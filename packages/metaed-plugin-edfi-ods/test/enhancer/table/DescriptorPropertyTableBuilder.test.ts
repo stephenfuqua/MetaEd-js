@@ -21,6 +21,7 @@ describe('when building descriptor property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -126,6 +127,7 @@ describe('when building collection descriptor property table', () => {
     table = Object.assign(newTable(), {
       schema: tableSchema,
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

@@ -6,7 +6,7 @@ import { addSourceEntityProperty, addMergedReferenceContext } from '../../model/
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
-import { joinTableNamer } from './JoinTableNamer';
+import { joinTableNamer } from './TableNaming';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
 import { ColumnCreatorFactory } from './ColumnCreatorFactory';
@@ -62,11 +62,19 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       }
 
       if (!referenceProperty.data.edfiOds.odsIsCollection) return;
+
+      const { name, nameComponents } = joinTableNamer(
+        referenceProperty,
+        parentTableStrategy.name,
+        parentTableStrategy.nameComponents,
+        strategy.parentContext(),
+      );
       const joinTable: Table = Object.assign(newTable(), {
         // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
         namespace: parentTableStrategy.table.namespace,
         schema: parentTableStrategy.table.schema.toLowerCase(),
-        name: joinTableNamer(referenceProperty, parentTableStrategy.name, strategy.parentContext()),
+        name,
+        nameComponents,
         description: referenceProperty.documentation,
         isRequiredCollectionTable: referenceProperty.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
         includeCreateDateColumn: true,

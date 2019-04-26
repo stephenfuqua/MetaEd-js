@@ -21,6 +21,7 @@ describe('when building inline common property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -106,6 +107,7 @@ describe('when building optional inline common property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

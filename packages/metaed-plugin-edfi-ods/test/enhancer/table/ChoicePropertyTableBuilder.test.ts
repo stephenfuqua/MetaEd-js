@@ -21,6 +21,7 @@ describe('when building choice property table with two integer properties', () =
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

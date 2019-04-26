@@ -25,6 +25,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 
     const table: Table = Object.assign(newTable(), {
       name: academicWeek,
+      nameComponents: [academicWeek],
     });
     tableEntities(metaEd, namespace).set(table.name, table);
 
@@ -92,6 +93,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 
     const table: Table = Object.assign(newTable(), {
       name: academicWeek,
+      nameComponents: [academicWeek],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableSchema: schemaName,

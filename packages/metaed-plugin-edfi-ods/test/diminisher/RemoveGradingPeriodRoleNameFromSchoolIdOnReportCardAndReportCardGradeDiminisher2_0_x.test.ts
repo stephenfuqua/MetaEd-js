@@ -26,6 +26,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentCompetencyObjective,
+      nameComponents: [studentCompetencyObjective],
       columns: [
         Object.assign(newColumn(), {
           name: gradingPeriodSchoolId,
@@ -90,6 +91,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjective,
+      nameComponents: [studentLearningObjective],
       columns: [
         Object.assign(newColumn(), {
           name: gradingPeriodSchoolId,

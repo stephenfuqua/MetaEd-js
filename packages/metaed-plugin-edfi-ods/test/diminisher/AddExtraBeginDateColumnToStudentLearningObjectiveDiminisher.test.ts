@@ -25,6 +25,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjective,
+      nameComponents: [studentLearningObjective],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: studentSectionAssociation,
@@ -76,6 +77,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjective,
+      nameComponents: [studentLearningObjective],
       columns: [
         Object.assign(newColumn(), {
           name: studentSectionAssociationBeginDate,

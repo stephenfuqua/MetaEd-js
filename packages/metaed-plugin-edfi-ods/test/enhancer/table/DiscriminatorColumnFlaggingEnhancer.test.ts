@@ -24,6 +24,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: true,
@@ -56,6 +57,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: true,
@@ -88,6 +90,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       isAggregateRootTable: true, // FYI: not actually possible to be aggregate root without parent
     });
@@ -119,6 +122,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root t
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: false,

@@ -25,6 +25,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjective,
+      nameComponents: [studentLearningObjective],
       columns: [
         Object.assign(newColumn(), {
           name: gradingPeriodSchoolId,
@@ -74,6 +75,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentCompetencyObjective,
+      nameComponents: [studentCompetencyObjective],
       columns: [
         Object.assign(newColumn(), {
           name: gradingPeriodSchoolId,
@@ -123,6 +125,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentCompetencyObjectiveStudentProgramAssociation,
+      nameComponents: [studentCompetencyObjectiveStudentProgramAssociation],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: studentCompetencyObjective,
@@ -164,6 +167,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentCompetencyObjectiveStudentSectionAssociation,
+      nameComponents: [studentCompetencyObjectiveStudentSectionAssociation],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: studentCompetencyObjective,
@@ -205,6 +209,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjectiveStudentStudentProgramAssociation,
+      nameComponents: [studentLearningObjectiveStudentStudentProgramAssociation],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: studentLearningObjective,
@@ -246,6 +251,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
     const table: Table = Object.assign(newTable(), {
       name: studentLearningObjectiveStudentStudentSectionAssociation,
+      nameComponents: [studentLearningObjectiveStudentStudentSectionAssociation],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: studentLearningObjective,

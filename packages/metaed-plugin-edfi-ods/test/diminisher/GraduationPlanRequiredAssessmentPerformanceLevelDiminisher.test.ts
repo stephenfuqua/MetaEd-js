@@ -20,6 +20,7 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
 
     const table: Table = Object.assign(newTable(), {
       name: graduationPlanRequiredAssessmentPerformanceLevel,
+      nameComponents: [graduationPlanRequiredAssessmentPerformanceLevel],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           parentTableName: graduationPlanRequiredAssessmentPerformanceLevel,

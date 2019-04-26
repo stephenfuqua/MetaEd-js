@@ -23,6 +23,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
     const derivativeSourceLearningResourceMetadataURI = 'DerivativeSourceLearningResourceMetadataURI';
     const table: Table = Object.assign(newTable(), {
       name: educationContentDerivativeSourceLearningResourceMetadataURI,
+      nameComponents: [educationContentDerivativeSourceLearningResourceMetadataURI],
       columns: [
         Object.assign(newStringColumn('123'), {
           name: derivativeSourceLearningResourceMetadataURI,
@@ -64,6 +65,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
     const derivativeSourceURI = 'DerivativeSourceURI';
     const table: Table = Object.assign(newTable(), {
       name: educationContentDerivativeSourceURI,
+      nameComponents: [educationContentDerivativeSourceURI],
       columns: [
         Object.assign(newStringColumn('123'), {
           name: derivativeSourceURI,

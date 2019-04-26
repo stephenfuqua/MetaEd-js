@@ -26,6 +26,7 @@ describe('when enhancing core association targeting 2.3 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
           },
@@ -68,6 +69,7 @@ describe('when enhancing core association targeting 2.5 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
           },
@@ -110,6 +112,7 @@ describe('when enhancing extension association targeting 2.5 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
           },
@@ -152,6 +155,7 @@ describe('when enhancing core association targeting 3.1 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
           },
@@ -213,6 +217,7 @@ describe('when enhancing extension association targeting 3.1 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
           },

@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this, no-use-before-define */
-import { appendOverlapping } from '../../shared/Utility';
+import { appendOverlapping } from '../../enhancer/table/TableNaming';
 import { addMergedReferenceContext, cloneColumn } from './Column';
 import { Column } from './Column';
 

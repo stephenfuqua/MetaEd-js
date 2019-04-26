@@ -14,6 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   const descriptorTable: Table = Object.assign(newTable(), {
     name: 'Descriptor',
+    nameComponents: ['Descriptor'],
     namespace: edfiNamespace,
     schema: edfiNamespace.namespaceName.toLowerCase(),
     description: 'This is the base entity for the descriptor pattern.',

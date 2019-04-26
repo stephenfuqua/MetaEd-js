@@ -20,6 +20,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
 
     const table: Table = Object.assign(newTable(), {
       name: gradingPeriodType,
+      nameComponents: [gradingPeriodType],
     });
     tableEntities(metaEd, namespace).set(table.name, table);
 
@@ -48,6 +49,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
 
     const table: Table = Object.assign(newTable(), {
       name: gradingPeriodType,
+      nameComponents: [gradingPeriodType],
       columns: [
         Object.assign(newColumn(), {
           name: periodSequence,

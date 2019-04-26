@@ -22,6 +22,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
     const innovativeDollarsSpentStrategicPriorities = 'InnovativeDollarsSpentStrategicPriorities';
     const table: Table = Object.assign(newTable(), {
       name: localEducationAgencyFederalFunds,
+      nameComponents: [localEducationAgencyFederalFunds],
       columns: [
         Object.assign(newColumn(), {
           name: innovativeDollarsSpentStrategicPriorities,
@@ -52,6 +53,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
 
     const table: Table = Object.assign(newTable(), {
       name: localEducationAgencyFederalFunds,
+      nameComponents: [localEducationAgencyFederalFunds],
       columns: [
         Object.assign(newColumn(), {
           name: innovativeDollarsSpentOnStrategicPriorities,

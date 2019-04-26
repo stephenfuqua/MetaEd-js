@@ -26,6 +26,7 @@ describe('when enhancing core descriptor targeting 2.3 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
             foreignKeys: [
@@ -71,6 +72,7 @@ describe('when enhancing core descriptor targeting 2.5 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
             foreignKeys: [
@@ -116,6 +118,7 @@ describe('when enhancing extension descriptor targeting 2.5 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
             foreignKeys: [
@@ -161,6 +164,7 @@ describe('when enhancing core descriptor targeting 3.1 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
             foreignKeys: [
@@ -225,6 +229,7 @@ describe('when enhancing extension descriptor targeting 3.1 ODS/API', () => {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
+            nameComponents: [tableName],
             schema: namespaceName,
             columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
             foreignKeys: [

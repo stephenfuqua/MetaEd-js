@@ -21,6 +21,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: 'edfi',
     });
     const primaryKey: Column = Object.assign(newColumn(), {
@@ -59,6 +60,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
     });
     const primaryKey: Column = Object.assign(newColumn(), {
       isPartOfPrimaryKey: true,
@@ -99,6 +101,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
     });
     const primaryKey1: Column = Object.assign(newColumn(), {
       name: 'primaryKeyName1',
@@ -145,6 +148,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
     });
     const primaryKey1: Column = Object.assign(newColumn(), {
       name: 'primaryKeyName1',
@@ -187,6 +191,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
     });
     const primaryKey: Column = Object.assign(newColumn(), {
       name: 'primaryKeyName',

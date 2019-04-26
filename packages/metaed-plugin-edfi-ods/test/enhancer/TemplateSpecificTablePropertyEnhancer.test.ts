@@ -23,6 +23,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       columns: [
         Object.assign(newColumn(), {
@@ -68,6 +69,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       columns: [
         Object.assign(newColumn(), {
@@ -115,6 +117,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       foreignKeys: [
         Object.assign(newForeignKey(), {
@@ -180,6 +183,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       columns: [
         Object.assign(newColumn(), {
@@ -224,6 +228,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       columns: [
         Object.assign(newColumn(), {
@@ -272,6 +277,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       schema: namespace.namespaceName,
       description,
       columns: [

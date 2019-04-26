@@ -30,6 +30,7 @@ describe('when enhancing associations', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 

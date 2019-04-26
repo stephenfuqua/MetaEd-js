@@ -17,6 +17,7 @@ const maxSqlServerIdentifierLength = R.take(128);
 
 export type Table = {
   name: string;
+  nameComponents: Array<string>;
   namespace: Namespace;
   schema: string;
   type: string;
@@ -45,6 +46,7 @@ export type Table = {
 export function newTable(): Table {
   return {
     name: '',
+    nameComponents: [],
     namespace: NoNamespace,
     schema: '',
     type: 'table',

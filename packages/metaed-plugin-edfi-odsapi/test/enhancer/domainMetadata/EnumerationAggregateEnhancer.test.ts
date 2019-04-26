@@ -31,6 +31,7 @@ describe('when enhancing enumerations', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 

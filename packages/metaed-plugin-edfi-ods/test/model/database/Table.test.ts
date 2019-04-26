@@ -69,7 +69,7 @@ describe('when getting strongest constrain column with an existing column', () =
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: 'TableName' });
+    table = Object.assign(newTable(), { name: 'TableName', nameComponents: ['TableName'] });
     existingColumn = Object.assign(newBooleanColumn(), { name: columnName });
     table.columns.push(existingColumn);
 
@@ -108,7 +108,7 @@ describe('when using add column range', () => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: 'TableName' });
+    table = Object.assign(newTable(), { name: 'TableName', nameComponents: ['TableName'] });
     table.columns.push(Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }));
 
     addColumns(
@@ -399,7 +399,7 @@ describe('when adding a foreign key with no existing foreign keys', () => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: tableName, schema: tableSchema });
+    table = Object.assign(newTable(), { name: tableName, nameComponents: [tableName], schema: tableSchema });
     addForeignKey(table, Object.assign(newForeignKey(), { foreignTableName }));
   });
 
@@ -419,7 +419,11 @@ describe('when adding a foreign key with existing foreign key', () => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: parentTableName, schema: parentTableSchema });
+    table = Object.assign(newTable(), {
+      name: parentTableName,
+      nameComponents: [parentTableName],
+      schema: parentTableSchema,
+    });
     addForeignKey(
       table,
       Object.assign(newForeignKey(), {

@@ -10,28 +10,44 @@ export class TableStrategy {
 
   name: string;
 
+  nameComponents: Array<string>;
+
   constructor(table: Table) {
     this.table = table;
     this.schema = table.schema;
     this.schemaNamespace = table.namespace;
     this.name = table.name;
+    this.nameComponents = table.nameComponents;
   }
 
   static default(table: Table) {
     return new TableStrategy(table);
   }
 
-  static extension(table: Table, baseSchemaName: string, baseSchemaNamespace: Namespace, baseTableName: string) {
+  static extension(
+    table: Table,
+    baseSchemaName: string,
+    baseSchemaNamespace: Namespace,
+    baseTableName: string,
+    baseTableNameComponents: Array<string>,
+  ) {
     // eslint-disable-next-line no-use-before-define
-    return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableName);
+    return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableName, baseTableNameComponents);
   }
 }
 
 class ExtensionTableStrategy extends TableStrategy {
-  constructor(table: Table, baseSchemaName: string, baseSchemaNamespace: Namespace, baseTableName: string) {
+  constructor(
+    table: Table,
+    baseSchemaName: string,
+    baseSchemaNamespace: Namespace,
+    baseTableName: string,
+    baseTableNameComponents: Array<string>,
+  ) {
     super(table);
     this.schema = baseSchemaName;
     this.schemaNamespace = baseSchemaNamespace;
     this.name = baseTableName;
+    this.nameComponents = baseTableNameComponents;
   }
 }

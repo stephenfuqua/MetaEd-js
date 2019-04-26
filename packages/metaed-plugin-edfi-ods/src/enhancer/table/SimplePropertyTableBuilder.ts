@@ -2,7 +2,7 @@ import R from 'ramda';
 import { EntityProperty, MergeDirective } from 'metaed-core';
 import { isSharedProperty, asReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
-import { baseNameCollapsingJoinTableNamer } from './JoinTableNamer';
+import { baseNameCollapsingJoinTableNamer } from './TableNaming';
 import { ColumnTransform, ColumnTransformPrimaryKey, ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
 import { BuildStrategy } from './BuildStrategy';
@@ -37,11 +37,18 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
       }
 
       if (property.data.edfiOds.odsIsCollection) {
+        const { name, nameComponents } = baseNameCollapsingJoinTableNamer(
+          property,
+          parentTableStrategy.name,
+          parentTableStrategy.nameComponents,
+          strategy.parentContext(),
+        );
         const joinTable: Table = Object.assign(newTable(), {
           // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
           namespace: parentTableStrategy.table.namespace,
           schema: parentTableStrategy.table.schema.toLowerCase(),
-          name: baseNameCollapsingJoinTableNamer(property, parentTableStrategy.name, strategy.parentContext()),
+          name,
+          nameComponents,
           description: property.documentation,
           isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,

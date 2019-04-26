@@ -32,6 +32,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         namespace: entity.namespace,
         schema: entity.namespace.namespaceName.toLowerCase(),
         name: entity.data.edfiOds.odsExtensionName,
+        nameComponents: [entity.data.edfiOds.odsExtensionName],
         description: entity.documentation,
         parentEntity: entity,
         // METAED-764: API requires extension tables to have CreateDate column
@@ -59,6 +60,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           entity.baseEntity != null ? entity.baseEntity.namespace.namespaceName.toLowerCase() : '',
           entity.baseEntity != null ? entity.baseEntity.namespace : NoNamespace,
           entity.baseEntity != null ? entity.baseEntity.data.edfiOds.odsTableName : '',
+          entity.baseEntity != null ? [entity.baseEntity.data.edfiOds.odsTableName] : [],
         );
         const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
         tableBuilder.buildTables(property, tableStrategy, primaryKeys, BuildStrategyDefault, tables, null);

@@ -31,6 +31,7 @@ describe('when enhancing a domain entity', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 
@@ -96,6 +97,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 
@@ -156,6 +158,7 @@ describe('when enhancing a domain entity that has a required collection table', 
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
       isRequiredCollectionTable: true,
     };

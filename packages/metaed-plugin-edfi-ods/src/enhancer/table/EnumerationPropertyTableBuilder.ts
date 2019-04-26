@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { EntityProperty, ReferentialProperty, asReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
-import { baseNameCollapsingJoinTableNamer } from './JoinTableNamer';
+import { baseNameCollapsingJoinTableNamer } from './TableNaming';
 import { ColumnTransform, ColumnTransformPrimaryKey, ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
 import { BuildStrategy } from './BuildStrategy';
@@ -46,10 +46,17 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         addForeignKey(parentTableStrategy.table, foreignKey);
         addColumns(parentTableStrategy.table, [enumerationColumn], buildStrategy.leafColumns(ColumnTransformUnchanged));
       } else {
+        const { name, nameComponents } = baseNameCollapsingJoinTableNamer(
+          enumeration,
+          parentTableStrategy.name,
+          parentTableStrategy.nameComponents,
+          buildStrategy.parentContext(),
+        );
         const joinTable: Table = Object.assign(newTable(), {
           namespace: parentTableStrategy.schemaNamespace,
           schema: parentTableStrategy.schema,
-          name: baseNameCollapsingJoinTableNamer(enumeration, parentTableStrategy.name, buildStrategy.parentContext()),
+          name,
+          nameComponents,
           description: enumeration.documentation,
           isRequiredCollectionTable: enumeration.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,

@@ -49,6 +49,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
 
     const table: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
+      nameComponents: [gradebookEntryLearningObjective],
       columns: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,
@@ -105,6 +106,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
 
     const table: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
+      nameComponents: [gradebookEntryLearningObjective],
       columns: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,
@@ -147,6 +149,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
 
     const table: Table = Object.assign(newTable(), {
       name: TableName,
+      nameComponents: [TableName],
       columns: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,

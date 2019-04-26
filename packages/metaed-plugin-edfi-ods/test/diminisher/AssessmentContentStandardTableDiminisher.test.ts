@@ -26,6 +26,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
     const table: Table = Object.assign(newTable(), {
       name: assessmentContentStandard,
+      nameComponents: [assessmentContentStandard],
       columns: [
         Object.assign(newColumn(), {
           name: version,
@@ -87,6 +88,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
     const table: Table = Object.assign(newTable(), {
       name: assessmentContentStandardAuthor,
+      nameComponents: [assessmentContentStandardAuthor],
       columns: [
         Object.assign(newColumn(), {
           name: version,
@@ -140,6 +142,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
     const table: Table = Object.assign(newTable(), {
       name: assessmentContentStandard,
+      nameComponents: [assessmentContentStandard],
       columns: [
         Object.assign(newColumn(), {
           name: assessmentVersion,
@@ -193,6 +196,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
     const table: Table = Object.assign(newTable(), {
       name: assessmentContentStandardAuthor,
+      nameComponents: [assessmentContentStandardAuthor],
       columns: [
         Object.assign(newColumn(), {
           name: assessmentVersion,

@@ -1,4 +1,4 @@
-import { appendOverlapping } from '../../src/shared/Utility';
+import { appendOverlapping } from '../../../src/enhancer/table/TableNaming';
 
 describe('when appending overlapping strings', () => {
   it('should append normally if no overlap :: AaaBbb, CccDdd => AaaBbbCccDdd', () =>

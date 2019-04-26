@@ -13,8 +13,10 @@ export const enumerationTableCreator: {
 } = {
   // @ts-ignore "metaEd" unused here
   build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table {
+    const normalizedName = normalizeEnumerationSuffix(name);
     const table: Table = Object.assign(newTable(), {
-      name: normalizeEnumerationSuffix(name),
+      name: normalizedName,
+      nameComponents: [normalizedName],
       namespace,
       schema: namespace.namespaceName.toLowerCase(),
       description: documentation,

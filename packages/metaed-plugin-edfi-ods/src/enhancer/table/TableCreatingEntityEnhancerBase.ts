@@ -30,6 +30,7 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
     namespace: entity.namespace,
     schema: entity.namespace.namespaceName.toLowerCase(),
     name: entity.data.edfiOds.odsTableName,
+    nameComponents: [entity.data.edfiOds.odsTableName],
     description: entity.documentation,
     parentEntity: entity,
     isEntityMainTable: true,

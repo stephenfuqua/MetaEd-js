@@ -45,6 +45,7 @@ describe('when enhancing association extensions', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 

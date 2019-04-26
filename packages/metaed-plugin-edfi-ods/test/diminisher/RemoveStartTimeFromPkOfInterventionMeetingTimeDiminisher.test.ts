@@ -21,6 +21,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
 
     const table: Table = Object.assign(newTable(), {
       name: interventionMeetingTime,
+      nameComponents: [interventionMeetingTime],
       columns: [
         Object.assign(newColumn(), {
           name: startTime,
@@ -54,6 +55,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       columns: [
         Object.assign(newColumn(), {
           name: columnName,

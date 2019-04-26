@@ -11,6 +11,7 @@ export const schoolYearEnumerationTableCreator: {
   build(metaEd: MetaEdEnvironment, namespace: Namespace, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: 'SchoolYearType',
+      nameComponents: ['SchoolYearType'],
       namespace,
       schema: namespace.namespaceName.toLowerCase(),
       description: documentation,

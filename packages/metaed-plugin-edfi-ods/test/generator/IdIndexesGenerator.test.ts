@@ -18,6 +18,7 @@ describe('when generating id indexes for core namespace table with no id', () =>
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
+      nameComponents: ['TableName'],
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: false,
     });
@@ -43,6 +44,7 @@ describe('when generating id indexes for core namespace table with no type', () 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
+      nameComponents: ['TableName'],
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,
@@ -75,6 +77,7 @@ describe('when generating id indexes for core namespace table with type', () => 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableNameType',
+      nameComponents: ['TableNameType'],
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: true,
@@ -112,6 +115,7 @@ describe('when generating id indexes for extension namespace table with no type'
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
+      nameComponents: ['TableName'],
       schema: 'extension',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,

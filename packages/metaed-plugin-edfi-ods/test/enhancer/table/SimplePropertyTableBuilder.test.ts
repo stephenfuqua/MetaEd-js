@@ -22,6 +22,7 @@ describe('when building simple entity property table with collection property an
     const table: Table = Object.assign(newTable(), {
       schema: tableSchema,
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

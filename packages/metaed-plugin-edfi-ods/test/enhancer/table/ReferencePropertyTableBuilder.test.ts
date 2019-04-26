@@ -18,6 +18,7 @@ describe('when building domain entity property table that is not an identity, re
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -95,6 +96,7 @@ describe('when building identity domain entity property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -188,6 +190,7 @@ describe('when building required domain entity property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -281,6 +284,7 @@ describe('when building optional domain entity property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: 'TableName',
+      nameComponents: ['TableName'],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -378,6 +382,7 @@ describe('when building collection domain entity property table', () => {
     table = Object.assign(newTable(), {
       schema: tableSchema,
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

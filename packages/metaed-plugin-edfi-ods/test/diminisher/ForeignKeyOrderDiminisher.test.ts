@@ -56,6 +56,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
+      nameComponents: [gradebookEntryLearningObjective],
       primaryKeys: primaryKeyOrder.map((name: string) =>
         Object.assign(newColumn(), {
           name,
@@ -67,6 +68,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
+      nameComponents: [parentTableName],
       columns: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,
@@ -134,6 +136,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: foreignTableName,
+      nameComponents: [foreignTableName],
       primaryKeys: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,
@@ -145,6 +148,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
+      nameComponents: [parentTableName],
       columns: primaryKeyNames.map((name: string) =>
         Object.assign(newColumn(), {
           name,

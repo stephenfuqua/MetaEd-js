@@ -1,4 +1,4 @@
-import { appendOverlapping } from '../../shared/Utility';
+import { appendOverlapping } from '../../enhancer/table/TableNaming';
 
 export type ColumnNamer = () => string;
 

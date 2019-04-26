@@ -3,6 +3,7 @@ import { enhancerList } from './enhancer/EnhancerList';
 import { generate as OdsGenerator } from './generator/OdsGenerator';
 import { generate as SchemaGenerator } from './generator/SchemaGenerator';
 import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
+import { generate as PostgresqlTableNameGenerator } from './generator/PostgresqlTableNameGenerator';
 
 export { ColumnDataTypes } from './model/database/ColumnDataTypes';
 
@@ -57,7 +58,7 @@ export function initialize(): MetaEdPlugin {
   return {
     validator: validatorList(),
     enhancer: enhancerList(),
-    generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator],
+    generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator, PostgresqlTableNameGenerator],
     configurationSchemas: new Map(),
   };
 }

@@ -21,6 +21,7 @@ describe('when building enumeration property table', () => {
     table = Object.assign(newTable(), {
       schema: 'TableSchema',
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -127,6 +128,7 @@ describe('when building collection enumeration property table', () => {
     table = Object.assign(newTable(), {
       schema: tableSchema,
       name: tableName,
+      nameComponents: [tableName],
     });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {

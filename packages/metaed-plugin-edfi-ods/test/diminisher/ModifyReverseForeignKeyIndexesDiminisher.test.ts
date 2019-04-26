@@ -21,6 +21,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
 
     const table: Table = Object.assign(newTable(), {
       name: assessmentContentStandard,
+      nameComponents: [assessmentContentStandard],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           parentTableName: assessmentContentStandard,
@@ -57,6 +58,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching 
 
     const table: Table = Object.assign(newTable(), {
       name: parentTableName,
+      nameComponents: [parentTableName],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           parentTableName,

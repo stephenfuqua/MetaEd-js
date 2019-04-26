@@ -76,7 +76,11 @@ describe('when building common property table', () => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), { schema: tableSchema, name: tableName });
+    const mainTable: Table = Object.assign(newTable(), {
+      schema: tableSchema,
+      name: tableName,
+      nameComponents: [tableName],
+    });
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -184,7 +188,11 @@ describe('when building optional common property table', () => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), { schema: tableSchema, name: tableName });
+    const mainTable: Table = Object.assign(newTable(), {
+      schema: tableSchema,
+      name: tableName,
+      nameComponents: [tableName],
+    });
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -291,7 +299,11 @@ describe('when building required collection common property table', () => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), { schema: tableSchema, name: tableName });
+    const mainTable: Table = Object.assign(newTable(), {
+      schema: tableSchema,
+      name: tableName,
+      nameComponents: [tableName],
+    });
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -386,7 +398,11 @@ describe('when building required collection common property table with make leaf
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), { schema: tableSchema, name: tableName });
+    const mainTable: Table = Object.assign(newTable(), {
+      schema: tableSchema,
+      name: tableName,
+      nameComponents: [tableName],
+    });
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,

@@ -21,6 +21,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
 
     const table: Table = Object.assign(newTable(), {
       name: courseOfferingCurriculumUsed,
+      nameComponents: [courseOfferingCurriculumUsed],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName: courseOffering,
@@ -55,6 +56,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matchi
 
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      nameComponents: [tableName],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableName,

@@ -36,6 +36,7 @@ describe('when enhancing descriptor with no map type', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
+      nameComponents: [tableName],
       schema,
     };
 
@@ -113,12 +114,14 @@ describe('when enhancing descriptor with map type', () => {
     const descriptorTable: Table = {
       ...newTable(),
       name: descriptorTableName,
+      nameComponents: [descriptorTableName],
       schema,
     };
 
     const typeTable: Table = {
       ...newTable(),
       name: typeTableName,
+      nameComponents: [typeTableName],
       schema,
     };
 

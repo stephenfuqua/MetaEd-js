@@ -21,6 +21,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
 
     identificationDocumentTable = Object.assign(newTable(), {
       name: `${domainEntityName}Schema${identificationDocument}`,
+      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
       foreignKeys: [
         Object.assign(newForeignKey(), {
           parentTableName: `${domainEntityName}Schema${identificationDocument}`,
@@ -83,10 +84,12 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
 
     identificationDocumentTable1 = Object.assign(newTable(), {
       name: `${domainEntityName}Schema${identificationDocument}`,
+      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
     });
     tableEntities(metaEd, namespace).set(identificationDocumentTable1.name, identificationDocumentTable1);
     identificationDocumentTable2 = Object.assign(newTable(), {
       name: `${domainEntityName}OtherSchema${identificationDocument}`,
+      nameComponents: [`${domainEntityName}OtherSchema${identificationDocument}`],
     });
     tableEntities(metaEd, namespace).set(identificationDocumentTable2.name, identificationDocumentTable2);
 
@@ -142,10 +145,12 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
 
     identificationDocumentTable1 = Object.assign(newTable(), {
       name: `${domainEntityName}Schema${identificationDocument}1`,
+      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
     });
     tableEntities(metaEd, namespace).set(identificationDocumentTable1.name, identificationDocumentTable1);
     identificationDocumentTable2 = Object.assign(newTable(), {
       name: `${domainEntityName}OtherSchema${identificationDocument}2`,
+      nameComponents: [`${domainEntityName}OtherSchema${identificationDocument}2`],
     });
     tableEntities(metaEd, namespace).set(identificationDocumentTable2.name, identificationDocumentTable2);
 

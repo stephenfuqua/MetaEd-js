@@ -24,6 +24,7 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
 
     const table: Table = Object.assign(newTable(), {
       name: reportCardStudentCompetencyObjective,
+      nameComponents: [reportCardStudentCompetencyObjective],
       columns: [
         Object.assign(newColumn(), {
           name: educationOrganizationId,
@@ -78,6 +79,7 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
 
     const table: Table = Object.assign(newTable(), {
       name: reportCardStudentLearningObjective,
+      nameComponents: [reportCardStudentLearningObjective],
       columns: [
         Object.assign(newColumn(), {
           name: educationOrganizationId,

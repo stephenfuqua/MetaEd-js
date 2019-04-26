@@ -413,6 +413,7 @@ describe('when using get merge property column with column that has invalid merg
 
     const referencedTable: Table = Object.assign(newTable(), {
       name: `DomainEntityName1${domainEntityName2}`,
+      nameComponents: [`DomainEntityName1${domainEntityName2}`],
       columns: [referencedColumn],
     });
 
@@ -465,6 +466,7 @@ describe('when using get merge property column with non reference target propert
 
     const referencedTable: Table = Object.assign(newTable(), {
       name: domainEntityName1 + nonReferencePropertyName,
+      nameComponents: [domainEntityName1 + nonReferencePropertyName],
       columns: [referencedColumn],
     });
 
@@ -534,6 +536,7 @@ describe('when using get merge property column with reference property', () => {
 
     const referencedTable: Table = Object.assign(newTable(), {
       name: domainEntityName1 + domainEntityName2,
+      nameComponents: [domainEntityName1 + domainEntityName2],
       columns: [referencedColumn],
     });
 
@@ -606,6 +609,7 @@ describe('when using get merge property column with multiple source entity prope
 
     const referencedTable: Table = Object.assign(newTable(), {
       name: domainEntityName1 + domainEntityName2,
+      nameComponents: [domainEntityName1 + domainEntityName2],
       columns: [referencedColumn],
     });
 
@@ -661,6 +665,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
+      nameComponents: [parentTableName],
       schema: 'edfi',
     });
     const sourceColumn: Column = Object.assign(newIntegerColumn(), {
@@ -681,6 +686,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: sourceEntityName,
+      nameComponents: [sourceEntityName],
       schema: 'edfi',
       columns: [],
     });
@@ -758,6 +764,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
+      nameComponents: [parentTableName],
       schema: 'extension',
     });
     const sourceColumn: Column = Object.assign(newIntegerColumn(), {
@@ -778,6 +785,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: sourceEntityName,
+      nameComponents: [sourceEntityName],
       columns: [],
       schema: 'edfi',
     });

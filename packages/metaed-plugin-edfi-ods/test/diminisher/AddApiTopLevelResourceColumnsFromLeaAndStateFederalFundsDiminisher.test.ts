@@ -19,11 +19,13 @@ describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminishe
 
     const localTable: Table = Object.assign(newTable(), {
       name: localEducationAgencyFederalFunds,
+      nameComponents: [localEducationAgencyFederalFunds],
     });
     tablesForCoreNamespace.set(localTable.name, localTable);
 
     const stateTable: Table = Object.assign(newTable(), {
       name: stateEducationAgencyFederalFunds,
+      nameComponents: [stateEducationAgencyFederalFunds],
     });
     tablesForCoreNamespace.set(stateTable.name, stateTable);
 

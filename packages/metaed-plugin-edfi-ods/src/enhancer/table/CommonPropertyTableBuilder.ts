@@ -2,7 +2,7 @@ import R from 'ramda';
 import { asCommonProperty } from 'metaed-core';
 import { EntityProperty, MergeDirective, ReferentialProperty, Namespace } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
-import { appendOverlapping } from '../../shared/Utility';
+import { appendOverlapping } from './TableNaming';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
@@ -26,6 +26,7 @@ function buildJoinTables(
   primaryKeys: Array<Column>,
   buildStrategy: BuildStrategy,
   joinTableName: string,
+  joinTableNameComponents: Array<string>,
   joinTableNamespace: Namespace,
   joinTableSchema: string,
   tables: Array<Table>,
@@ -36,6 +37,7 @@ function buildJoinTables(
     namespace: joinTableNamespace,
     schema: joinTableSchema.toLowerCase(),
     name: joinTableName,
+    nameComponents: joinTableNameComponents,
     description: property.documentation,
     isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
     includeCreateDateColumn: true,
@@ -102,6 +104,8 @@ export function commonPropertyTableBuilder(
         commonProperty.data.edfiOds.odsName,
       );
 
+      const joinTableNameComponents = [...parentTableStrategy.nameComponents, commonProperty.data.edfiOds.odsName];
+
       buildJoinTables(
         commonProperty,
         parentTableStrategy,
@@ -109,6 +113,7 @@ export function commonPropertyTableBuilder(
         primaryKeys,
         buildStrategy,
         joinTableName,
+        joinTableNameComponents,
         parentTableStrategy.table.namespace,
         parentTableStrategy.table.schema,
         tables,

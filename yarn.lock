@@ -3283,6 +3283,11 @@ ed-fi-model-3.1@2.0.0:
   resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.1/-/ed-fi-model-3.1-2.0.0.tgz#104283cb1e571ed7181a0d1beb80ec8e1363fe8c"
   integrity sha1-EEKDyx5XHtcYGg0b64DsjhNj/ow=
 
+ed-fi-model-3.2@2.0.0:
+  version "2.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.2/-/ed-fi-model-3.2-2.0.0.tgz#3329496d3b5e8191c5d1871ee7bebc495816ec8a"
+  integrity sha1-MylJbTtegZHF0Yce5768SVgW7Io=
+
 editions@^2.0.2, editions@^2.1.2:
   version "2.1.3"
   resolved "https://www.myget.org/F/ed-fi/npm/editions/-/editions-2.1.3.tgz#727ccf3ec2c7b12dcc652c71000f16c4824d6f7d"
@@ -4621,6 +4626,14 @@ has@^1.0.1, has@^1.0.3:
   integrity sha1-ci18v8H2qoJB8W3YFOAR4fQeh5Y=
   dependencies:
     function-bind "^1.1.1"
+
+hash.js@^1.1.7:
+  version "1.1.7"
+  resolved "https://www.myget.org/F/ed-fi/npm/hash.js/-/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
+  integrity sha1-C6vKU46NTuSg+JiNaIZlN6ADz0I=
+  dependencies:
+    inherits "^2.0.3"
+    minimalistic-assert "^1.0.1"
 
 hasha@^2.2.0:
   version "2.2.0"
@@ -6650,6 +6663,11 @@ mimic-response@^1.0.0:
   version "1.0.1"
   resolved "https://www.myget.org/F/ed-fi/npm/mimic-response/-/mimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
   integrity sha1-SSNTiHju9CBjy4o+OweYeBSHqxs=
+
+minimalistic-assert@^1.0.1:
+  version "1.0.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
+  integrity sha1-LhlN4ERibUoQ5/f7wAznPoPk1cc=
 
 minimatch@^3.0.0, minimatch@^3.0.3, minimatch@^3.0.4:
   version "3.0.4"

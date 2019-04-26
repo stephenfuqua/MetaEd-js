@@ -27,6 +27,7 @@
     "deep-freeze": "^0.0.1",
     "diff2html": "^2.3.2",
     "handlebars": "^4.0.11",
+    "hash.js": "^1.1.7",
     "metaed-core": "2.0.0-dev.7",
     "metaed-plugin-edfi-unified": "2.0.0-dev.7",
     "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.7",

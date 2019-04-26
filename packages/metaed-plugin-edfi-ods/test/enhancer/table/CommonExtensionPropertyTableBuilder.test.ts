@@ -133,7 +133,11 @@ describe('when building common property extension table', () => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), { schema: tableSchema, name: tableName });
+    const mainTable: Table = Object.assign(newTable(), {
+      schema: tableSchema,
+      name: tableName,
+      nameComponents: [tableName],
+    });
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,

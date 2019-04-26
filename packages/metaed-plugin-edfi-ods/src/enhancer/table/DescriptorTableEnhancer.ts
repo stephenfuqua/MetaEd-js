@@ -37,6 +37,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
     namespace: descriptor.namespace,
     schema: descriptor.namespace.namespaceName.toLowerCase(),
     name: descriptor.data.edfiOds.odsTableName,
+    nameComponents: [descriptor.data.edfiOds.odsTableName],
     description: descriptor.documentation,
     parentEntity: descriptor,
   });

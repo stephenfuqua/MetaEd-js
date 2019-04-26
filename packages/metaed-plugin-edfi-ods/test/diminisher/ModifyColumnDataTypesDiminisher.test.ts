@@ -21,6 +21,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
 
     const table: Table = Object.assign(newTable(), {
       name: studentIndicator,
+      nameComponents: [studentIndicator],
       columns: [
         Object.assign(newDateColumn(), {
           name: beginDate,
@@ -57,6 +58,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
 
     const table: Table = Object.assign(newTable(), {
       name: educationContentAuthor,
+      nameComponents: [educationContentAuthor],
       columns: [
         Object.assign(newStringColumn('123'), {
           name: author,
@@ -93,6 +95,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (
       columns: [
         Object.assign(newStringColumn('123'), {
           name: columnName,
+          nameComponents: [columnName],
         }),
       ],
     });
