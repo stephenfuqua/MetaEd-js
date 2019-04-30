@@ -36,7 +36,7 @@ function parentPropertyNotInExtensionOverridePropertyList(
   extensionOverrideProperties: Array<EntityProperty>,
 ): boolean {
   return !extensionOverrideProperties.some(
-    x => x.metaEdName === parentProperty.metaEdName && x.withContext === parentProperty.withContext,
+    x => x.metaEdName === parentProperty.metaEdName && x.roleName === parentProperty.roleName,
   );
 }
 

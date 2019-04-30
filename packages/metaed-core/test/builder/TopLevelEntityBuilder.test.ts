@@ -1079,7 +1079,7 @@ describe('when building optional collection entity property', () => {
   });
 });
 
-describe('when building entity property with context', () => {
+describe('when building entity property role name', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
@@ -1099,7 +1099,7 @@ describe('when building entity property with context', () => {
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, false, false)
-      .withContext(contextName)
+      .roleName(contextName)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -1108,8 +1108,8 @@ describe('when building entity property with context', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have withContext', () => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].withContext).toBe(contextName);
+  it('should have roleName', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].roleName).toBe(contextName);
   });
 
   it('should have names', () => {
@@ -1120,9 +1120,9 @@ describe('when building entity property with context', () => {
   });
 
   it('should have source map for contextName with line, column, text', () => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.withContext).toBeDefined();
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.withContext).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.withContext).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toBeDefined();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).not.toBe(NoSourceMap);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toMatchSnapshot();
   });
 });
 
@@ -1147,7 +1147,7 @@ describe('when building entity property with shortened context', () => {
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, false, false)
-      .withContext(contextName, shortenToName)
+      .roleName(contextName, shortenToName)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))

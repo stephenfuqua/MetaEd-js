@@ -3,8 +3,8 @@ import { appendOverlapping } from '../../shared/Utility';
 
 export type JoinTableNamer = string;
 
-function getWithContext(property: EntityProperty): string {
-  return property.withContext !== property.metaEdName ? property.withContext : '';
+function getroleName(property: EntityProperty): string {
+  return property.roleName !== property.metaEdName ? property.roleName : '';
 }
 
 export function baseNameCollapsingJoinTableNamer(
@@ -12,7 +12,7 @@ export function baseNameCollapsingJoinTableNamer(
   parentEntityName: string,
   parentContextName: string,
 ): string {
-  const contextName: string = getWithContext(property);
+  const contextName: string = getroleName(property);
 
   if (property.metaEdName.startsWith(parentEntityName)) {
     return appendOverlapping(appendOverlapping(parentContextName, contextName), property.metaEdName);
@@ -24,6 +24,6 @@ export function baseNameCollapsingJoinTableNamer(
 }
 
 export function joinTableNamer(property: EntityProperty, parentEntityName: string, parentContextName: string): string {
-  const contextName: string = getWithContext(property);
+  const contextName: string = getroleName(property);
   return parentEntityName + parentContextName + contextName + property.metaEdName;
 }

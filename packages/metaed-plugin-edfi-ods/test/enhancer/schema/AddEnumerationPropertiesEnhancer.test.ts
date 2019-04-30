@@ -24,7 +24,7 @@ describe('when EnumerationProperty enhances enumeration property', () => {
   });
 });
 
-describe('when EnumerationProperty enhances enumeration property with context', () => {
+describe('when EnumerationProperty enhances enumeration property role name', () => {
   const enumerationPropertyName = 'EnumerationPropertyName';
   const contextName = 'ContextName';
   let enumerationProperty: EnumerationProperty;
@@ -33,7 +33,7 @@ describe('when EnumerationProperty enhances enumeration property with context', 
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     enumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: enumerationPropertyName,
-      withContext: contextName,
+      roleName: contextName,
     });
     metaEd.propertyIndex.enumeration.push(enumerationProperty);
     enhance(metaEd);

@@ -55,7 +55,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
     });
     const property: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -127,7 +127,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const requiredCollectionProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: associationName,
       referencedNamespaceName: namespace.namespaceName,
-      withContext: '',
+      roleName: '',
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -155,7 +155,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const associationPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: associationPkPropertyName,
       isPartOfIdentity: true,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -253,7 +253,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const requiredCollectionProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
       referencedNamespaceName: namespace.namespaceName,
-      withContext: '',
+      roleName: '',
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -282,7 +282,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
       isPartOfIdentity: true,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -833,7 +833,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
   });
 });
 
-describe('when AssociationTableEnhancer enhances entity with optional collection property with context', () => {
+describe('when AssociationTableEnhancer enhances entity with optional collection property role name', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -859,7 +859,7 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
       metaEdName: optionalCollectionPropertyName,
       referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
-      withContext: contextName,
+      roleName: contextName,
       parentEntity: entity,
       referencedEntity: Object.assign(newEnumeration(), {
         data: {
@@ -891,7 +891,7 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
     expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
-  it('should have join table with context', () => {
+  it('should have join table role name', () => {
     expect(tableEntities(metaEd, namespace).get(entityName + contextName + optionalCollectionPropertyName)).toBeDefined();
   });
 });

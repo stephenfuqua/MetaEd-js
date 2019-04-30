@@ -24,7 +24,7 @@ describe('when DescriptorProperty enhances descriptor property', () => {
   });
 });
 
-describe('when DescriptorProperty enhances descriptor property with context', () => {
+describe('when DescriptorProperty enhances descriptor property role name', () => {
   const descriptorPropertyName = 'DescriptorPropertyName';
   const contextName = 'ContextName';
   let descriptorProperty: DescriptorProperty;
@@ -33,7 +33,7 @@ describe('when DescriptorProperty enhances descriptor property with context', ()
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     descriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorPropertyName,
-      withContext: contextName,
+      roleName: contextName,
     });
     metaEd.propertyIndex.descriptor.push(descriptorProperty);
     enhance(metaEd);

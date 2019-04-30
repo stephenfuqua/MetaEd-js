@@ -15,7 +15,7 @@ export function failExtensionPropertyRedeclarations(
     baseEntity.properties.forEach(baseProperty => {
       if (
         extensionProperty.metaEdName === baseProperty.metaEdName &&
-        extensionProperty.withContext === baseProperty.withContext &&
+        extensionProperty.roleName === baseProperty.roleName &&
         isNotCommonExtensionOverride(extensionProperty)
       ) {
         failures.push({

@@ -36,7 +36,7 @@ export type EntityPropertySourceMap = {
   isRequiredCollection: SourceMap;
   isOptionalCollection: SourceMap;
   isQueryableOnly: SourceMap;
-  withContext: SourceMap;
+  roleName: SourceMap;
   hasRestriction: SourceMap;
   referencedType: SourceMap;
   referencedNamespaceName: SourceMap;
@@ -66,7 +66,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
     isRequiredCollection: NoSourceMap,
     isOptionalCollection: NoSourceMap,
     isQueryableOnly: NoSourceMap,
-    withContext: NoSourceMap,
+    roleName: NoSourceMap,
     hasRestriction: NoSourceMap,
     referencedType: NoSourceMap,
     referencedNamespaceName: NoSourceMap,
@@ -93,9 +93,9 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  *
  * **baseKeyName** is the optional metaEdName for a given identity property rename.
  *
- * **shortenTo** is the optional shortenTo name for a with context -> shorten to directive.
+ * **shortenTo** is the optional shortenTo name for a role name -> shorten to directive.
  *
- * **fullPropertyName** is the property name, prepended with the optional withContext name.
+ * **fullPropertyName** is the property name, prepended with the optional roleName name.
  *
  * **parentEntityName** is the metaEdName of the parent entity
  *
@@ -115,7 +115,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  *
  * **isQueryableOnly** is true if the "is queryable only" keyword applies.
  *
- * **withContext** is true if the "renames identity property" keyword applies.
+ * **roleName** is true if the "renames identity property" keyword applies.
  *
  * **hasRestriction** is true if the property has a value restriction for its type, such as "min length" or "max value".
  *
@@ -151,7 +151,7 @@ export type EntityProperty = {
   isRequiredCollection: boolean;
   isOptionalCollection: boolean;
   isQueryableOnly: boolean;
-  withContext: string;
+  roleName: string;
   hasRestriction: boolean;
   referencedType: string;
   referencedNamespaceName: string;
@@ -185,7 +185,7 @@ export function newEntityProperty(): EntityProperty {
     isRequiredCollection: false,
     isOptionalCollection: false,
     isQueryableOnly: false,
-    withContext: '',
+    roleName: '',
     hasRestriction: false,
     referencedType: '',
     referencedNamespaceName: '',

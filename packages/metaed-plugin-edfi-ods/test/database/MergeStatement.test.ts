@@ -287,7 +287,7 @@ describe('when association merges domain entity property', () => {
       .withAssociationDomainEntityProperty(domainEntityName, 'Documentation')
       .withIntegerIdentity(integerPropertyName4, 'Documentation')
       .withAssociationProperty(associationName1, 'Documentation', false, false)
-      .withContext(associationName1, shortenTo)
+      .roleName(associationName1, shortenTo)
       .withMergeDirective(`${associationName1}.${domainEntityName}`, domainEntityName)
       .withEndAssociation()
       .withEndNamespace()

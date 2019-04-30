@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { getAllProperties, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-core';
-import { prependWithContextToMetaEdName } from '../../shared/Utility';
+import { prependroleNameToMetaEdName } from '../../shared/Utility';
 
 export type EntityPropertyEdfiOds = {
   odsName: string;
@@ -15,7 +15,7 @@ export type EntityPropertyEdfiOds = {
 const enhancerName = 'EntityPropertySetupEnhancer';
 
 export function odsName(property: EntityProperty): string {
-  return prependWithContextToMetaEdName(property.metaEdName, property.withContext);
+  return prependroleNameToMetaEdName(property.metaEdName, property.roleName);
 }
 
 export function odsIsCollection(property: EntityProperty): boolean {
@@ -23,7 +23,7 @@ export function odsIsCollection(property: EntityProperty): boolean {
 }
 
 export function odsContextPrefix(property: EntityProperty): string {
-  return R.isEmpty(property.shortenTo) || property.shortenTo == null ? property.withContext : property.shortenTo;
+  return R.isEmpty(property.shortenTo) || property.shortenTo == null ? property.roleName : property.shortenTo;
 }
 
 export function addEntityPropertyEdfiOdsTo(property: EntityProperty) {

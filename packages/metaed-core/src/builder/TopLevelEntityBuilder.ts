@@ -423,7 +423,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       category: 'error',
       message: `Property named ${
         this.currentProperty.metaEdName
-      } is a duplicate declaration of that name. Use 'with context' keyword to avoid naming collisions.`,
+      } is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions.`,
       sourceMap: this.currentProperty.sourceMap.metaEdName,
       fileMap: null,
     });
@@ -436,7 +436,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       category: 'error',
       message: `Property named ${
         duplicateProperty.metaEdName
-      } is a duplicate declaration of that name.  Use 'with context' keyword to avoid naming collisions.`,
+      } is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions.`,
       sourceMap: duplicateProperty.sourceMap.metaEdName,
       fileMap: null,
     });
@@ -473,7 +473,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       this.currentProperty.sourceMap.parentEntityName = this.currentTopLevelEntity.sourceMap.metaEdName;
 
       this.currentProperty.fullPropertyName =
-        (this.currentProperty.withContext !== this.currentProperty.metaEdName ? this.currentProperty.withContext : '') +
+        (this.currentProperty.roleName !== this.currentProperty.metaEdName ? this.currentProperty.roleName : '') +
         this.currentProperty.metaEdName;
       // isQueryableOnly is XSD-specific and needs to be pulled out to artifact-specific configuration
       if (!this.currentProperty.isQueryableOnly && !this.propertyNameCollision()) {
@@ -497,11 +497,11 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     }
   }
 
-  enterWithContextName(context: MetaEdGrammar.WithContextNameContext) {
+  enterRoleNameName(context: MetaEdGrammar.RoleNameNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-    this.currentProperty.withContext = context.ID().getText();
-    this.currentProperty.sourceMap.withContext = sourceMapFrom(context);
+    this.currentProperty.roleName = context.ID().getText();
+    this.currentProperty.sourceMap.roleName = sourceMapFrom(context);
   }
 
   enterShortenToName(context: MetaEdGrammar.ShortenToNameContext) {

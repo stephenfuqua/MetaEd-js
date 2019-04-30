@@ -22,7 +22,7 @@ export function getReferencePropertiesAndAssociatedColumns(table: Table): Array<
   return R.compose(
     R.map((pair: PropertyColumnPair) => ({ property: R.head(pair).property, columns: R.chain(x => x.columns)(pair) })),
     R.values,
-    R.groupBy((pair: PropertyColumnPair) => pair.property.withContext + pair.property.metaEdName),
+    R.groupBy((pair: PropertyColumnPair) => pair.property.roleName + pair.property.metaEdName),
     R.chain((column: Column) =>
       R.compose(
         R.map((property: EntityProperty) => ({ property, columns: [column] })),

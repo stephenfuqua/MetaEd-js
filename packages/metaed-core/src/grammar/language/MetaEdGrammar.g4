@@ -89,13 +89,13 @@ association
 firstDomainEntity
     :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
        propertyDocumentation
-       withContext?
+       roleName?
     ;
 
 secondDomainEntity
     :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
        propertyDocumentation
-       withContext?
+       roleName?
     ;
 
 // AssociationExtension
@@ -351,14 +351,14 @@ isQueryableOnly : IS_QUERYABLE_ONLY ;
 propertyComponents
     : propertyDocumentation
       propertyAnnotation
-      withContext?
+      roleName?
       isQueryableField?
     ;
 
 isQueryableField : IS_QUERYABLE_FIELD;
 
-withContext
-    : WITH_CONTEXT withContextName (SHORTEN_TO shortenToName)?
+roleName
+    : ROLE_NAME roleNameName (SHORTEN_TO shortenToName)?
     ;
 
 minLength : MIN_LENGTH UNSIGNED_INT;
@@ -528,6 +528,7 @@ propertyName
     : (propertyNamespace PERIOD)? localPropertyName
     ;
 propertyNamespace : ID;
+roleNameName : ID;
 sharedPropertyName : ID;
 sharedPropertyType
     : (propertyNamespace PERIOD)? localPropertyType
@@ -535,7 +536,6 @@ sharedPropertyType
 shortenToName : ID;
 simplePropertyName: localPropertyName;
 subdomainName : ID;
-withContextName : ID;
 
 namespaceName : ID;
 metaEdId : METAED_ID;

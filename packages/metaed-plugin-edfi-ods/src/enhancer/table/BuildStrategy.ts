@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this, no-use-before-define */
 import { EntityProperty } from 'metaed-core';
-import { defaultColumnNamer, withContextIgnoringColumnNamer } from '../../model/database/ColumnNamer';
+import { defaultColumnNamer, roleNameIgnoringColumnNamer } from '../../model/database/ColumnNamer';
 import { ColumnTransformMakeNull } from '../../model/database/ColumnTransform';
 import { ColumnNamer } from '../../model/database/ColumnNamer';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
@@ -20,10 +20,10 @@ export class BuildStrategy {
     return this.myDecoratedStrategy != null ? this.myDecoratedStrategy.leafColumns(strategy) : strategy;
   }
 
-  columnNamer(inlineContext: string, withContext: string, baseName: string): ColumnNamer {
+  columnNamer(inlineContext: string, roleName: string, baseName: string): ColumnNamer {
     return this.myDecoratedStrategy != null
-      ? this.myDecoratedStrategy.columnNamer(inlineContext, withContext, baseName)
-      : defaultColumnNamer(inlineContext, withContext, baseName);
+      ? this.myDecoratedStrategy.columnNamer(inlineContext, roleName, baseName)
+      : defaultColumnNamer(inlineContext, roleName, baseName);
   }
 
   buildColumns(property: EntityProperty): boolean {
@@ -35,8 +35,8 @@ export class BuildStrategy {
   }
 
   // #region strategy configuration methods
-  columnNamerIgnoresWithContext(): BuildStrategy {
-    return new ColumnNamerIgnoresWithContextStrategy(this);
+  columnNamerIgnoresroleName(): BuildStrategy {
+    return new ColumnNamerIgnoresroleNameStrategy(this);
   }
 
   appendParentContext(context: string): BuildStrategy {
@@ -123,9 +123,9 @@ class AppendInlineContextStrategy extends BuildStrategy {
   }
 }
 
-class ColumnNamerIgnoresWithContextStrategy extends BuildStrategy {
-  columnNamer(inlineContext: string, _withContext: string, baseName: string): ColumnNamer {
-    return withContextIgnoringColumnNamer(inlineContext, baseName);
+class ColumnNamerIgnoresroleNameStrategy extends BuildStrategy {
+  columnNamer(inlineContext: string, _roleName: string, baseName: string): ColumnNamer {
+    return roleNameIgnoringColumnNamer(inlineContext, baseName);
   }
 }
 
@@ -160,9 +160,9 @@ class SkipPathStrategy extends BuildStrategy {
       : this.myDecoratedStrategy;
   }
 
-  columnNamerIgnoresWithContext(): BuildStrategy {
+  columnNamerIgnoresroleName(): BuildStrategy {
     const strategy = this.getDecoratedStrategy();
-    return new ColumnNamerIgnoresWithContextStrategy(strategy);
+    return new ColumnNamerIgnoresroleNameStrategy(strategy);
   }
 
   appendParentContext(context: string): BuildStrategy {

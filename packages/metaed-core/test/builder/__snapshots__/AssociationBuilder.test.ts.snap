@@ -177,6 +177,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -186,11 +191,6 @@ Object {
     "column": 4,
     "line": 6,
     "tokenText": "domain entity",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -308,6 +308,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -318,18 +323,13 @@ Object {
     "line": 9,
     "tokenText": "domain entity",
   },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
 }
 `;
 
 exports[`when building association with invalid trailing text should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'with context'}, column: 0, line: 11, token: TrailingText",
-  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'with context'}, column: 0, line: 11, token: TrailingText",
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'role name'}, column: 0, line: 11, token: TrailingText",
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'role name'}, column: 0, line: 11, token: TrailingText",
 ]
 `;
 
@@ -370,8 +370,8 @@ Array [
 
 exports[`when building association with no domain entity property should have mismatched input error 1`] = `
 Array [
-  "mismatched input 'End Namespace' expecting {'domain entity', 'with context'}, column: 0, line: 8, token: End Namespace",
-  "mismatched input 'End Namespace' expecting {'domain entity', 'with context'}, column: 0, line: 8, token: End Namespace",
+  "mismatched input 'End Namespace' expecting {'domain entity', 'role name'}, column: 0, line: 8, token: End Namespace",
+  "mismatched input 'End Namespace' expecting {'domain entity', 'role name'}, column: 0, line: 8, token: End Namespace",
 ]
 `;
 

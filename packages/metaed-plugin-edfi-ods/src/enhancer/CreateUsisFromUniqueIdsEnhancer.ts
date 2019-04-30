@@ -26,7 +26,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     // a UniqueId property gets a parallel USI identity column
     const usiProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'USI',
-      withContext: odsUniqueIdProperty.withContext,
+      roleName: odsUniqueIdProperty.roleName,
       shortenTo: odsUniqueIdProperty.shortenTo,
       documentation: odsUniqueIdProperty.documentation,
       isPartOfIdentity: true,

@@ -39,7 +39,7 @@ describe('when creating columns for school year enumeration property', () => {
   });
 });
 
-describe('when creating columns for school year enumeration property with context', () => {
+describe('when creating columns for school year enumeration property role name', () => {
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: SchoolYearEnumerationProperty;
@@ -62,7 +62,7 @@ describe('when creating columns for school year enumeration property with contex
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column with context', () => {
+  it('should return a column role name', () => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -74,7 +74,7 @@ describe('when creating columns for school year enumeration property with contex
   });
 });
 
-describe('when creating columns for school year enumeration property with context and append parent context strategy', () => {
+describe('when creating columns for school year enumeration property role name and append parent context strategy', () => {
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const parentContextName = 'ParentContextName';
@@ -98,7 +98,7 @@ describe('when creating columns for school year enumeration property with contex
     columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContext(parentContextName));
   });
 
-  it('should return a column with context', () => {
+  it('should return a column role name', () => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');

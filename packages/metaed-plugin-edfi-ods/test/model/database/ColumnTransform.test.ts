@@ -94,7 +94,7 @@ describe('when using null column transform strategy', () => {
   });
 });
 
-describe('when using with context column transform strategy', () => {
+describe('when using role name column transform strategy', () => {
   const columns: Array<Column> = [];
   const primaryKeyName = 'PrimaryKeyName';
   const notNullName = 'NotNullName';
@@ -103,7 +103,7 @@ describe('when using with context column transform strategy', () => {
 
   beforeAll(() => {
     columns.push(
-      ...ColumnTransform.withContext(contextName).transform([
+      ...ColumnTransform.roleName(contextName).transform([
         Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
         Object.assign(newIntegerColumn(), { name: notNullName, isPartOfPrimaryKey: false, isNullable: false }),
         Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
@@ -116,7 +116,7 @@ describe('when using with context column transform strategy', () => {
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix primary key column name with context', () => {
+  it('should prefix primary key column name role name', () => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 
@@ -125,7 +125,7 @@ describe('when using with context column transform strategy', () => {
     expect(columns[1].isNullable).toBe(false);
   });
 
-  it('should prefix not null column name with context', () => {
+  it('should prefix not null column name role name', () => {
     expect(columns[1].name).toBe(contextName + notNullName);
   });
 
@@ -134,19 +134,19 @@ describe('when using with context column transform strategy', () => {
     expect(columns[2].isNullable).toBe(true);
   });
 
-  it('should prefix null column name with context', () => {
+  it('should prefix null column name role name', () => {
     expect(columns[2].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using primary key with context column transform strategy', () => {
+describe('when using primary key role name column transform strategy', () => {
   const columns: Array<Column> = [];
   const nullName = 'NullName';
   const contextName = 'ContextName';
 
   beforeAll(() => {
     columns.push(
-      ...ColumnTransform.primaryKeyWithContext(contextName).transform([
+      ...ColumnTransform.primaryKeyroleName(contextName).transform([
         Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
       ]),
     );
@@ -157,12 +157,12 @@ describe('when using primary key with context column transform strategy', () => 
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix column name with context', () => {
+  it('should prefix column name role name', () => {
     expect(columns[0].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using not null with context column transform strategy', () => {
+describe('when using not null role name column transform strategy', () => {
   const columns: Array<Column> = [];
   const primaryKeyName = 'PrimaryKeyName';
   const nullName = 'NullName';
@@ -170,7 +170,7 @@ describe('when using not null with context column transform strategy', () => {
 
   beforeAll(() => {
     columns.push(
-      ...ColumnTransform.notNullWithContext(contextName).transform([
+      ...ColumnTransform.notNullroleName(contextName).transform([
         Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
         Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
       ]),
@@ -182,7 +182,7 @@ describe('when using not null with context column transform strategy', () => {
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix primary key column name with context', () => {
+  it('should prefix primary key column name role name', () => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 
@@ -191,19 +191,19 @@ describe('when using not null with context column transform strategy', () => {
     expect(columns[1].isNullable).toBe(false);
   });
 
-  it('should prefix null column name with context', () => {
+  it('should prefix null column name role name', () => {
     expect(columns[1].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using null with context column transform strategy', () => {
+describe('when using null role name column transform strategy', () => {
   const columns: Array<Column> = [];
   const primaryKeyName = 'PrimaryKeyName';
   const contextName = 'ContextName';
 
   beforeAll(() => {
     columns.push(
-      ...ColumnTransform.nullWithContext(contextName).transform([
+      ...ColumnTransform.nullroleName(contextName).transform([
         Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
       ]),
     );
@@ -214,25 +214,25 @@ describe('when using null with context column transform strategy', () => {
     expect(columns[0].isNullable).toBe(true);
   });
 
-  it('should prefix primary key column name with context', () => {
+  it('should prefix primary key column name role name', () => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 });
 
-describe('when using primary key with context collapsible column transform strategy', () => {
+describe('when using primary key role name collapsible column transform strategy', () => {
   const columns: Array<Column> = [];
   const primaryKeyName = 'PrimaryKeyName';
   const contextName = 'ContextName';
 
   beforeAll(() => {
     columns.push(
-      ...ColumnTransform.primaryKeyWithContextCollapsible(contextName).transform([
+      ...ColumnTransform.primaryKeyroleNameCollapsible(contextName).transform([
         Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
       ]),
     );
   });
 
-  it('should prefix primary key column name with context', () => {
+  it('should prefix primary key column name role name', () => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 });

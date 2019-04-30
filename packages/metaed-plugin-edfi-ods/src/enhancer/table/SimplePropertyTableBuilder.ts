@@ -65,7 +65,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
         );
         addColumns(
           joinTable,
-          columnCreator.createColumns(property, strategy.columnNamerIgnoresWithContext()),
+          columnCreator.createColumns(property, strategy.columnNamerIgnoresroleName()),
           ColumnTransformPrimaryKey,
         );
 

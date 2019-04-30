@@ -293,7 +293,7 @@ describe('when collecting primary key columns for two inline common properties w
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 
-  it('should return a primary key column with context', () => {
+  it('should return a primary key column role name', () => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].dataType).toBe('[INT]');
     expect(columns[1].name).toBe(contextName + propertyName);

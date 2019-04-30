@@ -10,38 +10,38 @@ export class ColumnTransform {
     this.myDecoratedStrategy = decoratedStrategy;
   }
 
-  static withContext(contextPrefix: string): ColumnTransform {
-    return new PrefixWithContext(ColumnTransformUnchanged, contextPrefix);
+  static roleName(contextPrefix: string): ColumnTransform {
+    return new PrefixroleName(ColumnTransformUnchanged, contextPrefix);
   }
 
-  static primaryKeyWithContext(contextPrefix: string): ColumnTransform {
-    return new PrefixWithContext(ColumnTransformPrimaryKey, contextPrefix);
+  static primaryKeyroleName(contextPrefix: string): ColumnTransform {
+    return new PrefixroleName(ColumnTransformPrimaryKey, contextPrefix);
   }
 
-  static primaryKeyWithContextCollapsible(contextPrefix: string): ColumnTransform {
-    return new ColumnTransformPrefixWithContextCollapsible(ColumnTransformPrimaryKey, contextPrefix);
+  static primaryKeyroleNameCollapsible(contextPrefix: string): ColumnTransform {
+    return new ColumnTransformPrefixroleNameCollapsible(ColumnTransformPrimaryKey, contextPrefix);
   }
 
   static primaryKeyWithNewReferenceContext(referenceContext: string): ColumnTransform {
     return new ColumnTransformPrependReferenceContext(ColumnTransformPrimaryKey, referenceContext);
   }
 
-  static primaryKeyWithContextCollapsibleAndNewReferenceContext(
+  static primaryKeyroleNameCollapsibleAndNewReferenceContext(
     contextPrefix: string,
     referenceContext: string,
   ): ColumnTransform {
     return new ColumnTransformPrependReferenceContext(
-      ColumnTransform.primaryKeyWithContextCollapsible(contextPrefix),
+      ColumnTransform.primaryKeyroleNameCollapsible(contextPrefix),
       referenceContext,
     );
   }
 
-  static notNullWithContext(contextPrefix: string): ColumnTransform {
-    return new PrefixWithContext(ColumnTransformNotNull, contextPrefix);
+  static notNullroleName(contextPrefix: string): ColumnTransform {
+    return new PrefixroleName(ColumnTransformNotNull, contextPrefix);
   }
 
-  static nullWithContext(contextPrefix: string): ColumnTransform {
-    return new PrefixWithContext(ColumnTransformNull, contextPrefix);
+  static nullroleName(contextPrefix: string): ColumnTransform {
+    return new PrefixroleName(ColumnTransformNull, contextPrefix);
   }
 
   static myInvertStrategies(strategyStack: Array<ColumnTransform>, strategy: ColumnTransform | null): void {
@@ -73,7 +73,7 @@ export class ColumnTransform {
   }
 }
 
-export class PrefixWithContext extends ColumnTransform {
+export class PrefixroleName extends ColumnTransform {
   myContextPrefix: string;
 
   constructor(decoratedStrategy: ColumnTransform, contextPrefix: string) {
@@ -86,7 +86,7 @@ export class PrefixWithContext extends ColumnTransform {
   }
 }
 
-export class ColumnTransformPrefixWithContextCollapsible extends ColumnTransform {
+export class ColumnTransformPrefixroleNameCollapsible extends ColumnTransform {
   myContextPrefix: string;
 
   constructor(decoratedStrategy: ColumnTransform, contextPrefix: string) {

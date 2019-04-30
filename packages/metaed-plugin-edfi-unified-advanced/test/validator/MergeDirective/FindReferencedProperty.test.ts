@@ -260,7 +260,7 @@ describe('when looking for property that does not exist', () => {
   });
 });
 
-describe('when looking for duplicated property with context', () => {
+describe('when looking for duplicated property role name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   const contextName1 = 'ContextName1';
@@ -307,7 +307,7 @@ describe('when looking for duplicated property with context', () => {
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
     expect(property.metaEdName).toBe(domainEntityName1);
-    expect(property.withContext).toBe(contextName1);
+    expect(property.roleName).toBe(contextName1);
   });
 });
 

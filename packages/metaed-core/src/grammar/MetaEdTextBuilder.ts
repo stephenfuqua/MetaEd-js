@@ -652,14 +652,14 @@ export class MetaEdTextBuilder {
   /**
    *
    */
-  withContext(context: string | null, shortenTo: string | null = null): MetaEdTextBuilder {
+  roleName(context: string | null, shortenTo: string | null = null): MetaEdTextBuilder {
     if (context == null) return this;
 
-    const withContext = 'with context';
+    const roleName = 'role name';
     if (shortenTo == null) {
-      this.addLine(`${withContext} ${context}`);
+      this.addLine(`${roleName} ${context}`);
     } else {
-      this.addLine(`${withContext} ${context} shorten to ${shortenTo}`);
+      this.addLine(`${roleName} ${context} shorten to ${shortenTo}`);
     }
 
     return this;
@@ -745,7 +745,7 @@ export class MetaEdTextBuilder {
 
     this.withDocumentation(documentation);
     this.withIdentityIndicator();
-    this.withContext(context);
+    this.roleName(context);
 
     this.withEndProperty();
     return this;
@@ -763,7 +763,7 @@ export class MetaEdTextBuilder {
 
     this.withDocumentation(documentation);
     this.withIdentityRenameIndicator(basePropertyIdentifier);
-    this.withContext(context);
+    this.roleName(context);
 
     this.withEndProperty();
     return this;
@@ -788,7 +788,7 @@ export class MetaEdTextBuilder {
       this.withOptionalPropertyIndicator();
     }
 
-    this.withContext(context, shortenTo);
+    this.roleName(context, shortenTo);
     return this;
   }
 
@@ -803,7 +803,7 @@ export class MetaEdTextBuilder {
   ): MetaEdTextBuilder {
     this.withStartProperty('domain entity', identifier, metaEdId);
     this.withDocumentation(documentation);
-    this.withContext(context);
+    this.roleName(context);
     this.withEndProperty();
     return this;
   }
@@ -1357,7 +1357,7 @@ export class MetaEdTextBuilder {
     this.withStartSharedProperty('string', propertyIdentifier, named, metaEdId);
     this.withDocumentation(documentation);
     this.withIdentityIndicator();
-    this.withContext(context);
+    this.roleName(context);
     this.withEndProperty();
     return this;
   }
@@ -1375,7 +1375,7 @@ export class MetaEdTextBuilder {
     this.withStartSharedProperty('integer', propertyIdentifier, named, metaEdId);
     this.withDocumentation(documentation);
     this.withIdentityIndicator();
-    this.withContext(context);
+    this.roleName(context);
     this.withEndProperty();
     return this;
   }

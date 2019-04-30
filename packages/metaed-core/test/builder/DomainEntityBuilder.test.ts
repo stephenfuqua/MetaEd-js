@@ -225,7 +225,7 @@ describe('when building duplicate property names', () => {
   });
 });
 
-describe('when building duplicate property names with different with context names', () => {
+describe('when building duplicate property names with different role name names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
@@ -257,7 +257,7 @@ describe('when building duplicate property names with different with context nam
   });
 });
 
-describe('when building duplicate property names with same with context name', () => {
+describe('when building duplicate property names with same role name name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
@@ -292,19 +292,19 @@ describe('when building duplicate property names with same with context name', (
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate property names with same with context name should have validation failures for each property -> property 1 message',
+      'when building duplicate property names with same role name name should have validation failures for each property -> property 1 message',
     );
     expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate property names with same with context name should have validation failures for each property -> property 1 sourceMap',
+      'when building duplicate property names with same role name name should have validation failures for each property -> property 1 sourceMap',
     );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate property names with same with context name should have validation failures for each property -> property 2 message',
+      'when building duplicate property names with same role name name should have validation failures for each property -> property 2 message',
     );
     expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate property names with same with context name should have validation failures for each property -> property 2 sourceMap',
+      'when building duplicate property names with same role name name should have validation failures for each property -> property 2 sourceMap',
     );
   });
 });
@@ -373,13 +373,13 @@ describe('when building domain entity without extension', () => {
   });
 });
 
-describe('when building domain entity with a with context', () => {
+describe('when building domain entity with a role name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
-  const withContextName = 'WithContextName';
+  const roleNameName = 'RoleNameName';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -389,7 +389,7 @@ describe('when building domain entity with a with context', () => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCommonProperty(propertyName, 'doc', true, false, withContextName)
+      .withCommonProperty(propertyName, 'doc', true, false, roleNameName)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -404,18 +404,18 @@ describe('when building domain entity with a with context', () => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe('common');
   });
 
-  it('should have with context', () => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].withContext).toBe(withContextName);
+  it('should have role name', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].roleName).toBe(roleNameName);
   });
 });
 
-describe('when building domain entity with a with context and shorten to', () => {
+describe('when building domain entity with a role name and shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
-  const withContextName = 'WithContextName';
+  const roleNameName = 'RoleNameName';
   const shortenToName = 'ShortenToName';
   let namespace: any = null;
 
@@ -426,7 +426,7 @@ describe('when building domain entity with a with context and shorten to', () =>
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCommonProperty(propertyName, 'doc', true, false, withContextName, null, shortenToName)
+      .withCommonProperty(propertyName, 'doc', true, false, roleNameName, null, shortenToName)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -441,8 +441,8 @@ describe('when building domain entity with a with context and shorten to', () =>
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe('common');
   });
 
-  it('should have with context', () => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].withContext).toBe(withContextName);
+  it('should have role name', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].roleName).toBe(roleNameName);
   });
 
   it('should have shorten to', () => {

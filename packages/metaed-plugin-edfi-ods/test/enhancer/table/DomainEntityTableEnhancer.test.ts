@@ -60,7 +60,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
     const property: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName,
       namespace,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -137,7 +137,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const requiredCollectionProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName,
-      withContext: '',
+      roleName: '',
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -165,7 +165,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: domainEntityPkPropertyName,
       isPartOfIdentity: true,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -262,7 +262,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const requiredCollectionProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
-      withContext: '',
+      roleName: '',
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -291,7 +291,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
       isPartOfIdentity: true,
-      withContext: '',
+      roleName: '',
       data: {
         edfiOds: {
           odsContextPrefix: '',
@@ -835,7 +835,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
   });
 });
 
-describe('when DomainEntityTableEnhancer enhances entity with optional collection property with context', () => {
+describe('when DomainEntityTableEnhancer enhances entity with optional collection property role name', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -860,7 +860,7 @@ describe('when DomainEntityTableEnhancer enhances entity with optional collectio
     const optionalCollectionProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: optionalCollectionPropertyName,
       isOptionalCollection: true,
-      withContext: contextName,
+      roleName: contextName,
       parentEntity: entity,
       referencedEntity: Object.assign(newEnumeration(), {
         data: {
@@ -892,7 +892,7 @@ describe('when DomainEntityTableEnhancer enhances entity with optional collectio
     expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
-  it('should have join table with context', () => {
+  it('should have join table role name', () => {
     expect(tableEntities(metaEd, namespace).get(entityName + contextName + optionalCollectionPropertyName)).toBeDefined();
   });
 });

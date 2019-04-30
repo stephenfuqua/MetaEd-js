@@ -68,10 +68,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
         );
 
-        const columns: Array<Column> = columnCreator.createColumns(
-          descriptor,
-          buildStrategy.columnNamerIgnoresWithContext(),
-        );
+        const columns: Array<Column> = columnCreator.createColumns(descriptor, buildStrategy.columnNamerIgnoresroleName());
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,

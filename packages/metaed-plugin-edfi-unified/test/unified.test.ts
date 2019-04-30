@@ -590,7 +590,7 @@ describe('when building and enhancing association property', () => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.association.filter(x => x.metaEdName === associationName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${associationName1}`);
@@ -651,7 +651,7 @@ describe('when building and enhancing choice property', () => {
     expect(namespace.entity.choice.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.choice.filter(x => x.metaEdName === choiceName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${choiceName1}`);
@@ -711,7 +711,7 @@ describe('when building and enhancing common property', () => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.common.filter(x => x.metaEdName === commonName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${commonName1}`);
@@ -771,7 +771,7 @@ describe('when building and enhancing descriptor property', () => {
     expect(namespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.descriptor.filter(x => x.metaEdName === descriptorName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${descriptorName1}`);
@@ -826,7 +826,7 @@ describe('when building and enhancing domain entity property', () => {
     expect(namespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(x => x.metaEdName === domainEntityName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${domainEntityName1}`);
@@ -886,7 +886,7 @@ describe('when building and enhancing enumeration property', () => {
     expect(namespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.enumeration.filter(x => x.metaEdName === enumerationName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${enumerationName1}`);
@@ -946,7 +946,7 @@ describe('when building and enhancing inline common property', () => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.inlineCommon.filter(x => x.metaEdName === inlineCommonName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${inlineCommonName1}`);
@@ -1006,7 +1006,7 @@ describe('when building and enhancing school year enumeration property', () => {
     expect(namespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(
       metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
     );
@@ -1082,7 +1082,7 @@ describe('when building and enhancing shared decimal property', () => {
     expect(namespace.entity.decimalType.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(x => x.metaEdName === sharedDecimalPropertyName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${sharedDecimalPropertyName1}`);
@@ -1182,7 +1182,7 @@ describe('when building and enhancing shared integer property', () => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(x => x.metaEdName === sharedIntegerPropertyName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${sharedIntegerPropertyName1}`);
@@ -1270,7 +1270,7 @@ describe('when building and enhancing shared short property', () => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.sharedShort.filter(x => x.metaEdName === sharedShortPropertyName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${sharedShortPropertyName1}`);
@@ -1358,7 +1358,7 @@ describe('when building and enhancing shared string property', () => {
     expect(namespace.entity.stringType.size).toBe(1);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property = R.head(metaEd.propertyIndex.sharedString.filter(x => x.metaEdName === sharedStringPropertyName1));
     expect(property).toBeDefined();
     expect(property.fullPropertyName).toBe(`${contextName}${sharedStringPropertyName1}`);
@@ -1447,7 +1447,7 @@ describe('when building and enhancing domain entity merge directives', () => {
     expect(namespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should enhance property path name with context', () => {
+  it('should enhance property path name role name', () => {
     const property2 = R.head(
       metaEd.propertyIndex.domainEntity.filter(
         x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,

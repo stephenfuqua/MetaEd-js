@@ -1012,7 +1012,7 @@ describe('when choice has a inline common property', () => {
   });
 });
 
-describe('when choice has a inline common property with context with collection reference property', () => {
+describe('when choice has a inline common property role name with collection reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';

@@ -122,7 +122,7 @@ describe('when creating columns for nullable descriptor property', () => {
   });
 });
 
-describe('when creating columns for descriptor property with context', () => {
+describe('when creating columns for descriptor property role name', () => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
@@ -162,7 +162,7 @@ describe('when creating columns for descriptor property with context', () => {
   });
 });
 
-describe('when creating columns for descriptor property with context and append parent context strategy', () => {
+describe('when creating columns for descriptor property role name and append parent context strategy', () => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';

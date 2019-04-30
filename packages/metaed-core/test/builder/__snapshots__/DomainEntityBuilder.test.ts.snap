@@ -305,6 +305,11 @@ Object {
     "line": 5,
     "tokenText": "SharedPropertyType",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -314,11 +319,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "shared integer",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -441,6 +441,11 @@ Object {
     "line": 5,
     "tokenText": "SharedPropertyType",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -450,11 +455,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "shared integer",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -479,7 +479,7 @@ Object {
 }
 `;
 
-exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 1 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name. Use 'with context' keyword to avoid naming collisions."`;
+exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 1 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions."`;
 
 exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 1 sourceMap 1`] = `
 Object {
@@ -489,7 +489,7 @@ Object {
 }
 `;
 
-exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 2 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'with context' keyword to avoid naming collisions."`;
+exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 2 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions."`;
 
 exports[`when building duplicate property names should have validation failures for each property: when building duplicate property names should have validation failures for each property -> property 2 sourceMap 1`] = `
 Object {
@@ -499,9 +499,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate property names with same with context name should have validation failures for each property: when building duplicate property names with same with context name should have validation failures for each property -> property 1 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name. Use 'with context' keyword to avoid naming collisions."`;
+exports[`when building duplicate property names with same role name name should have validation failures for each property: when building duplicate property names with same role name name should have validation failures for each property -> property 1 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions."`;
 
-exports[`when building duplicate property names with same with context name should have validation failures for each property: when building duplicate property names with same with context name should have validation failures for each property -> property 1 sourceMap 1`] = `
+exports[`when building duplicate property names with same role name name should have validation failures for each property: when building duplicate property names with same role name name should have validation failures for each property -> property 1 sourceMap 1`] = `
 Object {
   "column": 11,
   "line": 16,
@@ -509,9 +509,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate property names with same with context name should have validation failures for each property: when building duplicate property names with same with context name should have validation failures for each property -> property 2 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'with context' keyword to avoid naming collisions."`;
+exports[`when building duplicate property names with same role name name should have validation failures for each property: when building duplicate property names with same role name name should have validation failures for each property -> property 2 message 1`] = `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions."`;
 
-exports[`when building duplicate property names with same with context name should have validation failures for each property: when building duplicate property names with same with context name should have validation failures for each property -> property 2 sourceMap 1`] = `
+exports[`when building duplicate property names with same role name name should have validation failures for each property: when building duplicate property names with same role name name should have validation failures for each property -> property 2 sourceMap 1`] = `
 Object {
   "column": 11,
   "line": 9,

@@ -18,7 +18,7 @@ Domain Entity LocalAccount
     domain entity ChartOfAccount
       documentation "The standard account under which the local ccount is reported."
       is required
-      with context ChartOfAccount
+      role name ChartOfAccount
       merge ChartOfAccount.FiscalYear with FiscalYear
 
     //Optional Collection

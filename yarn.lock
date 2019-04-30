@@ -3263,25 +3263,25 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-ed-fi-model-2.0@1.0.3:
-  version "1.0.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.3.tgz#c08c25ef91c50501b7cf72343635b678a9dbd9ef"
-  integrity sha1-wIwl75HFBQG3z3I0NjW2eKnb2e8=
+ed-fi-model-2.0@2.0.0:
+  version "2.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-2.0.0.tgz#f1c0c05cdf947b96e7dd3331be4c6854b58ae4dc"
+  integrity sha1-8cDAXN+Ue5bn3TMxvkxoVLWK5Nw=
 
-ed-fi-model-2.2@1.0.1:
-  version "1.0.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.2/-/ed-fi-model-2.2-1.0.1.tgz#42ad765ed6e259c4f32f36effaf32c1ac4684163"
-  integrity sha1-Qq12XtbiWcTzLzbv+vMsGsRoQWM=
+ed-fi-model-2.2@2.0.0:
+  version "2.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.2/-/ed-fi-model-2.2-2.0.0.tgz#7191a8081aebcb831d0793de406d37c2d9decfef"
+  integrity sha1-cZGoCBrry4MdB5PeQG03wtnez+8=
 
-ed-fi-model-3.0@1.0.0:
-  version "1.0.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0.tgz#862c7bedebdfd9acd2ec0c712f23ae9e3b1b36f5"
-  integrity sha1-hix77evf2azS7AxxLyOunjsbNvU=
+ed-fi-model-3.0@2.0.0:
+  version "2.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-2.0.0.tgz#2c4735dbc88a0e15c51dc2ab39695962489b55de"
+  integrity sha1-LEc128iKDhXFHcKrOWlZYkibVd4=
 
-ed-fi-model-3.1@1.0.3:
-  version "1.0.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.1/-/ed-fi-model-3.1-1.0.3.tgz#d581de55a44518111e29124aaf7f0d35b508a113"
-  integrity sha1-1YHeVaRFGBEeKRJKr38NNbUIoRM=
+ed-fi-model-3.1@2.0.0:
+  version "2.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.1/-/ed-fi-model-3.1-2.0.0.tgz#104283cb1e571ed7181a0d1beb80ec8e1363fe8c"
+  integrity sha1-EEKDyx5XHtcYGg0b64DsjhNj/ow=
 
 editions@^2.0.2, editions@^2.1.2:
   version "2.1.3"

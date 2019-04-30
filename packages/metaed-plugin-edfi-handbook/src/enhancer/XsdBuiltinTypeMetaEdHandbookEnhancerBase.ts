@@ -20,7 +20,7 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
 }
 
 function propertyNamer(property: EntityProperty): string {
-  return property.withContext === property.metaEdName ? property.metaEdName : property.withContext + property.metaEdName;
+  return property.roleName === property.metaEdName ? property.metaEdName : property.roleName + property.metaEdName;
 }
 
 function parentNameAndPropertyCardinality(property: EntityProperty): string {

@@ -39,86 +39,86 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
       const baseEntityResult: {
         referencedEntities: Array<{
-          withContext: string;
+          roleName: string;
           entity: TopLevelEntity;
         }>;
         properties: Array<{
-          withContext: string;
+          roleName: string;
           property: EntityProperty;
         }>;
       } = collectSingleEntity(
         entity.baseEntity,
         true,
         (referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           entity: asTopLevelEntity(referencedEntity),
         }),
         (_referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           property,
         }),
       );
 
       const extensionEntityResult: {
         referencedEntities: Array<{
-          withContext: string;
+          roleName: string;
           entity: TopLevelEntity;
         }>;
         properties: Array<{
-          withContext: string;
+          roleName: string;
           property: EntityProperty;
         }>;
       } = collectSingleEntity(
         entity,
         true,
         (referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           entity: asTopLevelEntity(referencedEntity),
         }),
         (_referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           property,
         }),
       );
 
-      const baseProperties: Array<{ withContext: string; property: EntityProperty }> = [];
-      const extensionProperties: Array<{ withContext: string; property: EntityProperty }> = [];
+      const baseProperties: Array<{ roleName: string; property: EntityProperty }> = [];
+      const extensionProperties: Array<{ roleName: string; property: EntityProperty }> = [];
 
       baseEntityResult.properties.forEach(result => {
-        baseProperties.push({ withContext: result.withContext, property: result.property });
+        baseProperties.push({ roleName: result.roleName, property: result.property });
       });
       baseEntityResult.referencedEntities.forEach(result => {
         baseProperties.push(
           ...propertyCollector(result.entity).map(property => ({
-            withContext: result.withContext,
+            roleName: result.roleName,
             property,
           })),
         );
       });
 
       extensionEntityResult.properties.forEach(result => {
-        baseProperties.push({ withContext: result.withContext, property: result.property });
+        baseProperties.push({ roleName: result.roleName, property: result.property });
       });
       extensionEntityResult.referencedEntities.forEach(referencedEntity => {
         extensionProperties.push(
           ...propertyCollector(referencedEntity.entity).map(property => ({
-            withContext: referencedEntity.withContext,
+            roleName: referencedEntity.roleName,
             property,
           })),
         );
       });
       const extensionPropertyNames: Array<string> = extensionProperties.map(
-        x => x.withContext + x.property.withContext + x.property.metaEdName,
+        x => x.roleName + x.property.roleName + x.property.metaEdName,
       );
 
       const duplicateProperties: Array<{
-        withContext: string;
+        roleName: string;
         property: EntityProperty;
       }> = baseProperties.filter(x =>
-        extensionPropertyNames.includes(x.withContext + x.property.withContext + x.property.metaEdName),
+        extensionPropertyNames.includes(x.roleName + x.property.roleName + x.property.metaEdName),
       );
 
-      duplicateProperties.forEach((duplicate: { withContext: string; property: EntityProperty }) => {
+      duplicateProperties.forEach((duplicate: { roleName: string; property: EntityProperty }) => {
         if (!entity.baseEntity) return;
         failures.push({
           validatorName,

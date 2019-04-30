@@ -12,8 +12,8 @@ export function appendOverlapping(base: string, suffix: string): string {
   )(suffix);
 }
 
-export function prependWithContextToMetaEdName(metaEdName: string, withContext: string) {
-  return withContext + metaEdName;
+export function prependroleNameToMetaEdName(metaEdName: string, roleName: string) {
+  return roleName + metaEdName;
 }
 
 export function escapeSqlSingleQuote(string: string): string {

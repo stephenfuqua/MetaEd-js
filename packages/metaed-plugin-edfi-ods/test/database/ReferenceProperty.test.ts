@@ -1496,7 +1496,7 @@ describe('when entity has domain entity property with shortened context', () => 
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName2, 'Documentation')
       .withDomainEntityProperty(referencedEntityName, 'Documentation', false, false)
-      .withContext(referencedEntityName, shortenTo)
+      .roleName(referencedEntityName, shortenTo)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -1574,7 +1574,7 @@ describe('when entity has collection domain entity that references domain entity
       .withStartDomainEntity(referencedEntityName2 + shortenTo)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(referencedEntityName1, 'Documentation')
-      .withContext(referencedEntityName1, shortenTo)
+      .roleName(referencedEntityName1, shortenTo)
       .withEndDomainEntity()
 
       .withStartDomainEntity(domainEntityName)
@@ -1896,7 +1896,7 @@ describe('when entity has collection reference to self', () => {
   });
 });
 
-describe('when entity has identity collection reference with context and a collection property', () => {
+describe('when entity has identity collection reference role name and a collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const contextName = 'ContextName';

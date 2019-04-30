@@ -56,16 +56,16 @@ describe('when enhancing core string property', () => {
   });
 });
 
-describe('when enhancing core string property with a "with context"', () => {
+describe('when enhancing core string property with a "role name"', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const withContext = 'Context';
+  const roleName = 'Context';
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
     namespace,
-    withContext,
+    roleName,
     data: { edfiXsd: {} },
   });
 
@@ -77,12 +77,12 @@ describe('when enhancing core string property with a "with context"', () => {
   });
 
   it('should have correct xsdName and xsdType', () => {
-    expect(property.data.edfiXsd.xsdName).toBe(`${withContext}${propertyName}`);
+    expect(property.data.edfiXsd.xsdName).toBe(`${roleName}${propertyName}`);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing core string property with a "with context" with same name as metaed name', () => {
+describe('when enhancing core string property with a "role name" with same name as metaed name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -90,7 +90,7 @@ describe('when enhancing core string property with a "with context" with same na
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
     namespace,
-    withContext: propertyName,
+    roleName: propertyName,
     data: { edfiXsd: {} },
   });
 
@@ -101,7 +101,7 @@ describe('when enhancing core string property with a "with context" with same na
     enhance(metaEd);
   });
 
-  it('should ignore with context on xsdName', () => {
+  it('should ignore role name on xsdName', () => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });

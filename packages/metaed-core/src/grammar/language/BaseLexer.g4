@@ -71,12 +71,12 @@ OPTIONAL :              'is optional';
 OPTIONAL_COLLECTION :   'is optional collection';
 REQUIRED :              'is required';
 REQUIRED_COLLECTION :   'is required collection';
+ROLE_NAME :             'role name';
 SHORTEN_TO :            'shorten to';
 SUBDOMAIN_OF :          'of';
 SUBDOMAIN_POSITION :    'position';
 TOTAL_DIGITS :          'total digits';
 WITH :                  'with';
-WITH_CONTEXT :          'with context';
 WITH_OPTIONAL_MAP_TYPE : 'with optional map type';
 WITH_MAP_TYPE :         'with map type';
 

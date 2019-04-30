@@ -82,11 +82,9 @@ export const matchAllButFirstAsIdentityProperties = () => {
   };
 };
 
-function withContext(property: EntityProperty): string {
-  if (!property.withContext) return '';
-  return !property.shortenTo
-    ? `${property.withContext}${property.metaEdName}`
-    : `${property.shortenTo}${property.metaEdName}`;
+function roleName(property: EntityProperty): string {
+  if (!property.roleName) return '';
+  return !property.shortenTo ? `${property.roleName}${property.metaEdName}` : `${property.shortenTo}${property.metaEdName}`;
 }
 
 export function findReferencedProperty(
@@ -108,7 +106,7 @@ export function findReferencedProperty(
       currentProperty = (currentEntity as TopLevelEntity).properties.find(
         // eslint-disable-next-line no-loop-func
         (property: EntityProperty) =>
-          (property.metaEdName === pathSegment || withContext(property) === pathSegment) &&
+          (property.metaEdName === pathSegment || roleName(property) === pathSegment) &&
           currentFilter(property, currentEntity as TopLevelEntity),
       );
 

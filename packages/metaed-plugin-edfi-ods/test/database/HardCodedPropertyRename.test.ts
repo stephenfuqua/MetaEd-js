@@ -870,7 +870,7 @@ describe('when enumeration property is school year', () => {
   });
 });
 
-describe('when enumeration property is school year with context', () => {
+describe('when enumeration property is school year role name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';

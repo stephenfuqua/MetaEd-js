@@ -36,9 +36,9 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
 function getPropertyNames(entity: TopLevelEntity): Array<string> {
   return entity.properties
     .map(p => {
-      const withContextName: string = p.withContext ? p.metaEdName : p.withContext + p.metaEdName;
+      const roleNameName: string = p.roleName ? p.metaEdName : p.roleName + p.metaEdName;
       const cardinalityString: string = getCardinalityStringFor(p);
-      return `${withContextName} (${cardinalityString})`;
+      return `${roleNameName} (${cardinalityString})`;
     })
     .sort();
 }
@@ -159,7 +159,7 @@ function entityPropertyToHandbookEntityReferenceProperty(
     edFiId: property.metaEdId,
     targetPropertyId: referentialProperty.referencedEntity ? referentialProperty.referencedEntity.metaEdId : '',
     referenceUniqueIdentifier: getReferenceUniqueIdentifier(allEntities, property),
-    name: `${property.withContext}${property.metaEdName}`,
+    name: `${property.roleName}${property.metaEdName}`,
     dataType: getDataTypeName(property),
     definition: property.documentation,
     isIdentity: property.isPartOfIdentity || property.isIdentityRename,

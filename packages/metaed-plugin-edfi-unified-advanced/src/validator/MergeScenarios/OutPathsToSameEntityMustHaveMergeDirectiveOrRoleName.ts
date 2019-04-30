@@ -21,8 +21,8 @@ function allPropertiesAfterTheFirstAreIdentity(outPath: Array<ReferentialPropert
   return true;
 }
 
-function noWithContextOnFirstProperty(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
-  return outPath[0].withContext === '';
+function noroleNameOnFirstProperty(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+  return outPath[0].roleName === '';
 }
 
 function noMergeDirectiveTargetingEntity(entityWithOutPaths: ModelBase) {
@@ -104,10 +104,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         return;
 
       // only matters for paths where all properties after the first are an identity, and then
-      // only matters for paths where with contexts and/or merge directives don't resolve collision
+      // only matters for paths where role names and/or merge directives don't resolve collision
       const problemOutPaths = [...listOfOutPaths]
         .filter(allPropertiesAfterTheFirstAreIdentity)
-        .filter(noWithContextOnFirstProperty)
+        .filter(noroleNameOnFirstProperty)
         .filter(noMergeDirectiveTargetingEntity(entityWithOutPaths));
 
       const pathStringReducer = (finalString, currentOutPath) =>
@@ -117,11 +117,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
       problemOutPaths.forEach(outPath => {
         failures.push({
-          validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext',
+          validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrroleName',
           category: 'error',
           message: `Ambiguous merge paths exist from ${outPath[0].parentEntityName}.${outPath[0].metaEdName} to ${
             entityWithOutPaths.metaEdName
-          }. Paths are${problemPathsAsString}.  Either add a merge directive, use 'with context', or change the model.`,
+          }. Paths are${problemPathsAsString}.  Either add a merge directive, use 'role name', or change the model.`,
           sourceMap: outPath[0].sourceMap.metaEdName,
           fileMap: null,
         });

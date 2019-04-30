@@ -605,12 +605,12 @@ MetaEdGrammarListener.prototype.exitIsQueryableField = function(ctx) {
 };
 
 
-// Enter a parse tree produced by MetaEdGrammar#withContext.
-MetaEdGrammarListener.prototype.enterWithContext = function(ctx) {
+// Enter a parse tree produced by MetaEdGrammar#roleName.
+MetaEdGrammarListener.prototype.enterRoleName = function(ctx) {
 };
 
-// Exit a parse tree produced by MetaEdGrammar#withContext.
-MetaEdGrammarListener.prototype.exitWithContext = function(ctx) {
+// Exit a parse tree produced by MetaEdGrammar#roleName.
+MetaEdGrammarListener.prototype.exitRoleName = function(ctx) {
 };
 
 
@@ -1163,6 +1163,15 @@ MetaEdGrammarListener.prototype.exitPropertyNamespace = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#roleNameName.
+MetaEdGrammarListener.prototype.enterRoleNameName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#roleNameName.
+MetaEdGrammarListener.prototype.exitRoleNameName = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#sharedPropertyName.
 MetaEdGrammarListener.prototype.enterSharedPropertyName = function(ctx) {
 };
@@ -1205,15 +1214,6 @@ MetaEdGrammarListener.prototype.enterSubdomainName = function(ctx) {
 
 // Exit a parse tree produced by MetaEdGrammar#subdomainName.
 MetaEdGrammarListener.prototype.exitSubdomainName = function(ctx) {
-};
-
-
-// Enter a parse tree produced by MetaEdGrammar#withContextName.
-MetaEdGrammarListener.prototype.enterWithContextName = function(ctx) {
-};
-
-// Exit a parse tree produced by MetaEdGrammar#withContextName.
-MetaEdGrammarListener.prototype.exitWithContextName = function(ctx) {
 };
 
 

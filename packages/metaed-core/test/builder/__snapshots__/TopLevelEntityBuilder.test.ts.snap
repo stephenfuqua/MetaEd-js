@@ -210,6 +210,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -224,11 +229,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "decimal",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -273,9 +273,9 @@ Object {
 }
 `;
 
-exports[`when building entity property with context should have source map for contextName with line, column, text 1`] = `
+exports[`when building entity property role name should have source map for contextName with line, column, text 1`] = `
 Object {
-  "column": 17,
+  "column": 14,
   "line": 9,
   "tokenText": "ContextName",
 }
@@ -291,7 +291,7 @@ Object {
 
 exports[`when building entity property with shortened context should have source map for shortenTo with line, column, text 1`] = `
 Object {
-  "column": 40,
+  "column": 37,
   "line": 9,
   "tokenText": "ShortenToName",
 }
@@ -448,6 +448,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -457,11 +462,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "integer",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -831,6 +831,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -840,11 +845,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "association",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -1006,6 +1006,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -1015,11 +1020,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "short",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;
@@ -1141,6 +1141,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "roleName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "shortenTo": Object {
     "column": 0,
     "line": 0,
@@ -1150,11 +1155,6 @@ Object {
     "column": 4,
     "line": 5,
     "tokenText": "string",
-  },
-  "withContext": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
 }
 `;

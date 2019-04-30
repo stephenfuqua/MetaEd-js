@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, EnhancerResult, DescriptorProperty } from 'metaed-core';
 import { normalizeDescriptorSuffix } from 'metaed-core';
-import { prependWithContextToMetaEdName } from '../../shared/Utility';
+import { prependroleNameToMetaEdName } from '../../shared/Utility';
 
 import { EntityPropertyEdfiOds } from './EntityProperty';
 
@@ -16,7 +16,7 @@ export function odsDescriptorfiedBaseName(property: DescriptorProperty) {
 }
 
 export function odsDescriptorName(property: DescriptorProperty) {
-  return normalizeDescriptorSuffix(prependWithContextToMetaEdName(property.metaEdName, property.withContext));
+  return normalizeDescriptorSuffix(prependroleNameToMetaEdName(property.metaEdName, property.roleName));
 }
 
 export function addDescriptorPropertyEdfiOdsTo(property: DescriptorProperty) {

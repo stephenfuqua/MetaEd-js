@@ -19,9 +19,9 @@ describe('when using default build strategy', () => {
 
   it('should use default column namer strategy', () => {
     const inlineContext = 'InlineContext';
-    const withContext = 'WithContext';
+    const roleName = 'roleName';
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, withContext, baseName)()).toBe(inlineContext + withContext + baseName);
+    expect(strategy.columnNamer(inlineContext, roleName, baseName)()).toBe(inlineContext + roleName + baseName);
   });
 
   it('should return true when calling build columns', () => {
@@ -33,7 +33,7 @@ describe('when using default build strategy', () => {
   });
 });
 
-describe('when composing default, append parent context, append inline context, column namer ignores with context, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
+describe('when composing default, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
   let strategy: BuildStrategy;
@@ -41,7 +41,7 @@ describe('when composing default, append parent context, append inline context, 
   beforeAll(() => {
     strategy = BuildStrategyDefault.appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
-      .columnNamerIgnoresWithContext()
+      .columnNamerIgnoresroleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -54,9 +54,9 @@ describe('when composing default, append parent context, append inline context, 
     expect(strategy.leafColumns(ColumnTransformUnchanged)).toBeInstanceOf(ColumnTransformMakeNull);
   });
 
-  it('should use ignore with context column namer strategy', () => {
+  it('should use ignore role name column namer strategy', () => {
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'WithContext', baseName)()).toBe(inlineContext + baseName);
+    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', () => {
@@ -85,9 +85,9 @@ describe('when using skip path build strategy with no eligible property paths', 
 
   it('should use default column namer strategy', () => {
     const inlineContext = 'InlineContext';
-    const withContext = 'WithContext';
+    const roleName = 'roleName';
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, withContext, baseName)()).toBe(inlineContext + withContext + baseName);
+    expect(strategy.columnNamer(inlineContext, roleName, baseName)()).toBe(inlineContext + roleName + baseName);
   });
 
   it('should return true when calling build columns', () => {
@@ -99,7 +99,7 @@ describe('when using skip path build strategy with no eligible property paths', 
   });
 });
 
-describe('when composing skip path with no eligible property paths, append parent context, append inline context, column namer ignores with context, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
+describe('when composing skip path with no eligible property paths, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
   let strategy: BuildStrategy;
@@ -108,7 +108,7 @@ describe('when composing skip path with no eligible property paths, append paren
     strategy = BuildStrategyDefault.skipPath([])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
-      .columnNamerIgnoresWithContext()
+      .columnNamerIgnoresroleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -121,9 +121,9 @@ describe('when composing skip path with no eligible property paths, append paren
     expect(strategy.leafColumns(ColumnTransformUnchanged)).toBeInstanceOf(ColumnTransformMakeNull);
   });
 
-  it('should use ignore with context column namer strategy', () => {
+  it('should use ignore role name column namer strategy', () => {
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'WithContext', baseName)()).toBe(inlineContext + baseName);
+    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', () => {
@@ -135,7 +135,7 @@ describe('when composing skip path with no eligible property paths, append paren
   });
 });
 
-describe('when composing skip path with eligible property paths, append parent context, append inline context, column namer ignores with context, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
+describe('when composing skip path with eligible property paths, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
   const integerPropertyPathName = 'IntegerPropertyPathName';
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
@@ -145,7 +145,7 @@ describe('when composing skip path with eligible property paths, append parent c
     strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName]])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
-      .columnNamerIgnoresWithContext()
+      .columnNamerIgnoresroleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -158,9 +158,9 @@ describe('when composing skip path with eligible property paths, append parent c
     expect(strategy.leafColumns(ColumnTransformUnchanged)).toBeInstanceOf(ColumnTransformMakeNull);
   });
 
-  it('should use ignore with context column namer strategy', () => {
+  it('should use ignore role name column namer strategy', () => {
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'WithContext', baseName)()).toBe(inlineContext + baseName);
+    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', () => {
@@ -174,7 +174,7 @@ describe('when composing skip path with eligible property paths, append parent c
   });
 });
 
-describe('when composing skip path with eligible property paths, append parent context, append inline context, column namer ignores with context, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
+describe('when composing skip path with eligible property paths, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', () => {
   const integerPropertyPathName = 'IntegerPropertyPathName';
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
@@ -184,7 +184,7 @@ describe('when composing skip path with eligible property paths, append parent c
     strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName, 'PropertyName']])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
-      .columnNamerIgnoresWithContext()
+      .columnNamerIgnoresroleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -197,9 +197,9 @@ describe('when composing skip path with eligible property paths, append parent c
     expect(strategy.leafColumns(ColumnTransformUnchanged)).toBeInstanceOf(ColumnTransformMakeNull);
   });
 
-  it('should use ignore with context column namer strategy', () => {
+  it('should use ignore role name column namer strategy', () => {
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'WithContext', baseName)()).toBe(inlineContext + baseName);
+    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', () => {

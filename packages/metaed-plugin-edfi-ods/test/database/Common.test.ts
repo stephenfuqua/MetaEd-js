@@ -173,7 +173,7 @@ describe('when common is a required property', () => {
   });
 });
 
-describe('when common is a required property with context', () => {
+describe('when common is a required property role name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';

@@ -12,7 +12,7 @@ import {
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
 type PropertyCollectorArray = Array<{
-  withContext: string;
+  roleName: string;
   isOptional: boolean;
   property: EntityProperty;
 }>;
@@ -36,7 +36,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     .forEach((entity: TopLevelEntity) => {
       const result: {
         referencedEntities: Array<{
-          withContext: string;
+          roleName: string;
           isOptional: boolean;
           entity: TopLevelEntity;
         }>;
@@ -45,12 +45,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         entity,
         true,
         (referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           isOptional: property.isOptional,
           entity: asTopLevelEntity(referencedEntity),
         }),
         (_referencedEntity, property) => ({
-          withContext: property.withContext,
+          roleName: property.roleName,
           isOptional: property.isOptional,
           property,
         }),
@@ -65,7 +65,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         if (referencedEntity.isOptional)
           optionalProperties.push(
             ...propertyCollector(referencedEntity.entity).map(property => ({
-              withContext: referencedEntity.withContext,
+              roleName: referencedEntity.roleName,
               isOptional: referencedEntity.isOptional,
               property,
             })),
@@ -73,7 +73,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         else {
           requiredProperties.push(
             ...propertyCollector(referencedEntity.entity).map(property => ({
-              withContext: referencedEntity.withContext,
+              roleName: referencedEntity.roleName,
               isOptional: referencedEntity.isOptional,
               property,
             })),
@@ -82,13 +82,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       });
 
       const requiredPropertiesNames: Array<string> = requiredProperties.map(
-        x => x.withContext + x.property.withContext + x.property.metaEdName,
+        x => x.roleName + x.property.roleName + x.property.metaEdName,
       );
       const duplicateProperties: PropertyCollectorArray = optionalProperties.filter(x =>
-        requiredPropertiesNames.includes(x.withContext + x.property.withContext + x.property.metaEdName),
+        requiredPropertiesNames.includes(x.roleName + x.property.roleName + x.property.metaEdName),
       );
 
-      duplicateProperties.forEach((duplicate: { withContext: string; isOptional: boolean; property: EntityProperty }) => {
+      duplicateProperties.forEach((duplicate: { roleName: string; isOptional: boolean; property: EntityProperty }) => {
         // skip failure message for now if this is a core only issue - in future maybe report if in a core-only mode (like IDE Alliance mode)
         if (!entity.namespace.isExtension) return;
 
@@ -97,7 +97,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           category: 'warning',
           message: `[ODS-1177] ${entity.typeHumanizedName} ${
             entity.metaEdName
-          } has both a required and optional property path to property ${duplicate.withContext +
+          } has both a required and optional property path to property ${duplicate.roleName +
             duplicate.property
               .metaEdName}. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API.`,
           sourceMap: duplicate.property.sourceMap.metaEdName,
@@ -108,7 +108,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           category: 'warning',
           message: `[ODS-1177] ${entity.typeHumanizedName} ${
             entity.metaEdName
-          } has both a required and optional property path to property ${duplicate.withContext +
+          } has both a required and optional property path to property ${duplicate.roleName +
             duplicate.property
               .metaEdName}. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API.`,
           sourceMap: entity.sourceMap.metaEdName,

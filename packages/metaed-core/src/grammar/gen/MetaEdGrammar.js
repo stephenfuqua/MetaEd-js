@@ -141,7 +141,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "|\u0003|\u0003}\u0003}\u0003~\u0003~\u0003\u007f\u0003\u007f\u0003\u0080",
     "\u0003\u0080\u0003\u0080\u0005\u0080\u0471\n\u0080\u0003\u0080\u0003",
     "\u0080\u0003\u0081\u0003\u0081\u0003\u0082\u0003\u0082\u0003\u0083\u0003",
-    "\u0083\u0003\u0083\u0005\u0083\u047c\n\u0083\u0003\u0083\u0003\u0083",
+    "\u0083\u0003\u0084\u0003\u0084\u0003\u0084\u0005\u0084\u047e\n\u0084",
     "\u0003\u0084\u0003\u0084\u0003\u0085\u0003\u0085\u0003\u0086\u0003\u0086",
     "\u0003\u0087\u0003\u0087\u0003\u0088\u0003\u0088\u0003\u0089\u0003\u0089",
     "\u0003\u0089\u0002\u0002\u008a\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012",
@@ -217,7 +217,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u00f8\u0467\u0003\u0002\u0002\u0002\u00fa\u0469\u0003\u0002\u0002\u0002",
     "\u00fc\u046b\u0003\u0002\u0002\u0002\u00fe\u0470\u0003\u0002\u0002\u0002",
     "\u0100\u0474\u0003\u0002\u0002\u0002\u0102\u0476\u0003\u0002\u0002\u0002",
-    "\u0104\u047b\u0003\u0002\u0002\u0002\u0106\u047f\u0003\u0002\u0002\u0002",
+    "\u0104\u0478\u0003\u0002\u0002\u0002\u0106\u047d\u0003\u0002\u0002\u0002",
     "\u0108\u0481\u0003\u0002\u0002\u0002\u010a\u0483\u0003\u0002\u0002\u0002",
     "\u010c\u0485\u0003\u0002\u0002\u0002\u010e\u0487\u0003\u0002\u0002\u0002",
     "\u0110\u0489\u0003\u0002\u0002\u0002\u0112\u0114\u0005\u0004\u0003\u0002",
@@ -460,14 +460,14 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u02a1\u02a2\u0003\u0002\u0002\u0002\u02a2\u02a0\u0003",
     "\u0002\u0002\u0002\u02a2\u02a3\u0003\u0002\u0002\u0002\u02a3[\u0003",
     "\u0002\u0002\u0002\u02a4\u02a5\u0007\u0014\u0002\u0002\u02a5\u02a6\u0005",
-    "\u010a\u0086\u0002\u02a6\u02a7\u0007I\u0002\u0002\u02a7\u02a9\u0005",
+    "\u010c\u0087\u0002\u02a6\u02a7\u0007J\u0002\u0002\u02a7\u02a9\u0005",
     "\u00fc\u007f\u0002\u02a8\u02aa\u0005\u0110\u0089\u0002\u02a9\u02a8\u0003",
     "\u0002\u0002\u0002\u02a9\u02aa\u0003\u0002\u0002\u0002\u02aa\u02ab\u0003",
     "\u0002\u0002\u0002\u02ab\u02ad\u0005\n\u0006\u0002\u02ac\u02ae\u0005",
     ":\u001e\u0002\u02ad\u02ac\u0003\u0002\u0002\u0002\u02ae\u02af\u0003",
     "\u0002\u0002\u0002\u02af\u02ad\u0003\u0002\u0002\u0002\u02af\u02b0\u0003",
     "\u0002\u0002\u0002\u02b0\u02b3\u0003\u0002\u0002\u0002\u02b1\u02b2\u0007",
-    "J\u0002\u0002\u02b2\u02b4\u0005^0\u0002\u02b3\u02b1\u0003\u0002\u0002",
+    "K\u0002\u0002\u02b2\u02b4\u0005^0\u0002\u02b3\u02b1\u0003\u0002\u0002",
     "\u0002\u02b3\u02b4\u0003\u0002\u0002\u0002\u02b4]\u0003\u0002\u0002",
     "\u0002\u02b5\u02b6\u0007V\u0002\u0002\u02b6_\u0003\u0002\u0002\u0002",
     "\u02b7\u02b8\u0007B\u0002\u0002\u02b8\u02b9\u0005\u00c6d\u0002\u02b9",
@@ -478,7 +478,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u02c3\u02c6\u0007W\u0002\u0002\u02c4\u02c6\u0005",
     "\u00c6d\u0002\u02c5\u02c3\u0003\u0002\u0002\u0002\u02c5\u02c4\u0003",
     "\u0002\u0002\u0002\u02c6i\u0003\u0002\u0002\u0002\u02c7\u02c8\u0007",
-    "K\u0002\u0002\u02c8\u02c9\u0007V\u0002\u0002\u02c9k\u0003\u0002\u0002",
+    "L\u0002\u0002\u02c8\u02c9\u0007V\u0002\u0002\u02c9k\u0003\u0002\u0002",
     "\u0002\u02ca\u02cb\u00079\u0002\u0002\u02cb\u02cc\u0007V\u0002\u0002",
     "\u02ccm\u0003\u0002\u0002\u0002\u02cd\u02ce\u0007\u001b\u0002\u0002",
     "\u02ceo\u0003\u0002\u0002\u0002\u02cf\u02d6\u0005r:\u0002\u02d0\u02d6",
@@ -502,9 +502,9 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0003\u0002\u0002\u0002\u02ef\u02f1\u0005\u0084C\u0002\u02f0\u02ef",
     "\u0003\u0002\u0002\u0002\u02f0\u02f1\u0003\u0002\u0002\u0002\u02f1\u0083",
     "\u0003\u0002\u0002\u0002\u02f2\u02f3\u0007<\u0002\u0002\u02f3\u0085",
-    "\u0003\u0002\u0002\u0002\u02f4\u02f5\u0007M\u0002\u0002\u02f5\u02f8",
-    "\u0005\u010c\u0087\u0002\u02f6\u02f7\u0007H\u0002\u0002\u02f7\u02f9",
-    "\u0005\u0106\u0084\u0002\u02f8\u02f6\u0003\u0002\u0002\u0002\u02f8\u02f9",
+    "\u0003\u0002\u0002\u0002\u02f4\u02f5\u0007H\u0002\u0002\u02f5\u02f8",
+    "\u0005\u0102\u0082\u0002\u02f6\u02f7\u0007I\u0002\u0002\u02f7\u02f9",
+    "\u0005\u0108\u0085\u0002\u02f8\u02f6\u0003\u0002\u0002\u0002\u02f8\u02f9",
     "\u0003\u0002\u0002\u0002\u02f9\u0087\u0003\u0002\u0002\u0002\u02fa\u02fb",
     "\u0007@\u0002\u0002\u02fb\u02fc\u0007V\u0002\u0002\u02fc\u0089\u0003",
     "\u0002\u0002\u0002\u02fd\u02fe\u0007A\u0002\u0002\u02fe\u02ff\u0007",
@@ -532,23 +532,23 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u0317\u0314\u0003\u0002\u0002\u0002\u0317\u0315\u0003",
     "\u0002\u0002\u0002\u0317\u0316\u0003\u0002\u0002\u0002\u0318\u008d\u0003",
     "\u0002\u0002\u0002\u0319\u031a\u0007\u0018\u0002\u0002\u031a\u031c\u0005",
-    "\u0108\u0085\u0002\u031b\u031d\u0005\u0110\u0089\u0002\u031c\u031b\u0003",
+    "\u010a\u0086\u0002\u031b\u031d\u0005\u0110\u0089\u0002\u031c\u031b\u0003",
     "\u0002\u0002\u0002\u031c\u031d\u0003\u0002\u0002\u0002\u031d\u031e\u0003",
     "\u0002\u0002\u0002\u031e\u031f\u0005\u0082B\u0002\u031f\u008f\u0003",
     "\u0002\u0002\u0002\u0320\u0321\u0007\u001c\u0002\u0002\u0321\u0323\u0005",
-    "\u0108\u0085\u0002\u0322\u0324\u0005\u0110\u0089\u0002\u0323\u0322\u0003",
+    "\u010a\u0086\u0002\u0322\u0324\u0005\u0110\u0089\u0002\u0323\u0322\u0003",
     "\u0002\u0002\u0002\u0323\u0324\u0003\u0002\u0002\u0002\u0324\u0325\u0003",
     "\u0002\u0002\u0002\u0325\u0326\u0005\u0082B\u0002\u0326\u0091\u0003",
     "\u0002\u0002\u0002\u0327\u0328\u0007\u001d\u0002\u0002\u0328\u032a\u0005",
-    "\u0108\u0085\u0002\u0329\u032b\u0005\u0110\u0089\u0002\u032a\u0329\u0003",
+    "\u010a\u0086\u0002\u0329\u032b\u0005\u0110\u0089\u0002\u032a\u0329\u0003",
     "\u0002\u0002\u0002\u032a\u032b\u0003\u0002\u0002\u0002\u032b\u032c\u0003",
     "\u0002\u0002\u0002\u032c\u032d\u0005\u0082B\u0002\u032d\u0093\u0003",
     "\u0002\u0002\u0002\u032e\u032f\u0007\u001e\u0002\u0002\u032f\u0331\u0005",
-    "\u0108\u0085\u0002\u0330\u0332\u0005\u0110\u0089\u0002\u0331\u0330\u0003",
+    "\u010a\u0086\u0002\u0330\u0332\u0005\u0110\u0089\u0002\u0331\u0330\u0003",
     "\u0002\u0002\u0002\u0331\u0332\u0003\u0002\u0002\u0002\u0332\u0333\u0003",
     "\u0002\u0002\u0002\u0333\u0334\u0005\u0082B\u0002\u0334\u0095\u0003",
     "\u0002\u0002\u0002\u0335\u0336\u0007\u001f\u0002\u0002\u0336\u0338\u0005",
-    "\u0108\u0085\u0002\u0337\u0339\u0005\u0110\u0089\u0002\u0338\u0337\u0003",
+    "\u010a\u0086\u0002\u0337\u0339\u0005\u0110\u0089\u0002\u0338\u0337\u0003",
     "\u0002\u0002\u0002\u0338\u0339\u0003\u0002\u0002\u0002\u0339\u033a\u0003",
     "\u0002\u0002\u0002\u033a\u033b\u0005\u0082B\u0002\u033b\u033c\u0005",
     "j6\u0002\u033c\u033e\u0005l7\u0002\u033d\u033f\u0005d3\u0002\u033e\u033d",
@@ -560,7 +560,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u0346\u0347\u0003\u0002\u0002\u0002\u0347\u0348\u0003",
     "\u0002\u0002\u0002\u0348\u0349\u0005\u0082B\u0002\u0349\u0099\u0003",
     "\u0002\u0002\u0002\u034a\u034b\u0007$\u0002\u0002\u034b\u034d\u0005",
-    "\u0108\u0085\u0002\u034c\u034e\u0005\u0110\u0089\u0002\u034d\u034c\u0003",
+    "\u010a\u0086\u0002\u034c\u034e\u0005\u0110\u0089\u0002\u034d\u034c\u0003",
     "\u0002\u0002\u0002\u034d\u034e\u0003\u0002\u0002\u0002\u034e\u034f\u0003",
     "\u0002\u0002\u0002\u034f\u0350\u0005\u0082B\u0002\u0350\u009b\u0003",
     "\u0002\u0002\u0002\u0351\u0352\u0007&\u0002\u0002\u0352\u0354\u0005",
@@ -590,15 +590,15 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "`\u0002\u037a\u0379\u0003\u0002\u0002\u0002\u037b\u037e\u0003\u0002",
     "\u0002\u0002\u037c\u037a\u0003\u0002\u0002\u0002\u037c\u037d\u0003\u0002",
     "\u0002\u0002\u037d\u00a3\u0003\u0002\u0002\u0002\u037e\u037c\u0003\u0002",
-    "\u0002\u0002\u037f\u0380\u0007)\u0002\u0002\u0380\u0382\u0005\u0108",
-    "\u0085\u0002\u0381\u0383\u0005\u0110\u0089\u0002\u0382\u0381\u0003\u0002",
+    "\u0002\u0002\u037f\u0380\u0007)\u0002\u0002\u0380\u0382\u0005\u010a",
+    "\u0086\u0002\u0381\u0383\u0005\u0110\u0089\u0002\u0382\u0381\u0003\u0002",
     "\u0002\u0002\u0382\u0383\u0003\u0002\u0002\u0002\u0383\u0384\u0003\u0002",
     "\u0002\u0002\u0384\u0386\u0005\u0082B\u0002\u0385\u0387\u0005`1\u0002",
     "\u0386\u0385\u0003\u0002\u0002\u0002\u0386\u0387\u0003\u0002\u0002\u0002",
     "\u0387\u0389\u0003\u0002\u0002\u0002\u0388\u038a\u0005b2\u0002\u0389",
     "\u0388\u0003\u0002\u0002\u0002\u0389\u038a\u0003\u0002\u0002\u0002\u038a",
     "\u00a5\u0003\u0002\u0002\u0002\u038b\u038c\u0007*\u0002\u0002\u038c",
-    "\u038e\u0005\u0108\u0085\u0002\u038d\u038f\u0005\u0110\u0089\u0002\u038e",
+    "\u038e\u0005\u010a\u0086\u0002\u038d\u038f\u0005\u0110\u0089\u0002\u038e",
     "\u038d\u0003\u0002\u0002\u0002\u038e\u038f\u0003\u0002\u0002\u0002\u038f",
     "\u0390\u0003\u0002\u0002\u0002\u0390\u0391\u0005\u0082B\u0002\u0391",
     "\u00a7\u0003\u0002\u0002\u0002\u0392\u0393\u0007\u0016\u0002\u0002\u0393",
@@ -620,8 +620,8 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u03af\u0003\u0002\u0002\u0002\u03ad\u03ab\u0003\u0002\u0002\u0002\u03ad",
     "\u03ae\u0003\u0002\u0002\u0002\u03ae\u00ab\u0003\u0002\u0002\u0002\u03af",
     "\u03ad\u0003\u0002\u0002\u0002\u03b0\u03b1\u0007,\u0002\u0002\u03b1",
-    "\u03b4\u0005\u0104\u0083\u0002\u03b2\u03b3\u00070\u0002\u0002\u03b3",
-    "\u03b5\u0005\u0102\u0082\u0002\u03b4\u03b2\u0003\u0002\u0002\u0002\u03b4",
+    "\u03b4\u0005\u0106\u0084\u0002\u03b2\u03b3\u00070\u0002\u0002\u03b3",
+    "\u03b5\u0005\u0104\u0083\u0002\u03b4\u03b2\u0003\u0002\u0002\u0002\u03b4",
     "\u03b5\u0003\u0002\u0002\u0002\u03b5\u03b7\u0003\u0002\u0002\u0002\u03b6",
     "\u03b8\u0005\u0110\u0089\u0002\u03b7\u03b6\u0003\u0002\u0002\u0002\u03b7",
     "\u03b8\u0003\u0002\u0002\u0002\u03b8\u03b9\u0003\u0002\u0002\u0002\u03b9",
@@ -629,8 +629,8 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0003\u0002\u0002\u0002\u03bc\u03bf\u0003\u0002\u0002\u0002\u03bd\u03bb",
     "\u0003\u0002\u0002\u0002\u03bd\u03be\u0003\u0002\u0002\u0002\u03be\u00ad",
     "\u0003\u0002\u0002\u0002\u03bf\u03bd\u0003\u0002\u0002\u0002\u03c0\u03c1",
-    "\u0007-\u0002\u0002\u03c1\u03c4\u0005\u0104\u0083\u0002\u03c2\u03c3",
-    "\u00070\u0002\u0002\u03c3\u03c5\u0005\u0102\u0082\u0002\u03c4\u03c2",
+    "\u0007-\u0002\u0002\u03c1\u03c4\u0005\u0106\u0084\u0002\u03c2\u03c3",
+    "\u00070\u0002\u0002\u03c3\u03c5\u0005\u0104\u0083\u0002\u03c4\u03c2",
     "\u0003\u0002\u0002\u0002\u03c4\u03c5\u0003\u0002\u0002\u0002\u03c5\u03c7",
     "\u0003\u0002\u0002\u0002\u03c6\u03c8\u0005\u0110\u0089\u0002\u03c7\u03c6",
     "\u0003\u0002\u0002\u0002\u03c7\u03c8\u0003\u0002\u0002\u0002\u03c8\u03c9",
@@ -639,8 +639,8 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0003\u0002\u0002\u0002\u03cd\u03cb\u0003\u0002\u0002\u0002\u03cd\u03ce",
     "\u0003\u0002\u0002\u0002\u03ce\u00af\u0003\u0002\u0002\u0002\u03cf\u03cd",
     "\u0003\u0002\u0002\u0002\u03d0\u03d1\u0007.\u0002\u0002\u03d1\u03d4",
-    "\u0005\u0104\u0083\u0002\u03d2\u03d3\u00070\u0002\u0002\u03d3\u03d5",
-    "\u0005\u0102\u0082\u0002\u03d4\u03d2\u0003\u0002\u0002\u0002\u03d4\u03d5",
+    "\u0005\u0106\u0084\u0002\u03d2\u03d3\u00070\u0002\u0002\u03d3\u03d5",
+    "\u0005\u0104\u0083\u0002\u03d4\u03d2\u0003\u0002\u0002\u0002\u03d4\u03d5",
     "\u0003\u0002\u0002\u0002\u03d5\u03d7\u0003\u0002\u0002\u0002\u03d6\u03d8",
     "\u0005\u0110\u0089\u0002\u03d7\u03d6\u0003\u0002\u0002\u0002\u03d7\u03d8",
     "\u0003\u0002\u0002\u0002\u03d8\u03d9\u0003\u0002\u0002\u0002\u03d9\u03dd",
@@ -648,8 +648,8 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u03dc\u03df\u0003\u0002\u0002\u0002\u03dd\u03db\u0003",
     "\u0002\u0002\u0002\u03dd\u03de\u0003\u0002\u0002\u0002\u03de\u00b1\u0003",
     "\u0002\u0002\u0002\u03df\u03dd\u0003\u0002\u0002\u0002\u03e0\u03e1\u0007",
-    "/\u0002\u0002\u03e1\u03e4\u0005\u0104\u0083\u0002\u03e2\u03e3\u0007",
-    "0\u0002\u0002\u03e3\u03e5\u0005\u0102\u0082\u0002\u03e4\u03e2\u0003",
+    "/\u0002\u0002\u03e1\u03e4\u0005\u0106\u0084\u0002\u03e2\u03e3\u0007",
+    "0\u0002\u0002\u03e3\u03e5\u0005\u0104\u0083\u0002\u03e4\u03e2\u0003",
     "\u0002\u0002\u0002\u03e4\u03e5\u0003\u0002\u0002\u0002\u03e5\u03e7\u0003",
     "\u0002\u0002\u0002\u03e6\u03e8\u0005\u0110\u0089\u0002\u03e7\u03e6\u0003",
     "\u0002\u0002\u0002\u03e7\u03e8\u0003\u0002\u0002\u0002\u03e8\u03e9\u0003",
@@ -658,30 +658,30 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0002\u0002\u03ed\u03eb\u0003\u0002\u0002\u0002\u03ed\u03ee\u0003",
     "\u0002\u0002\u0002\u03ee\u00b3\u0003\u0002\u0002\u0002\u03ef\u03ed\u0003",
     "\u0002\u0002\u0002\u03f0\u03f1\u00071\u0002\u0002\u03f1\u03f3\u0005",
-    "\u0108\u0085\u0002\u03f2\u03f4\u0005\u0110\u0089\u0002\u03f3\u03f2\u0003",
+    "\u010a\u0086\u0002\u03f2\u03f4\u0005\u0110\u0089\u0002\u03f3\u03f2\u0003",
     "\u0002\u0002\u0002\u03f3\u03f4\u0003\u0002\u0002\u0002\u03f4\u03f5\u0003",
     "\u0002\u0002\u0002\u03f5\u03f7\u0005\u0082B\u0002\u03f6\u03f8\u0005",
     "`1\u0002\u03f7\u03f6\u0003\u0002\u0002\u0002\u03f7\u03f8\u0003\u0002",
     "\u0002\u0002\u03f8\u03fa\u0003\u0002\u0002\u0002\u03f9\u03fb\u0005b",
     "2\u0002\u03fa\u03f9\u0003\u0002\u0002\u0002\u03fa\u03fb\u0003\u0002",
     "\u0002\u0002\u03fb\u00b5\u0003\u0002\u0002\u0002\u03fc\u03fd\u00072",
-    "\u0002\u0002\u03fd\u03ff\u0005\u0108\u0085\u0002\u03fe\u0400\u0005\u0110",
+    "\u0002\u0002\u03fd\u03ff\u0005\u010a\u0086\u0002\u03fe\u0400\u0005\u0110",
     "\u0089\u0002\u03ff\u03fe\u0003\u0002\u0002\u0002\u03ff\u0400\u0003\u0002",
     "\u0002\u0002\u0400\u0401\u0003\u0002\u0002\u0002\u0401\u0403\u0005\u0082",
     "B\u0002\u0402\u0404\u0005\u0088E\u0002\u0403\u0402\u0003\u0002\u0002",
     "\u0002\u0403\u0404\u0003\u0002\u0002\u0002\u0404\u0405\u0003\u0002\u0002",
     "\u0002\u0405\u0406\u0005\u008aF\u0002\u0406\u00b7\u0003\u0002\u0002",
-    "\u0002\u0407\u0408\u00073\u0002\u0002\u0408\u040a\u0005\u0108\u0085",
+    "\u0002\u0407\u0408\u00073\u0002\u0002\u0408\u040a\u0005\u010a\u0086",
     "\u0002\u0409\u040b\u0005\u0110\u0089\u0002\u040a\u0409\u0003\u0002\u0002",
     "\u0002\u040a\u040b\u0003\u0002\u0002\u0002\u040b\u040c\u0003\u0002\u0002",
     "\u0002\u040c\u040d\u0005\u0082B\u0002\u040d\u00b9\u0003\u0002\u0002",
-    "\u0002\u040e\u040f\u00074\u0002\u0002\u040f\u0411\u0005\u0108\u0085",
+    "\u0002\u040e\u040f\u00074\u0002\u0002\u040f\u0411\u0005\u010a\u0086",
     "\u0002\u0410\u0412\u0005\u0110\u0089\u0002\u0411\u0410\u0003\u0002\u0002",
     "\u0002\u0411\u0412\u0003\u0002\u0002\u0002\u0412\u0413\u0003\u0002\u0002",
     "\u0002\u0413\u0414\u0005\u0082B\u0002\u0414\u00bb\u0003\u0002\u0002",
     "\u0002\u0415\u0416\u0007>\u0002\u0002\u0416\u00bd\u0003\u0002\u0002",
     "\u0002\u0417\u0418\u0007?\u0002\u0002\u0418\u0419\u0005\u00c0a\u0002",
-    "\u0419\u041a\u0007L\u0002\u0002\u041a\u041b\u0005\u00c2b\u0002\u041b",
+    "\u0419\u041a\u0007M\u0002\u0002\u041a\u041b\u0005\u00c2b\u0002\u041b",
     "\u00bf\u0003\u0002\u0002\u0002\u041c\u041d\u0005\u00c4c\u0002\u041d",
     "\u00c1\u0003\u0002\u0002\u0002\u041e\u041f\u0005\u00c4c\u0002\u041f",
     "\u00c3\u0003\u0002\u0002\u0002\u0420\u0425\u0007U\u0002\u0002\u0421",
@@ -730,13 +730,13 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0471\u0472\u0003\u0002\u0002\u0002\u0472\u0473\u0005\u00f8}",
     "\u0002\u0473\u00ff\u0003\u0002\u0002\u0002\u0474\u0475\u0007U\u0002",
     "\u0002\u0475\u0101\u0003\u0002\u0002\u0002\u0476\u0477\u0007U\u0002",
-    "\u0002\u0477\u0103\u0003\u0002\u0002\u0002\u0478\u0479\u0005\u0100\u0081",
-    "\u0002\u0479\u047a\u0007\\\u0002\u0002\u047a\u047c\u0003\u0002\u0002",
-    "\u0002\u047b\u0478\u0003\u0002\u0002\u0002\u047b\u047c\u0003\u0002\u0002",
-    "\u0002\u047c\u047d\u0003\u0002\u0002\u0002\u047d\u047e\u0005\u00fa~",
-    "\u0002\u047e\u0105\u0003\u0002\u0002\u0002\u047f\u0480\u0007U\u0002",
-    "\u0002\u0480\u0107\u0003\u0002\u0002\u0002\u0481\u0482\u0005\u00f8}",
-    "\u0002\u0482\u0109\u0003\u0002\u0002\u0002\u0483\u0484\u0007U\u0002",
+    "\u0002\u0477\u0103\u0003\u0002\u0002\u0002\u0478\u0479\u0007U\u0002",
+    "\u0002\u0479\u0105\u0003\u0002\u0002\u0002\u047a\u047b\u0005\u0100\u0081",
+    "\u0002\u047b\u047c\u0007\\\u0002\u0002\u047c\u047e\u0003\u0002\u0002",
+    "\u0002\u047d\u047a\u0003\u0002\u0002\u0002\u047d\u047e\u0003\u0002\u0002",
+    "\u0002\u047e\u047f\u0003\u0002\u0002\u0002\u047f\u0480\u0005\u00fa~",
+    "\u0002\u0480\u0107\u0003\u0002\u0002\u0002\u0481\u0482\u0007U\u0002",
+    "\u0002\u0482\u0109\u0003\u0002\u0002\u0002\u0483\u0484\u0005\u00f8}",
     "\u0002\u0484\u010b\u0003\u0002\u0002\u0002\u0485\u0486\u0007U\u0002",
     "\u0002\u0486\u010d\u0003\u0002\u0002\u0002\u0487\u0488\u0007U\u0002",
     "\u0002\u0488\u010f\u0003\u0002\u0002\u0002\u0489\u048a\u0007Y\u0002",
@@ -751,7 +751,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0354\u035a\u035e\u0364\u036a\u0370\u0376\u037c\u0382\u0386\u0389\u038e",
     "\u0395\u0399\u039e\u03a4\u03a8\u03ad\u03b4\u03b7\u03bd\u03c4\u03c7\u03cd",
     "\u03d4\u03d7\u03dd\u03e4\u03e7\u03ed\u03f3\u03f7\u03fa\u03ff\u0403\u040a",
-    "\u0411\u0425\u0429\u0438\u0455\u0470\u047b"].join("");
+    "\u0411\u0425\u0429\u0438\u0455\u0470\u047d"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -779,12 +779,12 @@ var literalNames = [ null, "'Abstract Entity'", "'Association'", "'Begin Namespa
                      "'is queryable field'", "'is queryable only'", "'is weak'", 
                      "'merge'", "'min length'", "'max length'", "'min value'", 
                      "'max value'", "'is optional'", "'is optional collection'", 
-                     "'is required'", "'is required collection'", "'shorten to'", 
-                     "'of'", "'position'", "'total digits'", "'with'", "'with context'", 
-                     "'with optional map type'", "'with map type'", "'documentation'", 
-                     "'inherited'", "'extended documentation'", "'use case documentation'", 
-                     "'footer documentation'", null, null, null, null, null, 
-                     "'+'", "'-'", "'.'" ];
+                     "'is required'", "'is required collection'", "'role name'", 
+                     "'shorten to'", "'of'", "'position'", "'total digits'", 
+                     "'with'", "'with optional map type'", "'with map type'", 
+                     "'documentation'", "'inherited'", "'extended documentation'", 
+                     "'use case documentation'", "'footer documentation'", 
+                     null, null, null, null, null, "'+'", "'-'", "'.'" ];
 
 var symbolicNames = [ null, "ABSTRACT_ENTITY", "ASSOCIATION", "BEGIN_NAMESPACE", 
                       "END_NAMESPACE", "CHOICE", "COMMON", "DESCRIPTOR", 
@@ -806,8 +806,8 @@ var symbolicNames = [ null, "ABSTRACT_ENTITY", "ASSOCIATION", "BEGIN_NAMESPACE",
                       "IS_WEAK_REFERENCE", "MERGE_REFERENCE", "MIN_LENGTH", 
                       "MAX_LENGTH", "MIN_VALUE", "MAX_VALUE", "OPTIONAL", 
                       "OPTIONAL_COLLECTION", "REQUIRED", "REQUIRED_COLLECTION", 
-                      "SHORTEN_TO", "SUBDOMAIN_OF", "SUBDOMAIN_POSITION", 
-                      "TOTAL_DIGITS", "WITH", "WITH_CONTEXT", "WITH_OPTIONAL_MAP_TYPE", 
+                      "ROLE_NAME", "SHORTEN_TO", "SUBDOMAIN_OF", "SUBDOMAIN_POSITION", 
+                      "TOTAL_DIGITS", "WITH", "WITH_OPTIONAL_MAP_TYPE", 
                       "WITH_MAP_TYPE", "DOCUMENTATION", "INHERITED", "EXTENDED_DOCUMENTATION", 
                       "USE_CASE_DOCUMENTATION", "FOOTER_DOCUMENTATION", 
                       "ID", "UNSIGNED_INT", "DECIMAL_VALUE", "TEXT", "METAED_ID", 
@@ -834,28 +834,28 @@ var ruleNames =  [ "metaEd", "namespace", "namespaceType", "topLevelEntity",
                    "propertyAnnotation", "identity", "identityRename", "required", 
                    "optional", "collection", "requiredCollection", "optionalCollection", 
                    "isQueryableOnly", "propertyComponents", "isQueryableField", 
-                   "withContext", "minLength", "maxLength", "property", 
-                   "booleanProperty", "currencyProperty", "dateProperty", 
-                   "datetimeProperty", "decimalProperty", "descriptorProperty", 
-                   "durationProperty", "enumerationProperty", "commonProperty", 
-                   "inlineCommonProperty", "choiceProperty", "integerProperty", 
-                   "percentProperty", "associationProperty", "domainEntityProperty", 
-                   "sharedDecimalProperty", "sharedIntegerProperty", "sharedShortProperty", 
-                   "sharedStringProperty", "shortProperty", "stringProperty", 
-                   "timeProperty", "yearProperty", "isWeakReference", "mergeDirective", 
-                   "sourcePropertyPath", "targetPropertyPath", "propertyPath", 
-                   "signed_int", "unaryOperator", "abstractEntityName", 
-                   "associationName", "baseKeyName", "baseName", "baseNamespace", 
-                   "choiceName", "sharedDecimalName", "sharedIntegerName", 
-                   "commonName", "sharedShortName", "sharedStringName", 
-                   "descriptorName", "domainName", "entityName", "enumerationName", 
-                   "extendeeName", "extendeeNamespace", "inlineCommonName", 
-                   "interchangeName", "localBaseName", "localDomainItemName", 
-                   "localExtendeeName", "localInterchangeItemName", "localPropertyName", 
-                   "localPropertyType", "parentDomainName", "propertyName", 
-                   "propertyNamespace", "sharedPropertyName", "sharedPropertyType", 
-                   "shortenToName", "simplePropertyName", "subdomainName", 
-                   "withContextName", "namespaceName", "metaEdId" ];
+                   "roleName", "minLength", "maxLength", "property", "booleanProperty", 
+                   "currencyProperty", "dateProperty", "datetimeProperty", 
+                   "decimalProperty", "descriptorProperty", "durationProperty", 
+                   "enumerationProperty", "commonProperty", "inlineCommonProperty", 
+                   "choiceProperty", "integerProperty", "percentProperty", 
+                   "associationProperty", "domainEntityProperty", "sharedDecimalProperty", 
+                   "sharedIntegerProperty", "sharedShortProperty", "sharedStringProperty", 
+                   "shortProperty", "stringProperty", "timeProperty", "yearProperty", 
+                   "isWeakReference", "mergeDirective", "sourcePropertyPath", 
+                   "targetPropertyPath", "propertyPath", "signed_int", "unaryOperator", 
+                   "abstractEntityName", "associationName", "baseKeyName", 
+                   "baseName", "baseNamespace", "choiceName", "sharedDecimalName", 
+                   "sharedIntegerName", "commonName", "sharedShortName", 
+                   "sharedStringName", "descriptorName", "domainName", "entityName", 
+                   "enumerationName", "extendeeName", "extendeeNamespace", 
+                   "inlineCommonName", "interchangeName", "localBaseName", 
+                   "localDomainItemName", "localExtendeeName", "localInterchangeItemName", 
+                   "localPropertyName", "localPropertyType", "parentDomainName", 
+                   "propertyName", "propertyNamespace", "roleNameName", 
+                   "sharedPropertyName", "sharedPropertyType", "shortenToName", 
+                   "simplePropertyName", "subdomainName", "namespaceName", 
+                   "metaEdId" ];
 
 function MetaEdGrammar (input) {
 	antlr4.Parser.call(this, input);
@@ -945,12 +945,12 @@ MetaEdGrammar.OPTIONAL = 66;
 MetaEdGrammar.OPTIONAL_COLLECTION = 67;
 MetaEdGrammar.REQUIRED = 68;
 MetaEdGrammar.REQUIRED_COLLECTION = 69;
-MetaEdGrammar.SHORTEN_TO = 70;
-MetaEdGrammar.SUBDOMAIN_OF = 71;
-MetaEdGrammar.SUBDOMAIN_POSITION = 72;
-MetaEdGrammar.TOTAL_DIGITS = 73;
-MetaEdGrammar.WITH = 74;
-MetaEdGrammar.WITH_CONTEXT = 75;
+MetaEdGrammar.ROLE_NAME = 70;
+MetaEdGrammar.SHORTEN_TO = 71;
+MetaEdGrammar.SUBDOMAIN_OF = 72;
+MetaEdGrammar.SUBDOMAIN_POSITION = 73;
+MetaEdGrammar.TOTAL_DIGITS = 74;
+MetaEdGrammar.WITH = 75;
 MetaEdGrammar.WITH_OPTIONAL_MAP_TYPE = 76;
 MetaEdGrammar.WITH_MAP_TYPE = 77;
 MetaEdGrammar.DOCUMENTATION = 78;
@@ -1036,7 +1036,7 @@ MetaEdGrammar.RULE_optionalCollection = 62;
 MetaEdGrammar.RULE_isQueryableOnly = 63;
 MetaEdGrammar.RULE_propertyComponents = 64;
 MetaEdGrammar.RULE_isQueryableField = 65;
-MetaEdGrammar.RULE_withContext = 66;
+MetaEdGrammar.RULE_roleName = 66;
 MetaEdGrammar.RULE_minLength = 67;
 MetaEdGrammar.RULE_maxLength = 68;
 MetaEdGrammar.RULE_property = 69;
@@ -1098,12 +1098,12 @@ MetaEdGrammar.RULE_localPropertyType = 124;
 MetaEdGrammar.RULE_parentDomainName = 125;
 MetaEdGrammar.RULE_propertyName = 126;
 MetaEdGrammar.RULE_propertyNamespace = 127;
-MetaEdGrammar.RULE_sharedPropertyName = 128;
-MetaEdGrammar.RULE_sharedPropertyType = 129;
-MetaEdGrammar.RULE_shortenToName = 130;
-MetaEdGrammar.RULE_simplePropertyName = 131;
-MetaEdGrammar.RULE_subdomainName = 132;
-MetaEdGrammar.RULE_withContextName = 133;
+MetaEdGrammar.RULE_roleNameName = 128;
+MetaEdGrammar.RULE_sharedPropertyName = 129;
+MetaEdGrammar.RULE_sharedPropertyType = 130;
+MetaEdGrammar.RULE_shortenToName = 131;
+MetaEdGrammar.RULE_simplePropertyName = 132;
+MetaEdGrammar.RULE_subdomainName = 133;
 MetaEdGrammar.RULE_namespaceName = 134;
 MetaEdGrammar.RULE_metaEdId = 135;
 
@@ -2275,8 +2275,8 @@ FirstDomainEntityContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-FirstDomainEntityContext.prototype.withContext = function() {
-    return this.getTypedRuleContext(WithContextContext,0);
+FirstDomainEntityContext.prototype.roleName = function() {
+    return this.getTypedRuleContext(RoleNameContext,0);
 };
 
 FirstDomainEntityContext.prototype.enterRule = function(listener) {
@@ -2320,9 +2320,9 @@ MetaEdGrammar.prototype.firstDomainEntity = function() {
         this.state = 363;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===MetaEdGrammar.WITH_CONTEXT) {
+        if(_la===MetaEdGrammar.ROLE_NAME) {
             this.state = 362;
-            this.withContext();
+            this.roleName();
         }
 
     } catch (re) {
@@ -2371,8 +2371,8 @@ SecondDomainEntityContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-SecondDomainEntityContext.prototype.withContext = function() {
-    return this.getTypedRuleContext(WithContextContext,0);
+SecondDomainEntityContext.prototype.roleName = function() {
+    return this.getTypedRuleContext(RoleNameContext,0);
 };
 
 SecondDomainEntityContext.prototype.enterRule = function(listener) {
@@ -2416,9 +2416,9 @@ MetaEdGrammar.prototype.secondDomainEntity = function() {
         this.state = 372;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===MetaEdGrammar.WITH_CONTEXT) {
+        if(_la===MetaEdGrammar.ROLE_NAME) {
             this.state = 371;
-            this.withContext();
+            this.roleName();
         }
 
     } catch (re) {
@@ -6860,8 +6860,8 @@ PropertyComponentsContext.prototype.propertyAnnotation = function() {
     return this.getTypedRuleContext(PropertyAnnotationContext,0);
 };
 
-PropertyComponentsContext.prototype.withContext = function() {
-    return this.getTypedRuleContext(WithContextContext,0);
+PropertyComponentsContext.prototype.roleName = function() {
+    return this.getTypedRuleContext(RoleNameContext,0);
 };
 
 PropertyComponentsContext.prototype.isQueryableField = function() {
@@ -6899,9 +6899,9 @@ MetaEdGrammar.prototype.propertyComponents = function() {
         this.state = 747;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===MetaEdGrammar.WITH_CONTEXT) {
+        if(_la===MetaEdGrammar.ROLE_NAME) {
             this.state = 746;
-            this.withContext();
+            this.roleName();
         }
 
         this.state = 750;
@@ -6985,7 +6985,7 @@ MetaEdGrammar.prototype.isQueryableField = function() {
     return localctx;
 };
 
-function WithContextContext(parser, parent, invokingState) {
+function RoleNameContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -6994,57 +6994,57 @@ function WithContextContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = MetaEdGrammar.RULE_withContext;
+    this.ruleIndex = MetaEdGrammar.RULE_roleName;
     return this;
 }
 
-WithContextContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-WithContextContext.prototype.constructor = WithContextContext;
+RoleNameContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+RoleNameContext.prototype.constructor = RoleNameContext;
 
-WithContextContext.prototype.WITH_CONTEXT = function() {
-    return this.getToken(MetaEdGrammar.WITH_CONTEXT, 0);
+RoleNameContext.prototype.ROLE_NAME = function() {
+    return this.getToken(MetaEdGrammar.ROLE_NAME, 0);
 };
 
-WithContextContext.prototype.withContextName = function() {
-    return this.getTypedRuleContext(WithContextNameContext,0);
+RoleNameContext.prototype.roleNameName = function() {
+    return this.getTypedRuleContext(RoleNameNameContext,0);
 };
 
-WithContextContext.prototype.SHORTEN_TO = function() {
+RoleNameContext.prototype.SHORTEN_TO = function() {
     return this.getToken(MetaEdGrammar.SHORTEN_TO, 0);
 };
 
-WithContextContext.prototype.shortenToName = function() {
+RoleNameContext.prototype.shortenToName = function() {
     return this.getTypedRuleContext(ShortenToNameContext,0);
 };
 
-WithContextContext.prototype.enterRule = function(listener) {
+RoleNameContext.prototype.enterRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.enterWithContext(this);
+        listener.enterRoleName(this);
 	}
 };
 
-WithContextContext.prototype.exitRule = function(listener) {
+RoleNameContext.prototype.exitRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.exitWithContext(this);
+        listener.exitRoleName(this);
 	}
 };
 
 
 
 
-MetaEdGrammar.WithContextContext = WithContextContext;
+MetaEdGrammar.RoleNameContext = RoleNameContext;
 
-MetaEdGrammar.prototype.withContext = function() {
+MetaEdGrammar.prototype.roleName = function() {
 
-    var localctx = new WithContextContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 132, MetaEdGrammar.RULE_withContext);
+    var localctx = new RoleNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 132, MetaEdGrammar.RULE_roleName);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 754;
-        this.match(MetaEdGrammar.WITH_CONTEXT);
+        this.match(MetaEdGrammar.ROLE_NAME);
         this.state = 755;
-        this.withContextName();
+        this.roleNameName();
         this.state = 758;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
@@ -11995,6 +11995,65 @@ MetaEdGrammar.prototype.propertyNamespace = function() {
     return localctx;
 };
 
+function RoleNameNameContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = MetaEdGrammar.RULE_roleNameName;
+    return this;
+}
+
+RoleNameNameContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+RoleNameNameContext.prototype.constructor = RoleNameNameContext;
+
+RoleNameNameContext.prototype.ID = function() {
+    return this.getToken(MetaEdGrammar.ID, 0);
+};
+
+RoleNameNameContext.prototype.enterRule = function(listener) {
+    if(listener instanceof MetaEdGrammarListener ) {
+        listener.enterRoleNameName(this);
+	}
+};
+
+RoleNameNameContext.prototype.exitRule = function(listener) {
+    if(listener instanceof MetaEdGrammarListener ) {
+        listener.exitRoleNameName(this);
+	}
+};
+
+
+
+
+MetaEdGrammar.RoleNameNameContext = RoleNameNameContext;
+
+MetaEdGrammar.prototype.roleNameName = function() {
+
+    var localctx = new RoleNameNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 256, MetaEdGrammar.RULE_roleNameName);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 1140;
+        this.match(MetaEdGrammar.ID);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
 function SharedPropertyNameContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
@@ -12035,10 +12094,10 @@ MetaEdGrammar.SharedPropertyNameContext = SharedPropertyNameContext;
 MetaEdGrammar.prototype.sharedPropertyName = function() {
 
     var localctx = new SharedPropertyNameContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 256, MetaEdGrammar.RULE_sharedPropertyName);
+    this.enterRule(localctx, 258, MetaEdGrammar.RULE_sharedPropertyName);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 1140;
+        this.state = 1142;
         this.match(MetaEdGrammar.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -12102,20 +12161,20 @@ MetaEdGrammar.SharedPropertyTypeContext = SharedPropertyTypeContext;
 MetaEdGrammar.prototype.sharedPropertyType = function() {
 
     var localctx = new SharedPropertyTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 258, MetaEdGrammar.RULE_sharedPropertyType);
+    this.enterRule(localctx, 260, MetaEdGrammar.RULE_sharedPropertyType);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 1145;
+        this.state = 1147;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,130,this._ctx);
         if(la_===1) {
-            this.state = 1142;
+            this.state = 1144;
             this.propertyNamespace();
-            this.state = 1143;
+            this.state = 1145;
             this.match(MetaEdGrammar.PERIOD);
 
         }
-        this.state = 1147;
+        this.state = 1149;
         this.localPropertyType();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -12171,10 +12230,10 @@ MetaEdGrammar.ShortenToNameContext = ShortenToNameContext;
 MetaEdGrammar.prototype.shortenToName = function() {
 
     var localctx = new ShortenToNameContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 260, MetaEdGrammar.RULE_shortenToName);
+    this.enterRule(localctx, 262, MetaEdGrammar.RULE_shortenToName);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 1149;
+        this.state = 1151;
         this.match(MetaEdGrammar.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -12230,10 +12289,10 @@ MetaEdGrammar.SimplePropertyNameContext = SimplePropertyNameContext;
 MetaEdGrammar.prototype.simplePropertyName = function() {
 
     var localctx = new SimplePropertyNameContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 262, MetaEdGrammar.RULE_simplePropertyName);
+    this.enterRule(localctx, 264, MetaEdGrammar.RULE_simplePropertyName);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 1151;
+        this.state = 1153;
         this.localPropertyName();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -12289,66 +12348,7 @@ MetaEdGrammar.SubdomainNameContext = SubdomainNameContext;
 MetaEdGrammar.prototype.subdomainName = function() {
 
     var localctx = new SubdomainNameContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 264, MetaEdGrammar.RULE_subdomainName);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 1153;
-        this.match(MetaEdGrammar.ID);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function WithContextNameContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = MetaEdGrammar.RULE_withContextName;
-    return this;
-}
-
-WithContextNameContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-WithContextNameContext.prototype.constructor = WithContextNameContext;
-
-WithContextNameContext.prototype.ID = function() {
-    return this.getToken(MetaEdGrammar.ID, 0);
-};
-
-WithContextNameContext.prototype.enterRule = function(listener) {
-    if(listener instanceof MetaEdGrammarListener ) {
-        listener.enterWithContextName(this);
-	}
-};
-
-WithContextNameContext.prototype.exitRule = function(listener) {
-    if(listener instanceof MetaEdGrammarListener ) {
-        listener.exitWithContextName(this);
-	}
-};
-
-
-
-
-MetaEdGrammar.WithContextNameContext = WithContextNameContext;
-
-MetaEdGrammar.prototype.withContextName = function() {
-
-    var localctx = new WithContextNameContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 266, MetaEdGrammar.RULE_withContextName);
+    this.enterRule(localctx, 266, MetaEdGrammar.RULE_subdomainName);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 1155;

@@ -72,10 +72,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
         );
 
-        const columns: Array<Column> = columnCreator.createColumns(
-          enumeration,
-          buildStrategy.columnNamerIgnoresWithContext(),
-        );
+        const columns: Array<Column> = columnCreator.createColumns(enumeration, buildStrategy.columnNamerIgnoresroleName());
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,

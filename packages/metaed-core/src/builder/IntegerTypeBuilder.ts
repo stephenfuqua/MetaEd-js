@@ -104,7 +104,7 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     this.currentIntegerType.sourceMap.metaEdName = sourceMapFrom(localPropertyNameContext);
   }
 
-  enteringIntegerTypeName(context: MetaEdGrammar.withContextNameContext) {
+  enteringIntegerTypeName(context: MetaEdGrammar.roleNameNameContext) {
     if (this.currentIntegerType === NoIntegerType) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentIntegerType.metaEdName = context.ID().getText();

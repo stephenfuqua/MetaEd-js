@@ -14,7 +14,7 @@ import {
   domainEntityExtensionBaseClassEnhancer,
   domainEntitySubclassBaseClassEnhancer,
 } from 'metaed-plugin-edfi-unified';
-import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext';
+import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
 
 describe('when domain entity has no multiple out paths to the same entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -194,10 +194,10 @@ describe('when domain entity has two out paths to the same entity that start wit
 
   it('should have two validation failures', () => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
-      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'with context', or change the model."`,
+      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
 Object {
@@ -254,10 +254,10 @@ describe('when domain entity has two out paths to the same entity and only one s
 
   it('should have two validation failures', () => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
-      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'with context', or change the model."`,
+      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
 Object {
@@ -438,10 +438,10 @@ describe('when domain entity extension has out paths to the same entity as base 
 
   it('should have two validation failures', () => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
-      `"Ambiguous merge paths exist from DE1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'with context', or change the model."`,
+      `"Ambiguous merge paths exist from DE1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
 Object {
@@ -579,10 +579,10 @@ describe('when domain entity subclass has out paths to the same entity as base a
 
   it('should have two validation failures', () => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrWithContext');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
-      `"Ambiguous merge paths exist from DES1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'with context', or change the model."`,
+      `"Ambiguous merge paths exist from DES1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
 Object {
@@ -602,11 +602,11 @@ describe('when domain entity has three out paths to the same entity and only one
 
 describe('when domain entity has two out paths to the same entity and both are non-identity collections', () => {});
 
-describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a with context', () => {});
+describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a role name', () => {});
 
 describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a merge directive', () => {});
 
 describe('when domain entity has three out paths to the same entity and only one starts with identity and are identities all the way and only one has a merge directive', () => {});
 
 // shared string
-// with context examples
+// role name examples

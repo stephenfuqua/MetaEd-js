@@ -23,8 +23,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     const referentialProperty = asReferentialProperty(property);
     referentialProperty.mergeDirectives.forEach(mergeDirective => {
       const prefix: string =
-        referentialProperty.withContext && referentialProperty.withContext !== referentialProperty.metaEdName
-          ? referentialProperty.withContext
+        referentialProperty.roleName && referentialProperty.roleName !== referentialProperty.metaEdName
+          ? referentialProperty.roleName
           : '';
       if (mergeDirective.sourcePropertyPathStrings[0] === `${prefix}${referentialProperty.metaEdName}`) return;
 

@@ -114,10 +114,10 @@ function xsdTypeFor(property: EntityProperty): string {
   return typeStringFor[property.type]();
 }
 
-// Note: XSD ignores 'with context' entry if same name as entity (typically used for ODS naming)
+// Note: XSD ignores 'role name' entry if same name as entity (typically used for ODS naming)
 function xsdNameFor(property: EntityProperty): string {
   const baseName =
-    property.withContext === property.metaEdName ? property.metaEdName : `${property.withContext}${property.metaEdName}`;
+    property.roleName === property.metaEdName ? property.metaEdName : `${property.roleName}${property.metaEdName}`;
   return ['choice', 'association', 'domainEntity'].includes(property.type) ? `${baseName}Reference` : baseName;
 }
 

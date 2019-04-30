@@ -52,15 +52,13 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
 
       const buildColumns = referenceColumnBuilder(referenceProperty, parentTableStrategy, strategy, factory);
       if (referenceProperty.isPartOfIdentity) {
-        buildColumns(ColumnTransform.primaryKeyWithContextCollapsible(referenceProperty.data.edfiOds.odsContextPrefix));
+        buildColumns(ColumnTransform.primaryKeyroleNameCollapsible(referenceProperty.data.edfiOds.odsContextPrefix));
       }
       if (referenceProperty.isRequired) {
-        buildColumns(
-          strategy.leafColumns(ColumnTransform.notNullWithContext(referenceProperty.data.edfiOds.odsContextPrefix)),
-        );
+        buildColumns(strategy.leafColumns(ColumnTransform.notNullroleName(referenceProperty.data.edfiOds.odsContextPrefix)));
       }
       if (referenceProperty.isOptional) {
-        buildColumns(strategy.leafColumns(ColumnTransform.nullWithContext(referenceProperty.data.edfiOds.odsContextPrefix)));
+        buildColumns(strategy.leafColumns(ColumnTransform.nullroleName(referenceProperty.data.edfiOds.odsContextPrefix)));
       }
 
       if (!referenceProperty.data.edfiOds.odsIsCollection) return;
@@ -95,7 +93,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       addColumns(
         joinTable,
         primaryKeys,
-        ColumnTransform.primaryKeyWithContext(referenceProperty.data.edfiOds.odsContextPrefix),
+        ColumnTransform.primaryKeyroleName(referenceProperty.data.edfiOds.odsContextPrefix),
       );
     },
   };

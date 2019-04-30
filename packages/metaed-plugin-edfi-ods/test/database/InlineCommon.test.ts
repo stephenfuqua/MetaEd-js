@@ -102,7 +102,7 @@ describe('when inline common is a required property', () => {
     expect(await columnIsNullable(requiredColumn)).toBe(false);
   });
 
-  it('should have inline common properties with context', async () => {
+  it('should have inline common properties role name', async () => {
     const identityColumn: DatabaseColumn = column(
       namespaceName,
       domainEntityName,
@@ -196,7 +196,7 @@ describe('when inline common is a required property', () => {
     expect(await columnExists(lastModifiedDateColumn)).toBe(false);
   });
 
-  it('should have collection table with context', async () => {
+  it('should have collection table role name', async () => {
     expect(await tableExists(table(namespaceName, domainEntityName + inlinePropertyContext + collectionPropertyName))).toBe(
       true,
     );
@@ -1434,7 +1434,7 @@ describe('when core inline common is a required property on an extension entity'
     expect(await columnIsNullable(requiredColumn)).toBe(false);
   });
 
-  it('should have inline common properties with context', async () => {
+  it('should have inline common properties role name', async () => {
     const identityColumn: DatabaseColumn = column(
       extension,
       domainEntityName,
@@ -1520,7 +1520,7 @@ describe('when core inline common is a required property on an extension entity'
     expect(await columnExists(lastModifiedDateColumn)).toBe(false);
   });
 
-  it('should have collection table with context', async () => {
+  it('should have collection table role name', async () => {
     expect(await tableExists(table(extension, domainEntityName + inlinePropertyContext + collectionPropertyName))).toBe(
       true,
     );

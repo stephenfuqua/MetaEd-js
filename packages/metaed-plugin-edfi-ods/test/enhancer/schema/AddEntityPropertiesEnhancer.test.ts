@@ -75,7 +75,7 @@ describe('when PropertyEnhancer enhances property with optional collection', () 
   });
 });
 
-describe('when PropertyEnhancer enhances property with context', () => {
+describe('when PropertyEnhancer enhances property role name', () => {
   const integerPropertyName = 'IntegerPropertyName';
   const contextName = 'ContextName';
   let integerProperty: IntegerProperty;
@@ -86,14 +86,14 @@ describe('when PropertyEnhancer enhances property with context', () => {
     metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
-      withContext: contextName,
+      roleName: contextName,
     });
 
     metaEd.propertyIndex.integer.push(integerProperty);
     enhance(metaEd);
   });
 
-  it('should have ods name prefixed with context', () => {
+  it('should have ods name prefixed role name', () => {
     expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
   });
 
@@ -114,7 +114,7 @@ describe('when PropertyEnhancer enhances property with shortened context', () =>
     metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
-      withContext: contextName,
+      roleName: contextName,
       shortenTo: shortenToName,
     });
 
@@ -122,7 +122,7 @@ describe('when PropertyEnhancer enhances property with shortened context', () =>
     enhance(metaEd);
   });
 
-  it('should have ods name prefixed with context', () => {
+  it('should have ods name prefixed role name', () => {
     expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
   });
 

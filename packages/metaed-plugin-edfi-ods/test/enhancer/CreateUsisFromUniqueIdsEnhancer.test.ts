@@ -13,7 +13,7 @@ describe('when enhancing entity with unique id property', () => {
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'UniqueId',
       namespace,
-      withContext: 'WithContextName',
+      roleName: 'roleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
@@ -51,7 +51,7 @@ describe('when enhancing entity with unique id property', () => {
     const property: any = domainEntity.data.edfiOds.odsProperties.find(x => x.metaEdName === integerProperty.metaEdName);
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe(integerProperty.metaEdName);
-    expect(property.withContext).toBe(integerProperty.withContext);
+    expect(property.roleName).toBe(integerProperty.roleName);
     expect(property.shortenTo).toBe(integerProperty.shortenTo);
     expect(property.documentation).toBe(integerProperty.documentation);
     expect(property.isPartOfIdentity).toBe(false);
@@ -64,13 +64,13 @@ describe('when enhancing entity with unique id property', () => {
     const property: any = domainEntity.data.edfiOds.odsProperties.find(x => x.metaEdName === 'USI');
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe('USI');
-    expect(property.withContext).toBe(integerProperty.withContext);
+    expect(property.roleName).toBe(integerProperty.roleName);
     expect(property.shortenTo).toBe(integerProperty.shortenTo);
     expect(property.documentation).toBe(integerProperty.documentation);
     expect(property.isPartOfIdentity).toBe(true);
     expect(property.parentEntityName).toBe(integerProperty.parentEntityName);
     expect(property.parentEntity).toBe(integerProperty.parentEntity);
-    expect(property.data.edfiOds.odsName).toBe(`${integerProperty.withContext}USI`);
+    expect(property.data.edfiOds.odsName).toBe(`${integerProperty.roleName}USI`);
     expect(property.data.edfiOds.odsIsCollection).toBe(false);
     expect(property.data.edfiOds.odsContextPrefix).toBe(integerProperty.shortenTo);
     expect(property.data.edfiOds.odsIsIdentityDatabaseType).toBe(true);
@@ -91,7 +91,7 @@ describe('when enhancing entity with non unique id property', () => {
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'UniqueID',
       namespace,
-      withContext: 'WithContextName',
+      roleName: 'roleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
@@ -143,7 +143,7 @@ describe('when enhancing entity with unique id property in extension namespace',
   beforeAll(() => {
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'UniqueID',
-      withContext: 'WithContextName',
+      roleName: 'roleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
