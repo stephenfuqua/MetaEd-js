@@ -11,6 +11,19 @@ import {
 
 const enhancerName = 'OutReferencePathEnhancer';
 
+function addToOutReferenceEntityEndpointsMap(
+  outReferenceEntityEndpointsMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
+  outReferencePath: Array<ReferentialProperty | SimpleProperty>,
+) {
+  const endpointOfPath = outReferencePath[outReferencePath.length - 1].referencedEntity;
+  if (!outReferenceEntityEndpointsMap.has(endpointOfPath)) {
+    outReferenceEntityEndpointsMap.set(endpointOfPath, []);
+  }
+  (outReferenceEntityEndpointsMap.get(endpointOfPath) as Array<Array<ReferentialProperty | SimpleProperty>>).push(
+    outReferencePath,
+  );
+}
+
 function addToOutReferenceEntitiesMap(
   outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
   outReferencePath: Array<ReferentialProperty | SimpleProperty>,
@@ -38,6 +51,7 @@ function buildUpPaths(
     const outReferencePath = [inReference, ...pathSoFar];
     inReference.parentEntity.outReferencePaths.push(outReferencePath);
     addToOutReferenceEntitiesMap(inReference.parentEntity.outReferenceEntitiesMap, outReferencePath);
+    addToOutReferenceEntityEndpointsMap(inReference.parentEntity.outReferenceEntityEndpointsMap, outReferencePath);
     buildUpPaths(inReference.parentEntity.inReferences, outReferencePath, [...visitList, inReference.parentEntity]);
   });
 }

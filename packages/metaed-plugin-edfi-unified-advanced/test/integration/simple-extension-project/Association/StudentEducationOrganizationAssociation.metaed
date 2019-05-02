@@ -1,0 +1,4 @@
+Association EdFi.StudentEducationOrganizationAssociation additions
+    domain entity EdFi.Course
+        documentation "Hi"
+        is required

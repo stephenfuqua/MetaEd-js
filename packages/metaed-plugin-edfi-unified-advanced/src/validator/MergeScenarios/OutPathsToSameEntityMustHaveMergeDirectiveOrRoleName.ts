@@ -1,3 +1,4 @@
+import R from 'ramda';
 import {
   getAllEntitiesOfType,
   MetaEdEnvironment,
@@ -6,7 +7,6 @@ import {
   ReferentialProperty,
   SimpleProperty,
   ModelBase,
-  MergeDirective,
 } from 'metaed-core';
 
 function allPropertiesAfterTheFirstAreIdentity(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
@@ -21,40 +21,50 @@ function allPropertiesAfterTheFirstAreIdentity(outPath: Array<ReferentialPropert
   return true;
 }
 
-function noroleNameOnFirstProperty(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
-  return outPath[0].roleName === '';
+function roleNameOnFirstProperty(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+  const property = outPath[0];
+  return property != null && property.roleName != null && property.roleName !== '';
 }
 
-function noMergeDirectiveTargetingEntity(entityWithOutPaths: ModelBase) {
-  return (outPath: Array<ReferentialProperty | SimpleProperty>) => {
-    const initialPropertyMergeDirectives: Array<MergeDirective> | null = (outPath[0] as ReferentialProperty).mergeDirectives;
-    if (initialPropertyMergeDirectives == null) return true; // something is wrong, should be ReferentialProperty
-    return !initialPropertyMergeDirectives.some(
-      mergeDirective =>
-        mergeDirective.targetProperty != null &&
-        (mergeDirective.targetProperty as ReferentialProperty | SimpleProperty).referencedEntity === entityWithOutPaths,
-    );
-  };
+function noMergeDirectives(
+  outPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
+): Array<Array<ReferentialProperty | SimpleProperty>> {
+  const result: Array<Array<ReferentialProperty | SimpleProperty>> = [];
+  outPaths.forEach(outPath => {
+    if (outPath.every(property => (property as ReferentialProperty).mergeDirectives.length === 0)) result.push(outPath);
+  });
+  return result;
 }
 
-function atLeastOneReferenceAtStartOfPathIsIdentity(
-  listOfOutPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
-): boolean {
-  // eslint-disable-next-line no-restricted-syntax
-  for (const outPath of listOfOutPaths) {
-    if (outPath.length === 0) return false; // something is wrong
-    if (outPath[0].isIdentityRename || outPath[0].isPartOfIdentity) return true;
-  }
-  return false;
+function roleNameOnAtLeastAllButOnePath(outPaths: Array<Array<ReferentialProperty | SimpleProperty>>) {
+  const countOfPathsWithRoleName: number = outPaths.reduce(
+    (count, outPath) => (roleNameOnFirstProperty(outPath) ? count + 1 : count),
+    0,
+  );
+  return countOfPathsWithRoleName >= outPaths.length - 1;
 }
 
-function atLeastTwoReferencesAtStartOfPathAreCollections(
-  listOfOutPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
-): boolean {
-  return listOfOutPaths && false; // TODO: *************************************************************** Not Implemented Yet ***************
+function targetDiffersByFullNameOnDirectReference(
+  outPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
+): Array<Array<ReferentialProperty | SimpleProperty>> {
+  const fullNamesMap: Map<string, Array<Array<ReferentialProperty | SimpleProperty>>> = new Map();
+
+  outPaths.forEach(outPath => {
+    const { fullPropertyName } = outPath[outPath.length - 1];
+    if (!fullNamesMap.has(fullPropertyName)) fullNamesMap.set(fullPropertyName, []);
+    (fullNamesMap.get(fullPropertyName) as Array<Array<ReferentialProperty | SimpleProperty>>).push(outPath);
+  });
+
+  // Ramda unnest === flatten a single level
+  return R.unnest(Array.from(fullNamesMap.values()).filter(outPathArray => outPathArray.length > 1));
 }
 
-function mergeOutReferenceEntitiesMap(
+function startOfPathIsIdentity(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+  if (outPath.length === 0) return false; // something is wrong
+  return outPath[0].isIdentityRename || outPath[0].isPartOfIdentity;
+}
+
+function mergeOutReferenceEntityEndpointsMap(
   baseMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
   targetMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
 ) {
@@ -67,6 +77,9 @@ function mergeOutReferenceEntitiesMap(
     });
   });
 }
+
+const pathStringReducer = (finalString, currentOutPath) =>
+  `${finalString} [${currentOutPath.map(p => p.metaEdName).join('.')}]`;
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
@@ -82,45 +95,54 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     'domainEntitySubclass',
   ).forEach(entity => {
     // combine outReferenceEntitiesMap if this entity has a base
-    const outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>> = new Map(
-      (entity as TopLevelEntity).outReferenceEntitiesMap,
+    const outReferenceEntityEndpointsMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>> = new Map(
+      (entity as TopLevelEntity).outReferenceEntityEndpointsMap,
     );
     const { baseEntity } = entity as TopLevelEntity;
     if (baseEntity !== null) {
-      mergeOutReferenceEntitiesMap(baseEntity.outReferenceEntitiesMap, outReferenceEntitiesMap);
+      mergeOutReferenceEntityEndpointsMap(baseEntity.outReferenceEntityEndpointsMap, outReferenceEntityEndpointsMap);
     }
 
-    outReferenceEntitiesMap.forEach((listOfOutPaths, entityWithOutPaths) => {
-      // only matters if entity found in multiple paths
+    outReferenceEntityEndpointsMap.forEach((listOfOutPaths, entityAtEndpoint) => {
+      // quick exit if there are not multiple paths
       if (listOfOutPaths.length < 2) return;
 
-      // only matters if for the first property in the path,
-      //     A) at least one reference is identity or
-      //     B) at least two references are a collection
-      if (
-        !atLeastOneReferenceAtStartOfPathIsIdentity(listOfOutPaths) &&
-        !atLeastTwoReferencesAtStartOfPathAreCollections(listOfOutPaths)
-      )
-        return;
+      // only paths with identities after the initial element are problems
+      const possibleProblemOutPaths: Array<Array<ReferentialProperty | SimpleProperty>> = [...listOfOutPaths].filter(
+        allPropertiesAfterTheFirstAreIdentity,
+      );
 
-      // only matters for paths where all properties after the first are an identity, and then
-      // only matters for paths where role names and/or merge directives don't resolve collision
-      const problemOutPaths = [...listOfOutPaths]
-        .filter(allPropertiesAfterTheFirstAreIdentity)
-        .filter(noroleNameOnFirstProperty)
-        .filter(noMergeDirectiveTargetingEntity(entityWithOutPaths));
+      // quick exit if there are not still multiple paths
+      if (possibleProblemOutPaths.length < 2) return;
 
-      const pathStringReducer = (finalString, currentOutPath) =>
-        `${finalString} [${currentOutPath.map(p => p.metaEdName).join('.')}]`;
+      // then ignore any path with any merge directive (targeting along the path to endpoint is what should be done)
+      const possibleProblemOutPaths2 = noMergeDirectives(possibleProblemOutPaths);
 
-      const problemPathsAsString = problemOutPaths.reduce(pathStringReducer, '');
+      // quick exit if there are not still multiple paths
+      if (possibleProblemOutPaths2.length < 2) return;
 
-      problemOutPaths.forEach(outPath => {
+      // of these paths, there must be one that starts with identity
+      if (!possibleProblemOutPaths2.some(startOfPathIsIdentity)) return;
+
+      // of these paths, we'll say they are fine if there is a role name on all or all but one
+      // (not entirely sufficient - e.g. role name might not have an effect)
+      if (roleNameOnAtLeastAllButOnePath(possibleProblemOutPaths2)) return;
+
+      // of these paths, we'll say they are fine if the property at the
+      // end of the path referenced it with differing full names
+      const possibleProblemOutPaths3 = targetDiffersByFullNameOnDirectReference(possibleProblemOutPaths2);
+
+      // exit if there are not still multiple paths
+      if (possibleProblemOutPaths3.length < 2) return;
+
+      const problemPathsAsString = possibleProblemOutPaths3.reduce(pathStringReducer, '');
+
+      possibleProblemOutPaths3.forEach(outPath => {
         failures.push({
           validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrroleName',
           category: 'error',
           message: `Ambiguous merge paths exist from ${outPath[0].parentEntityName}.${outPath[0].metaEdName} to ${
-            entityWithOutPaths.metaEdName
+            entityAtEndpoint.metaEdName
           }. Paths are${problemPathsAsString}.  Either add a merge directive, use 'role name', or change the model.`,
           sourceMap: outPath[0].sourceMap.metaEdName,
           fileMap: null,

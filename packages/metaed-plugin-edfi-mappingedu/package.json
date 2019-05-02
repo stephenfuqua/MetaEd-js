@@ -34,8 +34,8 @@
   "devDependencies": {
     "ed-fi-model-2.0": "2.0.0",
     "ed-fi-model-2.2": "2.0.0",
-    "ed-fi-model-3.0": "2.0.0",
-    "ed-fi-model-3.1": "2.0.0",
+    "ed-fi-model-3.0": "2.0.1",
+    "ed-fi-model-3.1": "2.0.1",
     "final-fs": "^1.6.1"
   },
   "scripts": {

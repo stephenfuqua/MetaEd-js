@@ -33,5 +33,10 @@
     "build:clean": "rimraf dist",
     "build:dist": "tsc",
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
+  },
+  "devDependencies": {
+    "ed-fi-model-3.0": "2.0.1",
+    "ed-fi-model-3.1": "2.0.1",
+    "ed-fi-model-3.2": "2.0.1"
   }
 }

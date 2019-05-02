@@ -7,12 +7,14 @@ import {
   MetaEdEnvironment,
   NamespaceBuilder,
   ValidationFailure,
+  SharedStringBuilder,
 } from 'metaed-core';
 import {
   outReferencePathEnhancer,
   domainEntityReferenceEnhancer,
   domainEntityExtensionBaseClassEnhancer,
   domainEntitySubclassBaseClassEnhancer,
+  sharedStringPropertyEnhancer,
 } from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
 
@@ -608,5 +610,49 @@ describe('when domain entity has two out paths to the same entity that start wit
 
 describe('when domain entity has three out paths to the same entity and only one starts with identity and are identities all the way and only one has a merge directive', () => {});
 
-// shared string
 // role name examples
+
+// shared string
+describe('when domain entity has reference to entity with identity of shared string', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let coreNamespace: any = null;
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('DE1')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('DE2', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DE2')
+      .withDocumentation('doc')
+      .withSharedStringIdentity('SS', null, 'doc')
+      .withEndDomainEntity()
+
+      .withStartSharedString('SS')
+      .withDocumentation('doc')
+      .withStringRestrictions('5', '10')
+      .withEndSharedString()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    sharedStringPropertyEnhancer(metaEd);
+    outReferencePathEnhancer(metaEd);
+    failures = validate(metaEd);
+  });
+
+  it('should build four domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
