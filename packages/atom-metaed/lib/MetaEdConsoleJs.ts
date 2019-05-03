@@ -244,13 +244,6 @@ function validProjectMetadata(metaEdProjectMetadata: Array<MetaEdProjectMetadata
     return false;
   }
 
-  if (hasExtensionProjects && allianceMode()) {
-    outputWindow.addMessage(
-      'Extension generation is not available in Alliance mode.  Please either switch modes or remove the extension project folder.',
-    );
-    return false;
-  }
-
   if (!hasExtensionProjects && !allianceMode()) {
     outputWindow.addMessage('No extension project.  Please add an extension project folder.');
     return false;
