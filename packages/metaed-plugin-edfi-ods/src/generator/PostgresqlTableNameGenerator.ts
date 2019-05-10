@@ -19,12 +19,12 @@ function maxComponentLength(tableNameComponents: Array<string>, maxLengthBeforeH
 }
 
 function truncatedTableName(tableNameComponents: Array<string>): string {
-  const maxLengthBeforeHash = 55;
+  const maxLengthBeforeHash = 56;
   const componentLength = maxComponentLength(tableNameComponents, maxLengthBeforeHash);
   const tableNameBeforeHash = tableNameComponents.reduce((acc, current) => acc + current.substring(0, componentLength), '');
   return `${tableNameBeforeHash}-${hash
     .sha256()
-    .update(tableNameBeforeHash)
+    .update(tableNameComponents.join(''))
     .digest('hex')
     .substring(0, 6)}`;
 }
