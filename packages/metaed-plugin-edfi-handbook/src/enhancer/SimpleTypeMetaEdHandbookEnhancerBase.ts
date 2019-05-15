@@ -51,7 +51,7 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
   return 'UNKNOWN CARDINALITY';
 }
 
-function referringProperties(metaEd: MetaEdEnvironment, entity: ModelBase): Array<string> {
+function referringProperties(metaEd: MetaEdEnvironment, entity: ModelBase): string[] {
   return getAllReferentialProperties(metaEd)
     .filter(x => x.referencedEntity.metaEdName === entity.metaEdName)
     .map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);

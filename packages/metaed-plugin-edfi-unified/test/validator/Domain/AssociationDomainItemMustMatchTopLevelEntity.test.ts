@@ -9,12 +9,12 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 
-describe('when validating association domain item matches top level entity', () => {
+describe('when validating association domain item matches top level entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const associationName = 'AssociationName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -40,21 +40,21 @@ describe('when validating association domain item matches top level entity', () 
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association domain item matches top level entity across namespace', () => {
+describe('when validating association domain item matches top level entity across namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const associationName = 'AssociationName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -84,22 +84,22 @@ describe('when validating association domain item matches top level entity acros
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association domain item matches top level entity subclass', () => {
+describe('when validating association domain item matches top level entity subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -131,22 +131,22 @@ describe('when validating association domain item matches top level entity subcl
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association domain item does not match top level entity', () => {
+describe('when validating association domain item does not match top level entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -177,11 +177,11 @@ describe('when validating association domain item does not match top level entit
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have one validation failure()', () => {
+  it('should have one validation failure()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');

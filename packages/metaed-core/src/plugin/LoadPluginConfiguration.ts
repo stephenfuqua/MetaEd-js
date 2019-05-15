@@ -11,15 +11,15 @@ import { ConfigurationSchema, ConfigurationRule } from './ConfigurationSchema';
 import { configurationStructureSchema } from './ConfigurationSchema';
 import { annotateModelWithConfiguration } from './AnnotateModelWithConfiguration';
 
-type CosmicResult = {
+interface CosmicResult {
   config?: any;
   filepath: string;
   isEmpty?: boolean;
-};
+}
 
 const sliceConfigFromObject = ({ config }) => ({ config });
 
-export function validateConfigurationStructure(pluginConfiguration: PluginConfiguration): Array<ValidationFailure> {
+export function validateConfigurationStructure(pluginConfiguration: PluginConfiguration): ValidationFailure[] {
   const result: JoiResult = configurationStructureSchema.validate(pluginConfiguration.configObject, { abortEarly: false });
   if (result.error == null) return [];
 
@@ -39,10 +39,10 @@ export function validateConfigurationStructure(pluginConfiguration: PluginConfig
 export function validatePluginSpecificStructure(
   pluginConfiguration: PluginConfiguration,
   configurationSchemas: ConfigurationSchema,
-): Array<ValidationFailure> {
-  const validationFailures: Array<ValidationFailure> = [];
+): ValidationFailure[] {
+  const validationFailures: ValidationFailure[] = [];
 
-  const configRuleArray: Array<ConfigurationRule> = [].concat(pluginConfiguration.configObject.config as any);
+  const configRuleArray: ConfigurationRule[] = [].concat(pluginConfiguration.configObject.config as any);
   configRuleArray.forEach((configRule: ConfigurationRule) => {
     const schemaForRule: JoiSchema | null = configurationSchemas.get(configRule.rule);
     if (schemaForRule == null) {
@@ -80,8 +80,8 @@ export function validatePluginSpecificStructure(
 function validatePluginConfiguration(
   pluginConfiguration: PluginConfiguration,
   configurationSchemas: ConfigurationSchema,
-): Array<ValidationFailure> {
-  const validationFailures: Array<ValidationFailure> = [];
+): ValidationFailure[] {
+  const validationFailures: ValidationFailure[] = [];
 
   validationFailures.push(...validateConfigurationStructure(pluginConfiguration));
   if (validationFailures.length === 0 && configurationSchemas != null) {
@@ -92,7 +92,7 @@ function validatePluginConfiguration(
 }
 
 export async function loadPluginConfiguration(state: State): Promise<void> {
-  const searchDirectories: Array<string> =
+  const searchDirectories: string[] =
     state.metaEdConfiguration.pluginConfigDirectories.length === 0
       ? state.inputDirectories.map((inputDirectory: InputDirectory) => inputDirectory.path)
       : state.metaEdConfiguration.pluginConfigDirectories;
@@ -114,7 +114,7 @@ export async function loadPluginConfiguration(state: State): Promise<void> {
               configObject: sliceConfigFromObject(cosmicResult.config),
             };
 
-            const failuresForPluginConfiguration: Array<ValidationFailure> = validatePluginConfiguration(
+            const failuresForPluginConfiguration: ValidationFailure[] = validatePluginConfiguration(
               pluginConfiguration,
               pluginManifest.metaEdPlugin.configurationSchemas,
             );
@@ -124,7 +124,7 @@ export async function loadPluginConfiguration(state: State): Promise<void> {
             } else {
               const pluginEnvironment: PluginEnvironment | undefined = state.metaEd.plugin.get(pluginShortName);
               if (pluginEnvironment != null) {
-                const annotationFailuresForPlugin: Array<ValidationFailure> = annotateModelWithConfiguration(
+                const annotationFailuresForPlugin: ValidationFailure[] = annotateModelWithConfiguration(
                   pluginConfiguration,
                   pluginEnvironment,
                   state.metaEd.namespace,

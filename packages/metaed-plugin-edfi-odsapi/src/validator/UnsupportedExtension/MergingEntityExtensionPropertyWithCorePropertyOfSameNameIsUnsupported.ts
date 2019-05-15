@@ -21,8 +21,8 @@ function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   );
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   getAllEntitiesOfType(
@@ -38,14 +38,14 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (entity.baseEntity.namespace.isExtension) return;
 
       const baseEntityResult: {
-        referencedEntities: Array<{
+        referencedEntities: {
           roleName: string;
           entity: TopLevelEntity;
-        }>;
-        properties: Array<{
+        }[];
+        properties: {
           roleName: string;
           property: EntityProperty;
-        }>;
+        }[];
       } = collectSingleEntity(
         entity.baseEntity,
         true,
@@ -60,14 +60,14 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       );
 
       const extensionEntityResult: {
-        referencedEntities: Array<{
+        referencedEntities: {
           roleName: string;
           entity: TopLevelEntity;
-        }>;
-        properties: Array<{
+        }[];
+        properties: {
           roleName: string;
           property: EntityProperty;
-        }>;
+        }[];
       } = collectSingleEntity(
         entity,
         true,
@@ -81,8 +81,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         }),
       );
 
-      const baseProperties: Array<{ roleName: string; property: EntityProperty }> = [];
-      const extensionProperties: Array<{ roleName: string; property: EntityProperty }> = [];
+      const baseProperties: { roleName: string; property: EntityProperty }[] = [];
+      const extensionProperties: { roleName: string; property: EntityProperty }[] = [];
 
       baseEntityResult.properties.forEach(result => {
         baseProperties.push({ roleName: result.roleName, property: result.property });
@@ -107,14 +107,14 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           })),
         );
       });
-      const extensionPropertyNames: Array<string> = extensionProperties.map(
+      const extensionPropertyNames: string[] = extensionProperties.map(
         x => x.roleName + x.property.roleName + x.property.metaEdName,
       );
 
-      const duplicateProperties: Array<{
+      const duplicateProperties: {
         roleName: string;
         property: EntityProperty;
-      }> = baseProperties.filter(x =>
+      }[] = baseProperties.filter(x =>
         extensionPropertyNames.includes(x.roleName + x.property.roleName + x.property.metaEdName),
       );
 

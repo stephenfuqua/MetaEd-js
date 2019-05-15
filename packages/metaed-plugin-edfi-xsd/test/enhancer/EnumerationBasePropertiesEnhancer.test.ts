@@ -9,7 +9,7 @@ import { MetaEdEnvironment, Enumeration, MapTypeEnumeration, SchoolYearEnumerati
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/EnumerationBasePropertiesEnhancer';
 
-describe('when EnumerationBasePropertiesEnhancer enhances enumeration', () => {
+describe('when EnumerationBasePropertiesEnhancer enhances enumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -30,18 +30,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration', () => {
     enhance(metaEd);
   });
 
-  it('should have xsdEnumerationName assigned', () => {
+  it('should have xsdEnumerationName assigned', (): void => {
     const enumeration: any = namespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationName).toBe(enumerationName);
   });
 
-  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', () => {
+  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', (): void => {
     const enumeration: any = namespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationNameWithExtension).toBe(enumerationName);
   });
 });
 
-describe('when EnumerationBasePropertiesEnhancer enhances enumeration with extension', () => {
+describe('when EnumerationBasePropertiesEnhancer enhances enumeration with extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const projectExtension = 'EXTENSION';
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
@@ -67,18 +67,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration with exten
     enhance(metaEd);
   });
 
-  it('should have xsdEnumerationName assigned', () => {
+  it('should have xsdEnumerationName assigned', (): void => {
     const enumeration: any = extensionNamespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationName).toBe(enumerationName);
   });
 
-  it('should have xsdEnumerationBaseNameWithExtension value with extension', () => {
+  it('should have xsdEnumerationBaseNameWithExtension value with extension', (): void => {
     const enumeration: any = extensionNamespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationNameWithExtension).toBe(`${projectExtension}-${enumerationName}`);
   });
 });
 
-describe('when EnumerationBasePropertiesEnhancer enhances enumeration that ends in Type', () => {
+describe('when EnumerationBasePropertiesEnhancer enhances enumeration that ends in Type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -99,18 +99,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration that ends 
     enhance(metaEd);
   });
 
-  it('should have xsdEnumerationName assigned', () => {
+  it('should have xsdEnumerationName assigned', (): void => {
     const enumeration: any = namespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationName).toBe(enumerationName);
   });
 
-  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', () => {
+  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', (): void => {
     const enumeration: any = namespace.entity.enumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationNameWithExtension).toBe(enumerationName);
   });
 });
 
-describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', () => {
+describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const enumerationBaseName = 'EnumerationName';
   const enumerationName = 'EnumerationNameType';
@@ -131,18 +131,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', (
     enhance(metaEd);
   });
 
-  it('should have xsdEnumerationName assigned', () => {
+  it('should have xsdEnumerationName assigned', (): void => {
     const enumeration: any = namespace.entity.mapTypeEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationName).toBe(enumerationName);
   });
 
-  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', () => {
+  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', (): void => {
     const enumeration: any = namespace.entity.mapTypeEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationNameWithExtension).toBe(enumerationName);
   });
 });
 
-describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration', () => {
+describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const enumerationBaseName = 'EnumerationName';
   const enumerationName = 'EnumerationNameType';
@@ -163,12 +163,12 @@ describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration'
     enhance(metaEd);
   });
 
-  it('should have xsdEnumerationName assigned', () => {
+  it('should have xsdEnumerationName assigned', (): void => {
     const enumeration: any = namespace.entity.schoolYearEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationName).toBe(enumerationName);
   });
 
-  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', () => {
+  it('should have xsdEnumerationBaseNameWithExtension value same as enumerationName', (): void => {
     const enumeration: any = namespace.entity.schoolYearEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsdEnumerationNameWithExtension).toBe(enumerationName);
   });

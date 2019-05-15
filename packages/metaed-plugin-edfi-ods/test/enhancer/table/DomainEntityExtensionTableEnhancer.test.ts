@@ -26,7 +26,7 @@ import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableE
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -100,22 +100,22 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should have schema equal to namespace', () => {
+  it('should have schema equal to namespace', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table).schema).toBe('extension');
   });
 
-  it('should have description equal to documentation', () => {
+  it('should have description equal to documentation', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table).description).toBe(
       documentation,
     );
   });
 
-  it('should have two columns', () => {
+  it('should have two columns', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPropertyName);
@@ -123,7 +123,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with primary key', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with primary key', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -194,26 +194,26 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should have one primary key column', () => {
+  it('should have one primary key column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should include create date column', () => {
+  it('should include create date column', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table).includeCreateDateColumn).toBe(
       true,
     );
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common extension override', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common extension override', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -373,28 +373,28 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create table for domain entity extension', () => {
+  it('should create table for domain entity extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should include create date column', () => {
+  it('should include create date column', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table).includeCreateDateColumn).toBe(
       true,
     );
   });
 
-  it('should create common extension override join table', () => {
+  it('should create common extension override join table', (): void => {
     expect(
       tableEntities(metaEd, extensionNamespace).get(`${domainEntityName + commonExtensionName}Extension`),
     ).toBeDefined();
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -525,26 +525,26 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create two tables', () => {
+  it('should create two tables', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create a table for domain entity extension', () => {
+  it('should create a table for domain entity extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should include create date column', () => {
+  it('should include create date column', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName) as Table).includeCreateDateColumn).toBe(
       true,
     );
   });
 
-  it('should create join table from domain entity and common', () => {
+  it('should create join table from domain entity and common', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName)).toBeDefined();
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only common', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only common', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -644,20 +644,20 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create one tables', () => {
+  it('should create one tables', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
   });
 
-  it('should not create a table for domain entity extension', () => {
+  it('should not create a table for domain entity extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeUndefined();
   });
 
-  it('should create join table from domain entity and common', () => {
+  it('should create join table from domain entity and common', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName)).toBeDefined();
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only commons', () => {
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only commons', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -774,19 +774,19 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     enhance(metaEd);
   });
 
-  it('should create two tables', () => {
+  it('should create two tables', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should not create a table for domain entity extension', () => {
+  it('should not create a table for domain entity extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeUndefined();
   });
 
-  it('should create join table from domain entity and common', () => {
+  it('should create join table from domain entity and common', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName1)).toBeDefined();
   });
 
-  it('should create join table from domain entity and common collection', () => {
+  it('should create join table from domain entity and common collection', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName2)).toBeDefined();
   });
 });

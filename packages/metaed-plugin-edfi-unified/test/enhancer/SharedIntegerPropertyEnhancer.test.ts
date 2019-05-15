@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SharedIntegerPropertyEnhancer';
 
-describe('when shared integer property refers to a shared integer', () => {
+describe('when shared integer property refers to a shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName = 'ReferencedEntityName';
 
@@ -32,14 +32,14 @@ describe('when shared integer property refers to a shared integer', () => {
     enhance(metaEd);
   });
 
-  it('should have the shared integer restrictions', () => {
+  it('should have the shared integer restrictions', (): void => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(p => p.metaEdName === metaEdName));
     expect(property.maxValue).toBe(maxValue);
     expect(property.minValue).toBe(minValue);
   });
 });
 
-describe('when shared short property refers to a shared short', () => {
+describe('when shared short property refers to a shared short', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName = 'ReferencedEntityName';
 
@@ -62,7 +62,7 @@ describe('when shared short property refers to a shared short', () => {
     enhance(metaEd);
   });
 
-  it('should have the shared integer restrictions', () => {
+  it('should have the shared integer restrictions', (): void => {
     const property = R.head(metaEd.propertyIndex.sharedShort.filter(p => p.metaEdName === metaEdName));
     expect(property.maxValue).toBe(maxValue);
     expect(property.minValue).toBe(minValue);

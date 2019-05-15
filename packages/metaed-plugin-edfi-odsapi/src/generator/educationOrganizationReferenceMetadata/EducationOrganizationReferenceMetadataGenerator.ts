@@ -33,10 +33,10 @@ function generateFile(input: any, namespace: Namespace): GeneratedOutput {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const educationOrganizationReferences: Array<EducationOrganizationReference> = orderByProp('name')(
+    const educationOrganizationReferences: EducationOrganizationReference[] = orderByProp('name')(
       namespace.data.edfiOdsApi.apiEducationOrganizationReferences,
     );
     if (educationOrganizationReferences.length > 0) {

@@ -2,7 +2,7 @@
 
 import { OutputWindow } from '../lib/OutputWindow';
 
-describe('OutputWindow', () => {
+describe('OutputWindow', (): void => {
   let outputWindow;
   let testPanel;
 
@@ -13,8 +13,8 @@ describe('OutputWindow', () => {
     testPanel.btnFold = jasmine.createSpyObj('btnFold', ['hasClass']);
   });
 
-  describe('.addMessage()', () => {
-    it('adds message with no raw indicator', () => {
+  describe('.addMessage()', (): void => {
+    it('adds message with no raw indicator', (): void => {
       outputWindow.myOutputWindow = testPanel;
       spyOn(outputWindow, 'ensureOutputWindowIsVisible');
       const message = 'Test Message';
@@ -28,7 +28,7 @@ describe('OutputWindow', () => {
       expect(testPanel.updateScroll).toHaveBeenCalled();
     });
 
-    it('adds message with raw indicator', () => {
+    it('adds message with raw indicator', (): void => {
       outputWindow.myOutputWindow = testPanel;
       spyOn(outputWindow, 'ensureOutputWindowIsVisible');
       const message = 'Test Message';
@@ -44,14 +44,14 @@ describe('OutputWindow', () => {
     });
   });
 
-  describe('.clear()', () => {
-    it('clear does not throw if window has not been initialized', () => {
+  describe('.clear()', (): void => {
+    it('clear does not throw if window has not been initialized', (): void => {
       outputWindow.myOutputWindow = undefined;
       // Should not throw an exception for an undefined outputWindow
       outputWindow.clear();
     });
 
-    it('clears the window if window has been initialized', () => {
+    it('clears the window if window has been initialized', (): void => {
       outputWindow.myOutputWindow = testPanel;
       outputWindow.clear();
 
@@ -59,8 +59,8 @@ describe('OutputWindow', () => {
     });
   });
 
-  describe('.ensureOutputWindowIsVisible()', () => {
-    it('initializes window if has not been initialized', () => {
+  describe('.ensureOutputWindowIsVisible()', (): void => {
+    it('initializes window if has not been initialized', (): void => {
       outputWindow.ensureOutputWindowIsVisible();
 
       expect(outputWindow.myOutputWindow).not.toBeUndefined();
@@ -68,7 +68,7 @@ describe('OutputWindow', () => {
       expect(outputWindow.myOutputWindow.autoScroll).toEqual(true);
     });
 
-    it('skips window initialization if has been already initialized and is expanded', () => {
+    it('skips window initialization if has been already initialized and is expanded', (): void => {
       testPanel.btnFold.hasClass.andReturn(false);
       outputWindow.myOutputWindow = testPanel;
       outputWindow.ensureOutputWindowIsVisible();
@@ -78,7 +78,7 @@ describe('OutputWindow', () => {
       expect(testPanel.toggle).not.toHaveBeenCalled();
     });
 
-    it('toggles window if has been already initialized and is collapsed', () => {
+    it('toggles window if has been already initialized and is collapsed', (): void => {
       testPanel.btnFold.hasClass.andReturn(true);
       outputWindow.myOutputWindow = testPanel;
       outputWindow.ensureOutputWindowIsVisible();
@@ -89,14 +89,14 @@ describe('OutputWindow', () => {
     });
   });
 
-  describe('.dispose()', () => {
-    it('dispose does not throw if window has not been initialized', () => {
+  describe('.dispose()', (): void => {
+    it('dispose does not throw if window has not been initialized', (): void => {
       outputWindow.myOutputWindow = undefined;
       // Should not throw an exception for an undefined outputWindow
       outputWindow.dispose();
     });
 
-    it('closes the window if window has been initialized', () => {
+    it('closes the window if window has been initialized', (): void => {
       outputWindow.myOutputWindow = testPanel;
       outputWindow.dispose();
 

@@ -1,7 +1,7 @@
 import { EntityProperty, ModelBase, ModelType, PropertyType, Namespace, TopLevelEntity } from 'metaed-core';
 import { asModelType, getEntityFromNamespaceChain, allEntityModelTypes } from 'metaed-core';
 
-export const referenceTypes: Array<ModelType> = [
+export const referenceTypes: ModelType[] = [
   'association',
   'associationExtension',
   'associationSubclass',
@@ -13,13 +13,13 @@ export const referenceTypes: Array<ModelType> = [
   'inlineCommon',
 ];
 
-export const commonTypes: Array<PropertyType> = ['choice', 'common', 'inlineCommon'];
+export const commonTypes: PropertyType[] = ['choice', 'common', 'inlineCommon'];
 
 const subclassSuffix = 'Subclass';
 const extensionSuffix = 'Extension';
 
-function possibleModelTypesReferencedByProperty(propertyType: ModelType | PropertyType): Array<ModelType> {
-  const allEntityModelTypesUntyped = allEntityModelTypes as Array<string>;
+function possibleModelTypesReferencedByProperty(propertyType: ModelType | PropertyType): ModelType[] {
+  const allEntityModelTypesUntyped = allEntityModelTypes as string[];
   // sketchy computation of model/property type
   const result: any = [propertyType];
   if (allEntityModelTypesUntyped.includes(`${propertyType}${extensionSuffix}`))
@@ -34,9 +34,9 @@ export function getReferencedEntities(
   propertyName: string,
   propertyReferencedNamespace: string,
   propertyType: ModelType | PropertyType,
-): Array<ModelBase> {
+): ModelBase[] {
   return possibleModelTypesReferencedByProperty(propertyType).reduce(
-    (result: Array<ModelBase>, type: ModelType | PropertyType) => {
+    (result: ModelBase[], type: ModelType | PropertyType) => {
       const entity = getEntityFromNamespaceChain(propertyName, propertyReferencedNamespace, namespace, asModelType(type));
       if (entity != null) return result.concat(entity);
       return result;
@@ -47,7 +47,7 @@ export function getReferencedEntities(
 
 function getBaseEntity(namespace: Namespace, entity: TopLevelEntity): ModelBase | null {
   if (!entity) return null;
-  const modelTypes: Array<ModelType> = [];
+  const modelTypes: ModelType[] = [];
   if (entity.type.match(subclassSuffix)) modelTypes.push(asModelType(entity.type.replace(subclassSuffix, '')));
   if (entity.type.match(extensionSuffix)) modelTypes.push(asModelType(entity.type.replace(extensionSuffix, '')));
   return getEntityFromNamespaceChain(entity.baseEntityName, entity.baseEntityNamespaceName, namespace, ...modelTypes);
@@ -90,10 +90,10 @@ function roleName(property: EntityProperty): string {
 export function findReferencedProperty(
   namespace: Namespace,
   initialEntity: ModelBase,
-  propertyPath: Array<string>,
+  propertyPath: string[],
   filter: (property: EntityProperty, parentContext: ModelBase) => boolean = matchAll(),
 ): EntityProperty | null {
-  const entities: Array<ModelBase> = [initialEntity];
+  const entities: ModelBase[] = [initialEntity];
   let currentEntity: ModelBase | undefined;
   let currentProperty: EntityProperty | undefined;
 

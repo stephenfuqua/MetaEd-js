@@ -1,8 +1,8 @@
 import { ShortProperty, ShortPropertySourceMap, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { asShortProperty } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.short.forEach(short => {
     const shortProperty: ShortProperty = asShortProperty(short);
     const minValue: number = Number.parseInt(shortProperty.minValue || '0', 10);

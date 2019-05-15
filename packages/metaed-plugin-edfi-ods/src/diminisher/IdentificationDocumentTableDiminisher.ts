@@ -15,8 +15,8 @@ const identificationDocument = 'IdentificationDocument';
 
 function renameIdentificationDocumentTables(coreNamespace: Namespace, tablesForCoreNamespace: Map<string, Table>): void {
   getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
-    const identificationDocumentTableNames: Array<string> = entity.data.edfiOds.odsTables.reduce(
-      (names: Array<string>, table: Table) => {
+    const identificationDocumentTableNames: string[] = entity.data.edfiOds.odsTables.reduce(
+      (names: string[], table: Table) => {
         if (
           table.name.startsWith(entity.metaEdName) &&
           table.name.endsWith(identificationDocument) &&

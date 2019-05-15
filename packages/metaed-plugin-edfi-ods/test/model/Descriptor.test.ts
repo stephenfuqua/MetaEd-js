@@ -9,7 +9,7 @@ import { MetaEdEnvironment } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
 import { initialize as initializeOdsPlugin } from '../../index';
 
-describe('when descriptor is required property of domain entity', () => {
+describe('when descriptor is required property of domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const extensionNamespace = 'Extension';
   const descriptorName = 'DescriptorName';
@@ -46,7 +46,7 @@ describe('when descriptor is required property of domain entity', () => {
     initializeOdsPlugin().enhancer.forEach(enhance => enhance(metaEd));
   });
 
-  it('should not crash', () => {
+  it('should not crash', (): void => {
     expect(true).toBe(true);
   });
 });

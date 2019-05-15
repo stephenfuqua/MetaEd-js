@@ -9,9 +9,9 @@ import { MergedInterchange } from '../model/MergedInterchange';
 
 const enhancerName = 'MergedInterchangeExtensionEnhancer';
 
-function allMergedInterchanges(metaEd: MetaEdEnvironment, namespace: Namespace): Array<MergedInterchange> {
-  const result: Array<MergedInterchange> = [];
-  const namespaces: Array<Namespace> = [namespace, ...namespace.dependencies];
+function allMergedInterchanges(metaEd: MetaEdEnvironment, namespace: Namespace): MergedInterchange[] {
+  const result: MergedInterchange[] = [];
+  const namespaces: Namespace[] = [namespace, ...namespace.dependencies];
   namespaces.forEach((n: Namespace) => {
     const xsdRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, n);
     if (xsdRepository == null) return;
@@ -24,7 +24,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   Array.from(metaEd.namespace.values())
     .filter(n => n.isExtension)
     .forEach((extensionNamespace: Namespace) => {
-      const extensionEntities: Array<ModelBase> = getEntitiesOfTypeForNamespaces(
+      const extensionEntities: ModelBase[] = getEntitiesOfTypeForNamespaces(
         [extensionNamespace],
         'associationExtension',
         'domainEntityExtension',
@@ -35,12 +35,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         extensionNamespace,
       );
       if (extensionEdfiXsdEntityRepository == null) return;
-      const extensionInterchanges: Array<MergedInterchange> = Array.from(
+      const extensionInterchanges: MergedInterchange[] = Array.from(
         extensionEdfiXsdEntityRepository.mergedInterchange.values(),
       );
 
       // Need to extend any interchange that contains an entity that has an extension in the current namespace
-      const interchangesToExtend: Array<MergedInterchange> = allMergedInterchanges(metaEd, extensionNamespace).filter(
+      const interchangesToExtend: MergedInterchange[] = allMergedInterchanges(metaEd, extensionNamespace).filter(
         (mi: MergedInterchange) => mi.elements.some(e => extensionEntities.some(ee => ee.metaEdName === e.metaEdName)),
       );
 

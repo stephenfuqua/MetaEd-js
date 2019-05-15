@@ -2,10 +2,10 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
 
-describe('when validating domain entity with no UniqueId fields', () => {
+describe('when validating domain entity with no UniqueId fields', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -25,19 +25,19 @@ describe('when validating domain entity with no UniqueId fields', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures.length).toBe(0);
   });
 });
 
-describe('when validating domain entity with one UniqueId field', () => {
+describe('when validating domain entity with one UniqueId field', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -57,19 +57,19 @@ describe('when validating domain entity with one UniqueId field', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity with two UniqueId fields', () => {
+describe('when validating domain entity with two UniqueId fields', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -90,11 +90,11 @@ describe('when validating domain entity with two UniqueId fields', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityMustContainNoMoreThanOneUniqueIdColumn');
     expect(failures[0].category).toBe('error');
@@ -103,10 +103,10 @@ describe('when validating domain entity with two UniqueId fields', () => {
   });
 });
 
-describe('when validating domain entity with two UniqueId fields in extension namespace', () => {
+describe('when validating domain entity with two UniqueId fields in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -138,11 +138,11 @@ describe('when validating domain entity with two UniqueId fields in extension na
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

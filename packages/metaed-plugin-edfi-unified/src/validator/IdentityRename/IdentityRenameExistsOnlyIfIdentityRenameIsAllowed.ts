@@ -1,6 +1,6 @@
 import { ModelType, MetaEdEnvironment, ValidationFailure, Namespace, EntityProperty, TopLevelEntity } from 'metaed-core';
 
-const invalidTypes: Array<ModelType> = [
+const invalidTypes: ModelType[] = [
   'association',
   'associationExtension',
   'choice',
@@ -13,12 +13,12 @@ const invalidTypes: Array<ModelType> = [
 
 const validTypeNames: string = ['Domain Entity Subclass', 'Association Subclass'].join(' and ');
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     invalidTypes.forEach((invalidType: ModelType) => {
-      const entities: Array<TopLevelEntity> = Array.from(namespace.entity[invalidType].values());
+      const entities: TopLevelEntity[] = Array.from(namespace.entity[invalidType].values());
       entities.forEach((entity: TopLevelEntity) => {
         if (!entity.identityProperties || entity.identityProperties.length === 0) return;
         entity.identityProperties.forEach((property: EntityProperty) => {

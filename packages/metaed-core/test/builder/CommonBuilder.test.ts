@@ -6,9 +6,9 @@ import { getCommon } from '../TestHelper';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when building common in extension namespace', () => {
+describe('when building common in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -36,44 +36,44 @@ describe('when building common in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not be inlined in ODS', () => {
+  it('should not be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(false);
   });
 
-  it('should have entity documentation', () => {
+  it('should have entity documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -84,9 +84,9 @@ describe('when building common in extension namespace', () => {
   });
 });
 
-describe('when building duplicate commons', () => {
+describe('when building duplicate commons', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -119,20 +119,20 @@ describe('when building duplicate commons', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot(
@@ -153,9 +153,9 @@ describe('when building duplicate commons', () => {
   });
 });
 
-describe('when building inline common in extension namespace', () => {
+describe('when building inline common in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -183,40 +183,40 @@ describe('when building inline common in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(true);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -227,9 +227,9 @@ describe('when building inline common in extension namespace', () => {
   });
 });
 
-describe('when building common with no common name', () => {
+describe('when building common with no common name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -258,18 +258,18 @@ describe('when building common with no common name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build common', () => {
+  it('should not build common', (): void => {
     expect(namespace.entity.common.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with lowercase common name', () => {
+describe('when building common with lowercase common name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -298,18 +298,18 @@ describe('when building common with lowercase common name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build common', () => {
+  it('should not build common', (): void => {
     expect(namespace.entity.common.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with no documentation', () => {
+describe('when building common with no documentation', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -336,40 +336,40 @@ describe('when building common with no documentation', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(false);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -379,14 +379,14 @@ describe('when building common with no documentation', () => {
     expect(property.documentation).toBe(propertyDocumentation);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with no property', () => {
+describe('when building common with no property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -411,47 +411,47 @@ describe('when building common with no property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(false);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have no property', () => {
+  it('should have no property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with invalid trailing text', () => {
+describe('when building common with invalid trailing text', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -482,40 +482,40 @@ describe('when building common with invalid trailing text', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(false);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -525,14 +525,14 @@ describe('when building common with invalid trailing text', () => {
     expect(property.documentation).toBe(propertyDocumentation);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with no inline common name', () => {
+describe('when building inline common with no inline common name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -561,18 +561,18 @@ describe('when building inline common with no inline common name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build inline common', () => {
+  it('should not build inline common', (): void => {
     expect(namespace.entity.common.size).toBe(0);
   });
 
-  it('should have missing id error', () => {
+  it('should have missing id error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with lowercase inline common name', () => {
+describe('when building inline common with lowercase inline common name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -601,18 +601,18 @@ describe('when building inline common with lowercase inline common name', () => 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build no inline common', () => {
+  it('should build no inline common', (): void => {
     expect(namespace.entity.common.size).toBe(0);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with no documentation', () => {
+describe('when building inline common with no documentation', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -639,40 +639,40 @@ describe('when building inline common with no documentation', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one inline common', () => {
+  it('should build one inline common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(true);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -682,14 +682,14 @@ describe('when building inline common with no documentation', () => {
     expect(property.documentation).toBe(propertyDocumentation);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with no property', () => {
+describe('when building inline common with no property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -714,47 +714,47 @@ describe('when building inline common with no property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one inline common', () => {
+  it('should build one inline common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(true);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have no property', () => {
+  it('should have no property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with invalid trailing text', () => {
+describe('when building inline common with invalid trailing text', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -785,40 +785,40 @@ describe('when building inline common with invalid trailing text', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one inline common', () => {
+  it('should build one inline common', (): void => {
     expect(namespace.entity.common.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getCommon(namespace.entity, entityName)).toBeDefined();
     expect(getCommon(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getCommon(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getCommon(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be inlined in ODS', () => {
+  it('should be inlined in ODS', (): void => {
     expect(getCommon(namespace.entity, entityName).inlineInOds).toBe(true);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getCommon(namespace.entity, entityName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getCommon(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const property = getCommon(namespace.entity, entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
@@ -828,14 +828,14 @@ describe('when building inline common with invalid trailing text', () => {
     expect(property.documentation).toBe(propertyDocumentation);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common source map', () => {
+describe('when building common source map', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -863,30 +863,30 @@ describe('when building common source map', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have a documentation property', () => {
+  it('should have a documentation property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have a metaEdId property', () => {
+  it('should have a metaEdId property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have a metaEdName property', () => {
+  it('should have a metaEdName property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have a type property', () => {
+  it('should have a type property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have source map data', () => {
+  it('should have source map data', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 });
 
-describe('when building inline common source map', () => {
+describe('when building inline common source map', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -914,23 +914,23 @@ describe('when building inline common source map', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have a documentation property', () => {
+  it('should have a documentation property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have a metaEdId property', () => {
+  it('should have a metaEdId property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have a metaEdName property', () => {
+  it('should have a metaEdName property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have a type property', () => {
+  it('should have a type property', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have source map data', () => {
+  it('should have source map data', (): void => {
     expect(getCommon(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 });

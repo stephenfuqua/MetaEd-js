@@ -21,7 +21,7 @@ const referenceColumnBuilder = (
   buildStrategy: BuildStrategy,
   factory: ColumnCreatorFactory,
 ) => (columnStrategy: ColumnTransform): void => {
-  const primaryKeys: Array<Column> = collectPrimaryKeys(referenceProperty.referencedEntity, buildStrategy, factory);
+  const primaryKeys: Column[] = collectPrimaryKeys(referenceProperty.referencedEntity, buildStrategy, factory);
 
   primaryKeys.forEach((pk: Column) => {
     pk.referenceContext = referenceProperty.data.edfiOds.odsName + pk.referenceContext;
@@ -36,9 +36,9 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       parentIsRequired: boolean | null,
     ): void {
       const referenceProperty: ReferentialProperty = asReferentialProperty(property);
@@ -96,7 +96,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       addForeignKey(joinTable, foreignKey);
       addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
 
-      const primaryKeys: Array<Column> = collectPrimaryKeys(referenceProperty.referencedEntity, strategy, factory);
+      const primaryKeys: Column[] = collectPrimaryKeys(referenceProperty.referencedEntity, strategy, factory);
       primaryKeys.forEach((pk: Column) => addSourceEntityProperty(pk, property));
       addColumns(
         joinTable,

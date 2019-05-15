@@ -8,7 +8,7 @@ import { MergeDirective } from './MergeDirective';
 
 export interface ReferentialPropertySourceMap extends EntityPropertySourceMap {
   referencedEntity: SourceMap;
-  mergeDirectives: Array<SourceMap>;
+  mergeDirectives: SourceMap[];
 }
 
 /**
@@ -25,7 +25,7 @@ export function newReferentialPropertySourceMap(): ReferentialPropertySourceMap 
 export interface ReferentialProperty extends EntityProperty {
   sourceMap: ReferentialPropertySourceMap;
   referencedEntity: TopLevelEntity;
-  mergeDirectives: Array<MergeDirective>;
+  mergeDirectives: MergeDirective[];
 }
 
 /**

@@ -33,7 +33,7 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
   return 'UNKNOWN CARDINALITY';
 }
 
-function getPropertyNames(entity: TopLevelEntity): Array<string> {
+function getPropertyNames(entity: TopLevelEntity): string[] {
   return entity.properties
     .map(p => {
       const roleNameName: string = p.roleName ? p.metaEdName : p.roleName + p.metaEdName;
@@ -43,11 +43,11 @@ function getPropertyNames(entity: TopLevelEntity): Array<string> {
     .sort();
 }
 
-function getEnumerationItemsFor(enumeration: Enumeration): Array<string> {
+function getEnumerationItemsFor(enumeration: Enumeration): string[] {
   return enumeration.enumerationItems.map(e => e.shortDescription).sort();
 }
 
-function enumerationShortDescriptionsFor(entity: TopLevelEntity): Array<string> {
+function enumerationShortDescriptionsFor(entity: TopLevelEntity): string[] {
   if (entity.type === 'enumeration' || entity.type === 'mapTypeEnumeration' || entity.type === 'schoolYearEnumeration') {
     return getEnumerationItemsFor(entity as Enumeration);
   }
@@ -71,11 +71,11 @@ const getHandbookTableTemplate: () => (x: any) => string = ramda.once(() =>
   handlebars.compile(getTemplateString('handbookTable')),
 );
 
-function generatedTableSqlFor(entity: TopLevelEntity): Array<string> {
+function generatedTableSqlFor(entity: TopLevelEntity): string[] {
   if (entity.data.edfiOds == null || entity.data.edfiOds.odsTables == null) return [];
 
   const tables = entity.data.edfiOds.odsTables;
-  const results: Array<string> = [];
+  const results: string[] = [];
 
   tables.forEach(x => {
     const handbookTableTemplate: (x: any) => string = getHandbookTableTemplate();
@@ -91,7 +91,7 @@ const getComplexTypeTemplate: () => (x: any) => string = ramda.once(() =>
 
 function generatedXsdFor(entity: TopLevelEntity): string {
   registerPartials();
-  const results: Array<string> = [];
+  const results: string[] = [];
   if (!entity.data.edfiXsd.xsdComplexTypes) return '';
   entity.data.edfiXsd.xsdComplexTypes.forEach(complexType => {
     const complexTypeTemplate: (x: any) => string = getComplexTypeTemplate();
@@ -100,15 +100,15 @@ function generatedXsdFor(entity: TopLevelEntity): string {
   return beautify(results.join('\n'), { indent_size: 2 });
 }
 
-function findEntityByMetaEdName(allEntities: Array<ModelBase>, metaEdName: string): boolean {
+function findEntityByMetaEdName(allEntities: ModelBase[], metaEdName: string): boolean {
   return allEntities.some(x => x.metaEdName === metaEdName);
 }
 
-function findEntityByUniqueId(allEntities: Array<ModelBase>, uniqueId: string): boolean {
+function findEntityByUniqueId(allEntities: ModelBase[], uniqueId: string): boolean {
   return allEntities.some(x => x.metaEdName + x.metaEdId === uniqueId);
 }
 
-function getReferenceUniqueIdentifier(allEntities: Array<ModelBase>, property: EntityProperty): string {
+function getReferenceUniqueIdentifier(allEntities: ModelBase[], property: EntityProperty): string {
   const uniqueIdCandidate: string = property.metaEdName + property.metaEdId;
 
   // If we have a metaEdId then this can be one of 3 scenarios:
@@ -141,7 +141,7 @@ function getDataTypeName(property: EntityProperty): string {
   return `${titleName}Property`;
 }
 
-function getMergedProperties(property: ReferentialProperty): Array<HandbookMergeProperty> {
+function getMergedProperties(property: ReferentialProperty): HandbookMergeProperty[] {
   if (!property.mergeDirectives) return [];
 
   return property.mergeDirectives.map(x => ({
@@ -151,7 +151,7 @@ function getMergedProperties(property: ReferentialProperty): Array<HandbookMerge
 }
 
 function entityPropertyToHandbookEntityReferenceProperty(
-  allEntities: Array<ModelBase>,
+  allEntities: ModelBase[],
   property: EntityProperty,
 ): HandbookEntityReferenceProperty {
   const referentialProperty: ReferentialProperty = property as ReferentialProperty;
@@ -168,15 +168,15 @@ function entityPropertyToHandbookEntityReferenceProperty(
   };
 }
 
-function propertyMetadataFor(allEntities: Array<ModelBase>, entity: TopLevelEntity): Array<HandbookEntityReferenceProperty> {
-  let results: Array<HandbookEntityReferenceProperty> = entity.properties.map(x =>
+function propertyMetadataFor(allEntities: ModelBase[], entity: TopLevelEntity): HandbookEntityReferenceProperty[] {
+  let results: HandbookEntityReferenceProperty[] = entity.properties.map(x =>
     entityPropertyToHandbookEntityReferenceProperty(allEntities, x),
   );
   results = sort(results, ['isIdentity', 'name'], { isIdentity: [true, false] });
   return results;
 }
 
-function referringProperties(allReferentialProperties: Array<ReferentialProperty>, entity: TopLevelEntity): Array<string> {
+function referringProperties(allReferentialProperties: ReferentialProperty[], entity: TopLevelEntity): string[] {
   return allReferentialProperties
     .filter(x => x.referencedEntity.metaEdName === entity.metaEdName)
     .map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);
@@ -187,8 +187,8 @@ export function createDefaultHandbookEntry(
   entityTypeName: string,
   metaEd: MetaEdEnvironment,
 ): HandbookEntry {
-  const allEntities: Array<ModelBase> = getAllEntitiesForNamespaces([...metaEd.namespace.values()]);
-  const allReferentialProperties: Array<ReferentialProperty> = getAllReferentialProperties(metaEd);
+  const allEntities: ModelBase[] = getAllEntitiesForNamespaces([...metaEd.namespace.values()]);
+  const allReferentialProperties: ReferentialProperty[] = getAllReferentialProperties(metaEd);
   return Object.assign(newHandbookEntry(), {
     definition: entity.documentation,
     edFiId: entity.metaEdId,

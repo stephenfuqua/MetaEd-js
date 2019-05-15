@@ -21,7 +21,7 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating change event scripts and comparing to ODS/API 3.1 authoritative artifacts', () => {
+describe('when generating change event scripts and comparing to ODS/API 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-trigger');
   const authoritativeFilename = 'DeleteTrackingTrigger-v3.1-Authoritative.sql';
   const generatedFilename = 'DeleteTrackingTrigger-v3.1.sql';
@@ -108,16 +108,16 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
   it('should have no differences', async () => {
     const authoritative: string = path.resolve(artifactPath, authoritativeFilename);
     const generated: string = path.resolve(artifactPath, generatedFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating change event scripts with simple extensions and comparing to ODS/API 3.1 authoritative artifacts', () => {
+describe('when generating change event scripts with simple extensions and comparing to ODS/API 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-trigger');
   const sampleExtensionPath: string = path.resolve(__dirname, './student-transcript-extension-project');
   const authoritativeCoreFilename = 'DeleteTrackingTrigger-v3.1-Authoritative.sql';
@@ -217,22 +217,22 @@ describe('when generating change event scripts with simple extensions and compar
   it('should have no core file differences', async () => {
     const authoritativeCore: string = path.resolve(artifactPath, authoritativeCoreFilename);
     const generatedCore: string = path.resolve(artifactPath, generatedCoreFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have no extension file differences', async () => {
     const authoritativeExtension: string = path.resolve(artifactPath, authoritativeExtensionFilename);
     const generatedExtension: string = path.resolve(artifactPath, generatedExtensionFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });

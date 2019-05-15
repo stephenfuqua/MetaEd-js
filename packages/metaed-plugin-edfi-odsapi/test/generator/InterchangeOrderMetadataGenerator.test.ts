@@ -11,7 +11,7 @@ import { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { nextHead, nextSecond, nextThird, nextLength, xsdAttributeName, xsdAttributeOrder } from './TemplateTestHelper';
 import { generate } from '../../src/generator/interchangeOrderMetadata/InterchangeOrderMetadataGenerator';
 
-describe('when generating core interchange', () => {
+describe('when generating core interchange', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -37,11 +37,11 @@ describe('when generating core interchange', () => {
     [result] = (await generate(metaEd)).generatedOutput;
   });
 
-  it('should generate correct filename', () => {
+  it('should generate correct filename', (): void => {
     expect(result.fileName).toBe('InterchangeOrderMetadata.xml');
   });
 
-  it('should generate valid xsd', () => {
+  it('should generate valid xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result.resultString));
 
     const interchange = R.view(nextHead, interchanges);
@@ -56,7 +56,7 @@ describe('when generating core interchange', () => {
   });
 });
 
-describe('when generating core interchange on DS 3.0', () => {
+describe('when generating core interchange on DS 3.0', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -82,11 +82,11 @@ describe('when generating core interchange on DS 3.0', () => {
     [result] = (await generate(metaEd)).generatedOutput;
   });
 
-  it('should generate correct filename', () => {
+  it('should generate correct filename', (): void => {
     expect(result.fileName).toBe('InterchangeOrderMetadata.xml');
   });
 
-  it('should generate valid xsd', () => {
+  it('should generate valid xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result.resultString));
 
     const interchange = R.view(nextHead, interchanges);
@@ -101,7 +101,7 @@ describe('when generating core interchange on DS 3.0', () => {
   });
 });
 
-describe('when generating extension interchange', () => {
+describe('when generating extension interchange', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
   const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
@@ -134,11 +134,11 @@ describe('when generating extension interchange', () => {
     [result] = (await generate(metaEd)).generatedOutput;
   });
 
-  it('should generate correct filename', () => {
+  it('should generate correct filename', (): void => {
     expect(result.fileName).toBe('InterchangeOrderMetadata-EXTENSION.xml');
   });
 
-  it('should generate valid xsd', () => {
+  it('should generate valid xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result.resultString));
     const interchange = R.view(nextHead, interchanges);
 
@@ -154,7 +154,7 @@ describe('when generating extension interchange', () => {
   });
 });
 
-describe('when generating core and extension interchange', () => {
+describe('when generating core and extension interchange', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
   const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
@@ -174,7 +174,7 @@ describe('when generating core and extension interchange', () => {
   const extensionInterchangeName = 'ExtensionInterchangeName';
   const coreInterchangeOrder = 10;
   const extensionInterchangeOrder = 20;
-  let result: Array<GeneratedOutput>;
+  let result: GeneratedOutput[];
 
   beforeAll(async () => {
     const element1: { name: string } = { name: elementName1 };
@@ -198,12 +198,12 @@ describe('when generating core and extension interchange', () => {
     result = (await generate(metaEd)).generatedOutput;
   });
 
-  it('should generate correct filenames', () => {
+  it('should generate correct filenames', (): void => {
     expect(result[0].fileName).toBe('InterchangeOrderMetadata.xml');
     expect(result[1].fileName).toBe('InterchangeOrderMetadata-EXTENSION.xml');
   });
 
-  it('should generate valid core xsd', () => {
+  it('should generate valid core xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result[0].resultString));
 
     const interchange = R.view(nextHead, interchanges);
@@ -218,7 +218,7 @@ describe('when generating core and extension interchange', () => {
     expect(R.view(xsdAttributeName, element2)).toBe(elementName2);
   });
 
-  it('should generate valid extension xsd', () => {
+  it('should generate valid extension xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result[1].resultString));
 
     const coreInterchange = R.view(nextHead, interchanges);
@@ -248,7 +248,7 @@ describe('when generating core and extension interchange', () => {
   });
 });
 
-describe('when generating core and extension interchange with same interchange name', () => {
+describe('when generating core and extension interchange with same interchange name', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
   const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
@@ -270,7 +270,7 @@ describe('when generating core and extension interchange with same interchange n
   const coreInterchangeOrder = 10;
   const extensionInterchangeOrder = 20;
   const sharedInterchangeOrder = 30;
-  let result: Array<GeneratedOutput>;
+  let result: GeneratedOutput[];
 
   beforeAll(async () => {
     const element1: { name: string } = { name: elementName1 };
@@ -308,12 +308,12 @@ describe('when generating core and extension interchange with same interchange n
     result = (await generate(metaEd)).generatedOutput;
   });
 
-  it('should generate correct filenames', () => {
+  it('should generate correct filenames', (): void => {
     expect(result[0].fileName).toBe('InterchangeOrderMetadata.xml');
     expect(result[1].fileName).toBe('InterchangeOrderMetadata-EXTENSION.xml');
   });
 
-  it('should generate valid core xsd', () => {
+  it('should generate valid core xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result[0].resultString));
 
     const interchange = R.view(nextHead, interchanges);
@@ -336,7 +336,7 @@ describe('when generating core and extension interchange with same interchange n
     expect(R.view(xsdAttributeName, sharedElement1)).toBe(elementName1);
   });
 
-  it('should generate valid extension xsd', () => {
+  it('should generate valid extension xsd', (): void => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result[1].resultString));
 
     const coreInterchange = R.view(nextHead, interchanges);

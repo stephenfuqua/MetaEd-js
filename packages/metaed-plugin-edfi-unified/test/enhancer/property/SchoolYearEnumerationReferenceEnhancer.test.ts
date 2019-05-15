@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, newNamespace, newSchoolYearEnumerationProperty, n
 import { MetaEdEnvironment, SchoolYearEnumerationProperty, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/SchoolYearEnumerationReferenceEnhancer';
 
-describe('when enhancing schoolYearEnumeration property', () => {
+describe('when enhancing schoolYearEnumeration property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -35,7 +35,7 @@ describe('when enhancing schoolYearEnumeration property', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -44,7 +44,7 @@ describe('when enhancing schoolYearEnumeration property', () => {
   });
 });
 
-describe('when enhancing schoolYearEnumeration property across namespaces', () => {
+describe('when enhancing schoolYearEnumeration property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -78,7 +78,7 @@ describe('when enhancing schoolYearEnumeration property across namespaces', () =
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);

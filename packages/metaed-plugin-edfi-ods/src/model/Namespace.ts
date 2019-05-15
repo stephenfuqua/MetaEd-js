@@ -2,9 +2,9 @@ import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newSchemaContainer } from './database/SchemaContainer';
 import { SchemaContainer } from './database/SchemaContainer';
 
-export type NamespaceEdfiOds = {
+export interface NamespaceEdfiOds {
   odsSchema: SchemaContainer;
-};
+}
 
 const enhancerName = 'NamespaceSetupEnhancer';
 

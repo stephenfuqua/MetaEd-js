@@ -10,8 +10,8 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building domain entity property table that is not an identity, required, optional, or a collection', () => {
-  const tables: Array<Table> = [];
+describe('when building domain entity property table that is not an identity, required, optional, or a collection', (): void => {
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -65,7 +65,7 @@ describe('when building domain entity property table that is not an identity, re
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
     tableBuilder.buildTables(
@@ -78,18 +78,18 @@ describe('when building domain entity property table that is not an identity, re
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should create no columns', () => {
+  it('should create no columns', (): void => {
     expect(table.columns).toHaveLength(0);
   });
 });
 
-describe('when building identity domain entity property table', () => {
+describe('when building identity domain entity property table', (): void => {
   const domainEntityPkName = 'DomainEntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -154,7 +154,7 @@ describe('when building identity domain entity property table', () => {
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
     tableBuilder.buildTables(
@@ -167,23 +167,23 @@ describe('when building identity domain entity property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should create one column', () => {
+  it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityPkName);
   });
 
-  it('should create no foreign keys', () => {
+  it('should create no foreign keys', (): void => {
     expect(table.foreignKeys).toHaveLength(0);
   });
 });
 
-describe('when building required domain entity property table', () => {
+describe('when building required domain entity property table', (): void => {
   const domainEntityPkName = 'DomainEntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -248,7 +248,7 @@ describe('when building required domain entity property table', () => {
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
     tableBuilder.buildTables(
@@ -261,23 +261,23 @@ describe('when building required domain entity property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should create one column', () => {
+  it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityPkName);
   });
 
-  it('should create no foreign keys', () => {
+  it('should create no foreign keys', (): void => {
     expect(table.foreignKeys).toHaveLength(0);
   });
 });
 
-describe('when building optional domain entity property table', () => {
+describe('when building optional domain entity property table', (): void => {
   const domainEntityPkName = 'DomainEntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -342,7 +342,7 @@ describe('when building optional domain entity property table', () => {
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
     tableBuilder.buildTables(
@@ -355,27 +355,27 @@ describe('when building optional domain entity property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should create one column', () => {
+  it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityPkName);
   });
 
-  it('should create no foreign keys', () => {
+  it('should create no foreign keys', (): void => {
     expect(table.foreignKeys).toHaveLength(0);
   });
 });
 
-describe('when building collection domain entity property table', () => {
+describe('when building collection domain entity property table', (): void => {
   const domainEntityName = 'DomainEntityName';
   const domainEntityPkName = 'domainEntityPkName';
   const entityPkName = 'EntityPkName';
   const tableSchema = 'tableschema';
   const tableName = 'TableName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -441,7 +441,7 @@ describe('when building collection domain entity property table', () => {
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
     tableBuilder.buildTables(
@@ -454,13 +454,13 @@ describe('when building collection domain entity property table', () => {
     );
   });
 
-  it('should return join table', () => {
+  it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + domainEntityName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
-  it('should create two primary key columns', () => {
+  it('should create two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
@@ -468,11 +468,11 @@ describe('when building collection domain entity property table', () => {
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should create one foreign key', () => {
+  it('should create one foreign key', (): void => {
     expect(tables[0].foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
     expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + domainEntityName);
     expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);

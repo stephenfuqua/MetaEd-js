@@ -8,7 +8,7 @@ import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
 export function referencePropertyColumnCreator(factory: ColumnCreatorFactory): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => {
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
       if (!strategy.buildColumns(property) || property.data.edfiOds.odsIsCollection) return [];
 
       const referentialProperty: ReferentialProperty = asReferentialProperty(property);
@@ -19,7 +19,7 @@ export function referencePropertyColumnCreator(factory: ColumnCreatorFactory): C
           ? buildStrategy.skipPath(referentialProperty.mergeDirectives.map(x => x.sourcePropertyPathStrings.slice(1)))
           : buildStrategy;
 
-      const columns: Array<Column> = collectPrimaryKeys(referentialProperty.referencedEntity, buildStrategy, factory);
+      const columns: Column[] = collectPrimaryKeys(referentialProperty.referencedEntity, buildStrategy, factory);
       columns.forEach((column: Column) => {
         column.referenceContext = referentialProperty.data.edfiOds.odsName + column.referenceContext;
       });

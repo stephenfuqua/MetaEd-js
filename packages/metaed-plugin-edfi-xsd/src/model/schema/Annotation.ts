@@ -1,4 +1,4 @@
-export type Annotation = {
+export interface Annotation {
   documentation: string;
   typeGroup: string;
   descriptorName: string;
@@ -6,7 +6,7 @@ export type Annotation = {
   hasTypeGroup: () => boolean;
   hasDescriptorName: () => boolean;
   hasAppInfo: () => boolean;
-};
+}
 
 export function newAnnotation(): Annotation {
   return {

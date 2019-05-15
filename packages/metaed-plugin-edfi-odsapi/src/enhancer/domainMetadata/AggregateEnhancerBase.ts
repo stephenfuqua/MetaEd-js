@@ -8,12 +8,12 @@ import { EntityTable } from '../../model/domainMetadata/EntityTable';
 
 export type EnhanceEntityTable = (entity: TopLevelEntity, table: Table, entityTable: EntityTable) => void;
 export type IsAggregateExtension = () => boolean;
-export type OrderedAndUniqueTablesFor = (entity: TopLevelEntity, namespace: Namespace) => Array<Table>;
+export type OrderedAndUniqueTablesFor = (entity: TopLevelEntity, namespace: Namespace) => Table[];
 
 // @ts-ignore - parameters never read
 export function nullEnhanceEntityTable(entity: TopLevelEntity, table: Table, entityTable: EntityTable): void {} // eslint-disable-line no-unused-vars
 
-export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Array<Table> {
+export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Table[] {
   const tablesForNamespace = (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTables.filter(
     (t: Table) => t.schema === namespace.namespaceName.toLowerCase(),
   );
@@ -29,9 +29,7 @@ function generateAggregate(
   isAggregateExtension: IsAggregateExtension,
   orderedAndUniqueTablesFor: OrderedAndUniqueTablesFor,
 ): Aggregate | null {
-  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespace).filter(
-    (table: Table) => !table.hideFromApiMetadata,
-  );
+  const tables: Table[] = orderedAndUniqueTablesFor(entity, namespace).filter((table: Table) => !table.hideFromApiMetadata);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName,

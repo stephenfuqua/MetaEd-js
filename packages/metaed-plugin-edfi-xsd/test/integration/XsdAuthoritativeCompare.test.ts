@@ -24,13 +24,13 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', () => {
+describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath: string = `${projectRootPath}/node_modules`;
-  const outputDirectory: string = `${artifactPath}`;
-  const complexTypeNames: Array<string> = [];
-  const simpleTypeNames: Array<string> = [];
+  const nodeModulesPath = `${projectRootPath}/node_modules`;
+  const outputDirectory = `${artifactPath}`;
+  const complexTypeNames: string[] = [];
+  const simpleTypeNames: string[] = [];
   let coreResult: GeneratedOutput;
   let schemaResult: GeneratedOutput;
   let coreFileBaseName: string;
@@ -107,14 +107,14 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
   it('should have core with no differences', async () => {
     expect(generatedCoreXsd).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd}`;
+    const gitCommand = `git diff --shortstat --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     expect(result).toMatchSnapshot();
   });
 
   it('should have schema annotation with no differences', async () => {
-    const gitCommand: string = `git diff --shortstat --no-index -- ${authoritativeSchemaXsd} ${generatedSchemaXsd}`;
+    const gitCommand = `git diff --shortstat --no-index -- ${authoritativeSchemaXsd} ${generatedSchemaXsd}`;
     expect(generatedCoreXsd).toBeDefined();
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
@@ -123,28 +123,28 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
   it('should create diff files', async () => {
     expect(generatedCoreXsd).toBeDefined();
-    const cssFile: string = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile: string = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile: string = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile: string = `git diff --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd} > ${diffFile}`;
+    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
+    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
+    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
+    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd} > ${diffFile}`;
 
     await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
       .then(() => ffs.readFile(diffFile))
       .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
       .then(result =>
         ffs.readFile(cssFile).then(css => {
-          const html: string = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
+          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
           return ffs.writeFile(htmlFile, html, 'utf-8');
         }),
       );
   });
 
-  it('should have complex types in the correct order', () => {
+  it('should have complex types in the correct order', (): void => {
     expect(generatedCoreXsd).toBeDefined();
     expect(complexTypeNames).toMatchSnapshot();
   });
 
-  it('should have simple types in the correct order', () => {
+  it('should have simple types in the correct order', (): void => {
     expect(generatedCoreXsd).toBeDefined();
     expect(simpleTypeNames).toMatchSnapshot();
   });

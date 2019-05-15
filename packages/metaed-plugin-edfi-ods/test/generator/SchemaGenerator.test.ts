@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { GeneratorResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/SchemaGenerator';
 
-describe('when generating schemas for core namespace', () => {
+describe('when generating schemas for core namespace', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -18,7 +18,7 @@ describe('when generating schemas for core namespace', () => {
     result = await generate(metaEd);
   });
 
-  it('should generate correct schema', () => {
+  it('should generate correct schema', (): void => {
     expect(result.generatorName).toEqual('edfiOds.SchemaGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0010-Schemas.sql');
     expect(R.head(result.generatedOutput).namespace).toBe('EdFi');
@@ -29,7 +29,7 @@ describe('when generating schemas for core namespace', () => {
   });
 });
 
-describe('when generating schemas for extension namespace', () => {
+describe('when generating schemas for extension namespace', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -45,7 +45,7 @@ describe('when generating schemas for extension namespace', () => {
     result = await generate(metaEd);
   });
 
-  it('should generate correct schema', () => {
+  it('should generate correct schema', (): void => {
     expect(result.generatorName).toEqual('edfiOds.SchemaGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0010-EXTENSION-Extension-Schemas.sql');
     expect(R.head(result.generatedOutput).namespace).toBe('Extension');

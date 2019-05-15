@@ -17,14 +17,14 @@ import { addDescriptorPropertyEdfiXsdTo } from '../../../src/model/property/Desc
 import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLevelEntity';
 import { enhance } from '../../../src/enhancer/schema/AddDescriptorComplexTypesEnhancerV2';
 
-describe('when enhancing descriptor', () => {
+describe('when enhancing descriptor', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
-  const complexTypeDescriptorNameWithExtension: string = `${projectExtension}-${complexTypeDescriptorName}`;
+  const complexTypeDescriptorName = `${complexTypeName}Descriptor`;
+  const complexTypeDescriptorNameWithExtension = `${projectExtension}-${complexTypeDescriptorName}`;
   const documentation = 'Documentation';
   let enhancedItem: Descriptor;
   let createdComplexType: ComplexType;
@@ -57,77 +57,77 @@ describe('when enhancing descriptor', () => {
     createdIdentityType = enhancedItem.data.edfiXsd.xsdIdentityType;
   });
 
-  it('should create complex type', () => {
+  it('should create complex type', (): void => {
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdComplexType.annotation).toBeDefined();
     expect(createdComplexType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdComplexType.annotation.typeGroup).toBe('Descriptor');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdComplexType.baseType).toBe('DescriptorType');
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdComplexType.name).toBe(complexTypeDescriptorNameWithExtension);
   });
 
-  it('should not have items', () => {
+  it('should not have items', (): void => {
     expect(createdComplexType.items.length).toBe(0);
   });
 
-  it('should create reference type', () => {
+  it('should create reference type', (): void => {
     expect(createdReferenceType).toBeDefined();
   });
 
-  it('should have reference type annotation documentation assigned', () => {
+  it('should have reference type annotation documentation assigned', (): void => {
     expect(createdReferenceType.annotation).toBeDefined();
     expect(createdReferenceType.annotation.documentation).toMatchSnapshot();
   });
 
-  it('should have reference type group assigned', () => {
+  it('should have reference type group assigned', (): void => {
     expect(createdReferenceType.annotation.typeGroup).toBe('Extended Descriptor Reference');
   });
 
-  it('should have reference type base type assigned', () => {
+  it('should have reference type base type assigned', (): void => {
     expect(createdReferenceType.baseType).toBe('DescriptorReferenceType');
   });
 
-  it('should have reference type name assigned', () => {
+  it('should have reference type name assigned', (): void => {
     expect(createdReferenceType.name).toBe(`${complexTypeDescriptorNameWithExtension}ReferenceType`);
   });
 
-  it('should not have reference type items', () => {
+  it('should not have reference type items', (): void => {
     expect(createdReferenceType.items.length).toBe(0);
   });
 
-  it('should not create identity type', () => {
+  it('should not create identity type', (): void => {
     expect(createdIdentityType).toBe(NoComplexType);
   });
 
-  it('should not create lookup type', () => {
+  it('should not create lookup type', (): void => {
     expect(createdLookupType).toBe(NoComplexType);
   });
 });
 
-describe('when enhancing descriptor with required map type', () => {
+describe('when enhancing descriptor with required map type', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
-  const complexTypeDescriptorNameWithExtension: string = `${projectExtension}-${complexTypeDescriptorName}`;
+  const complexTypeDescriptorName = `${complexTypeName}Descriptor`;
+  const complexTypeDescriptorNameWithExtension = `${projectExtension}-${complexTypeDescriptorName}`;
   const documentation = 'Documentation';
   const mapTypeName = 'MapTypeName';
   const enumerationName = 'EnumerationName';
-  const enumerationNameWithExtension: string = `${projectExtension}-${enumerationName}`;
+  const enumerationNameWithExtension = `${projectExtension}-${enumerationName}`;
 
   let enhancedItem: Descriptor;
   let createdComplexType: ComplexType;
@@ -176,28 +176,28 @@ describe('when enhancing descriptor with required map type', () => {
     createdIdentityType = enhancedItem.data.edfiXsd.xsdIdentityType;
   });
 
-  it('should create complex type', () => {
+  it('should create complex type', (): void => {
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdComplexType.annotation).toBeDefined();
     expect(createdComplexType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdComplexType.annotation.typeGroup).toBe('Descriptor');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdComplexType.baseType).toBe('DescriptorType');
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdComplexType.name).toBe(complexTypeDescriptorNameWithExtension);
   });
 
-  it('should not have items', () => {
+  it('should not have items', (): void => {
     expect(createdComplexType.items.length).toBe(1);
 
     const mapTypeItem: Element = createdComplexType.items[0] as Element;
@@ -209,31 +209,31 @@ describe('when enhancing descriptor with required map type', () => {
     expect(mapTypeItem.minOccurs).toBe('');
   });
 
-  it('should create reference type', () => {
+  it('should create reference type', (): void => {
     expect(createdReferenceType).toBeDefined();
   });
 
-  it('should not create identity type', () => {
+  it('should not create identity type', (): void => {
     expect(createdIdentityType).toBe(NoComplexType);
   });
 
-  it('should not create lookup type', () => {
+  it('should not create lookup type', (): void => {
     expect(createdLookupType).toBe(NoComplexType);
   });
 });
 
-describe('when enhancing descriptor with optional map type', () => {
+describe('when enhancing descriptor with optional map type', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
-  const complexTypeDescriptorNameWithExtension: string = `${projectExtension}-${complexTypeDescriptorName}`;
+  const complexTypeDescriptorName = `${complexTypeName}Descriptor`;
+  const complexTypeDescriptorNameWithExtension = `${projectExtension}-${complexTypeDescriptorName}`;
   const documentation = 'Documentation';
   const mapTypeName = 'MapTypeName';
   const enumerationName = 'EnumerationName';
-  const enumerationNameWithExtension: string = `${projectExtension}-${enumerationName}`;
+  const enumerationNameWithExtension = `${projectExtension}-${enumerationName}`;
 
   let enhancedItem: Descriptor;
   let createdComplexType: ComplexType;
@@ -282,28 +282,28 @@ describe('when enhancing descriptor with optional map type', () => {
     createdIdentityType = enhancedItem.data.edfiXsd.xsdIdentityType;
   });
 
-  it('should create complex type', () => {
+  it('should create complex type', (): void => {
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdComplexType.annotation).toBeDefined();
     expect(createdComplexType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdComplexType.annotation.typeGroup).toBe('Descriptor');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdComplexType.baseType).toBe('DescriptorType');
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdComplexType.name).toBe(complexTypeDescriptorNameWithExtension);
   });
 
-  it('should not have items', () => {
+  it('should not have items', (): void => {
     expect(createdComplexType.items.length).toBe(1);
 
     const mapTypeItem: Element = createdComplexType.items[0] as Element;
@@ -315,26 +315,26 @@ describe('when enhancing descriptor with optional map type', () => {
     expect(mapTypeItem.minOccurs).toBe('0');
   });
 
-  it('should create reference type', () => {
+  it('should create reference type', (): void => {
     expect(createdReferenceType).toBeDefined();
   });
 
-  it('should not create identity type', () => {
+  it('should not create identity type', (): void => {
     expect(createdIdentityType).toBe(NoComplexType);
   });
 
-  it('should not create lookup type', () => {
+  it('should not create lookup type', (): void => {
     expect(createdLookupType).toBe(NoComplexType);
   });
 });
 
-describe('when enhancing descriptor with property', () => {
+describe('when enhancing descriptor with property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
+  const complexTypeNameWithExtension = `${projectExtension}-${complexTypeName}`;
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   const propertyType = 'PropertyType';
@@ -377,11 +377,11 @@ describe('when enhancing descriptor with property', () => {
     [createdComplexType] = enhancedItem.data.edfiXsd.xsdComplexTypes;
   });
 
-  it('should have items', () => {
+  it('should have items', (): void => {
     expect(createdComplexType.items.length).toBe(1);
   });
 
-  it('should create complex type item element', () => {
+  it('should create complex type item element', (): void => {
     const complexTypeItem: Element = createdComplexType.items[0] as Element;
     expect(complexTypeItem.name).toBe(propertyName);
     expect(complexTypeItem.type).toBe(propertyType);
@@ -392,17 +392,17 @@ describe('when enhancing descriptor with property', () => {
   });
 });
 
-describe('when enhancing descriptor with property and map type', () => {
+describe('when enhancing descriptor with property and map type', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
+  const complexTypeNameWithExtension = `${projectExtension}-${complexTypeName}`;
   const documentation = 'Documentation';
   const mapTypeName = 'MapTypeName';
   const enumerationName = 'EnumerationName';
-  const enumerationNameWithExtension: string = `${projectExtension}-${enumerationName}`;
+  const enumerationNameWithExtension = `${projectExtension}-${enumerationName}`;
   const propertyName = 'PropertyName';
   const propertyType = 'PropertyType';
   const propertyDocumentation = 'PropertyDocumentation';
@@ -458,11 +458,11 @@ describe('when enhancing descriptor with property and map type', () => {
     [createdComplexType] = enhancedItem.data.edfiXsd.xsdComplexTypes;
   });
 
-  it('should have two items', () => {
+  it('should have two items', (): void => {
     expect(createdComplexType.items.length).toBe(2);
   });
 
-  it('should create complex type item element', () => {
+  it('should create complex type item element', (): void => {
     const complexTypeItem: Element = createdComplexType.items[0] as Element;
     expect(complexTypeItem.name).toBe(propertyName);
     expect(complexTypeItem.type).toBe(propertyType);
@@ -472,7 +472,7 @@ describe('when enhancing descriptor with property and map type', () => {
     expect(complexTypeItem.maxOccursIsUnbounded).toBe(false);
   });
 
-  it('should create map type item element', () => {
+  it('should create map type item element', (): void => {
     const complexTypeItem: Element = createdComplexType.items[1] as Element;
     expect(complexTypeItem.name).toBe(mapTypeName);
     expect(complexTypeItem.type).toBe(enumerationNameWithExtension);
@@ -483,15 +483,15 @@ describe('when enhancing descriptor with property and map type', () => {
   });
 });
 
-describe('when enhancing descriptor with descriptor property', () => {
+describe('when enhancing descriptor with descriptor property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
+  const complexTypeNameWithExtension = `${projectExtension}-${complexTypeName}`;
   const descriptorName = 'DescriptorName';
-  const descriptorNameWithExtension: string = `${projectExtension}-${descriptorName}`;
+  const descriptorNameWithExtension = `${projectExtension}-${descriptorName}`;
   const documentation = 'Documentation';
   const propertyType = 'PropertyType';
   const propertyDocumentation = 'PropertyDocumentation';
@@ -547,11 +547,11 @@ describe('when enhancing descriptor with descriptor property', () => {
     [createdComplexType] = enhancedItem.data.edfiXsd.xsdComplexTypes;
   });
 
-  it('should have items', () => {
+  it('should have items', (): void => {
     expect(createdComplexType.items.length).toBe(1);
   });
 
-  it('should create complex type item element', () => {
+  it('should create complex type item element', (): void => {
     const complexTypeItem: Element = createdComplexType.items[0] as Element;
     expect(complexTypeItem.name).toBe(descriptorName);
     expect(complexTypeItem.type).toBe(propertyType);
@@ -560,13 +560,13 @@ describe('when enhancing descriptor with descriptor property', () => {
   });
 });
 
-describe('when enhancing descriptor with both queryable and identity property', () => {
+describe('when enhancing descriptor with both queryable and identity property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const complexTypeName = 'ComplexTypeName';
-  const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
+  const complexTypeNameWithExtension = `${projectExtension}-${complexTypeName}`;
   const documentation = 'Documentation';
   const property1Name = 'Property1Name';
   const property1Type = 'Property1Type';
@@ -634,23 +634,23 @@ describe('when enhancing descriptor with both queryable and identity property', 
     createdIdentityType = enhancedItem.data.edfiXsd.xsdIdentityType;
   });
 
-  it('should create complex type', () => {
+  it('should create complex type', (): void => {
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should create reference type', () => {
+  it('should create reference type', (): void => {
     expect(createdReferenceType).toBeDefined();
   });
 
-  it('should not have reference type items', () => {
+  it('should not have reference type items', (): void => {
     expect(createdReferenceType.items.length).toBe(0);
   });
 
-  it('should not create identity type', () => {
+  it('should not create identity type', (): void => {
     expect(createdIdentityType).toBe(NoComplexType);
   });
 
-  it('should not create lookup type', () => {
+  it('should not create lookup type', (): void => {
     expect(createdLookupType).toBe(NoComplexType);
   });
 });

@@ -48,7 +48,7 @@ export function createNewColumnFor(property: SimpleProperty): Column {
 
 export function simplePropertyColumnCreator(): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => {
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
       if (!strategy.buildColumns(property)) return [];
 
       const column: Column = createNewColumnFor(property as SimpleProperty);

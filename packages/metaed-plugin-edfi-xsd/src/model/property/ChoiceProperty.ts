@@ -2,7 +2,7 @@ import { MetaEdEnvironment, EnhancerResult, EntityProperty, ChoiceProperty } fro
 import { EntityPropertyEdfiXsd } from './EntityProperty';
 
 export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd & {
-  xsdProperties: Array<EntityProperty>;
+  xsdProperties: EntityProperty[];
   xsdIsChoice: boolean;
 };
 

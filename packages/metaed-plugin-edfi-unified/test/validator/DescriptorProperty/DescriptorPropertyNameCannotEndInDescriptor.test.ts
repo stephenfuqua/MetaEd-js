@@ -8,9 +8,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DescriptorProperty/DescriptorPropertyNameCannotEndInDescriptor';
 
-describe('when descriptor property has valid name', () => {
+describe('when descriptor property has valid name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -31,18 +31,18 @@ describe('when descriptor property has valid name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when descriptor property has invalid name', () => {
+describe('when descriptor property has invalid name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -62,11 +62,11 @@ describe('when descriptor property has invalid name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DescriptorPropertyNameCannotEndInDescriptor');
     expect(failures[0].category).toBe('error');

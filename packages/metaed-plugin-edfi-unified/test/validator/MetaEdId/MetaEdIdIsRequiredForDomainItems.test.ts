@@ -2,9 +2,9 @@ import { DomainBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilde
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
 
-describe('when validating domain item is missing metaEdId', () => {
+describe('when validating domain item is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -22,11 +22,11 @@ describe('when validating domain item is missing metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForDomainItems');
     expect(failures[0].category).toBe('warning');
@@ -35,9 +35,9 @@ describe('when validating domain item is missing metaEdId', () => {
   });
 });
 
-describe('when validating subdomain item is missing metaEdId for entity', () => {
+describe('when validating subdomain item is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -56,11 +56,11 @@ describe('when validating subdomain item is missing metaEdId for entity', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one subdomain', () => {
+  it('should build one subdomain', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForDomainItems');
     expect(failures[0].category).toBe('warning');

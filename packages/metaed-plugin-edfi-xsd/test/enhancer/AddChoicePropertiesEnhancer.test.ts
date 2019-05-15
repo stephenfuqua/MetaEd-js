@@ -12,7 +12,7 @@ import {
 import { MetaEdEnvironment, Association, Choice, Common, Descriptor, DomainEntity, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/AddChoicePropertiesEnhancer';
 
-describe('when enhancing association with choice', () => {
+describe('when enhancing association with choice', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -54,7 +54,7 @@ describe('when enhancing association with choice', () => {
     enhance(metaEd);
   });
 
-  it('should add choice properties to association', () => {
+  it('should add choice properties to association', (): void => {
     const association: any = namespace.entity.association.get(entityName);
     expect(association.properties.length).toBe(1);
     const choiceProperty: any = association.properties[0];
@@ -64,7 +64,7 @@ describe('when enhancing association with choice', () => {
   });
 });
 
-describe('when enhancing association with choices nested', () => {
+describe('when enhancing association with choices nested', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -123,7 +123,7 @@ describe('when enhancing association with choices nested', () => {
     enhance(metaEd);
   });
 
-  it('should add two levels of choice properties to association', () => {
+  it('should add two levels of choice properties to association', (): void => {
     const association: any = namespace.entity.association.get(entityName);
     expect(association.properties.length).toBe(1);
 
@@ -139,7 +139,7 @@ describe('when enhancing association with choices nested', () => {
   });
 });
 
-describe('when enhancing common with choice', () => {
+describe('when enhancing common with choice', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -181,7 +181,7 @@ describe('when enhancing common with choice', () => {
     enhance(metaEd);
   });
 
-  it('should add choice properties to common', () => {
+  it('should add choice properties to common', (): void => {
     const common: any = namespace.entity.common.get(entityName);
     expect(common.properties.length).toBe(1);
     const choiceProperty: any = common.properties[0];
@@ -191,7 +191,7 @@ describe('when enhancing common with choice', () => {
   });
 });
 
-describe('when enhancing common with choices nested', () => {
+describe('when enhancing common with choices nested', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -249,7 +249,7 @@ describe('when enhancing common with choices nested', () => {
     enhance(metaEd);
   });
 
-  it('should add two levels of choice properties to common', () => {
+  it('should add two levels of choice properties to common', (): void => {
     const common: any = namespace.entity.common.get(entityName);
     expect(common.properties.length).toBe(1);
 
@@ -265,7 +265,7 @@ describe('when enhancing common with choices nested', () => {
   });
 });
 
-describe('when enhancing descriptor with choice', () => {
+describe('when enhancing descriptor with choice', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -307,7 +307,7 @@ describe('when enhancing descriptor with choice', () => {
     enhance(metaEd);
   });
 
-  it('should add choice properties to descriptor', () => {
+  it('should add choice properties to descriptor', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(entityName);
     expect(descriptor.properties.length).toBe(1);
     const choiceProperty: any = descriptor.properties[0];
@@ -317,7 +317,7 @@ describe('when enhancing descriptor with choice', () => {
   });
 });
 
-describe('when enhancing descriptor with choices nested', () => {
+describe('when enhancing descriptor with choices nested', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -376,7 +376,7 @@ describe('when enhancing descriptor with choices nested', () => {
     enhance(metaEd);
   });
 
-  it('should add two levels of choice properties to descriptor', () => {
+  it('should add two levels of choice properties to descriptor', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(entityName);
     expect(descriptor.properties.length).toBe(1);
 
@@ -392,7 +392,7 @@ describe('when enhancing descriptor with choices nested', () => {
   });
 });
 
-describe('when enhancing domainEntity with choice', () => {
+describe('when enhancing domainEntity with choice', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -434,7 +434,7 @@ describe('when enhancing domainEntity with choice', () => {
     enhance(metaEd);
   });
 
-  it('should add choice properties to domainEntity', () => {
+  it('should add choice properties to domainEntity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(entityName);
     expect(domainEntity.properties.length).toBe(1);
     const choiceProperty: any = domainEntity.properties[0];
@@ -444,7 +444,7 @@ describe('when enhancing domainEntity with choice', () => {
   });
 });
 
-describe('when enhancing domainEntity with choice across namespaces', () => {
+describe('when enhancing domainEntity with choice across namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -489,7 +489,7 @@ describe('when enhancing domainEntity with choice across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should add choice properties to domainEntity', () => {
+  it('should add choice properties to domainEntity', (): void => {
     const domainEntity: any = extensionNamespace.entity.domainEntity.get(entityName);
     expect(domainEntity.properties.length).toBe(1);
     const choiceProperty: any = domainEntity.properties[0];
@@ -499,7 +499,7 @@ describe('when enhancing domainEntity with choice across namespaces', () => {
   });
 });
 
-describe('when enhancing domainEntity with choices nested', () => {
+describe('when enhancing domainEntity with choices nested', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -559,7 +559,7 @@ describe('when enhancing domainEntity with choices nested', () => {
     enhance(metaEd);
   });
 
-  it('should add two levels of choice properties to domainEntity', () => {
+  it('should add two levels of choice properties to domainEntity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(entityName);
     expect(domainEntity.properties.length).toBe(1);
 

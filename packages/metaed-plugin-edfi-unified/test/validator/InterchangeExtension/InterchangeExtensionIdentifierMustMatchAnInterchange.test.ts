@@ -2,10 +2,10 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, InterchangeBuilder, NamespaceB
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/InterchangeExtension/InterchangeExtensionIdentifierMustMatchAnInterchange';
 
-describe('when validating interchange extension has valid extendee', () => {
+describe('when validating interchange extension has valid extendee', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName = 'InterchangeName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -36,22 +36,22 @@ describe('when validating interchange extension has valid extendee', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange extension has invalid extendee', () => {
+describe('when validating interchange extension has invalid extendee', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -80,11 +80,11 @@ describe('when validating interchange extension has invalid extendee', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionIdentifierMustMatchAnInterchange');
     expect(failures[0].category).toBe('error');

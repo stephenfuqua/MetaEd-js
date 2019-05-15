@@ -17,7 +17,7 @@ function rowToString(obj, value, i) {
   return value;
 }
 
-describe('when generating a simple sql data dictionary', () => {
+describe('when generating a simple sql data dictionary', (): void => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
 
@@ -59,24 +59,24 @@ describe('when generating a simple sql data dictionary', () => {
     workbook = readWorkbook(generatorResults.generatedOutput[0].resultStream, 'buffer');
   });
 
-  it('should generate excel sheet', () => {
+  it('should generate excel sheet', (): void => {
     expect(generatorResults).toBeDefined();
   });
 
-  it('should have three sheets with the correct names', () => {
+  it('should have three sheets with the correct names', (): void => {
     expect(workbook.sheets).toHaveLength(2);
     expect(workbook.sheets[0].name).toBe('Tables');
     expect(workbook.sheets[1].name).toBe('Columns');
   });
 
-  it('should have a Tables sheet with the correct headers', () => {
+  it('should have a Tables sheet with the correct headers', (): void => {
     expect(workbook.sheets[0].rows[0].headers).toHaveLength(3);
     expect(workbook.sheets[0].rows[0].headers[0]).toBe('Entity Name');
     expect(workbook.sheets[0].rows[0].headers[1]).toBe('Entity Schema');
     expect(workbook.sheets[0].rows[0].headers[2]).toBe('Entity Definition');
   });
 
-  it('should have a Columns sheet with the correct headers', () => {
+  it('should have a Columns sheet with the correct headers', (): void => {
     expect(workbook.sheets[1].rows[0].headers).toHaveLength(9);
     expect(workbook.sheets[1].rows[0].headers[0]).toBe('Entity/Table Owner');
     expect(workbook.sheets[1].rows[0].headers[1]).toBe('Table Name');
@@ -89,7 +89,7 @@ describe('when generating a simple sql data dictionary', () => {
     expect(workbook.sheets[1].rows[0].headers[8]).toBe('Foreign Key');
   });
 
-  it('should have a Tables sheet with the correct rows', () => {
+  it('should have a Tables sheet with the correct rows', (): void => {
     expect(workbook.sheets[0].rows).toHaveLength(5);
     expect(workbook.sheets[0].rows[0].values.reduce(rowToString)).toBe(
       'Descriptor, edfi, This is the base entity for the descriptor pattern.',
@@ -104,7 +104,7 @@ describe('when generating a simple sql data dictionary', () => {
     );
   });
 
-  it('should have a Columns sheet with the correct rows', () => {
+  it('should have a Columns sheet with the correct rows', (): void => {
     expect(workbook.sheets[1].rows).toHaveLength(16);
     expect(workbook.sheets[1].rows[0].values.reduce(rowToString)).toBe(
       'edfi, Descriptor, CodeValue, A code or abbreviation that is used to refer to the descriptor., [NVARCHAR](50), NOT NULL, No, No, No',

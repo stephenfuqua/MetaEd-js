@@ -11,7 +11,7 @@ import {
 const enhancerName = 'AddAssociationExtensionComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'associationExtension') as Array<AssociationExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'associationExtension') as AssociationExtension[]).forEach(
     (associationExtension: AssociationExtension) => {
       if (associationExtension.data.edfiXsd.xsdHasExtensionOverrideProperties()) {
         const associationExtensionEdfiXsd: TopLevelEntityEdfiXsd = associationExtension.data.edfiXsd;

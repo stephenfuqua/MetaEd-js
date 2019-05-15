@@ -31,7 +31,7 @@ import { allEntityModelTypes, allTopLevelEntityModelTypes, allEntityModelTypesNo
 /**
  *
  */
-export type EntityRepository = {
+export interface EntityRepository {
   unknown: Map<string, any>;
   association: Map<string, Association>;
   associationExtension: Map<string, AssociationExtension>;
@@ -56,7 +56,7 @@ export type EntityRepository = {
   sharedString: Map<string, SharedString>;
   stringType: Map<string, StringType>;
   subdomain: Map<string, Subdomain>;
-};
+}
 
 /**
  *
@@ -93,8 +93,8 @@ export function newEntityRepository(): EntityRepository {
 /**
  *
  */
-export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getAllEntities(repository: EntityRepository): ModelBase[] {
+  const result: ModelBase[] = [];
   allEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -102,8 +102,8 @@ export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
 /**
  *
  */
-export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getAllEntitiesForNamespaces(namespaces: Namespace[]): ModelBase[] {
+  const result: ModelBase[] = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getAllEntities(namespace.entity));
   });
@@ -113,8 +113,8 @@ export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array
 /**
  *
  */
-export function getAllTopLevelEntities(repository: EntityRepository): Array<TopLevelEntity> {
-  const result: Array<TopLevelEntity> = [];
+export function getAllTopLevelEntities(repository: EntityRepository): TopLevelEntity[] {
+  const result: TopLevelEntity[] = [];
   allTopLevelEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -122,8 +122,8 @@ export function getAllTopLevelEntities(repository: EntityRepository): Array<TopL
 /**
  *
  */
-export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>): Array<TopLevelEntity> {
-  const result: Array<TopLevelEntity> = [];
+export function getAllTopLevelEntitiesForNamespaces(namespaces: Namespace[]): TopLevelEntity[] {
+  const result: TopLevelEntity[] = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getAllTopLevelEntities(namespace.entity));
   });
@@ -133,8 +133,8 @@ export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>
 /**
  *
  */
-export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): ModelBase[] {
+  const result: ModelBase[] = [];
   allEntityModelTypesNoSimpleTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -142,8 +142,8 @@ export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array
 /**
  *
  */
-export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Namespace[]): ModelBase[] {
+  const result: ModelBase[] = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getAllEntitiesNoSimpleTypes(namespace.entity));
   });
@@ -153,8 +153,8 @@ export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Names
 /**
  *
  */
-export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: ModelType[]): ModelBase[] {
+  const result: ModelBase[] = [];
   modelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -162,11 +162,8 @@ export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: A
 /**
  *
  */
-export function getEntitiesOfTypeForNamespaces(
-  namespaces: Array<Namespace>,
-  ...modelTypes: Array<ModelType>
-): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+export function getEntitiesOfTypeForNamespaces(namespaces: Namespace[], ...modelTypes: ModelType[]): ModelBase[] {
+  const result: ModelBase[] = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getEntitiesOfType(namespace.entity, ...modelTypes));
   });
@@ -176,7 +173,7 @@ export function getEntitiesOfTypeForNamespaces(
 /**
  *
  */
-export function getAllEntitiesOfType(metaEd: MetaEdEnvironment, ...modelTypes: Array<ModelType>): Array<ModelBase> {
+export function getAllEntitiesOfType(metaEd: MetaEdEnvironment, ...modelTypes: ModelType[]): ModelBase[] {
   return getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), ...modelTypes);
 }
 
@@ -187,7 +184,7 @@ export function getEntityFromNamespaceChain(
   entityName: string,
   entityNamespaceName: string,
   workingNamespace: Namespace,
-  ...modelTypes: Array<ModelType>
+  ...modelTypes: ModelType[]
 ): ModelBase | null {
   const namespaceChain = [workingNamespace, ...workingNamespace.dependencies];
   // eslint-disable-next-line no-restricted-syntax
@@ -211,7 +208,7 @@ export function getEntityFromNamespaceChain(
 export function getEntityFromNamespace(
   entityName: string,
   namespace: Namespace,
-  ...modelTypes: Array<ModelType>
+  ...modelTypes: ModelType[]
 ): ModelBase | null {
   // eslint-disable-next-line no-restricted-syntax
   for (const modelType of modelTypes) {
@@ -226,11 +223,7 @@ export function getEntityFromNamespace(
 /**
  * Returns the first matching entity.
  */
-export function findFirstEntity(
-  entityName: string,
-  namespaces: Array<Namespace>,
-  ...modelTypes: Array<ModelType>
-): ModelBase | null {
+export function findFirstEntity(entityName: string, namespaces: Namespace[], ...modelTypes: ModelType[]): ModelBase | null {
   // eslint-disable-next-line no-restricted-syntax
   for (const namespace of namespaces) {
     const firstEntity = getEntityFromNamespace(entityName, namespace, ...modelTypes);

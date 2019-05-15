@@ -4,7 +4,7 @@ import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/EnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 
-describe('when EnumerationRowEnhancer enhances enumeration', () => {
+describe('when EnumerationRowEnhancer enhances enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -40,13 +40,13 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
     enhance(metaEd);
   });
 
-  it('should create two rows', () => {
+  it('should create two rows', (): void => {
     expect(rowEntities(metaEd, namespace).size).toBe(2);
     expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`)).toBeDefined();
     expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`)).toBeDefined();
   });
 
-  it('should have correct first enumeration row', () => {
+  it('should have correct first enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -59,7 +59,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
     expect(row.shortDescription).toBe(shortDescription1);
   });
 
-  it('should have correct second enumeration row', () => {
+  it('should have correct second enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -109,13 +109,13 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
     enhance(metaEd);
   });
 
-  it('should create two rows', () => {
+  it('should create two rows', (): void => {
     expect(rowEntities(metaEd, namespace).size).toBe(2);
     expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`)).toBeDefined();
     expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`)).toBeDefined();
   });
 
-  it('should have correct first enumeration row', () => {
+  it('should have correct first enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -128,7 +128,7 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
     expect(row.shortDescription).toBe(shortDescription1);
   });
 
-  it('should have correct second enumeration row', () => {
+  it('should have correct second enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);

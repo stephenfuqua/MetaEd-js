@@ -2,9 +2,9 @@ import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { SchemaContainer } from './schema/SchemaContainer';
 import { newSchemaContainer } from './schema/SchemaContainer';
 
-export type NamespaceEdfiXsd = {
+export interface NamespaceEdfiXsd {
   xsdSchema: SchemaContainer;
-};
+}
 
 const enhancerName = 'NamespaceSetupEnhancer';
 

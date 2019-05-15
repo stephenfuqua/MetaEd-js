@@ -9,7 +9,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for common type', () => {
+describe('when generating xsd for common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -37,18 +37,18 @@ describe('when generating xsd for common type', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate common type', () => {
+  it('should generate common type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate common type property', () => {
+  it('should generate common type property', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType/xs:sequence/xs:element[@name='CoreProperty']", coreResult);
     expect(elements).toHaveLength(1);
   });
 });
 
-describe('when generating xsd for domain entity in extension namespace with reference to core common type', () => {
+describe('when generating xsd for domain entity in extension namespace with reference to core common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreEntity = 'CoreEntity';
   const coreProperty = 'CoreProperty';
@@ -94,18 +94,18 @@ describe('when generating xsd for domain entity in extension namespace with refe
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core common type', () => {
+  it('should generate core common type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 });
 
-describe('when generating xsd for common type in extension namespace with reference to core entity', () => {
+describe('when generating xsd for common type in extension namespace with reference to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreEntity = 'CoreEntity';
   const coreEntityPk = 'CoreEntityPk';
@@ -151,12 +151,12 @@ describe('when generating xsd for common type in extension namespace with refere
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension common type', () => {
+  it('should generate extension common type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });

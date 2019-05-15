@@ -10,7 +10,7 @@ import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 
-describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
+describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -46,13 +46,13 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     enhance(metaEd);
   });
 
-  it('should create two rows', () => {
+  it('should create two rows', (): void => {
     expect(rowEntities(metaEd, namespace).size).toBe(2);
     expect(rowEntities(metaEd, namespace).get(`2018${shortDescription1}`)).toBeDefined();
     expect(rowEntities(metaEd, namespace).get(`2019${shortDescription2}`)).toBeDefined();
   });
 
-  it('should have correct first enumeration row', () => {
+  it('should have correct first enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`2018${shortDescription1}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2018');
@@ -64,7 +64,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     expect(row.schoolYearDescription).toBe(shortDescription1);
   });
 
-  it('should have correct second enumeration row', () => {
+  it('should have correct second enumeration row', (): void => {
     const row: any = rowEntities(metaEd, namespace).get(`2019${shortDescription2}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2019');

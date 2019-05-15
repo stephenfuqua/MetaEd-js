@@ -9,7 +9,7 @@ export function failExtensionPropertyRedeclarations(
   validatorName: string,
   extensionEntity: TopLevelEntity,
   baseEntity: TopLevelEntity,
-  failures: Array<ValidationFailure>,
+  failures: ValidationFailure[],
 ) {
   extensionEntity.properties.forEach(extensionProperty => {
     baseEntity.properties.forEach(baseProperty => {

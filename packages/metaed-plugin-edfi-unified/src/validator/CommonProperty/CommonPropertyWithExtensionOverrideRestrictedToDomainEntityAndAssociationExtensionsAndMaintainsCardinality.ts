@@ -44,8 +44,8 @@ function baseEntityMatchingProperty(namespace: Namespace, overrideProperty: Enti
   );
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.common.forEach(commonProperty => {
     if (!commonProperty.isExtensionOverride) return;
     const baseMatchingProperty: EntityProperty | undefined = baseEntityMatchingProperty(

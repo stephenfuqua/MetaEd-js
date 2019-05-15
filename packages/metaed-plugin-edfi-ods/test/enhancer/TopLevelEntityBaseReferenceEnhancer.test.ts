@@ -22,7 +22,7 @@ import {
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/TopLevelEntityBaseReferenceEnhancer';
 
-describe('when enhancing domain entity subclass base entity reference', () => {
+describe('when enhancing domain entity subclass base entity reference', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -59,7 +59,7 @@ describe('when enhancing domain entity subclass base entity reference', () => {
     enhance(metaEd);
   });
 
-  it('should create base entity reference property', () => {
+  it('should create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
     expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
 
@@ -76,7 +76,7 @@ describe('when enhancing domain entity subclass base entity reference', () => {
   });
 });
 
-describe('when enhancing domain entity subclass base entity reference with identity rename', () => {
+describe('when enhancing domain entity subclass base entity reference with identity rename', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -125,7 +125,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
     enhance(metaEd);
   });
 
-  it('should not create base entity reference property', () => {
+  it('should not create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
     expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
 
@@ -135,7 +135,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
   });
 });
 
-describe('when enhancing domain entity extension base entity reference', () => {
+describe('when enhancing domain entity extension base entity reference', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -172,7 +172,7 @@ describe('when enhancing domain entity extension base entity reference', () => {
     enhance(metaEd);
   });
 
-  it('should create base entity reference property', () => {
+  it('should create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntityExtension.get(domainEntityExtensionName);
     expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
 
@@ -189,7 +189,7 @@ describe('when enhancing domain entity extension base entity reference', () => {
   });
 });
 
-describe('when enhancing association subclass base entity reference', () => {
+describe('when enhancing association subclass base entity reference', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -226,7 +226,7 @@ describe('when enhancing association subclass base entity reference', () => {
     enhance(metaEd);
   });
 
-  it('should create base entity reference property', () => {
+  it('should create base entity reference property', (): void => {
     const association: any = namespace.entity.associationSubclass.get(associationSubclassName);
     expect(association.data.edfiOds.odsIdentityProperties).toHaveLength(1);
 
@@ -243,7 +243,7 @@ describe('when enhancing association subclass base entity reference', () => {
   });
 });
 
-describe('when enhancing association extension base entity reference', () => {
+describe('when enhancing association extension base entity reference', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -280,7 +280,7 @@ describe('when enhancing association extension base entity reference', () => {
     enhance(metaEd);
   });
 
-  it('should create base entity reference property', () => {
+  it('should create base entity reference property', (): void => {
     const association: any = namespace.entity.associationExtension.get(associationExtensionName);
     expect(association.data.edfiOds.odsIdentityProperties).toHaveLength(1);
 

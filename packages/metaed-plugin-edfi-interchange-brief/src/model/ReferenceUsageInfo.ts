@@ -1,9 +1,9 @@
-export type ReferenceUsageInfo = {
+export interface ReferenceUsageInfo {
   name: string;
   rootEntityName: string;
   isOptional: boolean;
   description: string;
-};
+}
 
 export function newReferenceUsageInfo() {
   return {

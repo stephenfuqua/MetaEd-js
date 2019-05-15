@@ -4,7 +4,7 @@ import { addColumnNamePair, newForeignKey, foreignKeySourceReferenceFrom } from 
 import { newColumnNamePair } from '../../../src/model/database/ColumnNamePair';
 import { ForeignKey, ForeignKeySourceReference } from '../../../src/model/database/ForeignKey';
 
-describe('when using add column name pair to a foreign key with no existing duplicates', () => {
+describe('when using add column name pair to a foreign key with no existing duplicates', (): void => {
   const parentTableColumnName = 'ParentTableColumnName';
   const foreignTableColumnName = 'ForeignTableColumnName';
   let foreignKey: ForeignKey;
@@ -20,14 +20,14 @@ describe('when using add column name pair to a foreign key with no existing dupl
     );
   });
 
-  it('should successfully add column name pair', () => {
+  it('should successfully add column name pair', (): void => {
     expect(foreignKey.columnNames).toHaveLength(1);
     expect(foreignKey.columnNames[0].parentTableColumnName).toBe(parentTableColumnName);
     expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(foreignTableColumnName);
   });
 });
 
-describe('when using add column name pair to a foreign key with existing duplicate', () => {
+describe('when using add column name pair to a foreign key with existing duplicate', (): void => {
   const parentTableColumnName = 'ParentTableColumnName';
   const foreignTableColumnName = 'ForeignTableColumnName';
   let foreignKey: ForeignKey;
@@ -50,21 +50,21 @@ describe('when using add column name pair to a foreign key with existing duplica
     );
   });
 
-  it('should reject incoming column name pair', () => {
+  it('should reject incoming column name pair', (): void => {
     expect(foreignKey.columnNames).toHaveLength(1);
     expect(foreignKey.columnNames[0].parentTableColumnName).toBe(parentTableColumnName);
     expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(foreignTableColumnName);
   });
 });
 
-describe('when creating foreign key sourceReference from identity property', () => {
+describe('when creating foreign key sourceReference from identity property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(true);
     expect(sourceReference.isRequired).toBe(true);
     expect(sourceReference.isOptional).toBe(false);
@@ -76,14 +76,14 @@ describe('when creating foreign key sourceReference from identity property', () 
   });
 });
 
-describe('when creating foreign key sourceReference from required property', () => {
+describe('when creating foreign key sourceReference from required property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isRequired: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(false);
     expect(sourceReference.isRequired).toBe(true);
     expect(sourceReference.isOptional).toBe(false);
@@ -95,14 +95,14 @@ describe('when creating foreign key sourceReference from required property', () 
   });
 });
 
-describe('when creating foreign key sourceReference from optional property', () => {
+describe('when creating foreign key sourceReference from optional property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isOptional: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(false);
     expect(sourceReference.isRequired).toBe(false);
     expect(sourceReference.isOptional).toBe(true);
@@ -114,14 +114,14 @@ describe('when creating foreign key sourceReference from optional property', () 
   });
 });
 
-describe('when creating foreign key sourceReference from required collection property', () => {
+describe('when creating foreign key sourceReference from required collection property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isRequiredCollection: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(false);
     expect(sourceReference.isRequired).toBe(false);
     expect(sourceReference.isOptional).toBe(false);
@@ -133,14 +133,14 @@ describe('when creating foreign key sourceReference from required collection pro
   });
 });
 
-describe('when creating foreign key sourceReference from optional collection property', () => {
+describe('when creating foreign key sourceReference from optional collection property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isOptionalCollection: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(false);
     expect(sourceReference.isRequired).toBe(false);
     expect(sourceReference.isOptional).toBe(false);
@@ -152,14 +152,14 @@ describe('when creating foreign key sourceReference from optional collection pro
   });
 });
 
-describe('when creating foreign key sourceReference from subclass relationship property', () => {
+describe('when creating foreign key sourceReference from subclass relationship property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: true, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(true);
     expect(sourceReference.isRequired).toBe(true);
     expect(sourceReference.isOptional).toBe(false);
@@ -171,14 +171,14 @@ describe('when creating foreign key sourceReference from subclass relationship p
   });
 });
 
-describe('when creating foreign key sourceReference from extension relationship property', () => {
+describe('when creating foreign key sourceReference from extension relationship property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
     data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: true } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
-  it('should create correct source reference', () => {
+  it('should create correct source reference', (): void => {
     expect(sourceReference.isPartOfIdentity).toBe(true);
     expect(sourceReference.isRequired).toBe(true);
     expect(sourceReference.isOptional).toBe(false);

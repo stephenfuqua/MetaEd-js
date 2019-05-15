@@ -4,7 +4,7 @@ import path from 'path';
 import hash from 'hash.js';
 import { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
 
-function maxComponentLength(tableNameComponents: Array<string>, maxLengthBeforeHash: number): number {
+function maxComponentLength(tableNameComponents: string[], maxLengthBeforeHash: number): number {
   const evenLength = Math.floor(maxLengthBeforeHash / tableNameComponents.length);
   let totalLengthOfShorterComponents = 0;
   let countOfLongerComponents = 0;
@@ -18,7 +18,7 @@ function maxComponentLength(tableNameComponents: Array<string>, maxLengthBeforeH
   return Math.floor((maxLengthBeforeHash - totalLengthOfShorterComponents) / countOfLongerComponents);
 }
 
-function truncatedTableName(tableNameComponents: Array<string>): string {
+function truncatedTableName(tableNameComponents: string[]): string {
   const maxLengthBeforeHash = 56;
   const componentLength = maxComponentLength(tableNameComponents, maxLengthBeforeHash);
   const tableNameBeforeHash = tableNameComponents.reduce((acc, current) => acc + current.substring(0, componentLength), '');
@@ -30,7 +30,7 @@ function truncatedTableName(tableNameComponents: Array<string>): string {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   const templateBuffer = fs.readFileSync(path.join(__dirname, 'templates', 'postgresqlTableNames.hbs'));
   const templateFunction: (Object) => string = handlebars.create().compile(templateBuffer.toString());

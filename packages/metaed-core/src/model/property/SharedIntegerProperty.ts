@@ -5,7 +5,7 @@ import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedIntegerPropertySourceMap extends IntegerPropertySourceMap {
-  mergeDirectives: Array<SourceMap>;
+  mergeDirectives: SourceMap[];
 }
 
 /**
@@ -20,7 +20,7 @@ export function newSharedIntegerPropertySourceMap(): SharedIntegerPropertySource
 
 export interface SharedIntegerProperty extends IntegerProperty {
   sourceMap: SharedIntegerPropertySourceMap;
-  mergeDirectives: Array<MergeDirective>;
+  mergeDirectives: MergeDirective[];
 }
 
 /**

@@ -26,7 +26,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     return { enhancerName, success: true };
 
   metaEd.namespace.forEach((namespace: Namespace) => {
-    (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as Array<DomainEntitySubclass>).forEach(
+    (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as DomainEntitySubclass[]).forEach(
       (subclass: DomainEntitySubclass) => {
         if (
           subclass.namespace.namespaceName !== namespace.namespaceName ||

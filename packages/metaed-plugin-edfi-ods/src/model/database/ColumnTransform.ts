@@ -44,24 +44,24 @@ export class ColumnTransform {
     return new PrefixroleName(ColumnTransformNull, contextPrefix);
   }
 
-  static myInvertStrategies(strategyStack: Array<ColumnTransform>, strategy: ColumnTransform | null): void {
+  static myInvertStrategies(strategyStack: ColumnTransform[], strategy: ColumnTransform | null): void {
     if (strategy == null) return;
     strategyStack.push(strategy);
     ColumnTransform.myInvertStrategies(strategyStack, strategy.myDecoratedStrategy);
   }
 
-  static myTransformTopOfStack(strategyStack: Array<ColumnTransform>, originalColumns: Array<Column>): Array<Column> {
+  static myTransformTopOfStack(strategyStack: ColumnTransform[], originalColumns: Column[]): Column[] {
     if (strategyStack.length === 0) return originalColumns;
 
     const currentStrategy: ColumnTransform = strategyStack.pop() as ColumnTransform;
 
-    const newColumns: Array<Column> = originalColumns.map(x => cloneColumn(x));
+    const newColumns: Column[] = originalColumns.map(x => cloneColumn(x));
     newColumns.forEach((column: Column) => currentStrategy.transformSingle(column));
 
     return ColumnTransform.myTransformTopOfStack(strategyStack, newColumns);
   }
 
-  transform(originalColumns: Array<Column>): Array<Column> {
+  transform(originalColumns: Column[]): Column[] {
     const invertStrategies = [];
     ColumnTransform.myInvertStrategies(invertStrategies, this);
     return ColumnTransform.myTransformTopOfStack(invertStrategies, originalColumns);

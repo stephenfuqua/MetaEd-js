@@ -17,7 +17,7 @@ function filesFrom(textEditors: TextEditor[]): MetaEdFile[] {
   );
 }
 
-export function loadFromModifiedEditors(state: State, metaEdProjectMetadata: Array<MetaEdProjectMetadata>): void {
+export function loadFromModifiedEditors(state: State, metaEdProjectMetadata: MetaEdProjectMetadata[]): void {
   const editors = atom.workspace
     .getTextEditors()
     .filter(editor => editor.isModified() && editor.getPath() && (editor.getPath() || '').endsWith('.metaed'));

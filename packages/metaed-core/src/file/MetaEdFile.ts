@@ -1,20 +1,20 @@
 import path from 'path';
 
-export type MetaEdFile = {
+export interface MetaEdFile {
   contents: string;
   lineCount: number;
   directoryName: string;
   filename: string;
   fullPath: string;
-};
+}
 
-export type FileSet = {
+export interface FileSet {
   namespaceName: string;
   projectExtension: string;
   projectName: string;
   isExtension: boolean;
   files: MetaEdFile[];
-};
+}
 
 export function createMetaEdFile(directoryName: string, filename: string, originalContents: string): MetaEdFile {
   let contents = originalContents;

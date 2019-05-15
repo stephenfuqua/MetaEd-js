@@ -2,10 +2,10 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AbstractEntity/AbstractEntityMustContainAnIdentity';
 
-describe('when validating abstract entity with identity fields', () => {
+describe('when validating abstract entity with identity fields', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -24,19 +24,19 @@ describe('when validating abstract entity with identity fields', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating abstract entity with no identity fields', () => {
+describe('when validating abstract entity with no identity fields', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -55,11 +55,11 @@ describe('when validating abstract entity with no identity fields', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AbstractEntityMustContainAnIdentity');
     expect(failures[0].category).toBe('error');

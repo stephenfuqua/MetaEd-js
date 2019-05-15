@@ -1,8 +1,8 @@
 import { Domain, Subdomain, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { getEntitiesOfTypeForNamespaces, asDomainBase } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     if (namespace.isExtension) return;
 

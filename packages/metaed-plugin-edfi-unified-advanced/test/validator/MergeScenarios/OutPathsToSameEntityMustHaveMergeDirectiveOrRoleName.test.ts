@@ -18,10 +18,10 @@ import {
 } from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
 
-describe('when domain entity has no multiple out paths to the same entity', () => {
+describe('when domain entity has no multiple out paths to the same entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -46,19 +46,19 @@ describe('when domain entity has no multiple out paths to the same entity', () =
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity has two out paths to the same entity but do not start with identities', () => {
+describe('when domain entity has two out paths to the same entity but do not start with identities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -94,19 +94,19 @@ describe('when domain entity has two out paths to the same entity but do not sta
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity has two out paths to the same entity that start with identities but are not identities all the way', () => {
+describe('when domain entity has two out paths to the same entity that start with identities but are not identities all the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -142,19 +142,19 @@ describe('when domain entity has two out paths to the same entity that start wit
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way', () => {
+describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -190,11 +190,11 @@ describe('when domain entity has two out paths to the same entity that start wit
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
@@ -211,10 +211,10 @@ Object {
   });
 });
 
-describe('when domain entity has two out paths to the same entity and only one starts with identities and both are identities the rest of the way', () => {
+describe('when domain entity has two out paths to the same entity and only one starts with identities and both are identities the rest of the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -250,11 +250,11 @@ describe('when domain entity has two out paths to the same entity and only one s
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
@@ -271,10 +271,10 @@ Object {
   });
 });
 
-describe('when domain entity has two out paths to the same entity and only one starts with identities and both are not identities the rest of the way', () => {
+describe('when domain entity has two out paths to the same entity and only one starts with identities and both are not identities the rest of the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -310,20 +310,20 @@ describe('when domain entity has two out paths to the same entity and only one s
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity extension has out paths without referencing same entity', () => {
+describe('when domain entity extension has out paths without referencing same entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -368,24 +368,24 @@ describe('when domain entity extension has out paths without referencing same en
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity extension has out paths to the same entity as base and only base path starts with identities and both are identities the rest of the way', () => {
+describe('when domain entity extension has out paths to the same entity as base and only base path starts with identities and both are identities the rest of the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -430,15 +430,15 @@ describe('when domain entity extension has out paths to the same entity as base 
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
@@ -455,11 +455,11 @@ Object {
   });
 });
 
-describe('when domain entity subclass has out paths without referencing same entity', () => {
+describe('when domain entity subclass has out paths without referencing same entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -504,28 +504,28 @@ describe('when domain entity subclass has out paths without referencing same ent
     failures = validate(metaEd);
   });
 
-  it('should build three domain entities in core', () => {
+  it('should build three domain entities in core', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should build one domain entity in extension', () => {
+  it('should build one domain entity in extension', (): void => {
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity subclass has out paths to the same entity as base and only base path starts with identities and both are identities the rest of the way', () => {
+describe('when domain entity subclass has out paths to the same entity as base and only base path starts with identities and both are identities the rest of the way', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -571,15 +571,15 @@ describe('when domain entity subclass has out paths to the same entity as base a
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
     expect(failures[0].category).toBe('error');
@@ -598,25 +598,25 @@ Object {
 
 // TODO: additional testing ideas
 
-describe('when domain entity has three out paths to the same entity and only one starts with identities and all are identities all the way', () => {});
+describe('when domain entity has three out paths to the same entity and only one starts with identities and all are identities all the way', (): void => {});
 
-describe('when domain entity has three out paths to the same entity and only one starts with identities and one is not identities the rest of the way', () => {});
+describe('when domain entity has three out paths to the same entity and only one starts with identities and one is not identities the rest of the way', (): void => {});
 
-describe('when domain entity has two out paths to the same entity and both are non-identity collections', () => {});
+describe('when domain entity has two out paths to the same entity and both are non-identity collections', (): void => {});
 
-describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a role name', () => {});
+describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a role name', (): void => {});
 
-describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a merge directive', () => {});
+describe('when domain entity has two out paths to the same entity that start with identities and are identities all the way and one has a merge directive', (): void => {});
 
-describe('when domain entity has three out paths to the same entity and only one starts with identity and are identities all the way and only one has a merge directive', () => {});
+describe('when domain entity has three out paths to the same entity and only one starts with identity and are identities all the way and only one has a merge directive', (): void => {});
 
 // role name examples
 
 // shared string
-describe('when domain entity has reference to entity with identity of shared string', () => {
+describe('when domain entity has reference to entity with identity of shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -648,11 +648,11 @@ describe('when domain entity has reference to entity with identity of shared str
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

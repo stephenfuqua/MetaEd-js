@@ -8,9 +8,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
 
-describe('when validating enumeration item is missing metaEdId', () => {
+describe('when validating enumeration item is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -28,11 +28,11 @@ describe('when validating enumeration item is missing metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
@@ -43,9 +43,9 @@ describe('when validating enumeration item is missing metaEdId', () => {
   });
 });
 
-describe('when validating map type enumeration item is missing metaEdId', () => {
+describe('when validating map type enumeration item is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -67,22 +67,22 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should build one map type enumeration', () => {
+  it('should build one map type enumeration', (): void => {
     expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating school year enumeration item is missing metaEdId', () => {
+describe('when validating school year enumeration item is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -100,11 +100,11 @@ describe('when validating school year enumeration item is missing metaEdId', () 
     failures = validate(metaEd);
   });
 
-  it('should build one school year enumeration', () => {
+  it('should build one school year enumeration', (): void => {
     expect(coreNamespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
@@ -113,9 +113,9 @@ describe('when validating school year enumeration item is missing metaEdId', () 
   });
 });
 
-describe('when validating enumeration item is missing metaEdId in extension namespace', () => {
+describe('when validating enumeration item is missing metaEdId in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -133,11 +133,11 @@ describe('when validating enumeration item is missing metaEdId in extension name
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(extensionNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

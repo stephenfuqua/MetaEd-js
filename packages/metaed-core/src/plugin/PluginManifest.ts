@@ -1,6 +1,6 @@
 import { MetaEdPlugin } from './MetaEdPlugin';
 
-export type PluginManifest = {
+export interface PluginManifest {
   npmName: string;
   description: string;
   version: string;
@@ -9,7 +9,7 @@ export type PluginManifest = {
   authorName: string;
   metaEdVersion: string;
   technologyVersion: string;
-  dependencies: Array<string>;
+  dependencies: string[];
   metaEdPlugin: MetaEdPlugin;
   enabled: boolean;
-};
+}

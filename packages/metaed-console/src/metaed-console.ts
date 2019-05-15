@@ -41,7 +41,7 @@ export async function metaEdConsole() {
   if (argv.defaultPluginTechVersion != null)
     state.metaEdConfiguration.defaultPluginTechVersion = argv.defaultPluginTechVersion;
 
-  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projects);
+  const dataStandardVersions: SemVer[] = findDataStandardVersions(state.metaEdConfiguration.projects);
 
   if (dataStandardVersions.length === 0) {
     winston.error('No data standard project found.  Aborting.');

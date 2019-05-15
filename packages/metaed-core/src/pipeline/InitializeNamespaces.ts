@@ -4,8 +4,8 @@ import { MetaEdProject } from '../project/ProjectTypes';
 
 // derives Namespace's projectName from its namespaceName
 export function addProjectNameToNamespace(state: State): void {
-  const { projects }: { projects: Array<MetaEdProject> } = state.metaEdConfiguration;
-  const namespaces: Array<Namespace> = Array.from(state.metaEd.namespace.values());
+  const { projects }: { projects: MetaEdProject[] } = state.metaEdConfiguration;
+  const namespaces: Namespace[] = Array.from(state.metaEd.namespace.values());
 
   namespaces.forEach((namespace: Namespace) => {
     const matchingProject: MetaEdProject | undefined = projects.find(

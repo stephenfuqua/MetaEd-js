@@ -8,7 +8,7 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with no extension', () => {
+describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with no extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -46,16 +46,16 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(mergedInterchange.interchangeName).toBe(`Interchange${interchangeName}`);
   });
 
-  it('should have xsdType value assigned', () => {
+  it('should have xsdType value assigned', (): void => {
     expect(mergedInterchange.schemaLocation).toBe('Ed-Fi-Core.xsd');
   });
 });
 
-describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with extension', () => {
+describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with extension', (): void => {
   const projectExtension = 'EXTENSION';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), {
@@ -100,11 +100,11 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(mergedInterchange.interchangeName).toBe(`Interchange${interchangeName}`);
   });
 
-  it('should have xsdType value assigned with extension', () => {
+  it('should have xsdType value assigned with extension', (): void => {
     expect(mergedInterchange.schemaLocation).toBe(`${projectExtension}-Ed-Fi-Extended-Core.xsd`);
   });
 });

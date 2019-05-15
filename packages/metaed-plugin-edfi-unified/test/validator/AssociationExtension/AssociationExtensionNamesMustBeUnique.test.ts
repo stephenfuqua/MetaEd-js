@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationExtensionBuilder, N
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionNamesMustBeUnique';
 
-describe('when entities in same namespace have different names', () => {
+describe('when entities in same namespace have different names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -26,19 +26,19 @@ describe('when entities in same namespace have different names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two associationExtension', () => {
+  it('should build two associationExtension', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when entities in same namespace have identical names', () => {
+describe('when entities in same namespace have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -60,19 +60,19 @@ describe('when entities in same namespace have identical names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one associationExtension because TopLevelEntityBuilder will not let it get that far', () => {
+  it('should build one associationExtension because TopLevelEntityBuilder will not let it get that far', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures because of TopLevelEntityBuilder', () => {
+  it('should have no validation failures because of TopLevelEntityBuilder', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when associationExtensions in separate dependency-linked namespaces have identical names', () => {
+describe('when associationExtensions in separate dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -100,23 +100,23 @@ describe('when associationExtensions in separate dependency-linked namespaces ha
     failures = validate(metaEd);
   });
 
-  it('should build one associationExtension in core namespace', () => {
+  it('should build one associationExtension in core namespace', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should build one associationExtension in extension namespace', () => {
+  it('should build one associationExtension in extension namespace', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when associationExtensions in non-dependency-linked namespaces have identical names', () => {
+describe('when associationExtensions in non-dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespacea: any = null;
   let extensionNamespaceb: any = null;
@@ -153,19 +153,19 @@ describe('when associationExtensions in non-dependency-linked namespaces have id
     failures = validate(metaEd);
   });
 
-  it('should build one core associationExtension', () => {
+  it('should build one core associationExtension', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should build one extension1 associationExtension', () => {
+  it('should build one extension1 associationExtension', (): void => {
     expect(extensionNamespacea.entity.associationExtension.size).toBe(1);
   });
 
-  it('should build one extension2 associationExtension', () => {
+  it('should build one extension2 associationExtension', (): void => {
     expect(extensionNamespaceb.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

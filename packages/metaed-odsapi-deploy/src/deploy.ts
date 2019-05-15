@@ -23,14 +23,14 @@ export interface DeployTargets extends ArtifactPaths {
   projectName: string;
 }
 
-type OdsApiPaths = {
+interface OdsApiPaths {
   root: string;
   implementation: string;
   application: string;
   standard: string;
   extension: string;
   supportingArtifacts: string;
-};
+}
 
 const odsApiPaths: OdsApiPaths = {
   root: 'Ed-Fi-ODS/',
@@ -122,9 +122,9 @@ const extensionTargetV2 = (namespaceName: string): DeployTargets => ({
   xsd: path.join(odsApiPaths.implementation, 'Extensions/Schemas/'),
 });
 
-export function dataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
-  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(projects);
-  const errorMessage: Array<string> = [];
+export function dataStandardVersionFor(projects: MetaEdProject[]): SemVer {
+  const dataStandardVersions: SemVer[] = findDataStandardVersions(projects);
+  const errorMessage: string[] = [];
 
   if (dataStandardVersions.length === 0) {
     errorMessage.push('No data standard project found.  Aborting.');
@@ -140,11 +140,11 @@ export function dataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
   return '0.0.0';
 }
 
-export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deployCore: boolean): Array<DeployTargets> {
-  const { projects }: { projects: Array<MetaEdProject> } = metaEdConfiguration;
+export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deployCore: boolean): DeployTargets[] {
+  const { projects }: { projects: MetaEdProject[] } = metaEdConfiguration;
   const dataStandardVersion: SemVer = dataStandardVersionFor(projects);
 
-  const targets: Array<DeployTargets> = [];
+  const targets: DeployTargets[] = [];
 
   if (versionSatisfies(dataStandardVersion, V3OrGreater)) {
     projects.forEach((project: MetaEdProject) => {
@@ -301,7 +301,7 @@ export async function executeDeploy(
 ): Promise<boolean> {
   if (metaEdConfiguration.deployDirectory === '') return true;
 
-  const targets: Array<DeployTargets> = deployTargetsFor(metaEdConfiguration, deployCore);
+  const targets: DeployTargets[] = deployTargetsFor(metaEdConfiguration, deployCore);
   if (targets.length === 0) return true;
 
   let result = false;

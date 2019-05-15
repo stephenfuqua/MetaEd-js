@@ -4,11 +4,11 @@ import { ParserRuleContext } from 'antlr4/ParserRuleContext';
 /**
  *
  */
-export type SourceMap = {
+export interface SourceMap {
   line: number;
   column: number;
   tokenText: string;
-};
+}
 
 /**
  *

@@ -9,7 +9,7 @@ const enhancerName = 'MergedInterchangeEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // Build merged interchanges for all the interchanges, in any namespace
-  (getAllEntitiesOfType(metaEd, 'interchange') as Array<Interchange>).forEach((interchange: Interchange) => {
+  (getAllEntitiesOfType(metaEd, 'interchange') as Interchange[]).forEach((interchange: Interchange) => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchange.metaEdName,
       repositoryId: interchange.metaEdName,
@@ -25,7 +25,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   });
 
   // Build merged interchanges for all the extensions in the extension namespace
-  (getAllEntitiesOfType(metaEd, 'interchangeExtension') as Array<InterchangeExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'interchangeExtension') as InterchangeExtension[]).forEach(
     (interchangeExtension: InterchangeExtension) => {
       const interchange = interchangeExtension.baseEntity;
       if (!interchange) return;

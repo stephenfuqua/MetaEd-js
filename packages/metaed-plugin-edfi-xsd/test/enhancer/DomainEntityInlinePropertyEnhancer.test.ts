@@ -10,7 +10,7 @@ import { MetaEdEnvironment, Common, DomainEntity, Namespace } from 'metaed-core'
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
-describe('when enhancing domainEntity with inline string property', () => {
+describe('when enhancing domainEntity with inline string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -65,7 +65,7 @@ describe('when enhancing domainEntity with inline string property', () => {
     enhance(metaEd);
   });
 
-  it('should add identity properties to domainEntity', () => {
+  it('should add identity properties to domainEntity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(entityName);
     expect(domainEntity.properties[0].type).toBe('inlineCommon');
     expect(domainEntity.data.edfiXsd.xsdIdentityProperties.length).toBe(1);
@@ -73,7 +73,7 @@ describe('when enhancing domainEntity with inline string property', () => {
   });
 });
 
-describe('when enhancing domainEntity with inline nested string property', () => {
+describe('when enhancing domainEntity with inline nested string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -145,7 +145,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
     enhance(metaEd);
   });
 
-  it('should add identity properties to domainEntity', () => {
+  it('should add identity properties to domainEntity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(entityName);
     expect(domainEntity.properties[0].type).toBe('inlineCommon');
     expect(domainEntity.data.edfiXsd.xsdIdentityProperties.length).toBe(2);

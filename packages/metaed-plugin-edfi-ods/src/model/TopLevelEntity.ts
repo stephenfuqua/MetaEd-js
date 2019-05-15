@@ -3,14 +3,14 @@ import { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity } fro
 import { NoTable } from './database/Table';
 import { Table } from './database/Table';
 
-export type TopLevelEntityEdfiOds = {
+export interface TopLevelEntityEdfiOds {
   odsTableName: string;
   odsCascadePrimaryKeyUpdates: boolean;
-  odsProperties: Array<EntityProperty>;
-  odsIdentityProperties: Array<EntityProperty>;
+  odsProperties: EntityProperty[];
+  odsIdentityProperties: EntityProperty[];
   odsEntityTable: Table;
-  odsTables: Array<Table>;
-};
+  odsTables: Table[];
+}
 
 const enhancerName = 'OdsTopLevelEntitySetupEnhancer';
 

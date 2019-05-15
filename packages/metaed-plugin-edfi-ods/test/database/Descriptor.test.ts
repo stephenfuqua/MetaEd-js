@@ -44,7 +44,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when descriptor is defined', () => {
+describe('when descriptor is defined', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const baseDescriptorTableName = 'Descriptor';
@@ -172,14 +172,14 @@ describe('when descriptor is defined', () => {
   });
 });
 
-describe('when descriptor does not have a map type', () => {
+describe('when descriptor does not have a map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
-  const descriptorDocumentation: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
+  const baseDescriptorTableName = `Descriptor`;
+  const descriptorDocumentation = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -240,18 +240,18 @@ describe('when descriptor does not have a map type', () => {
   });
 });
 
-describe('when descriptor has required map type', () => {
+describe('when descriptor has required map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
-  const mapTypeDocumentation: string = `MapTypeDocumentation`;
-  const mapTypeShortDescription: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
-  const typeTableName: string = `${descriptorName}Type`;
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
+  const mapTypeDocumentation = `MapTypeDocumentation`;
+  const mapTypeShortDescription = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
+  const typeTableName = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -392,17 +392,17 @@ describe('when descriptor has required map type', () => {
   });
 });
 
-describe('when descriptor has required map type with multiple items', () => {
+describe('when descriptor has required map type with multiple items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
-  const mapTypeDocumentation: string = `MapTypeDocumentation`;
+  const mapTypeDocumentation = `MapTypeDocumentation`;
   const mapTypeShortDescription1 = 'MapTypeShortDescription1';
   const mapTypeShortDescription2 = 'MapTypeShortDescription2';
   const mapTypeShortDescription3 = 'MapTypeShortDescription3';
-  const typeTableName: string = `${descriptorName}Type`;
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -455,14 +455,14 @@ describe('when descriptor has required map type with multiple items', () => {
   });
 });
 
-describe('when descriptor has optional map type', () => {
+describe('when descriptor has optional map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const typeTableName: string = `${descriptorName}Type`;
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -504,18 +504,18 @@ describe('when descriptor has optional map type', () => {
   });
 });
 
-describe('when descriptor name has type suffix', () => {
+describe('when descriptor name has type suffix', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorNameType';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
-  const mapTypeDocumentation: string = `MapTypeDocumentation`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
+  const mapTypeDocumentation = `MapTypeDocumentation`;
   const mapTypeShortDescription = 'MapTypeShortDescription1';
   const typeTableName: string = descriptorName;
-  const typeIdColumnName: string = `${descriptorName}Id`;
+  const typeIdColumnName = `${descriptorName}Id`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -568,16 +568,16 @@ describe('when descriptor name has type suffix', () => {
   });
 });
 
-describe('when descriptor has properties', () => {
+describe('when descriptor has properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
-  const typeTableName: string = `${descriptorName}Type`;
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
+  const typeTableName = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
   const stringPropertyName1 = 'StringPropertyName1';
   const stringPropertyName2 = 'StringPropertyName2';
   const stringPropertyDocumentation1 = 'StringPropertyDocumentation1';
@@ -653,19 +653,19 @@ describe('when descriptor has properties', () => {
   });
 });
 
-describe('when descriptor has properties and map type', () => {
+describe('when descriptor has properties and map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const stringPropertyDocumentation1 = 'StringPropertyDocumentation1';
   const stringPropertyDocumentation2 = 'StringPropertyDocumentation2';
   const stringPropertyName1 = 'StringPropertyName1';
   const stringPropertyName2 = 'StringPropertyName2';
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
-  const typeTableName: string = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
   const maxLength = '128';
 
   beforeAll(async () => {
@@ -735,17 +735,17 @@ describe('when descriptor has properties and map type', () => {
   });
 });
 
-describe('when descriptor has required collection property', () => {
+describe('when descriptor has required collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const stringPropertyDocumentation = 'StringPropertyDocumentation';
   const stringPropertyName = 'StringPropertyName';
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
-  const typeTableName: string = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
   const maxLength = '128';
 
   beforeAll(async () => {
@@ -856,17 +856,17 @@ describe('when descriptor has required collection property', () => {
   });
 });
 
-describe('when descriptor has optional collection property', () => {
+describe('when descriptor has optional collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const stringPropertyDocumentation = 'StringPropertyDocumentation';
   const stringPropertyName = 'StringPropertyName';
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
-  const typeTableName: string = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
   const maxLength = '128';
 
   beforeAll(async () => {
@@ -977,17 +977,17 @@ describe('when descriptor has optional collection property', () => {
   });
 });
 
-describe('when descriptor has enumeration property', () => {
+describe('when descriptor has enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const enumerationName = 'EnumerationName';
   const enumerationPropertyDocumentation = 'EnumerationPropertyDocumentation';
-  const typeIdColumnName: string = `${enumerationName}TypeId`;
-  const typeTableName: string = `${enumerationName}Type`;
+  const typeIdColumnName = `${enumerationName}TypeId`;
+  const typeTableName = `${enumerationName}Type`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -1045,17 +1045,17 @@ describe('when descriptor has enumeration property', () => {
   });
 });
 
-describe('when descriptor has descriptor property', () => {
+describe('when descriptor has descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const referencedDescriptorName = 'ReferencedDescriptorName';
   const descriptorName = 'DescriptorName';
   const descriptorPropertyDocumentation = 'DescriptorPropertyDocumentation';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const referencedDescriptorTableName: string = referencedDescriptorName + baseDescriptorTableName;
-  const referencedDescriptorIdColumnName: string = `${referencedDescriptorTableName}Id`;
+  const referencedDescriptorIdColumnName = `${referencedDescriptorTableName}Id`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -1116,17 +1116,17 @@ describe('when descriptor has descriptor property', () => {
   });
 });
 
-describe('when descriptor has collection descriptor property', () => {
+describe('when descriptor has collection descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorPropertyDocumentation = 'DescriptorPropertyDocumentation';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const referencedDescriptorName = 'ReferencedDescriptorName';
   const referencedDescriptorTableName: string = referencedDescriptorName + baseDescriptorTableName;
-  const referencedDescriptorIdColumnName: string = `${referencedDescriptorTableName}Id`;
+  const referencedDescriptorIdColumnName = `${referencedDescriptorTableName}Id`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -1234,19 +1234,19 @@ describe('when descriptor has collection descriptor property', () => {
   });
 });
 
-describe('when extension descriptor has required reference properties to core entity and map type', () => {
+describe('when extension descriptor has required reference properties to core entity and map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const extension = 'Extension';
-  const baseDescriptorTableName: string = `Descriptor`;
+  const baseDescriptorTableName = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
-  const descriptorIdColumnName: string = `${descriptorTableName}Id`;
+  const descriptorIdColumnName = `${descriptorTableName}Id`;
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const integerPropertyDocumentation = 'IntegerPropertyDocumentation';
-  const typeIdColumnName: string = `${descriptorName}TypeId`;
-  const typeTableName: string = `${descriptorName}Type`;
+  const typeIdColumnName = `${descriptorName}TypeId`;
+  const typeTableName = `${descriptorName}Type`;
   const mapTypeShortDescription = 'MapTypeShortDescription';
 
   beforeAll(async () => {

@@ -4,4 +4,4 @@ import { ValidationFailure } from './ValidationFailure';
 /**
  *
  */
-export type Validator = (metaEd: MetaEdEnvironment) => Array<ValidationFailure>;
+export type Validator = (metaEd: MetaEdEnvironment) => ValidationFailure[];

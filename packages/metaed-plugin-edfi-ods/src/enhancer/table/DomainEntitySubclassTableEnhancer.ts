@@ -36,7 +36,7 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
       foreignKey.foreignTableName = entity.baseEntity.data.edfiOds.odsTableName;
     }
 
-    const localColumnNames: Array<string> = columnCreatorFactory
+    const localColumnNames: string[] = columnCreatorFactory
       .columnCreatorFor(keyRenameProperty)
       .createColumns(keyRenameProperty, BuildStrategyDefault)
       .map((x: Column) => x.name);
@@ -48,12 +48,12 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
       ),
     );
 
-    const baseColumnNames: Array<string> = columnCreatorFactory
+    const baseColumnNames: string[] = columnCreatorFactory
       .columnCreatorFor(baseColumnProperty)
       .createColumns(baseColumnProperty, BuildStrategyDefault)
       .map((x: Column) => x.name);
 
-    const columnNamePairs: Array<ColumnNamePair> = R.zipWith((localColumnName, baseColumnName) =>
+    const columnNamePairs: ColumnNamePair[] = R.zipWith((localColumnName, baseColumnName) =>
       Object.assign(newColumnNamePair(), {
         parentTableColumnName: localColumnName,
         foreignTableColumnName: baseColumnName,
@@ -69,7 +69,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'domainEntitySubclass')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
-      const tables: Array<Table> = [];
+      const tables: Table[] = [];
       const mainTable: Table = buildMainTable(metaEd, entity, false);
       tables.push(mainTable);
       addForeignKeyToPrimaryKeyRename(mainTable, entity);

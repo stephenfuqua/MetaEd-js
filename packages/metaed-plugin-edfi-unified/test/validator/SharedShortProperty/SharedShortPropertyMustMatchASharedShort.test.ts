@@ -8,11 +8,11 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedShortProperty/SharedShortPropertyMustMatchASharedShort';
 
-describe('when shared short property has identifier of shared short', () => {
+describe('when shared short property has identifier of shared short', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -34,16 +34,16 @@ describe('when shared short property has identifier of shared short', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared short property has identifier of shared integer', () => {
+describe('when shared short property has identifier of shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -65,11 +65,11 @@ describe('when shared short property has identifier of shared integer', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedShortPropertyMustMatchASharedShort');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -77,11 +77,11 @@ describe('when shared short property has identifier of shared integer', () => {
   });
 });
 
-describe('when shared short property has identifier of shared short with different local name', () => {
+describe('when shared short property has identifier of shared short with different local name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -103,15 +103,15 @@ describe('when shared short property has identifier of shared short with differe
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared short property has invalid identifier', () => {
+describe('when shared short property has invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -128,11 +128,11 @@ describe('when shared short property has invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedShortPropertyMustMatchASharedShort');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -140,11 +140,11 @@ describe('when shared short property has invalid identifier', () => {
   });
 });
 
-describe('when shared short property has identifier of shared short in dependency namespace', () => {
+describe('when shared short property has identifier of shared short in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -174,16 +174,16 @@ describe('when shared short property has identifier of shared short in dependenc
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared short property has invalid identifier of shared short in dependency namespace', () => {
+describe('when shared short property has invalid identifier of shared short in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -213,11 +213,11 @@ describe('when shared short property has invalid identifier of shared short in d
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedShortPropertyMustMatchASharedShort');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -225,10 +225,10 @@ describe('when shared short property has invalid identifier of shared short in d
   });
 });
 
-describe('when shared short property refers to shared short in non-dependency namespace', () => {
+describe('when shared short property refers to shared short in non-dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -252,11 +252,11 @@ describe('when shared short property refers to shared short in non-dependency na
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedShortPropertyMustMatchASharedShort');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

@@ -2,10 +2,10 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, InterchangeBuilder, NamespaceB
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeElements';
 
-describe('when validating interchange extension elements has different names than base interchange', () => {
+describe('when validating interchange extension elements has different names than base interchange', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName = 'InterchangeName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -34,24 +34,24 @@ describe('when validating interchange extension elements has different names tha
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange extension elements duplicates names in base interchange', () => {
+describe('when validating interchange extension elements duplicates names in base interchange', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName = 'InterchangeName';
   const domainEntityElementName = 'DomainEntityElementName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -80,15 +80,15 @@ describe('when validating interchange extension elements duplicates names in bas
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareBaseInterchangeElements');
     expect(failures[0].category).toBe('error');
@@ -97,13 +97,13 @@ describe('when validating interchange extension elements duplicates names in bas
   });
 });
 
-describe('when interchange extension elements duplicates multiple names in base interchange', () => {
+describe('when interchange extension elements duplicates multiple names in base interchange', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName = 'InterchangeName';
   const domainEntityElementName1 = 'DomainEntityElementName1';
   const domainEntityElementName2 = 'DomainEntityElementName2';
   const notDuplicateDomainEntityTemplateName = 'NotDuplicateDomainEntityElementName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -135,15 +135,15 @@ describe('when interchange extension elements duplicates multiple names in base 
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareBaseInterchangeElements');
     expect(failures[0].category).toBe('error');

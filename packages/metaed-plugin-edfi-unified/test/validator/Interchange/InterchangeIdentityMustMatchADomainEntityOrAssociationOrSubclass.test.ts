@@ -11,10 +11,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Interchange/InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass';
 
-describe('when validating interchange identity template is an abstract entity', () => {
+describe('when validating interchange identity template is an abstract entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const abstractEntityName = 'AbstractEntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -40,23 +40,23 @@ describe('when validating interchange identity template is an abstract entity', 
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template is a domain entity', () => {
+describe('when validating interchange identity template is a domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -82,23 +82,23 @@ describe('when validating interchange identity template is a domain entity', () 
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template is a domain entity across namespaces', () => {
+describe('when validating interchange identity template is a domain entity across namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -130,24 +130,24 @@ describe('when validating interchange identity template is a domain entity acros
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(extensionNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template is a domain entity subclass', () => {
+describe('when validating interchange identity template is a domain entity subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -179,27 +179,27 @@ describe('when validating interchange identity template is a domain entity subcl
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template is an association', () => {
+describe('when validating interchange identity template is an association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName = 'AssociationName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -227,24 +227,24 @@ describe('when validating interchange identity template is an association', () =
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template is an association', () => {
+describe('when validating interchange identity template is an association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -278,26 +278,26 @@ describe('when validating interchange identity template is an association', () =
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating interchange identity template has invalid name', () => {
+describe('when validating interchange identity template has invalid name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -317,11 +317,11 @@ describe('when validating interchange identity template has invalid name', () =>
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass');
     expect(failures[0].category).toBe('error');

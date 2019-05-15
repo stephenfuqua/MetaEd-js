@@ -33,14 +33,14 @@ export const baseTypeTopLevelEntity = 'ComplexObjectType';
 
 function parentPropertyNotInExtensionOverridePropertyList(
   parentProperty: EntityProperty,
-  extensionOverrideProperties: Array<EntityProperty>,
+  extensionOverrideProperties: EntityProperty[],
 ): boolean {
   return !extensionOverrideProperties.some(
     x => x.metaEdName === parentProperty.metaEdName && x.roleName === parentProperty.roleName,
   );
 }
 
-function parentPropertiesWithOverriddenPropertiesFilteredOut(topLevelEntity: TopLevelEntity): Array<EntityProperty> {
+function parentPropertiesWithOverriddenPropertiesFilteredOut(topLevelEntity: TopLevelEntity): EntityProperty[] {
   const extensionOverrideProperties = topLevelEntity.data.edfiXsd
     .xsdProperties()
     .filter(x => x.type === 'common' && (x as CommonProperty).isExtensionOverride);
@@ -64,7 +64,7 @@ export function createDefaultComplexType(
   typeGroup: string,
   baseType: string = '',
   isAbstract: boolean = false,
-): Array<ComplexType> {
+): ComplexType[] {
   const complexType: ComplexType = Object.assign(newComplexType(), {
     annotation: Object.assign(newAnnotation(), {
       documentation: topLevelEntity.documentation,

@@ -47,7 +47,7 @@ export class BuildStrategy {
     return new AppendInlineContextStrategy(this, context);
   }
 
-  skipPath(eligiblePropertyPaths: Array<Array<string>>): BuildStrategy {
+  skipPath(eligiblePropertyPaths: string[][]): BuildStrategy {
     return new SkipPathStrategy(this, eligiblePropertyPaths);
   }
   // #endregion strategy configuration methods
@@ -139,11 +139,11 @@ class MakeLeafColumnNullableStrategy extends BuildStrategy {
 // The result is that if skip path is not called last the skip path decorator is removed from the decorator chain
 // and skip path's buildColumns method is never called.
 class SkipPathStrategy extends BuildStrategy {
-  myEligiblePropertyPaths: Array<Array<string>>;
+  myEligiblePropertyPaths: string[][];
 
-  onPathPropertyPaths: Array<Array<string>>;
+  onPathPropertyPaths: string[][];
 
-  constructor(decoratedStrategy: BuildStrategy | null, eligiblePropertyPaths: Array<Array<string>>) {
+  constructor(decoratedStrategy: BuildStrategy | null, eligiblePropertyPaths: string[][]) {
     super(decoratedStrategy);
     this.myEligiblePropertyPaths = eligiblePropertyPaths;
   }
@@ -175,7 +175,7 @@ class SkipPathStrategy extends BuildStrategy {
     return new AppendInlineContextStrategy(strategy, context);
   }
 
-  skipPath(eligiblePropertyPaths: Array<Array<string>>): BuildStrategy {
+  skipPath(eligiblePropertyPaths: string[][]): BuildStrategy {
     const strategy = this.getDecoratedStrategy();
     return new SkipPathStrategy(strategy, eligiblePropertyPaths);
   }

@@ -2,7 +2,7 @@ import { newAssociationProperty, newDomainEntityProperty, newMetaEdEnvironment }
 import { AssociationProperty, DomainEntityProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/property/ReferenceProperty';
 
-describe('when ReferenceProperty enhances association property', () => {
+describe('when ReferenceProperty enhances association property', (): void => {
   let associationProperty: AssociationProperty;
 
   beforeAll(() => {
@@ -12,16 +12,16 @@ describe('when ReferenceProperty enhances association property', () => {
     enhance(metaEd);
   });
 
-  it('should have false ods delete cascade primary key', () => {
+  it('should have false ods delete cascade primary key', (): void => {
     expect(associationProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(false);
   });
 
-  it('should have false ods causes cyclic update cascade', () => {
+  it('should have false ods causes cyclic update cascade', (): void => {
     expect(associationProperty.data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
   });
 });
 
-describe('when ReferenceProperty enhances domain entity property', () => {
+describe('when ReferenceProperty enhances domain entity property', (): void => {
   let domainEntityProperty: DomainEntityProperty;
 
   beforeAll(() => {
@@ -32,11 +32,11 @@ describe('when ReferenceProperty enhances domain entity property', () => {
     enhance(metaEd);
   });
 
-  it('should have false ods delete cascade primary key', () => {
+  it('should have false ods delete cascade primary key', (): void => {
     expect(domainEntityProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(false);
   });
 
-  it('should have false ods causes cyclic update cascade', () => {
+  it('should have false ods causes cyclic update cascade', (): void => {
     expect(domainEntityProperty.data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
   });
 });

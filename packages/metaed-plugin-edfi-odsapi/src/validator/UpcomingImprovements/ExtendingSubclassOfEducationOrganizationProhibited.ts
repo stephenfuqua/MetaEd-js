@@ -26,11 +26,11 @@ function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   );
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
-  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as Array<DomainEntityExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as DomainEntityExtension[]).forEach(
     (domainEntityExtension: DomainEntityExtension) => {
       if (!domainEntityExtension.baseEntity) return;
       if (isEducationOrganizationSubclass(domainEntityExtension.baseEntity)) {

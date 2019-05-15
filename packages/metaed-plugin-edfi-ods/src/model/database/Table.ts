@@ -15,9 +15,9 @@ winston.configure({ transports: [new winston.transports.Console()], format: wins
 
 const maxSqlServerIdentifierLength = R.take(128);
 
-export type Table = {
+export interface Table {
   name: string;
-  nameComponents: Array<string>;
+  nameComponents: string[];
   namespace: Namespace;
   schema: string;
   type: string;
@@ -30,18 +30,18 @@ export type Table = {
   isRequiredCollectionTable: boolean;
   isTypeTable: boolean;
   hasAlternateKeys: boolean;
-  columns: Array<Column>;
-  primaryKeys: Array<Column>;
-  foreignKeys: Array<ForeignKey>;
-  alternateKeys: Array<Column>;
-  uniqueIndexes: Array<Column>;
+  columns: Column[];
+  primaryKeys: Column[];
+  foreignKeys: ForeignKey[];
+  alternateKeys: Column[];
+  uniqueIndexes: Column[];
   // not all tables have a parentEntity
   parentEntity: TopLevelEntity;
   isEntityMainTable: boolean;
   isAggregateRootTable: boolean;
   hideFromApiMetadata: boolean;
   hasDiscriminatorColumn: boolean;
-};
+}
 
 export function newTable(): Table {
   return {
@@ -101,35 +101,35 @@ export function addColumn(table: Table, column: Column): void {
   table.columns.push(clone);
 }
 
-export function addColumns(table: Table, columns: Array<Column>, strategy: ColumnTransform): void {
+export function addColumns(table: Table, columns: Column[], strategy: ColumnTransform): void {
   strategy.transform(columns).forEach(column => addColumn(table, column));
 }
 
-export function getAlternateKeys(table: Table): Array<Column> {
+export function getAlternateKeys(table: Table): Column[] {
   return orderByProp('name')(table.columns.filter(x => x.isPartOfAlternateKey));
 }
 
-export function getPrimaryKeys(table: Table): Array<Column> {
+export function getPrimaryKeys(table: Table): Column[] {
   return orderByProp('name')(table.columns.filter(x => x.isPartOfPrimaryKey));
 }
 
-export function getNonPrimaryKeys(table: Table): Array<Column> {
+export function getNonPrimaryKeys(table: Table): Column[] {
   return table.columns.filter(x => !x.isPartOfPrimaryKey);
 }
 
-export function getUniqueIndexes(table: Table): Array<Column> {
+export function getUniqueIndexes(table: Table): Column[] {
   return orderByProp('name')(table.columns.filter(x => x.isUniqueIndex));
 }
 
-export function getAllColumns(table: Table): Array<Column> {
+export function getAllColumns(table: Table): Column[] {
   return [...getPrimaryKeys(table), ...getNonPrimaryKeys(table)];
 }
 
-export function getColumnView(table: Table): Array<Column> {
+export function getColumnView(table: Table): Column[] {
   return getAllColumns(table).map(x => cloneColumn(x));
 }
 
-export function getForeignKeys(table: Table): Array<ForeignKey> {
+export function getForeignKeys(table: Table): ForeignKey[] {
   return orderByProp('name')(table.foreignKeys);
 }
 
@@ -168,7 +168,7 @@ export function addForeignKey(table: Table, foreignKey: ForeignKey): void {
 
 function createForeignKeyInternal(
   sourceReference: ForeignKeySourceReference,
-  foreignKeyColumns: Array<Column>,
+  foreignKeyColumns: Column[],
   foreignTableSchema: string,
   foreignTableNamespace: Namespace,
   foreignTableName: string,
@@ -197,7 +197,7 @@ function createForeignKeyInternal(
 
 export function createForeignKey(
   sourceProperty: EntityProperty,
-  foreignKeyColumns: Array<Column>,
+  foreignKeyColumns: Column[],
   foreignTableSchema: string,
   foreignTableNamespace: Namespace,
   foreignTableName: string,
@@ -215,7 +215,7 @@ export function createForeignKey(
 
 export function createForeignKeyUsingSourceReference(
   sourceReference: ForeignKeySourceReference,
-  foreignKeyColumns: Array<Column>,
+  foreignKeyColumns: Column[],
   foreignTableSchema: string,
   foreignTableNamespace: Namespace,
   foreignTableName: string,

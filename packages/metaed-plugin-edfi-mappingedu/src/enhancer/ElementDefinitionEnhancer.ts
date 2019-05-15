@@ -23,7 +23,7 @@ import {
   referenceFor,
 } from './ReferenceDefintionHelper';
 
-const enhancerName: string = 'ElementDefinitionEnhancer';
+const enhancerName = 'ElementDefinitionEnhancer';
 
 const isRequired = (element: Element): boolean =>
   element.minOccurs != null && (element.minOccurs === '' || element.minOccurs === '1');
@@ -33,8 +33,8 @@ const fieldLengthFor = (stringSimpleType: any): string =>
 
 const collectElementsFor = (
   element: ComplexType | ElementGroup,
-  entityPath: Array<string>,
-  elements: Array<{ value: Element | ElementGroup; entityPath: Array<string> }>,
+  entityPath: string[],
+  elements: { value: Element | ElementGroup; entityPath: string[] }[],
 ): void => {
   element.items.forEach((value: ComplexTypeItem) =>
     elements.push({
@@ -47,8 +47,8 @@ const collectElementsFor = (
 const createElementDefinitionForDescriptorReferenceType = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-  element: { value: Element; entityPath: Array<string> },
-  elements: Array<{ value: Element | ElementGroup; entityPath: Array<string> }>,
+  element: { value: Element; entityPath: string[] },
+  elements: { value: Element | ElementGroup; entityPath: string[] }[],
 ) => {
   const descriptorReference: ComplexType | undefined = pluginDescriptorExtendedReferencesForNamespace(metaEd, namespace).get(
     element.value.type,
@@ -64,20 +64,20 @@ const createElementDefinitionsFor = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
   complexType: ComplexType,
-  entityPath: Array<string> = [complexType.name],
+  entityPath: string[] = [complexType.name],
 ) => {
   /* eslint-disable no-continue */
-  const repository: Array<ElementDefinition> = pluginElementDefinitionsForNamespace(metaEd, namespace);
-  const elements: Array<{ value: Element | ElementGroup; entityPath: Array<string> }> = [];
+  const repository: ElementDefinition[] = pluginElementDefinitionsForNamespace(metaEd, namespace);
+  const elements: { value: Element | ElementGroup; entityPath: string[] }[] = [];
   collectElementsFor(complexType, entityPath, elements);
 
   while (elements.length > 0) {
-    const elementOrElementGroup: { value: Element | ElementGroup; entityPath: Array<string> } = elements.pop() as {
+    const elementOrElementGroup: { value: Element | ElementGroup; entityPath: string[] } = elements.pop() as {
       value: Element | ElementGroup;
-      entityPath: Array<string>;
+      entityPath: string[];
     };
     if (isElementGroup(elementOrElementGroup.value)) {
-      const elementGroup: { value: ElementGroup; entityPath: Array<string> } = {
+      const elementGroup: { value: ElementGroup; entityPath: string[] } = {
         value: elementOrElementGroup.value as ElementGroup,
         entityPath: elementOrElementGroup.entityPath,
       };
@@ -86,7 +86,7 @@ const createElementDefinitionsFor = (
       continue;
     }
 
-    const element: { value: Element; entityPath: Array<string> } = {
+    const element: { value: Element; entityPath: string[] } = {
       value: elementOrElementGroup.value as Element,
       entityPath: elementOrElementGroup.entityPath,
     };
@@ -147,7 +147,7 @@ const createElementDefinitionForBaseType = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
   complexType: ComplexType,
-  entityPath: Array<string> = [complexType.name],
+  entityPath: string[] = [complexType.name],
 ) => {
   if (
     complexType.baseType == null ||
@@ -164,7 +164,7 @@ const createElementDefinitionForBaseType = (
 
 export const enhance = (metaEd: MetaEdEnvironment): EnhancerResult => {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const xsdElements: Array<ComplexType> = [
+    const xsdElements: ComplexType[] = [
       ...pluginDescriptorsForNamespace(metaEd, namespace).values(),
       ...pluginDomainEntitiesForNamespace(metaEd, namespace).values(),
       ...pluginAssociationsForNamespace(metaEd, namespace).values(),

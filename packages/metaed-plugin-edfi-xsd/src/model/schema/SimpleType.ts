@@ -2,11 +2,11 @@ import deepFreeze from 'deep-freeze';
 import { Annotation } from './Annotation';
 import { newAnnotation } from './Annotation';
 
-export type SimpleType = {
+export interface SimpleType {
   name: string;
   baseType: string;
   annotation: Annotation;
-};
+}
 
 export function newSimpleType(): SimpleType {
   return {

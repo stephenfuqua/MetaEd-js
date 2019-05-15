@@ -2,8 +2,8 @@ import { MetaEdEnvironment, ValidationFailure, TopLevelEntity } from 'metaed-cor
 import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach(namespace => {
     namespace.entity.associationExtension.forEach(associationExtension => {
       const extendedEntity: TopLevelEntity | null = getEntityFromNamespaceChain(

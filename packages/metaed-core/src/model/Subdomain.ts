@@ -8,8 +8,8 @@ import { DomainItem } from './DomainItem';
 import { ModelBase } from './ModelBase';
 
 export interface SubdomainSourceMap extends TopLevelEntitySourceMap {
-  domainItems: Array<SourceMap>;
-  entities: Array<SourceMap>;
+  domainItems: SourceMap[];
+  entities: SourceMap[];
   parent: SourceMap;
   parentMetaEdName: SourceMap;
   position: SourceMap;
@@ -31,8 +31,8 @@ export function newSubdomainSourceMap(): SubdomainSourceMap {
 
 export interface Subdomain extends TopLevelEntity {
   sourceMap: SubdomainSourceMap;
-  domainItems: Array<DomainItem>;
-  entities: Array<TopLevelEntity>;
+  domainItems: DomainItem[];
+  entities: TopLevelEntity[];
   parent: Domain;
   parentMetaEdName: string;
   position: number;

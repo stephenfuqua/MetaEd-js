@@ -2,13 +2,13 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/StringProperty/StringPropertyMinLengthMustNotBeGreaterThanMaxLength';
 
-describe('when validating string property with correct minimum length and maximum length', () => {
+describe('when validating string property with correct minimum length and maximum length', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const minLength = '0';
   const maxLength = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -28,26 +28,26 @@ describe('when validating string property with correct minimum length and maximu
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.string.length).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating string property with same minimum length and maximum length', () => {
+describe('when validating string property with same minimum length and maximum length', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const minLength = '5';
   const maxLength = '5';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -67,26 +67,26 @@ describe('when validating string property with same minimum length and maximum l
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.string.length).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating string property with minimum length greater than maximum length', () => {
+describe('when validating string property with minimum length greater than maximum length', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const minLength = '10';
   const maxLength = '0';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -106,15 +106,15 @@ describe('when validating string property with minimum length greater than maxim
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.string.length).toBe(2);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('StringPropertyMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');

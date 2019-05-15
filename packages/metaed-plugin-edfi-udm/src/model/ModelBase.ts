@@ -2,9 +2,9 @@ import { MetaEdEnvironment, EnhancerResult, ModelBase } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 import { String as sugar } from 'sugar';
 
-export type ModelBaseEdfiUdm = {
+export interface ModelBaseEdfiUdm {
   humanizedName: string;
-};
+}
 
 const enhancerName = 'DomainSetupEnhancer';
 

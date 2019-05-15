@@ -8,7 +8,7 @@ function fileName(projectPrefix: string): string {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (versionSatisfies(metaEd.dataStandardVersion, V3OrGreater)) {
     metaEd.namespace.forEach((namespace: Namespace) => {

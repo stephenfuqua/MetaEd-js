@@ -2,11 +2,11 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilder, DomainEntity
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CrossProperty/PropertiesMustReferToValidNamespace';
 
-describe('when referring to valid namespace', () => {
+describe('when referring to valid namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -30,16 +30,16 @@ describe('when referring to valid namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when referring to invalid namespace', () => {
+describe('when referring to invalid namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -63,7 +63,7 @@ describe('when referring to invalid namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('PropertiesMustReferToValidNamespace');
     expect(failures[0].category).toBe('error');

@@ -9,13 +9,13 @@ export type AssociationDefinitionCardinality =
   | 'OneToZeroOrMore'
   | 'Unknown';
 
-export type AssociationDefinition = {
+export interface AssociationDefinition {
   fullName: ApiFullName;
   cardinality: AssociationDefinitionCardinality;
   primaryEntityFullName: ApiFullName;
-  primaryEntityProperties: Array<ApiProperty>;
+  primaryEntityProperties: ApiProperty[];
   secondaryEntityFullName: ApiFullName;
-  secondaryEntityProperties: Array<ApiProperty>;
+  secondaryEntityProperties: ApiProperty[];
   isIdentifying: boolean;
   isRequired: boolean;
-};
+}

@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DescriptorBuilder, NamespaceBu
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
 
-describe('when map type enumeration items have different short descriptions', () => {
+describe('when map type enumeration items have different short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -27,18 +27,18 @@ describe('when map type enumeration items have different short descriptions', ()
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when map type enumeration items have duplicate short descriptions', () => {
+describe('when map type enumeration items have duplicate short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -61,11 +61,11 @@ describe('when map type enumeration items have duplicate short descriptions', ()
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DescriptorMapTypeItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
@@ -74,9 +74,9 @@ describe('when map type enumeration items have duplicate short descriptions', ()
   });
 });
 
-describe('when map type enumeration items have multiple duplicate short descriptions', () => {
+describe('when map type enumeration items have multiple duplicate short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -101,11 +101,11 @@ describe('when map type enumeration items have multiple duplicate short descript
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have multiple validation failure', () => {
+  it('should have multiple validation failure', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DescriptorMapTypeItemsMustBeUnique');
     expect(failures[0].category).toBe('error');

@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedDomainEntitiesProhibited';
 
-describe('when a domain entity extension extends a domain entity with no required properties', () => {
+describe('when a domain entity extension extends a domain entity with no required properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -18,7 +18,7 @@ describe('when a domain entity extension extends a domain entity with no require
     }),
   );
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -41,12 +41,12 @@ describe('when a domain entity extension extends a domain entity with no require
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity extension extends a domain entity with a required property', () => {
+describe('when a domain entity extension extends a domain entity with a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -55,7 +55,7 @@ describe('when a domain entity extension extends a domain entity with a required
     }),
   );
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -77,7 +77,7 @@ describe('when a domain entity extension extends a domain entity with a required
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IncludingRequiredPropertiesInExtendedDomainEntitiesProhibited');
     expect(failures[0].category).toBe('warning');
@@ -90,7 +90,7 @@ describe('when a domain entity extension extends a domain entity with a required
   });
 });
 
-describe('when a domain entity extension extends a domain entity with a required property for ODS/API >3.0', () => {
+describe('when a domain entity extension extends a domain entity with a required property for ODS/API >3.0', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -99,7 +99,7 @@ describe('when a domain entity extension extends a domain entity with a required
     }),
   );
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -121,7 +121,7 @@ describe('when a domain entity extension extends a domain entity with a required
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

@@ -8,8 +8,8 @@ import { enhance } from '../../src/diminisher/ModifyIdentityTypeOrderToMatchLega
 
 const testBase = (
   testEntityName: string,
-  originalElementOrder: Array<string>,
-  diminishedElementOrder: Array<string>,
+  originalElementOrder: string[],
+  diminishedElementOrder: string[],
   isAssociation: boolean = false,
 ): void => {
   let complexType: ComplexType;
@@ -22,7 +22,7 @@ const testBase = (
     complexType = Object.assign(newComplexType(), {
       name: `${testEntityName}IdentityType`,
       items: originalElementOrder.reduce(
-        (arr: Array<ComplexTypeItem>, x: string) => arr.concat([Object.assign(newElement(), { name: x })]),
+        (arr: ComplexTypeItem[], x: string) => arr.concat([Object.assign(newElement(), { name: x })]),
         [],
       ),
     });
@@ -42,12 +42,12 @@ const testBase = (
     enhance(metaEd);
   });
 
-  it('should have diminished order', () => {
+  it('should have diminished order', (): void => {
     expect(complexType.items.map(x => (x as Element).name)).toEqual(diminishedElementOrder);
   });
 };
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes staffEducationOrganizationEmploymentAssociation', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes staffEducationOrganizationEmploymentAssociation', (): void => {
   testBase(
     'StaffEducationOrganizationEmploymentAssociation',
     ['StaffReference', 'EducationOrganizationReference', 'EmploymentStatus', 'HireDate'],
@@ -56,7 +56,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentProgramAssociation', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentProgramAssociation', (): void => {
   testBase(
     'StudentProgramAssociation',
     ['StudentReference', 'ProgramReference', 'BeginDate', 'EducationOrganizationReference'],
@@ -65,15 +65,15 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes assessmentItem', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes assessmentItem', (): void => {
   testBase('AssessmentItem', ['IdentificationCode', 'AssessmentReference'], ['AssessmentReference', 'IdentificationCode']);
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes classPeriod', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes classPeriod', (): void => {
   testBase('ClassPeriod', ['SchoolReference', 'ClassPeriodName'], ['ClassPeriodName', 'SchoolReference']);
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes courseOffering', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes courseOffering', (): void => {
   testBase(
     'CourseOffering',
     ['LocalCourseCode', 'SchoolReference', 'SessionReference'],
@@ -81,7 +81,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes co
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gradebookEntry', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gradebookEntry', (): void => {
   testBase(
     'GradebookEntry',
     ['GradebookEntryTitle', 'DateAssigned', 'SectionReference'],
@@ -89,7 +89,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gr
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes grade', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes grade', (): void => {
   testBase(
     'Grade',
     ['GradeType', 'StudentSectionAssociationReference', 'GradingPeriodReference'],
@@ -97,7 +97,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gr
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gradingPeriod', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gradingPeriod', (): void => {
   testBase(
     'GradingPeriod',
     ['SchoolReference', 'GradingPeriod', 'BeginDate'],
@@ -105,7 +105,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes gr
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes intervention', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes intervention', (): void => {
   testBase(
     'Intervention',
     ['EducationOrganizationReference', 'InterventionIdentificationCode'],
@@ -113,7 +113,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes in
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes interventionPrescription', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes interventionPrescription', (): void => {
   testBase(
     'InterventionPrescription',
     ['EducationOrganizationReference', 'InterventionPrescriptionIdentificationCode'],
@@ -121,7 +121,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes in
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes location', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes location', (): void => {
   testBase(
     'Location',
     ['SchoolReference', 'ClassroomIdentificationCode'],
@@ -129,7 +129,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes lo
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes objectiveAssessment', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes objectiveAssessment', (): void => {
   testBase(
     'ObjectiveAssessment',
     ['IdentificationCode', 'AssessmentReference'],
@@ -137,7 +137,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes ob
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes program', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes program', (): void => {
   testBase(
     'Program',
     ['EducationOrganizationReference', 'ProgramName', 'ProgramType'],
@@ -145,7 +145,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes pr
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes section', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes section', (): void => {
   testBase(
     'Section',
     ['UniqueSectionCode', 'SequenceOfCourse', 'CourseOfferingReference', 'LocationReference', 'ClassPeriodReference'],
@@ -153,11 +153,11 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes se
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes session', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes session', (): void => {
   testBase('Session', ['SchoolYear', 'Term', 'SchoolReference'], ['SchoolReference', 'SchoolYear', 'Term']);
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentAssessment', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentAssessment', (): void => {
   testBase(
     'StudentAssessment',
     ['AdministrationDate', 'StudentReference', 'AssessmentReference'],
@@ -165,7 +165,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentCompetencyObjective', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentCompetencyObjective', (): void => {
   testBase(
     'StudentCompetencyObjective',
     ['CompetencyObjectiveReference', 'GradingPeriodReference', 'StudentReference'],
@@ -173,7 +173,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentLearningObjective', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentLearningObjective', (): void => {
   testBase(
     'StudentLearningObjective',
     ['LearningObjectiveReference', 'GradingPeriodReference', 'StudentReference'],
@@ -181,7 +181,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching association', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching association', (): void => {
   testBase(
     'AssociationName1',
     ['ElementName1', 'ElementName2', 'ElementName3'],
@@ -190,7 +190,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes wi
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching domain entity', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching domain entity', (): void => {
   testBase(
     'DomainEntityName1',
     ['ElementName1', 'ElementName2', 'ElementName3'],
@@ -198,7 +198,7 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes wi
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching identity type items', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no matching identity type items', (): void => {
   testBase(
     'AssessmentItem',
     ['ElementName1', 'ElementName2', 'ElementName3'],
@@ -206,6 +206,6 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes wi
   );
 });
 
-describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no identity type items', () => {
+describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes with no identity type items', (): void => {
   testBase('AssessmentItem', [], []);
 });

@@ -26,33 +26,33 @@ winston.configure({ transports: [new winston.transports.Console()], format: wins
 
 const enhancerName = 'InterchangeOrderMetadataEnhancer';
 
-type Edge = {
+interface Edge {
   target: string;
   isRequired: boolean;
-};
+}
 
-type Dependency = {
+interface Dependency {
   vertex: string;
-  edges: Array<Edge>;
-};
+  edges: Edge[];
+}
 
-function getDependencies(entity: TopLevelEntity, includeExtensions: boolean, parentIsRequired: boolean = true): Array<Edge> {
+function getDependencies(entity: TopLevelEntity, includeExtensions: boolean, parentIsRequired: boolean = true): Edge[] {
   if (!includeExtensions && entity.namespace.isExtension) return [];
 
-  const result: Array<Edge> = [];
+  const result: Edge[] = [];
 
   if (entity.baseEntity != null) result.push({ target: entity.baseEntity.metaEdName, isRequired: true });
   if (entity.baseEntity != null) result.push(...getDependencies(entity.baseEntity, includeExtensions));
 
-  const referenceProperties: Array<ReferentialProperty> = entity.properties
+  const referenceProperties: ReferentialProperty[] = entity.properties
     .filter((property: EntityProperty) => isReferentialProperty(property))
     .map((property: EntityProperty) => asReferentialProperty(property));
 
   if (referenceProperties.length === 0) return result;
 
-  const otherProperties: Array<ReferentialProperty> = [];
-  const choiceProperties: Array<ChoiceProperty> = [];
-  const inlineCommonProperties: Array<InlineCommonProperty> = [];
+  const otherProperties: ReferentialProperty[] = [];
+  const choiceProperties: ChoiceProperty[] = [];
+  const inlineCommonProperties: InlineCommonProperty[] = [];
 
   referenceProperties.forEach((property: ReferentialProperty) => {
     if (property.type === 'choice') choiceProperties.push(asChoiceProperty(property));
@@ -82,7 +82,7 @@ function getDependencies(entity: TopLevelEntity, includeExtensions: boolean, par
   return sortWith([prop('target'), prop('isRequired')])(result);
 }
 
-function addDependenciesToGraph(graph: Graph, elementDependencies: Array<Dependency>): Graph {
+function addDependenciesToGraph(graph: Graph, elementDependencies: Dependency[]): Graph {
   elementDependencies.forEach((dependency: Dependency) => {
     if (dependency.edges.length === 0) graph.setNode(dependency.vertex);
     else
@@ -94,7 +94,7 @@ function addDependenciesToGraph(graph: Graph, elementDependencies: Array<Depende
   return graph;
 }
 
-export function sortGraph(graph: Graph, removeRequiredCycles: boolean = false): Array<string> {
+export function sortGraph(graph: Graph, removeRequiredCycles: boolean = false): string[] {
   if (graphlib.alg.isAcyclic(graph)) return graphlib.alg.topsort(graph);
 
   graphlib.alg.findCycles(graph).forEach(cycle => {
@@ -128,7 +128,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     edFiXsdEntityRepository.mergedInterchange.forEach((mergedInterchange: MergedInterchange) => {
       if (mergedInterchange.namespace.namespaceName !== namespace.namespaceName) return;
 
-      const elementDependencies: Array<Dependency> = mergedInterchange.elements.map((element: InterchangeItem) => ({
+      const elementDependencies: Dependency[] = mergedInterchange.elements.map((element: InterchangeItem) => ({
         vertex: element.referencedEntity.metaEdName,
         edges: getDependencies(element.referencedEntity, mergedInterchange.namespace.isExtension).filter(
           (edge: Edge) => element.referencedEntity.metaEdName !== edge.target,
@@ -164,11 +164,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       addDependenciesToGraph(interchangeGraph, [interchangeDependencies]);
     });
 
-    const sortedEntities: Array<{ name: string; globalDependencyOrder: number }> = sortGraph(entityGraph)
+    const sortedEntities: { name: string; globalDependencyOrder: number }[] = sortGraph(entityGraph)
       .reverse()
       .map((name: string, index: number) => ({ name, globalDependencyOrder: index + 1 }));
 
-    const sortedInterchanges: Array<{ name: string; apiOrder: number }> = sortGraph(interchangeGraph)
+    const sortedInterchanges: { name: string; apiOrder: number }[] = sortGraph(interchangeGraph)
       .reverse()
       .map((name: string, index: number) => ({ name, apiOrder: (index + 1) * 10 }));
 

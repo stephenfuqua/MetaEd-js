@@ -9,7 +9,7 @@ import {
   ModelBase,
 } from 'metaed-core';
 
-function allPropertiesAfterTheFirstAreIdentity(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+function allPropertiesAfterTheFirstAreIdentity(outPath: (ReferentialProperty | SimpleProperty)[]): boolean {
   // eslint-disable-next-line no-restricted-syntax
   for (const [index, propertyOnPath] of outPath.entries()) {
     // skip first property
@@ -21,22 +21,22 @@ function allPropertiesAfterTheFirstAreIdentity(outPath: Array<ReferentialPropert
   return true;
 }
 
-function roleNameOnFirstProperty(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+function roleNameOnFirstProperty(outPath: (ReferentialProperty | SimpleProperty)[]): boolean {
   const property = outPath[0];
   return property != null && property.roleName != null && property.roleName !== '';
 }
 
 function noMergeDirectives(
-  outPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
-): Array<Array<ReferentialProperty | SimpleProperty>> {
-  const result: Array<Array<ReferentialProperty | SimpleProperty>> = [];
+  outPaths: (ReferentialProperty | SimpleProperty)[][],
+): (ReferentialProperty | SimpleProperty)[][] {
+  const result: (ReferentialProperty | SimpleProperty)[][] = [];
   outPaths.forEach(outPath => {
     if (outPath.every(property => (property as ReferentialProperty).mergeDirectives.length === 0)) result.push(outPath);
   });
   return result;
 }
 
-function roleNameOnAtLeastAllButOnePath(outPaths: Array<Array<ReferentialProperty | SimpleProperty>>) {
+function roleNameOnAtLeastAllButOnePath(outPaths: (ReferentialProperty | SimpleProperty)[][]) {
   const countOfPathsWithRoleName: number = outPaths.reduce(
     (count, outPath) => (roleNameOnFirstProperty(outPath) ? count + 1 : count),
     0,
@@ -45,35 +45,35 @@ function roleNameOnAtLeastAllButOnePath(outPaths: Array<Array<ReferentialPropert
 }
 
 function targetDiffersByFullNameOnDirectReference(
-  outPaths: Array<Array<ReferentialProperty | SimpleProperty>>,
-): Array<Array<ReferentialProperty | SimpleProperty>> {
-  const fullNamesMap: Map<string, Array<Array<ReferentialProperty | SimpleProperty>>> = new Map();
+  outPaths: (ReferentialProperty | SimpleProperty)[][],
+): (ReferentialProperty | SimpleProperty)[][] {
+  const fullNamesMap: Map<string, (ReferentialProperty | SimpleProperty)[][]> = new Map();
 
   outPaths.forEach(outPath => {
     const { fullPropertyName } = outPath[outPath.length - 1];
     if (!fullNamesMap.has(fullPropertyName)) fullNamesMap.set(fullPropertyName, []);
-    (fullNamesMap.get(fullPropertyName) as Array<Array<ReferentialProperty | SimpleProperty>>).push(outPath);
+    (fullNamesMap.get(fullPropertyName) as (ReferentialProperty | SimpleProperty)[][]).push(outPath);
   });
 
   // Ramda unnest === flatten a single level
   return R.unnest(Array.from(fullNamesMap.values()).filter(outPathArray => outPathArray.length > 1));
 }
 
-function startOfPathIsIdentity(outPath: Array<ReferentialProperty | SimpleProperty>): boolean {
+function startOfPathIsIdentity(outPath: (ReferentialProperty | SimpleProperty)[]): boolean {
   if (outPath.length === 0) return false; // something is wrong
   return outPath[0].isIdentityRename || outPath[0].isPartOfIdentity;
 }
 
 function mergeOutReferenceEntityEndpointsMap(
-  baseMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
-  targetMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
+  baseMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>,
+  targetMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>,
 ) {
   baseMap.forEach((listOfOutReferencePathsFromBase, entityAsKey) => {
     if (!targetMap.has(entityAsKey)) {
       targetMap.set(entityAsKey, []);
     }
     listOfOutReferencePathsFromBase.forEach(outReferencePathFromBase => {
-      (targetMap.get(entityAsKey) as Array<Array<ReferentialProperty | SimpleProperty>>).push(outReferencePathFromBase);
+      (targetMap.get(entityAsKey) as (ReferentialProperty | SimpleProperty)[][]).push(outReferencePathFromBase);
     });
   });
 }
@@ -81,8 +81,8 @@ function mergeOutReferenceEntityEndpointsMap(
 const pathStringReducer = (finalString, currentOutPath) =>
   `${finalString} [${currentOutPath.map(p => p.metaEdName).join('.')}]`;
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   // TODO: limited to direct sourcing from A/DEs and sub/extensions - doesn't look at Commons to traverse back to parent A/DE
   getAllEntitiesOfType(
@@ -95,7 +95,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     'domainEntitySubclass',
   ).forEach(entity => {
     // combine outReferenceEntitiesMap if this entity has a base
-    const outReferenceEntityEndpointsMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>> = new Map(
+    const outReferenceEntityEndpointsMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]> = new Map(
       (entity as TopLevelEntity).outReferenceEntityEndpointsMap,
     );
     const { baseEntity } = entity as TopLevelEntity;
@@ -108,7 +108,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (listOfOutPaths.length < 2) return;
 
       // only paths with identities after the initial element are problems
-      const possibleProblemOutPaths: Array<Array<ReferentialProperty | SimpleProperty>> = [...listOfOutPaths].filter(
+      const possibleProblemOutPaths: (ReferentialProperty | SimpleProperty)[][] = [...listOfOutPaths].filter(
         allPropertiesAfterTheFirstAreIdentity,
       );
 

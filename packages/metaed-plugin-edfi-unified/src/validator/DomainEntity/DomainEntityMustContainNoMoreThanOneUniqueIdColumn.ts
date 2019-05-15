@@ -1,13 +1,13 @@
 import { EntityProperty, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
-const hasDuplicateUniqueIds = (properties: Array<EntityProperty>) =>
+const hasDuplicateUniqueIds = (properties: EntityProperty[]) =>
   properties.reduce(
     (count: number, property: EntityProperty) => (property.metaEdName === 'UniqueId' ? count + 1 : count),
     0,
   ) > 1;
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach(namespace => {
     if (namespace.isExtension) return;

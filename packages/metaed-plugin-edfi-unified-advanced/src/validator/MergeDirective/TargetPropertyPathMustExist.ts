@@ -2,7 +2,7 @@ import { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core'
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from './FailReferencedPropertyDoesNotExist';
 
-const validPropertyTypes: Array<PropertyType> = [
+const validPropertyTypes: PropertyType[] = [
   'association',
   'choice',
   'common',
@@ -17,8 +17,8 @@ const validPropertyTypes: Array<PropertyType> = [
   'sharedString',
 ];
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which

@@ -8,12 +8,12 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
-describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
+describe('when PrimaryKeyOrderDiminisher diminishes matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const gradebookEntryLearningObjective = 'GradebookEntryLearningObjective';
-  const primaryKeyNames: Array<string> = [
+  const primaryKeyNames: string[] = [
     'SequenceOfCourse',
     'SchoolId',
     'UniqueSectionCode',
@@ -28,7 +28,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
     'Objective',
     'AcademicSubjectDescriptorId',
   ];
-  const expectedPrimaryKeyOrder: Array<string> = [
+  const expectedPrimaryKeyOrder: string[] = [
     'SchoolId',
     'ClassPeriodName',
     'ClassroomIdentificationCode',
@@ -63,18 +63,18 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
     enhance(metaEd);
   });
 
-  it('should have correct primary key order', () => {
+  it('should have correct primary key order', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective) as Table;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
 
-describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneous primary keys', () => {
+describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneous primary keys', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const gradebookEntryLearningObjective = 'GradebookEntryLearningObjective';
-  const primaryKeyNames: Array<string> = [
+  const primaryKeyNames: string[] = [
     'PrimaryKeyNameC',
     'ClassroomIdentificationCode',
     'TermDescriptorId',
@@ -99,7 +99,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
     'UniqueSectionCode',
     'PrimaryKeyNameI',
   ];
-  const expectedPrimaryKeyOrder: Array<string> = [];
+  const expectedPrimaryKeyOrder: string[] = [];
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -120,18 +120,18 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
     enhance(metaEd);
   });
 
-  it('should have ignored primary key ordering for this table', () => {
+  it('should have ignored primary key ordering for this table', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective) as Table;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
 
-describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
+describe('when PrimaryKeyOrderDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const TableName = 'TableName';
-  const primaryKeyNames: Array<string> = [
+  const primaryKeyNames: string[] = [
     'PrimaryKeyNameF',
     'PrimaryKeyNameA',
     'PrimaryKeyNameC',
@@ -163,7 +163,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
     enhance(metaEd);
   });
 
-  it('should have correct primary key order', () => {
+  it('should have correct primary key order', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(TableName) as Table;
     expect(primaryKeys).toEqual([]);
   });

@@ -24,13 +24,13 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when enumeration has single item', () => {
+describe('when enumeration has single item', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
-  const enumerationItemShortDescription: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationTypeIdColumnName = `${enumerationName}TypeId`;
+  const enumerationItemShortDescription = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -110,12 +110,12 @@ describe('when enumeration has single item', () => {
   });
 });
 
-describe('when enumeration has multiple items', () => {
+describe('when enumeration has multiple items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationTypeIdColumnName = `${enumerationName}TypeId`;
   const shortDescription1 = 'ShortDescription1';
   const shortDescription2 = 'ShortDescription2';
   const shortDescription3 = 'ShortDescription3';
@@ -199,12 +199,12 @@ describe('when enumeration has multiple items', () => {
   });
 });
 
-describe('when enumeration name ends in type', () => {
+describe('when enumeration name ends in type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationNameType';
   const enumerationTableName: string = enumerationName;
-  const enumerationTypeIdColumnName: string = `${enumerationName}Id`;
+  const enumerationTypeIdColumnName = `${enumerationName}Id`;
   const shortDescription = 'ShortDescription';
 
   beforeAll(async () => {
@@ -288,14 +288,14 @@ describe('when enumeration name ends in type', () => {
   });
 });
 
-describe('when extension enumeration has single item', () => {
+describe('when extension enumeration has single item', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const enumerationName2 = 'EnumerationName2';
-  const enumerationTableName2: string = `${enumerationName2}Type`;
-  const enumerationTypeIdColumnName2: string = `${enumerationName2}TypeId`;
-  const enumerationItemShortDescription2: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
+  const enumerationTableName2 = `${enumerationName2}Type`;
+  const enumerationTypeIdColumnName2 = `${enumerationName2}TypeId`;
+  const enumerationItemShortDescription2 = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()

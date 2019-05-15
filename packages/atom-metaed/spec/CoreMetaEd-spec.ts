@@ -11,7 +11,7 @@ import type MetaEdConfig from '../lib/MetaEdConfig';
 
 const coreMetaEdSourceDirectory = 'coreMetaEdSourceDirectory';
 
-describe('CoreMetaEd', () => {
+describe('CoreMetaEd', (): void => {
   let testMetaEdLog: OutputWindow | any;
   let testMetaEdConfig: MetaEdConfig | any;
 
@@ -23,8 +23,8 @@ describe('CoreMetaEd', () => {
     spyOn(atom, 'pickFolder');
   });
 
-  describe('when creating new extension project', () => {
-    it('returns if no valid core MetaEd directory', () => {
+  describe('when creating new extension project', (): void => {
+    it('returns if no valid core MetaEd directory', (): void => {
       atom.project.getPaths.andReturn([]);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
 
@@ -33,7 +33,7 @@ describe('CoreMetaEd', () => {
       expect(atom.pickFolder).not.toHaveBeenCalled();
     });
 
-    it('prompts user to select directory if no extension project exists and returns when user cancels', () => {
+    it('prompts user to select directory if no extension project exists and returns when user cancels', (): void => {
       atom.project.getPaths.andReturn(['core']);
       atom.pickFolder.andCallFake(() => null);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
@@ -43,7 +43,7 @@ describe('CoreMetaEd', () => {
       expect(atom.pickFolder).toHaveBeenCalled();
     });
 
-    it('prompts user to select directory if no extension project exists', () => {
+    it('prompts user to select directory if no extension project exists', (): void => {
       atom.project.getPaths.andReturn(['core']);
       atom.pickFolder.andCallFake(() => ['extension']);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
@@ -53,7 +53,7 @@ describe('CoreMetaEd', () => {
       expect(atom.pickFolder).toHaveBeenCalled();
     });
 
-    it('prompts user to select directory if extension project already exists', () => {
+    it('prompts user to select directory if extension project already exists', (): void => {
       atom.project.getPaths.andReturn(['core', 'extension']);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
 
@@ -62,7 +62,7 @@ describe('CoreMetaEd', () => {
       expect(atom.pickFolder).toHaveBeenCalled();
     });
 
-    it('prompts user to select directory if multiple extension projects already exists', () => {
+    it('prompts user to select directory if multiple extension projects already exists', (): void => {
       atom.project.getPaths.andReturn(['core', 'extensionOne', 'extensionTwo']);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
 
@@ -72,12 +72,12 @@ describe('CoreMetaEd', () => {
     });
   });
 
-  describe('when getting a metaed config', () => {
+  describe('when getting a metaed config', (): void => {
     beforeEach(() => {
       atom.project.getPaths.andReturn(['core', 'extension']);
     });
 
-    it('uses an existing config if one exists', () => {
+    it('uses an existing config if one exists', (): void => {
       spyOn(fs, 'existsSync').andReturn(true);
       spyOn(fs, 'writeFileSync').andReturn(false);
       coreMetaEd.getMetaEdConfig('extension', testMetaEdLog);
@@ -86,7 +86,7 @@ describe('CoreMetaEd', () => {
       expect(fs.writeFileSync).not.toHaveBeenCalled();
     });
 
-    it('creates config if none exist', () => {
+    it('creates config if none exist', (): void => {
       spyOn(fs, 'existsSync').andReturn(false);
       spyOn(fs, 'writeFileSync').andReturn(true);
       coreMetaEd.getMetaEdConfig('extension', testMetaEdLog);
@@ -99,12 +99,12 @@ describe('CoreMetaEd', () => {
     });
   });
 
-  describe('when creating file from template', () => {
+  describe('when creating file from template', (): void => {
     const targetPath = 'targetPath';
     const targetFileName = 'targetFileName.metaed';
     const templateFunction = () => 'templateOutput';
 
-    it('creates file at target path with target file name', () => {
+    it('creates file at target path with target file name', (): void => {
       spyOn(fs, 'existsSync').andReturn(false);
       spyOn(fs, 'writeFileSync').andReturn(true);
       coreMetaEd.createFromTemplate(targetPath, targetFileName, templateFunction);
@@ -112,7 +112,7 @@ describe('CoreMetaEd', () => {
       expect(fs.writeFileSync).toHaveBeenCalledWith(path.join('targetPath/targetFileName.metaed'), 'templateOutput');
     });
 
-    it('adds number to file name if file already exists', () => {
+    it('adds number to file name if file already exists', (): void => {
       spyOn(fs, 'existsSync').andCallFake(filepath => filepath.endsWith('targetFileName.metaed'));
       spyOn(fs, 'writeFileSync').andReturn(true);
       coreMetaEd.createFromTemplate(targetPath, targetFileName, templateFunction);
@@ -120,7 +120,7 @@ describe('CoreMetaEd', () => {
       expect(fs.writeFileSync).toHaveBeenCalledWith(path.join('targetPath/targetFileName1.metaed'), 'templateOutput');
     });
 
-    it('continues to increment number of file name to ensure unique file name', () => {
+    it('continues to increment number of file name to ensure unique file name', (): void => {
       spyOn(fs, 'existsSync').andCallFake(filepath => !filepath.endsWith('targetFileName6.metaed'));
       spyOn(fs, 'writeFileSync').andReturn(true);
       coreMetaEd.createFromTemplate(targetPath, targetFileName, templateFunction);

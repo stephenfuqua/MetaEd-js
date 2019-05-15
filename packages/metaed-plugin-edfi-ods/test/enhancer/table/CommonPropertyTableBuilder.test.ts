@@ -10,13 +10,13 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building common property table', () => {
+describe('when building common property table', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
@@ -74,7 +74,7 @@ describe('when building common property table', () => {
       },
     });
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = Object.assign(newTable(), {
       schema: tableSchema,
@@ -92,13 +92,13 @@ describe('when building common property table', () => {
     );
   });
 
-  it('should return join table', () => {
+  it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
-  it('should have two primary key columns', () => {
+  it('should have two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
@@ -106,11 +106,11 @@ describe('when building common property table', () => {
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should have one foreign key', () => {
+  it('should have one foreign key', (): void => {
     expect(tables[0].foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
     expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + commonPropertyName);
     expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
@@ -120,13 +120,13 @@ describe('when building common property table', () => {
   });
 });
 
-describe('when building optional common property table', () => {
+describe('when building optional common property table', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonName = 'CommonName';
   const commonPkName = 'CommonPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
@@ -186,7 +186,7 @@ describe('when building optional common property table', () => {
       },
     });
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = Object.assign(newTable(), {
       schema: tableSchema,
@@ -204,13 +204,13 @@ describe('when building optional common property table', () => {
     );
   });
 
-  it('should return join table table', () => {
+  it('should return join table table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + commonName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
-  it('should have two columns with one primary key', () => {
+  it('should have two columns with one primary key', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(false);
@@ -218,11 +218,11 @@ describe('when building optional common property table', () => {
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should have one foreign key', () => {
+  it('should have one foreign key', (): void => {
     expect(tables[0].foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
     expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + commonName);
     expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
@@ -232,13 +232,13 @@ describe('when building optional common property table', () => {
   });
 });
 
-describe('when building required collection common property table', () => {
+describe('when building required collection common property table', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
@@ -297,7 +297,7 @@ describe('when building required collection common property table', () => {
       },
     });
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = Object.assign(newTable(), {
       schema: tableSchema,
@@ -315,14 +315,14 @@ describe('when building required collection common property table', () => {
     );
   });
 
-  it('should return required collection table', () => {
+  it('should return required collection table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
     expect(tables[0].isRequiredCollectionTable).toBe(true);
   });
 
-  it('should have two primary keys', () => {
+  it('should have two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
@@ -331,13 +331,13 @@ describe('when building required collection common property table', () => {
   });
 });
 
-describe('when building required collection common property table with make leaf column nullable strategy', () => {
+describe('when building required collection common property table with make leaf column nullable strategy', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
@@ -396,7 +396,7 @@ describe('when building required collection common property table with make leaf
       },
     });
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = Object.assign(newTable(), {
       schema: tableSchema,
@@ -414,14 +414,14 @@ describe('when building required collection common property table with make leaf
     );
   });
 
-  it('should return required collection table', () => {
+  it('should return required collection table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
     expect(tables[0].isRequiredCollectionTable).toBe(true);
   });
 
-  it('should have two primary keys', () => {
+  it('should have two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);

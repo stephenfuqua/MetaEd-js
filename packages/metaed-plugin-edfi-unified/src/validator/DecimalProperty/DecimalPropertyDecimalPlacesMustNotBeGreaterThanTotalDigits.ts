@@ -1,8 +1,8 @@
 import { DecimalProperty, MetaEdEnvironment, ValidationFailure, DecimalPropertySourceMap } from 'metaed-core';
 import { asDecimalProperty } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.decimal.forEach(decimal => {
     const decimalProperty: DecimalProperty = asDecimalProperty(decimal);
     const decimalPlaces: number = Number.parseInt(decimalProperty.decimalPlaces, 10);

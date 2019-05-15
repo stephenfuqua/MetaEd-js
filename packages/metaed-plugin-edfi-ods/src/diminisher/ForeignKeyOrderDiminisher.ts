@@ -17,7 +17,7 @@ const targetVersions = '2.x';
 const schemaName = 'edfi';
 
 function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
-  const foreignKeys: Array<ForeignKey> = R.chain((table: Table) =>
+  const foreignKeys: ForeignKey[] = R.chain((table: Table) =>
     getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === schemaName),
   )([...tablesForCoreNamespace.values()]);
   if (foreignKeys.length === 0) return;
@@ -26,7 +26,7 @@ function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
     const foreignTable: Table | undefined = tablesForCoreNamespace.get(fk.foreignTableName);
     if (foreignTable == null) return;
 
-    const primaryKeyOrder: Array<string> = foreignTable.primaryKeys.map((pk: Column) => pk.name);
+    const primaryKeyOrder: string[] = foreignTable.primaryKeys.map((pk: Column) => pk.name);
     const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnNamePair } = R.groupBy(
       R.prop('foreignTableColumnName'),
       fk.columnNames,
@@ -34,9 +34,7 @@ function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
     // eslint-disable-next-line no-underscore-dangle
     const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnNamePair = R.prop(R.__, foreignKeyColumnPairLookup);
 
-    const foreignKeyOrder: Array<ColumnNamePair> = R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(
-      primaryKeyOrder,
-    );
+    const foreignKeyOrder: ColumnNamePair[] = R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
 
     fk.parentTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.parentTableColumnName);
     fk.foreignTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.foreignTableColumnName);

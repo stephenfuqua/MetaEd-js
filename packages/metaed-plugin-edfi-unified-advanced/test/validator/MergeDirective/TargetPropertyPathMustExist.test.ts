@@ -13,12 +13,12 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergeDirective/TargetPropertyPathMustExist';
 
-describe('when validating domain entity has target property', () => {
+describe('when validating domain entity has target property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const propertyName = 'Property1';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -44,22 +44,22 @@ describe('when validating domain entity has target property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity has merge property and entity is wrong', () => {
+describe('when validating domain entity has merge property and entity is wrong', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'Entity1';
   const propertyName = 'Property1';
   const targetEntityName = 'DomainEntity2';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -85,11 +85,11 @@ describe('when validating domain entity has merge property and entity is wrong',
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
@@ -102,13 +102,13 @@ describe('when validating domain entity has merge property and entity is wrong',
   });
 });
 
-describe('when validating domain entity has merge property and property is wrong', () => {
+describe('when validating domain entity has merge property and property is wrong', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'GoodEntity1';
   const propertyName = 'Property1';
   const targetEntityName = 'GoodEntity2';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -134,11 +134,11 @@ describe('when validating domain entity has merge property and property is wrong
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
@@ -151,14 +151,14 @@ describe('when validating domain entity has merge property and property is wrong
   });
 });
 
-describe('when validating domain entity has merge property on common type', () => {
+describe('when validating domain entity has merge property on common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'Entity1';
   const secondEntityName = 'SecondEntity2';
   const propertyName = 'Property1';
   const targetEntityName = 'TargetEntity3';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -191,22 +191,22 @@ describe('when validating domain entity has merge property on common type', () =
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity subclass has merge property', () => {
+describe('when validating domain entity subclass has merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'EntityWithSub1';
   const propertyName = 'Property1';
   const targetEntityName = 'EntityWithSub2';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -238,22 +238,22 @@ describe('when validating domain entity subclass has merge property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association has merge property', () => {
+describe('when validating association has merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'EntityWithAssoc1';
   const propertyName = 'Property1';
   const targetAssociationName = 'Association';
   const targetPropertyName = 'Property4';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -291,22 +291,22 @@ describe('when validating association has merge property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association extension has merge property', () => {
+describe('when validating association extension has merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'EntityWithAssocExt1';
   const propertyName = 'Property1';
   const targetAssociationName = 'Association';
   const targetPropertyName = 'Property4';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -347,21 +347,21 @@ describe('when validating association extension has merge property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating association subclass has merge property', () => {
+describe('when validating association subclass has merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'EntityWithAssocSub1';
   const propertyName = 'Property1';
   const targetAssociationName = 'Association';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -403,22 +403,22 @@ describe('when validating association subclass has merge property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating abstract entity has merge property', () => {
+describe('when validating abstract entity has merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'AbstractEntity1';
   const propertyName = 'Property1';
   const targetEntityName = 'AbstractEntity2';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -444,21 +444,21 @@ describe('when validating abstract entity has merge property', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity has target property across namespaces', () => {
+describe('when validating domain entity has target property across namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const propertyName = 'Property1';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -490,23 +490,23 @@ describe('when validating domain entity has target property across namespaces', 
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity has merge property across namespaces and entity is wrong', () => {
+describe('when validating domain entity has merge property across namespaces and entity is wrong', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'Entity1';
   const propertyName = 'Property1';
   const targetEntityName = 'DomainEntity2';
   const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -538,12 +538,12 @@ describe('when validating domain entity has merge property across namespaces and
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
@@ -552,14 +552,14 @@ describe('when validating domain entity has merge property across namespaces and
   });
 });
 
-describe('when validating domain entity has simple property as merge property', () => {
+describe('when validating domain entity has simple property as merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const learningObjectiveName = 'LearningObjective';
   const objectiveAssessmentName = 'ObjectiveAssessment';
   const assessmentName = 'Assessment';
   const uriName = 'URI';
   const namespaceRename = 'Namespace';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -597,11 +597,11 @@ describe('when validating domain entity has simple property as merge property', 
     failures = validate(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failure', () => {
+  it('should have no validation failure', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, EnumerationBuilder, NamespaceB
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Enumeration/EnumerationExistsOnlyInCoreNamespace';
 
-describe('when validating enumeration type exists in core', () => {
+describe('when validating enumeration type exists in core', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -24,18 +24,18 @@ describe('when validating enumeration type exists in core', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating enumeration exists in extension', () => {
+describe('when validating enumeration exists in extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -62,11 +62,11 @@ describe('when validating enumeration exists in extension', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(extensionNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('EnumerationExistsOnlyInCoreNamespace');
     expect(failures[0].category).toBe('warning');

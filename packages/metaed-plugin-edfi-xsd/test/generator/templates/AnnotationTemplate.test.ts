@@ -6,7 +6,7 @@ import { templateNamed } from '../../../src/generator/XsdGeneratorBase';
 
 const annotation = nextHead;
 
-describe('when generating schema', () => {
+describe('when generating schema', (): void => {
   const documentation = 'documentation';
   let result;
 
@@ -16,12 +16,12 @@ describe('when generating schema', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be annotation only', () => {
+  it('should be annotation only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:annotation');
   });
 
-  it('should have correct documentation', () => {
+  it('should have correct documentation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -53,7 +53,7 @@ describe('when generating schema', () => {
   });
 });
 
-describe('when generating annotation with type group', () => {
+describe('when generating annotation with type group', (): void => {
   const documentation = 'Documentation';
   const typeGroup = 'TypeGroup';
   let result;
@@ -64,12 +64,12 @@ describe('when generating annotation with type group', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be annotation only', () => {
+  it('should be annotation only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:annotation');
   });
 
-  it('should be annotation only', () => {
+  it('should be annotation only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -81,7 +81,7 @@ describe('when generating annotation with type group', () => {
     ).toBe(2);
   });
 
-  it('should have correct documentation', () => {
+  it('should have correct documentation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -103,7 +103,7 @@ describe('when generating annotation with type group', () => {
     ).toBe(documentation);
   });
 
-  it('should have appinfo', () => {
+  it('should have appinfo', (): void => {
     expect(
       R.view(
         R.compose(
@@ -115,7 +115,7 @@ describe('when generating annotation with type group', () => {
     ).toBe('xs:appinfo');
   });
 
-  it('should have type group only', () => {
+  it('should have type group only', (): void => {
     const appinfo = R.compose(
       annotation,
       nextSecond,

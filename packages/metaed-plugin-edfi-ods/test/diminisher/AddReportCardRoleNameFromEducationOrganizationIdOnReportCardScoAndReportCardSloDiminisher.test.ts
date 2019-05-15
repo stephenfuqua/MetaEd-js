@@ -10,7 +10,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentCompetencyObjective table', () => {
+describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentCompetencyObjective table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -48,14 +48,14 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
     enhance(metaEd);
   });
 
-  it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
+  it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', (): void => {
     const {
       columns: [column],
     } = tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective) as Table;
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective) as Table;
@@ -65,7 +65,7 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   });
 });
 
-describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentLearningObjective table', () => {
+describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentLearningObjective table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -103,14 +103,14 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
     enhance(metaEd);
   });
 
-  it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
+  it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', (): void => {
     const {
       columns: [column],
     } = tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective) as Table;
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective) as Table;

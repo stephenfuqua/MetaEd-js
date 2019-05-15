@@ -25,9 +25,9 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       parentIsRequired: boolean | null,
     ): void {
       const enumeration: ReferentialProperty = asReferentialProperty(property);
@@ -79,7 +79,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
         );
 
-        const columns: Array<Column> = columnCreator.createColumns(enumeration, buildStrategy.columnNamerIgnoresroleName());
+        const columns: Column[] = columnCreator.createColumns(enumeration, buildStrategy.columnNamerIgnoresroleName());
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,

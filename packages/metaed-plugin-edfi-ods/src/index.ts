@@ -50,7 +50,7 @@ export { newForeignKey, newForeignKeySourceReference } from './model/database/Fo
 // Enhancer for testing
 export { enhance as baseDescriptorTableCreatingEnhancer } from './enhancer/table/BaseDescriptorTableCreatingEnhancer';
 
-function validatorList(): Array<Validator> {
+function validatorList(): Validator[] {
   return [];
 }
 

@@ -3,7 +3,7 @@ import { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core
 import { fileNameFor, structurePath, template } from './OdsGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
   const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0001' : '0010';
 
   metaEd.namespace.forEach(namespace => {

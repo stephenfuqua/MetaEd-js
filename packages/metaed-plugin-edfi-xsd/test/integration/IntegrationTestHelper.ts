@@ -19,11 +19,11 @@ export const xpathSelect = xpath.useNamespaces({
   ann: 'http://ed-fi.org/annotation',
 });
 
-type EnhanceAndGenerateResult = {
+interface EnhanceAndGenerateResult {
   coreResult: string;
   extensionResult: string | null;
-  interchangeResults: Array<string>;
-};
+  interchangeResults: string[];
+}
 
 export function initializeNamespaceDependencies(
   metaEd: MetaEdEnvironment,
@@ -43,8 +43,8 @@ export async function enhanceAndGenerate(metaEd: MetaEdEnvironment): Promise<Enh
   initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
   initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
-  const generatorResult: Array<GeneratedOutput> = (await generate(metaEd)).generatedOutput;
-  const interchangeGeneratorResult: Array<GeneratedOutput> = (await generateInterchange(metaEd)).generatedOutput || [];
+  const generatorResult: GeneratedOutput[] = (await generate(metaEd)).generatedOutput;
+  const interchangeGeneratorResult: GeneratedOutput[] = (await generateInterchange(metaEd)).generatedOutput || [];
   const coreResultString = generatorResult[0].resultString;
   const extensionResultString = generatorResult[1] ? generatorResult[1].resultString : null;
   return {

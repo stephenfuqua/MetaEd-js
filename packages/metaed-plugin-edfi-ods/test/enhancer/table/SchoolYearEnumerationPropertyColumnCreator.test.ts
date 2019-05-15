@@ -5,10 +5,10 @@ import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorF
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when creating columns for school year enumeration property', () => {
+describe('when creating columns for school year enumeration property', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -27,7 +27,7 @@ describe('when creating columns for school year enumeration property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -39,11 +39,11 @@ describe('when creating columns for school year enumeration property', () => {
   });
 });
 
-describe('when creating columns for school year enumeration property role name', () => {
+describe('when creating columns for school year enumeration property role name', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -62,7 +62,7 @@ describe('when creating columns for school year enumeration property role name',
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column role name', () => {
+  it('should return a column role name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -74,12 +74,12 @@ describe('when creating columns for school year enumeration property role name',
   });
 });
 
-describe('when creating columns for school year enumeration property role name and append parent context strategy', () => {
+describe('when creating columns for school year enumeration property role name and append parent context strategy', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const parentContextName = 'ParentContextName';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -98,7 +98,7 @@ describe('when creating columns for school year enumeration property role name a
     columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContext(parentContextName));
   });
 
-  it('should return a column role name', () => {
+  it('should return a column role name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -110,10 +110,10 @@ describe('when creating columns for school year enumeration property role name a
   });
 });
 
-describe('when creating columns for nullable school year enumeration property', () => {
+describe('when creating columns for nullable school year enumeration property', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -132,7 +132,7 @@ describe('when creating columns for nullable school year enumeration property', 
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a nullable column', () => {
+  it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -144,10 +144,10 @@ describe('when creating columns for nullable school year enumeration property', 
   });
 });
 
-describe('when creating columns for primary key school year enumeration property', () => {
+describe('when creating columns for primary key school year enumeration property', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -166,7 +166,7 @@ describe('when creating columns for primary key school year enumeration property
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -178,10 +178,10 @@ describe('when creating columns for primary key school year enumeration property
   });
 });
 
-describe('when creating columns for identity rename school year enumeration property', () => {
+describe('when creating columns for identity rename school year enumeration property', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -200,7 +200,7 @@ describe('when creating columns for identity rename school year enumeration prop
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a identity rename column', () => {
+  it('should return a identity rename column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -212,10 +212,10 @@ describe('when creating columns for identity rename school year enumeration prop
   });
 });
 
-describe('when creating columns for primary key school year enumeration property with suppress primary key creation strategy', () => {
+describe('when creating columns for primary key school year enumeration property with suppress primary key creation strategy', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -234,7 +234,7 @@ describe('when creating columns for primary key school year enumeration property
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -246,10 +246,10 @@ describe('when creating columns for primary key school year enumeration property
   });
 });
 
-describe('when creating columns for identity rename school year enumeration property with suppress primary key creation strategy', () => {
+describe('when creating columns for identity rename school year enumeration property with suppress primary key creation strategy', (): void => {
   const propertyDocumentation = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSchoolYearEnumerationProperty(), {
@@ -268,7 +268,7 @@ describe('when creating columns for identity rename school year enumeration prop
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a identity rename column', () => {
+  it('should return a identity rename column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');

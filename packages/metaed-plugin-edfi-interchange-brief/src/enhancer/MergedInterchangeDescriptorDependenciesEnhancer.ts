@@ -22,17 +22,17 @@ export function enhance(metaEd: MetaEdEnvironment) {
     xsdRepository.mergedInterchange.forEach(mergedInterchange => {
       addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange);
 
-      const topLevelEntities: Array<TopLevelEntity> = topLevelEntitiesFrom(mergedInterchange);
-      const topLevelReferenceProperties: Array<ReferentialProperty> = topLevelReferencePropertiesFrom(mergedInterchange);
+      const topLevelEntities: TopLevelEntity[] = topLevelEntitiesFrom(mergedInterchange);
+      const topLevelReferenceProperties: ReferentialProperty[] = topLevelReferencePropertiesFrom(mergedInterchange);
 
-      const previouslyMatchedProperties: Array<ReferentialProperty> = [];
-      const descriptorExclusionList: Array<string> = topLevelEntities
+      const previouslyMatchedProperties: ReferentialProperty[] = [];
+      const descriptorExclusionList: string[] = topLevelEntities
         .filter(x => x.type === descriptorType)
         .map(x => x.metaEdName);
 
-      const allDescriptorDependencies: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce(
-        (referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp: ReferentialProperty) => {
-          const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [
+      const allDescriptorDependencies: ReferenceUsageInfo[] = topLevelReferenceProperties.reduce(
+        (referencedUsageInfos: ReferenceUsageInfo[], tlrp: ReferentialProperty) => {
+          const extendedReferencesFromProperty: ReferenceUsageInfo[] = [
             ...getReferenceUsageInfoList([descriptorType], descriptorExclusionList, previouslyMatchedProperties, tlrp),
           ];
           if (extendedReferencesFromProperty.length > 0) {
@@ -47,7 +47,7 @@ export function enhance(metaEd: MetaEdEnvironment) {
       const groupByName = R.groupBy(x => x.name);
       const sortByOptional = R.sortBy(x => x.isOptional);
       const orderByName = R.sortBy(x => x.name);
-      const filteredDescriptorDependencies: Array<ReferenceUsageInfo> = orderByName(
+      const filteredDescriptorDependencies: ReferenceUsageInfo[] = orderByName(
         R.map(R.head, R.map(sortByOptional, R.values(groupByName(allDescriptorDependencies)))),
       );
 

@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching table', () => {
+describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -35,7 +35,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
     enhance(metaEd);
   });
 
-  it('should modify with delete cascade', () => {
+  it('should modify with delete cascade', (): void => {
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(courseOfferingCurriculumUsed) as Table).foreignKeys,
     );
@@ -44,7 +44,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
   });
 });
 
-describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matching table', () => {
+describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -70,7 +70,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matchi
     enhance(metaEd);
   });
 
-  it('should not modify with delete cascade', () => {
+  it('should not modify with delete cascade', (): void => {
     const foreignKey: ForeignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.foreignTableName).toBe(foreignTableName);
     expect(foreignKey.withDeleteCascade).toBe(true);

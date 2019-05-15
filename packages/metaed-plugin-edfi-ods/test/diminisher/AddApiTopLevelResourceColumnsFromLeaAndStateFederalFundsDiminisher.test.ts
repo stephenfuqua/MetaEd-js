@@ -6,7 +6,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher diminishes local/state education agency federal fund tables', () => {
+describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher diminishes local/state education agency federal fund tables', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -33,14 +33,14 @@ describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminishe
     enhance(metaEd);
   });
 
-  it('should have local table with includeLastModifiedDateAndIdColumn set to true', () => {
+  it('should have local table with includeLastModifiedDateAndIdColumn set to true', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(localEducationAgencyFederalFunds);
     expect(table).toBeDefined();
     if (table == null) throw new Error();
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
-  it('should have state table with includeLastModifiedDateAndIdColumn set to true', () => {
+  it('should have state table with includeLastModifiedDateAndIdColumn set to true', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(stateEducationAgencyFederalFunds);
     expect(table).toBeDefined();
     if (table == null) throw new Error();

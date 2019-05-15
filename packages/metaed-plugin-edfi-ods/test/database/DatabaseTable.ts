@@ -1,9 +1,9 @@
 import { database, firstKeyValueOf, scalar, query, queryWithBoolResult, testDatabaseName } from './DatabaseConnection';
 
-export type DatabaseTable = {
+export interface DatabaseTable {
   schema: string;
   name: string;
-};
+}
 
 export async function tableExists(databaseTable: DatabaseTable, databaseName: string = testDatabaseName): Promise<boolean> {
   const sql = `
@@ -76,7 +76,7 @@ export async function tableColumnCount(databaseTable: DatabaseTable, databaseNam
 export async function tablePrimaryKeys(
   databaseTable: DatabaseTable,
   databaseName: string = testDatabaseName,
-): Promise<Array<any>> {
+): Promise<any[]> {
   const sql = `
     SELECT K.COLUMN_NAME
     FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS C
@@ -91,7 +91,7 @@ export async function tablePrimaryKeys(
     ORDER BY K.ORDINAL_POSITION
   `;
 
-  let result: Array<any> = [];
+  let result: any[] = [];
   await database(databaseName, async db => {
     result = await query(db, 'tablePrimaryKeys', sql);
   });
@@ -101,7 +101,7 @@ export async function tablePrimaryKeys(
 export async function tableUniqueConstraints(
   databaseTable: DatabaseTable,
   databaseName: string = testDatabaseName,
-): Promise<Array<any>> {
+): Promise<any[]> {
   const sql = `
     SELECT K.COLUMN_NAME
     FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS C

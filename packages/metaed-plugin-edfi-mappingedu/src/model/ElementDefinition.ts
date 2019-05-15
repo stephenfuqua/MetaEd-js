@@ -1,6 +1,6 @@
-export type ElementDefinition = {
+export interface ElementDefinition {
   elementGroup: string;
-  entityPath: Array<string>;
+  entityPath: string[];
   element: string;
   definition: string;
   dataType: string;
@@ -8,7 +8,7 @@ export type ElementDefinition = {
   url: string;
   technicalName: string;
   isRequired: boolean;
-};
+}
 
 export const newElementDefinition = (): ElementDefinition => ({
   elementGroup: '',

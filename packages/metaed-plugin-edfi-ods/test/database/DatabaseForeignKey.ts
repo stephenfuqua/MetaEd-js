@@ -2,17 +2,17 @@ import Sugar from 'sugar';
 import { database, firstKeyValueOf, scalar, testDatabaseName } from './DatabaseConnection';
 import { DatabaseTable } from './DatabaseTable';
 
-export type DatabaseForeignKey = {
+export interface DatabaseForeignKey {
   parentTable: DatabaseTable;
-  parentColumns: Array<string>;
+  parentColumns: string[];
   foreignTable: DatabaseTable;
-  foreignColumns: Array<string>;
-};
+  foreignColumns: string[];
+}
 
 const existsSelect = 'SELECT COUNT(1) ';
 const deleteCascadeSelect = 'SELECT RC.DELETE_RULE ';
 const updateCascadeSelect = 'SELECT RC.UPDATE_RULE ';
-const fromBody: string = `
+const fromBody = `
   FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK_TC
   INNER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS RC
     ON FK_TC.CONSTRAINT_CATALOG = RC.CONSTRAINT_CATALOG
@@ -35,7 +35,7 @@ const fromBody: string = `
     AND PK_KCU.ORDINAL_POSITION = FK_KCU.ORDINAL_POSITION
 `;
 
-const whereClauseFormat: string = `(
+const whereClauseFormat = `(
   FK_KCU.TABLE_SCHEMA = '{0}'
     AND FK_KCU.TABLE_NAME = '{1}'
     AND FK_KCU.COLUMN_NAME = '{2}'
@@ -55,7 +55,7 @@ function whereClause(foreignKey: DatabaseForeignKey): string {
   }
 
   // @ts-ignore - "column" is never read
-  const clause: Array<string> = foreignKey.parentColumns.map((column: string, x: number) =>
+  const clause: string[] = foreignKey.parentColumns.map((column: string, x: number) =>
     Sugar.String.format(
       whereClauseFormat,
       foreignKey.parentTable.schema,

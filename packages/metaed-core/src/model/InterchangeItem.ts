@@ -30,7 +30,7 @@ export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
 
 export interface InterchangeItem extends ModelBase {
   sourceMap: InterchangeItemSourceMap;
-  referencedType: Array<ModelType>;
+  referencedType: ModelType[];
   referencedNamespaceName: string;
   referencedEntity: TopLevelEntity;
   typeHumanizedName: string;

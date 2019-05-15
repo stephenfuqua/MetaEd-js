@@ -6,7 +6,7 @@ import { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 const enhancerName = 'AddInlineIdentityEnhancer';
 
-function addInlineIdentities(topLevelEntity: TopLevelEntity, properties: Array<EntityProperty>, namespace: Namespace) {
+function addInlineIdentities(topLevelEntity: TopLevelEntity, properties: EntityProperty[], namespace: Namespace) {
   properties
     .filter(p => p.type === 'inlineCommon')
     .forEach(commonProperty => {

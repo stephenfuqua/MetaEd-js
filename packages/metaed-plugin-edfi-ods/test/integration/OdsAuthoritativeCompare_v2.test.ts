@@ -27,18 +27,18 @@ import { orderRows } from '../../src/enhancer/AddSchemaContainerEnhancer';
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating ods and comparing it to data standard 2.0 authoritative artifacts', () => {
+describe('when generating ods and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
   const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath: string = `${projectRootPath}/node_modules`;
-  const outputDirectory: string = `${artifactPath}`;
+  const nodeModulesPath = `${projectRootPath}/node_modules`;
+  const outputDirectory = `${artifactPath}`;
   let coreResult: GeneratedOutput;
   let coreFileBaseName: string;
   let authoritativeCoreOdsFilename: string;
   let generatedCoreOdsFilename: string;
-  let tableOrder: Array<string>;
-  let fkOrder: Array<string>;
-  let rowOrder: Array<string>;
+  let tableOrder: string[];
+  let fkOrder: string[];
+  let rowOrder: string[];
 
   beforeAll(async () => {
     const metaEdConfiguration = {
@@ -82,9 +82,9 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     const coreNamespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
 
-    const tables: Array<Table> = orderByProp('name')([...tableEntities(state.metaEd, coreNamespace).values()]);
+    const tables: Table[] = orderByProp('name')([...tableEntities(state.metaEd, coreNamespace).values()]);
     tableOrder = tables.map(table => table.name);
-    fkOrder = tables.reduce((acc: Array<string>, table: Table) => acc.concat([...table.foreignKeys.map(fk => fk.name)]), []);
+    fkOrder = tables.reduce((acc: string[], table: Table) => acc.concat([...table.foreignKeys.map(fk => fk.name)]), []);
 
     rowOrder = orderRows([...rowEntities(state.metaEd, coreNamespace).values()]).map(
       x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
@@ -101,51 +101,51 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     await ffs.writeFile(generatedCoreOdsFilename, coreResult.resultString, 'utf-8');
   });
 
-  it('should have correct table order', () => {
+  it('should have correct table order', (): void => {
     expect(tableOrder).toBeDefined();
     expect(tableOrder).toMatchSnapshot();
   });
 
-  it('should have correct foreign key order', () => {
+  it('should have correct foreign key order', (): void => {
     expect(fkOrder).toBeDefined();
     expect(fkOrder).toMatchSnapshot();
   });
 
-  it('should have correct row order', () => {
+  it('should have correct row order', (): void => {
     expect(rowOrder).toBeDefined();
     expect(rowOrder).toMatchSnapshot();
   });
 
   it('should have core with no differences', async () => {
     expect(coreResult).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should create diff files', async () => {
     expect(coreResult).toBeDefined();
-    const cssFile: string = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile: string = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile: string = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile: string = `git diff --no-index -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename} > ${diffFile}`;
+    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
+    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
+    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
+    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename} > ${diffFile}`;
 
     await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
       .then(() => ffs.readFile(diffFile))
       .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
       .then(result =>
         ffs.readFile(cssFile).then(css => {
-          const html: string = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
+          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
           return ffs.writeFile(htmlFile, html, 'utf-8');
         }),
       );
   });
 });
 
-describe('when generating ods with simple extensions and comparing it to data standard 2.0 authoritative artifacts', () => {
+describe('when generating ods with simple extensions and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
 
@@ -220,26 +220,26 @@ describe('when generating ods with simple extensions and comparing it to data st
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have extension with no differences', async () => {
     expect(generatedExtensionOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating ods with student transcript extensions and comparing it to data standard 2.0 authoritative artifacts', () => {
+describe('when generating ods with student transcript extensions and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
   const sampleExtensionPath: string = path.resolve(__dirname, './student-transcript-extension-project');
 
@@ -314,21 +314,21 @@ describe('when generating ods with student transcript extensions and comparing i
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have extension with no differences', async () => {
     expect(generatedExtensionOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });

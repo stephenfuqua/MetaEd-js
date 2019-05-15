@@ -18,10 +18,10 @@ import { EntityIdentifier } from '../../model/apiModel/EntityIdentifier';
 import { ApiProperty } from '../../model/apiModel/ApiProperty';
 import { DbType } from '../../model/apiModel/DbType';
 
-type BuildSingleEntityDefinitionOptions = {
+interface BuildSingleEntityDefinitionOptions {
   includeAlternateKeys: boolean;
   isAbstract: boolean;
-};
+}
 
 function isUpdatable(table: Table): boolean {
   return table.isEntityMainTable && table.parentEntity.allowPrimaryKeyUpdates;
@@ -31,8 +31,8 @@ function isUpdatable(table: Table): boolean {
 export function identifiersFrom(
   table: Table,
   { includeAlternateKeys }: BuildSingleEntityDefinitionOptions,
-): Array<EntityIdentifier> {
-  const result: Array<EntityIdentifier> = [];
+): EntityIdentifier[] {
+  const result: EntityIdentifier[] = [];
   result.push({
     identifierName: `${table.name}_PK`,
     identifyingPropertyNames: table.primaryKeys.map((column: Column) => column.name),
@@ -82,7 +82,7 @@ export function identifiersFrom(
 // may actually be defined by simple properties as well and thus "locally defined",
 // for example when they are the target of a merge then a column can be there both because of the foreign key
 // and because of the local definition
-function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTable: Array<string>): boolean {
+function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTable: string[]): boolean {
   // automatically include if not an FK column
   if (!foreignKeyColumnNamesOnTable.includes(column.name)) return true;
 
@@ -96,13 +96,13 @@ function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTabl
   );
 }
 
-function locallyDefinedPropertiesFrom(targetTechnologyVersion: SemVer, table: Table): Array<ApiProperty> {
-  const foreignKeyColumnNamesOnTable: Array<string> = R.chain(
+function locallyDefinedPropertiesFrom(targetTechnologyVersion: SemVer, table: Table): ApiProperty[] {
+  const foreignKeyColumnNamesOnTable: string[] = R.chain(
     (foreignKey: ForeignKey) => foreignKey.parentTableColumnNames,
     table.foreignKeys,
   );
 
-  const result: Array<ApiProperty> = table.columns
+  const result: ApiProperty[] = table.columns
     .filter((column: Column) => includeColumn(column, table, foreignKeyColumnNamesOnTable))
     .map((column: Column) => buildApiProperty(column));
 
@@ -199,10 +199,10 @@ function shouldIncludeAlternateKeys(table: Table): boolean {
 export function buildEntityDefinitions(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-  additionalEntityDefinitions: Array<EntityDefinition>,
-): Array<EntityDefinition> {
+  additionalEntityDefinitions: EntityDefinition[],
+): EntityDefinition[] {
   const { targetTechnologyVersion } = metaEd.plugin.get('edfiOds') as PluginEnvironment;
-  const result: Array<EntityDefinition> = [];
+  const result: EntityDefinition[] = [];
   tableEntities(metaEd, namespace).forEach((table: Table) => {
     result.push(
       buildSingleEntityDefinitionFrom(targetTechnologyVersion, table, {

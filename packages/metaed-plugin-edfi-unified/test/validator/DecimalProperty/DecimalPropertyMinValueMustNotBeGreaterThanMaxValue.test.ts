@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterThanMaxValue';
 
-describe('when validating decimal property with correct minimum value and maximum value', () => {
+describe('when validating decimal property with correct minimum value and maximum value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '10';
@@ -10,7 +10,7 @@ describe('when validating decimal property with correct minimum value and maximu
   const minValue = '0';
   const maxValue = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -30,20 +30,20 @@ describe('when validating decimal property with correct minimum value and maximu
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.decimal.length).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating decimal property with same minimum value and maximum value', () => {
+describe('when validating decimal property with same minimum value and maximum value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '10';
@@ -51,7 +51,7 @@ describe('when validating decimal property with same minimum value and maximum v
   const minValue = '5';
   const maxValue = '5';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -71,20 +71,20 @@ describe('when validating decimal property with same minimum value and maximum v
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.decimal.length).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating decimal property with minimum value greater than maximum value', () => {
+describe('when validating decimal property with minimum value greater than maximum value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '10';
@@ -92,7 +92,7 @@ describe('when validating decimal property with minimum value greater than maxim
   const minValue = '10';
   const maxValue = '0';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -112,15 +112,15 @@ describe('when validating decimal property with minimum value greater than maxim
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build two properties', () => {
+  it('should build two properties', (): void => {
     expect(metaEd.propertyIndex.decimal.length).toBe(2);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DecimalPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');

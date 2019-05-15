@@ -17,7 +17,7 @@ import { sourceMapFrom } from '../model/SourceMap';
 export class EnumerationBuilder extends TopLevelEntityBuilder {
   currentEnumerationItem: EnumerationItem;
 
-  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: ValidationFailure[]) {
     super(metaEd, validationFailures);
     this.currentEnumerationItem = NoEnumerationItem;
   }

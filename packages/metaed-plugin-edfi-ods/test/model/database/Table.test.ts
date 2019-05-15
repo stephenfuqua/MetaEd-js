@@ -37,7 +37,7 @@ import { Column } from '../../../src/model/database/Column';
 import { Table } from '../../../src/model/database/Table';
 import { ForeignKey } from '../../../src/model/database/ForeignKey';
 
-describe('when getting strongest constrain column with no existing column', () => {
+describe('when getting strongest constrain column with no existing column', (): void => {
   const mockStrategy = jest.fn((existing: Column) => existing);
   const columnName = 'ColumnName';
   let column: Column;
@@ -50,17 +50,17 @@ describe('when getting strongest constrain column with no existing column', () =
     );
   });
 
-  it('should not call strategy', () => {
+  it('should not call strategy', (): void => {
     expect(mockStrategy).not.toBeCalled();
   });
 
-  it('should return the column', () => {
+  it('should return the column', (): void => {
     expect(column.name).toBe(columnName);
     expect(column.type).toBe('boolean');
   });
 });
 
-describe('when getting strongest constrain column with an existing column', () => {
+describe('when getting strongest constrain column with an existing column', (): void => {
   const mockStrategy = jest.fn((existing: Column) => existing);
   const columnName = 'ColumnName';
   let existingColumn: Column;
@@ -77,18 +77,18 @@ describe('when getting strongest constrain column with an existing column', () =
     column = getColumnWithStrongestConstraint(table, receivedColumn, mockStrategy);
   });
 
-  it('should call strategy with both columns', () => {
+  it('should call strategy with both columns', (): void => {
     expect(mockStrategy).toBeCalled();
     expect(mockStrategy).toBeCalledWith(existingColumn, receivedColumn);
     expect(column).toBe(existingColumn);
   });
 
-  it('should remove existing column from table', () => {
+  it('should remove existing column from table', (): void => {
     expect(table.columns).toHaveLength(0);
   });
 });
 
-describe('when using add column', () => {
+describe('when using add column', (): void => {
   const columnName = 'ColumnName';
   let table: Table;
 
@@ -97,14 +97,14 @@ describe('when using add column', () => {
     addColumn(table, Object.assign(newBooleanColumn(), { name: columnName }));
   });
 
-  it('should add column to table', () => {
+  it('should add column to table', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(columnName);
     expect(table.columns[0].type).toBe('boolean');
   });
 });
 
-describe('when using add column range', () => {
+describe('when using add column range', (): void => {
   let table: Table;
 
   beforeAll(() => {
@@ -130,12 +130,12 @@ describe('when using add column range', () => {
     );
   });
 
-  it('should add all columns except existing', () => {
+  it('should add all columns except existing', (): void => {
     expect(table.columns).toHaveLength(11);
   });
 });
 
-describe('when using table column getters', () => {
+describe('when using table column getters', (): void => {
   const booleanColumnName = 'BooleanColumnName';
   const currencyColumnName = 'CurrencyColumnName';
   const dateColumnName = 'DateColumnName';
@@ -236,7 +236,7 @@ describe('when using table column getters', () => {
     );
   });
 
-  it('should get all columns with primary keys first', () => {
+  it('should get all columns with primary keys first', (): void => {
     const expectedOrder = [
       decimalColumnName,
       durationColumnName,
@@ -255,14 +255,14 @@ describe('when using table column getters', () => {
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get all alternate keys', () => {
+  it('should get all alternate keys', (): void => {
     const expectedOrder = [booleanColumnName, currencyColumnName, dateColumnName, timeColumnName];
     const columns = getAlternateKeys(table);
     expect(columns).toHaveLength(4);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get column view with primary keys first', () => {
+  it('should get column view with primary keys first', (): void => {
     const expectedOrder = [
       decimalColumnName,
       durationColumnName,
@@ -281,14 +281,14 @@ describe('when using table column getters', () => {
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get all foreign keys', () => {
+  it('should get all foreign keys', (): void => {
     const expectedOrder = [ForeignKeyName1, ForeignKeyName2];
     const columns = getForeignKeys(table);
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get all non primary keys', () => {
+  it('should get all non primary keys', (): void => {
     const expectedOrder = [
       booleanColumnName,
       currencyColumnName,
@@ -302,14 +302,14 @@ describe('when using table column getters', () => {
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get all primary keys', () => {
+  it('should get all primary keys', (): void => {
     const expectedOrder = [decimalColumnName, durationColumnName, integerColumnName, timeColumnName, yearColumnName];
     const columns = getPrimaryKeys(table);
     expect(columns).toHaveLength(5);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
-  it('should get all unique indexes', () => {
+  it('should get all unique indexes', (): void => {
     const expectedOrder = [percentColumnName, shortColumnName, stringColumnName, yearColumnName];
     const columns = getUniqueIndexes(table);
     expect(columns).toHaveLength(4);
@@ -317,7 +317,7 @@ describe('when using table column getters', () => {
   });
 });
 
-describe('when using has alternate keys on table with no alternate keys', () => {
+describe('when using has alternate keys on table with no alternate keys', (): void => {
   let result: boolean;
 
   beforeAll(() => {
@@ -331,12 +331,12 @@ describe('when using has alternate keys on table with no alternate keys', () => 
     result = hasAlternateKeys(table);
   });
 
-  it('should return true', () => {
+  it('should return true', (): void => {
     expect(result).toBe(true);
   });
 });
 
-describe('when using has alternate keys on table with no alternate keys', () => {
+describe('when using has alternate keys on table with no alternate keys', (): void => {
   let result: boolean;
 
   beforeAll(() => {
@@ -350,12 +350,12 @@ describe('when using has alternate keys on table with no alternate keys', () => 
     result = hasAlternateKeys(table);
   });
 
-  it('should return false', () => {
+  it('should return false', (): void => {
     expect(result).toBe(false);
   });
 });
 
-describe('when using is foreign key', () => {
+describe('when using is foreign key', (): void => {
   let booleanColumnResult: boolean;
   let currencyColumnResult: boolean;
 
@@ -383,16 +383,16 @@ describe('when using is foreign key', () => {
     currencyColumnResult = isForeignKey(table, currencyColumn);
   });
 
-  it('should return true when column is a foreign key', () => {
+  it('should return true when column is a foreign key', (): void => {
     expect(booleanColumnResult).toBe(true);
   });
 
-  it('should return false when column is not a foreign key', () => {
+  it('should return false when column is not a foreign key', (): void => {
     expect(currencyColumnResult).toBe(false);
   });
 });
 
-describe('when adding a foreign key with no existing foreign keys', () => {
+describe('when adding a foreign key with no existing foreign keys', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'TableSchema';
   const foreignTableName = 'ForeignTableName';
@@ -403,7 +403,7 @@ describe('when adding a foreign key with no existing foreign keys', () => {
     addForeignKey(table, Object.assign(newForeignKey(), { foreignTableName }));
   });
 
-  it('should add foreign key', () => {
+  it('should add foreign key', (): void => {
     expect(table.foreignKeys).toHaveLength(1);
     expect(table.foreignKeys[0].parentTable).toBe(table);
     expect(table.foreignKeys[0].parentTableName).toBe(tableName);
@@ -412,7 +412,7 @@ describe('when adding a foreign key with no existing foreign keys', () => {
   });
 });
 
-describe('when adding a foreign key with existing foreign key', () => {
+describe('when adding a foreign key with existing foreign key', (): void => {
   const parentTableName = 'ParentTableName';
   const parentTableSchema = 'ParentTableSchema';
   const foreignTableName = 'ForeignTableName';
@@ -447,7 +447,7 @@ describe('when adding a foreign key with existing foreign key', () => {
     );
   });
 
-  it('should add foreign keys', () => {
+  it('should add foreign keys', (): void => {
     expect(table.foreignKeys).toHaveLength(3);
     expect(table.foreignKeys[0].parentTable).toBe(table);
     expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
@@ -466,7 +466,7 @@ describe('when adding a foreign key with existing foreign key', () => {
   });
 });
 
-describe('when creating foreign key with single column', () => {
+describe('when creating foreign key with single column', (): void => {
   const booleanColumnName = 'BooleanColumnName';
   const foreignTableSchema = 'ForeignTableSchema';
   const foreignTableNamespace: Namespace = { ...newNamespace(), namespaceName: foreignTableSchema };
@@ -484,32 +484,32 @@ describe('when creating foreign key with single column', () => {
     );
   });
 
-  it('should set foreign table schema', () => {
+  it('should set foreign table schema', (): void => {
     expect(foreignKey.foreignTableSchema).toBe(foreignTableSchema);
   });
 
-  it('should set foreign table name', () => {
+  it('should set foreign table name', (): void => {
     expect(foreignKey.foreignTableName).toBe(foreignTableName);
   });
 
-  it('should set delete cascade to false', () => {
+  it('should set delete cascade to false', (): void => {
     expect(foreignKey.withDeleteCascade).toBe(false);
   });
 
-  it('should set with update cascade to false', () => {
+  it('should set with update cascade to false', (): void => {
     expect(foreignKey.withUpdateCascade).toBe(false);
   });
 
-  it('should have parent table column name', () => {
+  it('should have parent table column name', (): void => {
     expect(foreignKey.columnNames[0].parentTableColumnName).toBe(booleanColumnName);
   });
 
-  it('should have foreign table column name', () => {
+  it('should have foreign table column name', (): void => {
     expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(booleanColumnName);
   });
 });
 
-describe('when creating foreign key with multiple columns', () => {
+describe('when creating foreign key with multiple columns', (): void => {
   const booleanColumnName1 = 'BooleanColumnName1';
   const booleanColumnName2 = 'BooleanColumnName2';
   const foreignTableSchema = 'ForeignTableSchema';
@@ -531,35 +531,35 @@ describe('when creating foreign key with multiple columns', () => {
     );
   });
 
-  it('should set foreign table schema', () => {
+  it('should set foreign table schema', (): void => {
     expect(foreignKey.foreignTableSchema).toBe(foreignTableSchema);
   });
 
-  it('should set foreign table name', () => {
+  it('should set foreign table name', (): void => {
     expect(foreignKey.foreignTableName).toBe(foreignTableName);
   });
 
-  it('should set delete cascade to false', () => {
+  it('should set delete cascade to false', (): void => {
     expect(foreignKey.withDeleteCascade).toBe(false);
   });
 
-  it('should set with update cascade to false', () => {
+  it('should set with update cascade to false', (): void => {
     expect(foreignKey.withUpdateCascade).toBe(false);
   });
 
-  it('should have first parent table column name', () => {
+  it('should have first parent table column name', (): void => {
     expect(foreignKey.columnNames[0].parentTableColumnName).toBe(booleanColumnName1);
   });
 
-  it('should have first foreign table column name', () => {
+  it('should have first foreign table column name', (): void => {
     expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(booleanColumnName1);
   });
 
-  it('should have second parent table column name', () => {
+  it('should have second parent table column name', (): void => {
     expect(foreignKey.columnNames[1].parentTableColumnName).toBe(booleanColumnName2);
   });
 
-  it('should have second foreign table column name', () => {
+  it('should have second foreign table column name', (): void => {
     expect(foreignKey.columnNames[1].foreignTableColumnName).toBe(booleanColumnName2);
   });
 });

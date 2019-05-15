@@ -10,7 +10,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table with alternate keys', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table with alternate keys', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -45,18 +45,18 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
     enhance(metaEd);
   });
 
-  it('should have hasAlternateKeys property set to true', () => {
+  it('should have hasAlternateKeys property set to true', (): void => {
     expect((tableEntities(metaEd, namespace).get(tableName) as Table).hasAlternateKeys).toBe(true);
   });
 
-  it('should have correct alternate key order', () => {
+  it('should have correct alternate key order', (): void => {
     const { alternateKeys } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(alternateKeys).toHaveLength(2);
     expect(alternateKeys.map(x => x.name)).toEqual([alternateKeyName1, alternateKeyName2]);
   });
 });
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary keys', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary keys', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -91,14 +91,14 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     enhance(metaEd);
   });
 
-  it('should have correct primary key order', () => {
+  it('should have correct primary key order', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(primaryKeys).toHaveLength(2);
     expect(primaryKeys.map(x => x.name)).toEqual([primaryKeyName1, primaryKeyName2]);
   });
 });
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign keys', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign keys', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -150,7 +150,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
     enhance(metaEd);
   });
 
-  it('should have correct foreign key order', () => {
+  it('should have correct foreign key order', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(foreignKeys).toHaveLength(2);
     expect(foreignKeys.map(x => x.name)).toEqual([
@@ -159,7 +159,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
     ]);
   });
 
-  it('should have correct foreign key column order', () => {
+  it('should have correct foreign key column order', (): void => {
     const { parentTableColumnNames } = R.last((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(parentTableColumnNames).toHaveLength(2);
     expect(parentTableColumnNames).toEqual([parentTableColumnName1, parentTableColumnName2]);
@@ -170,7 +170,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
   });
 });
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique indexes', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique indexes', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -204,14 +204,14 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
     enhance(metaEd);
   });
 
-  it('should have correct unique index order', () => {
+  it('should have correct unique index order', (): void => {
     const { uniqueIndexes } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(uniqueIndexes).toHaveLength(2);
     expect(uniqueIndexes.map(x => x.name)).toEqual([uniqueIndexName1, uniqueIndexName2]);
   });
 });
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary and non primary keys', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary and non primary keys', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -256,14 +256,14 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     enhance(metaEd);
   });
 
-  it('should have correct column order with primary keys first', () => {
+  it('should have correct column order with primary keys first', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(columns).toHaveLength(5);
     expect(columns.map(x => x.name)).toEqual([primaryKeyName1, primaryKeyName2, primaryKeyName3, columnName2, columnName1]);
   });
 });
 
-describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns with sql escaped description', () => {
+describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns with sql escaped description', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -294,13 +294,13 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
     enhance(metaEd);
   });
 
-  it('should have correct sql escaped descriptions for table', () => {
+  it('should have correct sql escaped descriptions for table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(table).toBeDefined();
     expect(table.sqlEscapedDescription).toEqual(expectedDescription);
   });
 
-  it('should have correct sql escaped descriptions for columns', () => {
+  it('should have correct sql escaped descriptions for columns', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.sqlEscapedDescription)).toEqual([expectedDescription, expectedDescription]);

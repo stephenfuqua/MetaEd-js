@@ -23,19 +23,19 @@ import { enhance } from '../../src/enhancer/XsdElementGroupEnhancer';
 import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRepository';
 import { EdFiMappingEduRepository } from '../../src/model/EdFiMappingEduRepository';
 
-describe('when enhancing entity definitions', () => {
+describe('when enhancing entity definitions', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const associationName: string = 'AssociationName';
-  const commonName: string = 'CommonName';
-  const baseName: string = 'BaseName;';
-  const descriptorName: string = 'DescriptorName';
-  const descriptorExtendedReferenceName: string = 'DescriptorExtendedReferenceName';
-  const domainEntityName: string = 'DomainEntityName';
-  const enumerationName: string = 'EnumerationName';
-  const extendedReferenceName: string = 'ExtendedReferenceName';
-  const identityName: string = 'IdentityName';
-  const lookupName: string = 'LookupName';
-  const simpleName: string = 'SimpleName';
+  const associationName = 'AssociationName';
+  const commonName = 'CommonName';
+  const baseName = 'BaseName;';
+  const descriptorName = 'DescriptorName';
+  const descriptorExtendedReferenceName = 'DescriptorExtendedReferenceName';
+  const domainEntityName = 'DomainEntityName';
+  const enumerationName = 'EnumerationName';
+  const extendedReferenceName = 'ExtendedReferenceName';
+  const identityName = 'IdentityName';
+  const lookupName = 'LookupName';
+  const simpleName = 'SimpleName';
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -105,7 +105,7 @@ describe('when enhancing entity definitions', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create plugin repository', () => {
+  it('should create plugin repository', (): void => {
     expect(pluginNamespace).toBeDefined();
     expect(pluginNamespace.xsdElement).toBeDefined();
     expect(pluginNamespace.xsdElement.association).toBeDefined();

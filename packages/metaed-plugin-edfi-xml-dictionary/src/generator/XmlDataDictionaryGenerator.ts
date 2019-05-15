@@ -31,7 +31,7 @@ function byNameDesc(a, b) {
 }
 
 function formatRestrictions(simpleType: AnySimpleType): string {
-  const result: Array<string> = [];
+  const result: string[] = [];
   if (simpleType.minValue) result.push(`minValue: ${simpleType.minValue}`);
   if (simpleType.maxValue) result.push(`maxValue: ${simpleType.maxValue}`);
   if (simpleType.minLength) result.push(`minLength: ${simpleType.minLength}`);
@@ -48,7 +48,7 @@ function formatRestrictions(simpleType: AnySimpleType): string {
 }
 
 function formatCardinality(element: Element): string {
-  const result: Array<string> = [];
+  const result: string[] = [];
   if (element.minOccurs) result.push(`minOccurs: ${element.minOccurs}`);
   if (element.maxOccursIsUnbounded) {
     result.push('maxOccurs: unbounded');
@@ -58,26 +58,29 @@ function formatCardinality(element: Element): string {
   return result.join('\n');
 }
 
-type ElementByComplexType = { complexType: ComplexType; element: Element };
+interface ElementByComplexType {
+  complexType: ComplexType;
+  element: Element;
+}
 
-function elementFromElementGroupCollector(items: Array<AnyComplexTypeItem>, results: Array<Element>) {
+function elementFromElementGroupCollector(items: AnyComplexTypeItem[], results: Element[]) {
   items.forEach((item: AnyComplexTypeItem) => {
     if (item.items) {
-      elementFromElementGroupCollector(item.items as Array<AnyComplexTypeItem>, results);
+      elementFromElementGroupCollector(item.items as AnyComplexTypeItem[], results);
     } else {
       results.push(item);
     }
   });
 }
 
-function elementsByComplexType(complexTypes: Array<ComplexType>): Array<ElementByComplexType> {
-  const result: Array<ElementByComplexType> = [];
+function elementsByComplexType(complexTypes: ComplexType[]): ElementByComplexType[] {
+  const result: ElementByComplexType[] = [];
   complexTypes.forEach((complexType: ComplexType) => {
     complexType.items.forEach((item: ComplexTypeItem) => {
       // @ts-ignore - using items existence to determine if subtype is ElementGroup
       if (item.items) {
-        const elements: Array<Element> = [];
-        elementFromElementGroupCollector((item as ElementGroup).items as Array<AnyComplexTypeItem>, elements);
+        const elements: Element[] = [];
+        elementFromElementGroupCollector((item as ElementGroup).items as AnyComplexTypeItem[], elements);
         elements.forEach((element: Element) => {
           result.push({ complexType, element });
         });
@@ -92,19 +95,19 @@ function elementsByComplexType(complexTypes: Array<ComplexType>): Array<ElementB
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const allComplexTypes: Array<ComplexType> = [];
-  const allSimpleTypes: Array<AnySimpleType> = [];
+  const allComplexTypes: ComplexType[] = [];
+  const allSimpleTypes: AnySimpleType[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const schemaContainer: SchemaContainer = (namespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
     schemaContainer.sections.forEach((section: SchemaSection) => {
       allComplexTypes.push(...section.complexTypes);
-      const sectionSimpleTypes: Array<AnySimpleType> = section.simpleTypes as Array<AnySimpleType>;
+      const sectionSimpleTypes: AnySimpleType[] = section.simpleTypes as AnySimpleType[];
       allSimpleTypes.push(...sectionSimpleTypes);
     });
   });
 
-  const allElementsByComplexType: Array<ElementByComplexType> = elementsByComplexType(allComplexTypes);
+  const allElementsByComplexType: ElementByComplexType[] = elementsByComplexType(allComplexTypes);
 
   const eBook: Workbook = newWorkbook();
 
@@ -147,7 +150,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   eBook.sheets.push(complexSheet);
   eBook.sheets.push(simpleSheet);
 
-  const generatedOutput: Array<GeneratedOutput> = [
+  const generatedOutput: GeneratedOutput[] = [
     {
       name: 'XmlDataDictionary',
       namespace: 'Documentation',

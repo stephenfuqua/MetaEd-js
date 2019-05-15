@@ -2,9 +2,9 @@ import { InterchangeBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceB
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
 
-describe('when validating interchange element is missing metaEdId', () => {
+describe('when validating interchange element is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -23,11 +23,11 @@ describe('when validating interchange element is missing metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
@@ -36,9 +36,9 @@ describe('when validating interchange element is missing metaEdId', () => {
   });
 });
 
-describe('when validating interchange extension element is missing metaEdId', () => {
+describe('when validating interchange extension element is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -56,11 +56,11 @@ describe('when validating interchange extension element is missing metaEdId', ()
     failures = validate(metaEd);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
@@ -69,9 +69,9 @@ describe('when validating interchange extension element is missing metaEdId', ()
   });
 });
 
-describe('when validating interchange identity template is missing metaEdId', () => {
+describe('when validating interchange identity template is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -91,11 +91,11 @@ describe('when validating interchange identity template is missing metaEdId', ()
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
@@ -104,9 +104,9 @@ describe('when validating interchange identity template is missing metaEdId', ()
   });
 });
 
-describe('when validating interchange extension identity template is missing metaEdId', () => {
+describe('when validating interchange extension identity template is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -124,11 +124,11 @@ describe('when validating interchange extension identity template is missing met
     failures = validate(metaEd);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
@@ -137,9 +137,9 @@ describe('when validating interchange extension identity template is missing met
   });
 });
 
-describe('when validating interchange extension element in extension namespace is missing metaEdId', () => {
+describe('when validating interchange extension element in extension namespace is missing metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -157,11 +157,11 @@ describe('when validating interchange extension element in extension namespace i
     failures = validate(metaEd);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

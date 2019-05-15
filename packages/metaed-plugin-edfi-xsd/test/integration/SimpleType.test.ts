@@ -12,7 +12,7 @@ import {
 } from 'metaed-core';
 import { enhanceAndGenerate, xpathSelect, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for domain entity in extension namespace with a simple type', () => {
+describe('when generating xsd for domain entity in extension namespace with a simple type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -54,17 +54,17 @@ describe('when generating xsd for domain entity in extension namespace with a si
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity string property', () => {
+  it('should generate extension domain entity string property', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityString'][@type='EXTENSION-ExtensionEntityString']",
       extensionResult,
@@ -72,13 +72,13 @@ describe('when generating xsd for domain entity in extension namespace with a si
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension string type', () => {
+  it('should generate extension string type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityString']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 });
 
-describe('when generating xsd for common string', () => {
+describe('when generating xsd for common string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -108,12 +108,12 @@ describe('when generating xsd for common string', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate simple type entity', () => {
+  it('should generate simple type entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct type annotation', () => {
+  it('should generate correct type annotation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
       coreResult,
@@ -121,7 +121,7 @@ describe('when generating xsd for common string', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct documentation', () => {
+  it('should generate correct documentation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
       coreResult,
@@ -129,7 +129,7 @@ describe('when generating xsd for common string', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of corrext xsd base type', () => {
+  it('should generate restriction of corrext xsd base type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']",
       coreResult,
@@ -137,7 +137,7 @@ describe('when generating xsd for common string', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct min length', () => {
+  it('should generate correct min length', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:minLength[@value='10']",
       coreResult,
@@ -145,7 +145,7 @@ describe('when generating xsd for common string', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct max length', () => {
+  it('should generate correct max length', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:maxLength[@value='100']",
       coreResult,
@@ -154,7 +154,7 @@ describe('when generating xsd for common string', () => {
   });
 });
 
-describe('when generating xsd for common decimal', () => {
+describe('when generating xsd for common decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -186,12 +186,12 @@ describe('when generating xsd for common decimal', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate simple type entity', () => {
+  it('should generate simple type entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct type annotation', () => {
+  it('should generate correct type annotation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
       coreResult,
@@ -199,7 +199,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct documentation', () => {
+  it('should generate correct documentation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
       coreResult,
@@ -207,7 +207,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of correct xsd base type', () => {
+  it('should generate restriction of correct xsd base type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']",
       coreResult,
@@ -215,7 +215,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of correct total digits', () => {
+  it('should generate restriction of correct total digits', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:totalDigits[@value='5']",
       coreResult,
@@ -223,7 +223,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of correct decimal places', () => {
+  it('should generate restriction of correct decimal places', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:fractionDigits[@value='4']",
       coreResult,
@@ -231,7 +231,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct min value', () => {
+  it('should generate correct min value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:minInclusive[@value='10']",
       coreResult,
@@ -239,7 +239,7 @@ describe('when generating xsd for common decimal', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct max value', () => {
+  it('should generate correct max value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:maxInclusive[@value='100']",
       coreResult,
@@ -248,7 +248,7 @@ describe('when generating xsd for common decimal', () => {
   });
 });
 
-describe('when generating xsd for common integer', () => {
+describe('when generating xsd for common integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -278,12 +278,12 @@ describe('when generating xsd for common integer', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate simple type entity', () => {
+  it('should generate simple type entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct type annotation', () => {
+  it('should generate correct type annotation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
       coreResult,
@@ -291,7 +291,7 @@ describe('when generating xsd for common integer', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct documentation', () => {
+  it('should generate correct documentation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
       coreResult,
@@ -299,7 +299,7 @@ describe('when generating xsd for common integer', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of correct xsd base type', () => {
+  it('should generate restriction of correct xsd base type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']",
       coreResult,
@@ -307,7 +307,7 @@ describe('when generating xsd for common integer', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct min value', () => {
+  it('should generate correct min value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:minInclusive[@value='10']",
       coreResult,
@@ -315,7 +315,7 @@ describe('when generating xsd for common integer', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct max value', () => {
+  it('should generate correct max value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:maxInclusive[@value='100']",
       coreResult,
@@ -324,7 +324,7 @@ describe('when generating xsd for common integer', () => {
   });
 });
 
-describe('when generating xsd for common short', () => {
+describe('when generating xsd for common short', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -354,12 +354,12 @@ describe('when generating xsd for common short', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate simple type entity', () => {
+  it('should generate simple type entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct type annotation', () => {
+  it('should generate correct type annotation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
       coreResult,
@@ -367,7 +367,7 @@ describe('when generating xsd for common short', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct documentation', () => {
+  it('should generate correct documentation', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
       coreResult,
@@ -375,7 +375,7 @@ describe('when generating xsd for common short', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate restriction of correct xsd base type', () => {
+  it('should generate restriction of correct xsd base type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']",
       coreResult,
@@ -383,7 +383,7 @@ describe('when generating xsd for common short', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct min value', () => {
+  it('should generate correct min value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:minInclusive[@value='10']",
       coreResult,
@@ -391,7 +391,7 @@ describe('when generating xsd for common short', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate correct max value', () => {
+  it('should generate correct max value', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:maxInclusive[@value='100']",
       coreResult,
@@ -400,7 +400,7 @@ describe('when generating xsd for common short', () => {
   });
 });
 
-describe('when generating xsd for shared simpel property in extension namespace with reference to core simple common type', () => {
+describe('when generating xsd for shared simpel property in extension namespace with reference to core simple common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreSharedString = 'CoreSharedString';
@@ -445,17 +445,17 @@ describe('when generating xsd for shared simpel property in extension namespace 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core shared string', () => {
+  it('should generate core shared string', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreSharedString']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core shared type', () => {
+  it('should generate extension domain entity reference to core shared type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='CoreSharedString']",
       extensionResult,
@@ -464,7 +464,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
   });
 });
 
-describe('when generating xsd for renamed shared simple property in extension namespace with reference to core simple common type', () => {
+describe('when generating xsd for renamed shared simple property in extension namespace with reference to core simple common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreSharedString = 'CoreSharedString';
@@ -510,17 +510,17 @@ describe('when generating xsd for renamed shared simple property in extension na
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core shared string', () => {
+  it('should generate core shared string', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreSharedString']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core shared type', () => {
+  it('should generate extension domain entity reference to core shared type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='DifferentName'][@type='CoreSharedString']",
       extensionResult,
@@ -529,7 +529,7 @@ describe('when generating xsd for renamed shared simple property in extension na
   });
 });
 
-describe('when generating xsd for shared simple property in extension namespace with reference to extension simple common type', () => {
+describe('when generating xsd for shared simple property in extension namespace with reference to extension simple common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreSharedString = 'CoreSharedString';
@@ -582,12 +582,12 @@ describe('when generating xsd for shared simple property in extension namespace 
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate extension shared string', () => {
+  it('should generate extension shared string', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-CoreSharedString']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core shared type', () => {
+  it('should generate extension domain entity reference to core shared type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='EXTENSION-CoreSharedString']",
       extensionResult,

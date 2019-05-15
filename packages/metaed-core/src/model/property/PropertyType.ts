@@ -33,7 +33,7 @@ export type PropertyType =
 /**
  *
  */
-const sharedProperty: Array<PropertyType> = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
+const sharedProperty: PropertyType[] = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
 /**
  *
  */
@@ -42,7 +42,7 @@ export const isSharedProperty = (property: EntityProperty): boolean => sharedPro
 /**
  *
  */
-const referentialProperty: Array<PropertyType> = [
+const referentialProperty: PropertyType[] = [
   'association',
   'choice',
   'common',
@@ -60,7 +60,7 @@ export const isReferentialProperty = (property: EntityProperty): boolean => refe
 /**
  *
  */
-export const allPropertyTypes: Array<PropertyType> = [
+export const allPropertyTypes: PropertyType[] = [
   'association',
   'boolean',
   'choice',

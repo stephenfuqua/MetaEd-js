@@ -7,8 +7,8 @@ import { newModelBaseSourceMap } from './ModelBase';
 import { newNamespace } from './Namespace';
 
 export interface InterchangeSourceMap extends ModelBaseSourceMap {
-  elements: Array<SourceMap>;
-  identityTemplates: Array<SourceMap>;
+  elements: SourceMap[];
+  identityTemplates: SourceMap[];
   extendedDocumentation: SourceMap;
   useCaseDocumentation: SourceMap;
   baseEntityName: SourceMap;
@@ -34,8 +34,8 @@ export function newInterchangeSourceMap(): InterchangeSourceMap {
 
 export interface Interchange extends ModelBase {
   typeHumanizedName: string;
-  elements: Array<InterchangeItem>;
-  identityTemplates: Array<InterchangeItem>;
+  elements: InterchangeItem[];
+  identityTemplates: InterchangeItem[];
   extendedDocumentation: string;
   useCaseDocumentation: string;
   baseEntityName: string;

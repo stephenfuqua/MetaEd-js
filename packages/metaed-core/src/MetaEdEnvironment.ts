@@ -11,7 +11,7 @@ export type SemVer = string;
 /**
  * Provided to validators and enhancers
  */
-export type MetaEdEnvironment = {
+export interface MetaEdEnvironment {
   // namespaces
   namespace: Map<string, Namespace>;
 
@@ -26,7 +26,7 @@ export type MetaEdEnvironment = {
 
   // the data standard version to target
   dataStandardVersion: SemVer;
-};
+}
 
 /**
  *

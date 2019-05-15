@@ -1,8 +1,8 @@
-export type EntityDefinition = {
+export interface EntityDefinition {
   elementGroup: string;
-  entityPath: Array<string>;
+  entityPath: string[];
   definition: string;
-};
+}
 
 export const newEntityDefinition = (): EntityDefinition => ({
   elementGroup: '',

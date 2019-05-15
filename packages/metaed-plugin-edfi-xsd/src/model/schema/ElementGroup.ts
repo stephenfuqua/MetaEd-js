@@ -3,7 +3,7 @@ import { newComplexTypeItem } from './ComplexTypeItem';
 
 export interface ElementGroup extends ComplexTypeItem {
   isChoice: boolean;
-  items: Array<ComplexTypeItem>;
+  items: ComplexTypeItem[];
 }
 
 export function newElementGroup(): ElementGroup {

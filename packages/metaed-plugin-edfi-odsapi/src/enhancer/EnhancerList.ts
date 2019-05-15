@@ -25,7 +25,7 @@ import { enhance as buildSchemaDefinitionEnhancer } from './apiModel/BuildSchema
 
 import { enhance as moveFederalFundsDiminisher } from '../diminisher/domainMetadata/MoveFederalFundsDiminisher';
 
-export function enhancerList(): Array<Enhancer> {
+export function enhancerList(): Enhancer[] {
   return [
     // **************************
     // API Metadata Default Phase

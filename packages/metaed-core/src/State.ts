@@ -16,19 +16,19 @@ import { PluginManifest } from './plugin/PluginManifest';
 /**
  *
  */
-export type State = {
+export interface State {
   // the project level configuration loaded from the metaed.json file either located at the root level of a project
   // or referenced by the console's --config argument
   metaEdConfiguration: MetaEdConfiguration;
 
   // the collection of error messages from syntax and semantic validation, and other processes
-  validationFailure: Array<ValidationFailure>;
+  validationFailure: ValidationFailure[];
 
   // the collection of enhancer results returned by each enhancer
-  enhancerResults: Array<EnhancerResult>;
+  enhancerResults: EnhancerResult[];
 
   // the collection of generator results returned by each generator
-  generatorResults: Array<GeneratorResult>;
+  generatorResults: GeneratorResult[];
 
   // the specified directories to load .metaed files from
   inputDirectories: InputDirectory[];
@@ -37,7 +37,7 @@ export type State = {
   filePathsToExclude: Set<string>;
 
   // the set of files whose contents have been loaded
-  loadedFileSet: Array<FileSet>;
+  loadedFileSet: FileSet[];
 
   // the line number indexing for the concatenation of all .metaed files
   fileIndex: FileIndex | null;
@@ -55,11 +55,11 @@ export type State = {
   pluginScanDirectory: string | null;
 
   // the plugin manifest information loaded from each plugin's package.json
-  pluginManifest: Array<PluginManifest>;
+  pluginManifest: PluginManifest[];
 
   // options for what pipeline steps should run
   pipelineOptions: PipelineOptions;
-};
+}
 
 /**
  *

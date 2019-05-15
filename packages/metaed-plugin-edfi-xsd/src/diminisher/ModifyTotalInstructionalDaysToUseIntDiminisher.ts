@@ -9,7 +9,7 @@ import { Element } from '../model/schema/Element';
 const enhancerName = 'ModifyTotalInstructionalDaysToUseIntDiminisher';
 const targetVersions = '2.0.x';
 
-const domainEntityNames: Array<string> = ['AcademicWeek', 'Session'];
+const domainEntityNames: string[] = ['AcademicWeek', 'Session'];
 const domainEntityType: ModelType = 'domainEntity';
 const elementNameType = 'TotalInstructionalDays';
 const intType = 'xs:int';

@@ -3,7 +3,7 @@ import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/domainMetadata/DomainMetadataGenerator';
 import { Aggregate } from '../../src/model/domainMetadata/Aggregate';
 
-describe('when generating aggregate for edfi', () => {
+describe('when generating aggregate for edfi', (): void => {
   const namespaceName = 'EdFi';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
@@ -54,12 +54,12 @@ describe('when generating aggregate for edfi', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating aggregate for extensions', () => {
+describe('when generating aggregate for extensions', (): void => {
   const namespaceName = 'Extension';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Extension';
@@ -102,12 +102,12 @@ describe('when generating aggregate for extensions', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating aggregate with subclass for edfi', () => {
+describe('when generating aggregate with subclass for edfi', (): void => {
   const namespaceName = 'EdFi';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
@@ -150,12 +150,12 @@ describe('when generating aggregate with subclass for edfi', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating aggregate extensions', () => {
+describe('when generating aggregate extensions', (): void => {
   const namespaceName = 'Extension';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Extension';
@@ -198,12 +198,12 @@ describe('when generating aggregate extensions', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating abstract aggregate for edfi', () => {
+describe('when generating abstract aggregate for edfi', (): void => {
   const namespaceName = 'EdFi';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
@@ -246,12 +246,12 @@ describe('when generating abstract aggregate for edfi', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating aggregate with primary key update', () => {
+describe('when generating aggregate with primary key update', (): void => {
   const namespaceName = 'EdFi';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
@@ -294,12 +294,12 @@ describe('when generating aggregate with primary key update', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating aggregate with required collection table', () => {
+describe('when generating aggregate with required collection table', (): void => {
   const namespaceName = 'EdFi';
   const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
@@ -342,7 +342,7 @@ describe('when generating aggregate with required collection table', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate aggregate element', () => {
+  it('should generate aggregate element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });

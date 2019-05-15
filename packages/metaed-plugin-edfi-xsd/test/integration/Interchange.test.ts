@@ -13,7 +13,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for domain entity in both namespaces sharing a simple type', () => {
+describe('when generating xsd for domain entity in both namespaces sharing a simple type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const entityAsElement = 'EntityAsElement';
@@ -58,18 +58,18 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should include core xsd', () => {
+  it('should include core xsd', (): void => {
     const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='Ed-Fi-Core.xsd']", interchangeResults[0]);
     expect(elements).toHaveLength(1);
   });
-  it('should identity template', () => {
+  it('should identity template', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsIdentityTemplateReference'][@type='EntityAsIdentityTemplateReferenceType']",
       interchangeResults[0],
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have element', () => {
+  it('should have element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsElement'][@type='EntityAsElement']",
       interchangeResults[0],
@@ -77,7 +77,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     expect(elements).toHaveLength(1);
   });
 });
-describe('when generating xsd for extension interchange with a new domain entity', () => {
+describe('when generating xsd for extension interchange with a new domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName = 'InterchangeName';
   const coreEntity1 = 'CoreEntity';
@@ -85,7 +85,7 @@ describe('when generating xsd for extension interchange with a new domain entity
   const coreEntity1Pk = 'CoreEntityPk';
   const extensionEntityPk = 'ExtensionEntityPk';
 
-  let interchangeResults: Array<string>;
+  let interchangeResults: string[];
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
@@ -130,32 +130,32 @@ describe('when generating xsd for extension interchange with a new domain entity
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should include core xsd', () => {
+  it('should include core xsd', (): void => {
     const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='Ed-Fi-Core.xsd']", interchangeResults[0] as any);
     expect(elements).toHaveLength(1);
   });
-  it('should include extension xsd', () => {
+  it('should include extension xsd', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have element', () => {
+  it('should have element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
       interchangeResults[0] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have core in extension interchange', () => {
+  it('should have core in extension interchange', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have extension element', () => {
+  it('should have extension element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
       interchangeResults[1] as any,
@@ -163,7 +163,7 @@ describe('when generating xsd for extension interchange with a new domain entity
     expect(elements).toHaveLength(1);
   });
 
-  it('should list core element before extensions', () => {
+  it('should list core element before extensions', (): void => {
     const extension: any = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element",
       interchangeResults[1] as any,
@@ -180,7 +180,7 @@ describe('when generating xsd for extension interchange with a new domain entity
     expect(extension[1].getAttribute('name')).toEqual(extensionElement.getAttribute('name'));
   });
 });
-describe('when generating xsd for extension interchange with a domain entity extension', () => {
+describe('when generating xsd for extension interchange with a domain entity extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const xYZ = 'XYZ';
   const coreEntity1 = 'CoreEntity1';
@@ -189,7 +189,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
   const coreEntity2Pk = 'CoreEntity2Pk';
   const extensionProperty = 'ExtensionProperty';
 
-  let interchangeResults: Array<string>;
+  let interchangeResults: string[];
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
@@ -237,32 +237,32 @@ describe('when generating xsd for extension interchange with a domain entity ext
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should include core xsd', () => {
+  it('should include core xsd', (): void => {
     const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='Ed-Fi-Core.xsd']", interchangeResults[0] as any);
     expect(elements).toHaveLength(1);
   });
-  it('should include extension xsd', () => {
+  it('should include extension xsd', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have element', () => {
+  it('should have element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='CoreEntity1']",
       interchangeResults[0] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have extension element', () => {
+  it('should have extension element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='EXTENSION-CoreEntity1Extension']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should list extension domain entity in same position as core', () => {
+  it('should list extension domain entity in same position as core', (): void => {
     const core: any = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
       interchangeResults[0] as any,
@@ -274,7 +274,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
     expect(extension.getAttribute('name')).toEqual(core.getAttribute('name'));
     expect(extension.getAttribute('type')).toEqual(`EXTENSION-${core.getAttribute('type')}Extension`);
   });
-  it('should have the same number of elements', () => {
+  it('should have the same number of elements', (): void => {
     const core = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
       interchangeResults[0] as any,
@@ -286,7 +286,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
     expect(extension.length).toEqual(core.length);
   });
 });
-describe('when generating xsd for extension interchange with an association extension', () => {
+describe('when generating xsd for extension interchange with an association extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const xYZ = 'XYZ';
   const coreEntity1 = 'CoreEntity1';
@@ -296,7 +296,7 @@ describe('when generating xsd for extension interchange with an association exte
   const extensionProperty = 'ExtensionProperty';
   const coreAssociation = 'CoreAssociation';
 
-  let interchangeResults: Array<string>;
+  let interchangeResults: string[];
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
@@ -356,32 +356,32 @@ describe('when generating xsd for extension interchange with an association exte
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should include core xsd', () => {
+  it('should include core xsd', (): void => {
     const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='Ed-Fi-Core.xsd']", interchangeResults[0] as any);
     expect(elements).toHaveLength(1);
   });
-  it('should include extension xsd', () => {
+  it('should include extension xsd', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have element', () => {
+  it('should have element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='CoreAssociation']",
       interchangeResults[0] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have extension element', () => {
+  it('should have extension element', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='EXTENSION-CoreAssociationExtension']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should list extension domain entity in same position as core', () => {
+  it('should list extension domain entity in same position as core', (): void => {
     const core: any = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
       interchangeResults[0] as any,
@@ -393,7 +393,7 @@ describe('when generating xsd for extension interchange with an association exte
     expect(extension.getAttribute('name')).toEqual(core.getAttribute('name'));
     expect(extension.getAttribute('type')).toEqual(`EXTENSION-${core.getAttribute('type')}Extension`);
   });
-  it('should have the same number of elements', () => {
+  it('should have the same number of elements', (): void => {
     const core = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
       interchangeResults[0] as any,
@@ -405,14 +405,14 @@ describe('when generating xsd for extension interchange with an association exte
     expect(extension.length).toEqual(core.length);
   });
 });
-describe('when generating xsd for extension interchange with extension descriptor', () => {
+describe('when generating xsd for extension interchange with extension descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const core = 'Core';
   const coreProperty = 'CoreProperty';
   const extension = 'Extension';
   const extensionProperty = 'ExtensionProperty';
 
-  let interchangeResults: Array<string>;
+  let interchangeResults: string[];
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
@@ -451,32 +451,32 @@ describe('when generating xsd for extension interchange with extension descripto
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should include core descriptor interchange', () => {
+  it('should include core descriptor interchange', (): void => {
     const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='Ed-Fi-Core.xsd']", interchangeResults[0] as any);
     expect(elements).toHaveLength(1);
   });
-  it('should have core descriptor', () => {
+  it('should have core descriptor', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']",
       interchangeResults[0] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should include extension descriptor interchange', () => {
+  it('should include extension descriptor interchange', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have core descriptor in extension interchange', () => {
+  it('should have core descriptor in extension interchange', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should have extension descriptor', () => {
+  it('should have extension descriptor', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='ExtensionDescriptor'][@type='EXTENSION-ExtensionDescriptor']",
       interchangeResults[1] as any,

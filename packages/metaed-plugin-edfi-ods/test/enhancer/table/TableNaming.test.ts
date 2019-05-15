@@ -1,6 +1,6 @@
 import { appendOverlapping } from '../../../src/enhancer/table/TableNaming';
 
-describe('when appending overlapping strings', () => {
+describe('when appending overlapping strings', (): void => {
   it('should append normally if no overlap :: AaaBbb, CccDdd => AaaBbbCccDdd', () =>
     expect(appendOverlapping('AaaBbb', 'CccDdd')).toBe('AaaBbbCccDdd'));
   it('should fully collapse if a prefix :: AaaBbb, AaaBbbCcc => AaaBbbCcc', () =>

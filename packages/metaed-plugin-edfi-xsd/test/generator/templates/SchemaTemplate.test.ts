@@ -31,7 +31,7 @@ const simpleTypeName = 'Simple Type Name';
 const simpleTypeBaseType = 'xs:string';
 const simpleTypeDocumentation = 'Simple Type Documentation';
 
-describe('when generating core schema', () => {
+describe('when generating core schema', (): void => {
   let result;
 
   beforeAll(() => {
@@ -47,12 +47,12 @@ describe('when generating core schema', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be schema only', () => {
+  it('should be schema only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:schema');
   });
 
-  it('should have schema version', () => {
+  it('should have schema version', (): void => {
     expect(
       R.view(
         R.compose(
@@ -73,7 +73,7 @@ describe('when generating core schema', () => {
     ).toContain(schemaVersion);
   });
 
-  it('should have five sections', () => {
+  it('should have five sections', (): void => {
     expect(
       R.view(
         R.compose(
@@ -85,7 +85,7 @@ describe('when generating core schema', () => {
     ).toBe(5);
   });
 
-  it('should have annotation import', () => {
+  it('should have annotation import', (): void => {
     expect(
       R.view(
         R.compose(
@@ -97,7 +97,7 @@ describe('when generating core schema', () => {
     ).toBe('xs:import');
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -120,7 +120,7 @@ describe('when generating core schema', () => {
     ).toBe(schemaDocumentation);
   });
 
-  it('should have section annotation', () => {
+  it('should have section annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -143,7 +143,7 @@ describe('when generating core schema', () => {
     ).toBe(schemaSectionDocumentation);
   });
 
-  it('should have complex type', () => {
+  it('should have complex type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -167,7 +167,7 @@ describe('when generating core schema', () => {
     ).toBe(complexTypeDocumentation);
   });
 
-  it('should have simple type', () => {
+  it('should have simple type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -192,7 +192,7 @@ describe('when generating core schema', () => {
   });
 });
 
-describe('when generating extension schema', () => {
+describe('when generating extension schema', (): void => {
   let result;
 
   beforeAll(() => {
@@ -208,12 +208,12 @@ describe('when generating extension schema', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be schema only', () => {
+  it('should be schema only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:schema');
   });
 
-  it('should have schema version', () => {
+  it('should have schema version', (): void => {
     expect(
       R.view(
         R.compose(
@@ -234,7 +234,7 @@ describe('when generating extension schema', () => {
     ).toContain(schemaVersion);
   });
 
-  it('should have five sections', () => {
+  it('should have five sections', (): void => {
     expect(
       R.view(
         R.compose(
@@ -246,7 +246,7 @@ describe('when generating extension schema', () => {
     ).toBe(5);
   });
 
-  it('should have include', () => {
+  it('should have include', (): void => {
     expect(
       R.view(
         R.compose(
@@ -258,7 +258,7 @@ describe('when generating extension schema', () => {
     ).toBe('xs:include');
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -281,7 +281,7 @@ describe('when generating extension schema', () => {
     ).toBe(schemaDocumentation);
   });
 
-  it('should have section annotation', () => {
+  it('should have section annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -304,7 +304,7 @@ describe('when generating extension schema', () => {
     ).toBe(schemaSectionDocumentation);
   });
 
-  it('should have complex type', () => {
+  it('should have complex type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -328,7 +328,7 @@ describe('when generating extension schema', () => {
     ).toBe(complexTypeDocumentation);
   });
 
-  it('should have simple type', () => {
+  it('should have simple type', (): void => {
     expect(
       R.view(
         R.compose(

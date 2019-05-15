@@ -22,14 +22,14 @@ function overlapCollapsingJoinTableName(parentEntityName: string, odsName: strin
 function buildJoinTables(
   property: ReferentialProperty,
   parentTableStrategy: TableStrategy,
-  parentPrimaryKeys: Array<Column>,
-  primaryKeys: Array<Column>,
+  parentPrimaryKeys: Column[],
+  primaryKeys: Column[],
   buildStrategy: BuildStrategy,
   joinTableName: string,
-  joinTableNameComponents: Array<string>,
+  joinTableNameComponents: string[],
   joinTableNamespace: Namespace,
   joinTableSchema: string,
-  tables: Array<Table>,
+  tables: Table[],
   tableFactory: TableBuilderFactory,
   parentIsRequired: boolean | null,
 ): void {
@@ -79,9 +79,9 @@ export function commonPropertyTableBuilder(
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       parentIsRequired: boolean | null,
     ): void {
       const commonProperty = asCommonProperty(property);
@@ -93,7 +93,7 @@ export function commonPropertyTableBuilder(
         );
       }
 
-      const primaryKeys: Array<Column> = [];
+      const primaryKeys: Column[] = [];
       if (!commonProperty.isOptional) {
         primaryKeys.push(...collectPrimaryKeys(commonProperty.referencedEntity, strategy, columnFactory));
       }

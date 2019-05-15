@@ -10,7 +10,7 @@ export interface Namespace {
   namespaceName: string;
   isExtension: boolean;
   // Namespace dependencies, in closest dependency first order
-  dependencies: Array<Namespace>;
+  dependencies: Namespace[];
   projectExtension: string;
   projectName: string;
   projectVersion: string;

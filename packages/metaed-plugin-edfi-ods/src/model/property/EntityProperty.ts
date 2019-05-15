@@ -3,13 +3,13 @@ import { getAllProperties, getAllTopLevelEntitiesForNamespaces } from 'metaed-co
 import { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-core';
 import { prependroleNameToMetaEdName } from '../../shared/Utility';
 
-export type EntityPropertyEdfiOds = {
+export interface EntityPropertyEdfiOds {
   odsName: string;
   odsIsCollection: boolean;
   odsIsIdentityDatabaseType: boolean;
   odsIsUniqueIndex: boolean;
   odsContextPrefix: string;
-};
+}
 
 // Enhancer for object setup
 const enhancerName = 'EntityPropertySetupEnhancer';

@@ -9,10 +9,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DomainEntityExtension/DomainEntityExtensionMustNotRedeclareProperties';
 
-describe('when domain entity extension correctly has different property names', () => {
+describe('when domain entity extension correctly has different property names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -42,20 +42,20 @@ describe('when domain entity extension correctly has different property names', 
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity extension has duplicate property name', () => {
+describe('when domain entity extension has duplicate property name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -85,11 +85,11 @@ describe('when domain entity extension has duplicate property name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -98,11 +98,11 @@ describe('when domain entity extension has duplicate property name', () => {
   });
 });
 
-describe('when domain entity extension has duplicate property name but different role name', () => {
+describe('when domain entity extension has duplicate property name but different role name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -132,17 +132,17 @@ describe('when domain entity extension has duplicate property name but different
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domain entity subclass and extension have duplicate property name', () => {
+describe('when domain entity subclass and extension have duplicate property name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const subclassEntityName = 'SubclassEntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -178,11 +178,11 @@ describe('when domain entity subclass and extension have duplicate property name
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -191,13 +191,13 @@ describe('when domain entity subclass and extension have duplicate property name
   });
 });
 
-describe('when domain entity extension has multiple duplicates', () => {
+describe('when domain entity extension has multiple duplicates', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const notDuplicatePropertyName = 'NotDuplicatePropertyName';
   const duplicatePropertyName1 = 'DuplicatePropertyName1';
   const duplicatePropertyName2 = 'DuplicatePropertyName2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -230,7 +230,7 @@ describe('when domain entity extension has multiple duplicates', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -246,11 +246,11 @@ describe('when domain entity extension has multiple duplicates', () => {
   });
 });
 
-describe('when domain entity extension has duplicate common property', () => {
+describe('when domain entity extension has duplicate common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -280,16 +280,16 @@ describe('when domain entity extension has duplicate common property', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 });
 
-describe('when domain entity extension has duplicate common extension override property', () => {
+describe('when domain entity extension has duplicate common extension override property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -319,7 +319,7 @@ describe('when domain entity extension has duplicate common extension override p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

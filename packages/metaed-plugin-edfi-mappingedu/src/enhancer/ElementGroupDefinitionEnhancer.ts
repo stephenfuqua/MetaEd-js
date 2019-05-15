@@ -2,7 +2,7 @@ import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { newElementGroupDefinition } from '../model/ElementGroupDefinition';
 import { elementGroupNameFor, isDataStandard, pluginElementGroupDefinitionsForNamespace } from './EnhancerHelper';
 
-const enhancerName: string = 'ElementGroupDefinitionEnhancer';
+const enhancerName = 'ElementGroupDefinitionEnhancer';
 
 const createElementGroupDefinitionFor = (metaEd: MetaEdEnvironment, namespace: Namespace) => {
   const elementGroup: string = elementGroupNameFor(namespace);

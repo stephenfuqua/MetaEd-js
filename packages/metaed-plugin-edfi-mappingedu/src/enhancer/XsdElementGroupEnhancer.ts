@@ -28,7 +28,7 @@ import {
   xsdSchemaForNamespace,
 } from './EnhancerHelper';
 
-const enhancerName: string = 'XsdElementGroupEnhancer';
+const enhancerName = 'XsdElementGroupEnhancer';
 
 const typeGroupRepositoryFor = (
   metaEd: MetaEdEnvironment,
@@ -61,8 +61,8 @@ const addXsdElement = (metaEd: MetaEdEnvironment, namespace: Namespace, xsdEleme
   typeGroupRepositoryFor(metaEd, namespace, xsdElement).set(xsdElement.name, xsdElement);
 };
 
-const xsdElementsForNamespace = (metaEd: MetaEdEnvironment, namespace: Namespace): Array<ComplexType | SimpleType> => {
-  const xsdElements: Array<ComplexType | SimpleType> = [];
+const xsdElementsForNamespace = (metaEd: MetaEdEnvironment, namespace: Namespace): (ComplexType | SimpleType)[] => {
+  const xsdElements: (ComplexType | SimpleType)[] = [];
   xsdSchemaForNamespace(metaEd, namespace).sections.forEach((section: SchemaSection) => {
     xsdElements.push(...section.complexTypes);
     xsdElements.push(...section.simpleTypes);

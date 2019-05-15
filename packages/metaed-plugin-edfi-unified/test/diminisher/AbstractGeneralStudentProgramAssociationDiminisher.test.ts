@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, newNamespace, newAssociation } from 'metaed-core'
 import { MetaEdEnvironment, Namespace, Association } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AbstractGeneralStudentProgramAssociationDiminisher';
 
-describe('when diminishing with no matching entity', () => {
+describe('when diminishing with no matching entity', (): void => {
   const entityName = 'EntityName';
   const namespaceName = 'EdFi';
 
@@ -19,12 +19,12 @@ describe('when diminishing with no matching entity', () => {
     enhance(metaEd);
   });
 
-  it('should not change associations in namespace', () => {
+  it('should not change associations in namespace', (): void => {
     expect(association.isAbstract).toBe(false);
   });
 });
 
-describe('when diminishing with matching entity', () => {
+describe('when diminishing with matching entity', (): void => {
   const entityName = 'EntityName';
   const generalStudentProgramAssociationName = 'GeneralStudentProgramAssociation';
   const studentProgramAssociationName = 'StudentProgramAssociation';
@@ -51,7 +51,7 @@ describe('when diminishing with matching entity', () => {
     enhance(metaEd);
   });
 
-  it('should only set GeneralStudentProgramAssociation isAbstract', () => {
+  it('should only set GeneralStudentProgramAssociation isAbstract', (): void => {
     expect(association1.isAbstract).toBe(true);
     expect(association2.isAbstract).toBe(false);
     expect(association3.isAbstract).toBe(false);

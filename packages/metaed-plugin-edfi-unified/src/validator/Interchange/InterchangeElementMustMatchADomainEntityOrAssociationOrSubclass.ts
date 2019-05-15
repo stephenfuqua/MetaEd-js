@@ -12,9 +12,9 @@ const validTypeNames: string = [
   'Domain Entity Subclass',
 ].join(', ');
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
-  (getAllEntitiesOfType(metaEd, 'interchange') as Array<Interchange>).forEach((interchange: Interchange) => {
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
+  (getAllEntitiesOfType(metaEd, 'interchange') as Interchange[]).forEach((interchange: Interchange) => {
     if (interchange.elements.length === 0) return;
     interchange.elements.forEach((item: InterchangeItem) => {
       const foundEntity = getEntityFromNamespaceChain(

@@ -12,12 +12,12 @@ import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRep
 import { EnumerationItemDefinition } from '../../src/model/EnumerationItemDefinition';
 import { EdFiMappingEduRepository } from '../../src/model/EdFiMappingEduRepository';
 
-describe('when enhancing enumeration element', () => {
+describe('when enhancing enumeration element', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const enumerationName: string = 'EnumerationName';
-  const value1: string = 'Value1';
-  const value2: string = 'Value2';
-  const value3: string = 'Value3';
+  const enumerationName = 'EnumerationName';
+  const value1 = 'Value1';
+  const value2 = 'Value2';
+  const value3 = 'Value3';
 
   // Core | EnumerationName | Value1 | Value1 | Value1
   // Core | EnumerationName | Value2 | Value2 | Value2
@@ -45,13 +45,13 @@ describe('when enhancing enumeration element', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create three enumeration definitions', () => {
+  it('should create three enumeration definitions', (): void => {
     expect(pluginNamespace.enumerationItemDefinitions).toHaveLength(3);
   });
 
   it.each([[enumerationName, value1, 0], [enumerationName, value2, 1], [enumerationName, value3, 2]])(
     `should create core enumeration item definition with name: '%s' and value: '%s'`,
-    (enumeration: Array<string>, value: string, index: number) => {
+    (enumeration, value: string, index: number) => {
       const enumerationItemDefinition: EnumerationItemDefinition = pluginNamespace.enumerationItemDefinitions[index];
       expect(enumerationItemDefinition).toBeDefined();
       expect(enumerationItemDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -63,16 +63,16 @@ describe('when enhancing enumeration element', () => {
   );
 });
 
-describe('when enhancing multiple enumeration elements', () => {
+describe('when enhancing multiple enumeration elements', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const enumerationName1: string = 'EnumerationName1';
-  const enumerationName2: string = 'EnumerationName2';
-  const value1: string = 'Value1';
-  const value2: string = 'Value2';
-  const value3: string = 'Value3';
-  const value4: string = 'Value4';
-  const value5: string = 'Value5';
-  const value6: string = 'Value6';
+  const enumerationName1 = 'EnumerationName1';
+  const enumerationName2 = 'EnumerationName2';
+  const value1 = 'Value1';
+  const value2 = 'Value2';
+  const value3 = 'Value3';
+  const value4 = 'Value4';
+  const value5 = 'Value5';
+  const value6 = 'Value6';
 
   // Core | EnumerationName1 | Value1 | Value1 | Value1
   // Core | EnumerationName1 | Value2 | Value2 | Value2
@@ -112,7 +112,7 @@ describe('when enhancing multiple enumeration elements', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create six enumeration definitions', () => {
+  it('should create six enumeration definitions', (): void => {
     expect(pluginNamespace.enumerationItemDefinitions).toHaveLength(6);
   });
 
@@ -125,7 +125,7 @@ describe('when enhancing multiple enumeration elements', () => {
     [enumerationName2, value6, 5],
   ])(
     `should create core enumeration item definition with name: '%s' and value: '%s'`,
-    (enumeration: Array<string>, value: string, index: number) => {
+    (enumeration, value: string, index: number) => {
       const enumerationItemDefinition: EnumerationItemDefinition = pluginNamespace.enumerationItemDefinitions[index];
       expect(enumerationItemDefinition).toBeDefined();
       expect(enumerationItemDefinition.elementGroup).toBe(dataStandardElementGroupName);

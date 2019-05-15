@@ -36,7 +36,7 @@ const metaEdConfiguration = {
   ],
 };
 
-describe('when building a simple core and two simple extension projects', () => {
+describe('when building a simple core and two simple extension projects', (): void => {
   let state: State = newState();
 
   beforeAll(async () => {
@@ -53,29 +53,29 @@ describe('when building a simple core and two simple extension projects', () => 
     await executePipeline(state);
   });
 
-  it('should have no validation errors', () => {
+  it('should have no validation errors', (): void => {
     expect(state.validationFailure.length).toBe(0);
   });
 
-  it('should have core domain entity', () => {
+  it('should have core domain entity', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('EdfiDomainEntity')).toBeDefined();
   });
 
-  it('should have gb domain entity', () => {
+  it('should have gb domain entity', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('Gb');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('GbDomainEntity')).toBeDefined();
   });
 
-  it('should have sample domain entity', () => {
+  it('should have sample domain entity', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('Sample');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('SampleDomainEntity')).toBeDefined();
   });
 
-  it('should have core ods table', () => {
+  it('should have core ods table', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (namespace == null) throw new Error();
     const edfiDomainEntity = namespace.entity.domainEntity.get('EdfiDomainEntity');
@@ -84,7 +84,7 @@ describe('when building a simple core and two simple extension projects', () => 
     expect(edfiDomainEntity.data.edfiOds.odsTables[0].schema).toBe('edfi');
   });
 
-  it('should have gb ods table with reference to core', () => {
+  it('should have gb ods table with reference to core', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('Gb');
     if (namespace == null) throw new Error();
     const gbDomainEntity = namespace.entity.domainEntity.get('GbDomainEntity');
@@ -96,7 +96,7 @@ describe('when building a simple core and two simple extension projects', () => 
     expect(gbDomainEntityFK.foreignTableSchema).toBe('edfi');
   });
 
-  it('should have sample ods table with reference to core', () => {
+  it('should have sample ods table with reference to core', (): void => {
     const namespace: Namespace | undefined = state.metaEd.namespace.get('Sample');
     if (namespace == null) throw new Error();
     const sampleDomainEntity = namespace.entity.domainEntity.get('SampleDomainEntity');

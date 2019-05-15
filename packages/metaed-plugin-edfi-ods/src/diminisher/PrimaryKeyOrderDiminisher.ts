@@ -11,8 +11,8 @@ import { Table } from '../model/database/Table';
 const enhancerName = 'PrimaryKeyOrderDiminisher';
 const targetVersions = '2.x';
 
-function primaryKeyOrderFor(table: Table): Array<string> {
-  const primaryKeysFor: { [tableName: string]: Array<string> } = {
+function primaryKeyOrderFor(table: Table): string[] {
+  const primaryKeysFor: { [tableName: string]: string[] } = {
     AcademicWeek: ['WeekIdentifier', 'SchoolId'],
     Account: ['EducationOrganizationId', 'AccountNumber', 'FiscalYear'],
     AccountabilityRating: ['RatingTitle', 'EducationOrganizationId', 'SchoolYear'],
@@ -953,11 +953,11 @@ function primaryKeyOrderFor(table: Table): Array<string> {
 
 function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
   Array.from(tablesForCoreNamespace.values()).forEach((table: Table) => {
-    const primaryKeyOrder: Array<string> = primaryKeyOrderFor(table);
+    const primaryKeyOrder: string[] = primaryKeyOrderFor(table);
     if (primaryKeyOrder.length === 0) return;
 
     // ignore table if primary keys have been modified
-    const primaryKeys: Array<Column> = getPrimaryKeys(table);
+    const primaryKeys: Column[] = getPrimaryKeys(table);
     if (R.symmetricDifference(primaryKeyOrder, primaryKeys.map(x => x.name)).length > 0) return;
 
     const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('name'), primaryKeys);

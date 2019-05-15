@@ -5,7 +5,7 @@ import { addEdFiOdsEntityRepositoryTo } from '../../../src/model/EdFiOdsEntityRe
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { Table } from '../../../src/model/database/Table';
 
-describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
+describe('when BaseDescriptorTableCreatingEnhancer enhances', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -15,11 +15,11 @@ describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
     enhance(metaEd);
   });
 
-  it('should create descriptor table', () => {
+  it('should create descriptor table', (): void => {
     expect(tableEntities(metaEd, namespace).get('Descriptor')).toBeDefined();
   });
 
-  it('should have eight descriptor columns', () => {
+  it('should have eight descriptor columns', (): void => {
     const descriptorTable: Table = tableEntities(metaEd, namespace).get('Descriptor') as Table;
     expect(descriptorTable.columns).toHaveLength(8);
     expect(descriptorTable.columns.map(x => x.name)).toEqual([

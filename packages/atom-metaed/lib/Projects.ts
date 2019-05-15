@@ -31,10 +31,10 @@ export async function newProjectJson(projectPath: string): Promise<void> {
   );
 }
 
-type ProjectFileData = {
+interface ProjectFileData {
   projectName: string;
   projectVersion: string;
-};
+}
 
 async function projectValuesFromProjectJson(verifiedPathToProjectJson: string): Promise<ProjectFileData | null> {
   const projectJson = await fs.readJson(verifiedPathToProjectJson);
@@ -43,7 +43,7 @@ async function projectValuesFromProjectJson(verifiedPathToProjectJson: string): 
   return null;
 }
 
-export type MetaEdProjectMetadata = {
+export interface MetaEdProjectMetadata {
   projectPath: string;
   invalidProject: boolean;
   invalidProjectReason: string;
@@ -52,7 +52,7 @@ export type MetaEdProjectMetadata = {
   projectNamespace: string;
   isExtensionProject: boolean;
   projectExtension: string;
-};
+}
 
 function newMetaEdProjectMetadata(projectPath: string): MetaEdProjectMetadata {
   return {
@@ -67,8 +67,8 @@ function newMetaEdProjectMetadata(projectPath: string): MetaEdProjectMetadata {
   };
 }
 
-export async function findMetaEdProjectMetadata(createProjectJson: boolean = false): Promise<Array<MetaEdProjectMetadata>> {
-  const result: Array<MetaEdProjectMetadata> = await Promise.all(
+export async function findMetaEdProjectMetadata(createProjectJson: boolean = false): Promise<MetaEdProjectMetadata[]> {
+  const result: MetaEdProjectMetadata[] = await Promise.all(
     atom.project.getPaths().map(async (projectPath: string) => {
       const projectJsonFilePath = path.join(projectPath, PROJECT_SETTINGS_FILE_NAME);
       if (!(await fs.exists(projectJsonFilePath))) {

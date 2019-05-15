@@ -17,7 +17,7 @@ export type HasReferencedEntity = ReferentialProperty | SimpleProperty;
 /**
  *
  */
-export type EntityPropertySourceMap = {
+export interface EntityPropertySourceMap {
   type: SourceMap;
   documentation: SourceMap;
   documentationInherited: SourceMap;
@@ -41,7 +41,7 @@ export type EntityPropertySourceMap = {
   referencedType: SourceMap;
   referencedNamespaceName: SourceMap;
   mergeTargetedBy: SourceMap;
-};
+}
 
 /**
  *
@@ -131,7 +131,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  *
  * **data** is the place where plugins are allowed to annotate the property with their own plugin-specfic data.
  */
-export type EntityProperty = {
+export interface EntityProperty {
   type: PropertyType;
   typeHumanizedName: string;
   documentation: string;
@@ -155,11 +155,11 @@ export type EntityProperty = {
   hasRestriction: boolean;
   referencedType: string;
   referencedNamespaceName: string;
-  mergeSourcedBy: Array<EntityProperty>;
-  mergeTargetedBy: Array<EntityProperty>;
+  mergeSourcedBy: EntityProperty[];
+  mergeTargetedBy: EntityProperty[];
   sourceMap: EntityPropertySourceMap;
   data: any;
-};
+}
 
 /**
  *

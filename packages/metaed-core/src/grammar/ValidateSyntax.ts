@@ -16,7 +16,7 @@ export const validateSyntax = R.curry(
 
     state.loadedFileSet.forEach((fileToLoad: FileSet) => {
       fileToLoad.files.forEach((file: MetaEdFile) => {
-        const validationFailures: Array<ValidationFailure> = [];
+        const validationFailures: ValidationFailure[] = [];
         const errorListener = new MetaEdErrorListener(validationFailures, 'ValidateSyntax - MetaEdErrorListener');
 
         const parseTree = parseTreeBuilder(errorListener, file.contents);

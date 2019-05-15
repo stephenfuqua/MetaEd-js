@@ -12,7 +12,7 @@ import { Column } from '../../src/model/database/Column';
 import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key matching primary key columns', () => {
+describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key matching primary key columns', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -45,13 +45,13 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
     enhance(metaEd);
   });
 
-  it('should have foreign key with reverse foreign key index set to false', () => {
+  it('should have foreign key with reverse foreign key index set to false', (): void => {
     const foreignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
 });
 
-describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key not matching primary key columns', () => {
+describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key not matching primary key columns', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -86,13 +86,13 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
     enhance(metaEd);
   });
 
-  it('should have foreign key with reverse foreign key index set to true', () => {
+  it('should have foreign key with reverse foreign key index set to true', (): void => {
     const foreignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });
 
-describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column foreign key matching primary key columns', () => {
+describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column foreign key matching primary key columns', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -133,13 +133,13 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
     enhance(metaEd);
   });
 
-  it('should have foreign key with reverse foreign key index set to false', () => {
+  it('should have foreign key with reverse foreign key index set to false', (): void => {
     const foreignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
 });
 
-describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key subset of primary key columns', () => {
+describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key subset of primary key columns', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -176,13 +176,13 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
     enhance(metaEd);
   });
 
-  it('should have foreign key with reverse foreign key index set to true', () => {
+  it('should have foreign key with reverse foreign key index set to true', (): void => {
     const foreignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });
 
-describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key superset of primary key columns', () => {
+describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key superset of primary key columns', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -222,7 +222,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
     enhance(metaEd);
   });
 
-  it('should have foreign key with reverse foreign key index set to true', () => {
+  it('should have foreign key with reverse foreign key index set to true', (): void => {
     const foreignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });

@@ -31,53 +31,53 @@ import { Namespace } from '../Namespace';
  *
  */
 export class PropertyIndex {
-  association: Array<AssociationProperty>;
+  association: AssociationProperty[];
 
-  boolean: Array<BooleanProperty>;
+  boolean: BooleanProperty[];
 
-  choice: Array<ChoiceProperty>;
+  choice: ChoiceProperty[];
 
-  common: Array<CommonProperty>;
+  common: CommonProperty[];
 
-  currency: Array<CurrencyProperty>;
+  currency: CurrencyProperty[];
 
-  date: Array<DatetimeProperty>;
+  date: DatetimeProperty[];
 
-  datetime: Array<DateProperty>;
+  datetime: DateProperty[];
 
-  decimal: Array<DecimalProperty>;
+  decimal: DecimalProperty[];
 
-  descriptor: Array<DescriptorProperty>;
+  descriptor: DescriptorProperty[];
 
-  domainEntity: Array<DomainEntityProperty>;
+  domainEntity: DomainEntityProperty[];
 
-  duration: Array<DurationProperty>;
+  duration: DurationProperty[];
 
-  enumeration: Array<EnumerationProperty>;
+  enumeration: EnumerationProperty[];
 
-  inlineCommon: Array<InlineCommonProperty>;
+  inlineCommon: InlineCommonProperty[];
 
-  integer: Array<IntegerProperty>;
+  integer: IntegerProperty[];
 
-  percent: Array<PercentProperty>;
+  percent: PercentProperty[];
 
-  schoolYearEnumeration: Array<SchoolYearEnumerationProperty>;
+  schoolYearEnumeration: SchoolYearEnumerationProperty[];
 
-  sharedDecimal: Array<SharedDecimalProperty>;
+  sharedDecimal: SharedDecimalProperty[];
 
-  sharedInteger: Array<SharedIntegerProperty>;
+  sharedInteger: SharedIntegerProperty[];
 
-  sharedShort: Array<SharedShortProperty>;
+  sharedShort: SharedShortProperty[];
 
-  sharedString: Array<SharedStringProperty>;
+  sharedString: SharedStringProperty[];
 
-  short: Array<ShortProperty>;
+  short: ShortProperty[];
 
-  string: Array<StringProperty>;
+  string: StringProperty[];
 
-  time: Array<TimeProperty>;
+  time: TimeProperty[];
 
-  year: Array<YearProperty>;
+  year: YearProperty[];
 }
 
 /**
@@ -115,11 +115,8 @@ export function newPropertyIndex(): PropertyIndex {
 /**
  *
  */
-export function getPropertiesOfType(
-  propertyIndex: PropertyIndex,
-  ...propertyTypes: Array<PropertyType>
-): Array<EntityProperty> {
-  const result: Array<EntityProperty> = [];
+export function getPropertiesOfType(propertyIndex: PropertyIndex, ...propertyTypes: PropertyType[]): EntityProperty[] {
+  const result: EntityProperty[] = [];
   propertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));
   return result;
 }
@@ -129,10 +126,10 @@ export function getPropertiesOfType(
  */
 export function getPropertiesOfTypeForNamespaces(
   propertyIndex: PropertyIndex,
-  namespaces: Array<Namespace>,
-  ...propertyTypes: Array<PropertyType>
-): Array<EntityProperty> {
-  const result: Array<EntityProperty> = [];
+  namespaces: Namespace[],
+  ...propertyTypes: PropertyType[]
+): EntityProperty[] {
+  const result: EntityProperty[] = [];
 
   propertyTypes.forEach(propertyType => {
     const propertiesInNamespaces = propertyIndex[propertyType].filter((property: EntityProperty) =>
@@ -146,17 +143,14 @@ export function getPropertiesOfTypeForNamespaces(
 /**
  *
  */
-export function getAllProperties(propertyIndex: PropertyIndex): Array<EntityProperty> {
+export function getAllProperties(propertyIndex: PropertyIndex): EntityProperty[] {
   return getPropertiesOfType(propertyIndex, ...allPropertyTypes);
 }
 
 /**
  *
  */
-export function getAllPropertiesForNamespaces(
-  propertyIndex: PropertyIndex,
-  namespaces: Array<Namespace>,
-): Array<EntityProperty> {
+export function getAllPropertiesForNamespaces(propertyIndex: PropertyIndex, namespaces: Namespace[]): EntityProperty[] {
   return getPropertiesOfTypeForNamespaces(propertyIndex, namespaces, ...allPropertyTypes);
 }
 

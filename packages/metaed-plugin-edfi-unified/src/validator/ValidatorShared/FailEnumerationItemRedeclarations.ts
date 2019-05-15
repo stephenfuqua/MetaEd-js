@@ -4,11 +4,11 @@ import { findDuplicates } from './FindDuplicates';
 export function failEnumerationItemRedeclarations(
   validatorName: string,
   entity: Descriptor | Enumeration,
-  enumerationItems: Array<EnumerationItem>,
-  failures: Array<ValidationFailure>,
+  enumerationItems: EnumerationItem[],
+  failures: ValidationFailure[],
 ) {
-  const shortDescriptions: Array<string> = enumerationItems.map(x => x.shortDescription);
-  const duplicates: Array<string> = findDuplicates(shortDescriptions);
+  const shortDescriptions: string[] = enumerationItems.map(x => x.shortDescription);
+  const duplicates: string[] = findDuplicates(shortDescriptions);
 
   duplicates.forEach(duplicate => {
     const enumerationItem = enumerationItems.find(x => x.shortDescription === duplicate);

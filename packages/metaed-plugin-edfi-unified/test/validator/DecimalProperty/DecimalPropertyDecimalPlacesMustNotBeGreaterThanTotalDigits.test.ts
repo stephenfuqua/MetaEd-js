@@ -2,13 +2,13 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
 
-describe('when validating decimal property with correct total digits and decimal places', () => {
+describe('when validating decimal property with correct total digits and decimal places', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '10';
   const decimalPlaces = '2';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -27,22 +27,22 @@ describe('when validating decimal property with correct total digits and decimal
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating decimal property with same total digits and decimal places', () => {
+describe('when validating decimal property with same total digits and decimal places', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '10';
   const decimalPlaces = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -61,22 +61,22 @@ describe('when validating decimal property with same total digits and decimal pl
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating decimal property with decimal places greater than total digits', () => {
+describe('when validating decimal property with decimal places greater than total digits', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const totalDigits = '2';
   const decimalPlaces = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -94,11 +94,11 @@ describe('when validating decimal property with decimal places greater than tota
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits');
     expect(failures[0].category).toBe('error');

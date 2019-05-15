@@ -11,7 +11,7 @@ import {
 const enhancerName = 'AddDomainEntityExtensionComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as Array<DomainEntityExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as DomainEntityExtension[]).forEach(
     (domainEntityExtension: DomainEntityExtension) => {
       if (domainEntityExtension.data.edfiXsd.xsdHasExtensionOverrideProperties()) {
         const domainEntityExtensionEdfiXsd: TopLevelEntityEdfiXsd = domainEntityExtension.data.edfiXsd;

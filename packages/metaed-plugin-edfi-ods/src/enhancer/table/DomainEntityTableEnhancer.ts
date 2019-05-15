@@ -9,7 +9,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'domainEntity')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
-      const tables: Array<Table> = [];
+      const tables: Table[] = [];
       const mainTable: Table = buildMainTable(metaEd, entity, true);
       tables.push(mainTable);
       buildTablesFromProperties(entity, mainTable, tables);

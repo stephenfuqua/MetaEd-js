@@ -36,7 +36,7 @@ const metaEdConfiguration = {
   ],
 };
 
-describe('when building a simple core and two simple extension projects', () => {
+describe('when building a simple core and two simple extension projects', (): void => {
   let state: State = newState();
 
   beforeAll(async () => {
@@ -52,11 +52,11 @@ describe('when building a simple core and two simple extension projects', () => 
     await executePipeline(state);
   });
 
-  it('should have no validation errors', () => {
+  it('should have no validation errors', (): void => {
     expect(state.validationFailure.length).toBe(0);
   });
 
-  it('should have extension domain entities referencing core entity (meaning unified enhancers ran)', () => {
+  it('should have extension domain entities referencing core entity (meaning unified enhancers ran)', (): void => {
     const coreNamespace = state.metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     const edfiDomainEntity = coreNamespace.entity.domainEntity.get('EdfiDomainEntity');

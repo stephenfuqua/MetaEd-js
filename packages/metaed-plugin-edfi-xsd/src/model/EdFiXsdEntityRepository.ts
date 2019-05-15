@@ -2,9 +2,9 @@ import { newPluginEnvironment } from 'metaed-core';
 import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { MergedInterchange } from './MergedInterchange';
 
-export type EdFiXsdEntityRepository = {
+export interface EdFiXsdEntityRepository {
   mergedInterchange: Map<string, MergedInterchange>;
-};
+}
 
 const enhancerName = 'EdFiXsdEntityRepositorySetupEnhancer';
 

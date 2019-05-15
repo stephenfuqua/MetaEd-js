@@ -5,11 +5,11 @@ import { deleteTrackingTriggerEntities } from '../enhancer/EnhancerHelper';
 import { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
-      const triggers: Array<DeleteTrackingTrigger> = deleteTrackingTriggerEntities(metaEd, namespace);
+      const triggers: DeleteTrackingTrigger[] = deleteTrackingTriggerEntities(metaEd, namespace);
       if (triggers.length > 0) {
         triggers.sort(
           // by schema then by trigger name

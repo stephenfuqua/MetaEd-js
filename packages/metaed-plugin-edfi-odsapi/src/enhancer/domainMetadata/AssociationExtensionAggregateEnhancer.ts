@@ -6,7 +6,7 @@ import { enhanceSingleEntity } from './AggregateEnhancerBase';
 
 const enhancerName = 'AssociationExtensionAggregateEnhancer';
 
-function orderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Array<Table> {
+function orderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Table[] {
   const tablesForNamespace = (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTables.filter(
     (t: Table) =>
       t.schema === namespace.namespaceName.toLowerCase() &&

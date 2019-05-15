@@ -8,9 +8,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/IntegerProperty/IntegerPropertyMustNotMatchASharedInteger';
 
-describe('when validating integer property does not match shared integer', () => {
+describe('when validating integer property does not match shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -34,19 +34,19 @@ describe('when validating integer property does not match shared integer', () =>
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating integer property matches shared integer', () => {
+describe('when validating integer property matches shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -70,11 +70,11 @@ describe('when validating integer property matches shared integer', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IntegerPropertyMustNotMatchASharedInteger');
     expect(failures[0].category).toBe('error');

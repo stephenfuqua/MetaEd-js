@@ -7,10 +7,10 @@ const targetVersions: string = V3OrGreater;
 
 const generalStudentProgramAssociationName = 'GeneralStudentProgramAssociation';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return [];
 
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach(namespace => {
     namespace.entity.associationExtension.forEach((extensionEntity: AssociationExtension) => {

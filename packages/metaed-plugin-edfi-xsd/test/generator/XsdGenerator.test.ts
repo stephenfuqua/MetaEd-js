@@ -10,7 +10,7 @@ import {
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { generate } from '../../src/generator/XsdGenerator';
 
-describe('when generating schema', () => {
+describe('when generating schema', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
     // dataStandardVersion: '2.1.0',
   });
@@ -54,7 +54,7 @@ describe('when generating schema', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should generate valid xsd', () => {
+  it('should generate valid xsd', (): void => {
     const xsSchema = result.elements[1];
 
     const schemaDocumentationAnnotation = xsSchema.elements[1];

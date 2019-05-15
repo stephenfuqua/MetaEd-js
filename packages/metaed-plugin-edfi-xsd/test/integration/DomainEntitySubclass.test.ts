@@ -8,7 +8,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for descriptor', () => {
+describe('when generating xsd for descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -52,17 +52,17 @@ describe('when generating xsd for descriptor', () => {
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity as extending core entity', () => {
+  it('should generate extension domain entity as extending core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension[@base='CoreEntity']",
       extensionResult,

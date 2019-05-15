@@ -33,7 +33,7 @@ export interface IntegerType extends ModelBase {
   isShort: boolean;
   minValue: string;
   maxValue: string;
-  referringSimpleProperties: Array<EntityProperty>;
+  referringSimpleProperties: EntityProperty[];
   sourceMap: IntegerTypeSourceMap;
 }
 

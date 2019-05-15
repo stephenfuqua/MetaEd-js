@@ -3,7 +3,7 @@ import { MetaEdEnvironment, DomainEntity, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/CopyPropertiesEnhancer';
 
-describe('when enhancing domainEntity with string properties', () => {
+describe('when enhancing domainEntity with string properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const identityProperty = Object.assign(newStringProperty(), {
@@ -37,7 +37,7 @@ describe('when enhancing domainEntity with string properties', () => {
     enhance(metaEd);
   });
 
-  it('should add identity property only to domainEntity xsdIdentityProperties', () => {
+  it('should add identity property only to domainEntity xsdIdentityProperties', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(entityName);
     expect(domainEntity.data.edfiXsd.xsdIdentityProperties.length).toBe(1);
     expect(domainEntity.data.edfiXsd.xsdIdentityProperties[0]).toBe(identityProperty);

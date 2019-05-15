@@ -2,8 +2,8 @@ import { DomainEntity, MetaEdEnvironment, ValidationFailure, Namespace } from 'm
 import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
       const extendedEntity: DomainEntity | null = getEntityFromNamespaceChain(

@@ -10,7 +10,7 @@ import {
 const enhancerName = 'AddAssociationSubclassComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'associationSubclass') as Array<AssociationSubclass>).forEach(
+  (getAllEntitiesOfType(metaEd, 'associationSubclass') as AssociationSubclass[]).forEach(
     (associationSubclass: AssociationSubclass) => {
       if (associationSubclass.baseEntity == null) return;
 

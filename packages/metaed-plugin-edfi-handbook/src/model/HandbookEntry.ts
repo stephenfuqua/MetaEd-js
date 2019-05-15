@@ -1,9 +1,9 @@
-export type HandbookMergeProperty = {
-  propertyPath: Array<string>;
-  targetPath: Array<string>;
-};
+export interface HandbookMergeProperty {
+  propertyPath: string[];
+  targetPath: string[];
+}
 
-export type HandbookEntityReferenceProperty = {
+export interface HandbookEntityReferenceProperty {
   edFiId: string;
   targetPropertyId: string;
   referenceUniqueIdentifier: string;
@@ -12,27 +12,27 @@ export type HandbookEntityReferenceProperty = {
   isIdentity: boolean;
   cardinality: string;
   definition: string;
-  mergeDirectives?: Array<HandbookMergeProperty>;
-};
+  mergeDirectives?: HandbookMergeProperty[];
+}
 
-export type HandbookEntry = {
+export interface HandbookEntry {
   definition: string;
   edFiId: string;
   uniqueIdentifier: string;
   entityType: string;
-  modelReferencesContains: Array<string>;
-  modelReferencesContainsProperties: Array<HandbookEntityReferenceProperty>;
-  modelReferencesUsedBy: Array<string>;
-  modelReferencesUsedByProperties: Array<HandbookEntityReferenceProperty>;
+  modelReferencesContains: string[];
+  modelReferencesContainsProperties: HandbookEntityReferenceProperty[];
+  modelReferencesUsedBy: string[];
+  modelReferencesUsedByProperties: HandbookEntityReferenceProperty[];
   name: string;
-  odsFragment: Array<string>;
-  optionList: Array<string>;
-  typeCharacteristics: Array<string>;
+  odsFragment: string[];
+  optionList: string[];
+  typeCharacteristics: string[];
   xsdFragment: string;
   repositoryId: string;
   namespace: string;
   metaEdType: string;
-};
+}
 
 export function newHandbookEntry(): HandbookEntry {
   return {

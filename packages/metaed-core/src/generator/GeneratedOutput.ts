@@ -15,11 +15,11 @@
  *
  * **resultStream** is the generator output as a binary stream.  **resultString** is ignored if this is supplied.
  */
-export type GeneratedOutput = {
+export interface GeneratedOutput {
   name: string;
   namespace: string;
   fileName: string;
   folderName: string;
   resultString: string;
   resultStream: Buffer | null;
-};
+}

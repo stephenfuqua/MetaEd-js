@@ -3,8 +3,8 @@ import { getAllProperties, versionSatisfies } from 'metaed-core';
 
 const targetTechnologyVersion: SemVer = '>=3.1';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   if (
     !versionSatisfies((metaEd.plugin.get('edfiOds') as PluginEnvironment).targetTechnologyVersion, targetTechnologyVersion)

@@ -11,9 +11,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MetaEdId/MustNotDuplicateMetaEdId';
 
-describe('when validating two entities have different metaEdId', () => {
+describe('when validating two entities have different metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -37,18 +37,18 @@ describe('when validating two entities have different metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating two entities have duplicate metaEdId', () => {
+describe('when validating two entities have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -73,11 +73,11 @@ describe('when validating two entities have duplicate metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -90,9 +90,9 @@ describe('when validating two entities have duplicate metaEdId', () => {
   });
 });
 
-describe('when validating two domain items have duplicate metaEdId', () => {
+describe('when validating two domain items have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -118,15 +118,15 @@ describe('when validating two domain items have duplicate metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should build one subdomain', () => {
+  it('should build one subdomain', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -139,9 +139,9 @@ describe('when validating two domain items have duplicate metaEdId', () => {
   });
 });
 
-describe('when validating two enumeration items have duplicate metaEdId', () => {
+describe('when validating two enumeration items have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -166,15 +166,15 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should build one school year enumeration', () => {
+  it('should build one school year enumeration', (): void => {
     expect(coreNamespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -187,9 +187,9 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
   });
 });
 
-describe('when validating two map type enumeration items have duplicate metaEdId', () => {
+describe('when validating two map type enumeration items have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -220,11 +220,11 @@ describe('when validating two map type enumeration items have duplicate metaEdId
     failures = validate(metaEd);
   });
 
-  it('should build two map type enumerations', () => {
+  it('should build two map type enumerations', (): void => {
     expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(2);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -237,9 +237,9 @@ describe('when validating two map type enumeration items have duplicate metaEdId
   });
 });
 
-describe('when validating interchange items have duplicate metaEdId', () => {
+describe('when validating interchange items have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -263,15 +263,15 @@ describe('when validating interchange items have duplicate metaEdId', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -284,9 +284,9 @@ describe('when validating interchange items have duplicate metaEdId', () => {
   });
 });
 
-describe('when validating multiple entities, properties, and items have duplicate metaEdId', () => {
+describe('when validating multiple entities, properties, and items have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -333,23 +333,23 @@ describe('when validating multiple entities, properties, and items have duplicat
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one map type enumeration', () => {
+  it('should build one map type enumeration', (): void => {
     expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(1);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have five validation failures', () => {
+  it('should have five validation failures', (): void => {
     expect(failures).toHaveLength(5);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
@@ -374,9 +374,9 @@ describe('when validating multiple entities, properties, and items have duplicat
   });
 });
 
-describe('when validating multiple entities, properties, and items across namespaces have duplicate metaEdId', () => {
+describe('when validating multiple entities, properties, and items across namespaces have duplicate metaEdId', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -429,23 +429,23 @@ describe('when validating multiple entities, properties, and items across namesp
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one map type enumeration', () => {
+  it('should build one map type enumeration', (): void => {
     expect(extensionNamespace.entity.mapTypeEnumeration.size).toBe(1);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(extensionNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have five validation failures', () => {
+  it('should have five validation failures', (): void => {
     expect(failures).toHaveLength(5);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');

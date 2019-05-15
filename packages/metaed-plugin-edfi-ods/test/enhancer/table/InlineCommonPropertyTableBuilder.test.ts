@@ -10,11 +10,11 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building inline common property table', () => {
+describe('when building inline common property table', (): void => {
   const inlineCommonEntityPropertyName1 = 'InlineCommonEntityPropertyName1';
   const contextName = 'ContextName';
   const entityPkName = 'EntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -74,7 +74,7 @@ describe('when building inline common property table', () => {
     inlineCommonProperty.referencedEntity = inlineCommon;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(inlineCommonProperty);
     tableBuilder.buildTables(
@@ -87,20 +87,20 @@ describe('when building inline common property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should have one column', () => {
+  it('should have one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(contextName + inlineCommonEntityPropertyName1);
   });
 });
 
-describe('when building optional inline common property table', () => {
+describe('when building optional inline common property table', (): void => {
   const inlineCommonEntityPropertyName1 = 'InlineCommonEntityPropertyName1';
   const entityPkName = 'EntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -161,7 +161,7 @@ describe('when building optional inline common property table', () => {
     inlineCommonProperty.referencedEntity = inlineCommon;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(inlineCommonProperty);
     tableBuilder.buildTables(
@@ -174,11 +174,11 @@ describe('when building optional inline common property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should have one column', () => {
+  it('should have one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(inlineCommonEntityPropertyName1);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);

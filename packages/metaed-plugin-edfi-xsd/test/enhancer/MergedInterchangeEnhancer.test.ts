@@ -13,7 +13,7 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when running with no interchange extensions', () => {
+describe('when running with no interchange extensions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -55,7 +55,7 @@ describe('when running with no interchange extensions', () => {
     enhance(metaEd);
   });
 
-  it('should be core merged interchange', () => {
+  it('should be core merged interchange', (): void => {
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeName);
@@ -69,7 +69,7 @@ describe('when running with no interchange extensions', () => {
   });
 });
 
-describe('when running with interchange extensions', () => {
+describe('when running with interchange extensions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -148,7 +148,7 @@ describe('when running with interchange extensions', () => {
     enhance(metaEd);
   });
 
-  it('should have core merged interchange', () => {
+  it('should have core merged interchange', (): void => {
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeToBeExtendedName);

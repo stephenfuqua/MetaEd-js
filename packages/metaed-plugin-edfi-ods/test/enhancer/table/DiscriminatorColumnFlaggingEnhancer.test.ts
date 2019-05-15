@@ -6,7 +6,7 @@ import { newTable } from '../../../src/model/database/Table';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { Table } from '../../../src/model/database/Table';
 
-describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 3.1', () => {
+describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 3.1', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -34,12 +34,12 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
     enhance(metaEd);
   });
 
-  it('should have hasDiscriminatorColumn set to true', () => {
+  it('should have hasDiscriminatorColumn set to true', (): void => {
     expect((tableEntities(metaEd, namespace).get(tableName) as Table).hasDiscriminatorColumn).toBe(true);
   });
 });
 
-describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 2.0', () => {
+describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 2.0', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -67,12 +67,12 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
     enhance(metaEd);
   });
 
-  it('should have hasDiscriminatorColumn set to false', () => {
+  it('should have hasDiscriminatorColumn set to false', (): void => {
     expect((tableEntities(metaEd, namespace).get(tableName) as Table).hasDiscriminatorColumn).toBe(false);
   });
 });
 
-describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent', () => {
+describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -99,12 +99,12 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent
     enhance(metaEd);
   });
 
-  it('should have hasDiscriminatorColumn set to false', () => {
+  it('should have hasDiscriminatorColumn set to false', (): void => {
     expect((tableEntities(metaEd, namespace).get(tableName) as Table).hasDiscriminatorColumn).toBe(false);
   });
 });
 
-describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root table', () => {
+describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -132,7 +132,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root t
     enhance(metaEd);
   });
 
-  it('should have hasDiscriminatorColumn set to false', () => {
+  it('should have hasDiscriminatorColumn set to false', (): void => {
     expect((tableEntities(metaEd, namespace).get(tableName) as Table).hasDiscriminatorColumn).toBe(false);
   });
 });

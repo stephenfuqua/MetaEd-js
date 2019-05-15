@@ -2,12 +2,12 @@ import { Annotation } from './Annotation';
 import { SchemaSection } from './SchemaSection';
 import { newAnnotation } from './Annotation';
 
-export type SchemaContainer = {
+export interface SchemaContainer {
   isExtension: boolean;
   schemaAnnotation: Annotation;
-  sections: Array<SchemaSection>;
+  sections: SchemaSection[];
   schemaVersion: string;
-};
+}
 
 export function newSchemaContainer(): SchemaContainer {
   return {

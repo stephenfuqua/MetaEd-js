@@ -5,7 +5,7 @@ import { typeGroupCommon, createDefaultComplexType } from './AddComplexTypesBase
 const enhancerName = 'AddCommonComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'common') as Array<Common>).forEach((common: Common) => {
+  (getAllEntitiesOfType(metaEd, 'common') as Common[]).forEach((common: Common) => {
     common.data.edfiXsd.xsdComplexTypes = createDefaultComplexType(common, typeGroupCommon);
   });
 

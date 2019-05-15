@@ -1,6 +1,6 @@
 import { configurationStructureSchema } from '../../src/plugin/ConfigurationSchema';
 
-describe('when config is single plugin level rule', () => {
+describe('when config is single plugin level rule', (): void => {
   const configToTest = {
     config: {
       rule: '35113',
@@ -10,13 +10,13 @@ describe('when config is single plugin level rule', () => {
     },
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config is single plugin level rule in array', () => {
+describe('when config is single plugin level rule in array', (): void => {
   const configToTest = {
     config: [
       {
@@ -28,13 +28,13 @@ describe('when config is single plugin level rule in array', () => {
     ],
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config is single rule with matches', () => {
+describe('when config is single rule with matches', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -50,13 +50,13 @@ describe('when config is single rule with matches', () => {
     },
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config is single rule in array with matches', () => {
+describe('when config is single rule in array with matches', (): void => {
   const configToTest = {
     config: [
       {
@@ -74,13 +74,13 @@ describe('when config is single rule in array with matches', () => {
     ],
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config is multiple rules', () => {
+describe('when config is multiple rules', (): void => {
   const configToTest = {
     config: [
       {
@@ -110,13 +110,13 @@ describe('when config is multiple rules', () => {
     ],
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config has single match', () => {
+describe('when config has single match', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -131,13 +131,13 @@ describe('when config has single match', () => {
     },
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config has single match', () => {
+describe('when config has single match', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -152,13 +152,13 @@ describe('when config has single match', () => {
     },
   };
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).toBeNull();
   });
 });
 
-describe('when config has invalid entity type', () => {
+describe('when config has invalid entity type', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -172,14 +172,14 @@ describe('when config has invalid entity type', () => {
     },
   };
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).not.toBeNull();
     expect(result.error).toMatchSnapshot();
   });
 });
 
-describe('when config has matches with core flag along with namespace', () => {
+describe('when config has matches with core flag along with namespace', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -195,14 +195,14 @@ describe('when config has matches with core flag along with namespace', () => {
     },
   };
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).not.toBeNull();
     expect(result.error).toMatchSnapshot();
   });
 });
 
-describe('when config has matches with extensions flag along with namespace', () => {
+describe('when config has matches with extensions flag along with namespace', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -218,14 +218,14 @@ describe('when config has matches with extensions flag along with namespace', ()
     },
   };
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).not.toBeNull();
     expect(result.error).toMatchSnapshot();
   });
 });
 
-describe('when config has matches with entityName but without entity type', () => {
+describe('when config has matches with entityName but without entity type', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -239,14 +239,14 @@ describe('when config has matches with entityName but without entity type', () =
     },
   };
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).not.toBeNull();
     expect(result.error).toMatchSnapshot();
   });
 });
 
-describe('when config has invalid matches field', () => {
+describe('when config has invalid matches field', (): void => {
   const configToTest = {
     config: {
       rule: '4433334',
@@ -260,7 +260,7 @@ describe('when config has invalid matches field', () => {
     },
   };
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     const result = configurationStructureSchema.validate(configToTest, { abortEarly: false });
     expect(result.error).not.toBeNull();
     expect(result.error).toMatchSnapshot();

@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, DomainEntityBui
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonProperty/CommonPropertyMustNotContainIdentity';
 
-describe('when validating common property is part of identity', () => {
+describe('when validating common property is part of identity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -30,15 +30,15 @@ describe('when validating common property is part of identity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustNotContainIdentity');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

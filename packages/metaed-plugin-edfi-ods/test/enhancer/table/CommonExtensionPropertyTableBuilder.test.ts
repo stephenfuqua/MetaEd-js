@@ -18,7 +18,7 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building common property extension table', () => {
+describe('when building common property extension table', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'TableSchema';
   const entityPkName = 'EntityPkName';
@@ -26,7 +26,7 @@ describe('when building common property extension table', () => {
   const commonPkName = 'CommonPkName';
   const commonExtensionPropertyName = 'CommonExtensionPropertyName';
   const extensionNamespaceName = 'Extension';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: extensionNamespaceName };
   extensionNamespace.dependencies.push(coreNamespace);
@@ -131,7 +131,7 @@ describe('when building common property extension table', () => {
     entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = Object.assign(newTable(), {
       schema: tableSchema,
@@ -149,13 +149,13 @@ describe('when building common property extension table', () => {
     );
   });
 
-  it('should return join table', () => {
+  it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(`${tableName}${commonName}Extension`);
     expect(tables[0].schema).toBe(extensionNamespaceName.toLowerCase());
   });
 
-  it('should have three columns with two primary keys', () => {
+  it('should have three columns with two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(3);
     expect(tables[0].columns[0].name).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
@@ -165,11 +165,11 @@ describe('when building common property extension table', () => {
     expect(tables[0].columns[2].isPartOfPrimaryKey).toBe(false);
   });
 
-  it('should have one foreign key', () => {
+  it('should have one foreign key', (): void => {
     expect(tables[0].foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(tables[0].foreignKeys[0].columnNames).toHaveLength(2);
     expect(tables[0].foreignKeys[0].parentTableName).toBe(`${tableName + commonName}Extension`);
     expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(commonPkName);

@@ -13,7 +13,7 @@ const targetVersions = '*';
 
 const typeGroup = 'Lookup';
 const documentation = 'Encapsulates alternative attributes that can be used to look up the identity of {entity.metaEdName}.';
-const lookupTypeNames: Array<string> = [
+const lookupTypeNames: string[] = [
   'Assessment',
   'AssessmentFamily',
   'Course',

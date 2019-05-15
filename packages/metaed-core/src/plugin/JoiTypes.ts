@@ -2,16 +2,16 @@
 // https://github.com/hapijs/joi/blob/master/API.md
 export type JoiSchema = any;
 
-export type JoiErrorDetail = {
+export interface JoiErrorDetail {
   message: string;
-  path: Array<string>;
-};
+  path: string[];
+}
 
-export type JoiError = {
-  details: Array<JoiErrorDetail>;
+export interface JoiError {
+  details: JoiErrorDetail[];
   message: string;
-};
+}
 
-export type JoiResult = {
+export interface JoiResult {
   error: JoiError | null;
-};
+}

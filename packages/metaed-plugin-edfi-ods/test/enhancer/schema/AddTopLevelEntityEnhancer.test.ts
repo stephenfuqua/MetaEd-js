@@ -3,7 +3,7 @@ import { DomainEntity, IntegerProperty, MetaEdEnvironment, Namespace } from 'met
 import { enhance } from '../../../src/model/TopLevelEntity';
 import { NoTable } from '../../../src/model/database/Table';
 
-describe('when enhancing domainEntity with string properties', () => {
+describe('when enhancing domainEntity with string properties', (): void => {
   let domainEntity: DomainEntity;
 
   beforeAll(() => {
@@ -21,28 +21,28 @@ describe('when enhancing domainEntity with string properties', () => {
     enhance(metaEd);
   });
 
-  it('should have ods table name', () => {
+  it('should have ods table name', (): void => {
     expect(domainEntity.data.edfiOds.odsTableName).toBeDefined();
     expect(domainEntity.data.edfiOds.odsTableName).toBe('');
   });
 
-  it('should have ods cascade primary key updates', () => {
+  it('should have ods cascade primary key updates', (): void => {
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBeDefined();
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
-  it('should have ods entity table', () => {
+  it('should have ods entity table', (): void => {
     expect(domainEntity.data.edfiOds.odsEntityTable).toBeDefined();
     expect(domainEntity.data.edfiOds.odsEntityTable).toBe(NoTable);
   });
 
-  it('should have ods tables', () => {
+  it('should have ods tables', (): void => {
     expect(domainEntity.data.edfiOds.odsTables).toBeDefined();
     expect(domainEntity.data.edfiOds.odsTables).toHaveLength(0);
   });
 });
 
-describe('when enhancing domainEntity with string properties', () => {
+describe('when enhancing domainEntity with string properties', (): void => {
   let domainEntity: DomainEntity;
   let integerIdentityProperty: IntegerProperty;
   let integerProperty: IntegerProperty;
@@ -72,12 +72,12 @@ describe('when enhancing domainEntity with string properties', () => {
     enhance(metaEd);
   });
 
-  it('should add identity property to ods identity properties', () => {
+  it('should add identity property to ods identity properties', (): void => {
     expect(domainEntity.data.edfiOds.odsIdentityProperties.length).toBe(1);
     expect(domainEntity.data.edfiOds.odsIdentityProperties[0]).toBe(integerIdentityProperty);
   });
 
-  it('should add properties to ods properties', () => {
+  it('should add properties to ods properties', (): void => {
     expect(domainEntity.data.edfiOds.odsProperties.length).toBe(2);
     expect(domainEntity.data.edfiOds.odsProperties[0]).toBe(integerIdentityProperty);
     expect(domainEntity.data.edfiOds.odsProperties[1]).toBe(integerProperty);

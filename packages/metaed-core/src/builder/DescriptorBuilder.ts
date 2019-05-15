@@ -21,7 +21,7 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
 
   currentEnumerationItem: EnumerationItem;
 
-  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: ValidationFailure[]) {
     super(metaEd, validationFailures);
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
     this.currentEnumerationItem = NoEnumerationItem;

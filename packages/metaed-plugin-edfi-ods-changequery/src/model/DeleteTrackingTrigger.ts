@@ -1,13 +1,13 @@
 import { ForeignKey } from 'metaed-plugin-edfi-ods';
 
-export type DeleteTrackingTrigger = {
+export interface DeleteTrackingTrigger {
   triggerSchema: string;
   triggerName: string;
   targetTableSchema: string;
   targetTableName: string;
   deleteTrackingTableSchema: string;
   deleteTrackingTableName: string;
-  primaryKeyColumnNames: Array<string>;
+  primaryKeyColumnNames: string[];
   targetTableIsSubclass: boolean;
   foreignKeyToSuperclass: ForeignKey | null;
-};
+}

@@ -3,25 +3,25 @@ import { getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { NoComplexType } from './schema/ComplexType';
 import { ComplexType } from './schema/ComplexType';
 
-export type TopLevelEntityEdfiXsd = {
-  xsdComplexTypes: Array<ComplexType>;
+export interface TopLevelEntityEdfiXsd {
+  xsdComplexTypes: ComplexType[];
   xsdReferenceType: ComplexType;
   xsdIdentityType: ComplexType;
   xsdLookupType: ComplexType;
-  xsdIdentityProperties: Array<EntityProperty>;
+  xsdIdentityProperties: EntityProperty[];
   xsdHasQueryableField: boolean;
-  xsdProperties: () => Array<EntityProperty>;
+  xsdProperties: () => EntityProperty[];
   xsdHasExtensionOverrideProperties: () => boolean;
-};
+}
 
 const enhancerName = 'TopLevelEntitySetupEnhancer';
 
-function xsdProperties(topLevelEntity: TopLevelEntity): () => Array<EntityProperty> {
-  return () => topLevelEntity.properties;
+function xsdProperties(topLevelEntity: TopLevelEntity): () => EntityProperty[] {
+  return (): EntityProperty[] => topLevelEntity.properties;
 }
 
 function xsdHasExtensionOverrideProperties(topLevelEntity: TopLevelEntity): () => boolean {
-  return () =>
+  return (): boolean =>
     topLevelEntity.properties.filter(p => p.type === 'common').some(p => (p as CommonProperty).isExtensionOverride);
 }
 

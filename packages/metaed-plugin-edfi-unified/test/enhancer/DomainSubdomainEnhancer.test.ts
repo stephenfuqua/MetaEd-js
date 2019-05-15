@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DomainSubdomainEnhancer';
 
-describe('when enhancing domain', () => {
+describe('when enhancing domain', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -48,7 +48,7 @@ describe('when enhancing domain', () => {
     enhance(metaEd);
   });
 
-  it('should have sorted subdomain references', () => {
+  it('should have sorted subdomain references', (): void => {
     const domain: any = getEntityFromNamespace(domainMetaEdName, namespace, 'domain');
     expect(domain.subdomains).toHaveLength(3);
     expect(domain.subdomains[0]).toBe(subdomain1);

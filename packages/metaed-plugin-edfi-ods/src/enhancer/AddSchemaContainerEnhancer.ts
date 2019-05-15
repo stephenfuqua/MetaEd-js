@@ -18,19 +18,19 @@ export const orderRows = R.sortBy(
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const rows: Array<EnumerationRowBase> = Array.from(rowEntities(metaEd, namespace).values()).filter(
+    const rows: EnumerationRowBase[] = Array.from(rowEntities(metaEd, namespace).values()).filter(
       (row: EnumerationRowBase) => row.namespace === namespace.namespaceName,
     );
-    const tables: Array<Table> = orderByProp('name')(
+    const tables: Table[] = orderByProp('name')(
       Array.from(tableEntities(metaEd, namespace).values()).filter(
         (table: Table) => table.schema === namespace.namespaceName.toLowerCase(),
       ),
     );
-    const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
-    const enumerationRows: Array<EnumerationRowBase> = orderRows(
+    const foreignKeys: ForeignKey[] = R.chain(table => table.foreignKeys)(tables);
+    const enumerationRows: EnumerationRowBase[] = orderRows(
       rows.filter((row: EnumerationRowBase) => row.type === 'enumerationRow'),
     );
-    const schoolYearEnumerationRows: Array<EnumerationRowBase> = orderByProp('name')(
+    const schoolYearEnumerationRows: EnumerationRowBase[] = orderByProp('name')(
       rows.filter((row: EnumerationRowBase) => row.type === 'schoolYearEnumerationRow'),
     );
 

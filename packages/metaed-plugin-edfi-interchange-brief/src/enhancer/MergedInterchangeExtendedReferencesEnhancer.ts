@@ -21,14 +21,14 @@ export function enhance(metaEd: MetaEdEnvironment) {
     xsdRepository.mergedInterchange.forEach(mergedInterchange => {
       addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange);
 
-      const topLevelEntities: Array<TopLevelEntity> = topLevelEntitiesFrom(mergedInterchange);
-      const topLevelReferenceProperties: Array<ReferentialProperty> = topLevelReferencePropertiesFrom(mergedInterchange);
+      const topLevelEntities: TopLevelEntity[] = topLevelEntitiesFrom(mergedInterchange);
+      const topLevelReferenceProperties: ReferentialProperty[] = topLevelReferencePropertiesFrom(mergedInterchange);
 
-      const previouslyMatchedProperties: Array<ReferentialProperty> = [];
-      const referenceExclusionList: Array<string> = topLevelEntities.map(i => i.metaEdName);
-      const allExtendedReferences: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce(
-        (referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp: ReferentialProperty) => {
-          const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [
+      const previouslyMatchedProperties: ReferentialProperty[] = [];
+      const referenceExclusionList: string[] = topLevelEntities.map(i => i.metaEdName);
+      const allExtendedReferences: ReferenceUsageInfo[] = topLevelReferenceProperties.reduce(
+        (referencedUsageInfos: ReferenceUsageInfo[], tlrp: ReferentialProperty) => {
+          const extendedReferencesFromProperty: ReferenceUsageInfo[] = [
             ...getReferenceUsageInfoList(
               ['domainEntity', 'association'],
               referenceExclusionList,

@@ -8,13 +8,13 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/ShortProperty/ShortPropertyMustNotMatchASharedInteger';
 
-describe('when validating short property does not match shared integer', () => {
+describe('when validating short property does not match shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const maxValue = '10';
   const minValue = '0';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -39,23 +39,23 @@ describe('when validating short property does not match shared integer', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating string identity matches shared integer', () => {
+describe('when validating string identity matches shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const integerProperty = 'IntegerProperty';
   const minValue = '0';
   const maxValue = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -79,11 +79,11 @@ describe('when validating string identity matches shared integer', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ShortPropertyMustNotMatchASharedInteger');
     expect(failures[0].category).toBe('error');
@@ -92,14 +92,14 @@ describe('when validating string identity matches shared integer', () => {
   });
 });
 
-describe('when validating short property matches shared integer', () => {
+describe('when validating short property matches shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const integerProperty = 'IntegerProperty';
   const minValue = '0';
   const maxValue = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -123,11 +123,11 @@ describe('when validating short property matches shared integer', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ShortPropertyMustNotMatchASharedInteger');
     expect(failures[0].category).toBe('error');

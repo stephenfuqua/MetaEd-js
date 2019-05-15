@@ -28,12 +28,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const complexType: ComplexType = entity.data.edfiXsd.xsdComplexTypes.find(x => x.name === entityName1);
 
     if (complexType != null && complexType.hasItems()) {
-      const element1: any = ((complexType.items as unknown) as Array<Element>).find(
+      const element1: any = ((complexType.items as unknown) as Element[]).find(
         x => x.name != null && x.name === elementNameType1 && x.type != null && x.type === elementNameType1,
       );
       if (element1 != null) Object.assign(element1, { type: integerType });
 
-      const element2: any = ((complexType.items as unknown) as Array<Element>).find(
+      const element2: any = ((complexType.items as unknown) as Element[]).find(
         x => x.name != null && x.name === elementName2 && x.type != null && x.type === elementNameType1,
       );
       if (element2 != null) Object.assign(element2, { type: integerType });

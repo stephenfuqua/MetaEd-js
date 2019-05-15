@@ -14,7 +14,7 @@ function reorderIdentityType(
   namespace: Namespace,
   modelType: ModelType,
   metaEdName: string,
-  newElementOrder: Array<string>,
+  newElementOrder: string[],
 ): void {
   const entity: ModelBase | null = getEntityFromNamespace(metaEdName, namespace, modelType);
   const identityType: ComplexType | null = entity != null ? entity.data.edfiXsd.xsdIdentityType : null;

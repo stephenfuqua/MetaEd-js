@@ -2,8 +2,8 @@ import { MetaEdEnvironment, ValidationFailure, Interchange, Namespace } from 'me
 import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failInterchangeExtensionPropertyRedeclarations } from '../ValidatorShared/FailInterchangeExtensionPropertyRedeclarations';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.interchangeExtension.forEach(interchangeExtension => {
       const extendedEntity: Interchange | null = getEntityFromNamespaceChain(

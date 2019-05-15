@@ -2,9 +2,9 @@ import { MetaEdEnvironment, EnhancerResult, DomainEntityExtension } from 'metaed
 import { getAllEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
-export type DomainEntityExtensionEdfiXsd = {
+export interface DomainEntityExtensionEdfiXsd {
   xsdMetaEdNameWithExtension: () => string;
-};
+}
 
 const enhancerName = 'DomainEntityExtensionSetupEnhancer';
 
@@ -17,7 +17,7 @@ export function addDomainEntityExtensionEdfiXsdTo(domainEntityExtension: DomainE
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as Array<DomainEntityExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'domainEntityExtension') as DomainEntityExtension[]).forEach(
     (domainEntityExtension: DomainEntityExtension) => {
       addDomainEntityExtensionEdfiXsdTo(domainEntityExtension);
     },

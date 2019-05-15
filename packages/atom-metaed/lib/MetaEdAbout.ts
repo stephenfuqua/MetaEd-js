@@ -17,7 +17,7 @@ export class MetaEdAboutModel {
 
 export function metaEdAboutView(): () => HTMLElement {
   return () => {
-    const pluginList: Array<string> = scanForPlugins(newState()).map(pm => `${pm.npmName} ${pm.version}`);
+    const pluginList: string[] = scanForPlugins(newState()).map(pm => `${pm.npmName} ${pm.version}`);
     const version: string = atomMetaEdPackageJson() != null ? ` v${atomMetaEdPackageJson().version}` : '';
 
     const template = `

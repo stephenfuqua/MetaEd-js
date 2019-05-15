@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching table', () => {
+describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -36,7 +36,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
     enhance(metaEd);
   });
 
-  it('should modify with reverse foreign key index', () => {
+  it('should modify with reverse foreign key index', (): void => {
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table).foreignKeys,
     );
@@ -46,7 +46,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
   });
 });
 
-describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching table', () => {
+describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -73,7 +73,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching 
     enhance(metaEd);
   });
 
-  it('should not modify with reverse foreign key index', () => {
+  it('should not modify with reverse foreign key index', (): void => {
     const foreignKey: ForeignKey = R.head((tableEntities(metaEd, namespace).get(parentTableName) as Table).foreignKeys);
     expect(foreignKey.parentTableName).toBe(parentTableName);
     expect(foreignKey.foreignTableName).toBe(foreignTableName);

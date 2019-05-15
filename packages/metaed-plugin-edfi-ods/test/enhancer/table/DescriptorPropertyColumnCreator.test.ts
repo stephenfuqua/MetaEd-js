@@ -5,11 +5,11 @@ import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorF
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when creating columns for descriptor property', () => {
+describe('when creating columns for descriptor property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -30,7 +30,7 @@ describe('when creating columns for descriptor property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -44,11 +44,11 @@ describe('when creating columns for descriptor property', () => {
   });
 });
 
-describe('when creating columns for primary key descriptor property', () => {
+describe('when creating columns for primary key descriptor property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -69,7 +69,7 @@ describe('when creating columns for primary key descriptor property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -83,11 +83,11 @@ describe('when creating columns for primary key descriptor property', () => {
   });
 });
 
-describe('when creating columns for nullable descriptor property', () => {
+describe('when creating columns for nullable descriptor property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -108,7 +108,7 @@ describe('when creating columns for nullable descriptor property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a nullable column', () => {
+  it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -122,12 +122,12 @@ describe('when creating columns for nullable descriptor property', () => {
   });
 });
 
-describe('when creating columns for descriptor property role name', () => {
+describe('when creating columns for descriptor property role name', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -148,7 +148,7 @@ describe('when creating columns for descriptor property role name', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a nullable column', () => {
+  it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -162,13 +162,13 @@ describe('when creating columns for descriptor property role name', () => {
   });
 });
 
-describe('when creating columns for descriptor property role name and append parent context strategy', () => {
+describe('when creating columns for descriptor property role name and append parent context strategy', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const parentContextName = 'ParentContextName';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -189,7 +189,7 @@ describe('when creating columns for descriptor property role name and append par
     columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContext(parentContextName));
   });
 
-  it('should return a nullable column', () => {
+  it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -203,11 +203,11 @@ describe('when creating columns for descriptor property role name and append par
   });
 });
 
-describe('when creating columns for collection descriptor property', () => {
+describe('when creating columns for collection descriptor property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -228,7 +228,7 @@ describe('when creating columns for collection descriptor property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -242,11 +242,11 @@ describe('when creating columns for collection descriptor property', () => {
   });
 });
 
-describe('when creating columns for primary key descriptor property with suppress primary key creation strategy', () => {
+describe('when creating columns for primary key descriptor property with suppress primary key creation strategy', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -267,7 +267,7 @@ describe('when creating columns for primary key descriptor property with suppres
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -281,11 +281,11 @@ describe('when creating columns for primary key descriptor property with suppres
   });
 });
 
-describe('when creating columns for collection descriptor property with suppress primary key creation strategy', () => {
+describe('when creating columns for collection descriptor property with suppress primary key creation strategy', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: DescriptorProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDescriptorProperty(), {
@@ -306,7 +306,7 @@ describe('when creating columns for collection descriptor property with suppress
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');

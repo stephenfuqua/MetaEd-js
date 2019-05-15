@@ -12,36 +12,34 @@ import {
 const enhancerName = 'OutReferencePathEnhancer';
 
 function addToOutReferenceEntityEndpointsMap(
-  outReferenceEntityEndpointsMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
-  outReferencePath: Array<ReferentialProperty | SimpleProperty>,
+  outReferenceEntityEndpointsMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>,
+  outReferencePath: (ReferentialProperty | SimpleProperty)[],
 ) {
   const endpointOfPath = outReferencePath[outReferencePath.length - 1].referencedEntity;
   if (!outReferenceEntityEndpointsMap.has(endpointOfPath)) {
     outReferenceEntityEndpointsMap.set(endpointOfPath, []);
   }
-  (outReferenceEntityEndpointsMap.get(endpointOfPath) as Array<Array<ReferentialProperty | SimpleProperty>>).push(
-    outReferencePath,
-  );
+  (outReferenceEntityEndpointsMap.get(endpointOfPath) as (ReferentialProperty | SimpleProperty)[][]).push(outReferencePath);
 }
 
 function addToOutReferenceEntitiesMap(
-  outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
-  outReferencePath: Array<ReferentialProperty | SimpleProperty>,
+  outReferenceEntitiesMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>,
+  outReferencePath: (ReferentialProperty | SimpleProperty)[],
 ) {
   outReferencePath.forEach(property => {
     if (!outReferenceEntitiesMap.has(property.referencedEntity)) {
       outReferenceEntitiesMap.set(property.referencedEntity, []);
     }
-    (outReferenceEntitiesMap.get(property.referencedEntity) as Array<Array<ReferentialProperty | SimpleProperty>>).push(
+    (outReferenceEntitiesMap.get(property.referencedEntity) as (ReferentialProperty | SimpleProperty)[][]).push(
       outReferencePath,
     );
   });
 }
 
 function buildUpPaths(
-  inReferences: Array<ReferentialProperty | SimpleProperty>,
-  pathSoFar: Array<ReferentialProperty | SimpleProperty>,
-  visitList: Array<ModelBase>,
+  inReferences: (ReferentialProperty | SimpleProperty)[],
+  pathSoFar: (ReferentialProperty | SimpleProperty)[],
+  visitList: ModelBase[],
 ) {
   inReferences.forEach(inReference => {
     // avoid cycles

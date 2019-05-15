@@ -3,7 +3,7 @@ import { addProperty, newMetaEdEnvironment, newSharedString, newSharedStringProp
 import { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SharedStringPropertyEnhancer';
 
-describe('when shared string property refers to a shared string', () => {
+describe('when shared string property refers to a shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName = 'ReferencedEntityName';
 
@@ -26,7 +26,7 @@ describe('when shared string property refers to a shared string', () => {
     enhance(metaEd);
   });
 
-  it('should have the shared string restrictions', () => {
+  it('should have the shared string restrictions', (): void => {
     const property = R.head(metaEd.propertyIndex.sharedString.filter(p => p.metaEdName === metaEdName));
     expect(property.maxLength).toBe(maxLength);
     expect(property.minLength).toBe(minLength);

@@ -8,7 +8,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for common type extension in extension namespace based on core common type', () => {
+describe('when generating xsd for common type extension in extension namespace based on core common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -51,17 +51,17 @@ describe('when generating xsd for common type extension in extension namespace b
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core common type', () => {
+  it('should generate core common type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension common type', () => {
+  it('should generate extension common type', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should genrate extension common type as extending core common type', () => {
+  it('should genrate extension common type as extending core common type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension[@base='CoreEntity']",
       extensionResult,
@@ -69,7 +69,7 @@ describe('when generating xsd for common type extension in extension namespace b
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity new property', () => {
+  it('should generate extension domain entity new property', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']",
       extensionResult,

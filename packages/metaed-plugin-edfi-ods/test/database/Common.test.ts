@@ -28,7 +28,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when common is a required property', () => {
+describe('when common is a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -173,7 +173,7 @@ describe('when common is a required property', () => {
   });
 });
 
-describe('when common is a required property role name', () => {
+describe('when common is a required property role name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -340,7 +340,7 @@ describe('when common is a required property role name', () => {
   });
 });
 
-describe('when common is an optional property', () => {
+describe('when common is an optional property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -400,7 +400,7 @@ describe('when common is an optional property', () => {
   });
 });
 
-describe('when common is a required collection property', () => {
+describe('when common is a required collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -469,7 +469,7 @@ describe('when common is a required collection property', () => {
   });
 });
 
-describe('when common is an optional collection property', () => {
+describe('when common is an optional collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -538,7 +538,7 @@ describe('when common is an optional collection property', () => {
   });
 });
 
-describe('when common is a required property with primary key', () => {
+describe('when common is a required property with primary key', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -607,14 +607,14 @@ describe('when common is a required property with primary key', () => {
   });
 });
 
-describe('when common has an enumeration property', () => {
+describe('when common has an enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const enumerationName = 'EnumerationName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationColumnName = `${enumerationName}TypeId`;
   const enumerationItemName = 'EnumerationItemName';
   const integerPropertyName = 'IntegerPropertyName';
 
@@ -687,14 +687,14 @@ describe('when common has an enumeration property', () => {
   });
 });
 
-describe('when common has a collection enumeration property', () => {
+describe('when common has a collection enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const enumerationName = 'EnumerationName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationColumnName = `${enumerationName}TypeId`;
   const enumerationItemName = 'EnumerationItemName';
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
@@ -799,14 +799,14 @@ describe('when common has a collection enumeration property', () => {
   });
 });
 
-describe('when common has a descriptor property', () => {
+describe('when common has a descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const descriptorName = 'DescriptorName';
-  const descriptorTableName: string = `${descriptorName}Descriptor`;
-  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorTableName = `${descriptorName}Descriptor`;
+  const descriptorColumnName = `${descriptorName}DescriptorId`;
   const integerPropertyName = 'IntegerPropertyName';
 
   beforeAll(async () => {
@@ -873,14 +873,14 @@ describe('when common has a descriptor property', () => {
   });
 });
 
-describe('when common has a collection descriptor property', () => {
+describe('when common has a collection descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const descriptorName = 'DescriptorName';
-  const descriptorTableName: string = `${descriptorName}Descriptor`;
-  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorTableName = `${descriptorName}Descriptor`;
+  const descriptorColumnName = `${descriptorName}DescriptorId`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
 
@@ -983,7 +983,7 @@ describe('when common has a collection descriptor property', () => {
   });
 });
 
-describe('when common has a domain entity property', () => {
+describe('when common has a domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -1056,7 +1056,7 @@ describe('when common has a domain entity property', () => {
   });
 });
 
-describe('when common has a collection domain entity property', () => {
+describe('when common has a collection domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -1144,7 +1144,7 @@ describe('when common has a collection domain entity property', () => {
   });
 });
 
-describe('when common has a common property', () => {
+describe('when common has a common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName1 = 'CommonName1';
@@ -1243,7 +1243,7 @@ describe('when common has a common property', () => {
   });
 });
 
-describe('when common has a collection common property', () => {
+describe('when common has a collection common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName1 = 'CommonName1';
@@ -1343,7 +1343,7 @@ describe('when common has a collection common property', () => {
   });
 });
 
-describe('when common has an inline common property', () => {
+describe('when common has an inline common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -1402,7 +1402,7 @@ describe('when common has an inline common property', () => {
   });
 });
 
-describe('when common has a choice property', () => {
+describe('when common has a choice property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
@@ -1462,7 +1462,7 @@ describe('when common has a choice property', () => {
   });
 });
 
-describe('when common has name that starts with another entities name', () => {
+describe('when common has name that starts with another entities name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'EntityNameCommonName';
@@ -1503,7 +1503,7 @@ describe('when common has name that starts with another entities name', () => {
   });
 });
 
-describe('when common has name that overlaps with another entities name', () => {
+describe('when common has name that overlaps with another entities name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'OverlapCommonName';
@@ -1545,7 +1545,7 @@ describe('when common has name that overlaps with another entities name', () => 
   });
 });
 
-describe('when common has overlapping property names with another entity', () => {
+describe('when common has overlapping property names with another entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonName = 'CommonName';
@@ -1631,7 +1631,7 @@ describe('when common has overlapping property names with another entity', () =>
   });
 });
 
-describe('when core common is referenced from extension entity as a required property', () => {
+describe('when core common is referenced from extension entity as a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
@@ -1789,7 +1789,7 @@ describe('when core common is referenced from extension entity as a required pro
   });
 });
 
-describe('when extension common is referenced from extension entity as a required property', () => {
+describe('when extension common is referenced from extension entity as a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';

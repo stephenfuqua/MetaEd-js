@@ -6,7 +6,7 @@ import { newMergedInterchange, addMergedInterchangeToRepository } from '../../sr
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsdName', () => {
+describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsdName', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -87,13 +87,13 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
     enhance(metaEd);
   });
 
-  it('should have correct core interchange item order', () => {
+  it('should have correct core interchange item order', (): void => {
     expect(coreMergedInterchange.orderedElements.length).toBe(2);
     expect(coreMergedInterchange.orderedElements[0].metaEdName).toBe(extendedInterchangeItemName);
     expect(coreMergedInterchange.orderedElements[1].metaEdName).toBe(coreOnlyInterchangeItemName);
   });
 
-  it('should have correct extension interchange item order', () => {
+  it('should have correct extension interchange item order', (): void => {
     expect(extensionMergedInterchange.orderedElements.length).toBe(2);
     expect(extensionMergedInterchange.orderedElements[0].metaEdName).toBe(extendedInterchangeItemName);
     expect(extensionMergedInterchange.orderedElements[1].metaEdName).toBe(extensionOnlyInterchangeItemName);

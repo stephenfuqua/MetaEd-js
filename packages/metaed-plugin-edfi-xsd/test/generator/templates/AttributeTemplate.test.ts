@@ -14,7 +14,7 @@ import { templateNamed, registerPartials } from '../../../src/generator/XsdGener
 
 const attribute = nextHead;
 
-describe('when generating attribute', () => {
+describe('when generating attribute', (): void => {
   const documentation = 'Documentation';
   const attributeName = 'Attribute Name';
   const attributeType = 'xs:string';
@@ -28,12 +28,12 @@ describe('when generating attribute', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be attribute only', () => {
+  it('should be attribute only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:attribute');
   });
 
-  it('should have attribute name', () => {
+  it('should have attribute name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -45,7 +45,7 @@ describe('when generating attribute', () => {
     ).toBe(attributeName);
   });
 
-  it('should have attribute type', () => {
+  it('should have attribute type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -57,7 +57,7 @@ describe('when generating attribute', () => {
     ).toBe(attributeType);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -89,7 +89,7 @@ describe('when generating attribute', () => {
     ).toBe(documentation);
   });
 
-  it('should not have use required', () => {
+  it('should not have use required', (): void => {
     expect(
       R.view(
         R.compose(
@@ -102,7 +102,7 @@ describe('when generating attribute', () => {
   });
 });
 
-describe('when generating attribute with use required', () => {
+describe('when generating attribute with use required', (): void => {
   const documentation = 'Documentation';
   const attributeName = 'Attribute Name';
   const attributeType = 'xs:string';
@@ -116,12 +116,12 @@ describe('when generating attribute with use required', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be attribute only', () => {
+  it('should be attribute only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:attribute');
   });
 
-  it('should have attribute name', () => {
+  it('should have attribute name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -133,7 +133,7 @@ describe('when generating attribute with use required', () => {
     ).toBe(attributeName);
   });
 
-  it('should have attribute type', () => {
+  it('should have attribute type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -145,7 +145,7 @@ describe('when generating attribute with use required', () => {
     ).toBe(attributeType);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -177,7 +177,7 @@ describe('when generating attribute with use required', () => {
     ).toBe(documentation);
   });
 
-  it('should not have use required', () => {
+  it('should not have use required', (): void => {
     expect(
       R.view(
         R.compose(

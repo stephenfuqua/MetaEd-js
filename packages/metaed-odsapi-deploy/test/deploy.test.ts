@@ -3,8 +3,8 @@ import { MetaEdConfiguration } from 'metaed-core';
 import { deployTargetsFor } from '../src/deploy';
 import { DeployTargets } from '../src/deploy';
 
-describe('when deploying 3.0 artifacts', () => {
-  let result: Array<DeployTargets> = [];
+describe('when deploying 3.0 artifacts', (): void => {
+  let result: DeployTargets[] = [];
 
   beforeAll(async () => {
     const metaEdConfiguration: MetaEdConfiguration = {
@@ -28,7 +28,7 @@ describe('when deploying 3.0 artifacts', () => {
     result = await deployTargetsFor(metaEdConfiguration, true);
   });
 
-  it('should have correct core directory paths', () => {
+  it('should have correct core directory paths', (): void => {
     const core = result[0];
     expect(core.namespaceName).toBe('EdFi');
     expect(core.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Metadata/');
@@ -38,7 +38,7 @@ describe('when deploying 3.0 artifacts', () => {
     expect(core.xsd.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Schemas/');
   });
 
-  it('should have correct extension directory paths', () => {
+  it('should have correct extension directory paths', (): void => {
     const extension = result[1];
     expect(extension.namespaceName).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe(
@@ -59,8 +59,8 @@ describe('when deploying 3.0 artifacts', () => {
   });
 });
 
-describe('when deploying 2.0 artifacts', () => {
-  let result: Array<DeployTargets> = [];
+describe('when deploying 2.0 artifacts', (): void => {
+  let result: DeployTargets[] = [];
 
   beforeAll(async () => {
     const metaEdConfiguration: MetaEdConfiguration = {
@@ -84,7 +84,7 @@ describe('when deploying 2.0 artifacts', () => {
     result = await deployTargetsFor(metaEdConfiguration, true);
   });
 
-  it('should have correct core directory paths', () => {
+  it('should have correct core directory paths', (): void => {
     const core = result[0];
     expect(core.namespaceName).toBe('EdFi');
     expect(core.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Metadata/');
@@ -94,7 +94,7 @@ describe('when deploying 2.0 artifacts', () => {
     expect(core.xsd.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Schemas/');
   });
 
-  it('should have correct extension directory paths', () => {
+  it('should have correct extension directory paths', (): void => {
     const extension = result[1];
     expect(extension.namespaceName).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extensions/Metadata/');

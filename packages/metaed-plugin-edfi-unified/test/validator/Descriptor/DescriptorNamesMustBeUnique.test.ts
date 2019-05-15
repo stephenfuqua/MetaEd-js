@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DescriptorBuilder, NamespaceBu
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Descriptor/DescriptorNamesMustBeUnique';
 
-describe('when entities in same namespace have different names', () => {
+describe('when entities in same namespace have different names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -26,19 +26,19 @@ describe('when entities in same namespace have different names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two descriptor', () => {
+  it('should build two descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when entities in same namespace have identical names', () => {
+describe('when entities in same namespace have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -60,19 +60,19 @@ describe('when entities in same namespace have identical names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor because TopLevelEntityBuilder will not let it get that far', () => {
+  it('should build one descriptor because TopLevelEntityBuilder will not let it get that far', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have no validation failures because of TopLevelEntityBuilder', () => {
+  it('should have no validation failures because of TopLevelEntityBuilder', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when descriptors in separate dependency-linked namespaces have identical names', () => {
+describe('when descriptors in separate dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -100,23 +100,23 @@ describe('when descriptors in separate dependency-linked namespaces have identic
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor in core namespace', () => {
+  it('should build one descriptor in core namespace', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should build one descriptor in extension namespace', () => {
+  it('should build one descriptor in extension namespace', (): void => {
     expect(extensionNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when descriptors in non-dependency-linked namespaces have identical names', () => {
+describe('when descriptors in non-dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespacea: any = null;
   let extensionNamespaceb: any = null;
@@ -153,19 +153,19 @@ describe('when descriptors in non-dependency-linked namespaces have identical na
     failures = validate(metaEd);
   });
 
-  it('should build one core descriptor', () => {
+  it('should build one core descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should build one extension1 descriptor', () => {
+  it('should build one extension1 descriptor', (): void => {
     expect(extensionNamespacea.entity.descriptor.size).toBe(1);
   });
 
-  it('should build one extension2 descriptor', () => {
+  it('should build one extension2 descriptor', (): void => {
     expect(extensionNamespaceb.entity.descriptor.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

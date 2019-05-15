@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment, AssociationProperty, Association, AssociationSubclass, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/AssociationReferenceEnhancer';
 
-describe('when enhancing association property referring to association', () => {
+describe('when enhancing association property referring to association', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -41,7 +41,7 @@ describe('when enhancing association property referring to association', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -50,7 +50,7 @@ describe('when enhancing association property referring to association', () => {
   });
 });
 
-describe('when enhancing association property referring to subclass', () => {
+describe('when enhancing association property referring to subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -82,7 +82,7 @@ describe('when enhancing association property referring to subclass', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -91,7 +91,7 @@ describe('when enhancing association property referring to subclass', () => {
   });
 });
 
-describe('when enhancing association property referring to association across namespaces', () => {
+describe('when enhancing association property referring to association across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -125,7 +125,7 @@ describe('when enhancing association property referring to association across na
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);

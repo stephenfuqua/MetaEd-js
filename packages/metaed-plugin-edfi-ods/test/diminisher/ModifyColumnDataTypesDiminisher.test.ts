@@ -8,7 +8,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ModifyColumnDataTypesDiminisher diminishes data types for matching table', () => {
+describe('when ModifyColumnDataTypesDiminisher diminishes data types for matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -37,7 +37,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
     enhance(metaEd);
   });
 
-  it('should modify data type for matching columns', () => {
+  it('should modify data type for matching columns', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(studentIndicator) as Table;
     expect(columns).toHaveLength(2);
     expect(R.head(columns).name).toBe(beginDate);
@@ -47,7 +47,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
   });
 });
 
-describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for matching table', () => {
+describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -71,7 +71,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
     enhance(metaEd);
   });
 
-  it('should modify data type for matching columns', () => {
+  it('should modify data type for matching columns', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(educationContentAuthor) as Table;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(author);
@@ -80,7 +80,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
   });
 });
 
-describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', () => {
+describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -105,7 +105,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (
     enhance(metaEd);
   });
 
-  it('should not modify column datatype or length', () => {
+  it('should not modify column datatype or length', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(tableName) as Table;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(columnName);

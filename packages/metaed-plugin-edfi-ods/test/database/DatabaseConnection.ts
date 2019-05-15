@@ -12,10 +12,10 @@ if (process.env.TEAMCITY_VERSION != null) {
 }
 const highlightSql = (sql: string) => highlight(sql, { language: 'sql', ignoreIllegals: true });
 
-export type Pool = {
+export interface Pool {
   transaction?: Transaction;
   connection?: ConnectionPool;
-};
+}
 export const pools: Map<string, Pool> = new Map();
 export const retryCount = 5;
 
@@ -161,7 +161,7 @@ export async function queryWithBoolResult(
 }
 
 export async function executeGeneratedSql(generatedSql: string, databaseName: string) {
-  const sqlStatements: Array<string> = generatedSql.split('\nGO\n');
+  const sqlStatements: string[] = generatedSql.split('\nGO\n');
   await database(
     databaseName,
     async db => {

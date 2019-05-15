@@ -8,7 +8,7 @@ import {
 import { MetaEdEnvironment, Association, AssociationSubclass, AssociationExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/AssociationExtensionBaseClassEnhancer';
 
-describe('when enhancing association extension referring to association', () => {
+describe('when enhancing association extension referring to association', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -34,14 +34,14 @@ describe('when enhancing association extension referring to association', () => 
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing association extension referring to association subclass', () => {
+describe('when enhancing association extension referring to association subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -67,14 +67,14 @@ describe('when enhancing association extension referring to association subclass
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing association extension referring to association across namespaces', () => {
+describe('when enhancing association extension referring to association across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -102,14 +102,14 @@ describe('when enhancing association extension referring to association across n
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing association extension referring to association subclass across namespaces', () => {
+describe('when enhancing association extension referring to association subclass across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -137,7 +137,7 @@ describe('when enhancing association extension referring to association subclass
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);

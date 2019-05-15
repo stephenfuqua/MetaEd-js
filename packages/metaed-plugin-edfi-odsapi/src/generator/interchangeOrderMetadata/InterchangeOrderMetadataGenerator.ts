@@ -32,19 +32,19 @@ function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   };
 }
 
-type ElementMetadata = {
+interface ElementMetadata {
   name: string;
   order: number;
-};
+}
 
-type InterchangeMetadata = {
+interface InterchangeMetadata {
   name: string;
   order: number;
-  elements: Array<ElementMetadata>;
-};
+  elements: ElementMetadata[];
+}
 
 function getInterchangeMetadataFor(interchange: MergedInterchange): InterchangeMetadata {
-  const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
+  const elements: ElementMetadata[] = interchange.data.edfiOdsApi.apiOrderedElements.map(
     (element: { name: string; globalDependencyOrder: number }) => ({
       name: element.name,
     }),
@@ -53,7 +53,7 @@ function getInterchangeMetadataFor(interchange: MergedInterchange): InterchangeM
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (metaEd.namespace.size > 0) {
     const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
@@ -62,7 +62,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     const coreEdfiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
     if (coreEdfiXsdEntityRepository == null) return { generatorName, generatedOutput: [] };
 
-    const coreInterchangeMetadata: Array<InterchangeMetadata> = [];
+    const coreInterchangeMetadata: InterchangeMetadata[] = [];
     coreEdfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
       if (interchange.namespace.namespaceName !== 'EdFi') return;
 
@@ -73,7 +73,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const edfiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
       if (edfiXsdEntityRepository == null) return;
 
-      const interchangeMetadata: Array<InterchangeMetadata> = [];
+      const interchangeMetadata: InterchangeMetadata[] = [];
       edfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
         if (interchange.namespace.namespaceName !== namespace.namespaceName) return;
 

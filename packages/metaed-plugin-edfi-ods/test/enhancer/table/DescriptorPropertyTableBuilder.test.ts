@@ -10,11 +10,11 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building descriptor property table', () => {
+describe('when building descriptor property table', (): void => {
   const descriptorName = 'DescriptorName';
   const descriptorPropertyName = 'DescriptorPropertyName';
   const tableName = 'TableName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -78,7 +78,7 @@ describe('when building descriptor property table', () => {
     entityDescriptorProperty.referencedEntity = descriptor;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
     tableBuilder.buildTables(
@@ -91,20 +91,20 @@ describe('when building descriptor property table', () => {
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should create one column', () => {
+  it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(`${descriptorPropertyName}Id`);
   });
 
-  it('should create one foreign key', () => {
+  it('should create one foreign key', (): void => {
     expect(table.foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(table.foreignKeys[0].columnNames).toHaveLength(1);
     expect(table.foreignKeys[0].parentTableName).toBe(tableName);
     expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(`${descriptorPropertyName}Id`);
@@ -114,13 +114,13 @@ describe('when building descriptor property table', () => {
   });
 });
 
-describe('when building collection descriptor property table', () => {
+describe('when building collection descriptor property table', (): void => {
   const descriptorName = 'DescriptorName';
   const descriptorEntityPropertyName1 = 'DescriptorEntityPropertyName1';
   const entityPkName = 'EntityPkName';
   const tableSchema = 'tableschema';
   const tableName = 'TableName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -185,7 +185,7 @@ describe('when building collection descriptor property table', () => {
     entityDescriptorProperty.referencedEntity = descriptor;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
     tableBuilder.buildTables(
@@ -198,13 +198,13 @@ describe('when building collection descriptor property table', () => {
     );
   });
 
-  it('should return join table', () => {
+  it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(tableName + descriptorName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
-  it('should create two primary key columns', () => {
+  it('should create two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
     expect(tables[0].columns[0].name).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
@@ -212,11 +212,11 @@ describe('when building collection descriptor property table', () => {
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should create one foreign key', () => {
+  it('should create one foreign key', (): void => {
     expect(tables[0].foreignKeys).toHaveLength(2);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
     expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + descriptorName);
     expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);

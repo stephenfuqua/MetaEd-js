@@ -8,7 +8,7 @@ import {
   pluginEnumerationsForNamespace,
 } from './EnhancerHelper';
 
-const enhancerName: string = 'EnumerationDefinitionEnhancer';
+const enhancerName = 'EnumerationDefinitionEnhancer';
 
 const createEnumerationDefinitionFor = (
   metaEd: MetaEdEnvironment,
@@ -25,7 +25,7 @@ const createEnumerationDefinitionFor = (
 
 export const enhance = (metaEd: MetaEdEnvironment): EnhancerResult => {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const xsdElements: Array<ComplexType | EnumerationSimpleType> = [
+    const xsdElements: (ComplexType | EnumerationSimpleType)[] = [
       ...pluginDescriptorsForNamespace(metaEd, namespace).values(),
       ...pluginEnumerationsForNamespace(metaEd, namespace).values(),
     ];

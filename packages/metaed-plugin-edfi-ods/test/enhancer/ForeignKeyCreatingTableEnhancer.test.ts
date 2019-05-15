@@ -22,8 +22,8 @@ import { Column } from '../../src/model/database/Column';
 import { PropertyColumnPair } from '../../src/enhancer/ForeignKeyCreatingTableEnhancer';
 import { Table } from '../../src/model/database/Table';
 
-describe('when using get reference properties and associated columns with non reference properties', () => {
-  let propertyColumnPair: Array<PropertyColumnPair>;
+describe('when using get reference properties and associated columns with non reference properties', (): void => {
+  let propertyColumnPair: PropertyColumnPair[];
   const domainEntityPropertyName1 = 'DomainEntityPropertyName1';
   const domainEntityPropertyName2 = 'DomainEntityPropertyName2';
   const columnName1 = 'ColumnName1';
@@ -59,26 +59,26 @@ describe('when using get reference properties and associated columns with non re
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
-  it('should return two property column pairs', () => {
+  it('should return two property column pairs', (): void => {
     expect(propertyColumnPair).toBeDefined();
     expect(propertyColumnPair).toHaveLength(2);
   });
 
-  it('should have first reference pair', () => {
+  it('should have first reference pair', (): void => {
     expect(R.head(propertyColumnPair).columns).toHaveLength(1);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName1);
     expect(R.head(R.head(propertyColumnPair).columns).name).toBe(columnName1);
   });
 
-  it('should have second reference pair', () => {
+  it('should have second reference pair', (): void => {
     expect(R.last(propertyColumnPair).columns).toHaveLength(1);
     expect(R.last(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName2);
     expect(R.head(R.last(propertyColumnPair).columns).name).toBe(columnName2);
   });
 });
 
-describe('when using get reference properties and associated columns with weak reference properties', () => {
-  let propertyColumnPair: Array<PropertyColumnPair>;
+describe('when using get reference properties and associated columns with weak reference properties', (): void => {
+  let propertyColumnPair: PropertyColumnPair[];
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   const columnName1 = 'ColumnName1';
 
@@ -107,7 +107,7 @@ describe('when using get reference properties and associated columns with weak r
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
-  it('should only return strong reference property column pair', () => {
+  it('should only return strong reference property column pair', (): void => {
     expect(propertyColumnPair).toBeDefined();
     expect(R.head(propertyColumnPair).columns).toHaveLength(1);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName);
@@ -115,8 +115,8 @@ describe('when using get reference properties and associated columns with weak r
   });
 });
 
-describe('when using get reference properties and associated columns', () => {
-  let propertyColumnPair: Array<PropertyColumnPair>;
+describe('when using get reference properties and associated columns', (): void => {
+  let propertyColumnPair: PropertyColumnPair[];
   const domainEntityPropertyName1 = 'DomainEntityPropertyName1';
   const domainEntityPropertyName2 = 'DomainEntityPropertyName2';
   const columnName1 = 'ColumnName1';
@@ -149,26 +149,26 @@ describe('when using get reference properties and associated columns', () => {
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
-  it('should return two property column pairs', () => {
+  it('should return two property column pairs', (): void => {
     expect(propertyColumnPair).toBeDefined();
     expect(propertyColumnPair).toHaveLength(2);
   });
 
-  it('should have first pair with two columns', () => {
+  it('should have first pair with two columns', (): void => {
     expect(R.head(propertyColumnPair).columns).toHaveLength(2);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName1);
     expect(R.head(R.head(propertyColumnPair).columns).name).toBe(columnName1);
     expect(R.last(R.head(propertyColumnPair).columns).name).toBe(columnName2);
   });
 
-  it('should have second pair with one column', () => {
+  it('should have second pair with one column', (): void => {
     expect(R.last(propertyColumnPair).columns).toHaveLength(1);
     expect(R.last(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName2);
     expect(R.head(R.last(propertyColumnPair).columns).name).toBe(columnName1);
   });
 });
 
-describe('when using get matching column from source entity properties with no matching source entity properties', () => {
+describe('when using get matching column from source entity properties with no matching source entity properties', (): void => {
   let column: Column;
 
   beforeAll(() => {
@@ -199,12 +199,12 @@ describe('when using get matching column from source entity properties with no m
     column = getMatchingColumnFromSourceEntityProperties(integerColumn1, [integerColumn2, integerColumn3]) as Column;
   });
 
-  it('should return null', () => {
+  it('should return null', (): void => {
     expect(column).toBeUndefined();
   });
 });
 
-describe('when using get matching column from source entity properties with matching source entity property only', () => {
+describe('when using get matching column from source entity properties with matching source entity property only', (): void => {
   let column: Column;
   let matchingColumn: Column;
 
@@ -246,12 +246,12 @@ describe('when using get matching column from source entity properties with matc
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]) as Column;
   });
 
-  it('should return matching column', () => {
+  it('should return matching column', (): void => {
     expect(column).toBe(matchingColumn);
   });
 });
 
-describe('when using get matching column from source entity properties with matching source entity property and column name', () => {
+describe('when using get matching column from source entity properties with matching source entity property and column name', (): void => {
   const matchingColumnName = 'MatchingColumnName';
   let matchingIntegerProperty: IntegerProperty;
   let column: Column;
@@ -311,12 +311,12 @@ describe('when using get matching column from source entity properties with matc
     ]) as Column;
   });
 
-  it('should return matching column with same name', () => {
+  it('should return matching column with same name', (): void => {
     expect(column).toBe(matchingColumn1);
   });
 });
 
-describe('when using get matching column from source entity properties with matching column', () => {
+describe('when using get matching column from source entity properties with matching column', (): void => {
   const matchingColumnName = 'MatchingColumnName';
   let matchingIntegerProperty: IntegerProperty;
   let column: Column;
@@ -360,14 +360,14 @@ describe('when using get matching column from source entity properties with matc
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]) as Column;
   });
 
-  it('should return matching column', () => {
+  it('should return matching column', (): void => {
     expect(column).toBeDefined();
     expect(R.prop('name')(column)).toBe(matchingColumnName);
     expect(R.prop('sourceEntityProperties')(column)).toContain(matchingIntegerProperty);
   });
 });
 
-describe('when using get merge property column with property that is not included in column source properties', () => {
+describe('when using get merge property column with property that is not included in column source properties', (): void => {
   let column: Column;
 
   beforeAll(() => {
@@ -383,12 +383,12 @@ describe('when using get merge property column with property that is not include
     column = getMergePropertyColumn(newTable(), newIntegerColumn(), domainEntity1Property3) as Column;
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(column).toBeUndefined();
   });
 });
 
-describe('when using get merge property column with column that has invalid merge reference context and source property', () => {
+describe('when using get merge property column with column that has invalid merge reference context and source property', (): void => {
   let column: Column;
 
   beforeAll(() => {
@@ -420,12 +420,12 @@ describe('when using get merge property column with column that has invalid merg
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(column).toBeUndefined();
   });
 });
 
-describe('when using get merge property column with non reference target property', () => {
+describe('when using get merge property column with non reference target property', (): void => {
   const domainEntityName1 = 'DomainEntityName1';
   const nonReferencePropertyName = 'NonReferencePropertyName';
   const domainEntityName3 = 'DomainEntityName3';
@@ -473,12 +473,12 @@ describe('when using get merge property column with non reference target propert
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntityProperty) as Column;
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(column).toBeUndefined();
   });
 });
 
-describe('when using get merge property column with reference property', () => {
+describe('when using get merge property column with reference property', (): void => {
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const domainEntityName3 = 'DomainEntityName3';
@@ -543,7 +543,7 @@ describe('when using get merge property column with reference property', () => {
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
 
-  it('should return merge property column', () => {
+  it('should return merge property column', (): void => {
     expect(column).toBeDefined();
     expect(column.name).toBe(domainEntityName3);
     expect(R.head(column.sourceEntityProperties)).toBe(domainEntity1Property3);
@@ -551,7 +551,7 @@ describe('when using get merge property column with reference property', () => {
   });
 });
 
-describe('when using get merge property column with multiple source entity properties', () => {
+describe('when using get merge property column with multiple source entity properties', (): void => {
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const domainEntityName3 = 'DomainEntityName3';
@@ -616,7 +616,7 @@ describe('when using get merge property column with multiple source entity prope
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
 
-  it('should return merge property column', () => {
+  it('should return merge property column', (): void => {
     expect(column).toBeDefined();
     expect(column.name).toBe(domainEntityName3);
     expect(R.head(column.sourceEntityProperties)).toBe(domainEntity1Property3);
@@ -624,7 +624,7 @@ describe('when using get merge property column with multiple source entity prope
   });
 });
 
-describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column', () => {
+describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -703,12 +703,12 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
     enhance(metaEd);
   });
 
-  it('should have one foreign key', () => {
+  it('should have one foreign key', (): void => {
     const table = tableEntities(metaEd, namespace).get(parentTableName) as Table;
     expect(table.foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     const table = tableEntities(metaEd, namespace).get(parentTableName) as Table;
     expect(table.foreignKeys[0].columnNames).toHaveLength(1);
     expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
@@ -721,7 +721,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
   });
 });
 
-describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column across namespaces', () => {
+describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -802,12 +802,12 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
     enhance(metaEd);
   });
 
-  it('should have one foreign key', () => {
+  it('should have one foreign key', (): void => {
     const table = tableEntities(metaEd, extensionNamespace).get(parentTableName) as Table;
     expect(table.foreignKeys).toHaveLength(1);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     const table = tableEntities(metaEd, extensionNamespace).get(parentTableName) as Table;
     expect(table.foreignKeys[0].columnNames).toHaveLength(1);
     expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);

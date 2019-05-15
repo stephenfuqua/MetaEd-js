@@ -2,11 +2,11 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, DomainEntityBui
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonProperty/CommonPropertyMustMatchACommon';
 
-describe('when common property has identifier of common', () => {
+describe('when common property has identifier of common', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -29,16 +29,16 @@ describe('when common property has identifier of common', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when common property has identifier of inline common', () => {
+describe('when common property has identifier of inline common', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -61,11 +61,11 @@ describe('when common property has identifier of inline common', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -73,11 +73,11 @@ describe('when common property has identifier of inline common', () => {
   });
 });
 
-describe('when common property has invalid identifier', () => {
+describe('when common property has invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -100,11 +100,11 @@ describe('when common property has invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -112,11 +112,11 @@ describe('when common property has invalid identifier', () => {
   });
 });
 
-describe('when common property has identifier of common in dependency namespace', () => {
+describe('when common property has identifier of common in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -147,16 +147,16 @@ describe('when common property has identifier of common in dependency namespace'
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when common property has invalid identifier of common in dependency namespace', () => {
+describe('when common property has invalid identifier of common in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -187,11 +187,11 @@ describe('when common property has invalid identifier of common in dependency na
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -200,9 +200,9 @@ describe('when common property has invalid identifier of common in dependency na
 });
 
 // can't reference entities outside of dependency list
-describe('when common property refers to common in non-dependency namespace', () => {
+describe('when common property refers to common in non-dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespacea: any = null;
   let extensionNamespaceb: any = null;
@@ -243,11 +243,11 @@ describe('when common property refers to common in non-dependency namespace', ()
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

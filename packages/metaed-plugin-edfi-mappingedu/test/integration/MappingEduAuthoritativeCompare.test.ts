@@ -23,7 +23,7 @@ jest.unmock('final-fs');
 jest.setTimeout(40000);
 
 // quick-and-dirty polyfill of Object.values for Typescript conversion
-function objectValues(obj: any): Array<any> {
+function objectValues(obj: any): any[] {
   const vals = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const key in obj) {
@@ -40,11 +40,11 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
   'when generating mapping edu and comparing it to data standard %s authoritative artifacts',
   (dataStandardVersion: SemVer, npmPackageName: string) => {
     const artifactPath: string = path.resolve(__dirname, './artifact');
-    const baseName: string = `edfi-data-standard-${dataStandardVersion}`;
-    const authoritativeSuffix: string = 'authoritative';
-    const generatedSuffix: string = 'generated';
-    const xlsxSuffix: string = 'xlsx';
-    const csvSuffix: string = 'csv';
+    const baseName = `edfi-data-standard-${dataStandardVersion}`;
+    const authoritativeSuffix = 'authoritative';
+    const generatedSuffix = 'generated';
+    const xlsxSuffix = 'xlsx';
+    const csvSuffix = 'csv';
     let authoritativeCoreMappingEdu: string;
     let generatedMappingEdu: string;
 
@@ -96,18 +96,18 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
       ffs.writeFileSync(generatedMappingEdu, coreResult.resultStream, 'utf-8');
     });
 
-    it('should have authoritative spreadsheet', () => {
+    it('should have authoritative spreadsheet', (): void => {
       expect(ffs.existsSync(authoritativeCoreMappingEdu)).toBe(true);
     });
 
-    it('should have generated spreadsheet', () => {
+    it('should have generated spreadsheet', (): void => {
       expect(ffs.existsSync(generatedMappingEdu)).toBe(true);
     });
 
-    it('should have authoritative csv', () => {
+    it('should have authoritative csv', (): void => {
       const authoritativeWorkbook = xlsx.readFile(authoritativeCoreMappingEdu);
       objectValues(authoritativeWorkbook.Sheets).forEach((sheet, i) => {
-        const fileName: string = `${artifactPath}/${baseName}-${
+        const fileName = `${artifactPath}/${baseName}-${
           authoritativeWorkbook.SheetNames[i]
         }-${authoritativeSuffix}.${csvSuffix}`;
 
@@ -116,12 +116,10 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
       });
     });
 
-    it('should have generated csv', () => {
+    it('should have generated csv', (): void => {
       const generatedWorkbook = xlsx.readFile(generatedMappingEdu);
       objectValues(generatedWorkbook.Sheets).forEach((sheet, i) => {
-        const fileName: string = `${artifactPath}/${baseName}-${
-          generatedWorkbook.SheetNames[i]
-        }-${generatedSuffix}.${csvSuffix}`;
+        const fileName = `${artifactPath}/${baseName}-${generatedWorkbook.SheetNames[i]}-${generatedSuffix}.${csvSuffix}`;
 
         ffs.writeFileSync(fileName, xlsx.utils.sheet_to_csv(sheet), 'utf-8');
         expect(ffs.existsSync(fileName)).toBe(true);
@@ -136,12 +134,12 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
       'EnumerationDefinitions',
       'EnumerationItems',
     ])(`generated %s should have no differences with authoritative`, async (sheetName: string) => {
-      const authoritativeCSV: string = `${artifactPath}/${baseName}-${sheetName}-${authoritativeSuffix}.${csvSuffix}`;
-      const generatedCSV: string = `${artifactPath}/${baseName}-${sheetName}-${generatedSuffix}.${csvSuffix}`;
+      const authoritativeCSV = `${artifactPath}/${baseName}-${sheetName}-${authoritativeSuffix}.${csvSuffix}`;
+      const generatedCSV = `${artifactPath}/${baseName}-${sheetName}-${generatedSuffix}.${csvSuffix}`;
       expect(ffs.existsSync(authoritativeCSV)).toBe(true);
       expect(ffs.existsSync(generatedCSV)).toBe(true);
 
-      const gitCommand: string = `git diff --shortstat --no-index -- ${authoritativeCSV} ${generatedCSV}`;
+      const gitCommand = `git diff --shortstat --no-index -- ${authoritativeCSV} ${generatedCSV}`;
       // @ts-ignore - error is unused
       const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
       expect(result).toMatchSnapshot();

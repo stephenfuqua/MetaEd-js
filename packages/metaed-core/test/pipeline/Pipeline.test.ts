@@ -24,7 +24,7 @@ const metaEdConfiguration = {
   ],
 };
 
-describe('when building a DE with a common property but no common declaration', () => {
+describe('when building a DE with a common property but no common declaration', (): void => {
   let state: State = newState();
   let coreNamespace: Namespace | undefined;
 
@@ -43,18 +43,18 @@ describe('when building a DE with a common property but no common declaration', 
     coreNamespace = state.metaEd.namespace.get('EdFi');
   });
 
-  it('should have built one domain entity', () => {
+  it('should have built one domain entity', (): void => {
     if (coreNamespace == null) throw new Error();
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation error', () => {
+  it('should have validation error', (): void => {
     expect(state.validationFailure.filter(message => message.category === 'error')[0].validatorName).toBe(
       'CommonPropertyMustMatchACommon',
     );
   });
 
-  it('should have common property with undefined referenced entity (meaning unified enhancers ran)', () => {
+  it('should have common property with undefined referenced entity (meaning unified enhancers ran)', (): void => {
     if (coreNamespace == null) throw new Error();
     const entity = coreNamespace.entity.domainEntity.get('EntityName');
     if (entity == null) throw new Error();

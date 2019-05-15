@@ -3,9 +3,9 @@ import { TopLevelEntity, EntityProperty, ValidationFailure } from 'metaed-core';
 export function failSubclassIdentityRenamingMoreThanOnce(
   validatorName: string,
   subclassEntity: TopLevelEntity,
-  failures: Array<ValidationFailure>,
+  failures: ValidationFailure[],
 ) {
-  const identityRenames: Array<EntityProperty> = subclassEntity.properties.filter(x => x.isIdentityRename === true);
+  const identityRenames: EntityProperty[] = subclassEntity.properties.filter(x => x.isIdentityRename === true);
   if (identityRenames.length <= 1) return;
 
   const baseKeyNames: string = identityRenames.map(x => x.baseKeyName).join(', ');

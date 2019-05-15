@@ -27,7 +27,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when entity has identity property', () => {
+describe('when entity has identity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -66,7 +66,7 @@ describe('when entity has identity property', () => {
   });
 });
 
-describe('when entity has multiple identity properties', () => {
+describe('when entity has multiple identity properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -115,7 +115,7 @@ describe('when entity has multiple identity properties', () => {
   });
 });
 
-describe('when entity has decimal properties', () => {
+describe('when entity has decimal properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -186,7 +186,7 @@ describe('when entity has decimal properties', () => {
   });
 });
 
-describe('when entity has collection decimal properties', () => {
+describe('when entity has collection decimal properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -332,7 +332,7 @@ describe('when entity has collection decimal properties', () => {
   });
 });
 
-describe('when entity has boolean properties', () => {
+describe('when entity has boolean properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -380,7 +380,7 @@ describe('when entity has boolean properties', () => {
   });
 });
 
-describe('when entity has collection boolean properties', () => {
+describe('when entity has collection boolean properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -503,7 +503,7 @@ describe('when entity has collection boolean properties', () => {
   });
 });
 
-describe('when entity has currency properties', () => {
+describe('when entity has currency properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -551,7 +551,7 @@ describe('when entity has currency properties', () => {
   });
 });
 
-describe('when entity has collection currency properties', () => {
+describe('when entity has collection currency properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -674,7 +674,7 @@ describe('when entity has collection currency properties', () => {
   });
 });
 
-describe('when entity has date properties', () => {
+describe('when entity has date properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -722,7 +722,7 @@ describe('when entity has date properties', () => {
   });
 });
 
-describe('when entity has collection date properties', () => {
+describe('when entity has collection date properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -837,7 +837,7 @@ describe('when entity has collection date properties', () => {
   });
 });
 
-describe('when entity has datetime properties', () => {
+describe('when entity has datetime properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -885,7 +885,7 @@ describe('when entity has datetime properties', () => {
   });
 });
 
-describe('when entity has collection datetime properties', () => {
+describe('when entity has collection datetime properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1008,7 +1008,7 @@ describe('when entity has collection datetime properties', () => {
   });
 });
 
-describe('when entity has duration properties', () => {
+describe('when entity has duration properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1056,7 +1056,7 @@ describe('when entity has duration properties', () => {
   });
 });
 
-describe('when entity has collection duration properties', () => {
+describe('when entity has collection duration properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1179,7 +1179,7 @@ describe('when entity has collection duration properties', () => {
   });
 });
 
-describe('when entity has percent properties', () => {
+describe('when entity has percent properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1227,7 +1227,7 @@ describe('when entity has percent properties', () => {
   });
 });
 
-describe('when entity has collection percent properties', () => {
+describe('when entity has collection percent properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1350,7 +1350,7 @@ describe('when entity has collection percent properties', () => {
   });
 });
 
-describe('when entity has short properties', () => {
+describe('when entity has short properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1398,7 +1398,7 @@ describe('when entity has short properties', () => {
   });
 });
 
-describe('when entity has collection short properties', () => {
+describe('when entity has collection short properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1513,7 +1513,7 @@ describe('when entity has collection short properties', () => {
   });
 });
 
-describe('when entity has string properties', () => {
+describe('when entity has string properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1573,7 +1573,7 @@ describe('when entity has string properties', () => {
   });
 });
 
-describe('when entity has collection string properties', () => {
+describe('when entity has collection string properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1704,7 +1704,7 @@ describe('when entity has collection string properties', () => {
   });
 });
 
-describe('when entity has time properties', () => {
+describe('when entity has time properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1752,7 +1752,7 @@ describe('when entity has time properties', () => {
   });
 });
 
-describe('when entity has collection time properties', () => {
+describe('when entity has collection time properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1867,7 +1867,7 @@ describe('when entity has collection time properties', () => {
   });
 });
 
-describe('when entity has year properties', () => {
+describe('when entity has year properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -1915,7 +1915,7 @@ describe('when entity has year properties', () => {
   });
 });
 
-describe('when entity has collection year properties', () => {
+describe('when entity has collection year properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';

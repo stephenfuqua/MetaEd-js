@@ -8,10 +8,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustExistNoMoreThanOnce';
 
-describe('when domain entity subclass renames base identity more than once', () => {
+describe('when domain entity subclass renames base identity more than once', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -38,15 +38,15 @@ describe('when domain entity subclass renames base identity more than once', () 
     failures = validate(metaEd);
   });
 
-  it('should build one domainEntity', () => {
+  it('should build one domainEntity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domainEntitySubclass', () => {
+  it('should build one domainEntitySubclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdenitityRenameMustExistNoMoreThanOnce');
     expect(failures[0].category).toBe('error');

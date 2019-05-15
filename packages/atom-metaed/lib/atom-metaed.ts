@@ -84,9 +84,12 @@ export async function activate() {
   );
 
   disposableTracker.add(
-    atom.config.observe('atom-metaed.coreMetaEdSourceDirectory', () => {
-      updateCoreMetaEdSourceDirectory();
-    }),
+    atom.config.observe(
+      'atom-metaed.coreMetaEdSourceDirectory',
+      (): void => {
+        updateCoreMetaEdSourceDirectory();
+      },
+    ),
   );
 
   if (!allianceMode()) {

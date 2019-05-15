@@ -7,12 +7,12 @@ import { ConfigurationSchema } from './ConfigurationSchema';
 /**
  *
  */
-export type MetaEdPlugin = {
-  validator: Array<Validator>;
-  enhancer: Array<Enhancer>;
-  generator: Array<Generator>;
+export interface MetaEdPlugin {
+  validator: Validator[];
+  enhancer: Enhancer[];
+  generator: Generator[];
   configurationSchemas: ConfigurationSchema;
-};
+}
 
 /**
  *

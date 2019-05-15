@@ -4,27 +4,27 @@ import { SemVer } from './MetaEdEnvironment';
 /**
  *
  */
-export type PluginTargetTechnologyVersion = {
+export interface PluginTargetTechnologyVersion {
   targetTechnologyVersion: SemVer;
-};
+}
 
 /**
  *
  */
-export type MetaEdConfiguration = {
+export interface MetaEdConfiguration {
   artifactDirectory: string;
   deployDirectory: string;
   pluginTechVersion: {
     [shortName: string]: PluginTargetTechnologyVersion;
   };
   defaultPluginTechVersion: string;
-  projects: Array<MetaEdProject>;
+  projects: MetaEdProject[];
   // projectPaths is meant to parallel projects
-  projectPaths: Array<string>;
+  projectPaths: string[];
 
   // pluginConfigDirectories is an override for the directories to look for plugin configuration files
-  pluginConfigDirectories: Array<string>;
-};
+  pluginConfigDirectories: string[];
+}
 
 /**
  *

@@ -7,12 +7,12 @@ import {
   getAllTopLevelEntitiesForNamespaces,
 } from 'metaed-core';
 
-export type EntityPropertyEdfiXsd = {
+export interface EntityPropertyEdfiXsd {
   xsdName: string;
   xsdType: string;
   xsdIsDescriptor: boolean;
   xsdIsChoice: boolean;
-};
+}
 
 // Enhancer for object setup
 const enhancerName = 'EntityPropertySetupEnhancer';

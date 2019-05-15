@@ -8,10 +8,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
 
-describe('when common extension extends common', () => {
+describe('when common extension extends common', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName = 'CommonName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -41,19 +41,19 @@ describe('when common extension extends common', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one common extension', () => {
+  it('should build one common extension', (): void => {
     expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when common extension extends an invalid identifier', () => {
+describe('when common extension extends an invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName = 'CommonName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -82,11 +82,11 @@ describe('when common extension extends an invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one common extension', () => {
+  it('should build one common extension', (): void => {
     expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionIdentifierMustMatchACommon');
     expect(failures[0].category).toBe('error');
@@ -95,10 +95,10 @@ describe('when common extension extends an invalid identifier', () => {
   });
 });
 
-describe('when common extension specifies wrong namespace', () => {
+describe('when common extension specifies wrong namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName = 'CommonName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -127,11 +127,11 @@ describe('when common extension specifies wrong namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one common extension', () => {
+  it('should build one common extension', (): void => {
     expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionIdentifierMustMatchACommon');
     expect(failures[0].category).toBe('error');

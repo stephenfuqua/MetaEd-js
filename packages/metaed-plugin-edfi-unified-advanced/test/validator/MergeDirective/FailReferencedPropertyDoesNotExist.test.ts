@@ -10,9 +10,9 @@ import {
 } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../../../src/validator/MergeDirective/FailReferencedPropertyDoesNotExist';
 
-describe('when validating merge property path', () => {
+describe('when validating merge property path', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -43,18 +43,18 @@ describe('when validating merge property path', () => {
     );
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with no matching merge property', () => {
+describe('when validating path with no matching merge property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -84,18 +84,18 @@ describe('when validating path with no matching merge property', () => {
     );
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 // Broke
-describe('when validating path with merge property collection targeting non identity on current', () => {
+describe('when validating path with merge property collection targeting non identity on current', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -135,20 +135,20 @@ describe('when validating path with merge property collection targeting non iden
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
   });
 });
 
-describe('when validating path with merge property collection targeting identity on current', () => {
+describe('when validating path with merge property collection targeting identity on current', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -188,18 +188,18 @@ describe('when validating path with merge property collection targeting identity
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with merge property targeting non identity on current', () => {
+describe('when validating path with merge property targeting non identity on current', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -239,18 +239,18 @@ describe('when validating path with merge property targeting non identity on cur
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with merge property targeting identity on reference', () => {
+describe('when validating path with merge property targeting identity on reference', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -297,18 +297,18 @@ describe('when validating path with merge property targeting identity on referen
     );
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with merge property targeting non identity on reference', () => {
+describe('when validating path with merge property targeting non identity on reference', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -354,20 +354,20 @@ describe('when validating path with merge property targeting non identity on ref
     );
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
   });
 });
 
-describe('when validating path with merge property targeting optional on common type', () => {
+describe('when validating path with merge property targeting optional on common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -414,22 +414,22 @@ describe('when validating path with merge property targeting optional on common 
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with merge property targeting non identity inline common type', () => {
+describe('when validating path with merge property targeting non identity inline common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -476,24 +476,24 @@ describe('when validating path with merge property targeting non identity inline
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
   });
 });
 
-describe('when validating path with merge property targeting non identity choice type', () => {
+describe('when validating path with merge property targeting non identity choice type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -540,22 +540,22 @@ describe('when validating path with merge property targeting non identity choice
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one choice', () => {
+  it('should build one choice', (): void => {
     expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating path with merge property collection targeting non identity choice type', () => {
+describe('when validating path with merge property collection targeting non identity choice type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -602,24 +602,24 @@ describe('when validating path with merge property collection targeting non iden
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one choice', () => {
+  it('should build one choice', (): void => {
     expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
   });
 });
 
-describe('when validating path with merge property collection targeting identity choice type', () => {
+describe('when validating path with merge property collection targeting identity choice type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const failures: Array<ValidationFailure> = [];
+  const failures: ValidationFailure[] = [];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -666,15 +666,15 @@ describe('when validating path with merge property collection targeting identity
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one choice', () => {
+  it('should build one choice', (): void => {
     expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

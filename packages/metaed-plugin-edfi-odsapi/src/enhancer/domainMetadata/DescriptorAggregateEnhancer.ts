@@ -12,7 +12,7 @@ import { defaultOrderedAndUniqueTablesFor } from './AggregateEnhancerBase';
 const enhancerName = 'DescriptorAggregateEnhancer';
 
 function generateAggregate(entity: TopLevelEntity, namespace: Namespace): Aggregate | null {
-  const tables: Array<Table> = defaultOrderedAndUniqueTablesFor(entity, namespace);
+  const tables: Table[] = defaultOrderedAndUniqueTablesFor(entity, namespace);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName,

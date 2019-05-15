@@ -1,10 +1,10 @@
 import { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
 import { normalizeDescriptorSuffix, getAllEntitiesOfType } from 'metaed-core';
 
-export type DescriptorEdfiOds = {
+export interface DescriptorEdfiOds {
   odsDescriptorName: string;
   odsIsMapType: boolean;
-};
+}
 
 const enhancerName = 'OdsDescriptorSetupEnhancer';
 
@@ -18,7 +18,7 @@ export function addDescriptorEdfiOdsTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'descriptor') as Array<Descriptor>).forEach((descriptor: Descriptor) => {
+  (getAllEntitiesOfType(metaEd, 'descriptor') as Descriptor[]).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiOdsTo(descriptor);
   });
 

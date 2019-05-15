@@ -8,8 +8,8 @@ import {
   Namespace,
 } from 'metaed-core';
 
-function sharedSimpleNeedingDuplicateChecking(namespace: Namespace): Array<SharedSimple> {
-  const result: Array<SharedSimple> = [];
+function sharedSimpleNeedingDuplicateChecking(namespace: Namespace): SharedSimple[] {
+  const result: SharedSimple[] = [];
   result.push(...namespace.entity.sharedString.values());
   result.push(...namespace.entity.sharedDecimal.values());
   result.push(...namespace.entity.sharedInteger.values());
@@ -17,7 +17,7 @@ function sharedSimpleNeedingDuplicateChecking(namespace: Namespace): Array<Share
 }
 
 function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace: Namespace): Map<string, SimpleProperty> {
-  const result: Array<SimpleProperty> = [];
+  const result: SimpleProperty[] = [];
 
   result.push(...properties.string.filter((property: EntityProperty) => namespace === property.namespace));
   result.push(...properties.decimal.filter((property: EntityProperty) => namespace === property.namespace));
@@ -30,9 +30,9 @@ function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace
 
 function generateValidationErrorsForDuplicates(
   metaEdProperty: Map<string, SimpleProperty>,
-  metaedEntities: Array<SharedSimple>,
-): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+  metaedEntities: SharedSimple[],
+): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaedEntities.forEach((entity: SharedSimple) => {
     const isDuplicate: boolean = metaEdProperty.has(entity.metaEdName);
     if (isDuplicate) {
@@ -58,8 +58,8 @@ function generateValidationErrorsForDuplicates(
   return failures;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     failures.push(

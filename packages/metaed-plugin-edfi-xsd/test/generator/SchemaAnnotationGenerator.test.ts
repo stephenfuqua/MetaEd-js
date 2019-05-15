@@ -5,7 +5,7 @@ import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepos
 import { createSchema } from './GeneratorTestBase';
 import { generate } from '../../src/generator/SchemaAnnotationGenerator';
 
-describe('when generating schema annotation for a single descriptor', () => {
+describe('when generating schema annotation for a single descriptor', (): void => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
     dataStandardVersion: '2.1.0',
   });
@@ -53,16 +53,16 @@ describe('when generating schema annotation for a single descriptor', () => {
     [, descriptorElement] = xmlParser.xml2js(rawXsd).elements[1].elements;
   });
 
-  it('should be simple type for descriptor list', () => {
+  it('should be simple type for descriptor list', (): void => {
     expect(descriptorElement.name).toBe('xs:simpleType');
   });
 
-  it('should be token restriction for descriptor list', () => {
+  it('should be token restriction for descriptor list', (): void => {
     expect(descriptorElement.elements[1].name).toBe('xs:restriction');
     expect(descriptorElement.elements[1].attributes.base).toBe('xs:token');
   });
 
-  it('should have single descriptor', () => {
+  it('should have single descriptor', (): void => {
     expect(descriptorElement.elements[1].elements).toHaveLength(1);
     expect(descriptorElement.elements[1].elements[0].name).toBe('xs:enumeration');
     expect(descriptorElement.elements[1].elements[0].attributes.value).toBe(xsdDescriptorName);

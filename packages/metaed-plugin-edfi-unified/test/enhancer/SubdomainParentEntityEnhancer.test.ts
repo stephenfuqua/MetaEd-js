@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, newDomain, newSubdomain, addEntityForNamespace, n
 import { MetaEdEnvironment, Domain, Subdomain, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SubdomainParentEntityEnhancer';
 
-describe('when enhancing subdomain with parent', () => {
+describe('when enhancing subdomain with parent', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -28,7 +28,7 @@ describe('when enhancing subdomain with parent', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(childEntity.parent).toBe(parentEntity);
   });
 });

@@ -12,7 +12,7 @@ import { IntegerType, MetaEdEnvironment, SharedInteger, SharedShortProperty, Sho
 
 import { enhance } from '../../../src/enhancer/property/ShortReferenceEnhancer';
 
-describe('when enhancing short property', () => {
+describe('when enhancing short property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -39,16 +39,16 @@ describe('when enhancing short property', () => {
     enhance(metaEd);
   });
 
-  it('should have property with no referenced entity', () => {
+  it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
   });
 
-  it('should have short type with no referring properties', () => {
+  it('should have short type with no referring properties', (): void => {
     expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
-describe('when enhancing shared short property', () => {
+describe('when enhancing shared short property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -83,18 +83,18 @@ describe('when enhancing shared short property', () => {
     enhance(metaEd);
   });
 
-  it('should have property with correct referenced entity', () => {
+  it('should have property with correct referenced entity', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
   });
 
-  it('should have short type with correct referring properties', () => {
+  it('should have short type with correct referring properties', (): void => {
     expect(integerType.referringSimpleProperties).toContain(property);
   });
 });
 
-describe('when enhancing short property across namespaces', () => {
+describe('when enhancing short property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -123,16 +123,16 @@ describe('when enhancing short property across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have property with no referenced entity', () => {
+  it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
   });
 
-  it('should have short type with no referring properties', () => {
+  it('should have short type with no referring properties', (): void => {
     expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
-describe('when enhancing shared short property across namespaces', () => {
+describe('when enhancing shared short property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -169,13 +169,13 @@ describe('when enhancing shared short property across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have property with correct referenced entity', () => {
+  it('should have property with correct referenced entity', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
   });
 
-  it('should have short type with correct referring properties', () => {
+  it('should have short type with correct referring properties', (): void => {
     expect(integerType.referringSimpleProperties).toContain(property);
   });
 });

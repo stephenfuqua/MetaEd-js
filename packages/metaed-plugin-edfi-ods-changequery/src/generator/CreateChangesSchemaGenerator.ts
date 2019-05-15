@@ -5,7 +5,7 @@ import { changeQueryIndicated } from '../enhancer/ChangeQueryIndicator';
 import { changeQueryPath } from './ChangeQueryGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {

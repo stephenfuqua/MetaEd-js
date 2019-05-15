@@ -1,9 +1,9 @@
 import { EntityProperty } from 'metaed-core';
 
-export type TableNaming = {
+export interface TableNaming {
   name: string;
-  nameComponents: Array<string>;
-};
+  nameComponents: string[];
+}
 
 export function appendOverlapping(base: string, suffix: string): string {
   const shortestLength = Math.min(base.length, suffix.length);
@@ -28,12 +28,12 @@ function getRoleName(property: EntityProperty): string {
 export function baseNameCollapsingJoinTableNamer(
   property: EntityProperty,
   parentTableName: string,
-  parentTableNameComponents: Array<string>,
+  parentTableNameComponents: string[],
   parentContextName: string,
 ): TableNaming {
   const contextName: string = getRoleName(property);
 
-  let nameComponents: Array<string> = [];
+  let nameComponents: string[] = [];
   let secondPart = '';
   if (property.metaEdName.startsWith(parentTableName)) {
     const groupedContexts = appendOverlapping(parentContextName, contextName);
@@ -58,7 +58,7 @@ export function baseNameCollapsingJoinTableNamer(
 export function joinTableNamer(
   property: EntityProperty,
   parentTableName: string,
-  parentTableNameComponents: Array<string>,
+  parentTableNameComponents: string[],
   parentContextName: string,
 ): TableNaming {
   const contextName: string = getRoleName(property);

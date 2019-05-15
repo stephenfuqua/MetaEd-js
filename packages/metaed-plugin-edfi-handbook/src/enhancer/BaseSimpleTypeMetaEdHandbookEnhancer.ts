@@ -6,7 +6,7 @@ import { SimpleType } from 'metaed-plugin-edfi-xsd';
 import { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 
-function generatedTableSqlFor(name: string, columnDefinition: string): Array<string> {
+function generatedTableSqlFor(name: string, columnDefinition: string): string[] {
   return [`${name} ${columnDefinition}`];
 }
 

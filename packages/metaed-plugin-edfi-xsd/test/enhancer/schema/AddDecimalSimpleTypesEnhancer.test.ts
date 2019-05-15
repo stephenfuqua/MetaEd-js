@@ -5,7 +5,7 @@ import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddDecimalSimpleTypesEnhancer';
 
-describe('when enhancing decimal type', () => {
+describe('when enhancing decimal type', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -39,45 +39,45 @@ describe('when enhancing decimal type', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSimpleType.annotation).toBeDefined();
     expect(createdSimpleType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdSimpleType.annotation.typeGroup).toBe('Simple');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdSimpleType.baseType).toBe('xs:decimal');
   });
 
-  it('should have max value assigned', () => {
+  it('should have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe(maxValue);
   });
 
-  it('should have min value assigned', () => {
+  it('should have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe(minValue);
   });
 
-  it('should have decimal places assigned', () => {
+  it('should have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have total digits assigned', () => {
+  it('should have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe(totalDigits);
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdSimpleType.name).toBe(simpleTypeName);
   });
 });
 
-describe('when enhancing generated decimal type with min value only', () => {
+describe('when enhancing generated decimal type with min value only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -105,28 +105,28 @@ describe('when enhancing generated decimal type with min value only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should have min value assigned', () => {
+  it('should have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe(minValue);
   });
 
-  it('should not have decimal places assigned', () => {
+  it('should not have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe('');
   });
 
-  it('should not have total digits assigned', () => {
+  it('should not have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe('');
   });
 });
 
-describe('when enhancing generated decimal type with max value only', () => {
+describe('when enhancing generated decimal type with max value only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -154,28 +154,28 @@ describe('when enhancing generated decimal type with max value only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have max value assigned', () => {
+  it('should have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe(maxValue);
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 
-  it('should not have decimal places assigned', () => {
+  it('should not have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe('');
   });
 
-  it('should not have total digits assigned', () => {
+  it('should not have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe('');
   });
 });
 
-describe('when enhancing generated decimal type with decimal places only', () => {
+describe('when enhancing generated decimal type with decimal places only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -203,28 +203,28 @@ describe('when enhancing generated decimal type with decimal places only', () =>
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 
-  it('should have decimal places assigned', () => {
+  it('should have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should not have total digits assigned', () => {
+  it('should not have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe('');
   });
 });
 
-describe('when enhancing generated decimal type with total digits only', () => {
+describe('when enhancing generated decimal type with total digits only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -252,28 +252,28 @@ describe('when enhancing generated decimal type with total digits only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 
-  it('should not have decimal places assigned', () => {
+  it('should not have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe('');
   });
 
-  it('should have total digits assigned', () => {
+  it('should have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe(totalDigits);
   });
 });
 
-describe('when enhancing non-generated decimal type with no restrictions', () => {
+describe('when enhancing non-generated decimal type with no restrictions', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -299,28 +299,28 @@ describe('when enhancing non-generated decimal type with no restrictions', () =>
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 
-  it('should not have decimal places assigned', () => {
+  it('should not have decimal places assigned', (): void => {
     expect(createdSimpleType.decimalPlaces).toBe('');
   });
 
-  it('should not have total digits assigned', () => {
+  it('should not have total digits assigned', (): void => {
     expect(createdSimpleType.totalDigits).toBe('');
   });
 });
 
-describe('when enhancing generated decimal type with no restrictions', () => {
+describe('when enhancing generated decimal type with no restrictions', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -346,7 +346,7 @@ describe('when enhancing generated decimal type with no restrictions', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBe(NoSimpleType);
   });
 });

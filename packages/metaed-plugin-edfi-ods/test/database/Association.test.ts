@@ -26,7 +26,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when association references two different domain entities', () => {
+describe('when association references two different domain entities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
@@ -105,7 +105,7 @@ describe('when association references two different domain entities', () => {
   });
 });
 
-describe('when association references two different domain entities', () => {
+describe('when association references two different domain entities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -172,7 +172,7 @@ describe('when association references two different domain entities', () => {
   });
 });
 
-describe('when association references the same domain entity', () => {
+describe('when association references the same domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -232,7 +232,7 @@ describe('when association references the same domain entity', () => {
   });
 });
 
-describe('when association has additional primary key simple properties', () => {
+describe('when association has additional primary key simple properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
@@ -303,7 +303,7 @@ describe('when association has additional primary key simple properties', () => 
   });
 });
 
-describe('when association has additional primary key reference properties', () => {
+describe('when association has additional primary key reference properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -387,7 +387,7 @@ describe('when association has additional primary key reference properties', () 
   });
 });
 
-describe('when association references another association', () => {
+describe('when association references another association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -466,7 +466,7 @@ describe('when association references another association', () => {
   });
 });
 
-describe('when association has overlapping primary key properties with domain entity', () => {
+describe('when association has overlapping primary key properties with domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
@@ -554,7 +554,7 @@ describe('when association has overlapping primary key properties with domain en
   });
 });
 
-describe('when association references another association property with matching context', () => {
+describe('when association references another association property with matching context', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
@@ -628,7 +628,7 @@ describe('when association references another association property with matching
   });
 });
 
-describe('when extension association references core domain entities', () => {
+describe('when extension association references core domain entities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const extension = 'Extension';
@@ -720,7 +720,7 @@ describe('when extension association references core domain entities', () => {
   });
 });
 
-describe('when extension association references extension domain entities', () => {
+describe('when extension association references extension domain entities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';

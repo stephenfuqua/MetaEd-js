@@ -12,7 +12,7 @@ import { Column } from '../../src/model/database/Column';
 import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
+describe('when ForeignKeyOrderDiminisher diminishes matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -20,7 +20,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
   const schemaName = namespaceName.toLowerCase();
   const parentTableName = 'ParentTableName';
   const gradebookEntryLearningObjective = 'GradebookEntryLearningObjective';
-  const primaryKeyOrder: Array<string> = [
+  const primaryKeyOrder: string[] = [
     'SchoolId',
     'ClassPeriodName',
     'ClassroomIdentificationCode',
@@ -35,7 +35,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
     'UniqueSectionCode',
     'SequenceOfCourse',
   ];
-  const primaryKeyNames: Array<string> = [
+  const primaryKeyNames: string[] = [
     'SequenceOfCourse',
     'SchoolId',
     'UniqueSectionCode',
@@ -93,24 +93,24 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
     enhance(metaEd);
   });
 
-  it('should have correct foreign key order', () => {
+  it('should have correct foreign key order', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyOrder);
   });
 
-  it('should have order parity with foreign table primary keys', () => {
-    const primaryKeyNamesOnForeignTable: Array<string> = (tableEntities(metaEd, namespace).get(
+  it('should have order parity with foreign table primary keys', (): void => {
+    const primaryKeyNamesOnForeignTable: string[] = (tableEntities(metaEd, namespace).get(
       gradebookEntryLearningObjective,
     ) as Table).primaryKeys.map((pk: Column) => pk.name);
-    const foreignKeyNames: Array<string> = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
+    const foreignKeyNames: string[] = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
       (tableEntities(metaEd, namespace).get(parentTableName) as Table).foreignKeys,
     );
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
   });
 });
 
-describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
+describe('when ForeignKeyOrderDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -118,7 +118,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
   const schemaName = namespaceName.toLowerCase();
   const parentTableName = 'ParentTableName';
   const foreignTableName = 'ForeignTableName';
-  const primaryKeyNames: Array<string> = [
+  const primaryKeyNames: string[] = [
     'PrimaryKeyNameF',
     'PrimaryKeyNameA',
     'PrimaryKeyNameC',
@@ -173,13 +173,13 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
     enhance(metaEd);
   });
 
-  it('should have correct foreign key order', () => {
+  it('should have correct foreign key order', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyNames);
   });
 
-  it('should have order parity with foreign table primary keys', () => {
+  it('should have order parity with foreign table primary keys', (): void => {
     const primaryKeyNamesOnForeignTable = (tableEntities(metaEd, namespace).get(foreignTableName) as Table).primaryKeys.map(
       (pk: Column) => pk.name,
     );

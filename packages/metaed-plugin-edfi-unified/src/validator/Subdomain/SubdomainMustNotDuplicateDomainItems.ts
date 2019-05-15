@@ -1,12 +1,12 @@
 import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.subdomain.forEach(subdomain => {
       const names = subdomain.domainItems.map(di => di.metaEdName);
-      const duplicates: Array<string> = findDuplicates(names);
+      const duplicates: string[] = findDuplicates(names);
 
       duplicates.forEach(val => {
         const domainItem = subdomain.domainItems.find(d => d.metaEdName === val);

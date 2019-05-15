@@ -4,13 +4,13 @@ import { EnumerationSimpleType } from '../../../src/model/schema/EnumerationSimp
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddEnumerationSimpleTypesEnhancer';
 
-describe('when enhancing enumeration', () => {
+describe('when enhancing enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
   const simpleTypeName = 'EnumerationSimpleType';
-  const simpleTypeNameWithExtension: string = `${projectExtension}-${simpleTypeName}`;
+  const simpleTypeNameWithExtension = `${projectExtension}-${simpleTypeName}`;
   const documentation = 'Documentation';
   const item1Documentation = 'Item 1 Documentation';
   const item1ShortDescription = 'Item 1 Short Description';
@@ -48,28 +48,28 @@ describe('when enhancing enumeration', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdEnumerationSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSimpleType.annotation).toBeDefined();
     expect(createdSimpleType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdSimpleType.annotation.typeGroup).toBe('Enumeration');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdSimpleType.baseType).toBe('xs:token');
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdSimpleType.name).toBe(simpleTypeNameWithExtension);
   });
 
-  it('should have enumeration tokens', () => {
+  it('should have enumeration tokens', (): void => {
     expect(createdSimpleType.enumerationTokens.length).toBe(2);
   });
 });

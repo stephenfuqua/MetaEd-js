@@ -9,7 +9,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for enumeration', () => {
+describe('when generating xsd for enumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -37,12 +37,12 @@ describe('when generating xsd for enumeration', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate enumeration', () => {
+  it('should generate enumeration', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreEntityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate enumeration item', () => {
+  it('should generate enumeration item', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='CoreEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']",
       coreResult,
@@ -51,7 +51,7 @@ describe('when generating xsd for enumeration', () => {
   });
 });
 
-describe('when generating xsd for domain entity in extension namespace with reference to enumeration', () => {
+describe('when generating xsd for domain entity in extension namespace with reference to enumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -100,17 +100,17 @@ describe('when generating xsd for domain entity in extension namespace with refe
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate enumeration', () => {
+  it('should generate enumeration', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreEntityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity'][@type='CoreEntityType']",
       extensionResult,
@@ -119,7 +119,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   });
 });
 
-describe('when generating xsd for enumeration in extension namespace with reference to core entity', () => {
+describe('when generating xsd for enumeration in extension namespace with reference to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -165,17 +165,17 @@ describe('when generating xsd for enumeration in extension namespace with refere
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate enumeration', () => {
+  it('should generate enumeration', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityType']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate enumeration item', () => {
+  it('should generate enumeration item', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']",
       extensionResult,

@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment, DomainEntityProperty, DomainEntity, DomainEntitySubclass, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/DomainEntityReferenceEnhancer';
 
-describe('when enhancing domainEntity property referring to domainEntity', () => {
+describe('when enhancing domainEntity property referring to domainEntity', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -41,7 +41,7 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -50,7 +50,7 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
   });
 });
 
-describe('when enhancing domainEntity property referring to subclass', () => {
+describe('when enhancing domainEntity property referring to subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -82,7 +82,7 @@ describe('when enhancing domainEntity property referring to subclass', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -91,7 +91,7 @@ describe('when enhancing domainEntity property referring to subclass', () => {
   });
 });
 
-describe('when enhancing domainEntity property referring to domainEntity across namespaces', () => {
+describe('when enhancing domainEntity property referring to domainEntity across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -125,7 +125,7 @@ describe('when enhancing domainEntity property referring to domainEntity across 
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);

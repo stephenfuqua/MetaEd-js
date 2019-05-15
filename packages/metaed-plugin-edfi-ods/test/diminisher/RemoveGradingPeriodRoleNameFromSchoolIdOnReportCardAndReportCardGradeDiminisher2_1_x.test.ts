@@ -11,7 +11,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjective table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjective table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -49,19 +49,19 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename column', () => {
+  it('should rename column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(studentLearningObjective) as Table).columns);
     expect(column.name).toBe(schoolId);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(studentLearningObjective) as Table;
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
 });
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjective table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjective table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -99,26 +99,26 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename column', () => {
+  it('should rename column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(studentCompetencyObjective) as Table).columns);
     expect(column.name).toBe(schoolId);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(studentCompetencyObjective) as Table;
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
 });
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjectiveStudentProgramAssociation table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjectiveStudentProgramAssociation table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolId = 'SchoolId';
-  const gradingPeriodSchoolId: string = `GradingPeriod${schoolId}`;
+  const gradingPeriodSchoolId = `GradingPeriod${schoolId}`;
   const studentCompetencyObjective = 'StudentCompetencyObjective';
-  const studentCompetencyObjectiveStudentProgramAssociation: string = `${studentCompetencyObjective}StudentProgramAssociation`;
+  const studentCompetencyObjectiveStudentProgramAssociation = `${studentCompetencyObjective}StudentProgramAssociation`;
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -144,7 +144,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentCompetencyObjectiveStudentProgramAssociation,
     ) as Table;
@@ -153,14 +153,14 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 });
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjectiveStudentSectionAssociation table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentCompetencyObjectiveStudentSectionAssociation table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolId = 'SchoolId';
-  const gradingPeriodSchoolId: string = `GradingPeriod${schoolId}`;
+  const gradingPeriodSchoolId = `GradingPeriod${schoolId}`;
   const studentCompetencyObjective = 'StudentCompetencyObjective';
-  const studentCompetencyObjectiveStudentSectionAssociation: string = `${studentCompetencyObjective}StudentSectionAssociation`;
+  const studentCompetencyObjectiveStudentSectionAssociation = `${studentCompetencyObjective}StudentSectionAssociation`;
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -186,7 +186,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentCompetencyObjectiveStudentSectionAssociation,
     ) as Table;
@@ -195,14 +195,14 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 });
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjectiveStudentProgramAssociation table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjectiveStudentProgramAssociation table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolId = 'SchoolId';
-  const gradingPeriodSchoolId: string = `GradingPeriod${schoolId}`;
+  const gradingPeriodSchoolId = `GradingPeriod${schoolId}`;
   const studentLearningObjective = 'StudentLearningObjective';
-  const studentLearningObjectiveStudentStudentProgramAssociation: string = `${studentLearningObjective}StudentProgramAssociation`;
+  const studentLearningObjectiveStudentStudentProgramAssociation = `${studentLearningObjective}StudentProgramAssociation`;
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -228,7 +228,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentLearningObjectiveStudentStudentProgramAssociation,
     ) as Table;
@@ -237,14 +237,14 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 });
 
-describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjectiveStudentSectionAssociation table', () => {
+describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x diminishes StudentLearningObjectiveStudentSectionAssociation table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolId = 'SchoolId';
-  const gradingPeriodSchoolId: string = `GradingPeriod${schoolId}`;
+  const gradingPeriodSchoolId = `GradingPeriod${schoolId}`;
   const studentLearningObjective = 'StudentLearningObjective';
-  const studentLearningObjectiveStudentStudentSectionAssociation: string = `${studentLearningObjective}StudentSectionAssociation`;
+  const studentLearningObjectiveStudentStudentSectionAssociation = `${studentLearningObjective}StudentSectionAssociation`;
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -270,7 +270,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     enhance(metaEd);
   });
 
-  it('should rename foreign key columns', () => {
+  it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentLearningObjectiveStudentStudentSectionAssociation,
     ) as Table;

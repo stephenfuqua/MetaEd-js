@@ -26,7 +26,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when association subclass has a single property', () => {
+describe('when association subclass has a single property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
@@ -129,7 +129,7 @@ describe('when association subclass has a single property', () => {
   });
 });
 
-describe('when extension association subclasses core association', () => {
+describe('when extension association subclasses core association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
@@ -241,7 +241,7 @@ describe('when extension association subclasses core association', () => {
   });
 });
 
-describe('when extension association subclasses extension association', () => {
+describe('when extension association subclasses extension association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreNamespaceName = 'EdFi';
   const extension = 'Extension';

@@ -1,13 +1,13 @@
 import { MetaEdEnvironment, EnhancerResult, Descriptor, getAllEntitiesOfType } from 'metaed-core';
 import { StringSimpleType, NoStringSimpleType } from './schema/StringSimpleType';
 
-export type DescriptorEdfiXsd = {
+export interface DescriptorEdfiXsd {
   xsdDescriptorName: string;
   xsdDescriptorNameWithExtension: string;
   xsdIsMapType: boolean;
   xsdHasPropertiesOrMapType: boolean;
   xsdDescriptorExtendedReferenceType: StringSimpleType;
-};
+}
 
 const enhancerName = 'DescriptorSetupEnhancer';
 
@@ -24,7 +24,7 @@ export function addDescriptorEdfiXsdTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'descriptor') as Array<Descriptor>).forEach((descriptor: Descriptor) => {
+  (getAllEntitiesOfType(metaEd, 'descriptor') as Descriptor[]).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiXsdTo(descriptor);
   });
 

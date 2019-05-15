@@ -26,11 +26,11 @@ function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   );
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
-  (getAllEntitiesOfType(metaEd, 'associationExtension') as Array<AssociationExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'associationExtension') as AssociationExtension[]).forEach(
     (associationExtension: AssociationExtension) => {
       if (!associationExtension.baseEntity) return;
       if (isStudentProgramAssociationOrSubclass(associationExtension.baseEntity)) {

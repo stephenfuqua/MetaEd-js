@@ -1,17 +1,17 @@
 import { SemVer } from '../MetaEdEnvironment';
 import { uppercaseThenAlphanumericOnly } from '../Utility';
 
-export type MetaEdProject = {
+export interface MetaEdProject {
   namespaceName: string;
   projectName: string;
   projectVersion: SemVer;
   projectExtension?: string;
-};
+}
 
-export type MetaEdProjectPathPairs = {
+export interface MetaEdProjectPathPairs {
   path: string;
   project: MetaEdProject;
-};
+}
 
 export const newMetaEdProject: () => MetaEdProject = () => ({
   namespaceName: '',
@@ -25,6 +25,6 @@ export const deriveNamespaceFromProjectName = (projectName: string): string | nu
 
 export const isDataStandard = (project: MetaEdProject): boolean => project.namespaceName === 'EdFi';
 
-export function findDataStandardVersions(projects: Array<MetaEdProject>): Array<SemVer> {
+export function findDataStandardVersions(projects: MetaEdProject[]): SemVer[] {
   return projects.filter(project => isDataStandard(project)).map(project => project.projectVersion);
 }

@@ -17,7 +17,7 @@ function rowToString(obj, value, i) {
   return value;
 }
 
-describe('when generating xsd for domain entity', () => {
+describe('when generating xsd for domain entity', (): void => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
 
@@ -59,22 +59,22 @@ describe('when generating xsd for domain entity', () => {
     workbook = readWorkbook(generatorResults.generatedOutput[0].resultStream, 'buffer');
   });
 
-  it('should generate excel sheet', () => {
+  it('should generate excel sheet', (): void => {
     expect(generatorResults).toBeDefined();
   });
 
-  it('should have three worksheets', () => {
+  it('should have three worksheets', (): void => {
     expect(workbook.sheets.length).toBe(3);
   });
 
-  it('should have three sheets with the correct names', () => {
+  it('should have three sheets with the correct names', (): void => {
     expect(workbook.sheets).toHaveLength(3);
     expect(workbook.sheets[0].name).toBe('Elements');
     expect(workbook.sheets[1].name).toBe('Complex Types');
     expect(workbook.sheets[2].name).toBe('Simple Types');
   });
 
-  it('should have an Elements sheet with the correct headers', () => {
+  it('should have an Elements sheet with the correct headers', (): void => {
     expect(workbook.sheets[0].rows[0].headers).toHaveLength(5);
     expect(workbook.sheets[0].rows[0].headers[0]).toBe('Name');
     expect(workbook.sheets[0].rows[0].headers[1]).toBe('Type');
@@ -83,20 +83,20 @@ describe('when generating xsd for domain entity', () => {
     expect(workbook.sheets[0].rows[0].headers[4]).toBe('Description');
   });
 
-  it('should have an Complex Types sheet with the correct headers', () => {
+  it('should have an Complex Types sheet with the correct headers', (): void => {
     expect(workbook.sheets[1].rows[0].headers).toHaveLength(2);
     expect(workbook.sheets[1].rows[0].headers[0]).toBe('Name');
     expect(workbook.sheets[1].rows[0].headers[1]).toBe('Description');
   });
 
-  it('should have an Simple Types sheet with the correct headers', () => {
+  it('should have an Simple Types sheet with the correct headers', (): void => {
     expect(workbook.sheets[2].rows[0].headers).toHaveLength(3);
     expect(workbook.sheets[2].rows[0].headers[0]).toBe('Name');
     expect(workbook.sheets[2].rows[0].headers[1]).toBe('Restrictions');
     expect(workbook.sheets[2].rows[0].headers[2]).toBe('Description');
   });
 
-  it('should have an Elements sheet with the correct rows', () => {
+  it('should have an Elements sheet with the correct rows', (): void => {
     expect(workbook.sheets[0].rows).toHaveLength(14);
     expect(workbook.sheets[0].rows[0].values.reduce(rowToString)).toBe(
       'BeginDate, xs:date, DomainEntityName, minOccurs: 0\nmaxOccurs: unbounded, The start date for the academic week.',
@@ -142,7 +142,7 @@ describe('when generating xsd for domain entity', () => {
     );
   });
 
-  it('should have a complex types sheet with the correct rows', () => {
+  it('should have a complex types sheet with the correct rows', (): void => {
     expect(workbook.sheets[1].rows).toHaveLength(7);
     expect(workbook.sheets[1].rows[0].values.reduce(rowToString)).toBe(
       'ComplexObjectType, This is the base type from which all entity elements are extended.',
@@ -165,7 +165,7 @@ describe('when generating xsd for domain entity', () => {
     );
   });
 
-  it('should have a simple types sheet with the correct rows', () => {
+  it('should have a simple types sheet with the correct rows', (): void => {
     expect(workbook.sheets[2].rows).toHaveLength(5);
     expect(workbook.sheets[2].rows[0].values.reduce(rowToString)).toBe(
       'CodeValue, minLength: 1\nmaxLength: 50, A code or abbreviation for an element.',

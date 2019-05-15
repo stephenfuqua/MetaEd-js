@@ -10,10 +10,10 @@ import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
-describe('when a domain entity extension extends a non-education organization domain entity', () => {
+describe('when a domain entity extension extends a non-education organization domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,16 +49,16 @@ describe('when a domain entity extension extends a non-education organization do
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity extension extends a non-education organization subclass', () => {
+describe('when a domain entity extension extends a non-education organization subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'NotEducationOrganization';
   const coreSubclassName = 'CoreSubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -107,16 +107,16 @@ describe('when a domain entity extension extends a non-education organization su
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity extension extends a subclass of education organization', () => {
+describe('when a domain entity extension extends a subclass of education organization', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EducationOrganization';
   const coreSubclassName = 'CoreSubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -165,7 +165,7 @@ describe('when a domain entity extension extends a subclass of education organiz
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingSubclassOfEducationOrganizationProhibited');
     expect(failures[0].category).toBe('warning');
@@ -178,12 +178,12 @@ describe('when a domain entity extension extends a subclass of education organiz
   });
 });
 
-describe('when a domain entity extension extends a subclass of a subclass of education organization', () => {
+describe('when a domain entity extension extends a subclass of a subclass of education organization', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EducationOrganization';
   const coreSubclassName = 'CoreSubclassName';
   const extensionSubclassName = 'CoreSubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -239,7 +239,7 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingSubclassOfEducationOrganizationProhibited');
     expect(failures[0].category).toBe('warning');

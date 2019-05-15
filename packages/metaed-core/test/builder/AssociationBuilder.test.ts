@@ -7,9 +7,9 @@ import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 import { EntityProperty } from '../../src/model/property/EntityProperty';
 
-describe('when building association in extension namespace', () => {
+describe('when building association in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -41,39 +41,39 @@ describe('when building association in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have association documentation', () => {
+  it('should have association documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -82,7 +82,7 @@ describe('when building association in extension namespace', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -91,7 +91,7 @@ describe('when building association in extension namespace', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property', () => {
+  it('should have second domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -100,7 +100,7 @@ describe('when building association in extension namespace', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property as identity property', () => {
+  it('should have second domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -110,9 +110,9 @@ describe('when building association in extension namespace', () => {
   });
 });
 
-describe('when building association without extension', () => {
+describe('when building association without extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
@@ -143,36 +143,36 @@ describe('when building association without extension', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
     expect(getAssociation(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have no project extension', () => {
+  it('should have no project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe('');
   });
 
-  it('should have association documentation', () => {
+  it('should have association documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -181,7 +181,7 @@ describe('when building association without extension', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -190,7 +190,7 @@ describe('when building association without extension', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property', () => {
+  it('should have second domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -199,7 +199,7 @@ describe('when building association without extension', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property as identity property', () => {
+  it('should have second domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -209,9 +209,9 @@ describe('when building association without extension', () => {
   });
 });
 
-describe('when building duplicate associations', () => {
+describe('when building duplicate associations', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -249,19 +249,19 @@ describe('when building duplicate associations', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(validationFailures.length).toBe(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot(
@@ -282,9 +282,9 @@ describe('when building duplicate associations', () => {
   });
 });
 
-describe('when building association with additional identity property', () => {
+describe('when building association with additional identity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
@@ -312,11 +312,11 @@ describe('when building association with additional identity property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have three properties', () => {
+  it('should have three properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(3);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -324,7 +324,7 @@ describe('when building association with additional identity property', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -332,7 +332,7 @@ describe('when building association with additional identity property', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property', () => {
+  it('should have second domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -340,7 +340,7 @@ describe('when building association with additional identity property', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have second domain entity property as identity property', () => {
+  it('should have second domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -348,7 +348,7 @@ describe('when building association with additional identity property', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have other domain entity property', () => {
+  it('should have other domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
@@ -356,7 +356,7 @@ describe('when building association with additional identity property', () => {
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
-  it('should have other domain entity property as identity property', () => {
+  it('should have other domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
@@ -365,9 +365,9 @@ describe('when building association with additional identity property', () => {
   });
 });
 
-describe('when building association with no association name', () => {
+describe('when building association with no association name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -400,18 +400,18 @@ describe('when building association with no association name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build association', () => {
+  it('should not build association', (): void => {
     expect(namespace.entity.association.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with lowercase association name', () => {
+describe('when building association with lowercase association name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -444,18 +444,18 @@ describe('when building association with lowercase association name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build association', () => {
+  it('should not build association', (): void => {
     expect(namespace.entity.association.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with no documentation', () => {
+describe('when building association with no documentation', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -486,39 +486,39 @@ describe('when building association with no documentation', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -528,7 +528,7 @@ describe('when building association with no documentation', () => {
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -538,7 +538,7 @@ describe('when building association with no documentation', () => {
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have second domain entity property', () => {
+  it('should have second domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -548,7 +548,7 @@ describe('when building association with no documentation', () => {
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have second domain entity property as identity property', () => {
+  it('should have second domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -558,14 +558,14 @@ describe('when building association with no documentation', () => {
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with no domain entity property', () => {
+describe('when building association with no domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -597,42 +597,42 @@ describe('when building association with no domain entity property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have no property', () => {
+  it('should have no property', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with no documentation in the first domain entity', () => {
+describe('when building association with no documentation in the first domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -666,39 +666,39 @@ describe('when building association with no documentation in the first domain en
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -708,7 +708,7 @@ describe('when building association with no documentation in the first domain en
     expect(domainEntityProperty.documentation).toBe('');
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -718,7 +718,7 @@ describe('when building association with no documentation in the first domain en
     expect(domainEntityProperty.documentation).toBe('');
   });
 
-  it('should have second domain entity property', () => {
+  it('should have second domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -728,7 +728,7 @@ describe('when building association with no documentation in the first domain en
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have second domain entity property as identity property', () => {
+  it('should have second domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -738,14 +738,14 @@ describe('when building association with no documentation in the first domain en
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with no documentation in the second domain entity', () => {
+describe('when building association with no documentation in the second domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -779,39 +779,39 @@ describe('when building association with no documentation in the second domain e
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -821,7 +821,7 @@ describe('when building association with no documentation in the second domain e
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -831,7 +831,7 @@ describe('when building association with no documentation in the second domain e
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have second domain entity property with no documentation', () => {
+  it('should have second domain entity property with no documentation', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -841,7 +841,7 @@ describe('when building association with no documentation in the second domain e
     expect(domainEntityProperty.documentation).toBe('');
   });
 
-  it('should have second domain entity property as identity property with no documentation', () => {
+  it('should have second domain entity property as identity property with no documentation', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -851,14 +851,14 @@ describe('when building association with no documentation in the second domain e
     expect(domainEntityProperty.documentation).toBe('');
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with invalid trailing text', () => {
+describe('when building association with invalid trailing text', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -893,39 +893,39 @@ describe('when building association with invalid trailing text', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(namespace.entity.association.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociation(namespace.entity, entityName)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
+  it('should have two properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(2);
   });
 
-  it('should have first domain entity property', () => {
+  it('should have first domain entity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -935,7 +935,7 @@ describe('when building association with invalid trailing text', () => {
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have first domain entity property as identity property', () => {
+  it('should have first domain entity property as identity property', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
@@ -945,7 +945,7 @@ describe('when building association with invalid trailing text', () => {
     expect(domainEntityProperty.documentation).toBe(documentation2);
   });
 
-  it('should have second domain entity property with', () => {
+  it('should have second domain entity property with', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -955,7 +955,7 @@ describe('when building association with invalid trailing text', () => {
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have second domain entity property as identity property with', () => {
+  it('should have second domain entity property as identity property with', (): void => {
     const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
@@ -965,14 +965,14 @@ describe('when building association with invalid trailing text', () => {
     expect(domainEntityProperty.documentation).toBe(documentation3);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association source map', () => {
+describe('when building association source map', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -1005,37 +1005,37 @@ describe('when building association source map', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have an allowPrimaryKeyUpdates property', () => {
+  it('should have an allowPrimaryKeyUpdates property', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
   });
 
-  it('should have a documentation property', () => {
+  it('should have a documentation property', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have two identity properties', () => {
+  it('should have two identity properties', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.identityProperties).toBeDefined();
     expect(getAssociation(namespace.entity, entityName).sourceMap.identityProperties).toHaveLength(2);
   });
 
-  it('should have a metaEdId property', () => {
+  it('should have a metaEdId property', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have a metaEdName property', () => {
+  it('should have a metaEdName property', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have a type property', () => {
+  it('should have a type property', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have source map data', () => {
+  it('should have source map data', (): void => {
     expect(getAssociation(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 
-  it('should have two identity properties with sourceMaps', () => {
-    const properties: Array<EntityProperty> = getAssociation(namespace.entity, entityName).identityProperties;
+  it('should have two identity properties with sourceMaps', (): void => {
+    const properties: EntityProperty[] = getAssociation(namespace.entity, entityName).identityProperties;
     expect(properties[0].sourceMap).toMatchSnapshot('Property 0');
     expect(properties[1].sourceMap).toMatchSnapshot('Property 1');
   });

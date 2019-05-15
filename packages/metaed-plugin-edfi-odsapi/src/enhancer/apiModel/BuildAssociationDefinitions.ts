@@ -10,19 +10,16 @@ import { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { buildApiProperty } from './BuildApiProperty';
 
 function findAggregateWithEntity(
-  aggregates: Array<Aggregate>,
+  aggregates: Aggregate[],
   entityTableSchema: string,
   entityTableName: string,
 ): Aggregate | null {
-  const aggregatesWithEntityTable: Array<Aggregate> = aggregates.reduce(
-    (result: Array<Aggregate>, currentAggregate: Aggregate) => {
-      const inThisAggregate: boolean = currentAggregate.entityTables.some(
-        (e: EntityTable) => e.schema === entityTableSchema && e.table === entityTableName,
-      );
-      return inThisAggregate ? result.concat(currentAggregate) : result;
-    },
-    [],
-  );
+  const aggregatesWithEntityTable: Aggregate[] = aggregates.reduce((result: Aggregate[], currentAggregate: Aggregate) => {
+    const inThisAggregate: boolean = currentAggregate.entityTables.some(
+      (e: EntityTable) => e.schema === entityTableSchema && e.table === entityTableName,
+    );
+    return inThisAggregate ? result.concat(currentAggregate) : result;
+  }, []);
   return aggregatesWithEntityTable.length === 1 ? aggregatesWithEntityTable[0] : null;
 }
 
@@ -30,7 +27,7 @@ function cardinalityFrom(
   isIdentifying: boolean,
   foreignKey: ForeignKey,
   schemasTables: Map<string, Map<string, Table>>,
-  domainMetadataAggregatesForNamespace: Array<Aggregate>,
+  domainMetadataAggregatesForNamespace: Aggregate[],
 ): AssociationDefinitionCardinality {
   if (foreignKey.sourceReference.isSubclassRelationship) return 'OneToOneInheritance';
   if (foreignKey.sourceReference.isExtensionRelationship) return 'OneToOneExtension';
@@ -62,7 +59,7 @@ function cardinalityFrom(
   );
   if (rootAggregate == null) return 'OneToZeroOrMore';
 
-  const childEntitySearch: Array<EntityTable> = rootAggregate.entityTables.filter(
+  const childEntitySearch: EntityTable[] = rootAggregate.entityTables.filter(
     (et: EntityTable) => et.table === foreignKey.parentTableName && et.schema === foreignKey.parentTableSchema,
   );
   if (childEntitySearch.length !== 1) return 'OneToZeroOrMore';
@@ -75,7 +72,7 @@ function getPrimaryEntityProperties(
   foreignKey: ForeignKey,
   schemasTables: Map<string, Map<string, Table>>,
   isIdentifying: boolean,
-): Array<ApiProperty> {
+): ApiProperty[] {
   const foreignSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.foreignTableSchema);
   if (foreignSchemaTableMap == null)
     throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.foreignTableSchema}'.`);
@@ -86,7 +83,7 @@ function getPrimaryEntityProperties(
   // maintain foreign key column order
   return foreignKey.foreignTableColumnNames
     .map((columnName: string) => foreignTable.columns.filter(c => c.name === columnName))
-    .map((columnArray: Array<Column>) => columnArray[0])
+    .map((columnArray: Column[]) => columnArray[0])
     .map((c: Column) => ({ ...buildApiProperty(c), isIdentifying }));
 }
 
@@ -97,7 +94,7 @@ function buildApiPropertyWithServerAssignedOverride(
   foreignKey: ForeignKey,
   schemasTables: Map<string, Map<string, Table>>,
   isIdentifying: boolean,
-  domainMetadataAggregatesForNamespace: Array<Aggregate>,
+  domainMetadataAggregatesForNamespace: Aggregate[],
 ): ApiProperty {
   const result: ApiProperty = { ...buildApiProperty(column), isIdentifying };
   const associationDefinitionCardinality: AssociationDefinitionCardinality = cardinalityFrom(
@@ -133,8 +130,8 @@ function getSecondaryEntityProperties(
   foreignKey: ForeignKey,
   schemasTables: Map<string, Map<string, Table>>,
   isIdentifying: boolean,
-  domainMetadataAggregatesForNamespace: Array<Aggregate>,
-): Array<ApiProperty> {
+  domainMetadataAggregatesForNamespace: Aggregate[],
+): ApiProperty[] {
   const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTableSchema);
   if (parentSchemaTableMap == null)
     throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTableSchema}'.`);
@@ -145,7 +142,7 @@ function getSecondaryEntityProperties(
   // maintain foreign key column order
   return foreignKey.parentTableColumnNames
     .map((columnName: string) => parentTable.columns.filter(c => c.name === columnName))
-    .map((columnArray: Array<Column>) => columnArray[0])
+    .map((columnArray: Column[]) => columnArray[0])
     .map((c: Column) =>
       buildApiPropertyWithServerAssignedOverride(
         c,
@@ -165,7 +162,7 @@ function isIdentifyingForeignKey(foreignKey: ForeignKey, schemasTables: Map<stri
   const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTableName);
   if (parentTable == null)
     throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
-  const primaryKeyColumnNames: Array<string> = parentTable.primaryKeys.map((c: Column) => c.name);
+  const primaryKeyColumnNames: string[] = parentTable.primaryKeys.map((c: Column) => c.name);
 
   return foreignKey.parentTableColumnNames.every(foreignKeyColumnName =>
     primaryKeyColumnNames.includes(foreignKeyColumnName),
@@ -187,7 +184,7 @@ function isRequiredFrom(
   if (parentTable == null)
     throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
 
-  const parentTableForeignKeyColumns: Array<Column> = parentTable.columns.filter((c: Column) =>
+  const parentTableForeignKeyColumns: Column[] = parentTable.columns.filter((c: Column) =>
     foreignKey.parentTableColumnNames.includes(c.name),
   );
   return parentTableForeignKeyColumns.every((c: Column) => !c.isNullable);
@@ -202,10 +199,9 @@ function allTablesInNamespacesBySchema(metaEd: MetaEdEnvironment): Map<string, M
 }
 
 // Association definitions are the ODS foreign key definitions for a namespace
-export function buildAssociationDefinitions(metaEd: MetaEdEnvironment, namespace: Namespace): Array<AssociationDefinition> {
-  const result: Array<AssociationDefinition> = [];
-  const domainMetadataAggregatesForNamespace: Array<Aggregate> = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi)
-    .aggregates;
+export function buildAssociationDefinitions(metaEd: MetaEdEnvironment, namespace: Namespace): AssociationDefinition[] {
+  const result: AssociationDefinition[] = [];
+  const domainMetadataAggregatesForNamespace: Aggregate[] = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
 
   const schemasTables: Map<string, Map<string, Table>> = allTablesInNamespacesBySchema(metaEd);
 

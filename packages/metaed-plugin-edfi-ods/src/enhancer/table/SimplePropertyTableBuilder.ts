@@ -19,9 +19,9 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       parentIsRequired: boolean | null,
     ): void {
       const columnCreator: ColumnCreator = factory.columnCreatorFor(property);

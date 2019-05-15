@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceLearningResourceMetadataURI table', () => {
+describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceLearningResourceMetadataURI table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -36,14 +36,14 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
     enhance(metaEd);
   });
 
-  it('should rename DerivativeSourceLearningResourceMetadataURI column to LearningResourceMetadataURI', () => {
+  it('should rename DerivativeSourceLearningResourceMetadataURI column to LearningResourceMetadataURI', (): void => {
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI) as Table).columns,
     );
     expect(column.name).toBe(learningResourceMetadataURI);
   });
 
-  it('should set column length', () => {
+  it('should set column length', (): void => {
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI) as Table).columns,
     );
@@ -52,7 +52,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 });
 
-describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceURI table', () => {
+describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceURI table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -78,14 +78,14 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
     enhance(metaEd);
   });
 
-  it('should rename DerivativeSourceURI column to URI', () => {
+  it('should rename DerivativeSourceURI column to URI', (): void => {
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
     );
     expect(column.name).toBe(uri);
   });
 
-  it('should set column length', () => {
+  it('should set column length', (): void => {
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
     );

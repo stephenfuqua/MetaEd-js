@@ -9,10 +9,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
 
-describe('when association extension extends association', () => {
+describe('when association extension extends association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -44,20 +44,20 @@ describe('when association extension extends association', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association extension extends association subclass', () => {
+describe('when association extension extends association subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -95,19 +95,19 @@ describe('when association extension extends association subclass', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association extension extends an invalid identifier', () => {
+describe('when association extension extends an invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -138,11 +138,11 @@ describe('when association extension extends an invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass');
     expect(failures[0].category).toBe('error');
@@ -151,10 +151,10 @@ describe('when association extension extends an invalid identifier', () => {
   });
 });
 
-describe('when association extension specifies wrong namespace', () => {
+describe('when association extension specifies wrong namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -185,11 +185,11 @@ describe('when association extension specifies wrong namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass');
     expect(failures[0].category).toBe('error');

@@ -6,7 +6,7 @@ import { formatAndPrependHeader, registerPartials, template, formatVersionForSch
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   registerPartials();
 
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const schema: SchemaContainer = (namespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;

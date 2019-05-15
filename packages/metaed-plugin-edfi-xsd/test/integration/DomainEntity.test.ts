@@ -10,7 +10,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for domain entity', () => {
+describe('when generating xsd for domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const sample = 'Sample';
@@ -38,25 +38,25 @@ describe('when generating xsd for domain entity', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='Sample']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity reference', () => {
+  it('should generate domain entity reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity identity', () => {
+  it('should generate domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should not generate domain entity lookup', () => {
+  it('should not generate domain entity lookup', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleLookupType']", coreResult);
     expect(elements).toHaveLength(0);
   });
 });
 
-describe('when generating xsd for domain entity with inline common type as part of primary key', () => {
+describe('when generating xsd for domain entity with inline common type as part of primary key', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const sample = 'Sample';
@@ -92,19 +92,19 @@ describe('when generating xsd for domain entity with inline common type as part 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='Sample']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity reference', () => {
+  it('should generate domain entity reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity identity', () => {
+  it('should generate domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should include inline common type in identity type', () => {
+  it('should include inline common type in identity type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='SampleIdentityType']/xs:sequence/xs:element[@name='Property2']",
       coreResult,
@@ -113,7 +113,7 @@ describe('when generating xsd for domain entity with inline common type as part 
   });
 });
 
-describe('when generating xsd for domain entity in extension namespace with reference to core domain entity', () => {
+describe('when generating xsd for domain entity in extension namespace with reference to core domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -159,51 +159,51 @@ describe('when generating xsd for domain entity in extension namespace with refe
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate core domain entity reference', () => {
+  it('should generate core domain entity reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate core domain entity identity', () => {
+  it('should generate core domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should include core domain entity primary key', () => {
+  it('should include core domain entity primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityPk']",
       coreResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate extension domain entity reference', () => {
+  it('should generate extension domain entity reference', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityReferenceType']",
       extensionResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate extension domain entity identity', () => {
+  it('should generate extension domain entity identity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityIdentityType']",
       extensionResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate extention domain entity primary key', () => {
+  it('should generate extention domain entity primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityPk']",
       extensionResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate extenion domain entity reference to core entity', () => {
+  it('should generate extenion domain entity reference to core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityReference'][@type='CoreEntityReferenceType']",
       extensionResult,
@@ -211,7 +211,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     expect(elements).toHaveLength(1);
   });
 });
-describe('when generating xsd for domain entity with queryable only field', () => {
+describe('when generating xsd for domain entity with queryable only field', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const assessment = 'Assessment';
@@ -247,26 +247,26 @@ describe('when generating xsd for domain entity with queryable only field', () =
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='Assessment']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity identity', () => {
+  it('should generate domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity lookup', () => {
+  it('should generate domain entity lookup', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentLookupType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity lookup in reference type', () => {
+  it('should generate domain entity lookup in reference type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']",
       coreResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity reference in lookup type', () => {
+  it('should generate domain entity reference in lookup type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='FooReference']",
       coreResult,
@@ -274,7 +274,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
     expect(elements).toHaveLength(1);
   });
 });
-describe('when generating xsd for domain entity with queryable field', () => {
+describe('when generating xsd for domain entity with queryable field', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const assessment = 'Assessment';
@@ -305,26 +305,26 @@ describe('when generating xsd for domain entity with queryable field', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='Assessment']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity identity', () => {
+  it('should generate domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity lookup', () => {
+  it('should generate domain entity lookup', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentLookupType']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate domain entity lookup in reference type', () => {
+  it('should generate domain entity lookup in reference type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']",
       coreResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate field reference in lookup type', () => {
+  it('should generate field reference in lookup type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='Foo']",
       coreResult,
@@ -333,7 +333,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
   });
 });
 
-describe('when generating xsd for domain entity with queryable field', () => {
+describe('when generating xsd for domain entity with queryable field', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const commonStringReference = 'CommonStringReference';
@@ -374,18 +374,18 @@ describe('when generating xsd for domain entity with queryable field', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='Sample']", coreResult);
     expect(elements).toHaveLength(1);
   });
-  it('should generate shared property', () => {
+  it('should generate shared property', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='Sample']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedProperty' and @type='CommonStringReference']",
       coreResult,
     );
     expect(elements).toHaveLength(1);
   });
-  it('should generate correct simple type for common string', () => {
+  it('should generate correct simple type for common string', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='CommonStringReference']/xs:annotation/xs:appinfo/ann:TypeGroup",
       coreResult,
@@ -394,7 +394,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
   });
 });
 
-describe('when generating xsd for abstract entity with identity property', () => {
+describe('when generating xsd for abstract entity with identity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const abstractEntityName = 'AbstractEntityName';
@@ -424,12 +424,12 @@ describe('when generating xsd for abstract entity with identity property', () =>
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect(`/xs:schema/xs:complexType[@name='${abstractEntityName}']`, coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should not generate identity property', () => {
+  it('should not generate identity property', (): void => {
     const elements = xpathSelect(
       `/xs:schema/xs:complexType[@name='${abstractEntityName}']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='${pkProperty}']`,
       coreResult,
@@ -437,7 +437,7 @@ describe('when generating xsd for abstract entity with identity property', () =>
     expect(elements).toHaveLength(0);
   });
 
-  it('should generate non identity property', () => {
+  it('should generate non identity property', (): void => {
     const elements = xpathSelect(
       `/xs:schema/xs:complexType[@name='${abstractEntityName}']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='${stringPropertyName}']`,
       coreResult,

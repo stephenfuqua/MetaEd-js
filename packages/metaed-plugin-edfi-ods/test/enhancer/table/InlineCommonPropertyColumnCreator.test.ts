@@ -5,12 +5,12 @@ import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorF
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when creating columns for inline common with is collection property', () => {
+describe('when creating columns for inline common with is collection property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const length = '50';
   let property: StringProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     const commonName = 'InlineCommonName';
@@ -55,19 +55,19 @@ describe('when creating columns for inline common with is collection property', 
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
   });
 
-  it('should return no columns', () => {
+  it('should return no columns', (): void => {
     expect(columns).toHaveLength(0);
   });
 });
 
-describe('when creating columns for inline common with only one property', () => {
+describe('when creating columns for inline common with only one property', (): void => {
   const contextName = 'ContextName';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const propertyContextName = 'PropertyContextName';
   const length = '50';
   let property: StringProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     const commonName = 'InlineCommonName';
@@ -112,7 +112,7 @@ describe('when creating columns for inline common with only one property', () =>
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
   });
 
-  it('should return a single column', () => {
+  it('should return a single column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
     expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
@@ -126,7 +126,7 @@ describe('when creating columns for inline common with only one property', () =>
   });
 });
 
-describe('when creating columns for inline common with two properties', () => {
+describe('when creating columns for inline common with two properties', (): void => {
   const contextName = 'ContextName';
   const stringPropertyName = 'StringPropertyName';
   const stringPropertyContextName = 'StringPropertyContextName';
@@ -136,7 +136,7 @@ describe('when creating columns for inline common with two properties', () => {
   const propertyDocumentation = 'PropertyDocumentation';
   let stringProperty: StringProperty;
   let integerProperty: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     const commonName = 'InlineCommonName';
@@ -195,11 +195,11 @@ describe('when creating columns for inline common with two properties', () => {
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
   });
 
-  it('should return two columns', () => {
+  it('should return two columns', (): void => {
     expect(columns).toHaveLength(2);
   });
 
-  it('should return a string column', () => {
+  it('should return a string column', (): void => {
     expect(columns[0].type).toBe('string');
     expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
     expect(columns[0].name).toBe(contextName + stringPropertyContextName + stringPropertyName);
@@ -211,7 +211,7 @@ describe('when creating columns for inline common with two properties', () => {
     expect(columns[0].sourceEntityProperties[0]).toBe(stringProperty);
   });
 
-  it('should return an integer column', () => {
+  it('should return an integer column', (): void => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].dataType).toBe('[INT]');
     expect(columns[1].name).toBe(contextName + integerPropertyContextName + integerPropertyName);

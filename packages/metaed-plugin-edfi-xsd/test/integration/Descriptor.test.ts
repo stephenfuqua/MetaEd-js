@@ -8,7 +8,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for descriptor', () => {
+describe('when generating xsd for descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -36,18 +36,18 @@ describe('when generating xsd for descriptor', () => {
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate descriptor', () => {
+  it('should generate descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptor']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate descriptor reference', () => {
+  it('should generate descriptor reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptorReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 });
 
-describe('when generating xsd for domain entity in extension namespace with reference to core descriptor', () => {
+describe('when generating xsd for domain entity in extension namespace with reference to core descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -92,22 +92,22 @@ describe('when generating xsd for domain entity in extension namespace with refe
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core descriptor', () => {
+  it('should generate core descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptor']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity reference', () => {
+  it('should generate core domain entity reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptorReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity'][@type='CoreEntityDescriptorReferenceType']",
       extensionResult,
@@ -116,7 +116,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   });
 });
 
-describe('when generating xsd for domain entity in extension namespace with reference to extension descriptor', () => {
+describe('when generating xsd for domain entity in extension namespace with reference to extension descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -166,22 +166,22 @@ describe('when generating xsd for domain entity in extension namespace with refe
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate extension descriptor', () => {
+  it('should generate extension descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityDescriptor']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity', () => {
+  it('should generate extension domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to extension descriptor', () => {
+  it('should generate extension domain entity reference to extension descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements: any = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntityDescriptorReferenceType']/xs:annotation/xs:appinfo/ann:Descriptor",
       extensionResult,
@@ -190,7 +190,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   });
 });
 
-describe('when generating xsd for descriptor in extension namespace with reference to core entity', () => {
+describe('when generating xsd for descriptor in extension namespace with reference to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -237,17 +237,17 @@ describe('when generating xsd for descriptor in extension namespace with referen
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension descriptor', () => {
+  it('should generate extension descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityDescriptor']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to extension descriptor', () => {
+  it('should generate extension domain entity reference to extension descriptor', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityDescriptor']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityReference'][@type='CoreEntityReferenceType']",
       extensionResult,
@@ -255,7 +255,7 @@ describe('when generating xsd for descriptor in extension namespace with referen
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityDescriptor']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityMap'][@type='EXTENSION-ExtensionEntityMapType']",
       extensionResult,
@@ -263,12 +263,12 @@ describe('when generating xsd for descriptor in extension namespace with referen
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityMapType']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity reference to core entity', () => {
+  it('should generate extension domain entity reference to core entity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType/xs:restriction/xs:enumeration[@value='DescriptorItem']",
       extensionResult,

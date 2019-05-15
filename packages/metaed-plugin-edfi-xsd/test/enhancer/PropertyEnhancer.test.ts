@@ -32,7 +32,7 @@ function createRepositoryEntityWithProperty(metaEd: MetaEdEnvironment, namespace
   addProperty(metaEd.propertyIndex, property);
 }
 
-describe('when enhancing core string property', () => {
+describe('when enhancing core string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -50,13 +50,13 @@ describe('when enhancing core string property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing core string property with a "role name"', () => {
+describe('when enhancing core string property with a "role name"', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -76,13 +76,13 @@ describe('when enhancing core string property with a "role name"', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(`${roleName}${propertyName}`);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing core string property with a "role name" with same name as metaed name', () => {
+describe('when enhancing core string property with a "role name" with same name as metaed name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -101,13 +101,13 @@ describe('when enhancing core string property with a "role name" with same name 
     enhance(metaEd);
   });
 
-  it('should ignore role name on xsdName', () => {
+  it('should ignore role name on xsdName', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing extension string property', () => {
+describe('when enhancing extension string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -132,13 +132,13 @@ describe('when enhancing extension string property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`EXTENSION-${propertyName}`);
   });
 });
 
-describe('when enhancing core association property', () => {
+describe('when enhancing core association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -156,13 +156,13 @@ describe('when enhancing core association property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(`${propertyName}Reference`);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}ReferenceType`);
   });
 });
 
-describe('when enhancing extension association property', () => {
+describe('when enhancing extension association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -187,13 +187,13 @@ describe('when enhancing extension association property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(`${propertyName}Reference`);
     expect(property.data.edfiXsd.xsdType).toBe(`EXTENSION-${propertyName}ReferenceType`);
   });
 });
 
-describe('when enhancing extension association property referring to core entity', () => {
+describe('when enhancing extension association property referring to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -227,13 +227,13 @@ describe('when enhancing extension association property referring to core entity
     enhance(metaEd);
   });
 
-  it('should use parent to determine xsdType', () => {
+  it('should use parent to determine xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(`${propertyName}Reference`);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}ReferenceType`);
   });
 });
 
-describe('when enhancing core descriptor property', () => {
+describe('when enhancing core descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -251,13 +251,13 @@ describe('when enhancing core descriptor property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}DescriptorReferenceType`);
   });
 });
 
-describe('when enhancing extension descriptor property', () => {
+describe('when enhancing extension descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -282,13 +282,13 @@ describe('when enhancing extension descriptor property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`EXTENSION-${propertyName}DescriptorReferenceType`);
   });
 });
 
-describe('when enhancing extension descriptor property referring to core entity', () => {
+describe('when enhancing extension descriptor property referring to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -322,13 +322,13 @@ describe('when enhancing extension descriptor property referring to core entity'
     enhance(metaEd);
   });
 
-  it('should use parent to determine xsdType', () => {
+  it('should use parent to determine xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}DescriptorReferenceType`);
   });
 });
 
-describe('when enhancing enumeration property', () => {
+describe('when enhancing enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -346,13 +346,13 @@ describe('when enhancing enumeration property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}Type`);
   });
 });
 
-describe('when enhancing enumeration property with name ending in "Type"', () => {
+describe('when enhancing enumeration property with name ending in "Type"', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -370,13 +370,13 @@ describe('when enhancing enumeration property with name ending in "Type"', () =>
     enhance(metaEd);
   });
 
-  it('should not add "Type" suffix', () => {
+  it('should not add "Type" suffix', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing common property', () => {
+describe('when enhancing common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -394,13 +394,13 @@ describe('when enhancing common property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(propertyName);
   });
 });
 
-describe('when enhancing extension override common property', () => {
+describe('when enhancing extension override common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -419,7 +419,7 @@ describe('when enhancing extension override common property', () => {
     enhance(metaEd);
   });
 
-  it('should have correct xsdName and xsdType', () => {
+  it('should have correct xsdName and xsdType', (): void => {
     expect(property.data.edfiXsd.xsdName).toBe(propertyName);
     expect(property.data.edfiXsd.xsdType).toBe(`${propertyName}${property.namespace.extensionEntitySuffix}`);
   });

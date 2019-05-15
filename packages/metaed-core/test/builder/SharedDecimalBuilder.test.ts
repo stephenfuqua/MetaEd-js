@@ -7,9 +7,9 @@ import { SharedDecimalSourceMap } from '../../src/model/SharedDecimal';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when building shared decimal in extension namespace', () => {
+describe('when building shared decimal in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -38,55 +38,55 @@ describe('when building shared decimal in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(namespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName)).toBeDefined();
     expect(getSharedDecimal(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 });
 
-describe('when building duplicate shared decimals', () => {
+describe('when building duplicate shared decimals', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -120,20 +120,20 @@ describe('when building duplicate shared decimals', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(namespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName)).toBeDefined();
     expect(getSharedDecimal(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot(
@@ -154,9 +154,9 @@ describe('when building duplicate shared decimals', () => {
   });
 });
 
-describe('when building shared decimal with no shared decimal name', () => {
+describe('when building shared decimal with no shared decimal name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -186,18 +186,18 @@ describe('when building shared decimal with no shared decimal name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build shared decimal', () => {
+  it('should not build shared decimal', (): void => {
     expect(namespace.entity.sharedInteger.size).toBe(0);
   });
 
-  it('should have missing id error', () => {
+  it('should have missing id error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with lowercase shared decimal name', () => {
+describe('when building shared decimal with lowercase shared decimal name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -227,18 +227,18 @@ describe('when building shared decimal with lowercase shared decimal name', () =
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build no shared decimal', () => {
+  it('should build no shared decimal', (): void => {
     expect(namespace.entity.sharedDecimal.size).toBe(0);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no documentation', () => {
+describe('when building shared decimal with no documentation', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -266,46 +266,46 @@ describe('when building shared decimal with no documentation', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should not have documentation', () => {
+  it('should not have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no metaed id', () => {
+describe('when building shared decimal with no metaed id', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -332,14 +332,14 @@ describe('when building shared decimal with no metaed id', () => {
       .sendToListener(builder);
   });
 
-  it('should have token recognition error', () => {
+  it('should have token recognition error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no total digits property', () => {
+describe('when building shared decimal with no total digits property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -370,46 +370,46 @@ describe('when building shared decimal with no total digits property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should not have total digits', () => {
+  it('should not have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe('');
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no total digits value', () => {
+describe('when building shared decimal with no total digits value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -442,46 +442,46 @@ describe('when building shared decimal with no total digits value', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits because decimal places token was ignored', () => {
+  it('should have total digits because decimal places token was ignored', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(decimalPlaces);
   });
 
-  it('should not have decimal places because it was consumed by total digits', () => {
+  it('should not have decimal places because it was consumed by total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe('');
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
-  it('should have extraneous input and mismatched input error', () => {
+  it('should have extraneous input and mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no decimal places property', () => {
+describe('when building shared decimal with no decimal places property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -512,46 +512,46 @@ describe('when building shared decimal with no decimal places property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should not have decimal places', () => {
+  it('should not have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe('');
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
-  it('should have mismatched input and extraneous input error', () => {
+  it('should have mismatched input and extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no min value', () => {
+describe('when building shared decimal with no min value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -584,46 +584,46 @@ describe('when building shared decimal with no min value', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue because max value token was ignored', () => {
+  it('should have minValue because max value token was ignored', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(`max value${maxValue}`);
   });
 
-  it('should not have maxValue because it was consumed by min value', () => {
+  it('should not have maxValue because it was consumed by min value', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe('');
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with no max value', () => {
+describe('when building shared decimal with no max value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -656,46 +656,46 @@ describe('when building shared decimal with no max value', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should not have maxValue', () => {
+  it('should not have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe('');
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal with invalid trailing text', () => {
+describe('when building shared decimal with invalid trailing text', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -727,46 +727,46 @@ describe('when building shared decimal with invalid trailing text', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared decimal source map', () => {
+describe('when building shared decimal source map', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -796,42 +796,42 @@ describe('when building shared decimal source map', () => {
   });
 
   // SharedSimpleSourceMap
-  it('should have type', () => {
+  it('should have type', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have metaEdName', () => {
+  it('should have metaEdName', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
 
-  it('should have metaEdId', () => {
+  it('should have metaEdId', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
   // SharedDecimalSourceMap
-  it('should have totalDigits', () => {
+  it('should have totalDigits', (): void => {
     expect((getSharedDecimal(namespace.entity, entityName).sourceMap as SharedDecimalSourceMap).totalDigits).toBeDefined();
   });
 
-  it('should have decimalPlaces', () => {
+  it('should have decimalPlaces', (): void => {
     expect((getSharedDecimal(namespace.entity, entityName).sourceMap as SharedDecimalSourceMap).decimalPlaces).toBeDefined();
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect((getSharedDecimal(namespace.entity, entityName).sourceMap as SharedDecimalSourceMap).minValue).toBeDefined();
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect((getSharedDecimal(namespace.entity, entityName).sourceMap as SharedDecimalSourceMap).maxValue).toBeDefined();
   });
 
-  it('should have line, column, text for each property', () => {
+  it('should have line, column, text for each property', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 });

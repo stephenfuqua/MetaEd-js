@@ -9,7 +9,7 @@ import {
 } from '../../../src/model/database/Column';
 import { Column } from '../../../src/model/database/Column';
 
-describe('when merging column constraints on existing primary key column', () => {
+describe('when merging column constraints on existing primary key column', (): void => {
   const integerColumnName1 = 'IntegerColumnName1';
   let column: Column;
 
@@ -49,36 +49,36 @@ describe('when merging column constraints on existing primary key column', () =>
     );
   });
 
-  it('should return the existing column', () => {
+  it('should return the existing column', (): void => {
     expect(column.name).toBe(integerColumnName1);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isPartOfAlternateKey).toBe(true);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isUniqueIndex).toBe(true);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.isNullable).toBe(false);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(3);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(3);
   });
 });
 
-describe('when merging column constraints on received primary key column', () => {
+describe('when merging column constraints on received primary key column', (): void => {
   const integerColumnName1 = 'IntegerColumnName1';
   let column: Column;
 
@@ -118,36 +118,36 @@ describe('when merging column constraints on received primary key column', () =>
     );
   });
 
-  it('should return the existing column', () => {
+  it('should return the existing column', (): void => {
     expect(column.name).toBe(integerColumnName1);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isPartOfAlternateKey).toBe(true);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isUniqueIndex).toBe(true);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.isNullable).toBe(false);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(3);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(3);
   });
 });
 
-describe('when merging column constraints on existing non nullable column', () => {
+describe('when merging column constraints on existing non nullable column', (): void => {
   const integerColumnName1 = 'IntegerColumnName1';
   let column: Column;
 
@@ -187,36 +187,36 @@ describe('when merging column constraints on existing non nullable column', () =
     );
   });
 
-  it('should return the existing column', () => {
+  it('should return the existing column', (): void => {
     expect(column.name).toBe(integerColumnName1);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isPartOfAlternateKey).toBe(false);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(false);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isUniqueIndex).toBe(false);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.isNullable).toBe(false);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(3);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(3);
   });
 });
 
-describe('when merging column constraints on received non nullable column', () => {
+describe('when merging column constraints on received non nullable column', (): void => {
   const integerColumnName1 = 'IntegerColumnName1';
   let column: Column;
 
@@ -256,36 +256,36 @@ describe('when merging column constraints on received non nullable column', () =
     );
   });
 
-  it('should return the existing column', () => {
+  it('should return the existing column', (): void => {
     expect(column.name).toBe(integerColumnName1);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isPartOfAlternateKey).toBe(false);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(false);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isUniqueIndex).toBe(false);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.isNullable).toBe(false);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(3);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(3);
   });
 });
 
-describe('when merging column constraints on nullable column', () => {
+describe('when merging column constraints on nullable column', (): void => {
   const integerColumnName1 = 'IntegerColumnName1';
   let column: Column;
 
@@ -325,36 +325,36 @@ describe('when merging column constraints on nullable column', () => {
     );
   });
 
-  it('should return the existing column', () => {
+  it('should return the existing column', (): void => {
     expect(column.name).toBe(integerColumnName1);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isPartOfAlternateKey).toBe(false);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(false);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isUniqueIndex).toBe(false);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.isNullable).toBe(true);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(3);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(3);
   });
 });
 
-describe('when using initialize column', () => {
+describe('when using initialize column', (): void => {
   const mockColumnNamer = jest.fn(() => 'MockColumnNamer');
   const propertyDocumentation = 'PropertyDocumentation';
   const contextPrefix = 'ContextPrefix';
@@ -381,40 +381,40 @@ describe('when using initialize column', () => {
     initializeColumn(column, domainEntityProperty, mockColumnNamer, false);
   });
 
-  it('should call column namer', () => {
+  it('should call column namer', (): void => {
     expect(mockColumnNamer).toBeCalled();
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.description).toBe(propertyDocumentation);
   });
 
-  it('should be part of alternate key', () => {
+  it('should be part of alternate key', (): void => {
     expect(column.isIdentityDatabaseType).toBe(true);
   });
 
-  it('should be part of primary key', () => {
+  it('should be part of primary key', (): void => {
     expect(column.isPartOfPrimaryKey).toBe(true);
   });
 
-  it('should be part of unique index', () => {
+  it('should be part of unique index', (): void => {
     expect(column.isNullable).toBe(true);
   });
 
-  it('should not be nullable', () => {
+  it('should not be nullable', (): void => {
     expect(column.originalContextPrefix).toBe(contextPrefix);
   });
 
-  it('should merge reference contexts', () => {
+  it('should merge reference contexts', (): void => {
     expect(column.isUniqueIndex).toBe(true);
   });
 
-  it('should merge source entity properties', () => {
+  it('should merge source entity properties', (): void => {
     expect(column.sourceEntityProperties[0]).toBe(domainEntityProperty);
   });
 });
 
-describe('when using add source entity property to a column with no existing duplicate', () => {
+describe('when using add source entity property to a column with no existing duplicate', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   let column: Column;
 
@@ -428,13 +428,13 @@ describe('when using add source entity property to a column with no existing dup
     );
   });
 
-  it('should successfully add source entity property', () => {
+  it('should successfully add source entity property', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(1);
     expect(column.sourceEntityProperties[0].metaEdName).toBe(domainEntityPropertyName);
   });
 });
 
-describe('when using add source entity property to a column with existing duplicate', () => {
+describe('when using add source entity property to a column with existing duplicate', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   let column: Column;
 
@@ -454,13 +454,13 @@ describe('when using add source entity property to a column with existing duplic
     );
   });
 
-  it('should reject incoming source entity property', () => {
+  it('should reject incoming source entity property', (): void => {
     expect(column.sourceEntityProperties).toHaveLength(1);
     expect(column.sourceEntityProperties[0].metaEdName).toBe(domainEntityPropertyName);
   });
 });
 
-describe('when using add merged reference context to a column with no existing duplicate', () => {
+describe('when using add merged reference context to a column with no existing duplicate', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   let column: Column;
 
@@ -469,13 +469,13 @@ describe('when using add merged reference context to a column with no existing d
     addMergedReferenceContext(column, domainEntityPropertyName);
   });
 
-  it('should successfully add merged reference context', () => {
+  it('should successfully add merged reference context', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(1);
     expect(column.mergedReferenceContexts[0]).toBe(domainEntityPropertyName);
   });
 });
 
-describe('when using add merged reference context to a column with existing duplicate', () => {
+describe('when using add merged reference context to a column with existing duplicate', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   let column: Column;
 
@@ -485,7 +485,7 @@ describe('when using add merged reference context to a column with existing dupl
     addMergedReferenceContext(column, domainEntityPropertyName);
   });
 
-  it('should reject incoming merged reference context', () => {
+  it('should reject incoming merged reference context', (): void => {
     expect(column.mergedReferenceContexts).toHaveLength(1);
     expect(column.mergedReferenceContexts[0]).toBe(domainEntityPropertyName);
   });

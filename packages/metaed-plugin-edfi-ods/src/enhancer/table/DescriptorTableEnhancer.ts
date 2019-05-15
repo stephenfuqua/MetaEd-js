@@ -30,8 +30,8 @@ const enhancerName = 'DescriptorTableEnhancer';
 const PRIMARY_KEY_DESCRIPTOR =
   'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.';
 
-function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<Table> {
-  const tables: Array<Table> = [];
+function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[] {
+  const tables: Table[] = [];
 
   const mainTable: Table = Object.assign(newTable(), {
     namespace: descriptor.namespace,
@@ -113,7 +113,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
     addForeignKey(mainTable, mapTypeForeignKey);
   }
 
-  const primaryKeys: Array<Column> = collectPrimaryKeys(descriptor, BuildStrategyDefault, columnCreatorFactory);
+  const primaryKeys: Column[] = collectPrimaryKeys(descriptor, BuildStrategyDefault, columnCreatorFactory);
   primaryKeys.push(primaryKey);
   descriptor.data.edfiOds.odsProperties.forEach((property: EntityProperty) => {
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
@@ -125,7 +125,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'descriptor').forEach((entity: ModelBase) => {
-    const tables: Array<Table> = createTables(metaEd, entity as Descriptor);
+    const tables: Table[] = createTables(metaEd, entity as Descriptor);
     entity.data.edfiOds.odsTables = tables;
     addTables(metaEd, tables);
   });

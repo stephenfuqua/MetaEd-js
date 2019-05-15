@@ -3,12 +3,12 @@ import { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-x
 import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 import { ReferenceUsageInfo } from './ReferenceUsageInfo';
 
-export type MergedInterchangeEdfiInterchangeBrief = {
-  interchangeBriefEntities: Array<InterchangeItem>;
-  interchangeBriefExtendedReferences: Array<ReferenceUsageInfo>;
-  interchangeBriefDescriptorReferences: Array<ReferenceUsageInfo>;
+export interface MergedInterchangeEdfiInterchangeBrief {
+  interchangeBriefEntities: InterchangeItem[];
+  interchangeBriefExtendedReferences: ReferenceUsageInfo[];
+  interchangeBriefDescriptorReferences: ReferenceUsageInfo[];
   interchangeBriefMarkdownEscapedDocumentation: string;
-};
+}
 
 const enhancerName = 'MergedInterchangeSetupEnhancer';
 

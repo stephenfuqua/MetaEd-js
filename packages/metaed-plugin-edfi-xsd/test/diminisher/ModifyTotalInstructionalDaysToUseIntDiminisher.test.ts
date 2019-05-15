@@ -6,7 +6,7 @@ import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { enhance } from '../../src/diminisher/ModifyTotalInstructionalDaysToUseIntDiminisher';
 
-describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academic week domain entity', () => {
+describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academic week domain entity', (): void => {
   const intType = 'xs:int';
   let domainEntity: DomainEntity;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -42,12 +42,12 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academi
     enhance(metaEd);
   });
 
-  it('should have type set to int type', () => {
+  it('should have type set to int type', (): void => {
     expect(R.head(R.head(domainEntity.data.edfiXsd.xsdComplexTypes).items).type).toBe(intType);
   });
 });
 
-describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session domain entity', () => {
+describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session domain entity', (): void => {
   const intType = 'xs:int';
   let domainEntity: DomainEntity;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -83,12 +83,12 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session
     enhance(metaEd);
   });
 
-  it('should have type set to int type', () => {
+  it('should have type set to int type', (): void => {
     expect(R.head(R.head(domainEntity.data.edfiXsd.xsdComplexTypes).items).type).toBe(intType);
   });
 });
 
-describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no academic week or session', () => {
+describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no academic week or session', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -132,7 +132,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no
     metaEd.dataStandardVersion = '2.0.0';
   });
 
-  it('should run without error', () => {
+  it('should run without error', (): void => {
     expect(enhance(metaEd).success).toBe(true);
   });
 });

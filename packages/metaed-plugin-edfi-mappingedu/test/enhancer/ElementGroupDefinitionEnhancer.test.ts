@@ -10,8 +10,8 @@ import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRep
 import { ElementGroupDefinition } from '../../src/model/ElementGroupDefinition';
 import { EdFiMappingEduRepository } from '../../src/model/EdFiMappingEduRepository';
 
-describe('when enhancing core', () => {
-  const projectName: string = 'Ed-Fi';
+describe('when enhancing core', (): void => {
+  const projectName = 'Ed-Fi';
   let pluginNamespace: EdFiMappingEduRepository;
 
   // Core | Ed-Fi Core
@@ -30,11 +30,11 @@ describe('when enhancing core', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create one element group definition', () => {
+  it('should create one element group definition', (): void => {
     expect(pluginNamespace.elementGroupDefinitions).toHaveLength(1);
   });
 
-  it('should create core element group definition', () => {
+  it('should create core element group definition', (): void => {
     const elementGroupDefinition: ElementGroupDefinition = pluginNamespace.elementGroupDefinitions[0];
     expect(elementGroupDefinition).toBeDefined();
     expect(elementGroupDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -42,10 +42,10 @@ describe('when enhancing core', () => {
   });
 });
 
-describe('when enhancing extension', () => {
-  const namespaceName: string = 'NamespaceName';
-  const projectName: string = 'ProjectName';
-  const extensionEntitySuffix: string = 'ExtensionEntitySuffix';
+describe('when enhancing extension', (): void => {
+  const namespaceName = 'NamespaceName';
+  const projectName = 'ProjectName';
+  const extensionEntitySuffix = 'ExtensionEntitySuffix';
   let pluginNamespace: EdFiMappingEduRepository;
 
   // NamespaceName | ProjectName ExtensionEntitySuffix
@@ -65,11 +65,11 @@ describe('when enhancing extension', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create one element group definition', () => {
+  it('should create one element group definition', (): void => {
     expect(pluginNamespace.elementGroupDefinitions).toHaveLength(1);
   });
 
-  it('should create extension element group definition', () => {
+  it('should create extension element group definition', (): void => {
     const elementGroupDefinition: ElementGroupDefinition = pluginNamespace.elementGroupDefinitions[0];
     expect(elementGroupDefinition).toBeDefined();
     expect(elementGroupDefinition.elementGroup).toBe(namespaceName);
@@ -77,12 +77,12 @@ describe('when enhancing extension', () => {
   });
 });
 
-describe('when enhancing core and extension', () => {
+describe('when enhancing core and extension', (): void => {
   const coreNamespaceName: string = dataStandardNamespaceName;
-  const coreProjectName: string = 'Ed-Fi';
-  const extensionNamespaceName: string = 'ExtensionNamespaceName';
-  const extensionProjectName: string = 'ExtensionProjectName';
-  const extensionEntitySuffix: string = 'ExtensionEntitySuffix';
+  const coreProjectName = 'Ed-Fi';
+  const extensionNamespaceName = 'ExtensionNamespaceName';
+  const extensionProjectName = 'ExtensionProjectName';
+  const extensionEntitySuffix = 'ExtensionEntitySuffix';
   let corePluginNamespace: EdFiMappingEduRepository;
   let extensionPluginNamespace: EdFiMappingEduRepository;
 
@@ -111,19 +111,19 @@ describe('when enhancing core and extension', () => {
     extensionPluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, extensionNamespace) as any;
   });
 
-  it('should create two element group definitions', () => {
+  it('should create two element group definitions', (): void => {
     expect(corePluginNamespace.elementGroupDefinitions).toHaveLength(1);
     expect(extensionPluginNamespace.elementGroupDefinitions).toHaveLength(1);
   });
 
-  it('should create core element group definition', () => {
+  it('should create core element group definition', (): void => {
     const elementGroupDefinition: ElementGroupDefinition = corePluginNamespace.elementGroupDefinitions[0];
     expect(elementGroupDefinition).toBeDefined();
     expect(elementGroupDefinition.elementGroup).toBe(dataStandardElementGroupName);
     expect(elementGroupDefinition.definition).toBe(`${coreProjectName} ${dataStandardElementGroupName}`);
   });
 
-  it('should create extension element group definition', () => {
+  it('should create extension element group definition', (): void => {
     const elementGroupDefinition: ElementGroupDefinition = extensionPluginNamespace.elementGroupDefinitions[0];
     expect(elementGroupDefinition).toBeDefined();
     expect(elementGroupDefinition.elementGroup).toBe(extensionNamespaceName);

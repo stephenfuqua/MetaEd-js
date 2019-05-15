@@ -5,7 +5,7 @@ import { SourceMap } from './SourceMap';
 import { ModelBase } from './ModelBase';
 
 export interface EnumerationSourceMap extends TopLevelEntitySourceMap {
-  enumerationItems: Array<SourceMap>;
+  enumerationItems: SourceMap[];
 }
 
 /**
@@ -20,7 +20,7 @@ export function newEnumerationSourceMap(): EnumerationSourceMap {
 
 export interface Enumeration extends TopLevelEntity {
   sourceMap: EnumerationSourceMap;
-  enumerationItems: Array<EnumerationItem>;
+  enumerationItems: EnumerationItem[];
 }
 
 /**

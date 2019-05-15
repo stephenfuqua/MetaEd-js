@@ -8,7 +8,7 @@ import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 
-describe('when enhancing a domain entity', () => {
+describe('when enhancing a domain entity', (): void => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const namespaceName = 'Namespace';
@@ -52,20 +52,20 @@ describe('when enhancing a domain entity', () => {
     ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
-  it('should add aggregate to namespace', () => {
-    const namespaceAggregates: Array<Aggregate> = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
+  it('should add aggregate to namespace', (): void => {
+    const namespaceAggregates: Aggregate[] = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
     expect(namespaceAggregates).toHaveLength(1);
     expect(namespaceAggregates[0]).toBe(aggregate);
   });
 
-  it('should create aggregate', () => {
+  it('should create aggregate', (): void => {
     expect(aggregate).not.toBeNull();
     expect(aggregate.root).toBe(tableName);
     expect(aggregate.allowPrimaryKeyUpdates).toBe(false);
     expect(aggregate.isExtension).toBe(false);
   });
 
-  it('should create entity tables', () => {
+  it('should create entity tables', (): void => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
@@ -74,7 +74,7 @@ describe('when enhancing a domain entity', () => {
   });
 });
 
-describe('when enhancing a domain entity that allows primary key updates', () => {
+describe('when enhancing a domain entity that allows primary key updates', (): void => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const namespaceName = 'Namespace';
@@ -119,14 +119,14 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
-  it('should create aggregate', () => {
+  it('should create aggregate', (): void => {
     expect(aggregate).not.toBeNull();
     expect(aggregate.root).toBe(tableName);
     expect(aggregate.allowPrimaryKeyUpdates).toBe(true);
     expect(aggregate.isExtension).toBe(false);
   });
 
-  it('should create entity tables', () => {
+  it('should create entity tables', (): void => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
@@ -135,7 +135,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
   });
 });
 
-describe('when enhancing a domain entity that has a required collection table', () => {
+describe('when enhancing a domain entity that has a required collection table', (): void => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const namespaceName = 'Namespace';
@@ -180,20 +180,20 @@ describe('when enhancing a domain entity that has a required collection table', 
     ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
-  it('should add aggregate to namespace', () => {
-    const namespaceAggregates: Array<Aggregate> = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
+  it('should add aggregate to namespace', (): void => {
+    const namespaceAggregates: Aggregate[] = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
     expect(namespaceAggregates).toHaveLength(1);
     expect(namespaceAggregates[0]).toBe(aggregate);
   });
 
-  it('should create aggregate', () => {
+  it('should create aggregate', (): void => {
     expect(aggregate).not.toBeNull();
     expect(aggregate.root).toBe(tableName);
     expect(aggregate.allowPrimaryKeyUpdates).toBe(false);
     expect(aggregate.isExtension).toBe(false);
   });
 
-  it('should create entity tables', () => {
+  it('should create entity tables', (): void => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();

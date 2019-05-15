@@ -11,26 +11,26 @@ export type ConfigurationSchema = Map<string, JoiSchema>;
 /**
  *
  */
-export type ConfigurationMatches = {
-  entity: Array<ModelType> | ModelType;
-  namespace?: Array<string> | string;
+export interface ConfigurationMatches {
+  entity: ModelType[] | ModelType;
+  namespace?: string[] | string;
   core?: boolean;
   extensions?: boolean;
-  entityName?: Array<string> | string;
-};
+  entityName?: string[] | string;
+}
 
 /**
  *
  */
-export type ConfigurationRule = {
+export interface ConfigurationRule {
   rule: string;
-  matches?: Array<ConfigurationMatches> | ConfigurationMatches;
+  matches?: ConfigurationMatches[] | ConfigurationMatches;
   data: any;
-};
+}
 
-export type ConfigurationStructure = {
-  config: Array<ConfigurationRule> | ConfigurationRule;
-};
+export interface ConfigurationStructure {
+  config: ConfigurationRule[] | ConfigurationRule;
+}
 
 export const configurationStructureSchema: JoiSchema = Joi.object().keys({
   config: Joi.array()

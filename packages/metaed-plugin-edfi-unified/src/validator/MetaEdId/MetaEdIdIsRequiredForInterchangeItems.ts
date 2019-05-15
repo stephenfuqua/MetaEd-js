@@ -1,9 +1,9 @@
 import { Interchange, InterchangeExtension, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { getEntitiesOfTypeForNamespaces, asInterchange } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
-  const namespaces: Array<Namespace> = Array.from(metaEd.namespace.values()).filter(n => !n.isExtension);
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
+  const namespaces: Namespace[] = Array.from(metaEd.namespace.values()).filter(n => !n.isExtension);
   getEntitiesOfTypeForNamespaces(namespaces, 'interchange', 'interchangeExtension').forEach(entity => {
     const interchange: Interchange | InterchangeExtension = asInterchange(entity);
     if (interchange.elements.length === 0 && interchange.identityTemplates.length === 0) return;

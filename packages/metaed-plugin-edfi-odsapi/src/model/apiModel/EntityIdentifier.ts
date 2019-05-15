@@ -1,6 +1,6 @@
-export type EntityIdentifier = {
+export interface EntityIdentifier {
   identifierName: string;
-  identifyingPropertyNames: Array<string>;
+  identifyingPropertyNames: string[];
   isPrimary: boolean;
   isUpdatable: boolean;
-};
+}

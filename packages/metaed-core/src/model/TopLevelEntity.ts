@@ -8,9 +8,9 @@ import { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 
 export interface TopLevelEntitySourceMap extends ModelBaseSourceMap {
-  properties: Array<SourceMap>;
-  identityProperties: Array<SourceMap>;
-  queryableFields: Array<SourceMap>;
+  properties: SourceMap[];
+  identityProperties: SourceMap[];
+  queryableFields: SourceMap[];
   allowPrimaryKeyUpdates: SourceMap;
   baseEntityName: SourceMap;
   baseEntityNamespaceName: SourceMap;
@@ -34,23 +34,23 @@ export function newTopLevelEntitySourceMap() {
 }
 
 export interface TopLevelEntity extends ModelBase {
-  properties: Array<EntityProperty>;
-  identityProperties: Array<EntityProperty>;
-  queryableFields: Array<EntityProperty>;
+  properties: EntityProperty[];
+  identityProperties: EntityProperty[];
+  queryableFields: EntityProperty[];
   typeHumanizedName: string;
   allowPrimaryKeyUpdates: boolean;
   baseEntityName: string;
   baseEntityNamespaceName: string;
   baseEntity: TopLevelEntity | null;
-  extendedBy: Array<TopLevelEntity>;
-  subclassedBy: Array<TopLevelEntity>;
-  outReferences: Array<ReferentialProperty | SimpleProperty>;
-  inReferences: Array<ReferentialProperty | SimpleProperty>;
-  outReferencePaths: Array<Array<ReferentialProperty | SimpleProperty>>;
+  extendedBy: TopLevelEntity[];
+  subclassedBy: TopLevelEntity[];
+  outReferences: (ReferentialProperty | SimpleProperty)[];
+  inReferences: (ReferentialProperty | SimpleProperty)[];
+  outReferencePaths: (ReferentialProperty | SimpleProperty)[][];
   // Map of entities to a list of the out reference paths the entity is in
-  outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>;
+  outReferenceEntitiesMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>;
   // Map of entities to a list of the out reference paths the entity is the endpoint of
-  outReferenceEntityEndpointsMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>;
+  outReferenceEntityEndpointsMap: Map<ModelBase, (ReferentialProperty | SimpleProperty)[][]>;
   sourceMap: TopLevelEntitySourceMap;
 }
 

@@ -4,7 +4,7 @@ import { Namespace } from '../model/Namespace';
 /**
  *
  */
-export type PluginEnvironment = {
+export interface PluginEnvironment {
   shortName: string;
 
   // the plugin-specific namespace partition to the plugin's entity repository
@@ -15,7 +15,7 @@ export type PluginEnvironment = {
 
   // plugin-wide configuration data
   config: any;
-};
+}
 
 /**
  *

@@ -7,7 +7,7 @@ import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../src/model/schema/SimpleType';
 import { enhance } from '../../src/diminisher/ModifyOrderOfPriorityToUsePositiveIntegerDiminisher';
 
-describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes telephone common type', () => {
+describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes telephone common type', (): void => {
   const positiveIntegerType = 'xs:positiveInteger';
   let commonEntity: Common;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -43,12 +43,12 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
     enhance(metaEd);
   });
 
-  it('should have element with positive integer type', () => {
+  it('should have element with positive integer type', (): void => {
     expect(R.head(R.head(commonEntity.data.edfiXsd.xsdComplexTypes).items).type).toBe(positiveIntegerType);
   });
 });
 
-describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes order of priority simple type', () => {
+describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes order of priority simple type', (): void => {
   let integerType: IntegerType;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
@@ -72,12 +72,12 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
     enhance(metaEd);
   });
 
-  it('should have no integer simple type for order of priority integer type', () => {
+  it('should have no integer simple type for order of priority integer type', (): void => {
     expect(integerType.data.edfiXsd.xsdSimpleType).toBe(NoSimpleType);
   });
 });
 
-describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes with no order of priority', () => {
+describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes with no order of priority', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -121,7 +121,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes wi
     metaEd.dataStandardVersion = '2.0.0';
   });
 
-  it('should run without error', () => {
+  it('should run without error', (): void => {
     expect(enhance(metaEd).success).toBe(true);
   });
 });

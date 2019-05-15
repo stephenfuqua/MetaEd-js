@@ -5,11 +5,7 @@ import { newEnumerationRow } from '../model/database/EnumerationRow';
 import { EnumerationRow } from '../model/database/EnumerationRow';
 
 export const enumerationRowCreator = {
-  createRows: (
-    namespaceName: string,
-    tableName: string,
-    enumerationItems: Array<EnumerationItem>,
-  ): Array<EnumerationRow> => {
+  createRows: (namespaceName: string, tableName: string, enumerationItems: EnumerationItem[]): EnumerationRow[] => {
     if (enumerationItems.length === 0) return [];
 
     return enumerationItems.map((item: EnumerationItem) => {

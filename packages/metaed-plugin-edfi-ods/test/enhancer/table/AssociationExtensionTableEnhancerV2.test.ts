@@ -26,7 +26,7 @@ import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEn
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
-describe('when AssociationExtensionTableEnhancerV2 enhances association extension', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension', (): void => {
   const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
@@ -101,22 +101,22 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
-  it('should have schema equal to namespace', () => {
+  it('should have schema equal to namespace', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).schema).toBe('extension');
   });
 
-  it('should have description equal to documentation', () => {
+  it('should have description equal to documentation', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).description).toBe(
       documentation,
     );
   });
 
-  it('should have one column', () => {
+  it('should have one column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPropertyName);
@@ -124,7 +124,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 });
 
-describe('when AssociationExtensionTableEnhancerV2 enhances association extension with primary key', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with primary key', (): void => {
   const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
@@ -196,12 +196,12 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
-  it('should have one primary key column', () => {
+  it('should have one primary key column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
@@ -209,7 +209,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 });
 
-describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common extension override', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common extension override', (): void => {
   const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
@@ -372,20 +372,20 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create table for association extension', () => {
+  it('should create table for association extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
-  it('should create common extension override join table', () => {
+  it('should create common extension override join table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(`${associationName + commonExtensionName}Extension`)).toBeDefined();
   });
 });
 
-describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common', (): void => {
   const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
@@ -519,15 +519,15 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     enhance(metaEd);
   });
 
-  it('should create two tables', () => {
+  it('should create two tables', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create a table for association extension', () => {
+  it('should create a table for association extension', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
-  it('should create join table from association and common', () => {
+  it('should create join table from association and common', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).get(associationName + commonName)).toBeDefined();
   });
 });

@@ -10,10 +10,10 @@ import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
-describe('when an association extension extends a non-student program association', () => {
+describe('when an association extension extends a non-student program association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,15 +49,15 @@ describe('when an association extension extends a non-student program associatio
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when an association extension extends student program association', () => {
+describe('when an association extension extends student program association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'StudentProgramAssociation';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -92,7 +92,7 @@ describe('when an association extension extends student program association', ()
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingStudentProgramAssociationOrSubclassProhibited');
     expect(failures[0].category).toBe('warning');
@@ -105,11 +105,11 @@ describe('when an association extension extends student program association', ()
   });
 });
 
-describe('when an association extension extends a subclass of student program association', () => {
+describe('when an association extension extends a subclass of student program association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'StudentProgramAssociation';
   const coreSubclassName = 'CoreSubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -158,7 +158,7 @@ describe('when an association extension extends a subclass of student program as
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingStudentProgramAssociationOrSubclassProhibited');
     expect(failures[0].category).toBe('warning');

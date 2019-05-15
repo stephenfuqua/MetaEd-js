@@ -2,10 +2,10 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationExtensionBuilder, N
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionMustNotBeInSameNamespaceAsBase';
 
-describe('when association extension is in correct namespace', () => {
+describe('when association extension is in correct namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -31,19 +31,19 @@ describe('when association extension is in correct namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association extension is in core namespace', () => {
+describe('when association extension is in core namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -67,11 +67,11 @@ describe('when association extension is in core namespace', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotBeInSameNamespaceAsBase');
     expect(failures[0].category).toBe('error');

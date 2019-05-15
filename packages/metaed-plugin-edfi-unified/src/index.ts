@@ -197,7 +197,7 @@ export { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/Do
 export { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
 export { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
 
-function validatorList(): Array<Validator> {
+function validatorList(): Validator[] {
   return [
     abstractEntityMustContainAnIdentity,
     abstractEntityMustNotBeExtended,
@@ -331,7 +331,7 @@ function validatorList(): Array<Validator> {
   ];
 }
 
-function enhancerList(): Array<Enhancer> {
+function enhancerList(): Enhancer[] {
   return [
     // diminish :: () => isAbstract
     abstractGeneralStudentProgramAssociationDiminisher,

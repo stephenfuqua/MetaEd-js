@@ -34,7 +34,7 @@ export interface DecimalType extends ModelBase {
   decimalPlaces: string;
   minValue: string;
   maxValue: string;
-  referringSimpleProperties: Array<EntityProperty>;
+  referringSimpleProperties: EntityProperty[];
   sourceMap: DecimalTypeSourceMap;
 }
 

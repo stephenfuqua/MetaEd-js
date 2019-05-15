@@ -1,13 +1,13 @@
 import deepFreeze from 'deep-freeze';
 import { EntityTable } from './EntityTable';
 
-export type Aggregate = {
+export interface Aggregate {
   root: string;
   schema: string;
   allowPrimaryKeyUpdates: boolean;
   isExtension: boolean;
-  entityTables: Array<EntityTable>;
-};
+  entityTables: EntityTable[];
+}
 
 export const NoAggregate: Aggregate = deepFreeze({
   root: '',

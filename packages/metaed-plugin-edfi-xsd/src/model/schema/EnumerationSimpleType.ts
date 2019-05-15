@@ -3,7 +3,7 @@ import { SimpleType, newSimpleType } from './SimpleType';
 import { EnumerationToken } from './EnumerationToken';
 
 export interface EnumerationSimpleType extends SimpleType {
-  enumerationTokens: Array<EnumerationToken>;
+  enumerationTokens: EnumerationToken[];
   hasRestrictions: () => boolean;
 }
 

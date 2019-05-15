@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
-describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes InterventionMeetingTime table', () => {
+describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes InterventionMeetingTime table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -36,14 +36,14 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
     enhance(metaEd);
   });
 
-  it('should modify StartTime column to be non-primary key and non-nullable', () => {
+  it('should modify StartTime column to be non-primary key and non-nullable', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(interventionMeetingTime) as Table).columns);
     expect(column.isPartOfPrimaryKey).toBe(false);
     expect(column.isNullable).toBe(false);
   });
 });
 
-describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes non matching table', () => {
+describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes non matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -70,7 +70,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
     enhance(metaEd);
   });
 
-  it('should not modify column', () => {
+  it('should not modify column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).columns);
     expect(column.isPartOfPrimaryKey).toBe(true);
     expect(column.isNullable).toBe(true);

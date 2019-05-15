@@ -10,10 +10,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/IdentityRename/IdentityRenameExistsOnlyIfIdentityRenameIsAllowed';
 
-describe('when validating association with invalid identity rename property', () => {
+describe('when validating association with invalid identity rename property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -34,11 +34,11 @@ describe('when validating association with invalid identity rename property', ()
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityRenameExistsOnlyIfIdentityRenameIsAllowed');
     expect(failures[0].category).toBe('error');
@@ -47,10 +47,10 @@ describe('when validating association with invalid identity rename property', ()
   });
 });
 
-describe('when validating domain entity with invalid identity rename property', () => {
+describe('when validating domain entity with invalid identity rename property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -69,11 +69,11 @@ describe('when validating domain entity with invalid identity rename property', 
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityRenameExistsOnlyIfIdentityRenameIsAllowed');
     expect(failures[0].category).toBe('error');
@@ -82,10 +82,10 @@ describe('when validating domain entity with invalid identity rename property', 
   });
 });
 
-describe('when validating association subclass with valid identity rename property', () => {
+describe('when validating association subclass with valid identity rename property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -112,23 +112,23 @@ describe('when validating association subclass with valid identity rename proper
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one associationSubclass', () => {
+  it('should build one associationSubclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating domain entity subclass with valid identity rename property', () => {
+describe('when validating domain entity subclass with valid identity rename property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -153,15 +153,15 @@ describe('when validating domain entity subclass with valid identity rename prop
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

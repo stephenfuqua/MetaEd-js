@@ -28,7 +28,7 @@ export interface StringType extends ModelBase {
   typeHumanizedName: string;
   minLength: string;
   maxLength: string;
-  referringSimpleProperties: Array<EntityProperty>;
+  referringSimpleProperties: EntityProperty[];
   sourceMap: StringTypeSourceMap;
 }
 

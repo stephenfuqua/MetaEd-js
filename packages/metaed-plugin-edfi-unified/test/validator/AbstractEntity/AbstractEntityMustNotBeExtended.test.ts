@@ -8,12 +8,12 @@ import {
 import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/AbstractEntity/AbstractEntityMustNotBeExtended';
 
-describe('when validating domain entity additions', () => {
+describe('when validating domain entity additions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   let coreNamespace: Namespace;
   let extensionNamespace: Namespace;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const coreNamespaceName = 'EdFi';
@@ -45,22 +45,22 @@ describe('when validating domain entity additions', () => {
     failures = validate(metaEd);
   });
 
-  it('should build domain entity and domain entity extension', () => {
+  it('should build domain entity and domain entity extension', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating abstract entity additions', () => {
+describe('when validating abstract entity additions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   let coreNamespace: Namespace;
   let extensionNamespace: Namespace;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const coreNamespaceName = 'EdFi';
@@ -92,23 +92,23 @@ describe('when validating abstract entity additions', () => {
     failures = validate(metaEd);
   });
 
-  it('should build abstract entity and domain entity extension', () => {
+  it('should build abstract entity and domain entity extension', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures).toMatchSnapshot();
   });
 });
 
-describe('when validating abstract entity additions in extension namespace', () => {
+describe('when validating abstract entity additions in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let coreNamespace: Namespace;
   let extensionNamespace: Namespace;
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const coreNamespaceName = 'EdFi';
@@ -145,13 +145,13 @@ describe('when validating abstract entity additions in extension namespace', () 
     failures = validate(metaEd);
   });
 
-  it('should build domain entity, abstract entity and domain entity extension', () => {
+  it('should build domain entity, abstract entity and domain entity extension', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures).toMatchSnapshot();
   });

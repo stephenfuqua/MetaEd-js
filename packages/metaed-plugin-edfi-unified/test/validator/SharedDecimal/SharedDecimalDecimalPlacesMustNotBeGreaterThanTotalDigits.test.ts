@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, SharedDecimalBuilder, Namespac
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedDecimal/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
 
-describe('when validating shared decimal with total digits greater than decimal places', () => {
+describe('when validating shared decimal with total digits greater than decimal places', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -22,14 +22,14 @@ describe('when validating shared decimal with total digits greater than decimal 
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared decimal with same decimal places and total digits', () => {
+describe('when validating shared decimal with same decimal places and total digits', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -47,14 +47,14 @@ describe('when validating shared decimal with same decimal places and total digi
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared decimal with decimal places greater than total digits', () => {
+describe('when validating shared decimal with decimal places greater than total digits', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -74,11 +74,11 @@ describe('when validating shared decimal with decimal places greater than total 
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits');
     expect(failures[0].category).toBe('error');

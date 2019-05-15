@@ -5,7 +5,7 @@ import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddIntegerSimpleTypesEnhancer';
 
-describe('when enhancing integer type', () => {
+describe('when enhancing integer type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -36,37 +36,37 @@ describe('when enhancing integer type', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSimpleType.annotation).toBeDefined();
     expect(createdSimpleType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdSimpleType.annotation.typeGroup).toBe('Simple');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdSimpleType.baseType).toBe('xs:int');
   });
 
-  it('should have max value assigned', () => {
+  it('should have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe(maxValue);
   });
 
-  it('should have min value assigned', () => {
+  it('should have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe(minValue);
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdSimpleType.name).toBe(simpleTypeName);
   });
 });
 
-describe('when enhancing integer type is short', () => {
+describe('when enhancing integer type is short', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -97,37 +97,37 @@ describe('when enhancing integer type is short', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSimpleType.annotation).toBeDefined();
     expect(createdSimpleType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdSimpleType.annotation.typeGroup).toBe('Simple');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdSimpleType.baseType).toBe('xs:short');
   });
 
-  it('should have max value assigned', () => {
+  it('should have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe(maxValue);
   });
 
-  it('should have min value assigned', () => {
+  it('should have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe(minValue);
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdSimpleType.name).toBe(simpleTypeName);
   });
 });
 
-describe('when enhancing generated integer type with min value only', () => {
+describe('when enhancing generated integer type with min value only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -155,20 +155,20 @@ describe('when enhancing generated integer type with min value only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should have min value assigned', () => {
+  it('should have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe(minValue);
   });
 });
 
-describe('when enhancing generated integer type with max value only', () => {
+describe('when enhancing generated integer type with max value only', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -196,20 +196,20 @@ describe('when enhancing generated integer type with max value only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have max value assigned', () => {
+  it('should have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe(maxValue);
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 });
 
-describe('when enhancing non-generated integer type with no restrictions', () => {
+describe('when enhancing non-generated integer type with no restrictions', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -235,20 +235,20 @@ describe('when enhancing non-generated integer type with no restrictions', () =>
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max value assigned', () => {
+  it('should not have max value assigned', (): void => {
     expect(createdSimpleType.maxValue).toBe('');
   });
 
-  it('should not have min value assigned', () => {
+  it('should not have min value assigned', (): void => {
     expect(createdSimpleType.minValue).toBe('');
   });
 });
 
-describe('when enhancing generated integer type with no restrictions', () => {
+describe('when enhancing generated integer type with no restrictions', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -274,7 +274,7 @@ describe('when enhancing generated integer type with no restrictions', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBe(NoSimpleType);
   });
 });

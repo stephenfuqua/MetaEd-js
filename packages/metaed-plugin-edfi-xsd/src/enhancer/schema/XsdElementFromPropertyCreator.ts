@@ -40,11 +40,11 @@ export function createXsdElementFromProperty(
 }
 
 export function createSchemaComplexTypeItems(
-  complexTypeItemProperties: Array<EntityProperty>,
+  complexTypeItemProperties: EntityProperty[],
   minOccursOverride?: string,
   maxOccursIsUnboundedOverride?: boolean,
-): Array<ComplexTypeItem> {
-  const complexTypeItems: Array<ComplexTypeItem> = [];
+): ComplexTypeItem[] {
+  const complexTypeItems: ComplexTypeItem[] = [];
   complexTypeItemProperties.forEach(complexTypeItemProperty => {
     if (complexTypeItemProperty.type === 'choice') {
       const choiceElement: ElementGroup = Object.assign(newElementGroup(), {

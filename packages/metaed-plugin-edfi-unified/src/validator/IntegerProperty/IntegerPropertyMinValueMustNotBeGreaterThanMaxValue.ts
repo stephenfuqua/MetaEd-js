@@ -1,8 +1,8 @@
 import { IntegerProperty, IntegerPropertySourceMap, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { asIntegerProperty } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.integer.forEach(integer => {
     const integerProperty: IntegerProperty = asIntegerProperty(integer);
     const minValue: number = Number.parseInt(integerProperty.minValue || '0', 10);

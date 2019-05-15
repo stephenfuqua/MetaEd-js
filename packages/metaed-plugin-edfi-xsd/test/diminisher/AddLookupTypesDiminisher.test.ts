@@ -6,7 +6,7 @@ import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelE
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { enhance } from '../../src/diminisher/AddLookupTypesDiminisher';
 
-describe('when AddLookupTypesDiminisher diminishes entity included in lookupTypeNames list', () => {
+describe('when AddLookupTypesDiminisher diminishes entity included in lookupTypeNames list', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -51,103 +51,103 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
     expect(entity).toBeDefined();
   });
 
-  it('should have lookup type', () => {
+  it('should have lookup type', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType).toBeTruthy();
     expect(entity.data.edfiXsd.xsdLookupType).not.toBe(NoComplexType);
   });
 
-  it('should have lookup type name', () => {
+  it('should have lookup type name', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.name).toBe(`${domainEntityName1}${typeGroup}Type`);
   });
 
-  it('should have lookup type annotation documentation', () => {
+  it('should have lookup type annotation documentation', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.annotation.documentation).toBeTruthy();
     expect(entity.data.edfiXsd.xsdLookupType.annotation.documentation).toMatchSnapshot();
   });
 
-  it('should have lookup type type group', () => {
+  it('should have lookup type type group', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.annotation.typeGroup).toBe(typeGroup);
   });
 
-  it('should have no lookup type base type', () => {
+  it('should have no lookup type base type', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.baseType).toBeFalsy();
   });
 
-  it('should have lookup type item', () => {
+  it('should have lookup type item', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.items).toHaveLength(1);
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items)).toBeTruthy();
   });
 
-  it('should have lookup type item name', () => {
+  it('should have lookup type item name', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).name).toBe(booleanPropertyName1);
   });
 
-  it('should have lookup type item type', () => {
+  it('should have lookup type item type', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).type).toBe(booleanPropertyType);
   });
 
-  it('should have lookup type item annotation', () => {
+  it('should have lookup type item annotation', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).annotation).toBeTruthy();
   });
 
-  it('should have lookup type item annotation documentation', () => {
+  it('should have lookup type item annotation documentation', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).annotation.documentation).toBe(booleanPropertyDocumentation);
   });
 
-  it('should have no lookup type item annotation descriptorName', () => {
+  it('should have no lookup type item annotation descriptorName', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).annotation.descriptorName).toBeFalsy();
   });
 
-  it('should have lookup type item minOccurs', () => {
+  it('should have lookup type item minOccurs', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).minOccurs).toBe('0');
   });
 
-  it('should have lookup type item maxOccursIsUnbounded', () => {
+  it('should have lookup type item maxOccursIsUnbounded', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdLookupType.items).maxOccursIsUnbounded).toBe(false);
   });
 
-  it('should have reference type', () => {
+  it('should have reference type', (): void => {
     expect(entity.data.edfiXsd.xsdReferenceType).toBeTruthy();
     expect(entity.data.edfiXsd.xsdReferenceType).not.toBe(NoComplexType);
   });
 
-  it('should have reference type item', () => {
+  it('should have reference type item', (): void => {
     expect(entity.data.edfiXsd.xsdReferenceType.items).toHaveLength(1);
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items)).toBeTruthy();
   });
 
-  it('should have reference type item name', () => {
+  it('should have reference type item name', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).name).toBe(`${domainEntityName1}${typeGroup}`);
   });
 
-  it('should have reference type item type', () => {
+  it('should have reference type item type', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).type).toBe(`${domainEntityName1}${typeGroup}Type`);
   });
 
-  it('should have reference type item annotation', () => {
+  it('should have reference type item annotation', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).annotation).toBeTruthy();
   });
 
-  it('should have reference type item annotation documentation', () => {
+  it('should have reference type item annotation documentation', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).annotation.documentation).toBe(
       entity.data.edfiXsd.xsdLookupType.annotation.documentation,
     );
   });
 
-  it('should have no reference type item annotation descriptorName', () => {
+  it('should have no reference type item annotation descriptorName', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).annotation.descriptorName).toBeFalsy();
   });
 
-  it('should have reference type item minOccurs', () => {
+  it('should have reference type item minOccurs', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).minOccurs).toBe('0');
   });
 
-  it('should have reference type item maxOccursIsUnbounded', () => {
+  it('should have reference type item maxOccursIsUnbounded', (): void => {
     expect(R.head(entity.data.edfiXsd.xsdReferenceType.items).maxOccursIsUnbounded).toBe(false);
   });
 });
 
-describe('when AddLookupTypesDiminisher diminishes entity not included in lookupTypeNames list', () => {
+describe('when AddLookupTypesDiminisher diminishes entity not included in lookupTypeNames list', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -194,21 +194,21 @@ describe('when AddLookupTypesDiminisher diminishes entity not included in lookup
     expect(entity).toBeDefined();
   });
 
-  it('should have no lookup type', () => {
+  it('should have no lookup type', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType).toBeTruthy();
     expect(entity.data.edfiXsd.xsdLookupType).toBe(NoComplexType);
   });
 
-  it('should have no lookup type item', () => {
+  it('should have no lookup type item', (): void => {
     expect(entity.data.edfiXsd.xsdLookupType.items).toHaveLength(0);
   });
 
-  it('should have no reference type', () => {
+  it('should have no reference type', (): void => {
     expect(entity.data.edfiXsd.xsdReferenceType).toBeTruthy();
     expect(entity.data.edfiXsd.xsdReferenceType).toBe(NoComplexType);
   });
 
-  it('should have no reference type item', () => {
+  it('should have no reference type item', (): void => {
     expect(entity.data.edfiXsd.xsdReferenceType.items).toHaveLength(0);
   });
 });

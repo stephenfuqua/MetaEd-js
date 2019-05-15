@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
-describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table', () => {
+describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -35,13 +35,13 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
     enhance(metaEd);
   });
 
-  it('should rename InnovativeDollarsSpentStrategicPriorities column to InnovativeDollarsSpentOnStrategicPriorities', () => {
+  it('should rename InnovativeDollarsSpentStrategicPriorities column to InnovativeDollarsSpentOnStrategicPriorities', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(localEducationAgencyFederalFunds) as Table).columns);
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });
 });
 
-describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table with existing InnovativeDollarsSpentOnStrategicPriorities column', () => {
+describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table with existing InnovativeDollarsSpentOnStrategicPriorities column', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -66,7 +66,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
     enhance(metaEd);
   });
 
-  it('should have InnovativeDollarsSpentOnStrategicPriorities column', () => {
+  it('should have InnovativeDollarsSpentOnStrategicPriorities column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(localEducationAgencyFederalFunds) as Table).columns);
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });

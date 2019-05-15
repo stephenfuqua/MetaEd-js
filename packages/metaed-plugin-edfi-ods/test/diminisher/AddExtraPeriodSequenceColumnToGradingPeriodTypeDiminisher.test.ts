@@ -8,7 +8,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table', () => {
+describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -28,7 +28,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
     enhance(metaEd);
   });
 
-  it('should add PeriodSequence column', () => {
+  it('should add PeriodSequence column', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(gradingPeriodType);
     expect(table).toBeDefined();
     if (table == null) throw new Error();
@@ -37,7 +37,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
   });
 });
 
-describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table with existing PeriodSequence column', () => {
+describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table with existing PeriodSequence column', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -63,7 +63,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
     enhance(metaEd);
   });
 
-  it('should not modify PeriodSequence column', () => {
+  it('should not modify PeriodSequence column', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(gradingPeriodType);
     expect(table).toBeDefined();
     if (table == null) throw new Error();

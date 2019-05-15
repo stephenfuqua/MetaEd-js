@@ -5,21 +5,21 @@ import { edfiHandbookRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import { HandbookEntry, HandbookEntityReferenceProperty } from '../model/HandbookEntry';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 
-function handbookEntriesForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): Array<HandbookEntry> {
+function handbookEntriesForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): HandbookEntry[] {
   const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
   if (handbookRepository == null) return [];
   return handbookRepository.handbookEntries;
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const handbookEntries: Array<HandbookEntry> = [];
+  const handbookEntries: HandbookEntry[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     handbookEntries.push(...handbookEntriesForNamespace(metaEd, namespace));
   });
 
   // unclear why this needs to be a map operation rather than forEach, as it's just mutating a part of x
   const updateHandbookEntries = handbookEntries.map(x => {
-    const referringProperties: Array<HandbookEntityReferenceProperty> = handbookEntries
+    const referringProperties: HandbookEntityReferenceProperty[] = handbookEntries
       .filter(
         y =>
           y.modelReferencesContainsProperties != null &&
@@ -51,7 +51,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     .replace(/\{JSONData\}/g, JSON.stringify(updateHandbookEntries))
     .replace(/\{detailTemplate\}/g, detail);
 
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
   results.push({
     name: 'MetaEd Ed-Fi Handbook',
     namespace: 'Documentation',

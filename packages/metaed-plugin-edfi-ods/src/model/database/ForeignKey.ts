@@ -10,7 +10,7 @@ import { Column } from './Column';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
-export type ForeignKeySourceReference = {
+export interface ForeignKeySourceReference {
   isPartOfIdentity: boolean;
   isRequired: boolean;
   isOptional: boolean;
@@ -20,11 +20,11 @@ export type ForeignKeySourceReference = {
   isExtensionRelationship: boolean;
   isSyntheticRelationship: boolean;
   propertyType: PropertyType;
-};
+}
 
-export type ForeignKey = {
+export interface ForeignKey {
   name: string;
-  columnNames: Array<ColumnNamePair>;
+  columnNames: ColumnNamePair[];
   parentTable: Table;
   parentTableName: string;
   parentTableSchema: string;
@@ -32,13 +32,13 @@ export type ForeignKey = {
   foreignTableSchema: string;
   foreignTableNamespace: Namespace;
   foreignKeyNameSuffix: string;
-  parentTableColumnNames: Array<string>;
-  foreignTableColumnNames: Array<string>;
+  parentTableColumnNames: string[];
+  foreignTableColumnNames: string[];
   withDeleteCascade: boolean;
   withUpdateCascade: boolean;
   withReverseForeignKeyIndex: boolean;
   sourceReference: ForeignKeySourceReference;
-};
+}
 
 export function newForeignKeySourceReference(): ForeignKeySourceReference {
   return {
@@ -54,7 +54,7 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
   };
 }
 
-const referenceProperty: Array<PropertyType> = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
+const referenceProperty: PropertyType[] = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
 const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
 
 function isSubclassRelationship(property: EntityProperty): boolean {
@@ -106,12 +106,12 @@ export function newForeignKey(): ForeignKey {
   };
 }
 
-export function getOrderedColumnNamePairs(foreignKey: ForeignKey, foreignTable: Table | null = null): Array<ColumnNamePair> {
+export function getOrderedColumnNamePairs(foreignKey: ForeignKey, foreignTable: Table | null = null): ColumnNamePair[] {
   if (foreignTable == null) {
     return orderByProp('foreignTableColumnName')(foreignKey.columnNames);
   }
 
-  const primaryKeyOrder: Array<string> = (foreignTable.primaryKeys.length === 0
+  const primaryKeyOrder: string[] = (foreignTable.primaryKeys.length === 0
     ? getPrimaryKeys(foreignTable)
     : foreignTable.primaryKeys
   ).map((pk: Column) => pk.name);
@@ -125,11 +125,11 @@ export function getOrderedColumnNamePairs(foreignKey: ForeignKey, foreignTable: 
   return R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
 }
 
-export function getParentTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): Array<string> {
+export function getParentTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
   return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.parentTableColumnName);
 }
 
-export function getForeignTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): Array<string> {
+export function getForeignTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
   return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.foreignTableColumnName);
 }
 
@@ -151,6 +151,6 @@ export function addColumnNamePair(foreignKey: ForeignKey, columnNamePair: Column
   }
 }
 
-export function addColumnNamePairs(foreignKey: ForeignKey, columnNamePairs: Array<ColumnNamePair>): void {
+export function addColumnNamePairs(foreignKey: ForeignKey, columnNamePairs: ColumnNamePair[]): void {
   columnNamePairs.forEach((columnNamePair: ColumnNamePair) => addColumnNamePair(foreignKey, columnNamePair));
 }

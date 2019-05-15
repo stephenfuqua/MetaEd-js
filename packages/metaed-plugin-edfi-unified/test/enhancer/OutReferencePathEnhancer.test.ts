@@ -15,7 +15,7 @@ import { enhance as stringReferenceEnhancer } from '../../src/enhancer/property/
 import { enhance as commonReferenceEnhancer } from '../../src/enhancer/property/CommonReferenceEnhancer';
 import { enhance as descriptorReferenceEnhancer } from '../../src/enhancer/property/DescriptorReferenceEnhancer';
 
-describe('when domain entity has single reference to a second domain entity', () => {
+describe('when domain entity has single reference to a second domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -41,11 +41,11 @@ describe('when domain entity has single reference to a second domain entity', ()
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have DE1 with out path to DE2', () => {
+  it('should have DE1 with out path to DE2', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -53,7 +53,7 @@ describe('when domain entity has single reference to a second domain entity', ()
     expect(outReferencePath[0].metaEdName).toBe('DE2');
   });
 
-  it('should have DE1 with map of out path containing DE2', () => {
+  it('should have DE1 with map of out path containing DE2', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(1);
     const outReferenceKV = Array.from(outReferenceEntitiesMap)[0];
@@ -66,7 +66,7 @@ describe('when domain entity has single reference to a second domain entity', ()
     expect(outReferencePath[0].metaEdName).toBe('DE2');
   });
 
-  it('should have DE1 with map of endpoint containing DE2', () => {
+  it('should have DE1 with map of endpoint containing DE2', (): void => {
     const { outReferenceEntityEndpointsMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntityEndpointsMap.size).toBe(1);
     const outReferenceKV = Array.from(outReferenceEntityEndpointsMap)[0];
@@ -79,12 +79,12 @@ describe('when domain entity has single reference to a second domain entity', ()
     expect(outReferencePath[0].metaEdName).toBe('DE2');
   });
 
-  it('should have DE2 with no out paths', () => {
+  it('should have DE2 with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE2').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has single reference to a second domain entity with reference to a third', () => {
+describe('when domain entity has single reference to a second domain entity with reference to a third', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -115,11 +115,11 @@ describe('when domain entity has single reference to a second domain entity with
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have DE1 with out path to DE3', () => {
+  it('should have DE1 with out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -128,7 +128,7 @@ describe('when domain entity has single reference to a second domain entity with
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of out path containing DE2', () => {
+  it('should have DE1 with map of out path containing DE2', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(2);
 
@@ -142,7 +142,7 @@ describe('when domain entity has single reference to a second domain entity with
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of out path containing DE3', () => {
+  it('should have DE1 with map of out path containing DE3', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(2);
 
@@ -156,7 +156,7 @@ describe('when domain entity has single reference to a second domain entity with
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of endpoint containing DE3', () => {
+  it('should have DE1 with map of endpoint containing DE3', (): void => {
     const { outReferenceEntityEndpointsMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntityEndpointsMap.size).toBe(1);
 
@@ -170,7 +170,7 @@ describe('when domain entity has single reference to a second domain entity with
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE2 with out path to DE3', () => {
+  it('should have DE2 with out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -178,12 +178,12 @@ describe('when domain entity has single reference to a second domain entity with
     expect(outReferencePath[0].metaEdName).toBe('DE3');
   });
 
-  it('should have DE3 with no out paths', () => {
+  it('should have DE3 with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE3').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has dual references to domain entities with reference to another', () => {
+describe('when domain entity has dual references to domain entities with reference to another', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -225,11 +225,11 @@ describe('when domain entity has dual references to domain entities with referen
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build five domain entities', () => {
+  it('should build five domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(5);
   });
 
-  it('should have DE1 with out path to DE3a', () => {
+  it('should have DE1 with out path to DE3a', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(2);
     const outReferencePathA = outReferencePaths[0];
@@ -238,7 +238,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathA[1].metaEdName).toBe('DE3a');
   });
 
-  it('should have DE1 with out path to DE3b', () => {
+  it('should have DE1 with out path to DE3b', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(2);
     const outReferencePathB = outReferencePaths[1];
@@ -247,7 +247,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathB[1].metaEdName).toBe('DE3b');
   });
 
-  it('should have DE1 with map of out path containing DE2a', () => {
+  it('should have DE1 with map of out path containing DE2a', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(4);
 
@@ -261,7 +261,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3a');
   });
 
-  it('should have DE1 with map of out path containing DE3a', () => {
+  it('should have DE1 with map of out path containing DE3a', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(4);
 
@@ -275,7 +275,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3a');
   });
 
-  it('should have DE1 with map of endpoint containing DE3a', () => {
+  it('should have DE1 with map of endpoint containing DE3a', (): void => {
     const { outReferenceEntityEndpointsMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntityEndpointsMap.size).toBe(2);
 
@@ -289,7 +289,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3a');
   });
 
-  it('should have DE1 with map of out path containing DE2b', () => {
+  it('should have DE1 with map of out path containing DE2b', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(4);
 
@@ -303,7 +303,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3b');
   });
 
-  it('should have DE1 with map of out path containing DE3b', () => {
+  it('should have DE1 with map of out path containing DE3b', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(4);
 
@@ -317,7 +317,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3b');
   });
 
-  it('should have DE1 with map of endpoint containing DE3b', () => {
+  it('should have DE1 with map of endpoint containing DE3b', (): void => {
     const { outReferenceEntityEndpointsMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntityEndpointsMap.size).toBe(2);
 
@@ -331,7 +331,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3b');
   });
 
-  it('should have DE2a with out path to DE3a', () => {
+  it('should have DE2a with out path to DE3a', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2a');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -339,7 +339,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[0].metaEdName).toBe('DE3a');
   });
 
-  it('should have DE2b with out path to DE3b', () => {
+  it('should have DE2b with out path to DE3b', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2b');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -347,16 +347,16 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[0].metaEdName).toBe('DE3b');
   });
 
-  it('should have DE3a with no out paths', () => {
+  it('should have DE3a with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE3a').outReferencePaths).toHaveLength(0);
   });
 
-  it('should have DE3b with no out paths', () => {
+  it('should have DE3b with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE3b').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has dual references to domain entities with reference to another that is the same (diamond)', () => {
+describe('when domain entity has dual references to domain entities with reference to another that is the same (diamond)', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -393,11 +393,11 @@ describe('when domain entity has dual references to domain entities with referen
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have DE1 with 1st out path to DE3', () => {
+  it('should have DE1 with 1st out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(2);
     const outReferencePathA = outReferencePaths[0];
@@ -406,7 +406,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathA[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with 2nd out path to DE3', () => {
+  it('should have DE1 with 2nd out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(2);
     const outReferencePathB = outReferencePaths[1];
@@ -415,7 +415,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathB[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of out path containing DE2a', () => {
+  it('should have DE1 with map of out path containing DE2a', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(3);
 
@@ -429,7 +429,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of out path containing DE3', () => {
+  it('should have DE1 with map of out path containing DE3', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(3);
 
@@ -449,7 +449,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathB[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of endpoint containing DE3', () => {
+  it('should have DE1 with map of endpoint containing DE3', (): void => {
     const { outReferenceEntityEndpointsMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntityEndpointsMap.size).toBe(1);
 
@@ -469,7 +469,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePathB[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE1 with map of out path containing DE2b', () => {
+  it('should have DE1 with map of out path containing DE2b', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferenceEntitiesMap.size).toBe(3);
 
@@ -483,7 +483,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[1].metaEdName).toBe('DE3');
   });
 
-  it('should have DE2a with out path to DE3', () => {
+  it('should have DE2a with out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2a');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -491,7 +491,7 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[0].metaEdName).toBe('DE3');
   });
 
-  it('should have DE2b with out path to DE3', () => {
+  it('should have DE2b with out path to DE3', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2b');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -499,12 +499,12 @@ describe('when domain entity has dual references to domain entities with referen
     expect(outReferencePath[0].metaEdName).toBe('DE3');
   });
 
-  it('should have DE3 with no out paths', () => {
+  it('should have DE3 with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE3').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when model has a leaf attached to a cycle', () => {
+describe('when model has a leaf attached to a cycle', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -541,11 +541,11 @@ describe('when model has a leaf attached to a cycle', () => {
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build four domain entities', () => {
+  it('should build four domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
-  it('should have DE1 with out path direct to Leaf', () => {
+  it('should have DE1 with out path direct to Leaf', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -553,7 +553,7 @@ describe('when model has a leaf attached to a cycle', () => {
     expect(outReferencePath[0].metaEdName).toBe('Leaf');
   });
 
-  it('should have DE2 with out path to Leaf via DE3 -> DE1', () => {
+  it('should have DE2 with out path to Leaf via DE3 -> DE1', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE2');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -563,7 +563,7 @@ describe('when model has a leaf attached to a cycle', () => {
     expect(outReferencePath[2].metaEdName).toBe('Leaf');
   });
 
-  it('should have DE3 with out path to Leaf via DE1', () => {
+  it('should have DE3 with out path to Leaf via DE1', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE3');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -572,12 +572,12 @@ describe('when model has a leaf attached to a cycle', () => {
     expect(outReferencePath[1].metaEdName).toBe('Leaf');
   });
 
-  it('should have Leaf with no out paths', () => {
+  it('should have Leaf with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('Leaf').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has single reference to a shared string', () => {
+describe('when domain entity has single reference to a shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -605,15 +605,15 @@ describe('when domain entity has single reference to a shared string', () => {
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should have DE with out path to SS', () => {
+  it('should have DE with out path to SS', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -621,7 +621,7 @@ describe('when domain entity has single reference to a shared string', () => {
     expect(outReferencePath[0].metaEdName).toBe('SS');
   });
 
-  it('should have DE with map of out path containing SS', () => {
+  it('should have DE with map of out path containing SS', (): void => {
     const { outReferenceEntitiesMap } = coreNamespace.entity.domainEntity.get('DE');
     expect(outReferenceEntitiesMap.size).toBe(1);
     const outReferenceKV = Array.from(outReferenceEntitiesMap)[0];
@@ -635,7 +635,7 @@ describe('when domain entity has single reference to a shared string', () => {
   });
 });
 
-describe('when domain entity has single reference to a common with reference to a descriptor', () => {
+describe('when domain entity has single reference to a common with reference to a descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
 
@@ -668,19 +668,19 @@ describe('when domain entity has single reference to a common with reference to 
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have DE with out path to DS', () => {
+  it('should have DE with out path to DS', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -689,7 +689,7 @@ describe('when domain entity has single reference to a common with reference to 
     expect(outReferencePath[1].metaEdName).toBe('DS');
   });
 
-  it('should have CO with out path to DS', () => {
+  it('should have CO with out path to DS', (): void => {
     const { outReferencePaths } = coreNamespace.entity.common.get('CO');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -697,12 +697,12 @@ describe('when domain entity has single reference to a common with reference to 
     expect(outReferencePath[0].metaEdName).toBe('DS');
   });
 
-  it('should have DS with no out paths', () => {
+  it('should have DS with no out paths', (): void => {
     expect(coreNamespace.entity.descriptor.get('DS').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has a reference and domain entity subclass has another', () => {
+describe('when domain entity has a reference and domain entity subclass has another', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
@@ -744,16 +744,16 @@ describe('when domain entity has a reference and domain entity subclass has anot
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have DE1 with out path to DE2', () => {
+  it('should have DE1 with out path to DE2', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -761,7 +761,7 @@ describe('when domain entity has a reference and domain entity subclass has anot
     expect(outReferencePath[0].metaEdName).toBe('DE2');
   });
 
-  it('should have DES with out path to DE3', () => {
+  it('should have DES with out path to DE3', (): void => {
     const { outReferencePaths } = extensionNamespace.entity.domainEntitySubclass.get('DES');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -769,16 +769,16 @@ describe('when domain entity has a reference and domain entity subclass has anot
     expect(outReferencePath[0].metaEdName).toBe('DE3');
   });
 
-  it('should have DE2 with no out paths', () => {
+  it('should have DE2 with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE2').outReferencePaths).toHaveLength(0);
   });
 
-  it('should have DE3 with no out paths', () => {
+  it('should have DE3 with no out paths', (): void => {
     expect(extensionNamespace.entity.domainEntity.get('DE3').outReferencePaths).toHaveLength(0);
   });
 });
 
-describe('when domain entity has a reference and domain entity subclass has another', () => {
+describe('when domain entity has a reference and domain entity subclass has another', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
@@ -820,16 +820,16 @@ describe('when domain entity has a reference and domain entity subclass has anot
     outReferencePathEnhancer(metaEd);
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have DE1 with out path to DE2', () => {
+  it('should have DE1 with out path to DE2', (): void => {
     const { outReferencePaths } = coreNamespace.entity.domainEntity.get('DE1');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -837,7 +837,7 @@ describe('when domain entity has a reference and domain entity subclass has anot
     expect(outReferencePath[0].metaEdName).toBe('DE2');
   });
 
-  it('should have DES with out path to DE3', () => {
+  it('should have DES with out path to DE3', (): void => {
     const { outReferencePaths } = extensionNamespace.entity.domainEntitySubclass.get('DES');
     expect(outReferencePaths).toHaveLength(1);
     const outReferencePath = outReferencePaths[0];
@@ -845,11 +845,11 @@ describe('when domain entity has a reference and domain entity subclass has anot
     expect(outReferencePath[0].metaEdName).toBe('DE3');
   });
 
-  it('should have DE2 with no out paths', () => {
+  it('should have DE2 with no out paths', (): void => {
     expect(coreNamespace.entity.domainEntity.get('DE2').outReferencePaths).toHaveLength(0);
   });
 
-  it('should have DE3 with no out paths', () => {
+  it('should have DE3 with no out paths', (): void => {
     expect(extensionNamespace.entity.domainEntity.get('DE3').outReferencePaths).toHaveLength(0);
   });
 });

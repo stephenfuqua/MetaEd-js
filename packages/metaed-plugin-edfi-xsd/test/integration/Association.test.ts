@@ -9,7 +9,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for association with inline common type as part of identity', () => {
+describe('when generating xsd for association with inline common type as part of identity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const sampleEntity = 'Sample';
@@ -62,22 +62,22 @@ describe('when generating xsd for association with inline common type as part of
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate domain entity', () => {
+  it('should generate domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleSample2Association']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate domain entity reference', () => {
+  it('should generate domain entity reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleSample2AssociationReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate domain entity identity', () => {
+  it('should generate domain entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleSample2AssociationIdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should include inline common type in identity type', () => {
+  it('should include inline common type in identity type', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='SampleSample2AssociationIdentityType']/xs:sequence/xs:element[@name='Property2']",
       coreResult,
@@ -86,7 +86,7 @@ describe('when generating xsd for association with inline common type as part of
   });
 });
 
-describe('when generating xsd for association in extension namespace with reference to core DEs', () => {
+describe('when generating xsd for association in extension namespace with reference to core DEs', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity1 = 'CoreEntity1';
@@ -138,22 +138,22 @@ describe('when generating xsd for association in extension namespace with refere
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity', () => {
+  it('should generate core domain entity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity1']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 1 references', () => {
+  it('should generate core domain entity 1 references', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity1ReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 1 identity', () => {
+  it('should generate core domain entity 1 identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity1IdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 1 primary key', () => {
+  it('should generate core domain entity 1 primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='CoreEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Pk']",
       coreResult,
@@ -161,22 +161,22 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 2', () => {
+  it('should generate core domain entity 2', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity2']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 2 references', () => {
+  it('should generate core domain entity 2 references', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity2ReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 2 entity identity', () => {
+  it('should generate core domain entity 2 entity identity', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity2IdentityType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity 2 primary key', () => {
+  it('should generate core domain entity 2 primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='CoreEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Pk']",
       coreResult,
@@ -184,12 +184,12 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association', () => {
+  it('should generate extension association', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should genrate extension association references', () => {
+  it('should genrate extension association references', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationReferenceType']",
       extensionResult,
@@ -197,7 +197,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should gerneate extension association identity', () => {
+  it('should gerneate extension association identity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']",
       extensionResult,
@@ -205,7 +205,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association reference to core entity 1', () => {
+  it('should generate extension association reference to core entity 1', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Reference'][@type='CoreEntity1ReferenceType']",
       extensionResult,
@@ -213,7 +213,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should genreate extension association refrence to core entity 2', () => {
+  it('should genreate extension association refrence to core entity 2', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Reference'][@type='CoreEntity2ReferenceType']",
       extensionResult,
@@ -222,7 +222,7 @@ describe('when generating xsd for association in extension namespace with refere
   });
 });
 
-describe('when generating xsd for association in extension namespace with reference to extension DEs', () => {
+describe('when generating xsd for association in extension namespace with reference to extension DEs', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity1 = 'CoreEntity1';
@@ -281,12 +281,12 @@ describe('when generating xsd for association in extension namespace with refere
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate extension domain entity 1', () => {
+  it('should generate extension domain entity 1', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity 1 reference', () => {
+  it('should generate extension domain entity 1 reference', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1ReferenceType']",
       extensionResult,
@@ -294,7 +294,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should gerneate extension domain entity 1 identity', () => {
+  it('should gerneate extension domain entity 1 identity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1IdentityType']",
       extensionResult,
@@ -302,7 +302,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity 1 primary key', () => {
+  it('should generate extension domain entity 1 primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Pk']",
       extensionResult,
@@ -310,12 +310,12 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should genreate extension domain entity 2', () => {
+  it('should genreate extension domain entity 2', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity 2 reference', () => {
+  it('should generate extension domain entity 2 reference', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']",
       extensionResult,
@@ -323,7 +323,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity 2 identity', () => {
+  it('should generate extension domain entity 2 identity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']",
       extensionResult,
@@ -331,7 +331,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity 2 primary key', () => {
+  it('should generate extension domain entity 2 primary key', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2IdentityType']",
       extensionResult,
@@ -339,7 +339,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association', () => {
+  it('should generate extension association', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Pk']",
       extensionResult,
@@ -347,12 +347,12 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association reference', () => {
+  it('should generate extension association reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association identity', () => {
+  it('should generate extension association identity', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']",
       extensionResult,
@@ -360,7 +360,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association reference to extension entity 1', () => {
+  it('should generate extension association reference to extension entity 1', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Reference'][@type='EXTENSION-ExtensionEntity1ReferenceType']",
       extensionResult,
@@ -368,7 +368,7 @@ describe('when generating xsd for association in extension namespace with refere
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association reference to extension entity 2', () => {
+  it('should generate extension association reference to extension entity 2', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Reference'][@type='EXTENSION-ExtensionEntity2ReferenceType']",
       extensionResult,

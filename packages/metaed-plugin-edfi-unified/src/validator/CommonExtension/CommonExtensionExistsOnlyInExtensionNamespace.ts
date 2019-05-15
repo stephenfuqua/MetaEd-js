@@ -1,7 +1,7 @@
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   Array.from(metaEd.namespace.values())
     .filter(n => !n.isExtension)
     .forEach(namespace => {

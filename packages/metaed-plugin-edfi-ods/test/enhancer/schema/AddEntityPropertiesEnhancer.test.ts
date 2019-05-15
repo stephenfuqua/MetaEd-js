@@ -2,7 +2,7 @@ import { newIntegerProperty, newMetaEdEnvironment, newNamespace } from 'metaed-c
 import { IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/property/EntityProperty';
 
-describe('when PropertyEnhancer enhances integer property', () => {
+describe('when PropertyEnhancer enhances integer property', (): void => {
   const integerPropertyName = 'IntegerPropertyName';
   let integerProperty: IntegerProperty;
 
@@ -18,20 +18,20 @@ describe('when PropertyEnhancer enhances integer property', () => {
     enhance(metaEd);
   });
 
-  it('should have ods name', () => {
+  it('should have ods name', (): void => {
     expect(integerProperty.data.edfiOds.odsName).toBe(integerPropertyName);
   });
 
-  it('should have empty ods context prefix', () => {
+  it('should have empty ods context prefix', (): void => {
     expect(integerProperty.data.edfiOds.odsContextPrefix).toBe('');
   });
 
-  it('should have false ods is collection', () => {
+  it('should have false ods is collection', (): void => {
     expect(integerProperty.data.edfiOds.odsIsCollection).toBe(false);
   });
 });
 
-describe('when PropertyEnhancer enhances property with required collection', () => {
+describe('when PropertyEnhancer enhances property with required collection', (): void => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
@@ -48,12 +48,12 @@ describe('when PropertyEnhancer enhances property with required collection', () 
     enhance(metaEd);
   });
 
-  it('should have true ods is collection', () => {
+  it('should have true ods is collection', (): void => {
     expect(integerProperty.data.edfiOds.odsIsCollection).toBe(true);
   });
 });
 
-describe('when PropertyEnhancer enhances property with optional collection', () => {
+describe('when PropertyEnhancer enhances property with optional collection', (): void => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
@@ -70,12 +70,12 @@ describe('when PropertyEnhancer enhances property with optional collection', () 
     enhance(metaEd);
   });
 
-  it('should have true ods is collection', () => {
+  it('should have true ods is collection', (): void => {
     expect(integerProperty.data.edfiOds.odsIsCollection).toBe(true);
   });
 });
 
-describe('when PropertyEnhancer enhances property role name', () => {
+describe('when PropertyEnhancer enhances property role name', (): void => {
   const integerPropertyName = 'IntegerPropertyName';
   const contextName = 'ContextName';
   let integerProperty: IntegerProperty;
@@ -93,16 +93,16 @@ describe('when PropertyEnhancer enhances property role name', () => {
     enhance(metaEd);
   });
 
-  it('should have ods name prefixed role name', () => {
+  it('should have ods name prefixed role name', (): void => {
     expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
   });
 
-  it('should have ods context prefix', () => {
+  it('should have ods context prefix', (): void => {
     expect(integerProperty.data.edfiOds.odsContextPrefix).toBe(contextName);
   });
 });
 
-describe('when PropertyEnhancer enhances property with shortened context', () => {
+describe('when PropertyEnhancer enhances property with shortened context', (): void => {
   const integerPropertyName = 'IntegerPropertyName';
   const contextName = 'ContextName';
   const shortenToName = 'shortenToName';
@@ -122,11 +122,11 @@ describe('when PropertyEnhancer enhances property with shortened context', () =>
     enhance(metaEd);
   });
 
-  it('should have ods name prefixed role name', () => {
+  it('should have ods name prefixed role name', (): void => {
     expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
   });
 
-  it('should have ods context prefix with shortened name', () => {
+  it('should have ods context prefix with shortened name', (): void => {
     expect(integerProperty.data.edfiOds.odsContextPrefix).toBe(shortenToName);
   });
 });

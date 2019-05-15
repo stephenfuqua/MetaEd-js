@@ -1,6 +1,6 @@
 import { ApiFullName } from './ApiFullName';
 
-export type AggregateExtensionDefinition = {
+export interface AggregateExtensionDefinition {
   aggregateRootEntityName: ApiFullName;
-  extensionEntityNames: Array<ApiFullName>;
-};
+  extensionEntityNames: ApiFullName[];
+}

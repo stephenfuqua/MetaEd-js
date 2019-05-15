@@ -8,7 +8,7 @@ import { ParseTreeBuilder } from './ParseTreeBuilder';
 
 export const buildParseTree = R.curry(
   (parseTreeBuilder: ParseTreeBuilder, state: State): void => {
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
 
     const errorListener = new MetaEdErrorListener(validationFailures, 'BuildParseTree - MetaEdErrorListener');
     const parseTree = parseTreeBuilder(errorListener, getAllContents(state.fileIndex));

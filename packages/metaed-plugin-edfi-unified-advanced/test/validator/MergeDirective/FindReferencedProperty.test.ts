@@ -16,7 +16,7 @@ import {
   matchAllIdentityReferenceProperties,
 } from '../../../src/validator/MergeDirective/FindReferencedProperty';
 
-describe('when looking for property on current entity', () => {
+describe('when looking for property on current entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let property: EntityProperty | null;
@@ -51,11 +51,11 @@ describe('when looking for property on current entity', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -63,7 +63,7 @@ describe('when looking for property on current entity', () => {
   });
 });
 
-describe('when looking for first domain entity on association', () => {
+describe('when looking for first domain entity on association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: EntityProperty | null;
@@ -106,15 +106,15 @@ describe('when looking for first domain entity on association', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -122,7 +122,7 @@ describe('when looking for first domain entity on association', () => {
   });
 });
 
-describe('when looking for second domain entity on association', () => {
+describe('when looking for second domain entity on association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let property: EntityProperty | null;
@@ -165,15 +165,15 @@ describe('when looking for second domain entity on association', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -181,7 +181,7 @@ describe('when looking for second domain entity on association', () => {
   });
 });
 
-describe('when looking for non identity property on current entity', () => {
+describe('when looking for non identity property on current entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let property: EntityProperty | null;
   let coreNamespace: any = null;
@@ -212,16 +212,16 @@ describe('when looking for non identity property on current entity', () => {
     );
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(property).toBeNull();
   });
 });
 
-describe('when looking for property that does not exist', () => {
+describe('when looking for property that does not exist', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let property: EntityProperty | null;
   let coreNamespace: any = null;
@@ -251,16 +251,16 @@ describe('when looking for property that does not exist', () => {
     );
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(property).toBeNull();
   });
 });
 
-describe('when looking for duplicated property role name', () => {
+describe('when looking for duplicated property role name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   const contextName1 = 'ContextName1';
@@ -298,11 +298,11 @@ describe('when looking for duplicated property role name', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -311,7 +311,7 @@ describe('when looking for duplicated property role name', () => {
   });
 });
 
-describe('when looking for deep property', () => {
+describe('when looking for deep property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: EntityProperty | null;
@@ -355,11 +355,11 @@ describe('when looking for deep property', () => {
     );
   });
 
-  it('should build three domain entities', () => {
+  it('should build three domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -367,7 +367,7 @@ describe('when looking for deep property', () => {
   });
 });
 
-describe('when looking for non primary key property', () => {
+describe('when looking for non primary key property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: EntityProperty | null;
@@ -404,11 +404,11 @@ describe('when looking for non primary key property', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -416,7 +416,7 @@ describe('when looking for non primary key property', () => {
   });
 });
 
-describe('when looking for property on parent abstract entity', () => {
+describe('when looking for property on parent abstract entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let property: EntityProperty | null;
@@ -458,15 +458,15 @@ describe('when looking for property on parent abstract entity', () => {
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -474,7 +474,7 @@ describe('when looking for property on parent abstract entity', () => {
   });
 });
 
-describe('when looking for property on parent domain entity from subclass', () => {
+describe('when looking for property on parent domain entity from subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let property: EntityProperty | null;
@@ -516,15 +516,15 @@ describe('when looking for property on parent domain entity from subclass', () =
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -532,7 +532,7 @@ describe('when looking for property on parent domain entity from subclass', () =
   });
 });
 
-describe('when looking for property on parent domain entity from extension', () => {
+describe('when looking for property on parent domain entity from extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName2 = 'DomainEntityName2';
   let property: EntityProperty | null;
@@ -573,15 +573,15 @@ describe('when looking for property on parent domain entity from extension', () 
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -589,7 +589,7 @@ describe('when looking for property on parent domain entity from extension', () 
   });
 });
 
-describe('when looking for property on parent association from subclass', () => {
+describe('when looking for property on parent association from subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: EntityProperty | null;
@@ -639,19 +639,19 @@ describe('when looking for property on parent association from subclass', () => 
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -659,7 +659,7 @@ describe('when looking for property on parent association from subclass', () => 
   });
 });
 
-describe('when looking for property on parent association from extension', () => {
+describe('when looking for property on parent association from extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: EntityProperty | null;
@@ -708,19 +708,19 @@ describe('when looking for property on parent association from extension', () =>
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     if (property == null) throw new Error();
@@ -728,7 +728,7 @@ describe('when looking for property on parent association from extension', () =>
   });
 });
 
-describe('when looking for property on parent association from extension across namespaces', () => {
+describe('when looking for property on parent association from extension across namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   let property: any;
@@ -783,19 +783,19 @@ describe('when looking for property on parent association from extension across 
     );
   });
 
-  it('should build two domain entities', () => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should return expected property', () => {
+  it('should return expected property', (): void => {
     expect(property).toBeDefined();
     expect(property).not.toBeNull();
     expect(property.metaEdName).toBe(domainEntityName1);
@@ -803,7 +803,7 @@ describe('when looking for property on parent association from extension across 
   });
 });
 
-describe('when looking for non identity property on parent domain entity from subclass', () => {
+describe('when looking for non identity property on parent domain entity from subclass', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let property: EntityProperty | null;
   let coreNamespace: any = null;
@@ -841,15 +841,15 @@ describe('when looking for non identity property on parent domain entity from su
     );
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should return undefined', () => {
+  it('should return undefined', (): void => {
     expect(property).toBeNull();
   });
 });

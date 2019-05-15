@@ -13,10 +13,10 @@ import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRep
 import { EnumerationDefinition } from '../../src/model/EnumerationDefinition';
 import { EdFiMappingEduRepository } from '../../src/model/EdFiMappingEduRepository';
 
-describe('when enhancing descriptor element', () => {
+describe('when enhancing descriptor element', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const descriptorName: string = 'DescriptorName';
-  const descriptorDocumentation: string = 'DescriptorDocumentation';
+  const descriptorName = 'DescriptorName';
+  const descriptorDocumentation = 'DescriptorDocumentation';
 
   // Core | DescriptorName | DescriptorDocumentation
   beforeAll(() => {
@@ -38,11 +38,11 @@ describe('when enhancing descriptor element', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create one enumeration definition', () => {
+  it('should create one enumeration definition', (): void => {
     expect(pluginNamespace.enumerationDefinitions).toHaveLength(1);
   });
 
-  it('should create core enumeration definition from descriptor element', () => {
+  it('should create core enumeration definition from descriptor element', (): void => {
     const enumerationDefinition: EnumerationDefinition = pluginNamespace.enumerationDefinitions[0];
     expect(enumerationDefinition).toBeDefined();
     expect(enumerationDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -51,10 +51,10 @@ describe('when enhancing descriptor element', () => {
   });
 });
 
-describe('when enhancing enumeration element', () => {
+describe('when enhancing enumeration element', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const enumerationName: string = 'EnumerationName';
-  const enumerationDocumentation: string = 'EnumerationDocumentation';
+  const enumerationName = 'EnumerationName';
+  const enumerationDocumentation = 'EnumerationDocumentation';
 
   // Core | EnumerationName | EnumerationDocumentation
   beforeAll(() => {
@@ -76,11 +76,11 @@ describe('when enhancing enumeration element', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create one enumeration definition', () => {
+  it('should create one enumeration definition', (): void => {
     expect(pluginNamespace.enumerationDefinitions).toHaveLength(1);
   });
 
-  it('should create core enumeration definition from enumeration element', () => {
+  it('should create core enumeration definition from enumeration element', (): void => {
     const enumerationDefinition: EnumerationDefinition = pluginNamespace.enumerationDefinitions[0];
     expect(enumerationDefinition).toBeDefined();
     expect(enumerationDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -89,12 +89,12 @@ describe('when enhancing enumeration element', () => {
   });
 });
 
-describe('when enhancing descriptor and enumeration elements', () => {
+describe('when enhancing descriptor and enumeration elements', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const descriptorName: string = 'DescriptorName';
-  const descriptorDocumentation: string = 'DescriptorDocumentation';
-  const enumerationName: string = 'EnumerationName';
-  const enumerationDocumentation: string = 'EnumerationDocumentation';
+  const descriptorName = 'DescriptorName';
+  const descriptorDocumentation = 'DescriptorDocumentation';
+  const enumerationName = 'EnumerationName';
+  const enumerationDocumentation = 'EnumerationDocumentation';
 
   // Core | DescriptorName | DescriptorDocumentation
   beforeAll(() => {
@@ -121,7 +121,7 @@ describe('when enhancing descriptor and enumeration elements', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create two enumeration definitions', () => {
+  it('should create two enumeration definitions', (): void => {
     expect(pluginNamespace.enumerationDefinitions).toHaveLength(2);
   });
 

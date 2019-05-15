@@ -7,10 +7,10 @@ export function collectSingleEntity(
   includeAllProperties: boolean,
   entityStrategy: (entity: TopLevelEntity, property: EntityProperty) => any,
   propertyStrategy: (entity: TopLevelEntity, property: EntityProperty) => any,
-): { referencedEntities: Array<any>; properties: Array<any> } {
+): { referencedEntities: any[]; properties: any[] } {
   if (entity == null) return { referencedEntities: [], properties: [] };
-  const referencedEntities: Array<any> = [];
-  const properties: Array<any> = [];
+  const referencedEntities: any[] = [];
+  const properties: any[] = [];
 
   entity.properties.forEach((property: EntityProperty) => {
     if (
@@ -29,14 +29,14 @@ export function collectSingleEntity(
   return { referencedEntities, properties };
 }
 
-export function propertyCollector(entity: TopLevelEntity): Array<EntityProperty> {
+export function propertyCollector(entity: TopLevelEntity): EntityProperty[] {
   if (entity == null) return [];
-  const entities: Array<TopLevelEntity> = [entity];
-  const properties: Array<EntityProperty> = [];
+  const entities: TopLevelEntity[] = [entity];
+  const properties: EntityProperty[] = [];
 
   while (entities.length > 0) {
     const currentEntity: TopLevelEntity = entities.shift() as TopLevelEntity;
-    const result: { referencedEntities: Array<any>; properties: Array<any> } = collectSingleEntity(
+    const result: { referencedEntities: any[]; properties: any[] } = collectSingleEntity(
       currentEntity,
       false,
       // @ts-ignore - "property" never read

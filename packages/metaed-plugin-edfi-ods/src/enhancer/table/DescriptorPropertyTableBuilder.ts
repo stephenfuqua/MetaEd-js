@@ -19,9 +19,9 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       parentIsRequired: boolean | null,
     ): void {
       const descriptor: ReferentialProperty = asReferentialProperty(property);
@@ -75,7 +75,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
         );
 
-        const columns: Array<Column> = columnCreator.createColumns(descriptor, buildStrategy.columnNamerIgnoresroleName());
+        const columns: Column[] = columnCreator.createColumns(descriptor, buildStrategy.columnNamerIgnoresroleName());
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,

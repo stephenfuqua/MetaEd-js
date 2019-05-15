@@ -8,7 +8,7 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DecimalProperty/DecimalPropertyMustNotMatchASharedDecimal';
 
-describe('when validating decimal property does not match shared decimal', () => {
+describe('when validating decimal property does not match shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const decimalProperty = 'DecimalProperty';
@@ -17,7 +17,7 @@ describe('when validating decimal property does not match shared decimal', () =>
   const minValue = '0';
   const maxValue = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -43,16 +43,16 @@ describe('when validating decimal property does not match shared decimal', () =>
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating decimal property matches shared decimal', () => {
+describe('when validating decimal property matches shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const decimalProperty = 'DecimalProperty';
@@ -61,7 +61,7 @@ describe('when validating decimal property matches shared decimal', () => {
   const minValue = '0';
   const maxValue = '10';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -87,11 +87,11 @@ describe('when validating decimal property matches shared decimal', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DecimalPropertyMustNotMatchASharedDecimal');
     expect(failures[0].category).toBe('error');

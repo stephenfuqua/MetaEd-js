@@ -2,7 +2,7 @@ import { newDescriptorProperty, newMetaEdEnvironment } from 'metaed-core';
 import { DescriptorProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/property/DescriptorProperty';
 
-describe('when DescriptorProperty enhances descriptor property', () => {
+describe('when DescriptorProperty enhances descriptor property', (): void => {
   const descriptorPropertyName = 'DescriptorPropertyName';
   let descriptorProperty: DescriptorProperty;
 
@@ -15,16 +15,16 @@ describe('when DescriptorProperty enhances descriptor property', () => {
     enhance(metaEd);
   });
 
-  it('should have ods name with descriptor suffix', () => {
+  it('should have ods name with descriptor suffix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsName).toBe(`${descriptorPropertyName}Descriptor`);
   });
 
-  it('should have ods descriptorified base name with descriptor suffix', () => {
+  it('should have ods descriptorified base name with descriptor suffix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsDescriptorifiedBaseName).toBe(`${descriptorPropertyName}Descriptor`);
   });
 });
 
-describe('when DescriptorProperty enhances descriptor property role name', () => {
+describe('when DescriptorProperty enhances descriptor property role name', (): void => {
   const descriptorPropertyName = 'DescriptorPropertyName';
   const contextName = 'ContextName';
   let descriptorProperty: DescriptorProperty;
@@ -39,16 +39,16 @@ describe('when DescriptorProperty enhances descriptor property role name', () =>
     enhance(metaEd);
   });
 
-  it('should have ods name with descriptor suffix and context prefix', () => {
+  it('should have ods name with descriptor suffix and context prefix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsName).toBe(`${contextName}${descriptorPropertyName}Descriptor`);
   });
 
-  it('should have ods descriptorified base name with descriptor suffix', () => {
+  it('should have ods descriptorified base name with descriptor suffix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsDescriptorifiedBaseName).toBe(`${descriptorPropertyName}Descriptor`);
   });
 });
 
-describe('when DescriptorProperty enhances descriptor property with descriptor suffix', () => {
+describe('when DescriptorProperty enhances descriptor property with descriptor suffix', (): void => {
   const descriptorPropertyName = 'DescriptorPropertyName';
   let descriptorProperty: DescriptorProperty;
 
@@ -61,11 +61,11 @@ describe('when DescriptorProperty enhances descriptor property with descriptor s
     enhance(metaEd);
   });
 
-  it('should have ods name with normalized descriptor suffix', () => {
+  it('should have ods name with normalized descriptor suffix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsName).toBe(`${descriptorPropertyName}Descriptor`);
   });
 
-  it('should have ods descriptorified base name normalized descriptor suffix', () => {
+  it('should have ods descriptorified base name normalized descriptor suffix', (): void => {
     expect(descriptorProperty.data.edfiOds.odsDescriptorifiedBaseName).toBe(`${descriptorPropertyName}Descriptor`);
   });
 });

@@ -7,9 +7,9 @@ import { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const outputName = 'Core XSD Interchanges';
   const generatorName = 'XSD Interchanges';
-  const generatedOutput: Array<GeneratedOutput> = [];
+  const generatedOutput: GeneratedOutput[] = [];
 
-  const orderedInterchange: Array<MergedInterchange> = [];
+  const orderedInterchange: MergedInterchange[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);

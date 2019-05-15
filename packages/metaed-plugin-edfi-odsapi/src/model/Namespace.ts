@@ -4,11 +4,11 @@ import { newDomainModelDefinition } from './apiModel/DomainModelDefinition';
 import { Aggregate } from './domainMetadata/Aggregate';
 import { EducationOrganizationReference } from './educationOrganizationReferenceMetadata/EducationOrganizationReference';
 
-export type NamespaceEdfiOdsApi = {
+export interface NamespaceEdfiOdsApi {
   domainModelDefinition: DomainModelDefinition;
-  aggregates: Array<Aggregate>;
-  apiEducationOrganizationReferences: Array<EducationOrganizationReference>;
-};
+  aggregates: Aggregate[];
+  apiEducationOrganizationReferences: EducationOrganizationReference[];
+}
 
 const enhancerName = 'NamespaceSetupEnhancer';
 

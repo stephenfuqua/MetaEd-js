@@ -12,7 +12,7 @@ import {
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/QueryableLookupSupport/SubclassQueryableEnhancer';
 
-describe('when enhancing domain entity subclass queryables', () => {
+describe('when enhancing domain entity subclass queryables', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -58,7 +58,7 @@ describe('when enhancing domain entity subclass queryables', () => {
     enhance(metaEd);
   });
 
-  it('should have both queryable fields', () => {
+  it('should have both queryable fields', (): void => {
     const entity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
@@ -68,7 +68,7 @@ describe('when enhancing domain entity subclass queryables', () => {
   });
 });
 
-describe('when enhancing domain entity subclass with identity rename of base class queryable', () => {
+describe('when enhancing domain entity subclass with identity rename of base class queryable', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -110,7 +110,7 @@ describe('when enhancing domain entity subclass with identity rename of base cla
     enhance(metaEd);
   });
 
-  it('should have both queryable fields', () => {
+  it('should have both queryable fields', (): void => {
     const entity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
@@ -118,7 +118,7 @@ describe('when enhancing domain entity subclass with identity rename of base cla
   });
 });
 
-describe('when enhancing association subclass queryables', () => {
+describe('when enhancing association subclass queryables', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -164,7 +164,7 @@ describe('when enhancing association subclass queryables', () => {
     enhance(metaEd);
   });
 
-  it('should have both queryable fields', () => {
+  it('should have both queryable fields', (): void => {
     const entity: any = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
@@ -174,7 +174,7 @@ describe('when enhancing association subclass queryables', () => {
   });
 });
 
-describe('when enhancing association subclass with identity rename of base class queryable', () => {
+describe('when enhancing association subclass with identity rename of base class queryable', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -217,7 +217,7 @@ describe('when enhancing association subclass with identity rename of base class
     enhance(metaEd);
   });
 
-  it('should ignore renamed identity', () => {
+  it('should ignore renamed identity', (): void => {
     const entity: any = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();

@@ -5,7 +5,7 @@ import { newState } from '../../src/State';
 import { loadFiles } from '../../src/file/FileSystemFilenameLoader';
 import { newMetaEdConfiguration } from '../../src/MetaEdConfiguration';
 
-describe('When a single file', () => {
+describe('When a single file', (): void => {
   beforeAll(() => {
     const metaEdText = MetaEdTextBuilder.build()
       .withStartDomainEntity('DomainEntity1')
@@ -22,7 +22,7 @@ describe('When a single file', () => {
     ffs.addMockFile(domainEntity1);
   });
 
-  it('Should load the file contents', () => {
+  it('Should load the file contents', (): void => {
     const state: State = {
       ...newState(),
       metaEdConfiguration: {
@@ -51,7 +51,7 @@ describe('When a single file', () => {
   });
 });
 
-describe('When an empty project', () => {
+describe('When an empty project', (): void => {
   beforeAll(() => {
     const metaEdText = MetaEdTextBuilder.build()
       .withStartDomainEntity('DomainEntity1')
@@ -68,7 +68,7 @@ describe('When an empty project', () => {
     ffs.addMockFile(domainEntity1);
   });
 
-  it('Should load the file contents', () => {
+  it('Should load the file contents', (): void => {
     const state: State = {
       ...newState(),
       metaEdConfiguration: {
@@ -97,7 +97,7 @@ describe('When an empty project', () => {
   });
 });
 
-describe('When multiple files', () => {
+describe('When multiple files', (): void => {
   beforeAll(() => {
     const metaEdTextDomainEntity = MetaEdTextBuilder.build()
       .withStartDomainEntity('DomainEntity1')
@@ -128,7 +128,7 @@ describe('When multiple files', () => {
     ffs.addMockFile(domainEntity1);
   });
 
-  it('Should load the file contents', () => {
+  it('Should load the file contents', (): void => {
     const state: State = {
       ...newState(),
       metaEdConfiguration: {

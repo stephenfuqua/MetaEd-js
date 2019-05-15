@@ -5,8 +5,8 @@ import R from 'ramda';
 import { Namespace } from 'metaed-core';
 
 export const odsPath = '/Database/SQLServer/ODS/';
-export const dataPath: string = `${odsPath}Data/`;
-export const structurePath: string = `${odsPath}Structure/`;
+export const dataPath = `${odsPath}Data/`;
+export const structurePath = `${odsPath}Structure/`;
 
 export function fileNameFor(prefix: string, namespace: Namespace, suffix: string): string {
   if (namespace.namespaceName === 'EdFi') return `${prefix}-${suffix}.sql`;

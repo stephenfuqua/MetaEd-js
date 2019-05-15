@@ -12,8 +12,8 @@ import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 type SimpleProperties = ShortProperty | DecimalProperty | IntegerProperty | StringProperty;
 
-function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace: Namespace): Array<SimpleProperties> {
-  const result: Array<SimpleProperties> = [];
+function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace: Namespace): SimpleProperties[] {
+  const result: SimpleProperties[] = [];
 
   result.push(...properties.string.filter(property => property.namespace === namespace));
   result.push(...properties.decimal.filter(property => property.namespace === namespace));
@@ -26,8 +26,8 @@ function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace
   return result;
 }
 
-function generateValidationErrorsForDuplicates(metaEdProperty: Array<SimpleProperties>): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+function generateValidationErrorsForDuplicates(metaEdProperty: SimpleProperties[]): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   groupByMetaEdName(metaEdProperty).forEach((properties, metaEdName) => {
     if (properties.length > 1) {
@@ -45,8 +45,8 @@ function generateValidationErrorsForDuplicates(metaEdProperty: Array<SimplePrope
   return failures;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach(namespace => {
     failures.push(

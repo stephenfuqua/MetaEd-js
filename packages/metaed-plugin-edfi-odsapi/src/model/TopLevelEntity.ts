@@ -3,9 +3,9 @@ import { getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { NoAggregate } from './domainMetadata/Aggregate';
 import { Aggregate } from './domainMetadata/Aggregate';
 
-export type TopLevelEntityEdfiOdsApi = {
+export interface TopLevelEntityEdfiOdsApi {
   aggregate: Aggregate;
-};
+}
 
 const enhancerName = 'TopLevelEntitySetupEnhancer';
 

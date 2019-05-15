@@ -3,9 +3,9 @@ import { getAllEntitiesOfType } from 'metaed-core';
 import { SimpleType } from './schema/SimpleType';
 import { NoSimpleType } from './schema/SimpleType';
 
-export type SimpleTypeBaseEdfiXsd = {
+export interface SimpleTypeBaseEdfiXsd {
   xsdSimpleType: SimpleType;
-};
+}
 
 export type SimpleTypeBase = DecimalType | IntegerType | StringType;
 
@@ -20,7 +20,7 @@ export function addSimpleTypeBaseEdfiXsdTo(simpleTypeBase: SimpleTypeBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'decimalType', 'integerType', 'stringType') as Array<SimpleTypeBase>).forEach(
+  (getAllEntitiesOfType(metaEd, 'decimalType', 'integerType', 'stringType') as SimpleTypeBase[]).forEach(
     (entity: SimpleTypeBase) => {
       addSimpleTypeBaseEdfiXsdTo(entity);
     },

@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, newInterchange, newInterchangeExtension, newNames
 import { MetaEdEnvironment, Interchange, InterchangeExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
-describe('when enhancing interchange extension referring to interchange', () => {
+describe('when enhancing interchange extension referring to interchange', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -30,7 +30,7 @@ describe('when enhancing interchange extension referring to interchange', () => 
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
   });
 });

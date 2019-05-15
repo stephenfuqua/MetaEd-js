@@ -5,7 +5,7 @@ import { SemVer } from './MetaEdEnvironment';
 export const nextMacroTask = (): Promise<void> => new Promise(resolve => setImmediate(resolve));
 
 export function uppercaseThenAlphanumericOnly(aString: string): string | null {
-  const alphanumericMatches: Array<string> | null = aString.match(/[a-zA-Z0-9]+/g);
+  const alphanumericMatches: string[] | null = aString.match(/[a-zA-Z0-9]+/g);
   if (alphanumericMatches == null) return null;
   const alphanumericOnly = alphanumericMatches.join('');
   const leadingAlphaCharacter = /^[A-Z]/;

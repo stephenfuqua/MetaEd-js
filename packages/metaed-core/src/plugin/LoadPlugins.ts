@@ -8,18 +8,18 @@ import { newPluginEnvironment } from './PluginEnvironment';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
-const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
+const cachedPlugins: Map<string, PluginManifest[]> = new Map();
 
-export function scanForPlugins(state: State): Array<PluginManifest> {
+export function scanForPlugins(state: State): PluginManifest[] {
   // default to artifact-specific plugin loading from siblings of metaed-core
   const directory: string = state.pluginScanDirectory || path.resolve(__dirname, '../../..');
 
   const cache = cachedPlugins.get(directory);
   if (cache && cache.length > 0) return cache;
 
-  const pluginManifests: Array<PluginManifest> = scanDirectories(directory);
+  const pluginManifests: PluginManifest[] = scanDirectories(directory);
 
-  const foundPlugins: Array<PluginManifest> = [];
+  const foundPlugins: PluginManifest[] = [];
   pluginManifests.forEach((pluginManifest: PluginManifest) => {
     materializePlugin(pluginManifest);
     if (pluginManifest.metaEdPlugin === NoMetaEdPlugin) {

@@ -30,22 +30,22 @@ import { EntityDefinition } from '../../src/model/EntityDefinition';
 import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRepository';
 import { EdFiMappingEduRepository } from '../../src/model/EdFiMappingEduRepository';
 
-describe('when enhancing domain entity with identity reference', () => {
+describe('when enhancing domain entity with identity reference', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const domainEntityName: string = 'DomainEntityName';
-  const domainEntityDocumentation: string = 'DomainEntityDocumentation';
-  const identityDocumentation: string = 'IdentityDocumentation';
-  const identityName: string = 'IdentityName';
+  const domainEntityName = 'DomainEntityName';
+  const domainEntityDocumentation = 'DomainEntityDocumentation';
+  const identityDocumentation = 'IdentityDocumentation';
+  const identityName = 'IdentityName';
   const identityType: string = identityTypeSuffix;
-  const referenceDocumentation: string = 'ReferenceDocumentation';
-  const referenceName: string = 'ReferenceNameReference';
+  const referenceDocumentation = 'ReferenceDocumentation';
+  const referenceName = 'ReferenceNameReference';
   const referenceType: string = referenceTypeSuffix;
-  const idName: string = 'IdName';
-  const idType: string = 'IdType';
-  const idDocumentation: string = 'IdDocumentation';
-  const namespaceName: string = 'Namespace';
-  const namespaceType: string = 'NamespaceType';
-  const namespaceDocumentation: string = 'NamespaceDocumentation';
+  const idName = 'IdName';
+  const idType = 'IdType';
+  const idDocumentation = 'IdDocumentation';
+  const namespaceName = 'Namespace';
+  const namespaceType = 'NamespaceType';
+  const namespaceDocumentation = 'NamespaceDocumentation';
 
   // Core | DomainEntityName                                     | DomainEntityDocumentation
   // Core | DomainEntityName.ReferenceNameReference              | ReferenceDocumentation
@@ -107,7 +107,7 @@ describe('when enhancing domain entity with identity reference', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create three entity definitions', () => {
+  it('should create three entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(3);
   });
 
@@ -117,7 +117,7 @@ describe('when enhancing domain entity with identity reference', () => {
     [[domainEntityName, referenceName, identityName], identityDocumentation, 2],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -127,28 +127,28 @@ describe('when enhancing domain entity with identity reference', () => {
   );
 });
 
-describe('when enhancing domain entity with multiple identity references', () => {
+describe('when enhancing domain entity with multiple identity references', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const domainEntityName: string = 'DomainEntityName';
-  const domainEntityDocumentation: string = 'DomainEntityDocumentation';
-  const identityName1: string = 'IdentityName1';
-  const identityType1: string = `IdentityType1${identityTypeSuffix}`;
-  const identityDocumentation1: string = 'IdentityDocumentation1';
-  const identityName2: string = 'IdentityName2';
-  const identityType2: string = `IdentityType2${identityTypeSuffix}`;
-  const identityDocumentation2: string = 'IdentityDocumentation2';
-  const referenceName1: string = 'ReferenceName1Reference';
-  const referenceType1: string = `ReferenceType1${referenceTypeSuffix}`;
-  const referenceDocumentation1: string = 'ReferenceDocumentation1';
-  const referenceName2: string = 'ReferenceName2Reference';
-  const referenceType2: string = `ReferenceType2${referenceTypeSuffix}`;
-  const referenceDocumentation2: string = 'ReferenceDocumentation2';
-  const idName: string = 'IdName';
-  const idType: string = 'IdType';
-  const idDocumentation: string = 'IdDoumentation';
-  const namespaceName: string = 'Namespace';
-  const namespaceType: string = 'NamespaceType';
-  const namespaceDocumentation: string = 'NamespaceDocumentation';
+  const domainEntityName = 'DomainEntityName';
+  const domainEntityDocumentation = 'DomainEntityDocumentation';
+  const identityName1 = 'IdentityName1';
+  const identityType1 = `IdentityType1${identityTypeSuffix}`;
+  const identityDocumentation1 = 'IdentityDocumentation1';
+  const identityName2 = 'IdentityName2';
+  const identityType2 = `IdentityType2${identityTypeSuffix}`;
+  const identityDocumentation2 = 'IdentityDocumentation2';
+  const referenceName1 = 'ReferenceName1Reference';
+  const referenceType1 = `ReferenceType1${referenceTypeSuffix}`;
+  const referenceDocumentation1 = 'ReferenceDocumentation1';
+  const referenceName2 = 'ReferenceName2Reference';
+  const referenceType2 = `ReferenceType2${referenceTypeSuffix}`;
+  const referenceDocumentation2 = 'ReferenceDocumentation2';
+  const idName = 'IdName';
+  const idType = 'IdType';
+  const idDocumentation = 'IdDoumentation';
+  const namespaceName = 'Namespace';
+  const namespaceType = 'NamespaceType';
+  const namespaceDocumentation = 'NamespaceDocumentation';
 
   // Core | DomainEntityName | DomainEntityDocumentation;
   // Core | DomainEntityName.ReferenceNameReference1 | ReferenceDocumentation1;
@@ -247,7 +247,7 @@ describe('when enhancing domain entity with multiple identity references', () =>
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create five entity definitions', () => {
+  it('should create five entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(5);
   });
 
@@ -259,7 +259,7 @@ describe('when enhancing domain entity with multiple identity references', () =>
     [[domainEntityName, referenceName1, identityName1, referenceName2, identityName2], identityDocumentation2, 4],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -269,13 +269,13 @@ describe('when enhancing domain entity with multiple identity references', () =>
   );
 });
 
-describe('when enhancing descriptor with only base descriptor type', () => {
+describe('when enhancing descriptor with only base descriptor type', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const baseTypeDescriptorReferenceDocumentation: string = 'BaseTypeDescriptorReferenceDocumentation';
-  const baseTypeDescriptorReferenceName: string = 'BaseTypeDescriptorReferenceName';
-  const descriptorDocumentation: string = 'DescriptorDocumentation';
-  const descriptorMapType: string = `DescriptorMapType${mapTypeSuffix}`;
-  const descriptorName: string = 'DescriptorName';
+  const baseTypeDescriptorReferenceDocumentation = 'BaseTypeDescriptorReferenceDocumentation';
+  const baseTypeDescriptorReferenceName = 'BaseTypeDescriptorReferenceName';
+  const descriptorDocumentation = 'DescriptorDocumentation';
+  const descriptorMapType = `DescriptorMapType${mapTypeSuffix}`;
+  const descriptorName = 'DescriptorName';
 
   // Core | DescriptorName                                 | DescriptorDocumentation
   // Core | DescriptorName.BaseTypeDescriptorReferenceName | baseTypeDescriptorReferenceDocumentation
@@ -321,7 +321,7 @@ describe('when enhancing descriptor with only base descriptor type', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create two entity definitions', () => {
+  it('should create two entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(2);
   });
 
@@ -330,7 +330,7 @@ describe('when enhancing descriptor with only base descriptor type', () => {
     [[descriptorName, baseTypeDescriptorReferenceName], baseTypeDescriptorReferenceDocumentation, 1],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -340,15 +340,15 @@ describe('when enhancing descriptor with only base descriptor type', () => {
   );
 });
 
-describe('when enhancing descriptor with map type reference', () => {
+describe('when enhancing descriptor with map type reference', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const baseTypeDescriptorReferenceDocumentation: string = 'BaseTypeDescriptorReferenceDocumentation';
-  const baseTypeDescriptorReferenceName: string = 'BaseTypeDescriptorReferenceName';
-  const descriptorDocumentation: string = 'DescriptorDocumentation';
-  const descriptorMap: string = 'DescriptorMap';
-  const descriptorMapDocumentation: string = 'DescriptorMapDocumentation';
-  const descriptorMapType: string = `DescriptorMapType${mapTypeSuffix}`;
-  const descriptorName: string = 'DescriptorName';
+  const baseTypeDescriptorReferenceDocumentation = 'BaseTypeDescriptorReferenceDocumentation';
+  const baseTypeDescriptorReferenceName = 'BaseTypeDescriptorReferenceName';
+  const descriptorDocumentation = 'DescriptorDocumentation';
+  const descriptorMap = 'DescriptorMap';
+  const descriptorMapDocumentation = 'DescriptorMapDocumentation';
+  const descriptorMapType = `DescriptorMapType${mapTypeSuffix}`;
+  const descriptorName = 'DescriptorName';
 
   // Core | DescriptorName                                 | DescriptorDocumentation
   // Core | DescriptorName.BaseTypeDescriptorReferenceName | baseTypeDescriptorReferenceDocumentation
@@ -402,7 +402,7 @@ describe('when enhancing descriptor with map type reference', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create two entity definitions', () => {
+  it('should create two entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(2);
   });
 
@@ -411,7 +411,7 @@ describe('when enhancing descriptor with map type reference', () => {
     [[descriptorName, baseTypeDescriptorReferenceName], baseTypeDescriptorReferenceDocumentation, 1],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -421,18 +421,18 @@ describe('when enhancing descriptor with map type reference', () => {
   );
 });
 
-describe('when enhancing descriptor with descriptor reference', () => {
+describe('when enhancing descriptor with descriptor reference', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const descriptorName1: string = 'DescriptorName1';
-  const descriptorDocumentation1: string = 'DescriptorDocumentation1';
-  const descriptorExtendedReferenceType: string = `DescriptorExtendedReferenceType${descriptorReferenceTypeSuffix}`;
-  const descriptorReferenceDocumentation: string = 'DescriptorReferenceDocumentation';
-  const descriptorExtendedReferenceDocumentation: string = 'DescriptorExtendedReferenceDocumentation';
-  const descriptorName2: string = 'DescriptorName2';
-  const descriptorDocumentation2: string = 'DescriptorDocumentation2';
-  const descriptorMap: string = 'DescriptorMap';
-  const descriptorMapType: string = 'DescriptorMapType';
-  const descriptorMapDocumentation: string = 'DescriptorMapDocumentation';
+  const descriptorName1 = 'DescriptorName1';
+  const descriptorDocumentation1 = 'DescriptorDocumentation1';
+  const descriptorExtendedReferenceType = `DescriptorExtendedReferenceType${descriptorReferenceTypeSuffix}`;
+  const descriptorReferenceDocumentation = 'DescriptorReferenceDocumentation';
+  const descriptorExtendedReferenceDocumentation = 'DescriptorExtendedReferenceDocumentation';
+  const descriptorName2 = 'DescriptorName2';
+  const descriptorDocumentation2 = 'DescriptorDocumentation2';
+  const descriptorMap = 'DescriptorMap';
+  const descriptorMapType = 'DescriptorMapType';
+  const descriptorMapDocumentation = 'DescriptorMapDocumentation';
 
   // Core | DescriptorName1                 | DescriptorDocumentation1
   // Core | DescriptorName1.DescriptorName2 | DescriptorReferenceDocumentation
@@ -490,7 +490,7 @@ describe('when enhancing descriptor with descriptor reference', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create three entity definitions', () => {
+  it('should create three entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(3);
   });
 
@@ -500,7 +500,7 @@ describe('when enhancing descriptor with descriptor reference', () => {
     [[descriptorName2], descriptorDocumentation2, 2],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -510,21 +510,21 @@ describe('when enhancing descriptor with descriptor reference', () => {
   );
 });
 
-describe('when enhancing domain entity with common reference', () => {
+describe('when enhancing domain entity with common reference', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const domainEntityName: string = 'DomainEntityName';
-  const domainEntityDocumentation: string = 'DomainEntityDocumentation';
-  const commonName1: string = 'CommonName1';
+  const domainEntityName = 'DomainEntityName';
+  const domainEntityDocumentation = 'DomainEntityDocumentation';
+  const commonName1 = 'CommonName1';
   const commonType1: string = commonName1;
-  const commonReferenceDocumentation1: string = 'CommonReferenceDocumentation1';
-  const commonDocumentation1: string = 'CommonDocumentation1';
-  const commonName2: string = 'CommonName2';
+  const commonReferenceDocumentation1 = 'CommonReferenceDocumentation1';
+  const commonDocumentation1 = 'CommonDocumentation1';
+  const commonName2 = 'CommonName2';
   const commonType2: string = commonName2;
-  const commonReferenceDocumentation2: string = 'CommonReferenceDocumentation2';
-  const commonDocumentation2: string = 'CommonDocumentation2';
-  const simpleName: string = 'SimpleName';
-  const simpleType: string = 'xs:boolean';
-  const simpleDocumentation: string = 'SimpleDocumentation';
+  const commonReferenceDocumentation2 = 'CommonReferenceDocumentation2';
+  const commonDocumentation2 = 'CommonDocumentation2';
+  const simpleName = 'SimpleName';
+  const simpleType = 'xs:boolean';
+  const simpleDocumentation = 'SimpleDocumentation';
 
   // Core | DomainEntityName                         | DomainEntityDocumentation
   // Core | DomainEntityName.CommonName1             | CommonReferenceDocumentation1
@@ -582,7 +582,7 @@ describe('when enhancing domain entity with common reference', () => {
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create three entity definitions', () => {
+  it('should create three entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(3);
   });
 
@@ -592,7 +592,7 @@ describe('when enhancing domain entity with common reference', () => {
     [[domainEntityName, commonName1, commonName2], commonReferenceDocumentation2, 2],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);
@@ -602,26 +602,26 @@ describe('when enhancing domain entity with common reference', () => {
   );
 });
 
-describe('when enhancing domain entity with choice with inline common reference', () => {
+describe('when enhancing domain entity with choice with inline common reference', (): void => {
   let pluginNamespace: EdFiMappingEduRepository;
-  const commonDocumentation: string = 'CommonDocumentation';
-  const commonName: string = 'CommonName';
-  const domainEntityDocumentation: string = 'DomainEntityDocumentation';
-  const domainEntityName: string = 'DomainEntityName';
-  const idDocumentation: string = 'IdDocumentation';
-  const identityDocumentation: string = 'IdentityDocumentation';
-  const identityName: string = 'IdentityName';
+  const commonDocumentation = 'CommonDocumentation';
+  const commonName = 'CommonName';
+  const domainEntityDocumentation = 'DomainEntityDocumentation';
+  const domainEntityName = 'DomainEntityName';
+  const idDocumentation = 'IdDocumentation';
+  const identityDocumentation = 'IdentityDocumentation';
+  const identityName = 'IdentityName';
   const identityType: string = identityTypeSuffix;
-  const idName: string = 'IdName';
-  const idType: string = 'IdType';
-  const inlineCommonReferenceDocumentation: string = 'InlineCommonReferenceDocumentation';
-  const inlineCommonReferenceName: string = 'InlineCommonReferenceName';
-  const namespaceName: string = 'Namespace';
-  const namespaceType: string = 'NamespaceType';
-  const referenceDocumentation: string = 'ReferenceDocumentation';
-  const referenceName: string = 'ReferenceNameReference';
+  const idName = 'IdName';
+  const idType = 'IdType';
+  const inlineCommonReferenceDocumentation = 'InlineCommonReferenceDocumentation';
+  const inlineCommonReferenceName = 'InlineCommonReferenceName';
+  const namespaceName = 'Namespace';
+  const namespaceType = 'NamespaceType';
+  const referenceDocumentation = 'ReferenceDocumentation';
+  const referenceName = 'ReferenceNameReference';
   const referenceType: string = referenceTypeSuffix;
-  const namespaceDocumentation: string = 'NamespaceDocumentation';
+  const namespaceDocumentation = 'NamespaceDocumentation';
 
   // Core | DomainEntityName                                                               | DomainEntityDocumentation
   // Core | DomainEntityName.InlineCommonReferenceName                                     | InlineCommonReferenceDocumentationName
@@ -716,7 +716,7 @@ describe('when enhancing domain entity with choice with inline common reference'
     pluginNamespace = pluginEnvironmentRepositoryForNamespace(metaEd, namespace) as any;
   });
 
-  it('should create four entity definitions', () => {
+  it('should create four entity definitions', (): void => {
     expect(pluginNamespace.entityDefinitions).toHaveLength(4);
   });
 
@@ -727,7 +727,7 @@ describe('when enhancing domain entity with choice with inline common reference'
     [[domainEntityName, inlineCommonReferenceName, referenceName, identityName], identityDocumentation, 3],
   ])(
     `should create core entity definition with entity path: %j and definition: '%s'`,
-    (entityPath: Array<string>, definition: string, index: number) => {
+    (entityPath: string[], definition: string, index: number) => {
       const entityDefinition: EntityDefinition = pluginNamespace.entityDefinitions[index];
       expect(entityDefinition).toBeDefined();
       expect(entityDefinition.elementGroup).toBe(dataStandardElementGroupName);

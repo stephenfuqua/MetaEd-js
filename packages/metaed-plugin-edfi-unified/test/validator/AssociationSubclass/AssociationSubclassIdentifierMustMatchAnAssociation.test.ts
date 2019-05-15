@@ -8,10 +8,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationSubclass/AssociationSubclassIdentifierMustMatchAnAssociation';
 
-describe('when association subclass has valid extendee', () => {
+describe('when association subclass has valid extendee', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -37,18 +37,18 @@ describe('when association subclass has valid extendee', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association subclass has invalid extendee', () => {
+describe('when association subclass has invalid extendee', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -66,11 +66,11 @@ describe('when association subclass has invalid extendee', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentifierMustMatchAnAssociation');
     expect(failures[0].category).toBe('error');
@@ -83,10 +83,10 @@ describe('when association subclass has invalid extendee', () => {
   });
 });
 
-describe('when association subclass has valid extendee across dependent namespaces', () => {
+describe('when association subclass has valid extendee across dependent namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -118,11 +118,11 @@ describe('when association subclass has valid extendee across dependent namespac
     failures = validate(metaEd);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(extensionNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

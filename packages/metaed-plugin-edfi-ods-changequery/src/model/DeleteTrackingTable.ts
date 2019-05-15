@@ -1,9 +1,9 @@
 import { Column } from 'metaed-plugin-edfi-ods';
 
-export type DeleteTrackingTable = {
+export interface DeleteTrackingTable {
   schema: string;
   tableName: string;
-  columns: Array<Column>;
+  columns: Column[];
   primaryKeyName: string;
-  primaryKeyColumns: Array<Column>;
-};
+  primaryKeyColumns: Column[];
+}

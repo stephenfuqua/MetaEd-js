@@ -17,7 +17,7 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating api model and comparing it to data standard 3.1 authoritative artifacts', () => {
+describe('when generating api model and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const metaEdConfiguration = {
     ...newMetaEdConfiguration(),
     artifactDirectory: './MetaEdOutput/',

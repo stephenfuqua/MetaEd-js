@@ -2,12 +2,12 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, CommonBuilder, 
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/InlineCommonDomainItemMustMatchTopLevelEntity';
 
-describe('when validating inline common domain item matches top level entity', () => {
+describe('when validating inline common domain item matches top level entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const inlineCommonName = 'InlineCommonName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -34,21 +34,21 @@ describe('when validating inline common domain item matches top level entity', (
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating inline common domain item matches top level entity across namespace', () => {
+describe('when validating inline common domain item matches top level entity across namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const inlineCommonName = 'InlineCommonName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -79,21 +79,21 @@ describe('when validating inline common domain item matches top level entity acr
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating inline common domain item does not match top level entity', () => {
+describe('when validating inline common domain item does not match top level entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const inlineCommonName = 'InlineCommonName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -120,11 +120,11 @@ describe('when validating inline common domain item does not match top level ent
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have one validation failure()', () => {
+  it('should have one validation failure()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InlineCommonDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');

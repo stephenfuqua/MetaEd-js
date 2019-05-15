@@ -3,17 +3,17 @@ import { Annotation, newAnnotation } from './Annotation';
 import { Attribute } from './Attribute';
 import { ComplexTypeItem } from './ComplexTypeItem';
 
-export type ComplexType = {
+export interface ComplexType {
   name: string;
   baseType: string;
   annotation: Annotation;
   isAbstract: boolean;
   isRestriction: boolean;
-  attributes: Array<Attribute>;
-  items: Array<ComplexTypeItem>;
+  attributes: Attribute[];
+  items: ComplexTypeItem[];
 
   hasItems: () => boolean;
-};
+}
 
 export function newComplexType(): ComplexType {
   return {

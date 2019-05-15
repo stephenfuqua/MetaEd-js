@@ -27,8 +27,8 @@ import { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 const enhancerName = 'PropertyEnhancer';
 
 // Ramda flatmap was too slow
-const queryableFieldsFrom = (topLevelEntities: Array<TopLevelEntity>): Array<EntityProperty> => {
-  const result: Array<EntityProperty> = [];
+const queryableFieldsFrom = (topLevelEntities: TopLevelEntity[]): EntityProperty[] => {
+  const result: EntityProperty[] = [];
   topLevelEntities.forEach((topLevelEntity: TopLevelEntity) => result.push(...topLevelEntity.queryableFields));
   return result;
 };
@@ -129,10 +129,10 @@ function applyXsdNameAndType(property: EntityProperty) {
 
 // this assumes all properties in propertyIndex **and** all queryable fields have been edfiXsd initialized
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const allProperties: Array<EntityProperty> = getAllProperties(metaEd.propertyIndex);
+  const allProperties: EntityProperty[] = getAllProperties(metaEd.propertyIndex);
   allProperties.forEach(property => applyXsdNameAndType(property));
 
-  const allQueryableFields: Array<EntityProperty> = queryableFieldsFrom(
+  const allQueryableFields: EntityProperty[] = queryableFieldsFrom(
     getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())),
   );
   allQueryableFields.forEach(property => applyXsdNameAndType(property));

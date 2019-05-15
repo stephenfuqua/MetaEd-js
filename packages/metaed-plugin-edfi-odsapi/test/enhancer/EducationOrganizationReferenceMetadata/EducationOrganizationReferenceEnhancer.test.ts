@@ -26,7 +26,7 @@ function buildEducationOrganizationEntity(namespace: Namespace): DomainEntity {
   return edOrgEntity;
 }
 
-describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization', () => {
+describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization', (): void => {
   const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
@@ -55,12 +55,12 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
     enhance(metaEd);
   });
 
-  it('should have no education organization reference', () => {
+  it('should have no education organization reference', (): void => {
     expect(coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(0);
   });
 });
 
-describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization Subclass', () => {
+describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization Subclass', (): void => {
   const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreNamespace: Namespace = Object.assign(newNamespace(), {
@@ -76,12 +76,12 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
     enhance(metaEd);
   });
 
-  it('should have no education organization reference', () => {
+  it('should have no education organization reference', (): void => {
     expect(coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(0);
   });
 });
 
-describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass', () => {
+describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass', (): void => {
   const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
@@ -109,7 +109,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
     enhance(metaEd);
   });
 
-  it('should have education organization reference', () => {
+  it('should have education organization reference', (): void => {
     expect(coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(1);
     const educationOrganizationReference = coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();
@@ -118,7 +118,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
   });
 });
 
-describe('when EducationOrganizationReferenceEnhancer enhances extension namespace with EducationOrganization Subclass', () => {
+describe('when EducationOrganizationReferenceEnhancer enhances extension namespace with EducationOrganization Subclass', (): void => {
   const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
@@ -155,11 +155,11 @@ describe('when EducationOrganizationReferenceEnhancer enhances extension namespa
     enhance(metaEd);
   });
 
-  it('should have no core education organization reference', () => {
+  it('should have no core education organization reference', (): void => {
     expect(coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(0);
   });
 
-  it('should have extension education organization reference', () => {
+  it('should have extension education organization reference', (): void => {
     expect(extensionNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(1);
     const educationOrganizationReference = extensionNamespace.data.edfiOdsApi.apiEducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();
@@ -168,7 +168,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances extension namespa
   });
 });
 
-describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass with no identity rename', () => {
+describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass with no identity rename', (): void => {
   const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -193,7 +193,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
     enhance(metaEd);
   });
 
-  it('should have extension education organization reference', () => {
+  it('should have extension education organization reference', (): void => {
     expect(coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences.length).toBe(1);
     const educationOrganizationReference = coreNamespace.data.edfiOdsApi.apiEducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();

@@ -21,8 +21,8 @@ export interface Column {
   isPartOfAlternateKey: boolean;
   isUniqueIndex: boolean;
   isIdentityDatabaseType: boolean;
-  sourceEntityProperties: Array<EntityProperty>;
-  mergedReferenceContexts: Array<string>;
+  sourceEntityProperties: EntityProperty[];
+  mergedReferenceContexts: string[];
 }
 
 export interface DecimalColumn extends Column {

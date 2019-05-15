@@ -1,11 +1,11 @@
 import { ApiProperty } from './ApiProperty';
 import { EntityIdentifier } from './EntityIdentifier';
 
-export type EntityDefinition = {
+export interface EntityDefinition {
   schema: string;
   name: string;
-  locallyDefinedProperties: Array<ApiProperty>;
-  identifiers: Array<EntityIdentifier>;
+  locallyDefinedProperties: ApiProperty[];
+  identifiers: EntityIdentifier[];
   isAbstract: boolean;
   description: string;
-};
+}

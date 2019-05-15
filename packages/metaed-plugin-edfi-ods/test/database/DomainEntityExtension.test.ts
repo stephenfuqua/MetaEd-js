@@ -26,13 +26,13 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when domain entity extension has multiple properties', () => {
+describe('when domain entity extension has multiple properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
-  const domainEntityExtensionName: string = `${domainEntityName}Extension`;
+  const domainEntityExtensionName = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
   const integerPropertyName3 = 'IntegerPropertyName3';
@@ -218,12 +218,12 @@ describe('when domain entity extension has multiple properties', () => {
   });
 });
 
-describe('when domain entity extension has optional collection property', () => {
+describe('when domain entity extension has optional collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
-  const domainEntityExtensionName: string = `${domainEntityName}Extension`;
+  const domainEntityExtensionName = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
 
@@ -330,12 +330,12 @@ describe('when domain entity extension has optional collection property', () => 
   });
 });
 
-describe('when domain entity extension has required collection property', () => {
+describe('when domain entity extension has required collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
-  const domainEntityExtensionName: string = `${domainEntityName}Extension`;
+  const domainEntityExtensionName = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
 
@@ -442,14 +442,14 @@ describe('when domain entity extension has required collection property', () => 
   });
 });
 
-describe('when domain entity extension has multiple common properties', () => {
+describe('when domain entity extension has multiple common properties', (): void => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const commonName1 = 'CommonName1';
   const commonName2 = 'CommonName2';
   const domainEntityName = 'DomainEntityName';
-  const domainEntityExtensionName: string = `${domainEntityName}Extension`;
+  const domainEntityExtensionName = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
   const integerPropertyName3 = 'IntegerPropertyName3';

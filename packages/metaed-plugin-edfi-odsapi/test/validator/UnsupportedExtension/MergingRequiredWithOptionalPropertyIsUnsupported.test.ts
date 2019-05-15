@@ -10,8 +10,8 @@ import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unifie
 import { initializeNamespaceDependencies } from '../ValidationTestHelper';
 import { validate } from '../../../src/validator/UnsupportedExtension/MergingRequiredWithOptionalPropertyIsUnsupported';
 
-describe('when a domain entity has both a required and optional reference to a property of the same name but is in core', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to a property of the same name but is in core', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -51,13 +51,13 @@ describe('when a domain entity has both a required and optional reference to a p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity has both a required and optional reference to a property of the same name in an extension', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to a property of the same name in an extension', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -100,7 +100,7 @@ describe('when a domain entity has both a required and optional reference to a p
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
@@ -121,8 +121,8 @@ describe('when a domain entity has both a required and optional reference to a p
   });
 });
 
-describe('when a domain entity has both a required and optional reference to domain entity with a property of the same name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to domain entity with a property of the same name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -170,7 +170,7 @@ describe('when a domain entity has both a required and optional reference to dom
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
@@ -191,8 +191,8 @@ describe('when a domain entity has both a required and optional reference to dom
   });
 });
 
-describe('when a domain entity has both a required and optional reference to a property of the same name with same context name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to a property of the same name with same context name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -235,7 +235,7 @@ describe('when a domain entity has both a required and optional reference to a p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
@@ -256,8 +256,8 @@ describe('when a domain entity has both a required and optional reference to a p
   });
 });
 
-describe('when a domain entity has both a required and optional reference to a property of the same name with different context name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to a property of the same name with different context name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -299,13 +299,13 @@ describe('when a domain entity has both a required and optional reference to a p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity has both a required and optional reference to a property of the same name with different context name on property', () => {
-  let failures: Array<ValidationFailure>;
+describe('when a domain entity has both a required and optional reference to a property of the same name with different context name on property', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -343,7 +343,7 @@ describe('when a domain entity has both a required and optional reference to a p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

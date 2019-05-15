@@ -28,14 +28,14 @@ export const registerPartials = R.once(() => {
   });
 });
 
-export type DomainMarkdown = {
+export interface DomainMarkdown {
   domainName: string;
   markdown: string;
-};
+}
 
-export async function generateMarkdownForDomains(metaEd: MetaEdEnvironment): Promise<Array<DomainMarkdown>> {
-  const result: Array<DomainMarkdown> = [];
-  const domains: Array<ModelBase> = getAllEntitiesOfType(metaEd, 'domain');
+export async function generateMarkdownForDomains(metaEd: MetaEdEnvironment): Promise<DomainMarkdown[]> {
+  const result: DomainMarkdown[] = [];
+  const domains: ModelBase[] = getAllEntitiesOfType(metaEd, 'domain');
 
   domains.forEach(domain => {
     const markdown: string = template().interchangeBrief({ domain });
@@ -58,8 +58,8 @@ export function convertMarkdownToHtml(markdown: string): string {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
-  const domainMarkdowns: Array<DomainMarkdown> = await generateMarkdownForDomains(metaEd);
+  const results: GeneratedOutput[] = [];
+  const domainMarkdowns: DomainMarkdown[] = await generateMarkdownForDomains(metaEd);
 
   domainMarkdowns.forEach(domainMarkdown => {
     results.push({

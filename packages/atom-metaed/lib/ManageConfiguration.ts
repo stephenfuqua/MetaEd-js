@@ -14,7 +14,7 @@ import {
 import { devEnvironmentCorrectedPath, nextMacroTask } from './Utility';
 
 // keys are ODS/API versions, values are arrays of DS versions supported
-const odsApiVersionSupport: Map<string, Array<string>> = new Map([
+const odsApiVersionSupport: Map<string, string[]> = new Map([
   ['2.0', ['2.0.1']],
   ['2.1', ['2.0.1']],
   ['2.2', ['2.0.1']],
@@ -118,21 +118,21 @@ export function manageLegacyIssues(disposableTracker: CompositeDisposable) {
 
   // warn that MetaEdOutput-Experimental folder from 1.1.x versions is no longer used
   disposableTracker.add(
-    atom.project.onDidChangePaths((projectPaths: Array<string>) => {
+    atom.project.onDidChangePaths((projectPaths: string[]) => {
       projectPaths.forEach(async projectPath => warnOnExperimentalFolderExistence(projectPath));
     }),
   );
 
   // warn that metaEd.json from pre-1.2 versions is obsolete
   disposableTracker.add(
-    atom.project.onDidChangePaths((projectPaths: Array<string>) => {
+    atom.project.onDidChangePaths((projectPaths: string[]) => {
       projectPaths.forEach(async projectPath => warnOnMetaEdJsonExistence(projectPath));
     }),
   );
 }
 
 export function odsApiAndDsCombinationValid(odsApiVersion: string, dsVersion: string): boolean {
-  const supportedDsVersions: Array<string> | undefined = odsApiVersionSupport.get(odsApiVersion);
+  const supportedDsVersions: string[] | undefined = odsApiVersionSupport.get(odsApiVersion);
   if (!supportedDsVersions) return false;
   return supportedDsVersions.includes(dsVersion);
 }

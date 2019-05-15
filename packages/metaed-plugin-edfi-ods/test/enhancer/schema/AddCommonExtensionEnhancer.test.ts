@@ -2,7 +2,7 @@ import { newCommonExtension, newNamespace, newMetaEdEnvironment } from 'metaed-c
 import { CommonExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/CommonExtension';
 
-describe('when CommonExtension enhances common extension entity', () => {
+describe('when CommonExtension enhances common extension entity', (): void => {
   const commonExtensionName = 'CommonExtensionName';
   const extensionEntitySuffix = 'Extension';
   let commonExtension: CommonExtension;
@@ -19,7 +19,7 @@ describe('when CommonExtension enhances common extension entity', () => {
     enhance(metaEd);
   });
 
-  it('should have ods extension name with extension entity suffix', () => {
+  it('should have ods extension name with extension entity suffix', (): void => {
     expect(commonExtension.data.edfiOds.odsExtensionName).toBe(commonExtensionName + extensionEntitySuffix);
   });
 });

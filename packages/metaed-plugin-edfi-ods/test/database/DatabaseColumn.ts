@@ -1,10 +1,10 @@
 import { database, firstKeyValueOf, queryWithBoolResult, scalar, testDatabaseName } from './DatabaseConnection';
 
-export type DatabaseColumn = {
+export interface DatabaseColumn {
   parentTableSchema: string;
   parentTableName: string;
   name: string;
-};
+}
 
 export async function columnExists(
   databaseColumn: DatabaseColumn,

@@ -2,7 +2,7 @@ import { newDomainEntityExtension, newNamespace, newMetaEdEnvironment } from 'me
 import { DomainEntityExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/DomainEntityExtension';
 
-describe('when DomainEntityExtension enhances domain entity extension entity', () => {
+describe('when DomainEntityExtension enhances domain entity extension entity', (): void => {
   const domainEntityExtensionName = 'DomainEntityExtensionName';
   const extensionEntitySuffix = 'Extension';
   let domainEntityExtension: DomainEntityExtension;
@@ -19,7 +19,7 @@ describe('when DomainEntityExtension enhances domain entity extension entity', (
     enhance(metaEd);
   });
 
-  it('should have ods extension name with extension entity suffix', () => {
+  it('should have ods extension name with extension entity suffix', (): void => {
     expect(domainEntityExtension.data.edfiOds.odsExtensionName).toBe(domainEntityExtensionName + extensionEntitySuffix);
   });
 });

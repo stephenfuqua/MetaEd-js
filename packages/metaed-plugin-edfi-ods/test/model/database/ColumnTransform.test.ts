@@ -8,8 +8,8 @@ import {
 } from '../../../src/model/database/ColumnTransform';
 import { Column } from '../../../src/model/database/Column';
 
-describe('when using default column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using default column transform strategy', (): void => {
+  const columns: Column[] = [];
 
   beforeAll(() => {
     columns.push(
@@ -21,24 +21,24 @@ describe('when using default column transform strategy', () => {
     );
   });
 
-  it('should not change primary key column', () => {
+  it('should not change primary key column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should not change not null column', () => {
+  it('should not change not null column', (): void => {
     expect(columns[1].isPartOfPrimaryKey).toBe(false);
     expect(columns[1].isNullable).toBe(false);
   });
 
-  it('should not change null column', () => {
+  it('should not change null column', (): void => {
     expect(columns[2].isPartOfPrimaryKey).toBe(false);
     expect(columns[2].isNullable).toBe(true);
   });
 });
 
-describe('when using primary key column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using primary key column transform strategy', (): void => {
+  const columns: Column[] = [];
 
   beforeAll(() => {
     columns.push(
@@ -48,14 +48,14 @@ describe('when using primary key column transform strategy', () => {
     );
   });
 
-  it('should convert column to primary key', () => {
+  it('should convert column to primary key', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].isNullable).toBe(false);
   });
 });
 
-describe('when using not null column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using not null column transform strategy', (): void => {
+  const columns: Column[] = [];
 
   beforeAll(() => {
     columns.push(
@@ -66,19 +66,19 @@ describe('when using not null column transform strategy', () => {
     );
   });
 
-  it('should convert primary key column to not null', () => {
+  it('should convert primary key column to not null', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should convert null column to not null', () => {
+  it('should convert null column to not null', (): void => {
     expect(columns[1].isPartOfPrimaryKey).toBe(false);
     expect(columns[1].isNullable).toBe(false);
   });
 });
 
-describe('when using null column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using null column transform strategy', (): void => {
+  const columns: Column[] = [];
 
   beforeAll(() => {
     columns.push(
@@ -88,14 +88,14 @@ describe('when using null column transform strategy', () => {
     );
   });
 
-  it('should convert column to nullable', () => {
+  it('should convert column to nullable', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].isNullable).toBe(true);
   });
 });
 
-describe('when using role name column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using role name column transform strategy', (): void => {
+  const columns: Column[] = [];
   const primaryKeyName = 'PrimaryKeyName';
   const notNullName = 'NotNullName';
   const nullName = 'NullName';
@@ -111,36 +111,36 @@ describe('when using role name column transform strategy', () => {
     );
   });
 
-  it('should not change primary key column', () => {
+  it('should not change primary key column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix primary key column name role name', () => {
+  it('should prefix primary key column name role name', (): void => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 
-  it('should not change not null column', () => {
+  it('should not change not null column', (): void => {
     expect(columns[1].isPartOfPrimaryKey).toBe(false);
     expect(columns[1].isNullable).toBe(false);
   });
 
-  it('should prefix not null column name role name', () => {
+  it('should prefix not null column name role name', (): void => {
     expect(columns[1].name).toBe(contextName + notNullName);
   });
 
-  it('should not change null column', () => {
+  it('should not change null column', (): void => {
     expect(columns[2].isPartOfPrimaryKey).toBe(false);
     expect(columns[2].isNullable).toBe(true);
   });
 
-  it('should prefix null column name role name', () => {
+  it('should prefix null column name role name', (): void => {
     expect(columns[2].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using primary key role name column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using primary key role name column transform strategy', (): void => {
+  const columns: Column[] = [];
   const nullName = 'NullName';
   const contextName = 'ContextName';
 
@@ -152,18 +152,18 @@ describe('when using primary key role name column transform strategy', () => {
     );
   });
 
-  it('should convert column to primary key', () => {
+  it('should convert column to primary key', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix column name role name', () => {
+  it('should prefix column name role name', (): void => {
     expect(columns[0].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using not null role name column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using not null role name column transform strategy', (): void => {
+  const columns: Column[] = [];
   const primaryKeyName = 'PrimaryKeyName';
   const nullName = 'NullName';
   const contextName = 'ContextName';
@@ -177,27 +177,27 @@ describe('when using not null role name column transform strategy', () => {
     );
   });
 
-  it('should convert primary key column to not nullable', () => {
+  it('should convert primary key column to not nullable', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].isNullable).toBe(false);
   });
 
-  it('should prefix primary key column name role name', () => {
+  it('should prefix primary key column name role name', (): void => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 
-  it('should convert null column to not nullable', () => {
+  it('should convert null column to not nullable', (): void => {
     expect(columns[1].isPartOfPrimaryKey).toBe(false);
     expect(columns[1].isNullable).toBe(false);
   });
 
-  it('should prefix null column name role name', () => {
+  it('should prefix null column name role name', (): void => {
     expect(columns[1].name).toBe(contextName + nullName);
   });
 });
 
-describe('when using null role name column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using null role name column transform strategy', (): void => {
+  const columns: Column[] = [];
   const primaryKeyName = 'PrimaryKeyName';
   const contextName = 'ContextName';
 
@@ -209,18 +209,18 @@ describe('when using null role name column transform strategy', () => {
     );
   });
 
-  it('should convert primary key column to nullable', () => {
+  it('should convert primary key column to nullable', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].isNullable).toBe(true);
   });
 
-  it('should prefix primary key column name role name', () => {
+  it('should prefix primary key column name role name', (): void => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 });
 
-describe('when using primary key role name collapsible column transform strategy', () => {
-  const columns: Array<Column> = [];
+describe('when using primary key role name collapsible column transform strategy', (): void => {
+  const columns: Column[] = [];
   const primaryKeyName = 'PrimaryKeyName';
   const contextName = 'ContextName';
 
@@ -232,7 +232,7 @@ describe('when using primary key role name collapsible column transform strategy
     );
   });
 
-  it('should prefix primary key column name role name', () => {
+  it('should prefix primary key column name role name', (): void => {
     expect(columns[0].name).toBe(contextName + primaryKeyName);
   });
 });

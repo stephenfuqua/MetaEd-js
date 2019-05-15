@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, NamespaceBuilde
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/DomainNamesMustBeUnique';
 
-describe('when entities in same namespace have different names', () => {
+describe('when entities in same namespace have different names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -28,18 +28,18 @@ describe('when entities in same namespace have different names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build two domain', () => {
+  it('should build two domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when entities in same namespace have identical names', () => {
+describe('when entities in same namespace have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -63,18 +63,18 @@ describe('when entities in same namespace have identical names', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain because DomainBuilder will not let it get that far', () => {
+  it('should build one domain because DomainBuilder will not let it get that far', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures because of DomainBuilder', () => {
+  it('should have no validation failures because of DomainBuilder', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domains in separate dependency-linked namespaces have identical names', () => {
+describe('when domains in separate dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -104,22 +104,22 @@ describe('when domains in separate dependency-linked namespaces have identical n
     failures = validate(metaEd);
   });
 
-  it('should build one domain in core namespace', () => {
+  it('should build one domain in core namespace', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should build one domain in extension namespace', () => {
+  it('should build one domain in extension namespace', (): void => {
     expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when domains in non-dependency-linked namespaces have identical names', () => {
+describe('when domains in non-dependency-linked namespaces have identical names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespacea: any = null;
   let extensionNamespaceb: any = null;
@@ -159,19 +159,19 @@ describe('when domains in non-dependency-linked namespaces have identical names'
     failures = validate(metaEd);
   });
 
-  it('should build one core domain', () => {
+  it('should build one core domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should build one extension1 domain', () => {
+  it('should build one extension1 domain', (): void => {
     expect(extensionNamespacea.entity.domain.size).toBe(1);
   });
 
-  it('should build one extension2 domain', () => {
+  it('should build one extension2 domain', (): void => {
     expect(extensionNamespaceb.entity.domain.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

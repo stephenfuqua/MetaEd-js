@@ -7,7 +7,7 @@ import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
 export function commonPropertyColumnCreator(factory: ColumnCreatorFactory): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> =>
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] =>
       collectColumns(property, strategy, factory),
   };
 }

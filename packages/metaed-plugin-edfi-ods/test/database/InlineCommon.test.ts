@@ -28,7 +28,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when inline common is a required property', () => {
+describe('when inline common is a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const inlineCommonName = 'InlineCommonName';
@@ -267,7 +267,7 @@ describe('when inline common is a required property', () => {
   });
 });
 
-describe('when inline common is an optional property', () => {
+describe('when inline common is an optional property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const inlineCommonName = 'InlineCommonName';
@@ -386,7 +386,7 @@ describe('when inline common is an optional property', () => {
   });
 });
 
-describe('when inline common is an optional property with required enumeration property', () => {
+describe('when inline common is an optional property with required enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
@@ -394,8 +394,8 @@ describe('when inline common is an optional property with required enumeration p
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityIdentityPropertyName = 'DomainEntityIdentityPropertyName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationColumnName = `${enumerationName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -461,7 +461,7 @@ describe('when inline common is an optional property with required enumeration p
   });
 });
 
-describe('when inline common has optional enumeration property', () => {
+describe('when inline common has optional enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
@@ -469,8 +469,8 @@ describe('when inline common has optional enumeration property', () => {
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityIdentityPropertyName = 'DomainEntityIdentityPropertyName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationColumnName = `${enumerationName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -536,7 +536,7 @@ describe('when inline common has optional enumeration property', () => {
   });
 });
 
-describe('when inline common has collection enumeration property', () => {
+describe('when inline common has collection enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
@@ -544,8 +544,8 @@ describe('when inline common has collection enumeration property', () => {
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityIdentityPropertyName = 'DomainEntityIdentityPropertyName';
-  const enumerationTableName: string = `${enumerationName}Type`;
-  const enumerationColumnName: string = `${enumerationName}TypeId`;
+  const enumerationTableName = `${enumerationName}Type`;
+  const enumerationColumnName = `${enumerationName}TypeId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -647,7 +647,7 @@ describe('when inline common has collection enumeration property', () => {
   });
 });
 
-describe('when inline common has descriptor property', () => {
+describe('when inline common has descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const baseDescriptorTableName = 'Descriptor';
@@ -655,8 +655,8 @@ describe('when inline common has descriptor property', () => {
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityIdentityPropertyName = 'DomainEntityIdentityPropertyName';
-  const descriptorTableName: string = `${descriptorName}Descriptor`;
-  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorTableName = `${descriptorName}Descriptor`;
+  const descriptorColumnName = `${descriptorName}DescriptorId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -728,7 +728,7 @@ describe('when inline common has descriptor property', () => {
   });
 });
 
-describe('when inline common has collection descriptor property', () => {
+describe('when inline common has collection descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const baseDescriptorTableName = 'Descriptor';
@@ -736,8 +736,8 @@ describe('when inline common has collection descriptor property', () => {
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityIdentityPropertyName = 'DomainEntityIdentityPropertyName';
-  const descriptorTableName: string = `${descriptorName}Descriptor`;
-  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorTableName = `${descriptorName}Descriptor`;
+  const descriptorColumnName = `${descriptorName}DescriptorId`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -835,7 +835,7 @@ describe('when inline common has collection descriptor property', () => {
   });
 });
 
-describe('when inline common has domain entity property', () => {
+describe('when inline common has domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -944,7 +944,7 @@ describe('when inline common has domain entity property', () => {
   });
 });
 
-describe('when inline common has collection domain entity property', () => {
+describe('when inline common has collection domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -1061,7 +1061,7 @@ describe('when inline common has collection domain entity property', () => {
   });
 });
 
-describe('when inline common has inline common property without naming issues', () => {
+describe('when inline common has inline common property without naming issues', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -1132,7 +1132,7 @@ describe('when inline common has inline common property without naming issues', 
   });
 });
 
-describe('when inline common has choice property with naming issues', () => {
+describe('when inline common has choice property with naming issues', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
@@ -1204,7 +1204,7 @@ describe('when inline common has choice property with naming issues', () => {
   });
 });
 
-describe('when inline common has required common property', () => {
+describe('when inline common has required common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -1276,7 +1276,7 @@ describe('when inline common has required common property', () => {
   });
 });
 
-describe('when inline common has collection common property', () => {
+describe('when inline common has collection common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const commonIdentityPropertyName = 'CommonIdentityPropertyName';
@@ -1351,7 +1351,7 @@ describe('when inline common has collection common property', () => {
   });
 });
 
-describe('when core inline common is a required property on an extension entity', () => {
+describe('when core inline common is a required property on an extension entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';

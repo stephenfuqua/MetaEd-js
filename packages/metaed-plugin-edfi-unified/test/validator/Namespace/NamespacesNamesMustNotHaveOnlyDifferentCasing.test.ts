@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilder, DomainEntity
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Namespace/NamespacesNamesMustNotHaveOnlyDifferentCasing';
 
-describe('when validating namespaces are different', () => {
+describe('when validating namespaces are different', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -28,14 +28,14 @@ describe('when validating namespaces are different', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating namespaces are exactly the same', () => {
+describe('when validating namespaces are exactly the same', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -59,14 +59,14 @@ describe('when validating namespaces are exactly the same', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating namespaces are different only in casing', () => {
+describe('when validating namespaces are different only in casing', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -90,7 +90,7 @@ describe('when validating namespaces are different only in casing', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('NamespacesNamesMustNotHaveOnlyDifferentCasing');
     expect(failures[0].category).toBe('error');

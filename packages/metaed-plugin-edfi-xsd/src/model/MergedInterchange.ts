@@ -6,26 +6,26 @@ import { EdFiXsdEntityRepository } from './EdFiXsdEntityRepository';
 import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 
 // From structure of Interchange - if core models move to structural typing, consider using Interchange directly
-type MergedInterchangeBase = {
+interface MergedInterchangeBase {
   data: any;
   documentation: string;
   metaEdName: string;
   metaEdId: string;
   namespace: Namespace;
 
-  elements: Array<InterchangeItem>;
-  identityTemplates: Array<InterchangeItem>;
+  elements: InterchangeItem[];
+  identityTemplates: InterchangeItem[];
   extendedDocumentation: string;
   useCaseDocumentation: string;
   baseEntityName: string;
   baseEntity: Interchange | null;
-};
+}
 
 export interface MergedInterchange extends MergedInterchangeBase {
   repositoryId: string;
   interchangeName: string;
   schemaLocation: string;
-  orderedElements: Array<InterchangeItem>;
+  orderedElements: InterchangeItem[];
   humanizedName: string;
 }
 

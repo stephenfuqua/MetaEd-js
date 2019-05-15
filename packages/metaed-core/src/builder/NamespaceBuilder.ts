@@ -70,9 +70,9 @@ export class NamespaceBuilder extends MetaEdGrammarListener {
 
   currentNamespace: Namespace;
 
-  validationFailures: Array<ValidationFailure>;
+  validationFailures: ValidationFailure[];
 
-  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: ValidationFailure[]) {
     super();
     this.namespaceRepository = metaEd.namespace;
     this.currentNamespace = NoNamespace;

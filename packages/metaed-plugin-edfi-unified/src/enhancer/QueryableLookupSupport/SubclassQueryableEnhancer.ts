@@ -3,10 +3,7 @@ import { asTopLevelEntity, getAllEntitiesForNamespaces } from 'metaed-core';
 
 const enhancerName = 'SubclassQueryableEnhancer';
 
-function includeBaseClassQueryableFields(
-  entity: TopLevelEntity,
-  queryableProperties: Array<EntityProperty>,
-): Array<EntityProperty> {
+function includeBaseClassQueryableFields(entity: TopLevelEntity, queryableProperties: EntityProperty[]): EntityProperty[] {
   const { baseEntity }: TopLevelEntity = entity;
   if (!baseEntity) return queryableProperties;
   const entityIdentityRenames = entity.identityProperties.filter(x => x.isIdentityRename).map(x => x.baseKeyName);

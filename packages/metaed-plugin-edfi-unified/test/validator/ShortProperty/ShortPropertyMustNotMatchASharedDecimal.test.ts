@@ -8,12 +8,12 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/ShortProperty/ShortPropertyMustNotMatchASharedDecimal';
 
-describe('when validating short property does not match shared decimal', () => {
+describe('when validating short property does not match shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const maxValue = '10';
   const minValue = '2';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -40,26 +40,26 @@ describe('when validating short property does not match shared decimal', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating short identity matches shared decimal', () => {
+describe('when validating short identity matches shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const maxValue = '10';
   const minValue = '2';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -85,15 +85,15 @@ describe('when validating short identity matches shared decimal', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ShortPropertyMustNotMatchASharedDecimal');
     expect(failures[0].category).toBe('error');
@@ -102,13 +102,13 @@ describe('when validating short identity matches shared decimal', () => {
   });
 });
 
-describe('when validating short property matches shared decimal', () => {
+describe('when validating short property matches shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const maxValue = '10';
   const minValue = '2';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -134,15 +134,15 @@ describe('when validating short property matches shared decimal', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ShortPropertyMustNotMatchASharedDecimal');
     expect(failures[0].category).toBe('error');

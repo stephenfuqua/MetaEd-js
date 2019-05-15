@@ -3,7 +3,7 @@ import { newNamespace, newMetaEdEnvironment } from 'metaed-core';
 import { addEdFiMappingEduRepositoryTo } from '../../src/model/EdFiMappingEduRepository';
 import { generate } from '../../src/generator/MappingEduGenerator';
 
-describe('when generating output for namespace', () => {
+describe('when generating output for namespace', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -17,7 +17,7 @@ describe('when generating output for namespace', () => {
     result = await generate(metaEd);
   });
 
-  it('should have correct generator result', () => {
+  it('should have correct generator result', (): void => {
     expect(result.generatorName).toEqual('edfiMappingedu.MappingEduGenerator');
     expect(result.generatedOutput[0].fileName).toBe('MappingEdu.xlsx');
     expect(result.generatedOutput[0].namespace).toBe('Documentation');

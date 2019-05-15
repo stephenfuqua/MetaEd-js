@@ -1,4 +1,4 @@
-export type AddColumnChangeVersionForTable = {
+export interface AddColumnChangeVersionForTable {
   schema: string;
   tableName: string;
-};
+}

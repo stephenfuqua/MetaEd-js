@@ -7,11 +7,11 @@ import { CreateTriggerUpdateChangeVersion } from '../model/CreateTriggerUpdateCh
 const generatorName = 'edfiOdsChangeQuery.CreateTriggerUpdateChangeVersionGenerator';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
-      const triggers: Array<CreateTriggerUpdateChangeVersion> = createTriggerUpdateChangeVersionEntities(metaEd, namespace);
+      const triggers: CreateTriggerUpdateChangeVersion[] = createTriggerUpdateChangeVersionEntities(metaEd, namespace);
       if (triggers.length > 0) {
         triggers.sort(
           // by schema then by table name

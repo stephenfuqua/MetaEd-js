@@ -8,10 +8,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionMustNotRedeclareProperties';
 
-describe('when association extension correctly has different property names', () => {
+describe('when association extension correctly has different property names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -43,20 +43,20 @@ describe('when association extension correctly has different property names', ()
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association extension has duplicate property name', () => {
+describe('when association extension has duplicate property name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -88,11 +88,11 @@ describe('when association extension has duplicate property name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -101,11 +101,11 @@ describe('when association extension has duplicate property name', () => {
   });
 });
 
-describe('when association extension has duplicate base property name but different role names', () => {
+describe('when association extension has duplicate base property name but different role names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -137,18 +137,18 @@ describe('when association extension has duplicate base property name but differ
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association extension has multiple duplicates', () => {
+describe('when association extension has multiple duplicates', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const notDuplicatePropertyName = 'NotDuplicatePropertyName';
   const duplicatePropertyName1 = 'DuplicatePropertyName1';
   const duplicatePropertyName2 = 'DuplicatePropertyName2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -183,7 +183,7 @@ describe('when association extension has multiple duplicates', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -199,11 +199,11 @@ describe('when association extension has multiple duplicates', () => {
   });
 });
 
-describe('when association extension has duplicate common property', () => {
+describe('when association extension has duplicate common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -235,7 +235,7 @@ describe('when association extension has duplicate common property', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -244,11 +244,11 @@ describe('when association extension has duplicate common property', () => {
   });
 });
 
-describe('when association extension has duplicate common extension override property', () => {
+describe('when association extension has duplicate common extension override property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName = 'DuplicatePropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -280,7 +280,7 @@ describe('when association extension has duplicate common extension override pro
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

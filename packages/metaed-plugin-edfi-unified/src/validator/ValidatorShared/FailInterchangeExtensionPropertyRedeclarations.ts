@@ -5,7 +5,7 @@ export function failInterchangeExtensionPropertyRedeclarations(
   interchangeItemType: 'elements' | 'identityTemplates',
   extensionEntity: Interchange,
   baseEntity: Interchange,
-  failures: Array<ValidationFailure>,
+  failures: ValidationFailure[],
 ) {
   extensionEntity[interchangeItemType].forEach(extensionItem => {
     baseEntity[interchangeItemType].forEach(baseItem => {

@@ -20,7 +20,7 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating ods tables file with simple merges', () => {
+describe('when generating ods tables file with simple merges', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v3/');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-type-merge-project');
 
@@ -95,26 +95,26 @@ describe('when generating ods tables file with simple merges', () => {
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have extension with no differences', async () => {
     expect(generatedExtensionOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating ods foreign keys file with simple merges', () => {
+describe('when generating ods foreign keys file with simple merges', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v3/');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-type-merge-project');
 
@@ -189,21 +189,21 @@ describe('when generating ods foreign keys file with simple merges', () => {
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have extension with no differences', async () => {
     expect(generatedExtensionOutput).toBeDefined();
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });

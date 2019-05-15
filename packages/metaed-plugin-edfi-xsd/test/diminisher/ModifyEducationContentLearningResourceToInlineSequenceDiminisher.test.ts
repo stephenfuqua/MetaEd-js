@@ -8,13 +8,13 @@ import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newElementGroup } from '../../src/model/schema/ElementGroup';
 
-describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher diminishes education content', () => {
+describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher diminishes education content', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentName = 'EducationContent';
   const learningResourceName = 'LearningResource';
-  let elementGroup: Array<ComplexType>;
+  let elementGroup: ComplexType[];
 
   beforeAll(() => {
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
@@ -69,22 +69,22 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
     enhance(metaEd);
   });
 
-  it('should clear complex types for LearningResource entity', () => {
-    const entityComplexTypes: Array<ComplexType> = (getEntityFromNamespace(learningResourceName, namespace, 'common') as any)
-      .data.edfiXsd.xsdComplexTypes;
+  it('should clear complex types for LearningResource entity', (): void => {
+    const entityComplexTypes: ComplexType[] = (getEntityFromNamespace(learningResourceName, namespace, 'common') as any).data
+      .edfiXsd.xsdComplexTypes;
     expect(entityComplexTypes).toBeDefined();
     expect(entityComplexTypes).toHaveLength(0);
     expect(entityComplexTypes).toEqual([]);
   });
 
-  it('should not have learning standard element', () => {
+  it('should not have learning standard element', (): void => {
     const entityComplexTypes = (getEntityFromNamespace(educationContentName, namespace, 'domainEntity') as any).data.edfiXsd
       .xsdComplexTypes;
     expect(entityComplexTypes).toBeDefined();
     expect(R.head(R.head(entityComplexTypes).items).items.some(x => x.name === learningResourceName)).toBe(false);
   });
 
-  it('should copy items from property and place them in the domain entity under EducationContent choice', () => {
+  it('should copy items from property and place them in the domain entity under EducationContent choice', (): void => {
     const entityComplexTypes = (getEntityFromNamespace(educationContentName, namespace, 'domainEntity') as any).data.edfiXsd
       .xsdComplexTypes;
     expect(entityComplexTypes).toBeDefined();

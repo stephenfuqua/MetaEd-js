@@ -8,11 +8,11 @@ import {
 import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 
-describe('when an association subclass subclasses GeneralStudentProgramAssociation', () => {
+describe('when an association subclass subclasses GeneralStudentProgramAssociation', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const baseEntityName = 'GeneralStudentProgramAssociation';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -48,16 +48,16 @@ describe('when an association subclass subclasses GeneralStudentProgramAssociati
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when an association subclass subclasses a non-GeneralStudentProgramAssociation association', () => {
+describe('when an association subclass subclasses a non-GeneralStudentProgramAssociation association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const baseEntityName = 'NotStudentProgramAssociation';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -94,7 +94,7 @@ describe('when an association subclass subclasses a non-GeneralStudentProgramAss
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported');
     expect(failures[0].category).toBe('error');
@@ -107,11 +107,11 @@ describe('when an association subclass subclasses a non-GeneralStudentProgramAss
   });
 });
 
-describe('when an association subclass subclasses StudentProgramAssociation association', () => {
+describe('when an association subclass subclasses StudentProgramAssociation association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const baseEntityName = 'StudentProgramAssociation';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -148,7 +148,7 @@ describe('when an association subclass subclasses StudentProgramAssociation asso
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported');
     expect(failures[0].category).toBe('error');

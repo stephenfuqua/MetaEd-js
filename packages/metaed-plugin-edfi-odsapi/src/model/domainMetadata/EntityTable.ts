@@ -1,4 +1,4 @@
-export type EntityTable = {
+export interface EntityTable {
   table: string;
   isA: string | null;
   isAbstract: boolean;
@@ -6,4 +6,4 @@ export type EntityTable = {
   schema: string;
   hasIsA: boolean;
   requiresSchema: boolean;
-};
+}

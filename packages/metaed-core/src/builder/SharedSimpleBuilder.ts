@@ -20,9 +20,9 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
 
   currentNamespace: Namespace;
 
-  validationFailures: Array<ValidationFailure>;
+  validationFailures: ValidationFailure[];
 
-  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: ValidationFailure[]) {
     super();
     this.metaEd = metaEd;
     this.validationFailures = validationFailures;

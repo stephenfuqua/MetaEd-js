@@ -28,7 +28,7 @@ import { NamespaceEdfiXsd } from '../../../src/model/Namespace';
 import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancer';
 import { baseTypeDescriptorReference } from '../../../src/enhancer/schema/AddComplexTypesBaseEnhancer';
 
-describe('when enhancing namespace info for core', () => {
+describe('when enhancing namespace info for core', (): void => {
   const dataStandardVersion: SemVer = '3.0.0';
   const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
@@ -45,16 +45,16 @@ describe('when enhancing namespace info for core', () => {
     createdSchema = (coreNamespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
   });
 
-  it('should have is extension assigned', () => {
+  it('should have is extension assigned', (): void => {
     expect(createdSchema.isExtension).toBe(false);
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSchema.schemaAnnotation.documentation).toContain('Ed-Fi-Core Version');
     expect(createdSchema.schemaAnnotation.documentation).toContain(dataStandardVersion);
   });
 
-  it('should generate sections in correct order', () => {
+  it('should generate sections in correct order', (): void => {
     expect(createdSchema.sections.length).toBe(10);
     expect(createdSchema.sections[0].sectionAnnotation.documentation).toContain('Domain Entities');
     expect(createdSchema.sections[1].sectionAnnotation.documentation).toContain('Descriptors');
@@ -69,7 +69,7 @@ describe('when enhancing namespace info for core', () => {
   });
 });
 
-describe('when enhancing namespace info for extension', () => {
+describe('when enhancing namespace info for extension', (): void => {
   const dataStandardVersion: SemVer = '3.0.0';
   const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
@@ -95,16 +95,16 @@ describe('when enhancing namespace info for extension', () => {
     createdSchema = (extensionNamespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
   });
 
-  it('should have is extension assigned', () => {
+  it('should have is extension assigned', (): void => {
     expect(createdSchema.isExtension).toBe(true);
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSchema.schemaAnnotation.documentation).toContain('Extensions');
     expect(createdSchema.schemaAnnotation.documentation).toContain(dataStandardVersion);
   });
 
-  it('should generate sections in correct order', () => {
+  it('should generate sections in correct order', (): void => {
     expect(createdSchema.sections.length).toBe(9);
     expect(createdSchema.sections[0].sectionAnnotation.documentation).toContain('Domain Entities');
     expect(createdSchema.sections[1].sectionAnnotation.documentation).toContain('Descriptors');
@@ -118,7 +118,7 @@ describe('when enhancing namespace info for extension', () => {
   });
 });
 
-describe('when enhancing namespace info for core with children', () => {
+describe('when enhancing namespace info for core with children', (): void => {
   const dataStandardVersion: SemVer = '3.0.0';
   const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
@@ -672,7 +672,7 @@ describe('when enhancing namespace info for core with children', () => {
     extensionSchema = (extensionNamespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
   });
 
-  it('should generate domain entities section', () => {
+  it('should generate domain entities section', (): void => {
     const section: SchemaSection = coreSchema.sections[0];
     expect(section.complexTypes.length).toBe(3);
     expect(section.complexTypes[0].name).toBe(domainEntity1ComplexTypeName);
@@ -680,20 +680,20 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.complexTypes[2].name).toBe(domainEntitySubclass1ComplexTypeName);
   });
 
-  it('should generate descriptor section', () => {
+  it('should generate descriptor section', (): void => {
     const section: SchemaSection = coreSchema.sections[1];
     expect(section.complexTypes.length).toBe(1);
     expect(section.complexTypes[0].name).toBe(descriptor1ComplexTypeName);
   });
 
-  it('should generate associations section', () => {
+  it('should generate associations section', (): void => {
     const section: SchemaSection = coreSchema.sections[2];
     expect(section.complexTypes.length).toBe(2);
     expect(section.complexTypes[0].name).toBe(association1ComplexTypeName);
     expect(section.complexTypes[1].name).toBe(associationSubclass1ComplexTypeName);
   });
 
-  it('should generate references section', () => {
+  it('should generate references section', (): void => {
     const section: SchemaSection = coreSchema.sections[4];
     expect(section.complexTypes.length).toBe(15);
 
@@ -714,20 +714,20 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.complexTypes[14].name).toBe(domainEntitySubclass1ReferenceTypeName);
   });
 
-  it('should generate descriptor references section', () => {
+  it('should generate descriptor references section', (): void => {
     const section: SchemaSection = coreSchema.sections[5];
     expect(section.simpleTypes.length).toBe(1);
     expect(section.simpleTypes[0].name).toBe(descriptor1ReferenceTypeName);
   });
 
-  it('should generate common types section', () => {
+  it('should generate common types section', (): void => {
     const section: SchemaSection = coreSchema.sections[6];
     expect(section.complexTypes.length).toBe(2);
     expect(section.complexTypes[0].name).toBe(common1ComplexTypeName);
     expect(section.complexTypes[1].name).toBe(inlineCommon1ComplexTypeName);
   });
 
-  it('should generate enumerations section', () => {
+  it('should generate enumerations section', (): void => {
     const section: SchemaSection = coreSchema.sections[7];
     expect(section.simpleTypes.length).toBe(3);
     expect(section.simpleTypes[0].name).toBe(enumeration1SimpleTypeName);
@@ -735,7 +735,7 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.simpleTypes[2].name).toBe(xsdMapTypeEnumeration1SimpleTypeName);
   });
 
-  it('should generate common types section in extension', () => {
+  it('should generate common types section in extension', (): void => {
     const section: SchemaSection = extensionSchema.sections[5];
     expect(section.complexTypes.length).toBe(3);
     expect(section.complexTypes[0].name).toBe(commonExtension1ComplexTypeName);
@@ -743,13 +743,13 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.complexTypes[2].name).toBe(inlineCommon2ComplexTypeName);
   });
 
-  it('should generate string simple types section in extension without base types', () => {
+  it('should generate string simple types section in extension without base types', (): void => {
     const section: SchemaSection = extensionSchema.sections[7];
     expect(section.simpleTypes.length).toBe(1);
     expect(section.simpleTypes[0].name).toBe(stringType2SimpleTypeName);
   });
 
-  it('should generate string simple types section in core', () => {
+  it('should generate string simple types section in core', (): void => {
     const section: SchemaSection = coreSchema.sections[8];
     expect(section.simpleTypes.length).toBe(4);
     expect(section.simpleTypes[0].name).toBe('CodeValue');
@@ -758,14 +758,14 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.simpleTypes[3].name).toBe('TimeInterval');
   });
 
-  it('should generate numeric simple types section in extension without base types', () => {
+  it('should generate numeric simple types section in extension without base types', (): void => {
     const section: SchemaSection = extensionSchema.sections[8];
     expect(section.simpleTypes.length).toBe(2);
     expect(section.simpleTypes[0].name).toBe(decimalType2SimpleTypeName);
     expect(section.simpleTypes[1].name).toBe(integerType2SimpleTypeName);
   });
 
-  it('should generate numeric simple types section in core', () => {
+  it('should generate numeric simple types section in core', (): void => {
     const section: SchemaSection = coreSchema.sections[9];
     expect(section.simpleTypes.length).toBe(4);
     expect(section.simpleTypes[0].name).toBe('Currency');

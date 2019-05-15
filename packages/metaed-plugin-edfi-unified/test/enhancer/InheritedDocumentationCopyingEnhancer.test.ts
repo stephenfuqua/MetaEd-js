@@ -12,7 +12,7 @@ import {
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InheritedDocumentationCopyingEnhancer';
 
-describe('when enhancing shared integer property with inherited documentation', () => {
+describe('when enhancing shared integer property with inherited documentation', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -48,13 +48,13 @@ describe('when enhancing shared integer property with inherited documentation', 
     enhance(metaEd);
   });
 
-  it('should have correct referenced entity', () => {
+  it('should have correct referenced entity', (): void => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(p => p.metaEdName === referencedEntityName));
     expect(property.documentation).toBe(referencedEntityDocumentation);
   });
 });
 
-describe('when enhancing domain entity property with inherited documentation', () => {
+describe('when enhancing domain entity property with inherited documentation', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -90,7 +90,7 @@ describe('when enhancing domain entity property with inherited documentation', (
     enhance(metaEd);
   });
 
-  it('should have correct referenced entity', () => {
+  it('should have correct referenced entity', (): void => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property.documentation).toBe(referencedEntityDocumentation);
   });

@@ -1,8 +1,8 @@
 import { MetaEdEnvironment, ValidationFailure, StringProperty, StringPropertySourceMap } from 'metaed-core';
 import { asStringProperty } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.string.forEach(string => {
     const stringProperty: StringProperty = asStringProperty(string);
     const minLength: number = Number.parseInt(stringProperty.minLength || '0', 10);

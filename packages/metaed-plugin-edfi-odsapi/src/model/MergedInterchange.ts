@@ -4,7 +4,7 @@ import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
 export interface MergedInterchangeEdfiOdsApi extends MergedInterchange {
   apiOrder: number;
-  apiOrderedElements: Array<InterchangeItem>;
+  apiOrderedElements: InterchangeItem[];
 }
 
 const enhancerName = 'MergedInterchangeSetupEnhancer';

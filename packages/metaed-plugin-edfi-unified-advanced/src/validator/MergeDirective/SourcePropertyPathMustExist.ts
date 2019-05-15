@@ -9,7 +9,7 @@ import {
   EntityProperty,
 } from 'metaed-core';
 
-const validPropertyTypes: Array<PropertyType> = [
+const validPropertyTypes: PropertyType[] = [
   'association',
   'choice',
   'common',
@@ -48,8 +48,8 @@ function makeFailure(failures: ValidationFailure[], mergeDirective: MergeDirecti
   });
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which

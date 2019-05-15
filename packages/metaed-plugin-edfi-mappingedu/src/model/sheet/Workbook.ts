@@ -3,9 +3,9 @@ import { Worksheet } from './Worksheet';
 import { newWorksheet } from './Worksheet';
 import { newRow } from './Row';
 
-export type Workbook = {
-  sheets: Array<Worksheet>;
-};
+export interface Workbook {
+  sheets: Worksheet[];
+}
 
 export function newWorkbook(): Workbook {
   return {
@@ -43,7 +43,7 @@ export function readWorkbook(input: any, type: string): Workbook {
   Object.values(wb.Sheets).forEach((sheet, i) => {
     const worksheet: Worksheet = newWorksheet(wb.SheetNames[i]);
     const parsedWorksheet: any = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-    const headers: Array<string> = parsedWorksheet.shift();
+    const headers: string[] = parsedWorksheet.shift();
     parsedWorksheet.forEach(row => {
       worksheet.rows.push(Object.assign(newRow(), { headers, values: row }));
     });

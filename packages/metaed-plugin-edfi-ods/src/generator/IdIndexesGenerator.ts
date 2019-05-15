@@ -5,11 +5,11 @@ import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Table } from '../model/database/Table';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
   const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0009' : '0040';
 
   metaEd.namespace.forEach(namespace => {
-    const tables: Array<Table> = orderByProp('name')(
+    const tables: Table[] = orderByProp('name')(
       [...tableEntities(metaEd, namespace).values()].filter(
         (table: Table) => table.includeLastModifiedDateAndIdColumn && table.schema === namespace.namespaceName.toLowerCase(),
       ),

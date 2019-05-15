@@ -5,11 +5,11 @@ import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorF
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when creating columns for enumeration property', () => {
+describe('when creating columns for enumeration property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -31,7 +31,7 @@ describe('when creating columns for enumeration property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -44,11 +44,11 @@ describe('when creating columns for enumeration property', () => {
   });
 });
 
-describe('when creating columns for primary key enumeration property', () => {
+describe('when creating columns for primary key enumeration property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -70,7 +70,7 @@ describe('when creating columns for primary key enumeration property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -84,12 +84,12 @@ describe('when creating columns for primary key enumeration property', () => {
   });
 });
 
-describe('when creating columns for identity rename enumeration property', () => {
+describe('when creating columns for identity rename enumeration property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const propertyBaseKeyName = 'PropertyBaseKeyName';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -111,7 +111,7 @@ describe('when creating columns for identity rename enumeration property', () =>
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a primary key column with base key name', () => {
+  it('should return a primary key column with base key name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -125,11 +125,11 @@ describe('when creating columns for identity rename enumeration property', () =>
   });
 });
 
-describe('when creating columns for nullable enumeration property', () => {
+describe('when creating columns for nullable enumeration property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -151,7 +151,7 @@ describe('when creating columns for nullable enumeration property', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -165,11 +165,11 @@ describe('when creating columns for nullable enumeration property', () => {
   });
 });
 
-describe('when creating columns for primary key enumeration property with suppress primary key creation strategy', () => {
+describe('when creating columns for primary key enumeration property with suppress primary key creation strategy', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -191,7 +191,7 @@ describe('when creating columns for primary key enumeration property with suppre
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a column', () => {
+  it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -205,12 +205,12 @@ describe('when creating columns for primary key enumeration property with suppre
   });
 });
 
-describe('when creating columns for identity rename enumeration property with suppress primary key creation strategy', () => {
+describe('when creating columns for identity rename enumeration property with suppress primary key creation strategy', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const propertyBaseKeyName = 'PropertyBaseKeyName';
   let property: EnumerationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newEnumerationProperty(), {
@@ -232,7 +232,7 @@ describe('when creating columns for identity rename enumeration property with su
     columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
   });
 
-  it('should return a column with base key name', () => {
+  it('should return a column with base key name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');

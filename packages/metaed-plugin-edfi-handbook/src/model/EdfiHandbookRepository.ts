@@ -2,9 +2,9 @@ import { newPluginEnvironment } from 'metaed-core';
 import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { HandbookEntry } from './HandbookEntry';
 
-export type EdfiHandbookRepository = {
-  handbookEntries: Array<HandbookEntry>;
-};
+export interface EdfiHandbookRepository {
+  handbookEntries: HandbookEntry[];
+}
 const enhancerName = 'EdfiHandbookRepositorySetupEnhancer';
 
 export function newEdfiHandbookRepository(): EdfiHandbookRepository {

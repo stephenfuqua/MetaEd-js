@@ -28,7 +28,7 @@ function parentNameAndPropertyCardinality(property: EntityProperty): string {
 }
 
 function getPropertyName(property: EntityProperty): string {
-  const nameRuleExeptions: Array<string> = ['BeginDate', 'AsOfDate', 'EndDate'];
+  const nameRuleExeptions: string[] = ['BeginDate', 'AsOfDate', 'EndDate'];
   if (nameRuleExeptions.includes(property.metaEdName)) return `${property.metaEdName} (${property.parentEntity.metaEdName})`;
   return property.metaEdName;
 }

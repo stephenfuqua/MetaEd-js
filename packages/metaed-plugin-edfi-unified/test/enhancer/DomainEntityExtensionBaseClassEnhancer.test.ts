@@ -8,7 +8,7 @@ import {
 import { MetaEdEnvironment, DomainEntity, DomainEntitySubclass, DomainEntityExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DomainEntityExtensionBaseClassEnhancer';
 
-describe('when enhancing domainEntity extension referring to domainEntity', () => {
+describe('when enhancing domainEntity extension referring to domainEntity', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -34,14 +34,14 @@ describe('when enhancing domainEntity extension referring to domainEntity', () =
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing domainEntity extension referring to domainEntity subclass', () => {
+describe('when enhancing domainEntity extension referring to domainEntity subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -67,14 +67,14 @@ describe('when enhancing domainEntity extension referring to domainEntity subcla
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing domainEntity extension referring to domainEntity across namespaces', () => {
+describe('when enhancing domainEntity extension referring to domainEntity across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -102,14 +102,14 @@ describe('when enhancing domainEntity extension referring to domainEntity across
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing domainEntity extension referring to domainEntity subclass across namespaces', () => {
+describe('when enhancing domainEntity extension referring to domainEntity subclass across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -137,7 +137,7 @@ describe('when enhancing domainEntity extension referring to domainEntity subcla
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);

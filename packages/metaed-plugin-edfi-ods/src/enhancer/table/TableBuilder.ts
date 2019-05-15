@@ -4,16 +4,16 @@ import { Column } from '../../model/database/Column';
 import { Table } from '../../model/database/Table';
 import { TableStrategy } from '../../model/database/TableStrategy';
 
-export type TableBuilder = {
+export interface TableBuilder {
   buildTables(
     property: EntityProperty,
     tableStrategy: TableStrategy,
-    primaryKeys: Array<Column>,
+    primaryKeys: Column[],
     buildStrategy: BuildStrategy,
-    tables: Array<Table>,
+    tables: Table[],
     parentIsRequired: boolean | null,
   ): void;
-};
+}
 
 export function nullTableBuilder() {
   return {
@@ -23,11 +23,11 @@ export function nullTableBuilder() {
       // @ts-ignore - unused parameter name
       tableStrategy: TableStrategy,
       // @ts-ignore - unused parameter name
-      primaryKeys: Array<Column>,
+      primaryKeys: Column[],
       // @ts-ignore - unused parameter name
       buildStrategy: BuildStrategy,
       // @ts-ignore - unused parameter name
-      tables: Array<Table>,
+      tables: Table[],
       // @ts-ignore - unused parameter name
       parentIsRequired: boolean | null,
     ) => {},

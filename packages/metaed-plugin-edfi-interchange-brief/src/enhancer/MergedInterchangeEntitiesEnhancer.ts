@@ -12,14 +12,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (xsdRepository == null) return;
 
     // eslint-disable-next-line prettier/prettier
-    const mergedInterchanges: Array<MergedInterchange> = Array.from(
+    const mergedInterchanges: MergedInterchange[] = Array.from(
       xsdRepository.mergedInterchange.values(),
-    ) as Array<MergedInterchange>;
+    ) as MergedInterchange[];
 
     mergedInterchanges.forEach(mergedInterchange => {
-      const entities: Array<InterchangeItem> = mergedInterchange.identityTemplates.concat(
+      const entities: InterchangeItem[] = mergedInterchange.identityTemplates.concat(
         mergedInterchange.elements,
-      ) as Array<InterchangeItem>;
+      ) as InterchangeItem[];
       entities.forEach(entity => {
         if (entity.referencedEntity.type === 'domainEntityExtension') {
           entity.data.edfiInterchangeBrief = {

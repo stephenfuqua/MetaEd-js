@@ -1,7 +1,7 @@
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach(namespace => {
     namespace.entity.domainEntity.forEach(domainEntity => {
       if (domainEntity.isAbstract && domainEntity.identityProperties.length === 0) {

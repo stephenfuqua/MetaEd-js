@@ -19,7 +19,7 @@ import {
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/UpdateCascadeTopLevelEntityEnhancer';
 
-describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates', () => {
+describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -118,23 +118,23 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
     enhance(metaEd);
   });
 
-  it('should not have cascade primary key updates for first domain entity', () => {
+  it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
-  it('should have cascade primary key updates for second domain entity', () => {
+  it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for third domain entity', () => {
+  it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
-describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with allow primary key updates', () => {
+describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with allow primary key updates', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -258,28 +258,28 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
     enhance(metaEd);
   });
 
-  it('should not have cascade primary key updates for first domain entity', () => {
+  it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
-  it('should not have cascade primary key updates for second domain entity', () => {
+  it('should not have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
-  it('should have cascade primary key updates for association', () => {
+  it('should have cascade primary key updates for association', (): void => {
     const association: any = namespace.entity.association.get(associationName);
     expect(association.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for third domain entity', () => {
+  it('should have cascade primary key updates for third domain entity', (): void => {
     const association: any = namespace.entity.association.get(associationName);
     expect(association.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
-describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on deep reference graph', () => {
+describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on deep reference graph', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -392,28 +392,28 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
     enhance(metaEd);
   });
 
-  it('should have cascade primary key updates for first domain entity', () => {
+  it('should have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for second domain entity', () => {
+  it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for third domain entity', () => {
+  it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for forth domain entity', () => {
+  it('should have cascade primary key updates for forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
-describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on cyclical reference graph', () => {
+describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on cyclical reference graph', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -544,34 +544,34 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
     enhance(metaEd);
   });
 
-  it('should have cascade primary key updates for first domain entity', () => {
+  it('should have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for second domain entity', () => {
+  it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for third domain entity', () => {
+  it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for forth domain entity', () => {
+  it('should have cascade primary key updates for forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have only one cascading property on forth domain entity', () => {
+  it('should have only one cascading property on forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
     expect(domainEntity.data.edfiOds.odsProperties[0].data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
     expect(domainEntity.data.edfiOds.odsProperties[1].data.edfiOds.odsCausesCyclicUpdateCascade).toBe(true);
   });
 });
 
-describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on non primary key reference', () => {
+describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on non primary key reference', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -656,17 +656,17 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
     enhance(metaEd);
   });
 
-  it('should not have cascade primary key updates for first domain entity', () => {
+  it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
-  it('should have cascade primary key updates for second domain entity', () => {
+  it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
-  it('should have cascade primary key updates for third domain entity', () => {
+  it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
     expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
   });

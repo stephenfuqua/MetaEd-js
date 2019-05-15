@@ -5,11 +5,11 @@ import { deleteTrackingTableEntities } from '../enhancer/EnhancerHelper';
 import { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
-      const tables: Array<DeleteTrackingTable> = deleteTrackingTableEntities(metaEd, namespace);
+      const tables: DeleteTrackingTable[] = deleteTrackingTableEntities(metaEd, namespace);
       if (tables.length > 0) {
         tables.sort(
           // by schema then by table name

@@ -7,7 +7,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher diminishes GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
+describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher diminishes GraduationPlanRequiredAssessmentPerformanceLevel table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -36,7 +36,7 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
     enhance(metaEd);
   });
 
-  it('should rename GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
+  it('should rename GraduationPlanRequiredAssessmentPerformanceLevel table', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(graduationPlanRequiredAssessmentPerformanceLevel);
     expect(table).toBeUndefined();
 
@@ -47,7 +47,7 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
     expect(targetTable.name).toBe(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
   });
 
-  it('should update foreign key parent table name', () => {
+  it('should update foreign key parent table name', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
     ) as Table;

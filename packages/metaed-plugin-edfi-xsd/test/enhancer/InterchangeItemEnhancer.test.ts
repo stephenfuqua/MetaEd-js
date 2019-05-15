@@ -15,7 +15,7 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when InterchangeItemEnhancer enhances element', () => {
+describe('when InterchangeItemEnhancer enhances element', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -69,16 +69,16 @@ describe('when InterchangeItemEnhancer enhances element', () => {
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(element.data.edfiXsd.xsdName).toBe(elementBaseName);
   });
 
-  it('should have xsdType value assigned', () => {
+  it('should have xsdType value assigned', (): void => {
     expect(element.data.edfiXsd.xsdType).toBe(referenceElementName);
   });
 });
 
-describe('when InterchangeItemEnhancer enhances identity template', () => {
+describe('when InterchangeItemEnhancer enhances identity template', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -129,16 +129,16 @@ describe('when InterchangeItemEnhancer enhances identity template', () => {
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(identityTemplate.data.edfiXsd.xsdName).toBe(`${identityTemplateName}Reference`);
   });
 
-  it('should have xsdType value assigned', () => {
+  it('should have xsdType value assigned', (): void => {
     expect(identityTemplate.data.edfiXsd.xsdType).toBe(`${referenceElementName}ReferenceType`);
   });
 });
 
-describe('when InterchangeItemEnhancer enhances element on extension', () => {
+describe('when InterchangeItemEnhancer enhances element on extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -218,16 +218,16 @@ describe('when InterchangeItemEnhancer enhances element on extension', () => {
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(extensionElement.data.edfiXsd.xsdName).toBe(extensionElementBaseName);
   });
 
-  it('should have xsdType value assigned', () => {
+  it('should have xsdType value assigned', (): void => {
     expect(extensionElement.data.edfiXsd.xsdType).toBe(referenceExtensionElementName);
   });
 });
 
-describe('when InterchangeItemEnhancer enhances identity template on extension', () => {
+describe('when InterchangeItemEnhancer enhances identity template on extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -307,11 +307,11 @@ describe('when InterchangeItemEnhancer enhances identity template on extension',
     enhance(metaEd);
   });
 
-  it('should have xsdName assigned', () => {
+  it('should have xsdName assigned', (): void => {
     expect(extensionElement.data.edfiXsd.xsdName).toBe(`${extensionElementBaseName}Reference`);
   });
 
-  it('should have xsdType value assigned', () => {
+  it('should have xsdType value assigned', (): void => {
     expect(extensionElement.data.edfiXsd.xsdType).toBe(`${referenceExtensionElementName}ReferenceType`);
   });
 });

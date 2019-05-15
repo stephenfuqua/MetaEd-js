@@ -3,7 +3,7 @@ import { MetaEdEnvironment } from 'metaed-core';
 import { addProperty, newMetaEdEnvironment, newSharedDecimal, newSharedDecimalProperty } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SharedDecimalPropertyEnhancer';
 
-describe('when shared decimal property refers to a shared decimal', () => {
+describe('when shared decimal property refers to a shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName = 'ReferencedEntityName';
 
@@ -30,7 +30,7 @@ describe('when shared decimal property refers to a shared decimal', () => {
     enhance(metaEd);
   });
 
-  it('should have the shared decimal restrictions', () => {
+  it('should have the shared decimal restrictions', (): void => {
     const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(p => p.metaEdName === metaEdName));
     expect(property.totalDigits).toBe(totalDigits);
     expect(property.decimalPlaces).toBe(decimalPlaces);

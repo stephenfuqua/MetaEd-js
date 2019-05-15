@@ -50,7 +50,7 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { ValidationFailure } from '../validator/ValidationFailure';
 import { PropertyIndex } from '../model/property/PropertyRepository';
 
-function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<string> {
+function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): string[] {
   if (R.any(token => token.exception)(context.ID())) return [];
   return R.map(token => token.getText())(context.ID());
 }
@@ -69,15 +69,15 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   currentMergeDirective: MergeDirective;
 
-  whenExitingPropertyCommand: Array<() => void>;
+  whenExitingPropertyCommand: (() => void)[];
 
-  validationFailures: Array<ValidationFailure>;
+  validationFailures: ValidationFailure[];
 
   currentTopLevelEntityPropertyLookup: Map<string, EntityProperty>;
 
   propertyRepository: PropertyIndex;
 
-  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: ValidationFailure[]) {
     super();
     this.namespaceRepository = metaEd.namespace;
     this.currentNamespace = NoNamespace;

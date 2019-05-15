@@ -6,14 +6,14 @@ import { SchemaDefinition } from './SchemaDefinition';
 
 import { NoSchemaDefinition } from './SchemaDefinition';
 
-export type DomainModelDefinition = {
+export interface DomainModelDefinition {
   odsApiVersion: string;
   schemaDefinition: SchemaDefinition;
-  aggregateDefinitions: Array<AggregateDefinition>;
-  aggregateExtensionDefinitions: Array<AggregateExtensionDefinition>;
-  entityDefinitions: Array<EntityDefinition>;
-  associationDefinitions: Array<AssociationDefinition>;
-};
+  aggregateDefinitions: AggregateDefinition[];
+  aggregateExtensionDefinitions: AggregateExtensionDefinition[];
+  entityDefinitions: EntityDefinition[];
+  associationDefinitions: AssociationDefinition[];
+}
 
 export function newDomainModelDefinition(): DomainModelDefinition {
   return {

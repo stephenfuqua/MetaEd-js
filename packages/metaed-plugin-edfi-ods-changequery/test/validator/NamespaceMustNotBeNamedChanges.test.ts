@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../src/validator/NamespaceMustNotBeNamedChanges';
 
-describe('when validating namespace named changes', () => {
+describe('when validating namespace named changes', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -21,7 +21,7 @@ describe('when validating namespace named changes', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('NamespaceMustNotBeNamedChanges');
     expect(failures[0].category).toBe('error');
@@ -30,9 +30,9 @@ describe('when validating namespace named changes', () => {
   });
 });
 
-describe('when validating namespace not named changes', () => {
+describe('when validating namespace not named changes', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,7 +49,7 @@ describe('when validating namespace not named changes', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

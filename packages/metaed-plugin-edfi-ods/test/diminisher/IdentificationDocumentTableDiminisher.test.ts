@@ -8,7 +8,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when IdentificationDocumentTableDiminisher diminishes matching table', () => {
+describe('when IdentificationDocumentTableDiminisher diminishes matching table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -48,7 +48,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
     enhance(metaEd);
   });
 
-  it('should rename table in repository', () => {
+  it('should rename table in repository', (): void => {
     const newLocal = tableEntities(metaEd, namespace);
     const table: Table | undefined = newLocal.get(`${domainEntityName}Schema${identificationDocument}`);
     expect(table).toBeUndefined();
@@ -58,19 +58,19 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
     expect(targetTable).toBe(identificationDocumentTable);
   });
 
-  it('should rename table in the domain entity ods tables', () => {
+  it('should rename table in the domain entity ods tables', (): void => {
     const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
     expect(odsTables).toHaveLength(1);
     expect(R.head(odsTables)).toBe(identificationDocumentTable);
   });
 
-  it('should update foreign key parent table name', () => {
+  it('should update foreign key parent table name', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument) as Table;
     expect(foreignKeys.every(fk => fk.parentTableName === domainEntityName + identificationDocument)).toBe(true);
   });
 });
 
-describe('when IdentificationDocumentTableDiminisher diminishes multiple matching tables', () => {
+describe('when IdentificationDocumentTableDiminisher diminishes multiple matching tables', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -108,7 +108,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
     enhance(metaEd);
   });
 
-  it('should rename tables in repository', () => {
+  it('should rename tables in repository', (): void => {
     const table1: Table | undefined = tableEntities(metaEd, namespace).get(
       `${domainEntityName}Schema${identificationDocument}`,
     );
@@ -124,14 +124,14 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
     expect(table2).toBeUndefined();
   });
 
-  it('should rename table in the domain entity ods tables', () => {
+  it('should rename table in the domain entity ods tables', (): void => {
     const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
     expect(odsTables).toHaveLength(1);
     expect(R.head(odsTables)).toBe(identificationDocumentTable1);
   });
 });
 
-describe('when IdentificationDocumentTableDiminisher diminishes non matching tables', () => {
+describe('when IdentificationDocumentTableDiminisher diminishes non matching tables', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -169,7 +169,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
     enhance(metaEd);
   });
 
-  it('should not modify tables in repository', () => {
+  it('should not modify tables in repository', (): void => {
     const table1: Table | undefined = tableEntities(metaEd, namespace).get(
       `${domainEntityName}Schema${identificationDocument}1`,
     );
@@ -186,7 +186,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
     expect(table2).toBe(identificationDocumentTable2);
   });
 
-  it('should not modify table in the domain entity ods tables', () => {
+  it('should not modify table in the domain entity ods tables', (): void => {
     const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
     expect(odsTables).toHaveLength(2);
     expect(R.head(odsTables)).toBe(identificationDocumentTable1);

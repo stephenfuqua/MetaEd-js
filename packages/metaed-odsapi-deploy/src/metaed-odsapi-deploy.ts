@@ -31,6 +31,7 @@ export async function metaEdDeploy() {
       type: 'string',
       array: true,
       conflicts: 'config',
+      // @ts-ignore
       requiresArg: 'target',
     })
     .option('target', {
@@ -70,10 +71,7 @@ export async function metaEdDeploy() {
   let metaEdConfiguration: MetaEdConfiguration;
 
   if (yargs.argv.metaEdConfiguration == null) {
-    const resolvedProjects: Array<MetaEdProjectPathPairs> = await scanForProjects(
-      yargs.argv.source,
-      yargs.argv.projectNames,
-    );
+    const resolvedProjects: MetaEdProjectPathPairs[] = await scanForProjects(yargs.argv.source, yargs.argv.projectNames);
 
     metaEdConfiguration = {
       ...newMetaEdConfiguration(),

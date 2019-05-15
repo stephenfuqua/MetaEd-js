@@ -5,7 +5,7 @@ import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedStringPropertySourceMap extends StringPropertySourceMap {
-  mergeDirectives: Array<SourceMap>;
+  mergeDirectives: SourceMap[];
 }
 
 /**
@@ -20,7 +20,7 @@ export function newSharedStringPropertySourceMap(): SharedStringPropertySourceMa
 
 export interface SharedStringProperty extends StringProperty {
   sourceMap: SharedStringPropertySourceMap;
-  mergeDirectives: Array<MergeDirective>;
+  mergeDirectives: MergeDirective[];
 }
 
 /**

@@ -6,7 +6,7 @@ import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 
-describe('when diminishing with no matching entity tables', () => {
+describe('when diminishing with no matching entity tables', (): void => {
   const entityName = 'EntityName';
   const namespaceName = 'EdFi';
 
@@ -51,14 +51,14 @@ describe('when diminishing with no matching entity tables', () => {
     enhance(metaEd);
   });
 
-  it('should not change aggregates in namespace', () => {
+  it('should not change aggregates in namespace', (): void => {
     const { aggregates } = namespace.data.edfiOdsApi as NamespaceEdfiOdsApi;
     expect(aggregates).toHaveLength(1);
     expect(aggregates[0]).toBe(aggregate);
   });
 });
 
-describe('when diminishing with matching entity tables', () => {
+describe('when diminishing with matching entity tables', (): void => {
   const entityName1 = 'EntityName1';
   const entityName2 = 'EntityName2';
   const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';
@@ -143,14 +143,14 @@ describe('when diminishing with matching entity tables', () => {
     enhance(metaEd);
   });
 
-  it('should remove matching entity tables', () => {
+  it('should remove matching entity tables', (): void => {
     expect(aggregate1.entityTables).toHaveLength(1);
     expect(aggregate1.entityTables[0].table).toBe(entityName1);
     expect(aggregate2.entityTables).toHaveLength(1);
     expect(aggregate2.entityTables[0].table).toBe(entityName2);
   });
 
-  it('should add fake aggregates', () => {
+  it('should add fake aggregates', (): void => {
     const { aggregates } = namespace.data.edfiOdsApi as NamespaceEdfiOdsApi;
     expect(aggregates).toHaveLength(4);
 

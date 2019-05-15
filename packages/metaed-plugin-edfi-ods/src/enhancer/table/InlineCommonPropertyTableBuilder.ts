@@ -12,9 +12,9 @@ export function inlineCommonPropertyTableBuilder(factory: TableBuilderFactory): 
     buildTables(
       property: EntityProperty,
       parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Array<Column>,
+      parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
-      tables: Array<Table>,
+      tables: Table[],
       // @ts-ignore
       parentIsRequired: boolean | null,
     ): void {

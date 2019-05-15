@@ -5,15 +5,15 @@ import { isOdsReferenceProperty } from '../model/property/ReferenceProperty';
 
 const enhancerName = 'UpdateCascadeTopLevelEntityEnhancer';
 
-export type Edge<T> = {
+export interface Edge<T> {
   source: T;
   target: T;
-};
-export type BidirectionalGraph<T> = {
-  vertices: Array<T>;
-  edges: Array<Edge<T>>;
-};
-export function inEdges<T>(graph: BidirectionalGraph<T>, vertex: T): Array<Edge<T>> {
+}
+export interface BidirectionalGraph<T> {
+  vertices: T[];
+  edges: Edge<T>[];
+}
+export function inEdges<T>(graph: BidirectionalGraph<T>, vertex: T): Edge<T>[] {
   return graph.edges.filter((edge: Edge<T>) => edge.target === vertex);
 }
 
@@ -26,17 +26,17 @@ export function inEdges<T>(graph: BidirectionalGraph<T>, vertex: T): Array<Edge<
 // Find any entity with multiple reference edges pointing at it
 // Sort by Ods_TableName, only allow the first to cascade, disable the rest by marking the property as Ods_CausesCyclicUpdateCascade = true
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const associationAndDeEntities: Array<TopLevelEntity> = getAllEntitiesOfType(
+  const associationAndDeEntities: TopLevelEntity[] = getAllEntitiesOfType(
     metaEd,
     'domainEntity',
     'association',
-  ) as Array<TopLevelEntity>;
+  ) as TopLevelEntity[];
 
-  const declaredCascadingEntities: Array<TopLevelEntity> = associationAndDeEntities.filter(
+  const declaredCascadingEntities: TopLevelEntity[] = associationAndDeEntities.filter(
     (x: TopLevelEntity) => x.allowPrimaryKeyUpdates,
   );
 
-  const referenceEntityProperties: Array<EntityProperty> = R.chain(
+  const referenceEntityProperties: EntityProperty[] = R.chain(
     (entity: TopLevelEntity) =>
       entity.data.edfiOds.odsProperties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
     getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())),
@@ -48,10 +48,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const cascadeGraph: BidirectionalGraph<TopLevelEntity> = { vertices: [], edges: [] };
     cascadeGraph.vertices.push(declaredCascadingEntity);
 
-    let topLevelCascadingEntities: Array<TopLevelEntity> = [];
+    let topLevelCascadingEntities: TopLevelEntity[] = [];
     topLevelCascadingEntities.push(declaredCascadingEntity);
     while (R.not(R.isEmpty(topLevelCascadingEntities))) {
-      const newCascades: Array<TopLevelEntity> = [];
+      const newCascades: TopLevelEntity[] = [];
 
       // eslint-disable-next-line no-loop-func
       referenceEntityProperties.forEach((referenceEntityProperty: EntityProperty) => {
@@ -75,7 +75,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       (vertex: TopLevelEntity) => inEdges(cascadeGraph, vertex).length > 1,
     );
     multipleCascadePathVertices.forEach((multipleCascadeTopLevelEntity: TopLevelEntity) => {
-      const edgesToPrune: Array<Edge<TopLevelEntity>> = R.compose(
+      const edgesToPrune: Edge<TopLevelEntity>[] = R.compose(
         R.tail,
         R.sortBy(
           R.compose(

@@ -15,7 +15,7 @@ import { generate as InterchangeBriefSvgGenerator } from '../../src/generator/In
 
 jest.setTimeout(10000);
 
-describe('When generating interchange brief with no extended references or descriptors', () => {
+describe('When generating interchange brief with no extended references or descriptors', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';

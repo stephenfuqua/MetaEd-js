@@ -22,9 +22,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForEntities';
 
-describe('when validating abstract entity is missing metaEdId for entity', () => {
+describe('when validating abstract entity is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -43,11 +43,11 @@ describe('when validating abstract entity is missing metaEdId for entity', () =>
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -56,9 +56,9 @@ describe('when validating abstract entity is missing metaEdId for entity', () =>
   });
 });
 
-describe('when validating association is missing metaEdId for entity', () => {
+describe('when validating association is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -78,11 +78,11 @@ describe('when validating association is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -91,9 +91,9 @@ describe('when validating association is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating association extension is missing metaEdId for entity', () => {
+describe('when validating association extension is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -111,11 +111,11 @@ describe('when validating association extension is missing metaEdId for entity',
     failures = validate(metaEd);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -124,9 +124,9 @@ describe('when validating association extension is missing metaEdId for entity',
   });
 });
 
-describe('when validating association subclass is missing metaEdId for entity', () => {
+describe('when validating association subclass is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -145,11 +145,11 @@ describe('when validating association subclass is missing metaEdId for entity', 
     failures = validate(metaEd);
   });
 
-  it('should build one association subclass', () => {
+  it('should build one association subclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -158,9 +158,9 @@ describe('when validating association subclass is missing metaEdId for entity', 
   });
 });
 
-describe('when validating choice is missing metaEdId for entity', () => {
+describe('when validating choice is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -179,11 +179,11 @@ describe('when validating choice is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one choice', () => {
+  it('should build one choice', (): void => {
     expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -192,9 +192,9 @@ describe('when validating choice is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating common is missing metaEdId for entity', () => {
+describe('when validating common is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -213,11 +213,11 @@ describe('when validating common is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one common', () => {
+  it('should build one common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -226,9 +226,9 @@ describe('when validating common is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating common extension is missing metaEdId for entity', () => {
+describe('when validating common extension is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -247,11 +247,11 @@ describe('when validating common extension is missing metaEdId for entity', () =
     failures = validate(metaEd);
   });
 
-  it('should build one common extension', () => {
+  it('should build one common extension', (): void => {
     expect(coreNamespace.entity.commonExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -260,9 +260,9 @@ describe('when validating common extension is missing metaEdId for entity', () =
   });
 });
 
-describe('when validating descriptor is missing metaEdId for entity', () => {
+describe('when validating descriptor is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -281,11 +281,11 @@ describe('when validating descriptor is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -294,9 +294,9 @@ describe('when validating descriptor is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating domain is missing metaEdId for entity', () => {
+describe('when validating domain is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -315,11 +315,11 @@ describe('when validating domain is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain', () => {
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -328,9 +328,9 @@ describe('when validating domain is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating domain entity is missing metaEdId for entity', () => {
+describe('when validating domain entity is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -349,11 +349,11 @@ describe('when validating domain entity is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -362,9 +362,9 @@ describe('when validating domain entity is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating domain entity extension is missing metaEdId for entity', () => {
+describe('when validating domain entity extension is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -383,11 +383,11 @@ describe('when validating domain entity extension is missing metaEdId for entity
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity extension', () => {
+  it('should build one domain entity extension', (): void => {
     expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -396,9 +396,9 @@ describe('when validating domain entity extension is missing metaEdId for entity
   });
 });
 
-describe('when validating domain entity subclass is missing metaEdId for entity', () => {
+describe('when validating domain entity subclass is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -417,11 +417,11 @@ describe('when validating domain entity subclass is missing metaEdId for entity'
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity subclass', () => {
+  it('should build one domain entity subclass', (): void => {
     expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -430,9 +430,9 @@ describe('when validating domain entity subclass is missing metaEdId for entity'
   });
 });
 
-describe('when validating enumeration is missing metaEdId for entity', () => {
+describe('when validating enumeration is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -451,11 +451,11 @@ describe('when validating enumeration is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -464,9 +464,9 @@ describe('when validating enumeration is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating inline common is missing metaEdId for entity', () => {
+describe('when validating inline common is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -485,11 +485,11 @@ describe('when validating inline common is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one inline common', () => {
+  it('should build one inline common', (): void => {
     expect(coreNamespace.entity.common.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -498,9 +498,9 @@ describe('when validating inline common is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating interchange is missing metaEdId for entity', () => {
+describe('when validating interchange is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -519,11 +519,11 @@ describe('when validating interchange is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one interchange', () => {
+  it('should build one interchange', (): void => {
     expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -532,9 +532,9 @@ describe('when validating interchange is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating map type enumeration is missing metaEdId for entity', () => {
+describe('when validating map type enumeration is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -557,15 +557,15 @@ describe('when validating map type enumeration is missing metaEdId for entity', 
     failures = validate(metaEd);
   });
 
-  it('should build one descriptor', () => {
+  it('should build one descriptor', (): void => {
     expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should build one map type enumeration', () => {
+  it('should build one map type enumeration', (): void => {
     expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -579,9 +579,9 @@ describe('when validating map type enumeration is missing metaEdId for entity', 
   });
 });
 
-describe('when validating interchange extension is missing metaEdId for entity', () => {
+describe('when validating interchange extension is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -599,11 +599,11 @@ describe('when validating interchange extension is missing metaEdId for entity',
     failures = validate(metaEd);
   });
 
-  it('should build one interchange extension', () => {
+  it('should build one interchange extension', (): void => {
     expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -612,9 +612,9 @@ describe('when validating interchange extension is missing metaEdId for entity',
   });
 });
 
-describe('when validating school year enumeration is missing metaEdId for entity', () => {
+describe('when validating school year enumeration is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -632,11 +632,11 @@ describe('when validating school year enumeration is missing metaEdId for entity
     failures = validate(metaEd);
   });
 
-  it('should build one school year enumeration', () => {
+  it('should build one school year enumeration', (): void => {
     expect(coreNamespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -645,9 +645,9 @@ describe('when validating school year enumeration is missing metaEdId for entity
   });
 });
 
-describe('when validating shared decimal is missing metaEdId for entity', () => {
+describe('when validating shared decimal is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -666,11 +666,11 @@ describe('when validating shared decimal is missing metaEdId for entity', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -679,9 +679,9 @@ describe('when validating shared decimal is missing metaEdId for entity', () => 
   });
 });
 
-describe('when validating shared integer is missing metaEdId for entity', () => {
+describe('when validating shared integer is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -698,11 +698,11 @@ describe('when validating shared integer is missing metaEdId for entity', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one shared integer', () => {
+  it('should build one shared integer', (): void => {
     expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -711,9 +711,9 @@ describe('when validating shared integer is missing metaEdId for entity', () => 
   });
 });
 
-describe('when validating shared short is missing metaEdId for entity', () => {
+describe('when validating shared short is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -730,11 +730,11 @@ describe('when validating shared short is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared short', () => {
+  it('should build one shared short', (): void => {
     expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -743,9 +743,9 @@ describe('when validating shared short is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating shared string is missing metaEdId for entity', () => {
+describe('when validating shared string is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -763,11 +763,11 @@ describe('when validating shared string is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -775,9 +775,9 @@ describe('when validating shared string is missing metaEdId for entity', () => {
     expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
-describe('when validating subdomain is missing metaEdId for entity', () => {
+describe('when validating subdomain is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -795,11 +795,11 @@ describe('when validating subdomain is missing metaEdId for entity', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one subdomain', () => {
+  it('should build one subdomain', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
@@ -808,9 +808,9 @@ describe('when validating subdomain is missing metaEdId for entity', () => {
   });
 });
 
-describe('when validating abstract entity in extension namespace is missing metaEdId for entity', () => {
+describe('when validating abstract entity in extension namespace is missing metaEdId for entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let extensionNamespace: any = null;
 
   beforeAll(() => {
@@ -836,11 +836,11 @@ describe('when validating abstract entity in extension namespace is missing meta
     failures = validate(metaEd);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

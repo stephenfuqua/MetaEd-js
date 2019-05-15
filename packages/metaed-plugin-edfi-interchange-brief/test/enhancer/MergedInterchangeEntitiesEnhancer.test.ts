@@ -53,44 +53,44 @@ function setupRepository() {
   xsdRepository.mergedInterchange.set(interchangeName, mergedInterchange);
 }
 
-describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity templates', () => {
+describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity templates', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntity1InterchangeItem);
     enhance(metaEd);
   });
-  it('should generate entity with description', () => {
+  it('should generate entity with description', (): void => {
     expect(mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
     const entity = mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities[0];
     expect(entity).toBe(domainEntity1InterchangeItem);
     expect(entity.data.edfiInterchangeBrief.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
   });
 });
-describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity elements', () => {
+describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity elements', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.identityTemplates.push(domainEntity1InterchangeItem);
     enhance(metaEd);
   });
-  it('should generate entity with description', () => {
+  it('should generate entity with description', (): void => {
     expect(mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
     const entity = mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities[0];
     expect(entity).toBe(domainEntity1InterchangeItem);
     expect(entity.data.edfiInterchangeBrief.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
   });
 });
-describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with multiple items', () => {
+describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with multiple items', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntity2InterchangeItem);
     mergedInterchange.identityTemplates.push(domainEntity1InterchangeItem);
     enhance(metaEd);
   });
-  it('should generate entities', () => {
+  it('should generate entities', (): void => {
     expect(mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities.length).toBe(2);
   });
 });
-describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with element with bad markdown character', () => {
+describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with element with bad markdown character', (): void => {
   const inputDocumentation = 'Documentation for logic (X | Y)';
   const escapedDocumentation = 'Documentation for logic (X \\| Y)';
 
@@ -100,7 +100,7 @@ describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with
     mergedInterchange.elements.push(domainEntity1InterchangeItem);
     enhance(metaEd);
   });
-  it('should generate entity with description', () => {
+  it('should generate entity with description', (): void => {
     expect(mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
     const entity = mergedInterchange.data.edfiInterchangeBrief.interchangeBriefEntities[0];
     expect(entity.data.edfiInterchangeBrief.interchangeBriefDescription).toBe(escapedDocumentation);

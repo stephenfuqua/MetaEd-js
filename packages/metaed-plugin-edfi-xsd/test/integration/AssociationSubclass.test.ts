@@ -9,7 +9,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for association extension in extension namespace based on core association', () => {
+describe('when generating xsd for association extension in extension namespace based on core association', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const namespaceName = 'Extension';
@@ -67,27 +67,27 @@ describe('when generating xsd for association extension in extension namespace b
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate core domain entity1', () => {
+  it('should generate core domain entity1', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity1']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity2', () => {
+  it('should generate core domain entity2', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity2']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core association', () => {
+  it('should generate core association', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreAssociation']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association', () => {
+  it('should generate extension association', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association as extending core association', () => {
+  it('should generate extension association as extending core association', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension[@base='CoreAssociation']",
       extensionResult,
@@ -95,7 +95,7 @@ describe('when generating xsd for association extension in extension namespace b
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension association new property', () => {
+  it('should generate extension association new property', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionAssociationProperty']",
       extensionResult,

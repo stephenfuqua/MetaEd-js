@@ -42,7 +42,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         inlineCommon != null &&
         inlineCommon.data.edfiXsd.xsdComplexTypes.length === 1
       ) {
-        const propertyComplexTypeItems: Array<ComplexTypeItem> = R.head(inlineCommon.data.edfiXsd.xsdComplexTypes).items;
+        const propertyComplexTypeItems: ComplexTypeItem[] = R.head(inlineCommon.data.edfiXsd.xsdComplexTypes).items;
 
         // Clear out generation of the common type
         inlineCommon.data.edfiXsd.xsdComplexTypes = [];

@@ -14,19 +14,19 @@ import { Worksheet } from '../model/Worksheet';
 
 const EOL = '\n';
 
-function handbookEntriesForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): Array<HandbookEntry> {
+function handbookEntriesForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): HandbookEntry[] {
   const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
   if (handbookRepository == null) return [];
   return handbookRepository.handbookEntries;
 }
 
-function asNewLineSeparatedList(list: Array<string>): string {
+function asNewLineSeparatedList(list: string[]): string {
   if (list == null || list.length === 0) return '';
   return list.join(EOL);
 }
 
 function getModelReferencesListFor(handbookEntry: HandbookEntry): string {
-  const result: Array<string> = [];
+  const result: string[] = [];
   const modelReferencesContainsExists =
     handbookEntry.modelReferencesContains != null && handbookEntry.modelReferencesContains.length !== 0;
 
@@ -45,13 +45,13 @@ function getModelReferencesListFor(handbookEntry: HandbookEntry): string {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const handbookEntries: Array<HandbookEntry> = [];
+  const handbookEntries: HandbookEntry[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     handbookEntries.push(...handbookEntriesForNamespace(metaEd, namespace));
   });
 
-  const orderedHandbookEntries: Array<HandbookEntry> = R.sortWith([orderByProp('entityType'), orderByProp('name')])(
+  const orderedHandbookEntries: HandbookEntry[] = R.sortWith([orderByProp('entityType'), orderByProp('name')])(
     handbookEntries,
   );
 
@@ -85,7 +85,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     ];
   });
 
-  const generatedOutput: Array<GeneratedOutput> = [
+  const generatedOutput: GeneratedOutput[] = [
     {
       name: 'Ed-Fi Handbook Excel',
       namespace: 'Documentation',

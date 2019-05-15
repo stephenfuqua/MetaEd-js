@@ -9,7 +9,7 @@ import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table', () => {
+describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -33,18 +33,18 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     enhance(metaEd);
   });
 
-  it('should add two foreign keys', () => {
+  it('should add two foreign keys', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
     expect(foreignKeys).toHaveLength(2);
   });
 
-  it('should have sourceReference on each foreign key', () => {
+  it('should have sourceReference on each foreign key', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
     expect(foreignKeys[0].sourceReference.isSyntheticRelationship).toBe(true);
     expect(foreignKeys[1].sourceReference.isSyntheticRelationship).toBe(true);
   });
 
-  it('should have correct foreign key relationship for first foreign key', () => {
+  it('should have correct foreign key relationship for first foreign key', (): void => {
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
@@ -59,7 +59,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     expect(R.last(foreignKey.columnNames).foreignTableColumnName).toBe(date);
   });
 
-  it('should have correct foreign key relationship for second foreign key', () => {
+  it('should have correct foreign key relationship for second foreign key', (): void => {
     const {
       foreignKeys: [, foreignKey],
     } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
@@ -75,7 +75,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   });
 });
 
-describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table with existing foreign keys to CalendarDate', () => {
+describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table with existing foreign keys to CalendarDate', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -131,7 +131,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     enhance(metaEd);
   });
 
-  it('should not modify existing foreign keys', () => {
+  it('should not modify existing foreign keys', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
     expect(foreignKeys).toHaveLength(2);
     expect(R.head(foreignKeys).name).toBe('');

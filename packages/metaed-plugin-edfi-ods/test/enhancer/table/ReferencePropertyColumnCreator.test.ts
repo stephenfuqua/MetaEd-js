@@ -5,8 +5,8 @@ import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorF
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when creating columns for identity collection reference property', () => {
-  let columns: Array<Column>;
+describe('when creating columns for identity collection reference property', (): void => {
+  let columns: Column[];
 
   beforeAll(() => {
     const property: IntegerProperty = Object.assign(newIntegerProperty(), {
@@ -45,17 +45,17 @@ describe('when creating columns for identity collection reference property', () 
     columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
   });
 
-  it('should return no columns', () => {
+  it('should return no columns', (): void => {
     expect(columns).toHaveLength(0);
   });
 });
 
-describe('when creating columns for identity reference property', () => {
+describe('when creating columns for identity reference property', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -96,7 +96,7 @@ describe('when creating columns for identity reference property', () => {
     columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -109,14 +109,14 @@ describe('when creating columns for identity reference property', () => {
   });
 });
 
-describe('when creating columns for identity reference properties with composite primary key', () => {
+describe('when creating columns for identity reference properties with composite primary key', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   const propertyName1 = 'PropertyName1';
   const propertyName2 = 'PropertyName2';
   const propertyDocumentation = 'PropertyDocumentation';
   let property1: IntegerProperty;
   let property2: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property1 = Object.assign(newIntegerProperty(), {
@@ -171,11 +171,11 @@ describe('when creating columns for identity reference properties with composite
     columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
   });
 
-  it('should return two columns', () => {
+  it('should return two columns', (): void => {
     expect(columns).toHaveLength(2);
   });
 
-  it('should return a primary key column for first property', () => {
+  it('should return a primary key column for first property', (): void => {
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
     expect(columns[0].name).toBe(propertyName1);
@@ -186,7 +186,7 @@ describe('when creating columns for identity reference properties with composite
     expect(columns[0].referenceContext).toBe(domainEntityPropertyName + propertyName1);
   });
 
-  it('should return a primary key column for second property', () => {
+  it('should return a primary key column for second property', (): void => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].dataType).toBe('[INT]');
     expect(columns[1].name).toBe(propertyName2);
@@ -198,13 +198,13 @@ describe('when creating columns for identity reference properties with composite
   });
 });
 
-describe('when creating columns for identity reference property that references entity with identity reference property', () => {
+describe('when creating columns for identity reference property that references entity with identity reference property', (): void => {
   const domainEntityPropertyName1 = 'DomainEntityPropertyName1';
   const domainEntityPropertyName2 = 'DomainEntityPropertyName2';
   const propertyName1 = 'PropertyName1';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -265,7 +265,7 @@ describe('when creating columns for identity reference property that references 
     columns = columnCreator.createColumns(domainEntityProperty2, BuildStrategyDefault);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');

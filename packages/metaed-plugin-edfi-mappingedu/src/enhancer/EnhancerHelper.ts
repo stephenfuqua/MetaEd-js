@@ -8,8 +8,8 @@ import { ElementDefinition } from '../model/ElementDefinition';
 import { EnumerationDefinition } from '../model/EnumerationDefinition';
 import { EnumerationItemDefinition } from '../model/EnumerationItemDefinition';
 
-export const dataStandardNamespaceName: string = 'EdFi';
-export const dataStandardElementGroupName: string = 'Core';
+export const dataStandardNamespaceName = 'EdFi';
+export const dataStandardElementGroupName = 'Core';
 
 export const isDataStandard = (namespace: Namespace): boolean => namespace.namespaceName === dataStandardNamespaceName;
 export const elementGroupNameFor = (namespace: Namespace): string =>
@@ -31,15 +31,12 @@ export const pluginEnvironmentRepositoryForNamespace = (
 export const pluginElementGroupDefinitionsForNamespace = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<ElementGroupDefinition> => {
+): ElementGroupDefinition[] => {
   const repository: EdFiMappingEduRepository | undefined = pluginEnvironmentRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.elementGroupDefinitions;
 };
 
-export const pluginEntityDefinitionsForNamespace = (
-  metaEd: MetaEdEnvironment,
-  namespace: Namespace,
-): Array<EntityDefinition> => {
+export const pluginEntityDefinitionsForNamespace = (metaEd: MetaEdEnvironment, namespace: Namespace): EntityDefinition[] => {
   const repository: EdFiMappingEduRepository | undefined = pluginEnvironmentRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.entityDefinitions;
 };
@@ -47,7 +44,7 @@ export const pluginEntityDefinitionsForNamespace = (
 export const pluginElementDefinitionsForNamespace = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<ElementDefinition> => {
+): ElementDefinition[] => {
   const repository: EdFiMappingEduRepository | undefined = pluginEnvironmentRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.elementDefinitions;
 };
@@ -55,7 +52,7 @@ export const pluginElementDefinitionsForNamespace = (
 export const pluginEnumerationDefinitionsForNamespace = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<EnumerationDefinition> => {
+): EnumerationDefinition[] => {
   const repository: EdFiMappingEduRepository | undefined = pluginEnvironmentRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.enumerationDefinitions;
 };
@@ -63,7 +60,7 @@ export const pluginEnumerationDefinitionsForNamespace = (
 export const pluginEnumerationItemDefinitionsForNamespace = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<EnumerationItemDefinition> => {
+): EnumerationItemDefinition[] => {
   const repository: EdFiMappingEduRepository | undefined = pluginEnvironmentRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.enumerationItemDefinitions;
 };

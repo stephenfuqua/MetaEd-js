@@ -4,9 +4,9 @@ export function failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
   validatorName: string,
   subclassEntity: TopLevelEntity,
   baseEntity: TopLevelEntity | null,
-  failures: Array<ValidationFailure>,
+  failures: ValidationFailure[],
 ) {
-  const identityRenames: Array<EntityProperty> = subclassEntity.properties.filter(x => x.isIdentityRename);
+  const identityRenames: EntityProperty[] = subclassEntity.properties.filter(x => x.isIdentityRename);
 
   identityRenames.forEach(renamedProperty => {
     if (baseEntity && baseEntity.identityProperties.some(x => x.metaEdName === renamedProperty.baseKeyName)) return;

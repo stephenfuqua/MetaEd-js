@@ -16,7 +16,7 @@ import {
 const enhancerName = 'AddDescriptorComplexTypesEnhancerV2';
 const targetVersions: SemVer = V2Only;
 
-function createComplexType(descriptor: Descriptor): Array<ComplexType> {
+function createComplexType(descriptor: Descriptor): ComplexType[] {
   const complexType = Object.assign(newComplexType(), {
     annotation: Object.assign(newAnnotation(), {
       documentation: descriptor.documentation,
@@ -57,7 +57,7 @@ function createReferenceType(descriptor: Descriptor): ComplexType {
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
-  (getAllEntitiesOfType(metaEd, 'descriptor') as Array<Descriptor>).forEach((descriptor: Descriptor) => {
+  (getAllEntitiesOfType(metaEd, 'descriptor') as Descriptor[]).forEach((descriptor: Descriptor) => {
     descriptor.data.edfiXsd.xsdComplexTypes = createComplexType(descriptor);
     descriptor.data.edfiXsd.xsdReferenceType = createReferenceType(descriptor);
   });

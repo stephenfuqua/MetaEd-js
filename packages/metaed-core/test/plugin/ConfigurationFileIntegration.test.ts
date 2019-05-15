@@ -20,7 +20,7 @@ import { newMetaEdPlugin } from '../../src/plugin/MetaEdPlugin';
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when loading a project with two invalid plugin configuration files', () => {
+describe('when loading a project with two invalid plugin configuration files', (): void => {
   const simpleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
 
   const metaEdConfiguration = {
@@ -96,7 +96,7 @@ function applyConfigFileRuleOnXsdPlugin(state: State) {
   };
 }
 
-describe('when loading a project with one invalid and one valid plugin configuration file', () => {
+describe('when loading a project with one invalid and one valid plugin configuration file', (): void => {
   const simpleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
 
   const metaEdConfiguration = {

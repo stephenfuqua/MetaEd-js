@@ -1,9 +1,9 @@
-export type PipelineOptions = {
+export interface PipelineOptions {
   runValidators: boolean;
   runEnhancers: boolean;
   runGenerators: boolean;
   stopOnValidationFailure: boolean;
-};
+}
 
 export const newPipelineOptions: () => PipelineOptions = () => ({
   runValidators: false,

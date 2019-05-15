@@ -27,12 +27,12 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when association extension has a single property', () => {
+describe('when association extension has a single property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -141,12 +141,12 @@ describe('when association extension has a single property', () => {
   });
 });
 
-describe('when association extension has a required property and a collection', () => {
+describe('when association extension has a required property and a collection', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -263,12 +263,12 @@ describe('when association extension has a required property and a collection', 
   });
 });
 
-describe('when association extension only has a collection', () => {
+describe('when association extension only has a collection', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -357,12 +357,12 @@ describe('when association extension only has a collection', () => {
   });
 });
 
-describe('when association extension has a reference property', () => {
+describe('when association extension has a reference property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const extension = 'Extension';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const domainEntityName3 = 'DomainEntityName3';
@@ -452,7 +452,7 @@ describe('when association extension has a reference property', () => {
   });
 });
 
-describe('when association extension has multiple common properties', () => {
+describe('when association extension has multiple common properties', (): void => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
   const namespaceName = 'Namespace';
   const extension = 'Extension';
@@ -461,7 +461,7 @@ describe('when association extension has multiple common properties', () => {
   const commonName1 = 'CommonName1';
   const commonName2 = 'CommonName2';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
   const integerPropertyName3 = 'IntegerPropertyName3';

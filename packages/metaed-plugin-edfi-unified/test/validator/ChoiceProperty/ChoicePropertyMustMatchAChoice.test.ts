@@ -2,11 +2,11 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, ChoiceBuilder, DomainEntityBui
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
 
-describe('when choice property has identifier of choice', () => {
+describe('when choice property has identifier of choice', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -29,16 +29,16 @@ describe('when choice property has identifier of choice', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when choice property has identifier of choice in dependency namespace', () => {
+describe('when choice property has identifier of choice in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -68,16 +68,16 @@ describe('when choice property has identifier of choice in dependency namespace'
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when choice property has invalid identifier', () => {
+describe('when choice property has invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -100,11 +100,11 @@ describe('when choice property has invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('ChoicePropertyMustMatchAChoice');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -112,11 +112,11 @@ describe('when choice property has invalid identifier', () => {
   });
 });
 
-describe('when choice property has invalid identifier in dependency namespace', () => {
+describe('when choice property has invalid identifier in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -147,11 +147,11 @@ describe('when choice property has invalid identifier in dependency namespace', 
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('ChoicePropertyMustMatchAChoice');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

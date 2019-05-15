@@ -5,9 +5,9 @@ import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 import { DefaultExtensionEntitySuffix } from '../../src/model/Namespace';
 
-describe('when building extension namespace info', () => {
+describe('when building extension namespace info', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -24,38 +24,38 @@ describe('when building extension namespace info', () => {
       .sendToListener(builder);
   });
 
-  it('should build one namespace info', () => {
+  it('should build one namespace info', (): void => {
     expect(metaEd.namespace.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have correct namespace', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have correct project extension', () => {
+  it('should have correct project extension', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should be an extension', () => {
+  it('should be an extension', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.isExtension).toBe(true);
   });
 
-  it('should have correct extension suffix', () => {
+  it('should have correct extension suffix', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });
 });
 
-describe('when building core namespace info', () => {
+describe('when building core namespace info', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'EdFi';
 
   beforeAll(() => {
@@ -71,26 +71,26 @@ describe('when building core namespace info', () => {
       .sendToListener(builder);
   });
 
-  it('should build one namespace info', () => {
+  it('should build one namespace info', (): void => {
     expect(metaEd.namespace.size).toBe(1);
   });
 
-  it('should have correct namespace', () => {
+  it('should have correct namespace', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have a blank project extension', () => {
+  it('should have a blank project extension', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.projectExtension).toBe('');
   });
 
-  it('should not be an extension', () => {
+  it('should not be an extension', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.isExtension).toBe(false);
   });
 
-  it('should have correct extension suffix', () => {
+  it('should have correct extension suffix', (): void => {
     const namespace: any = metaEd.namespace.get(namespaceName);
     expect(namespace.extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });

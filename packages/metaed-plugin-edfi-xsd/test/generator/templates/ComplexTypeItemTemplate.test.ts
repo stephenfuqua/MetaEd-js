@@ -15,7 +15,7 @@ import { templateNamed, registerPartials } from '../../../src/generator/XsdGener
 
 const complexTypeItem = nextHead;
 
-describe('when generating complex type item', () => {
+describe('when generating complex type item', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -29,12 +29,12 @@ describe('when generating complex type item', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be element complex type only', () => {
+  it('should be element complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:element');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -46,7 +46,7 @@ describe('when generating complex type item', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should have element complex type type', () => {
+  it('should have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -58,7 +58,7 @@ describe('when generating complex type item', () => {
     ).toBe(type);
   });
 
-  it('should have annotation only', () => {
+  it('should have annotation only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -90,7 +90,7 @@ describe('when generating complex type item', () => {
     ).toBe(documentation);
   });
 
-  it('should not have min occurs', () => {
+  it('should not have min occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -102,7 +102,7 @@ describe('when generating complex type item', () => {
     ).not.toBeDefined();
   });
 
-  it('should not have max occurs', () => {
+  it('should not have max occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -115,7 +115,7 @@ describe('when generating complex type item', () => {
   });
 });
 
-describe('when generating complex type item with min occurs', () => {
+describe('when generating complex type item with min occurs', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -130,12 +130,12 @@ describe('when generating complex type item with min occurs', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be element complex type only', () => {
+  it('should be element complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:element');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -147,7 +147,7 @@ describe('when generating complex type item with min occurs', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should have element complex type type', () => {
+  it('should have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -159,7 +159,7 @@ describe('when generating complex type item with min occurs', () => {
     ).toBe(type);
   });
 
-  it('should have annotation only', () => {
+  it('should have annotation only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -191,7 +191,7 @@ describe('when generating complex type item with min occurs', () => {
     ).toBe(documentation);
   });
 
-  it('should have min occurs', () => {
+  it('should have min occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -203,7 +203,7 @@ describe('when generating complex type item with min occurs', () => {
     ).toBe(minOccurs);
   });
 
-  it('should not have max occurs', () => {
+  it('should not have max occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -216,7 +216,7 @@ describe('when generating complex type item with min occurs', () => {
   });
 });
 
-describe('when generating complex type item with max occurs unbounded', () => {
+describe('when generating complex type item with max occurs unbounded', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -230,12 +230,12 @@ describe('when generating complex type item with max occurs unbounded', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be element complex type only', () => {
+  it('should be element complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:element');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -247,7 +247,7 @@ describe('when generating complex type item with max occurs unbounded', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should have element complex type type', () => {
+  it('should have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -259,7 +259,7 @@ describe('when generating complex type item with max occurs unbounded', () => {
     ).toBe(type);
   });
 
-  it('should have annotation only', () => {
+  it('should have annotation only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -291,7 +291,7 @@ describe('when generating complex type item with max occurs unbounded', () => {
     ).toBe(documentation);
   });
 
-  it('should not have min occurs', () => {
+  it('should not have min occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -303,7 +303,7 @@ describe('when generating complex type item with max occurs unbounded', () => {
     ).not.toBeDefined();
   });
 
-  it('should not have max occurs', () => {
+  it('should not have max occurs', (): void => {
     expect(
       R.view(
         R.compose(
@@ -316,7 +316,7 @@ describe('when generating complex type item with max occurs unbounded', () => {
   });
 });
 
-describe('when generating complex type item with element item', () => {
+describe('when generating complex type item with element item', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -332,12 +332,12 @@ describe('when generating complex type item with element item', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be sequence complex type only', () => {
+  it('should be sequence complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:sequence');
   });
 
-  it('should not have element complex type name', () => {
+  it('should not have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -349,7 +349,7 @@ describe('when generating complex type item with element item', () => {
     ).not.toBeDefined();
   });
 
-  it('should not have element complex type type', () => {
+  it('should not have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -361,7 +361,7 @@ describe('when generating complex type item with element item', () => {
     ).not.toBeDefined();
   });
 
-  it('should not have annotation, but element instead', () => {
+  it('should not have annotation, but element instead', (): void => {
     expect(
       R.view(
         R.compose(
@@ -383,7 +383,7 @@ describe('when generating complex type item with element item', () => {
   });
 });
 
-describe('when generating element group complex type item is choice with element item', () => {
+describe('when generating element group complex type item is choice with element item', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -399,12 +399,12 @@ describe('when generating element group complex type item is choice with element
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be sequence complex type only', () => {
+  it('should be sequence complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:choice');
   });
 
-  it('should not have element complex type name', () => {
+  it('should not have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -416,7 +416,7 @@ describe('when generating element group complex type item is choice with element
     ).not.toBeDefined();
   });
 
-  it('should not have element complex type type', () => {
+  it('should not have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -428,7 +428,7 @@ describe('when generating element group complex type item is choice with element
     ).not.toBeDefined();
   });
 
-  it('should not have annotation, but element instead', () => {
+  it('should not have annotation, but element instead', (): void => {
     expect(
       R.view(
         R.compose(
@@ -450,7 +450,7 @@ describe('when generating element group complex type item is choice with element
   });
 });
 
-describe('when generating element group complex type item with element group item', () => {
+describe('when generating element group complex type item with element group item', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const type = 'ComplexObjectType';
@@ -468,12 +468,12 @@ describe('when generating element group complex type item with element group ite
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be sequence complex type only', () => {
+  it('should be sequence complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:sequence');
   });
 
-  it('should not have element complex type name', () => {
+  it('should not have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -485,7 +485,7 @@ describe('when generating element group complex type item with element group ite
     ).not.toBeDefined();
   });
 
-  it('should not have element complex type type', () => {
+  it('should not have element complex type type', (): void => {
     expect(
       R.view(
         R.compose(
@@ -497,7 +497,7 @@ describe('when generating element group complex type item with element group ite
     ).not.toBeDefined();
   });
 
-  it('should not have annotation, but sequqence followed by element instead', () => {
+  it('should not have annotation, but sequqence followed by element instead', (): void => {
     expect(
       R.view(
         R.compose(

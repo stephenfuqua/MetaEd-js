@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, SharedStringBuilder, Namespace
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedString/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
-describe('when validating shared string with max length greater than min length', () => {
+describe('when validating shared string with max length greater than min length', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -24,18 +24,18 @@ describe('when validating shared string with max length greater than min length'
     failures = validate(metaEd);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared string with min length greater than max length', () => {
+describe('when validating shared string with min length greater than max length', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -55,11 +55,11 @@ describe('when validating shared string with min length greater than max length'
     failures = validate(metaEd);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedStringMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');

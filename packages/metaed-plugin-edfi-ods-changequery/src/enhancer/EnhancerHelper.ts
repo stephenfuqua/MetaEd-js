@@ -21,15 +21,12 @@ export function edfiOdsChangeQueryRepositoryForNamespace(
   return edfiOdsChangeQueryRepository;
 }
 
-export function deleteTrackingTableEntities(metaEd: MetaEdEnvironment, namespace: Namespace): Array<DeleteTrackingTable> {
+export function deleteTrackingTableEntities(metaEd: MetaEdEnvironment, namespace: Namespace): DeleteTrackingTable[] {
   const repository: EdFiOdsChangeQueryEntityRepository | null = edfiOdsChangeQueryRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.deleteTrackingTable;
 }
 
-export function deleteTrackingTriggerEntities(
-  metaEd: MetaEdEnvironment,
-  namespace: Namespace,
-): Array<DeleteTrackingTrigger> {
+export function deleteTrackingTriggerEntities(metaEd: MetaEdEnvironment, namespace: Namespace): DeleteTrackingTrigger[] {
   const repository: EdFiOdsChangeQueryEntityRepository | null = edfiOdsChangeQueryRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.deleteTrackingTrigger;
 }
@@ -37,7 +34,7 @@ export function deleteTrackingTriggerEntities(
 export function addColumnChangeVersionForTableEntities(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<AddColumnChangeVersionForTable> {
+): AddColumnChangeVersionForTable[] {
   const repository: EdFiOdsChangeQueryEntityRepository | null = edfiOdsChangeQueryRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.addColumnChangeVersionForTable;
 }
@@ -45,7 +42,7 @@ export function addColumnChangeVersionForTableEntities(
 export function createTriggerUpdateChangeVersionEntities(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<CreateTriggerUpdateChangeVersion> {
+): CreateTriggerUpdateChangeVersion[] {
   const repository: EdFiOdsChangeQueryEntityRepository | null = edfiOdsChangeQueryRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.createTriggerUpdateChangeVersion;
 }

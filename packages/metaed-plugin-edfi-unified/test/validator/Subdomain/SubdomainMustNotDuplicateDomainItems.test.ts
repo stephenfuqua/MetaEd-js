@@ -2,12 +2,12 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, NamespaceBuilde
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 
-describe('when validating subdomain entity domain item does not duplicate domain items', () => {
+describe('when validating subdomain entity domain item does not duplicate domain items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const subdomainName = 'SubdomainName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -27,11 +27,11 @@ describe('when validating subdomain entity domain item does not duplicate domain
     failures = validate(metaEd);
   });
 
-  it('should build one subdomain entity', () => {
+  it('should build one subdomain entity', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should build two domain entity domain items', () => {
+  it('should build two domain entity domain items', (): void => {
     const subdomain = coreNamespace.entity.subdomain.get(subdomainName);
     expect(subdomain).toBeDefined();
     if (subdomain !== undefined) {
@@ -39,18 +39,18 @@ describe('when validating subdomain entity domain item does not duplicate domain
     }
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating subdomain entity domain item has duplicate domain items', () => {
+describe('when validating subdomain entity domain item has duplicate domain items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const subdomainName = 'SubdomainName';
   const domainEntityName = 'DomainEntityName';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -70,11 +70,11 @@ describe('when validating subdomain entity domain item has duplicate domain item
     failures = validate(metaEd);
   });
 
-  it('should build one subdomain entity', () => {
+  it('should build one subdomain entity', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should have one validation failure', () => {
+  it('should have one validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubdomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');
@@ -83,14 +83,14 @@ describe('when validating subdomain entity domain item has duplicate domain item
   });
 });
 
-describe('when validating subdomain entity domain item has multiple duplicate domain items', () => {
+describe('when validating subdomain entity domain item has multiple duplicate domain items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName = 'DomainName';
   const subdomainName = 'SubdomainName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityName2 = 'DomainEntityName2';
 
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -114,11 +114,11 @@ describe('when validating subdomain entity domain item has multiple duplicate do
     failures = validate(metaEd);
   });
 
-  it('should build one subdomain entity', () => {
+  it('should build one subdomain entity', (): void => {
     expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
-  it('should have multiple validation failures', () => {
+  it('should have multiple validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('SubdomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');

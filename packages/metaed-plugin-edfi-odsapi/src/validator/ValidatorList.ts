@@ -11,7 +11,7 @@ import { validate as subclassingAnyAssociationExceptStudentProgramAssociationIsU
 import { validate as subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported } from './UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 import { validate as subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported } from './UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
 
-export function validatorList(): Array<Validator> {
+export function validatorList(): Validator[] {
   return [
     mergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported,
     mergingRequiredWithOptionalPropertyIsUnsupported,

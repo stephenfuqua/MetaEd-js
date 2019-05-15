@@ -4,7 +4,7 @@ import { ChoicePropertyEdfiXsd } from '../model/property/ChoiceProperty';
 
 const enhancerName = 'AddChoicePropertiesEnhancer';
 
-function addChoiceProperties(namespace: Namespace, properties: Array<EntityProperty>) {
+function addChoiceProperties(namespace: Namespace, properties: EntityProperty[]) {
   properties
     .filter(p => p.type === 'choice')
     .forEach(choiceProperty => {

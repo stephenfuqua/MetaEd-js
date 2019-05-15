@@ -30,7 +30,7 @@ import { newMergedInterchange, addMergedInterchangeToRepository } from '../../sr
 import { MergedInterchange } from '../../src/model/MergedInterchange';
 import { generate } from '../../src/generator/InterchangeGenerator';
 
-describe('when generating single interchange', () => {
+describe('when generating single interchange', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -48,7 +48,7 @@ describe('when generating single interchange', () => {
   const identityTemplateTypeName = 'IdentityTemplateNameReferenceType';
   const interchangeName = 'InterchangeName';
   const interchangeDocumentation = 'InterchangeDocumentation';
-  const schemaDocumentation: string = `===== Interchange Name Interchange Model =====`;
+  const schemaDocumentation = `===== Interchange Name Interchange Model =====`;
   const schemaLocationName = 'SchemaLocation.xsd';
   let result;
 
@@ -98,7 +98,7 @@ describe('when generating single interchange', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should generate valid xsd', () => {
+  it('should generate valid xsd', (): void => {
     const xsSchema = R.view(nextSecond, result);
 
     const schemaLocation = R.view(nextHead, xsSchema);
@@ -206,7 +206,7 @@ describe('when generating single interchange', () => {
   });
 });
 
-describe('when generating single interchange with extension', () => {
+describe('when generating single interchange with extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -228,7 +228,7 @@ describe('when generating single interchange with extension', () => {
   const interchangeDocumentation = 'InterchangeDocumentation';
   const interchangeExtensionDocumentation = 'InterchangeExtensionDocumentation';
   const schemaLocationName = 'SchemaLocation.xsd';
-  let result: Array<GeneratedOutput>;
+  let result: GeneratedOutput[];
 
   beforeAll(() => {
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
@@ -296,7 +296,7 @@ describe('when generating single interchange with extension', () => {
     expect(result).toHaveLength(1);
   });
 
-  it('should have interchange name', () => {
+  it('should have interchange name', (): void => {
     const xsSchema = R.view(nextSecond, xmlParser.xml2js(result[0].resultString));
 
     const interchangeElement = R.view(nextThird, xsSchema);

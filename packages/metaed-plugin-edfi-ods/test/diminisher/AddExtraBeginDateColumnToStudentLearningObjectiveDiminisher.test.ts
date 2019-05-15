@@ -11,7 +11,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
-describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table', () => {
+describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -44,7 +44,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
     enhance(metaEd);
   });
 
-  it('should add StudentSectionAssociationBeginDate column', () => {
+  it('should add StudentSectionAssociationBeginDate column', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(table).toBeDefined();
     if (table == null) throw new Error();
@@ -52,7 +52,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
     expect(R.head(table.columns).isNullable).toBe(true);
   });
 
-  it('should have correct foreign key relationship', () => {
+  it('should have correct foreign key relationship', (): void => {
     const foreignKey: ForeignKey | null = R.head(
       (tableEntities(metaEd, namespace).get(studentLearningObjective) as any).foreignKeys,
     );
@@ -63,7 +63,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
   });
 });
 
-describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table with existing studentSectionAssociationBeginDate column', () => {
+describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table with existing studentSectionAssociationBeginDate column', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -91,7 +91,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
     enhance(metaEd);
   });
 
-  it('should not modify StudentSectionAssociationBeginDate column', () => {
+  it('should not modify StudentSectionAssociationBeginDate column', (): void => {
     const table: Table | undefined = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(table).toBeDefined();
     if (table == null) throw new Error();
@@ -100,7 +100,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
     expect(R.head(table.columns).isNullable).toBe(false);
   });
 
-  it('should not modify foreign keys', () => {
+  it('should not modify foreign keys', (): void => {
     expect((tableEntities(metaEd, namespace).get(studentLearningObjective) as any).foreignKeys).toHaveLength(0);
   });
 });

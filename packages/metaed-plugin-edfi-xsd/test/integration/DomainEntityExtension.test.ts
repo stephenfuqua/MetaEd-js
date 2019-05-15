@@ -8,7 +8,7 @@ import {
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
-describe('when generating xsd for descriptor', () => {
+describe('when generating xsd for descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity = 'CoreEntity';
@@ -51,17 +51,17 @@ describe('when generating xsd for descriptor', () => {
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
-  it('should generate descriptor', () => {
+  it('should generate descriptor', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']", coreResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate descriptor reference', () => {
+  it('should generate descriptor reference', (): void => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate descriptor reference', () => {
+  it('should generate descriptor reference', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension[@base='CoreEntity']",
       extensionResult,
@@ -69,7 +69,7 @@ describe('when generating xsd for descriptor', () => {
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate descriptor reference', () => {
+  it('should generate descriptor reference', (): void => {
     const elements = xpathSelect(
       "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']",
       extensionResult,

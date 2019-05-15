@@ -1,12 +1,12 @@
 import { EnhancerResult, EntityProperty, MetaEdEnvironment } from 'metaed-core';
 import { getPropertiesOfType } from 'metaed-core';
 
-export type ReferencePropertyEdfiOds = {
+export interface ReferencePropertyEdfiOds {
   odsDeleteCascadePrimaryKey: boolean;
   odsCausesCyclicUpdateCascade: boolean;
   odsIsReferenceToSuperclass: boolean;
   odsIsReferenceToExtensionParent: boolean;
-};
+}
 
 // Enhancer for object setup
 const enhancerName = 'ReferencePropertySetupEnhancer';

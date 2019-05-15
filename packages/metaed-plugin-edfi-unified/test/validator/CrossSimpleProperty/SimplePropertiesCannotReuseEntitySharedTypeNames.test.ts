@@ -10,8 +10,8 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CrossSimpleProperty/SimplePropertiesCannotReuseEntitySharedTypeNames';
 
-describe('when building shared integer with duplicate integer property in core namespace', () => {
-  let failures: Array<ValidationFailure> = [];
+describe('when building shared integer with duplicate integer property in core namespace', (): void => {
+  let failures: ValidationFailure[] = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const entityName = 'EntityName';
@@ -39,15 +39,15 @@ describe('when building shared integer with duplicate integer property in core n
     failures = validate(metaEd);
   });
 
-  it('should build one integer property', () => {
+  it('should build one integer property', (): void => {
     expect(metaEd.propertyIndex.integer.length).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures[0].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -60,8 +60,8 @@ describe('when building shared integer with duplicate integer property in core n
   });
 });
 
-describe('when building shared integer with duplicate integer property in extension namespace', () => {
-  let failures: Array<ValidationFailure> = [];
+describe('when building shared integer with duplicate integer property in extension namespace', (): void => {
+  let failures: ValidationFailure[] = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const entityName = 'EntityName';
@@ -99,18 +99,18 @@ describe('when building shared integer with duplicate integer property in extens
     failures = validate(metaEd);
   });
 
-  it('should build one integer property', () => {
+  it('should build one integer property', (): void => {
     expect(metaEd.propertyIndex.integer.length).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when building shared decimal with duplicate decimal property in extension namespace', () => {
+describe('when building shared decimal with duplicate decimal property in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure> = [];
+  let failures: ValidationFailure[] = [];
 
   const entityName = 'EntityName';
   const documentation = 'doc';
@@ -150,18 +150,18 @@ describe('when building shared decimal with duplicate decimal property in extens
     failures = validate(metaEd);
   });
 
-  it('should build one decimal property', () => {
+  it('should build one decimal property', (): void => {
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when building shared string with duplicate string property in extension namespace reversed', () => {
+describe('when building shared string with duplicate string property in extension namespace reversed', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure> = [];
+  let failures: ValidationFailure[] = [];
 
   const entityName = 'EntityName';
   const documentation = 'doc';
@@ -198,18 +198,18 @@ describe('when building shared string with duplicate string property in extensio
     failures = validate(metaEd);
   });
 
-  it('should build one string property', () => {
+  it('should build one string property', (): void => {
     expect(metaEd.propertyIndex.string.length).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when building shared string with duplicate integer property in core namespace', () => {
+describe('when building shared string with duplicate integer property in core namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure> = [];
+  let failures: ValidationFailure[] = [];
 
   const entityName = 'EntityName';
   const documentation = 'doc';
@@ -237,15 +237,15 @@ describe('when building shared string with duplicate integer property in core na
     failures = validate(metaEd);
   });
 
-  it('should build one integer property', () => {
+  it('should build one integer property', (): void => {
     expect(metaEd.propertyIndex.integer.length).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures[0].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

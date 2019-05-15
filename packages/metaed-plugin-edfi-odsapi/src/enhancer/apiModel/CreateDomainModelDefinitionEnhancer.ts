@@ -23,8 +23,8 @@ export function buildSchemaDefinition(namespace: Namespace): SchemaDefinition {
   };
 }
 
-export function buildAggregateDefinitions(namespace: Namespace): Array<AggregateDefinition> {
-  const result: Array<AggregateDefinition> = [];
+export function buildAggregateDefinitions(namespace: Namespace): AggregateDefinition[] {
+  const result: AggregateDefinition[] = [];
   (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates
     .filter((a: Aggregate) => !a.isExtension)
     .forEach((aggregate: Aggregate) => {
@@ -35,7 +35,7 @@ export function buildAggregateDefinitions(namespace: Namespace): Array<Aggregate
         },
         aggregateEntityNames: [],
       };
-      const aggregateEntityNames: Array<ApiFullName> = [];
+      const aggregateEntityNames: ApiFullName[] = [];
       aggregate.entityTables.forEach((entityTable: EntityTable) => {
         aggregateEntityNames.push({
           schema: entityTable.schema,
@@ -61,8 +61,8 @@ export function buildAggregateDefinitions(namespace: Namespace): Array<Aggregate
   );
 }
 
-export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<AggregateExtensionDefinition> {
-  const result: Array<AggregateExtensionDefinition> = [];
+export function buildAggregateExtensionDefinitions(namespace: Namespace): AggregateExtensionDefinition[] {
+  const result: AggregateExtensionDefinition[] = [];
   (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates
     .filter((a: Aggregate) => a.isExtension)
     .forEach((aggregate: Aggregate) => {
@@ -73,7 +73,7 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<
         },
         extensionEntityNames: [],
       };
-      const extensionEntityNames: Array<ApiFullName> = [];
+      const extensionEntityNames: ApiFullName[] = [];
       aggregate.entityTables.forEach((entityTable: EntityTable) => {
         extensionEntityNames.push({
           schema: entityTable.schema,

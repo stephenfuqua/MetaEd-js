@@ -10,11 +10,11 @@ import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
-describe('when building choice property table with two integer properties', () => {
+describe('when building choice property table with two integer properties', (): void => {
   const choiceEntityPropertyName1 = 'ChoiceEntityPropertyName1';
   const choiceEntityPropertyName2 = 'ChoiceEntityPropertyName2';
   const entityPkName = 'EntityPkName';
-  const tables: Array<Table> = [];
+  const tables: Table[] = [];
   let table: Table;
 
   beforeAll(() => {
@@ -81,7 +81,7 @@ describe('when building choice property table with two integer properties', () =
     entityChoiceProperty.referencedEntity = choice;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
-    const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityChoiceProperty);
     tableBuilder.buildTables(
@@ -94,11 +94,11 @@ describe('when building choice property table with two integer properties', () =
     );
   });
 
-  it('should return no join table', () => {
+  it('should return no join table', (): void => {
     expect(tables).toHaveLength(0);
   });
 
-  it('should have two columns', () => {
+  it('should have two columns', (): void => {
     expect(table.columns).toHaveLength(2);
     expect(table.columns[0].name).toBe(choiceEntityPropertyName1);
     expect(table.columns[1].name).toBe(choiceEntityPropertyName2);

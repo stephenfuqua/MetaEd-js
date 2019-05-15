@@ -9,9 +9,9 @@ import { schoolYearEnumerationPropertyColumnCreator } from './SchoolYearEnumerat
 import { simplePropertyColumnCreator } from './SimplePropertyColumnCreator';
 import { ColumnCreator, nullColumnCreator } from './ColumnCreator';
 
-export type ColumnCreatorFactory = {
+export interface ColumnCreatorFactory {
   columnCreatorFor(property: EntityProperty): ColumnCreator;
-};
+}
 
 export const columnCreatorFactory: ColumnCreatorFactory = {
   columnCreatorFor: (property: EntityProperty): ColumnCreator => {

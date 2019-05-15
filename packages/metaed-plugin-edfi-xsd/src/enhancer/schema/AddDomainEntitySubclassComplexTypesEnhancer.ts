@@ -10,7 +10,7 @@ import {
 const enhancerName = 'AddDomainEntitySubclassComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as Array<DomainEntitySubclass>).forEach(
+  (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as DomainEntitySubclass[]).forEach(
     (domainEntitySubclass: DomainEntitySubclass) => {
       if (domainEntitySubclass.baseEntity == null) return;
       domainEntitySubclass.data.edfiXsd.xsdComplexTypes = createDefaultComplexType(

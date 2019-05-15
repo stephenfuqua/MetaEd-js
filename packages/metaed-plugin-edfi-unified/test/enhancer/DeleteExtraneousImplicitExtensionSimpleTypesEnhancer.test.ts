@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, newNamespace, newStringType } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
-describe('when there are duplicate string types', () => {
+describe('when there are duplicate string types', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = {
     ...newNamespace(),
@@ -44,21 +44,21 @@ describe('when there are duplicate string types', () => {
     enhance(metaEd);
   });
 
-  it('should not have removed the core only type', () => {
+  it('should not have removed the core only type', (): void => {
     expect(namespace.entity.stringType.get(coreOnlySimpleTypeName)).toBeDefined();
   });
 
-  it('should not have removed the extension only type', () => {
+  it('should not have removed the extension only type', (): void => {
     expect(
       extensionNamespace.entity.stringType.get(`${extensionNamespace.projectExtension}-${extensionOnlySimpleTypeName}`),
     ).toBeDefined();
   });
 
-  it('should not have removed the core duplicated type', () => {
+  it('should not have removed the core duplicated type', (): void => {
     expect(namespace.entity.stringType.get(coreDuplicatedSimpleTypeName)).toBeDefined();
   });
 
-  it('should have removed the extension duplicated type', () => {
+  it('should have removed the extension duplicated type', (): void => {
     expect(
       extensionNamespace.entity.stringType.get(`${extensionNamespace.projectExtension}-${coreDuplicatedSimpleTypeName}`),
     ).toBeUndefined();

@@ -5,7 +5,7 @@ import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddStringSimpleTypesEnhancer';
 
-describe('when enhancing string type', () => {
+describe('when enhancing string type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -36,37 +36,37 @@ describe('when enhancing string type', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdSimpleType.annotation).toBeDefined();
     expect(createdSimpleType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdSimpleType.annotation.typeGroup).toBe('Simple');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdSimpleType.baseType).toBe('xs:string');
   });
 
-  it('should have max length assigned', () => {
+  it('should have max length assigned', (): void => {
     expect(createdSimpleType.maxLength).toBe(maxLength);
   });
 
-  it('should have min length assigned', () => {
+  it('should have min length assigned', (): void => {
     expect(createdSimpleType.minLength).toBe(minLength);
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdSimpleType.name).toBe(simpleTypeName);
   });
 });
 
-describe('when enhancing generated string type with min length only', () => {
+describe('when enhancing generated string type with min length only', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -95,20 +95,20 @@ describe('when enhancing generated string type with min length only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max length assigned', () => {
+  it('should not have max length assigned', (): void => {
     expect(createdSimpleType.maxLength).toBe('');
   });
 
-  it('should have min length assigned', () => {
+  it('should have min length assigned', (): void => {
     expect(createdSimpleType.minLength).toBe(minLength);
   });
 });
 
-describe('when enhancing generated string type with max length only', () => {
+describe('when enhancing generated string type with max length only', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -137,20 +137,20 @@ describe('when enhancing generated string type with max length only', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should have max length assigned', () => {
+  it('should have max length assigned', (): void => {
     expect(createdSimpleType.maxLength).toBe(maxLength);
   });
 
-  it('should not have min length assigned', () => {
+  it('should not have min length assigned', (): void => {
     expect(createdSimpleType.minLength).toBe('');
   });
 });
 
-describe('when enhancing non-generated string type with no restrictions', () => {
+describe('when enhancing non-generated string type with no restrictions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -177,20 +177,20 @@ describe('when enhancing non-generated string type with no restrictions', () => 
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBeDefined();
   });
 
-  it('should not have max length assigned', () => {
+  it('should not have max length assigned', (): void => {
     expect(createdSimpleType.maxLength).toBe('');
   });
 
-  it('should not have min length assigned', () => {
+  it('should not have min length assigned', (): void => {
     expect(createdSimpleType.minLength).toBe('');
   });
 });
 
-describe('when enhancing generated string type with no restrictions', () => {
+describe('when enhancing generated string type with no restrictions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
@@ -217,7 +217,7 @@ describe('when enhancing generated string type with no restrictions', () => {
     createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
   });
 
-  it('should create simple type', () => {
+  it('should create simple type', (): void => {
     expect(createdSimpleType).toBe(NoSimpleType);
   });
 });

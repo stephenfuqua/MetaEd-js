@@ -2,10 +2,10 @@ import R from 'ramda';
 import { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 
-export type InterchangeItemEdfiXsd = {
+export interface InterchangeItemEdfiXsd {
   xsdName: string;
   xsdType: string;
-};
+}
 
 const equalXsdName = R.eqBy(R.path(['data', 'edfiXsd', 'xsdName']));
 const equalXsdType = R.eqBy(R.path(['data', 'edfiXsd', 'xsdType']));
@@ -32,11 +32,11 @@ function addInterchangeItemEdfiXsdToInterchange(interchange: Interchange | Inter
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'interchange') as Array<Interchange>).forEach((interchange: Interchange) => {
+  (getAllEntitiesOfType(metaEd, 'interchange') as Interchange[]).forEach((interchange: Interchange) => {
     addInterchangeItemEdfiXsdToInterchange(interchange);
   });
 
-  (getAllEntitiesOfType(metaEd, 'interchangeExtension') as Array<InterchangeExtension>).forEach(
+  (getAllEntitiesOfType(metaEd, 'interchangeExtension') as InterchangeExtension[]).forEach(
     (interchangeExtension: InterchangeExtension) => {
       addInterchangeItemEdfiXsdToInterchange(interchangeExtension);
     },

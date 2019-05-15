@@ -34,7 +34,7 @@ export const registerPartials = R.once(() => {
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   registerPartials();
-  const generatedOutput: Array<GeneratedOutput> = [];
+  const generatedOutput: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     const xsdRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);

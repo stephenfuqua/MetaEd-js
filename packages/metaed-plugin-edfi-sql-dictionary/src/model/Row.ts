@@ -1,7 +1,7 @@
-export type Row = {
-  header: Array<string>;
-  values: Array<string>;
-};
+export interface Row {
+  header: string[];
+  values: string[];
+}
 
 export function setRow(row: Row, name: string, value: string) {
   row.header.push(name);
@@ -15,7 +15,7 @@ export function newRow(): Row {
   };
 }
 
-export function createRow(row: Row): Object {
+export function createRow(row: Row): Record<string, any> {
   if (row.header.length !== row.values.length) return {};
   const value = {};
   row.values.forEach((col, index) => {

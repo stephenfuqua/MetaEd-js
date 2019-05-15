@@ -12,7 +12,7 @@ import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLevelEntity';
 import { enhance } from '../../../src/enhancer/schema/AddDomainEntitySubclassComplexTypesEnhancer';
 
-describe('when enhancing domainEntity subclass', () => {
+describe('when enhancing domainEntity subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -58,40 +58,40 @@ describe('when enhancing domainEntity subclass', () => {
     createdIdentityType = enhancedItem.data.edfiXsd.xsdIdentityType;
   });
 
-  it('should create complex type', () => {
+  it('should create complex type', (): void => {
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should have annotation documentation assigned', () => {
+  it('should have annotation documentation assigned', (): void => {
     expect(createdComplexType.annotation).toBeDefined();
     expect(createdComplexType.annotation.documentation).toBe(documentation);
   });
 
-  it('should have annotation type group assigned', () => {
+  it('should have annotation type group assigned', (): void => {
     expect(createdComplexType.annotation.typeGroup).toBe('Domain Entity');
   });
 
-  it('should have base type assigned', () => {
+  it('should have base type assigned', (): void => {
     expect(createdComplexType.baseType).toBe(baseTypeName);
   });
 
-  it('should have name assigned', () => {
+  it('should have name assigned', (): void => {
     expect(createdComplexType.name).toBe(complexTypeName);
   });
 
-  it('should not have items', () => {
+  it('should not have items', (): void => {
     expect(createdComplexType.items.length).toBe(0);
   });
 
-  it('should create reference type', () => {
+  it('should create reference type', (): void => {
     expect(createdReferenceType).toBeDefined();
   });
 
-  it('should not create identity type', () => {
+  it('should not create identity type', (): void => {
     expect(createdIdentityType).toBe(NoComplexType);
   });
 
-  it('should not create lookup type', () => {
+  it('should not create lookup type', (): void => {
     expect(createdLookupType).toBe(NoComplexType);
   });
 });

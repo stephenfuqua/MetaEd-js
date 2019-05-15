@@ -11,10 +11,10 @@
 import { MetaEdEnvironment, ValidationFailure, DomainEntitySubclass } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
-  (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as Array<DomainEntitySubclass>).forEach(
+  (getAllEntitiesOfType(metaEd, 'domainEntitySubclass') as DomainEntitySubclass[]).forEach(
     (domainEntitySubclass: DomainEntitySubclass) => {
       if (!domainEntitySubclass.baseEntity) return;
       if (!domainEntitySubclass.namespace.isExtension) return;

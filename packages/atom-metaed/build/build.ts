@@ -17,12 +17,12 @@ const atomScript: string = path.join(atomDirectory, '/resources/cli/atom.cmd');
 const apmScript: string = path.join(atomDirectory, '/resources/app/apm/bin/apm.cmd');
 // const npmScript: string = path.join(atomDirectory, '/resources/app/apm/node_modules/.bin/npm.cmd');
 
-const atomUrl: string = `https://atom.io/download/windows_zip?channel=${atomChannel}`;
+const atomUrl = `https://atom.io/download/windows_zip?channel=${atomChannel}`;
 const atomZip: string = path.join(rootDirectory, '/atom.zip');
 
-const apmTestPackages: Array<string> = [];
+const apmTestPackages: string[] = [];
 
-const execCommand = (command: string, options: Object = {}) =>
+const execCommand = (command: string, options: Record<string, any> = {}) =>
   new Promise(resolve => {
     exec(command, options, (error, stdout) => {
       if (error) {

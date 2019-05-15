@@ -5,7 +5,7 @@ import { enhance } from '../../src/enhancer/BaseDescriptorChangeQueryEnhancer';
 import { metaEdEnvironmentForApiVersion, newCoreNamespace } from './TestHelper';
 import { deleteTrackingTableEntities, deleteTrackingTriggerEntities } from '../../src/enhancer/EnhancerHelper';
 
-describe('when enhancing base descriptor targeting 2.3 ODS/API', () => {
+describe('when enhancing base descriptor targeting 2.3 ODS/API', (): void => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.3.0');
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -17,18 +17,18 @@ describe('when enhancing base descriptor targeting 2.3 ODS/API', () => {
     enhance(metaEd);
   });
 
-  it('should not create delete tracking table', () => {
+  it('should not create delete tracking table', (): void => {
     const deleteTrackingTables = deleteTrackingTableEntities(metaEd, namespace);
     expect(deleteTrackingTables).toHaveLength(0);
   });
 
-  it('should not create delete tracking trigger', () => {
+  it('should not create delete tracking trigger', (): void => {
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(metaEd, namespace);
     expect(deleteTrackingTriggers).toHaveLength(0);
   });
 });
 
-describe('when enhancing base descriptor targeting 2.5 ODS/API', () => {
+describe('when enhancing base descriptor targeting 2.5 ODS/API', (): void => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.5.0');
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -40,18 +40,18 @@ describe('when enhancing base descriptor targeting 2.5 ODS/API', () => {
     enhance(metaEd);
   });
 
-  it('should not create delete tracking table', () => {
+  it('should not create delete tracking table', (): void => {
     const deleteTrackingTables = deleteTrackingTableEntities(metaEd, namespace);
     expect(deleteTrackingTables).toHaveLength(0);
   });
 
-  it('should not create delete tracking trigger', () => {
+  it('should not create delete tracking trigger', (): void => {
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(metaEd, namespace);
     expect(deleteTrackingTriggers).toHaveLength(0);
   });
 });
 
-describe('when enhancing base descriptor targeting 3.1 ODS/API', () => {
+describe('when enhancing base descriptor targeting 3.1 ODS/API', (): void => {
   const schema = 'edfi';
   const tableName = 'Descriptor';
   const pkColumnName = 'DescriptorId';
@@ -67,7 +67,7 @@ describe('when enhancing base descriptor targeting 3.1 ODS/API', () => {
     enhance(metaEd);
   });
 
-  it('should create delete tracking table', () => {
+  it('should create delete tracking table', (): void => {
     const deleteTrackingTables = deleteTrackingTableEntities(metaEd, namespace);
     expect(deleteTrackingTables).toHaveLength(1);
     expect(deleteTrackingTables[0].schema).toBe('changes');
@@ -81,7 +81,7 @@ describe('when enhancing base descriptor targeting 3.1 ODS/API', () => {
     expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe('ChangeVersion');
   });
 
-  it('should create delete tracking trigger', () => {
+  it('should create delete tracking trigger', (): void => {
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(metaEd, namespace);
     expect(deleteTrackingTriggers).toHaveLength(1);
     expect(deleteTrackingTriggers[0].triggerSchema).toBe(schema);

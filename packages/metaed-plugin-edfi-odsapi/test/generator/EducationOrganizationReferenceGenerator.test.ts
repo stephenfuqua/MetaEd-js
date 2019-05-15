@@ -4,7 +4,7 @@ import { newEducationOrganizationReference } from '../../src/model/educationOrga
 import { EducationOrganizationReference } from '../../src/model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 import { generate } from '../../src/generator/educationOrganizationReferenceMetadata/EducationOrganizationReferenceMetadataGenerator';
 
-describe('when generating education organization reference for core', () => {
+describe('when generating education organization reference for core', (): void => {
   let result = '';
 
   beforeAll(async () => {
@@ -29,12 +29,12 @@ describe('when generating education organization reference for core', () => {
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate education organization reference element', () => {
+  it('should generate education organization reference element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating education organization reference for extension', () => {
+describe('when generating education organization reference for extension', (): void => {
   let result = '';
 
   beforeAll(async () => {
@@ -61,12 +61,12 @@ describe('when generating education organization reference for extension', () =>
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
-  it('should generate education organization reference element', () => {
+  it('should generate education organization reference element', (): void => {
     expect(result).toMatchSnapshot();
   });
 });
 
-describe('when generating education organization reference for both core and extensions', () => {
+describe('when generating education organization reference for both core and extensions', (): void => {
   let coreResult = '';
   let extensionResult = '';
 
@@ -110,16 +110,16 @@ describe('when generating education organization reference for both core and ext
     extensionResult = generatedResult.generatedOutput[1].resultString;
   });
 
-  it('should generate core education organization reference element', () => {
+  it('should generate core education organization reference element', (): void => {
     expect(coreResult).toMatchSnapshot();
   });
 
-  it('should generate extension education organization reference element', () => {
+  it('should generate extension education organization reference element', (): void => {
     expect(extensionResult).toMatchSnapshot();
   });
 });
 
-describe('when generating education organization reference for both core and empty extension', () => {
+describe('when generating education organization reference for both core and empty extension', (): void => {
   let coreResult = '';
 
   beforeAll(async () => {
@@ -157,7 +157,7 @@ describe('when generating education organization reference for both core and emp
     coreResult = generatedResult.generatedOutput[0].resultString;
   });
 
-  it('should only generate core education organization reference element', () => {
+  it('should only generate core education organization reference element', (): void => {
     expect(coreResult).toMatchSnapshot();
   });
 });

@@ -3,7 +3,7 @@ import { Column } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from '../../../src/enhancer/apiModel/BuildApiProperty';
 import { ApiProperty } from '../../../src/model/apiModel/ApiProperty';
 
-describe('when building an api property from a not null integer column', () => {
+describe('when building an api property from a not null integer column', (): void => {
   const name = 'Name';
   const description = 'Description';
   const column: Column = {
@@ -15,7 +15,7 @@ describe('when building an api property from a not null integer column', () => {
 
   const apiProperty: ApiProperty = buildApiProperty(column);
 
-  it('should have correct api property', () => {
+  it('should have correct api property', (): void => {
     expect(apiProperty.propertyName).toBe(name);
     expect(apiProperty.description).toBe(description);
     expect(apiProperty.propertyType.dbType).toBe('Int32');
@@ -25,7 +25,7 @@ describe('when building an api property from a not null integer column', () => {
   });
 });
 
-describe('when building an api property from a nullable string column', () => {
+describe('when building an api property from a nullable string column', (): void => {
   const name = 'Name';
   const description = 'Description';
   const column: Column = {
@@ -37,7 +37,7 @@ describe('when building an api property from a nullable string column', () => {
 
   const apiProperty: ApiProperty = buildApiProperty(column);
 
-  it('should have correct api property', () => {
+  it('should have correct api property', (): void => {
     expect(apiProperty.propertyName).toBe(name);
     expect(apiProperty.description).toBe(description);
     expect(apiProperty.propertyType.dbType).toBe('String');
@@ -48,7 +48,7 @@ describe('when building an api property from a nullable string column', () => {
   });
 });
 
-describe('when building an api property from a decimal primary key column', () => {
+describe('when building an api property from a decimal primary key column', (): void => {
   const name = 'Name';
   const description = 'Description';
   const column: Column = {
@@ -60,7 +60,7 @@ describe('when building an api property from a decimal primary key column', () =
 
   const apiProperty: ApiProperty = buildApiProperty(column);
 
-  it('should have correct api property', () => {
+  it('should have correct api property', (): void => {
     expect(apiProperty.propertyName).toBe(name);
     expect(apiProperty.description).toBe(description);
     expect(apiProperty.propertyType.dbType).toBe('Decimal');
@@ -72,7 +72,7 @@ describe('when building an api property from a decimal primary key column', () =
   });
 });
 
-describe('when building an api property from an identity integer column', () => {
+describe('when building an api property from an identity integer column', (): void => {
   const name = 'Name';
   const description = 'Description';
   const column: Column = {
@@ -84,7 +84,7 @@ describe('when building an api property from an identity integer column', () => 
 
   const apiProperty: ApiProperty = buildApiProperty(column);
 
-  it('should have correct api property', () => {
+  it('should have correct api property', (): void => {
     expect(apiProperty.propertyName).toBe(name);
     expect(apiProperty.description).toBe(description);
     expect(apiProperty.propertyType.dbType).toBe('Int32');

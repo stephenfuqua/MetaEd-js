@@ -12,10 +12,7 @@ import {
 
 const enhancerName = 'MergedInterchangeElementOrderEnhancer';
 
-function orderExtensionElements(
-  coreInterchanges: Array<MergedInterchange>,
-  extensionInterchanges: Array<MergedInterchange>,
-) {
+function orderExtensionElements(coreInterchanges: MergedInterchange[], extensionInterchanges: MergedInterchange[]) {
   extensionInterchanges.forEach(extension => {
     const initialExtensionElements = combinedElementsAndIdentityTemplatesFor(extension);
     const matchingCoreInterchange = R.find(R.eqProps('metaEdName', extension), coreInterchanges);
@@ -46,7 +43,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreXsdRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
   if (coreXsdRepository == null) return { enhancerName, success: false };
 
-  const coreInterchanges: Array<MergedInterchange> = [...coreXsdRepository.mergedInterchange.values()];
+  const coreInterchanges: MergedInterchange[] = [...coreXsdRepository.mergedInterchange.values()];
   coreInterchanges.forEach((coreInterchange: MergedInterchange) => {
     coreInterchange.orderedElements = combinedElementsAndIdentityTemplatesFor(coreInterchange);
   });

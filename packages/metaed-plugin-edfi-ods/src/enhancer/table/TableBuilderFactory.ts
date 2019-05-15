@@ -11,9 +11,9 @@ import { referencePropertyTableBuilder } from './ReferencePropertyTableBuilder';
 import { simplePropertyTableBuilder } from './SimplePropertyTableBuilder';
 import { TableBuilder, nullTableBuilder } from './TableBuilder';
 
-export type TableBuilderFactory = {
+export interface TableBuilderFactory {
   tableBuilderFor(property: EntityProperty): TableBuilder;
-};
+}
 
 export const tableBuilderFactory: TableBuilderFactory = {
   tableBuilderFor: (property: EntityProperty): TableBuilder => {

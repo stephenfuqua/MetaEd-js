@@ -9,7 +9,7 @@ import { deriveNamespaceFromProjectName } from './ProjectTypes';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
-function findDirectories(directory: string): Array<string> {
+function findDirectories(directory: string): string[] {
   try {
     return klawSync(directory, { nofile: true }).map(x => x.path);
   } catch (err) {
@@ -18,11 +18,11 @@ function findDirectories(directory: string): Array<string> {
   return [];
 }
 
-async function findProjects(directories: string | Array<string>): Promise<Array<MetaEdProjectPathPairs>> {
+async function findProjects(directories: string | string[]): Promise<MetaEdProjectPathPairs[]> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
-  const projects: Array<MetaEdProjectPathPairs> = [];
+  const projects: MetaEdProjectPathPairs[] = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const directory of directories) {
     const packageToTry: string = path.join(directory, 'package.json');
@@ -46,10 +46,7 @@ async function findProjects(directories: string | Array<string>): Promise<Array<
   return projects;
 }
 
-export function overrideProjectNameAndNamespace(
-  projects: Array<MetaEdProjectPathPairs>,
-  projectNameOverrides: Array<string>,
-) {
+export function overrideProjectNameAndNamespace(projects: MetaEdProjectPathPairs[], projectNameOverrides: string[]) {
   if (projectNameOverrides == null) return projects;
   if (projectNameOverrides.length > projects.length) return projects;
 
@@ -68,25 +65,25 @@ export function overrideProjectNameAndNamespace(
 
 // Scans the immediate directory then subdirectories for package.json with metaEdProject property
 export async function scanForProjects(
-  directories: string | Array<string>,
-  projectNameOverrides: Array<string>,
-): Promise<Array<MetaEdProjectPathPairs>> {
+  directories: string | string[],
+  projectNameOverrides: string[],
+): Promise<MetaEdProjectPathPairs[]> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
-  const projects: Array<MetaEdProjectPathPairs> = [];
+  const projects: MetaEdProjectPathPairs[] = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const directory of directories) {
     projects.push(...(await findProjects(directory)));
 
     if (projects.length === 0) {
-      const subdirectories: Array<string> = findDirectories(directory);
+      const subdirectories: string[] = findDirectories(directory);
 
       if (subdirectories) projects.push(...(await findProjects(subdirectories)));
     }
   }
 
-  const projectNameOverrideProjects: Array<MetaEdProjectPathPairs> = overrideProjectNameAndNamespace(
+  const projectNameOverrideProjects: MetaEdProjectPathPairs[] = overrideProjectNameAndNamespace(
     projects,
     projectNameOverrides,
   );

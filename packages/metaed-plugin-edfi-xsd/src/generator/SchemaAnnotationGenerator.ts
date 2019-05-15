@@ -3,9 +3,9 @@ import { getAllEntitiesOfType, orderByProp } from 'metaed-core';
 import { formatAndPrependHeader, template } from './XsdGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
-  const descriptors: Array<{ name: string }> = orderByProp('name')(
+  const descriptors: { name: string }[] = orderByProp('name')(
     getAllEntitiesOfType(metaEd, 'descriptor').map(x => ({ name: x.data.edfiXsd.xsdDescriptorName })),
   );
   const formattedGeneratedResult = formatAndPrependHeader(template().schemaAnnotation({ descriptors }));

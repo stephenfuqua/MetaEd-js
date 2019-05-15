@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
-const differOnlyInCaseFunction = (name: string, index: number, array: Array<string>) => {
+const differOnlyInCaseFunction = (name: string, index: number, array: string[]) => {
   const found: string | undefined = array.find(
     (nameInFind: string, indexInFind: number) =>
       indexInFind !== index && nameInFind !== name && nameInFind.toLowerCase() === name.toLowerCase(),
@@ -8,10 +8,10 @@ const differOnlyInCaseFunction = (name: string, index: number, array: Array<stri
   return found != null;
 };
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
-  const namespaceNames: Array<string> = Array.from(metaEd.namespace.keys());
-  const duplicateNames: Array<string> = Array.from(namespaceNames.filter(differOnlyInCaseFunction));
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
+  const namespaceNames: string[] = Array.from(metaEd.namespace.keys());
+  const duplicateNames: string[] = Array.from(namespaceNames.filter(differOnlyInCaseFunction));
 
   duplicateNames.forEach(duplicateName => {
     failures.push({

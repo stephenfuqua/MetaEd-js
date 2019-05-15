@@ -12,7 +12,7 @@ import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 
 const enhancerName = 'MergeDirectiveEnhancer';
 
-const referenceTypes: Array<PropertyType> = [
+const referenceTypes: PropertyType[] = [
   'association',
   'choice',
   'common',
@@ -29,8 +29,8 @@ const referenceTypes: Array<PropertyType> = [
 
 function findProperty(
   entity: TopLevelEntity,
-  pathStrings: Array<string>,
-  propertyChainAccumulator: Array<EntityProperty>,
+  pathStrings: string[],
+  propertyChainAccumulator: EntityProperty[],
 ): EntityProperty | null {
   const propertyName: string | undefined = pathStrings.pop();
   if (propertyName == null) return null;
@@ -79,8 +79,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .filter(x => !R.isEmpty(x.mergeDirectives))
     .forEach(property => {
       property.mergeDirectives.forEach(mergeDirective => {
-        const sourcePropertyChain: Array<EntityProperty> = [];
-        const targetPropertyChain: Array<EntityProperty> = [];
+        const sourcePropertyChain: EntityProperty[] = [];
+        const targetPropertyChain: EntityProperty[] = [];
 
         mergeDirective.sourceProperty = findProperty(
           property.parentEntity,

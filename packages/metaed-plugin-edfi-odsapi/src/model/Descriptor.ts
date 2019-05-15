@@ -3,9 +3,9 @@ import { getAllEntitiesOfType } from 'metaed-core';
 import { NoAggregate } from './domainMetadata/Aggregate';
 import { Aggregate } from './domainMetadata/Aggregate';
 
-export type DescriptorEdfiOdsApi = {
+export interface DescriptorEdfiOdsApi {
   typeAggregate: Aggregate;
-};
+}
 
 const enhancerName = 'DescriptorSetupEnhancer';
 
@@ -18,7 +18,7 @@ export function addDescriptorEdfiOdsApiTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'descriptor') as Array<Descriptor>).forEach((descriptor: Descriptor) => {
+  (getAllEntitiesOfType(metaEd, 'descriptor') as Descriptor[]).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiOdsApiTo(descriptor);
   });
 

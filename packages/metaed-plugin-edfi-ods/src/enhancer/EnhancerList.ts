@@ -63,7 +63,7 @@ import { enhance as removeGradingPeriodRoleNameFromSchoolIdOnReportCardAndReport
 import { enhance as removeGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase } from '../diminisher/RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
 import { enhance as removeStartTimeFromPkOfInterventionMeetingTimeDiminisher } from '../diminisher/RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher';
 
-export function enhancerList(): Array<Enhancer> {
+export function enhancerList(): Enhancer[] {
   return [
     // Property Collection Cloning Phase
     edFiOdsEntityRepository,

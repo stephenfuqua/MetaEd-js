@@ -6,7 +6,7 @@ import { ColumnCreator } from './ColumnCreator';
 
 export function schoolYearEnumerationPropertyColumnCreator(): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => {
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
       const column: Column = Object.assign(newShortColumn(), {
         name: `${strategy.parentContext()}${property.data.edfiOds.odsContextPrefix}SchoolYear`,
         description: property.documentation,

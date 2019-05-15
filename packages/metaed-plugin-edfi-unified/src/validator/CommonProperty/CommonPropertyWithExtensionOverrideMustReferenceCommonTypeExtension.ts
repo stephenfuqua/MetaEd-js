@@ -1,8 +1,8 @@
 import { MetaEdEnvironment, ValidationFailure, CommonPropertySourceMap, ModelBase } from 'metaed-core';
 import { getEntityFromNamespaceChain } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.propertyIndex.common.forEach(property => {
     if (!property.isExtensionOverride) return;

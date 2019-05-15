@@ -16,7 +16,7 @@ import {
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
 
-describe('when enhancing interchange in core', () => {
+describe('when enhancing interchange in core', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -68,7 +68,7 @@ describe('when enhancing interchange in core', () => {
     enhance(metaEd);
   });
 
-  it('should have references for all entities', () => {
+  it('should have references for all entities', (): void => {
     const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
     expect(interchange.elements[0].referencedEntity).toBe(domainEntity1);
     expect(interchange.elements[1].referencedEntity).toBe(domainEntitySubclass1);
@@ -84,7 +84,7 @@ describe('when enhancing interchange in core', () => {
   });
 });
 
-describe('when enhancing interchange extension', () => {
+describe('when enhancing interchange extension', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -134,7 +134,7 @@ describe('when enhancing interchange extension', () => {
     enhance(metaEd);
   });
 
-  it('should have references for all entities', () => {
+  it('should have references for all entities', (): void => {
     const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
     expect(interchange.elements[0].referencedEntity).toBe(domainEntity);
 

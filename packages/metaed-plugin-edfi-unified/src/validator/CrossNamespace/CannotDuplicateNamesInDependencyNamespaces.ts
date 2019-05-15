@@ -1,13 +1,13 @@
 import { ModelType, MetaEdEnvironment, Namespace, ValidationFailure, ModelBase, TopLevelEntity } from 'metaed-core';
 import { allEntityModelTypesNoSimpleTypes, asTopLevelEntity } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.dependencies.forEach((dependency: Namespace) => {
       allEntityModelTypesNoSimpleTypes.forEach((modelType: ModelType) => {
-        const entitiesInModelType: Array<ModelBase> = Array.from(namespace.entity[modelType].values());
+        const entitiesInModelType: ModelBase[] = Array.from(namespace.entity[modelType].values());
         entitiesInModelType.forEach((entityInModelType: ModelBase) => {
           if (dependency.entity[modelType].has(entityInModelType.metaEdName)) {
             const entityWithDuplicateName: TopLevelEntity = asTopLevelEntity(entityInModelType);

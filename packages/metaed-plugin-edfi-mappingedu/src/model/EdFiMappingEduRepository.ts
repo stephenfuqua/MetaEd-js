@@ -7,10 +7,10 @@ import { ElementDefinition } from './ElementDefinition';
 import { EnumerationDefinition } from './EnumerationDefinition';
 import { EnumerationItemDefinition } from './EnumerationItemDefinition';
 
-const enhancerName: string = 'EdFiMappingEduRepositorySetupEnhancer';
-const shortName: string = 'edfiMappingedu';
+const enhancerName = 'EdFiMappingEduRepositorySetupEnhancer';
+const shortName = 'edfiMappingedu';
 
-export type xsdElementRepository = {
+export interface xsdElementRepository {
   association: Map<string, ComplexType>;
   common: Map<string, ComplexType>;
   base: Map<string, ComplexType>;
@@ -22,16 +22,16 @@ export type xsdElementRepository = {
   identity: Map<string, ComplexType>;
   lookup: Map<string, ComplexType>;
   simple: Map<string, SimpleType>;
-};
+}
 
-export type EdFiMappingEduRepository = {
+export interface EdFiMappingEduRepository {
   xsdElement: xsdElementRepository;
-  elementGroupDefinitions: Array<ElementGroupDefinition>;
-  entityDefinitions: Array<EntityDefinition>;
-  elementDefinitions: Array<ElementDefinition>;
-  enumerationDefinitions: Array<EnumerationDefinition>;
-  enumerationItemDefinitions: Array<EnumerationItemDefinition>;
-};
+  elementGroupDefinitions: ElementGroupDefinition[];
+  entityDefinitions: EntityDefinition[];
+  elementDefinitions: ElementDefinition[];
+  enumerationDefinitions: EnumerationDefinition[];
+  enumerationItemDefinitions: EnumerationItemDefinition[];
+}
 
 export const newXsdElementRepository = (): xsdElementRepository => ({
   association: new Map(),

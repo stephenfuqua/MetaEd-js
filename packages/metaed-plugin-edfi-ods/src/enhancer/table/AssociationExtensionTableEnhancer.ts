@@ -27,7 +27,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'associationExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
-      const tables: Array<Table> = [];
+      const tables: Table[] = [];
       const mainTable: Table = Object.assign(newTable(), {
         namespace: entity.namespace,
         schema: entity.namespace.namespaceName.toLowerCase(),
@@ -52,7 +52,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         tables.push(mainTable);
       }
 
-      const primaryKeys: Array<Column> = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+      const primaryKeys: Column[] = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
 
       entity.data.edfiOds.odsProperties.forEach((property: EntityProperty) => {
         const tableStrategy: TableStrategy = TableStrategy.extension(

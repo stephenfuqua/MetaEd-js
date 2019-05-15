@@ -8,11 +8,11 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedStringProperty/SharedStringPropertyMustMatchASharedString';
 
-describe('when shared string property has identifier of shared string', () => {
+describe('when shared string property has identifier of shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -35,16 +35,16 @@ describe('when shared string property has identifier of shared string', () => {
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared string property has identifier of shared string with different local name', () => {
+describe('when shared string property has identifier of shared string with different local name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -67,15 +67,15 @@ describe('when shared string property has identifier of shared string with diffe
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared string property has invalid identifier', () => {
+describe('when shared string property has invalid identifier', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -92,11 +92,11 @@ describe('when shared string property has invalid identifier', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedStringPropertyMustMatchASharedString');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -104,11 +104,11 @@ describe('when shared string property has invalid identifier', () => {
   });
 });
 
-describe('when shared string property has identifier of shared string in dependency namespace', () => {
+describe('when shared string property has identifier of shared string in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -139,16 +139,16 @@ describe('when shared string property has identifier of shared string in depende
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when shared string property has invalid identifier of shared string in dependency namespace', () => {
+describe('when shared string property has invalid identifier of shared string in dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -179,11 +179,11 @@ describe('when shared string property has invalid identifier of shared string in
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedStringPropertyMustMatchASharedString');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
@@ -191,10 +191,10 @@ describe('when shared string property has invalid identifier of shared string in
   });
 });
 
-describe('when shared string property refers to shared string in non-dependency namespace', () => {
+describe('when shared string property refers to shared string in non-dependency namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const sharedName = 'SharedName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -219,11 +219,11 @@ describe('when shared string property refers to shared string in non-dependency 
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
+  it('should have validation failures()', (): void => {
     expect(failures).toHaveLength(1);
   });
 
-  it('should have validation failure for property', () => {
+  it('should have validation failure for property', (): void => {
     expect(failures[0].validatorName).toBe('SharedStringPropertyMustMatchASharedString');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();

@@ -8,11 +8,11 @@ import {
 import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
 
-describe('when a domain entity subclass subclasses EducationOrganization', () => {
+describe('when a domain entity subclass subclasses EducationOrganization', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const baseEntityName = 'EducationOrganization';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -46,16 +46,16 @@ describe('when a domain entity subclass subclasses EducationOrganization', () =>
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when a domain entity subclass subclasses a non-EducationOrganization domain entity', () => {
+describe('when a domain entity subclass subclasses a non-EducationOrganization domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const baseEntityName = 'NotEducationOrganization';
   const subclassName = 'SubclassName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -90,7 +90,7 @@ describe('when a domain entity subclass subclasses a non-EducationOrganization d
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported');
     expect(failures[0].category).toBe('error');

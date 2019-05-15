@@ -7,7 +7,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { Table } from '../../src/model/database/Table';
 
-describe('when generating id indexes for core namespace table with no id', () => {
+describe('when generating id indexes for core namespace table with no id', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -27,13 +27,13 @@ describe('when generating id indexes for core namespace table with no id', () =>
     result = await generate(metaEd);
   });
 
-  it('should not generate id index', () => {
+  it('should not generate id index', (): void => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(result.generatedOutput).toEqual([]);
   });
 });
 
-describe('when generating id indexes for core namespace table with no type', () => {
+describe('when generating id indexes for core namespace table with no type', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -54,7 +54,7 @@ describe('when generating id indexes for core namespace table with no type', () 
     result = await generate(metaEd);
   });
 
-  it('should generate correct id index', () => {
+  it('should generate correct id index', (): void => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-IdColumnUniqueIndexes.sql');
     expect(R.head(result.generatedOutput).namespace).toBe('EdFi');
@@ -66,7 +66,7 @@ describe('when generating id indexes for core namespace table with no type', () 
   });
 });
 
-describe('when generating id indexes for core namespace table with type', () => {
+describe('when generating id indexes for core namespace table with type', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -87,7 +87,7 @@ describe('when generating id indexes for core namespace table with type', () => 
     result = await generate(metaEd);
   });
 
-  it('should generate correct id index', () => {
+  it('should generate correct id index', (): void => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-IdColumnUniqueIndexes.sql');
     expect(R.head(result.generatedOutput).namespace).toBe('EdFi');
@@ -99,7 +99,7 @@ describe('when generating id indexes for core namespace table with type', () => 
   });
 });
 
-describe('when generating id indexes for extension namespace table with no type', () => {
+describe('when generating id indexes for extension namespace table with no type', (): void => {
   let result: GeneratorResult;
 
   beforeAll(async () => {
@@ -125,7 +125,7 @@ describe('when generating id indexes for extension namespace table with no type'
     result = await generate(metaEd);
   });
 
-  it('should generate correct id index', () => {
+  it('should generate correct id index', (): void => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-EXTENSION-Extension-IdColumnUniqueIndexes.sql');
     expect(R.head(result.generatedOutput).namespace).toBe('Extension');

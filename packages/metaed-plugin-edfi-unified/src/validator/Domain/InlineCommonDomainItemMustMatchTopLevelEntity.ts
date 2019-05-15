@@ -11,8 +11,8 @@ function getFailure(domainItem: DomainItem, name: string, failureMessage: string
   };
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.domain.forEach(domain => {
       domain.domainItems.forEach(domainItem => {

@@ -1,9 +1,9 @@
 import { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 
-export type CommonExtensionEdfiOds = {
+export interface CommonExtensionEdfiOds {
   odsExtensionName: string;
-};
+}
 
 const enhancerName = 'OdsCommonExtensionSetupEnhancer';
 
@@ -16,7 +16,7 @@ export function addCommonExtensionEdfiOdsTo(commonExtension: CommonExtension) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'commonExtension') as Array<CommonExtension>).forEach((commonExtension: CommonExtension) => {
+  (getAllEntitiesOfType(metaEd, 'commonExtension') as CommonExtension[]).forEach((commonExtension: CommonExtension) => {
     addCommonExtensionEdfiOdsTo(commonExtension);
   });
 

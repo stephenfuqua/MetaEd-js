@@ -12,7 +12,7 @@ import { generate as InterchangeBriefAsMarkdownGenerator } from '../../src/gener
 import { ReferenceUsageInfo } from '../../src/model/ReferenceUsageInfo';
 import { newReferenceUsageInfo } from '../../src/model/ReferenceUsageInfo';
 
-describe('When generating interchange brief with no extended references or descriptors', () => {
+describe('When generating interchange brief with no extended references or descriptors', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -26,7 +26,7 @@ describe('When generating interchange brief with no extended references or descr
   const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -100,7 +100,7 @@ describe('When generating interchange brief with no extended references or descr
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Should include entities', () => {
+  it('Should include entities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -114,7 +114,7 @@ describe('When generating interchange brief with no extended references or descr
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Should not include extended references', () => {
+  it('Should not include extended references', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain('This interchange contains no external references.');
 
@@ -123,7 +123,7 @@ describe('When generating interchange brief with no extended references or descr
   });
 });
 
-describe('When generating interchange brief with extended documentation', () => {
+describe('When generating interchange brief with extended documentation', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -139,7 +139,7 @@ describe('When generating interchange brief with extended documentation', () => 
   const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -226,7 +226,7 @@ describe('When generating interchange brief with extended documentation', () => 
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Should include entities', () => {
+  it('Should include entities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -241,7 +241,7 @@ describe('When generating interchange brief with extended documentation', () => 
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Should not include extended references', () => {
+  it('Should not include extended references', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain('This interchange contains no external references.');
 
@@ -250,7 +250,7 @@ describe('When generating interchange brief with extended documentation', () => 
   });
 });
 
-describe('When generating interchange brief with use case documentation', () => {
+describe('When generating interchange brief with use case documentation', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -266,7 +266,7 @@ describe('When generating interchange brief with use case documentation', () => 
   const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -341,7 +341,7 @@ describe('When generating interchange brief with use case documentation', () => 
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Should include entities', () => {
+  it('Should include entities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -356,7 +356,7 @@ describe('When generating interchange brief with use case documentation', () => 
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Should not include extended references', () => {
+  it('Should not include extended references', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain('This interchange contains no external references.');
 
@@ -365,7 +365,7 @@ describe('When generating interchange brief with use case documentation', () => 
   });
 });
 
-describe('When generating interchange brief with extended and use case documentation', () => {
+describe('When generating interchange brief with extended and use case documentation', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -382,7 +382,7 @@ describe('When generating interchange brief with extended and use case documenta
   const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -458,7 +458,7 @@ describe('When generating interchange brief with extended and use case documenta
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Shouldincludeentities', () => {
+  it('Shouldincludeentities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -474,7 +474,7 @@ describe('When generating interchange brief with extended and use case documenta
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Shouldnotincludeextendedreferences', () => {
+  it('Shouldnotincludeextendedreferences', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain('This interchange contains no external references.');
 
@@ -483,7 +483,7 @@ describe('When generating interchange brief with extended and use case documenta
   });
 });
 
-describe('When generating interchange brief with extended references', () => {
+describe('When generating interchange brief with extended references', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -507,7 +507,7 @@ describe('When generating interchange brief with extended references', () => {
   const referenceUsage3Description = 'Reference Usage 3 Description';
   const referenceUsage4Description = 'Reference Usage 4 Description';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -604,7 +604,7 @@ describe('When generating interchange brief with extended references', () => {
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Shouldincludeentities', () => {
+  it('Shouldincludeentities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -618,7 +618,7 @@ describe('When generating interchange brief with extended references', () => {
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Should include extended references', () => {
+  it('Should include extended references', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain(referenceUsage1Name);
     expect(generatedResults[0].resultString).toContain(referenceUsage2Name);
@@ -633,7 +633,7 @@ describe('When generating interchange brief with extended references', () => {
   });
 });
 
-describe('When generating interchange brief with descriptors', () => {
+describe('When generating interchange brief with descriptors', (): void => {
   const interchange1metaEdName = 'Interchange1metaEdName';
   const interchange2metaEdName = 'Interchange2metaEdName';
   const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
@@ -657,7 +657,7 @@ describe('When generating interchange brief with descriptors', () => {
   const referenceUsage3Description = 'Reference Usage 3 Description';
   const referenceUsage4Description = 'Reference Usage 4 Description';
 
-  let generatedResults: Array<GeneratedOutput>;
+  let generatedResults: GeneratedOutput[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -754,7 +754,7 @@ describe('When generating interchange brief with descriptors', () => {
     generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
-  it('Should include entities', () => {
+  it('Should include entities', (): void => {
     expect(generatedResults.length).toBe(3);
 
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
@@ -768,7 +768,7 @@ describe('When generating interchange brief with descriptors', () => {
     expect(generatedResults[1].resultString).toContain(domainEntity4Documentation);
   });
 
-  it('Should not include extended references', () => {
+  it('Should not include extended references', (): void => {
     expect(generatedResults[0].resultString).toContain('Extended References');
     expect(generatedResults[0].resultString).toContain('This interchange contains no external references.');
 
@@ -776,7 +776,7 @@ describe('When generating interchange brief with descriptors', () => {
     expect(generatedResults[1].resultString).toContain('This interchange contains no external references.');
   });
 
-  it('Should include descriptor dependencies', () => {
+  it('Should include descriptor dependencies', (): void => {
     expect(generatedResults[0].resultString).toContain('Descriptor Dependencies');
     expect(generatedResults[0].resultString).toContain(referenceUsage1Name);
     expect(generatedResults[0].resultString).toContain(referenceUsage2Name);

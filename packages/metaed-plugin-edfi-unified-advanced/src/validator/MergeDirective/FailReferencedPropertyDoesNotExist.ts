@@ -11,10 +11,10 @@ export function failReferencedPropertyDoesNotExist(
   validatorName: string,
   namespace: Namespace,
   entity: ModelBase,
-  propertyPath: Array<string>,
+  propertyPath: string[],
   pairedMergePropertyName: string,
   sourceMap: SourceMap,
-  failures: Array<ValidationFailure>,
+  failures: ValidationFailure[],
 ) {
   const matchingProperty = findReferencedProperty(namespace, entity, [pairedMergePropertyName], matchAll());
   if (!matchingProperty) return;

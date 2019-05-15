@@ -5,12 +5,12 @@ import { DeleteTrackingTrigger } from './DeleteTrackingTrigger';
 import { AddColumnChangeVersionForTable } from './AddColumnChangeVersionForTable';
 import { CreateTriggerUpdateChangeVersion } from './CreateTriggerUpdateChangeVersion';
 
-export type EdFiOdsChangeQueryEntityRepository = {
-  deleteTrackingTable: Array<DeleteTrackingTable>;
-  deleteTrackingTrigger: Array<DeleteTrackingTrigger>;
-  addColumnChangeVersionForTable: Array<AddColumnChangeVersionForTable>;
-  createTriggerUpdateChangeVersion: Array<CreateTriggerUpdateChangeVersion>;
-};
+export interface EdFiOdsChangeQueryEntityRepository {
+  deleteTrackingTable: DeleteTrackingTable[];
+  deleteTrackingTrigger: DeleteTrackingTrigger[];
+  addColumnChangeVersionForTable: AddColumnChangeVersionForTable[];
+  createTriggerUpdateChangeVersion: CreateTriggerUpdateChangeVersion[];
+}
 
 const enhancerName = 'EdFiOdsChangeQueryEntityRepositorySetupEnhancer';
 

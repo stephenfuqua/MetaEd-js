@@ -10,7 +10,7 @@ export class TableStrategy {
 
   name: string;
 
-  nameComponents: Array<string>;
+  nameComponents: string[];
 
   constructor(table: Table) {
     this.table = table;
@@ -29,7 +29,7 @@ export class TableStrategy {
     baseSchemaName: string,
     baseSchemaNamespace: Namespace,
     baseTableName: string,
-    baseTableNameComponents: Array<string>,
+    baseTableNameComponents: string[],
   ) {
     // eslint-disable-next-line no-use-before-define
     return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableName, baseTableNameComponents);
@@ -42,7 +42,7 @@ class ExtensionTableStrategy extends TableStrategy {
     baseSchemaName: string,
     baseSchemaNamespace: Namespace,
     baseTableName: string,
-    baseTableNameComponents: Array<string>,
+    baseTableNameComponents: string[],
   ) {
     super(table);
     this.schema = baseSchemaName;

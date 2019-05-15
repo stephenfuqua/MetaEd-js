@@ -10,7 +10,7 @@ import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelE
 import { enhance as copyPropertiesEnhance } from '../../src/enhancer/CopyPropertiesEnhancer';
 import { enhance } from '../../src/enhancer/SubclassIdentityEnhancer';
 
-describe('when enhancing association subclass without identity renames', () => {
+describe('when enhancing association subclass without identity renames', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -61,23 +61,23 @@ describe('when enhancing association subclass without identity renames', () => {
     enhance(metaEd);
   });
 
-  it('should add base identity property to subclass primary key list', () => {
+  it('should add base identity property to subclass primary key list', (): void => {
     const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsdIdentityProperties).toContain(baseIdentityProperty);
   });
 
-  it('should still have original identity', () => {
+  it('should still have original identity', (): void => {
     const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsdIdentityProperties).toContain(subclassIdentityProperty);
   });
 
-  it('should not have base identity in properties', () => {
+  it('should not have base identity in properties', (): void => {
     const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsdProperties).not.toContain(baseIdentityProperty);
   });
 });
 
-describe('when enhancing association subclass with identity renames', () => {
+describe('when enhancing association subclass with identity renames', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -137,7 +137,7 @@ describe('when enhancing association subclass with identity renames', () => {
     enhance(metaEd);
   });
 
-  it('should not add renamed identity property to subclass', () => {
+  it('should not add renamed identity property to subclass', (): void => {
     const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsdIdentityProperties).not.toContain(baseIdentityProperty);
   });

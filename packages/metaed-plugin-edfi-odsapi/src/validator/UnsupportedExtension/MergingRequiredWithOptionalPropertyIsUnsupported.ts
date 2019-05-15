@@ -11,11 +11,11 @@ import {
 } from 'metaed-core';
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
-type PropertyCollectorArray = Array<{
+type PropertyCollectorArray = {
   roleName: string;
   isOptional: boolean;
   property: EntityProperty;
-}>;
+}[];
 
 const validatorName = 'MergingRequiredWithOptionalPropertyIsUnsupported';
 const targetTechnologyVersion: SemVer = V2Only;
@@ -27,19 +27,19 @@ function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   );
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   getAllTopLevelEntitiesForNamespaces([...metaEd.namespace.values()])
     .map((entity: ModelBase) => asTopLevelEntity(entity))
     .forEach((entity: TopLevelEntity) => {
       const result: {
-        referencedEntities: Array<{
+        referencedEntities: {
           roleName: string;
           isOptional: boolean;
           entity: TopLevelEntity;
-        }>;
+        }[];
         properties: PropertyCollectorArray;
       } = collectSingleEntity(
         entity,
@@ -81,7 +81,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         }
       });
 
-      const requiredPropertiesNames: Array<string> = requiredProperties.map(
+      const requiredPropertiesNames: string[] = requiredProperties.map(
         x => x.roleName + x.property.roleName + x.property.metaEdName,
       );
       const duplicateProperties: PropertyCollectorArray = optionalProperties.filter(x =>

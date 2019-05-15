@@ -4,15 +4,15 @@ import path from 'path';
 import { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import { edfiXsdRepositoryForNamespace, EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
 
-type SvgElement = {
+interface SvgElement {
   name: string;
-  children?: Array<SvgElement>;
-};
+  children?: SvgElement[];
+}
 
-const generatorName: string = 'InterchangeBriefImageGenerator';
+const generatorName = 'InterchangeBriefImageGenerator';
 
-function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
-  const result: Array<SvgElement> = [];
+function getModel(metaEd: MetaEdEnvironment): SvgElement[] {
+  const result: SvgElement[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     const xsdRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
@@ -42,8 +42,8 @@ function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
 // This generator returns a Promise<GeneratorResult>
 // instead of the expected GeneratorResult because it's waiting on phantom to finish.
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const generatedOutput: Array<GeneratedOutput> = [];
-  const allInterchangeModels: Array<SvgElement> = getModel(metaEd);
+  const generatedOutput: GeneratedOutput[] = [];
+  const allInterchangeModels: SvgElement[] = getModel(metaEd);
   await Promise.all(
     allInterchangeModels.map(async interchange =>
       new Horseman({ phantomPath })

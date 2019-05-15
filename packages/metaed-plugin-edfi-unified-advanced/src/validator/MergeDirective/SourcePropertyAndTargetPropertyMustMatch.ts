@@ -9,7 +9,7 @@ import {
   TopLevelEntity,
 } from 'metaed-core';
 
-const validPropertyTypes: Array<PropertyType> = [
+const validPropertyTypes: PropertyType[] = [
   'association',
   'choice',
   'common',
@@ -24,7 +24,7 @@ const validPropertyTypes: Array<PropertyType> = [
   'sharedString',
 ];
 
-function ancestors(entity: TopLevelEntity, accumulator: Array<TopLevelEntity>): Array<TopLevelEntity> {
+function ancestors(entity: TopLevelEntity, accumulator: TopLevelEntity[]): TopLevelEntity[] {
   if (entity.baseEntity == null) return accumulator;
   accumulator.push(entity.baseEntity);
   return ancestors(entity.baseEntity, accumulator);
@@ -36,8 +36,8 @@ function hasCommonSuperClass(entity1: TopLevelEntity, entity2: TopLevelEntity): 
   return false;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     if (!isReferentialProperty(property)) return;

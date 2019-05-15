@@ -2,7 +2,7 @@ import { newAssociationExtension, newNamespace, newMetaEdEnvironment } from 'met
 import { AssociationExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/AssociationExtension';
 
-describe('when AssociationExtension enhances association extension entity', () => {
+describe('when AssociationExtension enhances association extension entity', (): void => {
   const associationExtensionName = 'AssociationExtensionName';
   const extensionEntitySuffix = 'Extension';
   let associationExtension: AssociationExtension;
@@ -19,7 +19,7 @@ describe('when AssociationExtension enhances association extension entity', () =
     enhance(metaEd);
   });
 
-  it('should have ods extension name with extension entity suffix', () => {
+  it('should have ods extension name with extension entity suffix', (): void => {
     expect(associationExtension.data.edfiOds.odsExtensionName).toBe(associationExtensionName + extensionEntitySuffix);
   });
 });

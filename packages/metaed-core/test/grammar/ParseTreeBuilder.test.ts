@@ -2,8 +2,8 @@ import { MetaEdErrorListener } from '../../src/grammar/MetaEdErrorListener';
 import { buildTopLevelEntity, buildMetaEd } from '../../src/grammar/ParseTreeBuilder';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when parsing top level entities', () => {
-  it('should parse with valid MetaEd', () => {
+describe('when parsing top level entities', (): void => {
+  it('should parse with valid MetaEd', (): void => {
     const inputText = [
       'Domain Entity TestEntity',
       'documentation "This is the first line\nThis is more..."',
@@ -12,13 +12,13 @@ describe('when parsing top level entities', () => {
       '        is part of identity\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should not parse with extraneous xyz', () => {
+  it('should not parse with extraneous xyz', (): void => {
     const inputText = [
       'Domain Entity TestEntity',
       'documentation "This is the first line\nThis is more..."',
@@ -27,14 +27,14 @@ describe('when parsing top level entities', () => {
       '        is part of identity\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('should not parse with multiple keyword syntax errors', () => {
+  it('should not parse with multiple keyword syntax errors', (): void => {
     const inputText = [
       'Domain Entity Staff additions\n',
       'descriptor EducatorEffectiveness\n',
@@ -54,14 +54,14 @@ describe('when parsing top level entities', () => {
       'is optional collection\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('another example', () => {
+  it('another example', (): void => {
     const inputText = [
       'Domain Entity Staff additions\n',
       'descriptor EducatorEffectiveness\n',
@@ -72,14 +72,14 @@ describe('when parsing top level entities', () => {
       'is optional collection\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('and another example', () => {
+  it('and another example', (): void => {
     const inputText = [
       'Domain Entity Staff\n',
       'documentation "Something"\n',
@@ -91,14 +91,14 @@ describe('when parsing top level entities', () => {
       'is optional collection\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('one more example', () => {
+  it('one more example', (): void => {
     const inputText = [
       'Domain Entity Staff\n',
       'documentation "Something"\n',
@@ -110,7 +110,7 @@ describe('when parsing top level entities', () => {
       'is optional collection\n',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
@@ -118,8 +118,8 @@ describe('when parsing top level entities', () => {
   });
 });
 
-describe('when parsing full MetaEd', () => {
-  it('should parse with valid MetaEd', () => {
+describe('when parsing full MetaEd', (): void => {
+  it('should parse with valid MetaEd', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity TestEntity',
@@ -130,13 +130,13 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should not parse with extraneous xyz', () => {
+  it('should not parse with extraneous xyz', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity TestEntity',
@@ -147,14 +147,14 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('should not parse with multiple keyword syntax errors', () => {
+  it('should not parse with multiple keyword syntax errors', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff additions\n',
@@ -176,14 +176,14 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('another example', () => {
+  it('another example', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff additions\n',
@@ -196,14 +196,14 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('and another example', () => {
+  it('and another example', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff\n',
@@ -217,14 +217,14 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures).toMatchSnapshot();
   });
 
-  it('one more example', () => {
+  it('one more example', (): void => {
     const inputText = [
       'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff\n',
@@ -238,7 +238,7 @@ describe('when parsing full MetaEd', () => {
       'End Namespace',
     ].join('\n');
 
-    const validationFailures: Array<ValidationFailure> = [];
+    const validationFailures: ValidationFailure[] = [];
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);

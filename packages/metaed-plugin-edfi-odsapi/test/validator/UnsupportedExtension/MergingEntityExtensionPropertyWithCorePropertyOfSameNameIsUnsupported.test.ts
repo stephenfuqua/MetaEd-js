@@ -12,8 +12,8 @@ import { initializeNamespaceDependencies } from '../ValidationTestHelper';
 import { validate } from '../../../src/validator/UnsupportedExtension/MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
 import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
-describe('when merging property of an extension entity with a core property of the same name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when merging property of an extension entity with a core property of the same name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -71,7 +71,7 @@ describe('when merging property of an extension entity with a core property of t
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported');
     expect(failures[0].category).toBe('warning');
@@ -84,8 +84,8 @@ describe('when merging property of an extension entity with a core property of t
   });
 });
 
-describe('when merging property of an extension entity with a core property of the same name with different context name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when merging property of an extension entity with a core property of the same name with different context name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -143,13 +143,13 @@ describe('when merging property of an extension entity with a core property of t
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when merging property of an extension entity with a core property of the same name and same context name', () => {
-  let failures: Array<ValidationFailure>;
+describe('when merging property of an extension entity with a core property of the same name and same context name', (): void => {
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -207,7 +207,7 @@ describe('when merging property of an extension entity with a core property of t
     failures = validate(metaEd);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported');
     expect(failures[0].category).toBe('warning');

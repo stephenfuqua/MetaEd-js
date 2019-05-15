@@ -4,7 +4,7 @@ import { newNamespace } from '../../src/model/Namespace';
 import { Namespace } from '../../src/model/Namespace';
 import { initializeNamespaces } from '../../src/pipeline/InitializeNamespaces';
 
-describe('when enhancing core namespace only', () => {
+describe('when enhancing core namespace only', (): void => {
   const state: State = newState();
   const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
 
@@ -13,12 +13,12 @@ describe('when enhancing core namespace only', () => {
     initializeNamespaces(state);
   });
 
-  it('should have no dependencies for core', () => {
+  it('should have no dependencies for core', (): void => {
     expect(coreNamespace.dependencies).toHaveLength(0);
   });
 });
 
-describe('when enhancing core and extension namespace', () => {
+describe('when enhancing core and extension namespace', (): void => {
   const state: State = newState();
   const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', isExtension: true };
@@ -29,11 +29,11 @@ describe('when enhancing core and extension namespace', () => {
     initializeNamespaces(state);
   });
 
-  it('should have no dependencies for core', () => {
+  it('should have no dependencies for core', (): void => {
     expect(coreNamespace.dependencies).toHaveLength(0);
   });
 
-  it('should have core dependencies for extension', () => {
+  it('should have core dependencies for extension', (): void => {
     expect(extensionNamespace.dependencies).toHaveLength(1);
     expect(extensionNamespace.dependencies[0]).toBe(coreNamespace);
   });

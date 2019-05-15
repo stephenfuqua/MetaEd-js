@@ -195,7 +195,7 @@ function setupRepository() {
   namespace.entity.common.set(referencedChoiceCommonType.metaEdName, referencedChoiceCommonType);
 }
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with element with bad markdown character', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with element with bad markdown character', (): void => {
   const inputDocumentation =
     'Documentation for logic (X | Y) \r\n Some Windows Documentation \n Some Unix Documentation \r Some Old Mac Documentation';
   const escapedDocumentation =
@@ -207,18 +207,18 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate exteded references', () => {
+  it('should generate exteded references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(escapedDocumentation);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with item with nonreferencing properties', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with item with nonreferencing properties', (): void => {
   const schoolYearEnumeration = Object.assign(newEnumeration(), { metaEdName: 'SchoolYearEnumeration' });
   const enumeration = Object.assign(newEnumeration(), { metaEdName: 'Enumeration' });
 
@@ -270,15 +270,15 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     );
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate extended references', () => {
+  it('should generate extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with optional collection element', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with optional collection element', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -289,19 +289,19 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with required collection element', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with required collection element', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -312,38 +312,38 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Required');
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with element referencing domain entity', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with element referencing domain entity', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with identity template referencing domain entity', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with identity template referencing domain entity', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -351,43 +351,43 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with identity template referencing non-identity domain entity', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange with identity template referencing non-identity domain entity', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.identityTemplates.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(referencedDomainEntity1Property);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should not generate required extended references or descriptors', () => {
+  it('should not generate required extended references or descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with no references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with no references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(referencedInlineCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should not generate required extended references or descriptors', () => {
+  it('should not generate required extended references or descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with single reference', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with single reference', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -395,18 +395,18 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedInlineCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with multiple references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing inline common type with multiple references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -417,31 +417,31 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedInlineCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with no references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with no references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(referencedCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should not generate required extended references or descriptors', () => {
+  it('should not generate required extended references or descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with single reference', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with single reference', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -449,18 +449,18 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with multiple references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing common type with multiple references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -471,31 +471,31 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
     (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
     const extendedReferences = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences;
     expect(extendedReferences[0].name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReferences[1].name).toBe(referencedDomainEntity2PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with no references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with no references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(referencedChoiceProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should not generate extended references or descriptors', () => {
+  it('should not generate extended references or descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with single reference', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with single reference', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -503,18 +503,18 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedChoiceProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with multiple references', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with multiple references', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -525,18 +525,18 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedChoiceProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
     (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
     const extendedReferences = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences;
     expect(extendedReferences[0].name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReferences[1].name).toBe(referencedDomainEntity2PropertyName);
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with all required in path', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with all required in path', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -565,7 +565,7 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
@@ -573,11 +573,11 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Required');
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
-describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with optional in path', () => {
+describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with optional in path', (): void => {
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -606,7 +606,7 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     interchangeLevelDomainEntity.properties.push(referencedCommonProperty);
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate required extended references', () => {
+  it('should generate required extended references', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
     (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
     const extendedReference = (mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefExtendedReferences[0];
@@ -614,7 +614,7 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
-  it('should not generate descriptors', () => {
+  it('should not generate descriptors', (): void => {
     expect((mergedInterchange as any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });

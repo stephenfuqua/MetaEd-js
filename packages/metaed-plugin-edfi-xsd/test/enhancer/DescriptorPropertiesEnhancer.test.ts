@@ -3,7 +3,7 @@ import { MetaEdEnvironment, Descriptor, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/DescriptorPropertiesEnhancer';
 
-describe('when DescriptorPropertiesEnhancer enhances descriptor', () => {
+describe('when DescriptorPropertiesEnhancer enhances descriptor', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const descriptorBaseName = 'DescriptorName';
   const descriptorName = 'DescriptorNameDescriptor';
@@ -26,28 +26,28 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor', () => {
     enhance(metaEd);
   });
 
-  it('should have xsdDescriptorName assigned', () => {
+  it('should have xsdDescriptorName assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdDescriptorName).toBe(descriptorName);
   });
 
-  it('should have xsdDescriptorNameWithExtension value same as descriptorName', () => {
+  it('should have xsdDescriptorNameWithExtension value same as descriptorName', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdDescriptorNameWithExtension).toBe(descriptorName);
   });
 
-  it('should have xsdIsMapType value assigned', () => {
+  it('should have xsdIsMapType value assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdIsMapType).toBe(false);
   });
 
-  it('should have xsdHasPropertiesOrMapType value assigned', () => {
+  it('should have xsdHasPropertiesOrMapType value assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdHasPropertiesOrMapType).toBe(false);
   });
 });
 
-describe('when DescriptorPropertiesEnhancer enhances descriptor with extension', () => {
+describe('when DescriptorPropertiesEnhancer enhances descriptor with extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const projectExtension = 'EXTENSION';
@@ -74,18 +74,18 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with extension',
     enhance(metaEd);
   });
 
-  it('should have xsdDescriptorName assigned', () => {
+  it('should have xsdDescriptorName assigned', (): void => {
     const descriptor: any = extensionNamespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdDescriptorName).toBe(descriptorName);
   });
 
-  it('should have xsdDescriptorNameWithExtension value with extension', () => {
+  it('should have xsdDescriptorNameWithExtension value with extension', (): void => {
     const descriptor: any = extensionNamespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdDescriptorNameWithExtension).toBe(`${projectExtension}-${descriptorName}`);
   });
 });
 
-describe('when DescriptorPropertiesEnhancer enhances descriptor with required map type', () => {
+describe('when DescriptorPropertiesEnhancer enhances descriptor with required map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -106,18 +106,18 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with required ma
     enhance(metaEd);
   });
 
-  it('should have xsdIsMapType value assigned', () => {
+  it('should have xsdIsMapType value assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdIsMapType).toBe(true);
   });
 
-  it('should have xsd_hasPropertiesOrMapType value with extension', () => {
+  it('should have xsd_hasPropertiesOrMapType value with extension', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdHasPropertiesOrMapType).toBe(true);
   });
 });
 
-describe('when DescriptorPropertiesEnhancer enhances descriptor with optional map type', () => {
+describe('when DescriptorPropertiesEnhancer enhances descriptor with optional map type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -138,18 +138,18 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with optional ma
     enhance(metaEd);
   });
 
-  it('should have xsdIsMapType value assigned', () => {
+  it('should have xsdIsMapType value assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdIsMapType).toBe(true);
   });
 
-  it('should have xsd_hasPropertiesOrMapType value with extension', () => {
+  it('should have xsd_hasPropertiesOrMapType value with extension', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdHasPropertiesOrMapType).toBe(true);
   });
 });
 
-describe('when DescriptorPropertiesEnhancer enhances descriptor with items', () => {
+describe('when DescriptorPropertiesEnhancer enhances descriptor with items', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -175,12 +175,12 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with items', () 
     enhance(metaEd);
   });
 
-  it('should have xsdIsMapType value assigned', () => {
+  it('should have xsdIsMapType value assigned', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdIsMapType).toBe(false);
   });
 
-  it('should have xsd_hasPropertiesOrMapType value with extension', () => {
+  it('should have xsd_hasPropertiesOrMapType value with extension', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorBaseName);
     expect(descriptor.data.edfiXsd.xsdHasPropertiesOrMapType).toBe(true);
   });

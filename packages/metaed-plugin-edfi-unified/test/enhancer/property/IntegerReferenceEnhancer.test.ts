@@ -19,7 +19,7 @@ import {
 
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
-describe('when enhancing integer property', () => {
+describe('when enhancing integer property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -46,16 +46,16 @@ describe('when enhancing integer property', () => {
     enhance(metaEd);
   });
 
-  it('should have property with no referenced entity', () => {
+  it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
   });
 
-  it('should have integer type with no referring properties', () => {
+  it('should have integer type with no referring properties', (): void => {
     expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
-describe('when enhancing shared integer property', () => {
+describe('when enhancing shared integer property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -90,18 +90,18 @@ describe('when enhancing shared integer property', () => {
     enhance(metaEd);
   });
 
-  it('should have property with correct referenced entity', () => {
+  it('should have property with correct referenced entity', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
   });
 
-  it('should have integer type with correct referring properties', () => {
+  it('should have integer type with correct referring properties', (): void => {
     expect(integerType.referringSimpleProperties).toContain(property);
   });
 });
 
-describe('when enhancing integer property across namespaces', () => {
+describe('when enhancing integer property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -130,16 +130,16 @@ describe('when enhancing integer property across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have property with no referenced entity', () => {
+  it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
   });
 
-  it('should have integer type with no referring properties', () => {
+  it('should have integer type with no referring properties', (): void => {
     expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
-describe('when enhancing shared integer property across namespaces', () => {
+describe('when enhancing shared integer property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -176,13 +176,13 @@ describe('when enhancing shared integer property across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have property with correct referenced entity', () => {
+  it('should have property with correct referenced entity', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
   });
 
-  it('should have integer type with correct referring properties', () => {
+  it('should have integer type with correct referring properties', (): void => {
     expect(integerType.referringSimpleProperties).toContain(property);
   });
 });

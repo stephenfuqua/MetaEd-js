@@ -45,7 +45,7 @@ export function execute(state: State): boolean {
         return false;
       }
 
-      const testForMetaEdFilePaths: Array<string> = klawSync(outputDirectory, {
+      const testForMetaEdFilePaths: string[] = klawSync(outputDirectory, {
         filter: item => ['.metaed', '.metaEd', '.MetaEd', '.METAED'].includes(path.extname(item.path)),
       });
       if (testForMetaEdFilePaths.length > 0) {

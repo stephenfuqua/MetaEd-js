@@ -8,7 +8,7 @@ import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 
-describe('when enhancing domainEntity extensions', () => {
+describe('when enhancing domainEntity extensions', (): void => {
   const baseEntityName = 'BaseEntityName';
   const baseTableName = 'BaseTableName';
   const entityName = 'EntityName';
@@ -81,21 +81,20 @@ describe('when enhancing domainEntity extensions', () => {
     ({ aggregate } = entity.data.edfiOdsApi);
   });
 
-  it('should add aggregate to namespace', () => {
-    const extensionNamespaceAggregates: Array<Aggregate> = (extensionNamespace.data.edfiOdsApi as NamespaceEdfiOdsApi)
-      .aggregates;
+  it('should add aggregate to namespace', (): void => {
+    const extensionNamespaceAggregates: Aggregate[] = (extensionNamespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates;
     expect(extensionNamespaceAggregates).toHaveLength(1);
     expect(extensionNamespaceAggregates[0]).toBe(aggregate);
   });
 
-  it('should create aggregate', () => {
+  it('should create aggregate', (): void => {
     expect(aggregate).not.toBeNull();
     expect(aggregate.root).toBe(tableName);
     expect(aggregate.allowPrimaryKeyUpdates).toBe(false);
     expect(aggregate.isExtension).toBe(true);
   });
 
-  it('should create entity tables', () => {
+  it('should create entity tables', (): void => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();

@@ -1,8 +1,8 @@
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { getAllProperties } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   getAllProperties(metaEd.propertyIndex).forEach(property => {
     if (property.namespace.isExtension) return;
     if (property.metaEdId) return;

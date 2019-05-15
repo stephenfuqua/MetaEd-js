@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, newInlineCommonProperty, newInlineCommon, newName
 import { MetaEdEnvironment, InlineCommonProperty, Common, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/InlineCommonReferenceEnhancer';
 
-describe('when enhancing inlineCommon property', () => {
+describe('when enhancing inlineCommon property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -35,7 +35,7 @@ describe('when enhancing inlineCommon property', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.inlineCommon.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
@@ -44,7 +44,7 @@ describe('when enhancing inlineCommon property', () => {
   });
 });
 
-describe('when enhancing inlineCommon property across namespaces', () => {
+describe('when enhancing inlineCommon property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -78,7 +78,7 @@ describe('when enhancing inlineCommon property across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     const property = R.head(metaEd.propertyIndex.inlineCommon.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);

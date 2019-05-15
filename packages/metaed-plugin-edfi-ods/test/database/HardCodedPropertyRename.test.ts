@@ -36,12 +36,12 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when domain entity is student', () => {
+describe('when domain entity is student', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const student = 'Student';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${student}USI`;
+  const usiColumnName = `${student}USI`;
   const uniqueIdColumnName: string = student + uniqueId;
   const maxLength = 32;
 
@@ -91,14 +91,14 @@ describe('when domain entity is student', () => {
   });
 });
 
-describe('when referenced domain entity is student', () => {
+describe('when referenced domain entity is student', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const student = 'Student';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${student}USI`;
+  const usiColumnName = `${student}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -153,7 +153,7 @@ describe('when referenced domain entity is student', () => {
   });
 });
 
-describe('when referenced domain entity across namespaces is student', () => {
+describe('when referenced domain entity across namespaces is student', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const extension = 'Extension';
@@ -161,7 +161,7 @@ describe('when referenced domain entity across namespaces is student', () => {
   const integerPropertyName = 'IntegerPropertyName';
   const student = 'Student';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${student}USI`;
+  const usiColumnName = `${student}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -224,12 +224,12 @@ describe('when referenced domain entity across namespaces is student', () => {
   });
 });
 
-describe('when domain entity is staff', () => {
+describe('when domain entity is staff', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const staff = 'Staff';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${staff}USI`;
+  const usiColumnName = `${staff}USI`;
   const uniqueIdColumnName: string = staff + uniqueId;
   const maxLength = 32;
 
@@ -279,14 +279,14 @@ describe('when domain entity is staff', () => {
   });
 });
 
-describe('when referenced domain entity is staff', () => {
+describe('when referenced domain entity is staff', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const staff = 'Staff';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${staff}USI`;
+  const usiColumnName = `${staff}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -341,12 +341,12 @@ describe('when referenced domain entity is staff', () => {
   });
 });
 
-describe('when domain entity is parent', () => {
+describe('when domain entity is parent', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const parent = 'Parent';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${parent}USI`;
+  const usiColumnName = `${parent}USI`;
   const uniqueIdColumnName: string = parent + uniqueId;
   const maxLength = 32;
 
@@ -396,14 +396,14 @@ describe('when domain entity is parent', () => {
   });
 });
 
-describe('when referenced domain entity is parent', () => {
+describe('when referenced domain entity is parent', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${parent}USI`;
+  const usiColumnName = `${parent}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -458,14 +458,14 @@ describe('when referenced domain entity is parent', () => {
   });
 });
 
-describe('when referenced domain entity is required', () => {
+describe('when referenced domain entity is required', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${parent}USI`;
+  const usiColumnName = `${parent}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -520,14 +520,14 @@ describe('when referenced domain entity is required', () => {
   });
 });
 
-describe('when referenced domain entity is optional', () => {
+describe('when referenced domain entity is optional', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
   const uniqueId = 'UniqueId';
-  const usiColumnName: string = `${parent}USI`;
+  const usiColumnName = `${parent}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -582,15 +582,15 @@ describe('when referenced domain entity is optional', () => {
   });
 });
 
-describe('when referenced two domain entities with one as collection', () => {
+describe('when referenced two domain entities with one as collection', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const student = 'Student';
   const staff = 'Staff';
   const uniqueId = 'UniqueId';
-  const studentUsiColumnName: string = `${student}USI`;
-  const staffUsiColumnName: string = `${staff}USI`;
+  const studentUsiColumnName = `${student}USI`;
+  const staffUsiColumnName = `${staff}USI`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -684,11 +684,11 @@ describe('when referenced two domain entities with one as collection', () => {
   });
 });
 
-describe('when enumeration is school year', () => {
+describe('when enumeration is school year', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const schoolYear = 'SchoolYear';
-  const schoolYearTableName: string = `${schoolYear}Type`;
+  const schoolYearTableName = `${schoolYear}Type`;
   const year1 = '1991';
   const year2 = '1992';
   const year3 = '1993';
@@ -802,13 +802,13 @@ describe('when enumeration is school year', () => {
   });
 });
 
-describe('when enumeration property is school year', () => {
+describe('when enumeration property is school year', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const schoolYear = 'SchoolYear';
-  const schoolYearTableName: string = `${schoolYear}Type`;
+  const schoolYearTableName = `${schoolYear}Type`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
@@ -870,14 +870,14 @@ describe('when enumeration property is school year', () => {
   });
 });
 
-describe('when enumeration property is school year role name', () => {
+describe('when enumeration property is school year role name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const schoolYear = 'SchoolYear';
-  const schoolYearTableName: string = `${schoolYear}Type`;
+  const schoolYearTableName = `${schoolYear}Type`;
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()

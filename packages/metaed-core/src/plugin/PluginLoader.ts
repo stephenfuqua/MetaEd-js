@@ -48,7 +48,7 @@ function loadPluginManifest(directory: string): PluginManifest | null {
 }
 
 // Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
-export function scanDirectories(directories: string | Array<string>): Array<PluginManifest> {
+export function scanDirectories(directories: string | string[]): PluginManifest[] {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
@@ -60,7 +60,7 @@ export function scanDirectories(directories: string | Array<string>): Array<Plug
   const pluginOrdering: Topo = new Topo();
 
   directories.forEach(directory => {
-    let subdirectories: Array<string> | null = null;
+    let subdirectories: string[] | null = null;
 
     try {
       subdirectories = fs.readdirSync(directory).filter(file => fs.statSync(path.join(directory, file)).isDirectory());

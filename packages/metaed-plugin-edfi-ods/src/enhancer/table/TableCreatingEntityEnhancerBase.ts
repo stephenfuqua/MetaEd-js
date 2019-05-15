@@ -13,9 +13,9 @@ import { TableBuilder } from './TableBuilder';
 
 // Build top level and sub level tables for the given top level entity,
 // including columns for each property and cascading through special property types as needed
-export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Table, tables: Array<Table>): void {
-  const primaryKeys: Array<Column> = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory).map(
-    (x: Column) => cloneColumn(x),
+export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Table, tables: Table[]): void {
+  const primaryKeys: Column[] = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory).map((x: Column) =>
+    cloneColumn(x),
   );
 
   entity.data.edfiOds.odsProperties.forEach((property: EntityProperty) => {
@@ -47,7 +47,7 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
   return mainTable;
 }
 
-export function addTables(metaEd: MetaEdEnvironment, tables: Array<Table>): void {
+export function addTables(metaEd: MetaEdEnvironment, tables: Table[]): void {
   tables.forEach((table: Table) => {
     tableEntities(metaEd, table.namespace).set(table.name, table);
   });

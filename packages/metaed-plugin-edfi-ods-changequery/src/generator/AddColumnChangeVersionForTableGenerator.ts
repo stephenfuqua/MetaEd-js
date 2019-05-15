@@ -7,11 +7,11 @@ import { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionF
 const generatorName = 'edfiOdsChangeQuery.AddColumnChangeVersionForTableGenerator';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
-      const tables: Array<AddColumnChangeVersionForTable> = addColumnChangeVersionForTableEntities(metaEd, namespace);
+      const tables: AddColumnChangeVersionForTable[] = addColumnChangeVersionForTableEntities(metaEd, namespace);
       if (tables.length > 0) {
         tables.sort(
           // by schema then by table name

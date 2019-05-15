@@ -7,7 +7,7 @@ import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../src/model/schema/SimpleType';
 import { enhance } from '../../src/diminisher/ModifyDisciplineActionLengthToUseIntegerDiminisher';
 
-describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action domain entity', () => {
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -53,13 +53,13 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     expect(entity).toBeDefined();
   });
 
-  it('should set type to integer type', () => {
+  it('should set type to integer type', (): void => {
     expect(R.head(R.head(entity.data.edfiXsd.xsdComplexTypes).items).type).toBe(integerType);
     expect(R.last(R.head(entity.data.edfiXsd.xsdComplexTypes).items).type).toBe(integerType);
   });
 });
 
-describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action simple type', () => {
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action simple type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -89,12 +89,12 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     expect(entity).toBeDefined();
   });
 
-  it('should set simple type to NoSimpleType', () => {
+  it('should set simple type to NoSimpleType', (): void => {
     expect(entity.data.edfiXsd.xsdSimpleType).toBe(NoSimpleType);
   });
 });
 
-describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes with no discipline action', () => {
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes with no discipline action', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -143,7 +143,7 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     result = enhance(metaEd);
   });
 
-  it('should run without error', () => {
+  it('should run without error', (): void => {
     expect(result.success).toBe(true);
   });
 });

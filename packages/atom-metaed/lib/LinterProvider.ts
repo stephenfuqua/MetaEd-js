@@ -29,7 +29,7 @@ async function lint(_textEditor: TextEditor): Promise<any[] | null> {
     return null;
   }
 
-  const metaEdProjectMetadata: Array<MetaEdProjectMetadata> = await findMetaEdProjectMetadata(true);
+  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata(true);
 
   // this is from MetaEdConsoleJs - will ignore for now, but provides validations to an OutputWindow
   // may want to do a notification equivalent...

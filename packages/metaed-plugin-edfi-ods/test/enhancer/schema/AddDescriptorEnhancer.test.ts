@@ -2,7 +2,7 @@ import { newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { Descriptor, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/Descriptor';
 
-describe('when Descriptor enhances descriptor entity', () => {
+describe('when Descriptor enhances descriptor entity', (): void => {
   const descriptorName = 'DescriptorName';
   let descriptor: Descriptor;
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -19,16 +19,16 @@ describe('when Descriptor enhances descriptor entity', () => {
     enhance(metaEd);
   });
 
-  it('should have ods descriptor name with descriptor suffix', () => {
+  it('should have ods descriptor name with descriptor suffix', (): void => {
     expect(descriptor.data.edfiOds.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
   });
 
-  it('should have false ods is map type', () => {
+  it('should have false ods is map type', (): void => {
     expect(descriptor.data.edfiOds.odsIsMapType).toBe(false);
   });
 });
 
-describe('when Descriptor enhances descriptor entity with descriptor suffix', () => {
+describe('when Descriptor enhances descriptor entity with descriptor suffix', (): void => {
   const descriptorName = 'DescriptorName';
   let descriptor: Descriptor;
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -45,16 +45,16 @@ describe('when Descriptor enhances descriptor entity with descriptor suffix', ()
     enhance(metaEd);
   });
 
-  it('should have ods descriptor name with normalized suffix', () => {
+  it('should have ods descriptor name with normalized suffix', (): void => {
     expect(descriptor.data.edfiOds.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
   });
 
-  it('should have false ods is map type', () => {
+  it('should have false ods is map type', (): void => {
     expect(descriptor.data.edfiOds.odsIsMapType).toBe(false);
   });
 });
 
-describe('when Descriptor enhances descriptor entity with is map type required', () => {
+describe('when Descriptor enhances descriptor entity with is map type required', (): void => {
   let descriptor: Descriptor;
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -70,12 +70,12 @@ describe('when Descriptor enhances descriptor entity with is map type required',
     enhance(metaEd);
   });
 
-  it('should have true ods is map type', () => {
+  it('should have true ods is map type', (): void => {
     expect(descriptor.data.edfiOds.odsIsMapType).toBe(true);
   });
 });
 
-describe('when Descriptor enhances descriptor entity with is amp type optional', () => {
+describe('when Descriptor enhances descriptor entity with is amp type optional', (): void => {
   let descriptor: Descriptor;
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -91,7 +91,7 @@ describe('when Descriptor enhances descriptor entity with is amp type optional',
     enhance(metaEd);
   });
 
-  it('should have true ods is map type', () => {
+  it('should have true ods is map type', (): void => {
     expect(descriptor.data.edfiOds.odsIsMapType).toBe(true);
   });
 });

@@ -2,8 +2,8 @@ import { DomainEntity, MetaEdEnvironment, ValidationFailure, Namespace } from 'm
 import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty } from '../ValidatorShared/FailSubclassIdentityRenameNotMatchingBaseClassIdentityProperty';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {

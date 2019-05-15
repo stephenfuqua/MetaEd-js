@@ -5,12 +5,12 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
-describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration', () => {
+describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolYear = 'SchoolYear';
-  const schoolYearType: string = `${schoolYear}Type`;
+  const schoolYearType = `${schoolYear}Type`;
   const schoolYearEnumerationDocumentation = 'SchoolYearEnumerationDocumentation';
 
   beforeAll(() => {
@@ -30,7 +30,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     enhance(metaEd);
   });
 
-  it('should create table', () => {
+  it('should create table', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     expect(table).toBeDefined();
     expect(table.name).toBe(schoolYearType);
@@ -40,12 +40,12 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
-  it('should have three columns', () => {
+  it('should have three columns', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     expect(table.columns).toHaveLength(3);
   });
 
-  it('should have one primary key', () => {
+  it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     expect(R.head(table.columns).name).toBe(schoolYear);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
@@ -53,7 +53,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     expect(R.last(table.columns).description).not.toBe('');
   });
 
-  it('should have school year description column', () => {
+  it('should have school year description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     const column = R.head(table.columns.filter(x => x.name === 'SchoolYearDescription'));
     expect(column).toBeDefined();
@@ -63,7 +63,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     expect(column.description).not.toBe('');
   });
 
-  it('should have current school year column', () => {
+  it('should have current school year column', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     const column = R.head(table.columns.filter(x => x.name === 'CurrentSchoolYear'));
     expect(column).toBeDefined();

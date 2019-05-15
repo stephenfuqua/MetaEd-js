@@ -9,12 +9,12 @@ import {
 import { getAllProperties } from 'metaed-core';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 
-const referenceProperty: Array<PropertyType> = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
+const referenceProperty: PropertyType[] = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
 const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
 
-export function getAllReferentialProperties(metaEd: MetaEdEnvironment): Array<ReferentialProperty> {
-  const allProperties: Array<EntityProperty> = getAllProperties(metaEd.propertyIndex);
-  return allProperties.filter(isReferenceProperty) as Array<ReferentialProperty>;
+export function getAllReferentialProperties(metaEd: MetaEdEnvironment): ReferentialProperty[] {
+  const allProperties: EntityProperty[] = getAllProperties(metaEd.propertyIndex);
+  return allProperties.filter(isReferenceProperty) as ReferentialProperty[];
 }
 
 export function pluginEnvironment(metaEd: MetaEdEnvironment): PluginEnvironment | undefined {

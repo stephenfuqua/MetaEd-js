@@ -34,7 +34,7 @@ export type ModelType =
 /**
  *
  */
-export const allEntityModelTypes: Array<ModelType> = [
+export const allEntityModelTypes: ModelType[] = [
   'unknown',
   'association',
   'associationExtension',
@@ -64,7 +64,7 @@ export const allEntityModelTypes: Array<ModelType> = [
 /**
  *
  */
-export const allEntityModelTypesNoSimpleTypes: Array<ModelType> = [
+export const allEntityModelTypesNoSimpleTypes: ModelType[] = [
   'unknown',
   'association',
   'associationExtension',
@@ -91,7 +91,7 @@ export const allEntityModelTypesNoSimpleTypes: Array<ModelType> = [
 /**
  *
  */
-export const allTopLevelEntityModelTypes: Array<ModelType> = [
+export const allTopLevelEntityModelTypes: ModelType[] = [
   'unknown',
   'association',
   'associationExtension',
@@ -110,7 +110,7 @@ export const allTopLevelEntityModelTypes: Array<ModelType> = [
 /**
  *
  */
-export const topLevelCoreEntityModelTypes: Array<ModelType> = [
+export const topLevelCoreEntityModelTypes: ModelType[] = [
   'association',
   'associationSubclass',
   'choice',

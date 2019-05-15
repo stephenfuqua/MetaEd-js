@@ -4,10 +4,10 @@ import { EnumerationRow } from './database/EnumerationRow';
 import { SchoolYearEnumerationRow } from './database/SchoolYearEnumerationRow';
 import { Table } from './database/Table';
 
-export type EdFiOdsEntityRepository = {
+export interface EdFiOdsEntityRepository {
   table: Map<string, Table>;
   row: Map<string, EnumerationRow | SchoolYearEnumerationRow>;
-};
+}
 
 const enhancerName = 'EdFiOdsEntityRepositorySetupEnhancer';
 

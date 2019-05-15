@@ -3,10 +3,10 @@ import { asTopLevelEntity } from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 export function generateValidationErrorsForDuplicates(
-  metaEdEntity: Array<ModelBase>,
+  metaEdEntity: ModelBase[],
   validatorName: string,
-): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   groupByMetaEdName(metaEdEntity).forEach((entities, metaEdName) => {
     if (entities.length > 1) {

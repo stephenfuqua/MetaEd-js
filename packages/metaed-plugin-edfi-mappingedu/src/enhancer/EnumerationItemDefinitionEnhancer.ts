@@ -8,14 +8,14 @@ import {
   pluginEnumerationsForNamespace,
 } from './EnhancerHelper';
 
-const enhancerName: string = 'EnumerationItemDefinitionEnhancer';
+const enhancerName = 'EnumerationItemDefinitionEnhancer';
 
 const createEnumerationItemDefinitionFor = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
   enumeration: EnumerationSimpleType,
 ) => {
-  const repository: Array<EnumerationItemDefinition> = pluginEnumerationItemDefinitionsForNamespace(metaEd, namespace);
+  const repository: EnumerationItemDefinition[] = pluginEnumerationItemDefinitionsForNamespace(metaEd, namespace);
   const definition: EnumerationItemDefinition = {
     ...newEnumerationItemDefinition(),
     elementGroup: elementGroupNameFor(namespace),

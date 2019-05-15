@@ -14,7 +14,7 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when enhances MergedInterchange with association extension', () => {
+describe('when enhances MergedInterchange with association extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -83,7 +83,7 @@ describe('when enhances MergedInterchange with association extension', () => {
     enhance(metaEd);
   });
 
-  it('should create additional extension interchange', () => {
+  it('should create additional extension interchange', (): void => {
     const expectedExtensionInterchangeName = `EXTENSION-${interchangeName}`;
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
       metaEd,

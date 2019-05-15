@@ -2,7 +2,7 @@ import { newMetaEdEnvironment, newCommon, newCommonExtension, newNamespace } fro
 import { MetaEdEnvironment, Common, CommonExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/CommonExtensionBaseClassEnhancer';
 
-describe('when enhancing common extension referring to common', () => {
+describe('when enhancing common extension referring to common', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -28,14 +28,14 @@ describe('when enhancing common extension referring to common', () => {
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
-describe('when enhancing common extension referring to common across namespaces', () => {
+describe('when enhancing common extension referring to common across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -63,7 +63,7 @@ describe('when enhancing common extension referring to common across namespaces'
     enhance(metaEd);
   });
 
-  it('should have correct references', () => {
+  it('should have correct references', (): void => {
     expect(childEntity.baseEntity).toBe(parentEntity);
     expect(parentEntity.extendedBy).toHaveLength(1);
     expect(parentEntity.extendedBy[0]).toBe(childEntity);

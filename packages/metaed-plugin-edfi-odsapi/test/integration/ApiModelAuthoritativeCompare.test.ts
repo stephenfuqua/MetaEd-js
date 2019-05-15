@@ -21,7 +21,7 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when generating api model and comparing it to data standard 3.1 authoritative artifacts', () => {
+describe('when generating api model and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const authoritativeFilename = 'edfi-3.1-api-model-authoritative.json';
   const generatedFilename = 'edfi-3.1-api-model-generated.json';
@@ -80,16 +80,16 @@ describe('when generating api model and comparing it to data standard 3.1 author
   it('should have no differences', async () => {
     const authoritative: string = path.resolve(artifactPath, authoritativeFilename);
     const generated: string = path.resolve(artifactPath, generatedFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating api model targeting tech version 3.1.1 and comparing it to data standard 3.1 authoritative artifacts', () => {
+describe('when generating api model targeting tech version 3.1.1 and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const authoritativeFilename = 'edfi-3.1.1-api-model-authoritative.json';
   const generatedFilename = 'edfi-3.1.1-api-model-generated.json';
@@ -148,16 +148,16 @@ describe('when generating api model targeting tech version 3.1.1 and comparing i
   it('should have no differences', async () => {
     const authoritative: string = path.resolve(artifactPath, authoritativeFilename);
     const generated: string = path.resolve(artifactPath, generatedFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating api model and comparing it to data standard 3.0 authoritative artifacts', () => {
+describe('when generating api model and comparing it to data standard 3.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const authoritativeFilename = 'edfi-3.0-api-model-authoritative.json';
   const generatedFilename = 'edfi-3.0-api-model-generated.json';
@@ -216,16 +216,16 @@ describe('when generating api model and comparing it to data standard 3.0 author
   it('should have no differences', async () => {
     const authoritative: string = path.resolve(artifactPath, authoritativeFilename);
     const generated: string = path.resolve(artifactPath, generatedFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating api model with simple extensions and comparing it to data standard 3.0 authoritative artifacts', () => {
+describe('when generating api model with simple extensions and comparing it to data standard 3.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
   const authoritativeCoreFilename = 'edfi-3.0-api-model-authoritative.json';
@@ -301,27 +301,27 @@ describe('when generating api model with simple extensions and comparing it to d
   it('should have no core file differences', async () => {
     const authoritativeCore: string = path.resolve(artifactPath, authoritativeCoreFilename);
     const generatedCore: string = path.resolve(artifactPath, generatedCoreFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have no extension file differences', async () => {
     const authoritativeExtension: string = path.resolve(artifactPath, authoritativeExtensionFilename);
     const generatedExtension: string = path.resolve(artifactPath, generatedExtensionFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating api model with student transcript extensions and comparing it to data standard 3.0 authoritative artifacts', () => {
+describe('when generating api model with student transcript extensions and comparing it to data standard 3.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const authoritativeCoreFilename = 'edfi-3.0-api-model-authoritative.json';
   const generatedCoreFilename = 'edfi-3.0-api-model-core-with-student-transcript-extension-generated.json';
@@ -398,27 +398,27 @@ describe('when generating api model with student transcript extensions and compa
   it('should have no core file differences', async () => {
     const authoritativeCore: string = path.resolve(artifactPath, authoritativeCoreFilename);
     const generatedCore: string = path.resolve(artifactPath, generatedCoreFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have no extension file differences', async () => {
     const authoritativeExtension: string = path.resolve(artifactPath, authoritativeExtensionFilename);
     const generatedExtension: string = path.resolve(artifactPath, generatedExtensionFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });
 
-describe('when generating api model with simple type merge extensions and comparing it to data standard 3.1 authoritative artifacts', () => {
+describe('when generating api model with simple type merge extensions and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-type-merge-project');
   const authoritativeCoreFilename = 'edfi-3.1-api-model-authoritative.json';
@@ -494,22 +494,22 @@ describe('when generating api model with simple type merge extensions and compar
   it('should have no core file differences', async () => {
     const authoritativeCore: string = path.resolve(artifactPath, authoritativeCoreFilename);
     const generatedCore: string = path.resolve(artifactPath, generatedCoreFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCore} ${generatedCore}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 
   it('should have no extension file differences', async () => {
     const authoritativeExtension: string = path.resolve(artifactPath, authoritativeExtensionFilename);
     const generatedExtension: string = path.resolve(artifactPath, generatedExtensionFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
+    const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
   });
 });

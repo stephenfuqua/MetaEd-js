@@ -26,15 +26,15 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when domain entity extension has a common extension with a collection which overrides a collection of that common', () => {
+describe('when domain entity extension has a common extension with a collection which overrides a collection of that common', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const core = 'EdFi';
   const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
-  const domainEntityExtension: string = `${coreDomainEntity}Extension`;
-  const commonExtensionPrefix: string = `${coreDomainEntity + coreCommon}`;
-  const commonExtensionName: string = `${commonExtensionPrefix}Extension`;
+  const domainEntityExtension = `${coreDomainEntity}Extension`;
+  const commonExtensionPrefix = `${coreDomainEntity + coreCommon}`;
+  const commonExtensionName = `${commonExtensionPrefix}Extension`;
   const coreDeIdentity = 'CoreDeIdentity';
   const coreCommonIdentity = 'CoreCommonIdentity';
   const scalarPlaceholder1 = 'ScalarPlaceholder1';
@@ -204,15 +204,15 @@ describe('when domain entity extension has a common extension with a collection 
   });
 });
 
-describe('when domain entity extension has only a common collection which is extended', () => {
+describe('when domain entity extension has only a common collection which is extended', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const core = 'EdFi';
   const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
-  const domainEntityExtension: string = `${coreDomainEntity}Extension`;
-  const commonExtensionPrefix: string = `${coreDomainEntity + coreCommon}`;
-  const commonExtensionName: string = `${commonExtensionPrefix}Extension`;
+  const domainEntityExtension = `${coreDomainEntity}Extension`;
+  const commonExtensionPrefix = `${coreDomainEntity + coreCommon}`;
+  const commonExtensionName = `${commonExtensionPrefix}Extension`;
   const coreDeIdentity = 'CoreDeIdentity';
   const coreCommonIdentity = 'CoreCommonIdentity';
   const scalarPlaceholder = 'ScalarPlaceholder2';
@@ -361,15 +361,15 @@ describe('when domain entity extension has only a common collection which is ext
   });
 });
 
-describe('when domain entity extension has only a common collection - with only a collection - which is extended', () => {
+describe('when domain entity extension has only a common collection - with only a collection - which is extended', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const core = 'EdFi';
   const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
-  const domainEntityExtension: string = `${coreDomainEntity}Extension`;
-  const commonExtensionPrefix: string = `${coreDomainEntity + coreCommon}`;
-  const commonExtensionName: string = `${commonExtensionPrefix}Extension`;
+  const domainEntityExtension = `${coreDomainEntity}Extension`;
+  const commonExtensionPrefix = `${coreDomainEntity + coreCommon}`;
+  const commonExtensionName = `${commonExtensionPrefix}Extension`;
   const coreDeIdentity = 'CoreDeIdentity';
   const coreCommonIdentity = 'CoreCommonIdentity';
   const collectionOnCommonExtension = 'CollectionOnCommonExtension';

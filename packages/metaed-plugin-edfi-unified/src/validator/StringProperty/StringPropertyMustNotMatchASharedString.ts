@@ -1,8 +1,8 @@
 import { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
 import { findFirstEntity } from 'metaed-core';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   metaEd.propertyIndex.string.forEach(property => {
     const referencedEntity: ModelBase | null = findFirstEntity(
       property.metaEdName,

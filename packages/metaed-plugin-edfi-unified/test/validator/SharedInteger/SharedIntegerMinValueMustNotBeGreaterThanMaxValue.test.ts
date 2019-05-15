@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, SharedIntegerBuilder, Namespac
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedInteger/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
 
-describe('when validating shared integer with max value greater than min value', () => {
+describe('when validating shared integer with max value greater than min value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -22,14 +22,14 @@ describe('when validating shared integer with max value greater than min value',
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared integer with min value greater than max value', () => {
+describe('when validating shared integer with min value greater than max value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -49,11 +49,11 @@ describe('when validating shared integer with min value greater than max value',
     failures = validate(metaEd);
   });
 
-  it('should build one shared integer', () => {
+  it('should build one shared integer', (): void => {
     expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
@@ -62,9 +62,9 @@ describe('when validating shared integer with min value greater than max value',
   });
 });
 
-describe('when validating shared short with max value greater than min value', () => {
+describe('when validating shared short with max value greater than min value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -82,14 +82,14 @@ describe('when validating shared short with max value greater than min value', (
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared short with min value greater than max value', () => {
+describe('when validating shared short with min value greater than max value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -109,11 +109,11 @@ describe('when validating shared short with min value greater than max value', (
     failures = validate(metaEd);
   });
 
-  it('should build one shared integer', () => {
+  it('should build one shared integer', (): void => {
     expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');

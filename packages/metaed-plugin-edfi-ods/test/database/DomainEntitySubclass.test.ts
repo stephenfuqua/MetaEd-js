@@ -25,7 +25,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when core domain entity subclass has identity rename property', () => {
+describe('when core domain entity subclass has identity rename property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
@@ -108,7 +108,7 @@ describe('when core domain entity subclass has identity rename property', () => 
   });
 });
 
-describe('when extension domain entity subclasses core domain entity', () => {
+describe('when extension domain entity subclasses core domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
@@ -200,7 +200,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
   });
 });
 
-describe('when extension domain entity subclasses extension domain entity', () => {
+describe('when extension domain entity subclasses extension domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';

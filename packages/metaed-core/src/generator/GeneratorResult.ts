@@ -7,7 +7,7 @@ import { GeneratedOutput } from './GeneratedOutput';
  *
  * **generatedOutput** is an array of GeneratedOutput objects, one per generated artifact.
  */
-export type GeneratorResult = {
+export interface GeneratorResult {
   generatorName: string;
-  generatedOutput: Array<GeneratedOutput>;
-};
+  generatedOutput: GeneratedOutput[];
+}

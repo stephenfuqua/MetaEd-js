@@ -2,9 +2,9 @@ import { MetaEdEnvironment, EnhancerResult, ModelBase } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtension } from './shared/AddMetaEdNameWithExtension';
 
-export type ModelBaseEdfiXsd = {
+export interface ModelBaseEdfiXsd {
   xsdMetaEdNameWithExtension: () => string;
-};
+}
 
 const enhancerName = 'ModelBaseSetupEnhancer';
 

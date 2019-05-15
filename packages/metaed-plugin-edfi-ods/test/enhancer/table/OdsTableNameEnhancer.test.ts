@@ -9,7 +9,7 @@ import {
 import { Descriptor, DomainEntity, Enumeration, MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/OdsTableNameEnhancer';
 
-describe('when enhancing a domain entity with ods table name', () => {
+describe('when enhancing a domain entity with ods table name', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -27,13 +27,13 @@ describe('when enhancing a domain entity with ods table name', () => {
     enhance(metaEd);
   });
 
-  it('should have ods table name', () => {
+  it('should have ods table name', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.odsTableName).toBe(domainEntityName);
   });
 });
 
-describe('when enhancing a descriptor with ods table name', () => {
+describe('when enhancing a descriptor with ods table name', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -53,13 +53,13 @@ describe('when enhancing a descriptor with ods table name', () => {
     enhance(metaEd);
   });
 
-  it('should have ods table name', () => {
+  it('should have ods table name', (): void => {
     const descriptor: any = namespace.entity.descriptor.get(descriptorName);
     expect(descriptor.data.edfiOds.odsTableName).toBe(descriptorName);
   });
 });
 
-describe('when enhancing an enumeration with ods table name', () => {
+describe('when enhancing an enumeration with ods table name', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -77,13 +77,13 @@ describe('when enhancing an enumeration with ods table name', () => {
     enhance(metaEd);
   });
 
-  it('should have ods table name', () => {
+  it('should have ods table name', (): void => {
     const enumeration: any = namespace.entity.enumeration.get(enumerationName);
     expect(enumeration.data.edfiOds.odsTableName).toBe(`${enumerationName}Type`);
   });
 });
 
-describe('when enhancing an school year enumeration with ods table name', () => {
+describe('when enhancing an school year enumeration with ods table name', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -101,7 +101,7 @@ describe('when enhancing an school year enumeration with ods table name', () => 
     enhance(metaEd);
   });
 
-  it('should have ods table name', () => {
+  it('should have ods table name', (): void => {
     const schoolYearEnumeration: any = namespace.entity.schoolYearEnumeration.get(schoolYearEnumerationName);
     expect(schoolYearEnumeration.data.edfiOds.odsTableName).toBe(`${schoolYearEnumerationName}Type`);
   });

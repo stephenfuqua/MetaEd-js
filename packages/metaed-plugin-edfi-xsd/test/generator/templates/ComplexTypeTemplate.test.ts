@@ -20,7 +20,7 @@ import { templateNamed, registerPartials } from '../../../src/generator/XsdGener
 
 const complexType = nextHead;
 
-describe('when generating complex type', () => {
+describe('when generating complex type', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
 
@@ -33,12 +33,12 @@ describe('when generating complex type', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be complex type only', () => {
+  it('should be complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:complexType');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -50,7 +50,7 @@ describe('when generating complex type', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should not have abstract', () => {
+  it('should not have abstract', (): void => {
     expect(
       R.view(
         R.compose(
@@ -62,7 +62,7 @@ describe('when generating complex type', () => {
     ).not.toBeDefined();
   });
 
-  it('should have annotation only', () => {
+  it('should have annotation only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -94,7 +94,7 @@ describe('when generating complex type', () => {
     ).toBe(documentation);
   });
 
-  it('should not have attribute', () => {
+  it('should not have attribute', (): void => {
     expect(
       R.view(
         R.compose(
@@ -107,7 +107,7 @@ describe('when generating complex type', () => {
   });
 });
 
-describe('when generating complex type with attribute', () => {
+describe('when generating complex type with attribute', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
 
@@ -126,12 +126,12 @@ describe('when generating complex type with attribute', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be complex type only', () => {
+  it('should be complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:complexType');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -143,7 +143,7 @@ describe('when generating complex type with attribute', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should not have abstract', () => {
+  it('should not have abstract', (): void => {
     expect(
       R.view(
         R.compose(
@@ -155,7 +155,7 @@ describe('when generating complex type with attribute', () => {
     ).not.toBeDefined();
   });
 
-  it('should have annotation and attribute only', () => {
+  it('should have annotation and attribute only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -197,7 +197,7 @@ describe('when generating complex type with attribute', () => {
   });
 });
 
-describe('when generating complex type with base type', () => {
+describe('when generating complex type with base type', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const baseType = 'BaseType';
@@ -211,12 +211,12 @@ describe('when generating complex type with base type', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be complex type only', () => {
+  it('should be complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:complexType');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -228,7 +228,7 @@ describe('when generating complex type with base type', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should not have abstract', () => {
+  it('should not have abstract', (): void => {
     expect(
       R.view(
         R.compose(
@@ -240,7 +240,7 @@ describe('when generating complex type with base type', () => {
     ).not.toBeDefined();
   });
 
-  it('should not have attribute', () => {
+  it('should not have attribute', (): void => {
     expect(
       R.view(
         R.compose(
@@ -252,7 +252,7 @@ describe('when generating complex type with base type', () => {
     ).toHaveLength(0);
   });
 
-  it('should have annotation and complex content only', () => {
+  it('should have annotation and complex content only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -293,7 +293,7 @@ describe('when generating complex type with base type', () => {
     ).toBe('xs:complexContent');
   });
 
-  it('should have complex content with base attribute and no child elements', () => {
+  it('should have complex content with base attribute and no child elements', (): void => {
     const complexContentElement = R.compose(
       complexType,
       nextSecond,
@@ -332,7 +332,7 @@ describe('when generating complex type with base type', () => {
   });
 });
 
-describe('when generating complex type with item', () => {
+describe('when generating complex type with item', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
 
@@ -351,12 +351,12 @@ describe('when generating complex type with item', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be complex type only', () => {
+  it('should be complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:complexType');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -368,7 +368,7 @@ describe('when generating complex type with item', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should not have abstract', () => {
+  it('should not have abstract', (): void => {
     expect(
       R.view(
         R.compose(
@@ -380,7 +380,7 @@ describe('when generating complex type with item', () => {
     ).not.toBeDefined();
   });
 
-  it('should have attribute', () => {
+  it('should have attribute', (): void => {
     expect(
       R.view(
         R.compose(
@@ -392,7 +392,7 @@ describe('when generating complex type with item', () => {
     ).toHaveLength(0);
   });
 
-  it('should have annotation and sequence only', () => {
+  it('should have annotation and sequence only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -433,7 +433,7 @@ describe('when generating complex type with item', () => {
     ).toBe('xs:sequence');
   });
 
-  it('should have sequence with complex item', () => {
+  it('should have sequence with complex item', (): void => {
     const sequenceElement = R.compose(
       complexType,
       nextSecond,
@@ -450,7 +450,7 @@ describe('when generating complex type with item', () => {
   });
 });
 
-describe('when generating complex type with everything', () => {
+describe('when generating complex type with everything', (): void => {
   const documentation = 'Documentation';
   const complexTypeName = 'Complex Type Name';
   const baseType = 'BaseType';
@@ -476,12 +476,12 @@ describe('when generating complex type with everything', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be complex type only', () => {
+  it('should be complex type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:complexType');
   });
 
-  it('should have element complex type name', () => {
+  it('should have element complex type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -493,7 +493,7 @@ describe('when generating complex type with everything', () => {
     ).toBe(complexTypeName);
   });
 
-  it('should not have abstract', () => {
+  it('should not have abstract', (): void => {
     expect(
       R.view(
         R.compose(
@@ -505,7 +505,7 @@ describe('when generating complex type with everything', () => {
     ).not.toBeDefined();
   });
 
-  it('should have annotation and attribute and complex content only', () => {
+  it('should have annotation and attribute and complex content only', (): void => {
     expect(
       R.view(
         R.compose(
@@ -555,7 +555,7 @@ describe('when generating complex type with everything', () => {
     ).toBe('xs:complexContent');
   });
 
-  it('should have attribute with annotation documentation', () => {
+  it('should have attribute with annotation documentation', (): void => {
     const attribute = R.compose(
       complexType,
       nextSecond,
@@ -582,7 +582,7 @@ describe('when generating complex type with everything', () => {
     ).toBe(attributeDocumentation);
   });
 
-  it('should have complex content with base attribute and sequence with complex item', () => {
+  it('should have complex content with base attribute and sequence with complex item', (): void => {
     const complexContentElement = R.compose(
       complexType,
       nextThird,

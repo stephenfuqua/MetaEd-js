@@ -59,7 +59,7 @@ import { enhance as modifyOrderOfPriorityToUsePositiveIntegerDiminisher } from '
 import { enhance as modifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher } from '../diminisher/ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher';
 import { enhance as modifyTotalInstructionalDaysToUseIntDiminisher } from '../diminisher/ModifyTotalInstructionalDaysToUseIntDiminisher';
 
-export function enhancerList(): Array<Enhancer> {
+export function enhancerList(): Enhancer[] {
   return [
     // *********************
     // Plugin setup enhancer

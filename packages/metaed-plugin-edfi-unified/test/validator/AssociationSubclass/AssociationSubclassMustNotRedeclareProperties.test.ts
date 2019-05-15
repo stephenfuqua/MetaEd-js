@@ -8,10 +8,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationSubclass/AssociationSubclassMustNotRedeclareProperties';
 
-describe('when association subclass has different property name', () => {
+describe('when association subclass has different property name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -38,25 +38,25 @@ describe('when association subclass has different property name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one associationSubclass', () => {
+  it('should build one associationSubclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when association subclass has duplicate property name', () => {
+describe('when association subclass has duplicate property name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName1 = 'DuplicatePropertyName';
   const duplicatePropertyName2 = 'DuplicatePropertyName2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -86,15 +86,15 @@ describe('when association subclass has duplicate property name', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one associationSubclass', () => {
+  it('should build one associationSubclass', (): void => {
     expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -108,12 +108,12 @@ describe('when association subclass has duplicate property name', () => {
   });
 });
 
-describe('when association subclass has duplicate property name across dependent namespaces', () => {
+describe('when association subclass has duplicate property name across dependent namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const duplicatePropertyName1 = 'DuplicatePropertyName';
   const duplicatePropertyName2 = 'DuplicatePropertyName2';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -148,15 +148,15 @@ describe('when association subclass has duplicate property name across dependent
     failures = validate(metaEd);
   });
 
-  it('should build one association', () => {
+  it('should build one association', (): void => {
     expect(coreNamespace.entity.association.size).toBe(1);
   });
 
-  it('should build one associationSubclass', () => {
+  it('should build one associationSubclass', (): void => {
     expect(extensionNamespace.entity.associationSubclass.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
@@ -170,11 +170,11 @@ describe('when association subclass has duplicate property name across dependent
   });
 });
 
-describe('when association subclass has duplicate property name but different role name', () => {
+describe('when association subclass has duplicate property name but different role name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -199,7 +199,7 @@ describe('when association subclass has duplicate property name but different ro
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

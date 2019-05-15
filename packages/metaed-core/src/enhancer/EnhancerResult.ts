@@ -10,8 +10,8 @@ import { ValidationFailure } from '../validator/ValidationFailure';
  * **validationFailure** is an optional ValidationFailure, if the Enhancer can communicate as a validation
  * failure what would otherwise be a failure of the Enhancer.  Enhancers can be successful yet have a ValidationFailure.
  */
-export type EnhancerResult = {
+export interface EnhancerResult {
   enhancerName: string;
   success: boolean;
   validationFailure?: ValidationFailure;
-};
+}

@@ -12,7 +12,7 @@ function sortFiles(a, b) {
 
 const ffs: any = jest.genMockFromModule('final-fs');
 
-const mockFiles: Array<any> = [];
+const mockFiles: any[] = [];
 
 ffs.addMockFile = mockFile => {
   mockFiles.push(mockFile);

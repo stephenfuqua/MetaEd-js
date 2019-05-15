@@ -4,7 +4,7 @@ import { addModelBaseEdfiUdmTo } from '../../src/model/ModelBase';
 import { generateMarkdownForDomains } from '../../src/generator/UdmGenerator';
 import { DomainMarkdown } from '../../src/generator/UdmGenerator';
 
-describe('When generating interchange brief with no extended references or descriptors', () => {
+describe('When generating interchange brief with no extended references or descriptors', (): void => {
   const domain1Name = 'Domain1Name';
   const domain2Name = 'Domain2Name';
   const domainEntity1Documentation = 'Domain Entity 1 Documentation here';
@@ -12,7 +12,7 @@ describe('When generating interchange brief with no extended references or descr
   const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
-  let generatedResults: Array<string>;
+  let generatedResults: string[];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -70,11 +70,11 @@ describe('When generating interchange brief with no extended references or descr
     addEntityForNamespace(domain2);
     addModelBaseEdfiUdmTo(domain2);
 
-    const domainMarkdowns: Array<DomainMarkdown> = await generateMarkdownForDomains(metaEd);
+    const domainMarkdowns: DomainMarkdown[] = await generateMarkdownForDomains(metaEd);
     generatedResults = domainMarkdowns.map(x => x.markdown);
   });
 
-  it('Should include entities', () => {
+  it('Should include entities', (): void => {
     expect(generatedResults.length).toBe(2);
 
     expect(generatedResults[0]).toContain('Domain 1 Documentation');

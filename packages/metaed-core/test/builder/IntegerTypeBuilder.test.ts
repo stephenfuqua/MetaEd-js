@@ -6,9 +6,9 @@ import { getIntegerType } from '../TestHelper';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when building shared integer in extension namespace', () => {
+describe('when building shared integer in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -35,66 +35,66 @@ describe('when building shared integer in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one integer type', () => {
+  it('should build one integer type', (): void => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have type', () => {
+  it('should have type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).type).toBe('integerType');
   });
 
-  it('should have type humanized name', () => {
+  it('should have type humanized name', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
-  it('should have data', () => {
+  it('should have data', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).data).toBeDefined();
   });
 
-  it('should not be a generated type', () => {
+  it('should not be a generated type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
 
-  it('should not be a short type', () => {
+  it('should not be a short type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).isShort).toBe(false);
   });
 });
 
-describe('when building domain entity with integer property in extension namespace', () => {
+describe('when building domain entity with integer property in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -121,66 +121,66 @@ describe('when building domain entity with integer property in extension namespa
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one integer type', () => {
+  it('should build one integer type', (): void => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have type', () => {
+  it('should have type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).type).toBe('integerType');
   });
 
-  it('should have type humanized name', () => {
+  it('should have type humanized name', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
-  it('should have data', () => {
+  it('should have data', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).data).toBeDefined();
   });
 
-  it('should be a generated type', () => {
+  it('should be a generated type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(true);
   });
 
-  it('should not be a short type', () => {
+  it('should not be a short type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).isShort).toBe(false);
   });
 });
 
-describe('when building shared short in extension namespace', () => {
+describe('when building shared short in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -207,66 +207,66 @@ describe('when building shared short in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one integer type', () => {
+  it('should build one integer type', (): void => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have type', () => {
+  it('should have type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).type).toBe('integerType');
   });
 
-  it('should have type humanized name', () => {
+  it('should have type humanized name', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
-  it('should have data', () => {
+  it('should have data', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).data).toBeDefined();
   });
 
-  it('should not be a generated type', () => {
+  it('should not be a generated type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
 
-  it('should be a short type', () => {
+  it('should be a short type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).isShort).toBe(true);
   });
 });
 
-describe('when building domain entity with short property in extension namespace', () => {
+describe('when building domain entity with short property in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -293,66 +293,66 @@ describe('when building domain entity with short property in extension namespace
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one integer type', () => {
+  it('should build one integer type', (): void => {
     expect(namespace.entity.integerType.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have type', () => {
+  it('should have type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).type).toBe('integerType');
   });
 
-  it('should have type humanized name', () => {
+  it('should have type humanized name', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', () => {
+  it('should have metaed id', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
-  it('should have documentation', () => {
+  it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
-  it('should have minValue', () => {
+  it('should have minValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).minValue).toBe(minValue);
   });
 
-  it('should have maxValue', () => {
+  it('should have maxValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
-  it('should have data', () => {
+  it('should have data', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).data).toBeDefined();
   });
 
-  it('should be a generated type', () => {
+  it('should be a generated type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(true);
   });
 
-  it('should be a short type', () => {
+  it('should be a short type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).isShort).toBe(true);
   });
 });
 
-describe('when building multiple shared integers in extension namespace', () => {
+describe('when building multiple shared integers in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -387,23 +387,23 @@ describe('when building multiple shared integers in extension namespace', () => 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build two integer types', () => {
+  it('should build two integer types', (): void => {
     expect(namespace.entity.integerType.size).toBe(2);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
     expect(namespace.entity.integerType.get(expectedRepositoryId2)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 });
 
-describe('when building domain entity with multiple integer properties in extension namespace', () => {
+describe('when building domain entity with multiple integer properties in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -434,16 +434,16 @@ describe('when building domain entity with multiple integer properties in extens
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build two integer types', () => {
+  it('should build two integer types', (): void => {
     expect(namespace.entity.integerType.size).toBe(2);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId)).toBeDefined();
     expect(namespace.entity.integerType.get(expectedRepositoryId2)).toBeDefined();
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 });

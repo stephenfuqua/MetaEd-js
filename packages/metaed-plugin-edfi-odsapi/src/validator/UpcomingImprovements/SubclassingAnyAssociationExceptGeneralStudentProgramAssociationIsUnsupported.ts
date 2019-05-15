@@ -5,11 +5,11 @@ import { versionSatisfies, V3OrGreater, getAllEntitiesOfType } from 'metaed-core
 const validatorName = 'SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 const targetVersions: SemVer = V3OrGreater;
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return failures;
 
-  (getAllEntitiesOfType(metaEd, 'associationSubclass') as Array<AssociationSubclass>).forEach(
+  (getAllEntitiesOfType(metaEd, 'associationSubclass') as AssociationSubclass[]).forEach(
     (associationSubclass: AssociationSubclass) => {
       if (!associationSubclass.baseEntity) return;
       if (!associationSubclass.namespace.isExtension) return;

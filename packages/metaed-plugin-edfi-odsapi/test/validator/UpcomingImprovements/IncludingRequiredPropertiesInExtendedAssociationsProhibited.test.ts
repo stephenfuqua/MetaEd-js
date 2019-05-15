@@ -9,7 +9,7 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';
 
-describe('when an association extension extends an association with no required properties', () => {
+describe('when an association extension extends an association with no required properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -18,7 +18,7 @@ describe('when an association extension extends an association with no required 
     }),
   );
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -41,12 +41,12 @@ describe('when an association extension extends an association with no required 
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when an association extension extends an association with a required property', () => {
+describe('when an association extension extends an association with a required property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -55,7 +55,7 @@ describe('when an association extension extends an association with a required p
     }),
   );
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -77,7 +77,7 @@ describe('when an association extension extends an association with a required p
     failures = validate(metaEd);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IncludingRequiredPropertiesInExtendedAssociationsProhibited');
     expect(failures[0].category).toBe('warning');
@@ -90,7 +90,7 @@ describe('when an association extension extends an association with a required p
   });
 });
 
-describe('when an association extension extends an association with a required property for ODS/API >3.0', () => {
+describe('when an association extension extends an association with a required property for ODS/API >3.0', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
     'edfiOdsApi',
@@ -100,7 +100,7 @@ describe('when an association extension extends an association with a required p
   );
 
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -122,7 +122,7 @@ describe('when an association extension extends an association with a required p
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });

@@ -10,8 +10,8 @@ import {
 // METAED-805
 const validatorName = 'AbstractEntityMustNotBeExtended';
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach(namespace => {
     namespace.entity.domainEntityExtension.forEach((extensionEntity: DomainEntityExtension) => {

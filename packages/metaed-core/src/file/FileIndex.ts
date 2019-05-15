@@ -1,20 +1,20 @@
 import R from 'ramda';
 import { MetaEdFile } from './MetaEdFile';
 
-export type FileAndLineNumber = {
+export interface FileAndLineNumber {
   file: MetaEdFile;
   lineNumber: number;
-};
+}
 
-export type FileMap = {
+export interface FileMap {
   fullPath: string;
   lineNumber: number;
-};
+}
 
-export type FileIndex = {
+export interface FileIndex {
   fileAndLineNumbersSorted: FileAndLineNumber[];
   totalLineCount: number;
-};
+}
 
 export function getAllContents(fileIndex: FileIndex | null): string {
   if (fileIndex == null) return '';

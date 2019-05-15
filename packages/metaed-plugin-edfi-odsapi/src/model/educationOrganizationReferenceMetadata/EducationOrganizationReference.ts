@@ -1,7 +1,7 @@
-export type EducationOrganizationReference = {
+export interface EducationOrganizationReference {
   name: string;
   identityPropertyName: string;
-};
+}
 
 export function newEducationOrganizationReference(): EducationOrganizationReference {
   return {

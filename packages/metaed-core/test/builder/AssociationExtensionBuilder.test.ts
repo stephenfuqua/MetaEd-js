@@ -6,9 +6,9 @@ import { getAssociationExtension } from '../TestHelper';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when building association extension in extension namespace', () => {
+describe('when building association extension in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -30,40 +30,40 @@ describe('when building association extension in extension namespace', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName)).toBeDefined();
     expect(getAssociationExtension(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have extendee name', () => {
+  it('should have extendee name', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have base entity namespace', () => {
+  it('should have base entity namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityNamespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const integerProperty = getAssociationExtension(namespace.entity, entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
@@ -72,9 +72,9 @@ describe('when building association extension in extension namespace', () => {
   });
 });
 
-describe('when building association extension in extension namespace extending core entity', () => {
+describe('when building association extension in extension namespace extending core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const coreNamespaceName = 'EdFi';
   const projectExtension = 'ProjectExtension';
@@ -97,22 +97,22 @@ describe('when building association extension in extension namespace extending c
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have extendee name', () => {
+  it('should have extendee name', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have base entity namespace', () => {
+  it('should have base entity namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityNamespaceName).toBe(coreNamespaceName);
   });
 });
 
-describe('when building duplicate association extensions', () => {
+describe('when building duplicate association extensions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -138,20 +138,20 @@ describe('when building duplicate association extensions', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName)).toBeDefined();
     expect(getAssociationExtension(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have two validation failures', () => {
+  it('should have two validation failures', (): void => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot(
@@ -172,9 +172,9 @@ describe('when building duplicate association extensions', () => {
   });
 });
 
-describe('when building association extension with no association extension name', () => {
+describe('when building association extension with no association extension name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -197,18 +197,18 @@ describe('when building association extension with no association extension name
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build association extension', () => {
+  it('should not build association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association extension with lowercase association extension name', () => {
+describe('when building association extension with lowercase association extension name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -231,18 +231,18 @@ describe('when building association extension with lowercase association extensi
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not build association extension', () => {
+  it('should not build association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(0);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association extension with no property', () => {
+describe('when building association extension with no property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -263,43 +263,43 @@ describe('when building association extension with no property', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName)).toBeDefined();
     expect(getAssociationExtension(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have extendee name', () => {
+  it('should have extendee name', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have no property', () => {
+  it('should have no property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
-  it('should have mismatched input error', () => {
+  it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association extension with invalid trailing text', () => {
+describe('when building association extension with invalid trailing text', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
@@ -324,36 +324,36 @@ describe('when building association extension with invalid trailing text', () =>
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one association extension', () => {
+  it('should build one association extension', (): void => {
     expect(namespace.entity.associationExtension.size).toBe(1);
   });
 
-  it('should be found in entity repository', () => {
+  it('should be found in entity repository', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName)).toBeDefined();
     expect(getAssociationExtension(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have extendee name', () => {
+  it('should have extendee name', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have namespace', () => {
+  it('should have namespace', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension', () => {
+  it('should have project extension', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have one property', () => {
+  it('should have one property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
-  it('should have integer property', () => {
+  it('should have integer property', (): void => {
     const integerProperty = getAssociationExtension(namespace.entity, entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
@@ -361,14 +361,14 @@ describe('when building association extension with invalid trailing text', () =>
     expect(integerProperty.isRequired).toBe(true);
   });
 
-  it('should have extraneous input error', () => {
+  it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association extension source map', () => {
+describe('when building association extension source map', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
+  const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
@@ -389,19 +389,19 @@ describe('when building association extension source map', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have a metaEdId property', () => {
+  it('should have a metaEdId property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have a metaEdName property', () => {
+  it('should have a metaEdName property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have a type property', () => {
+  it('should have a type property', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have source map data', () => {
+  it('should have source map data', (): void => {
     expect(getAssociationExtension(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 });

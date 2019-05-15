@@ -7,7 +7,7 @@ import { ColumnNamer } from '../../model/database/ColumnNamer';
 
 export function enumerationPropertyColumnCreator(): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => {
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
       if (!strategy.buildColumns(property)) return [];
 
       const columnNamer: ColumnNamer = strategy.columnNamer(

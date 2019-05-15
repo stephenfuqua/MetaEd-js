@@ -5,11 +5,11 @@ import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy'
 import { collectPrimaryKeys } from '../../../src/enhancer/table/PrimaryKeyCollector';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 
-describe('when collecting primary key columns for identity property', () => {
+describe('when collecting primary key columns for identity property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -37,7 +37,7 @@ describe('when collecting primary key columns for identity property', () => {
     columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -51,11 +51,11 @@ describe('when collecting primary key columns for identity property', () => {
   });
 });
 
-describe('when collecting primary key columns for inline common property', () => {
+describe('when collecting primary key columns for inline common property', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -103,7 +103,7 @@ describe('when collecting primary key columns for inline common property', () =>
     columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -117,13 +117,13 @@ describe('when collecting primary key columns for inline common property', () =>
   });
 });
 
-describe('when collecting primary key columns for identity property and inline common property', () => {
+describe('when collecting primary key columns for identity property and inline common property', (): void => {
   const propertyName1 = 'PropertyName1';
   const propertyName2 = 'PropertyName2';
   const propertyDocumentation = 'PropertyDocumentation';
   let property1: IntegerProperty;
   let property2: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property1 = Object.assign(newIntegerProperty(), {
@@ -184,11 +184,11 @@ describe('when collecting primary key columns for identity property and inline c
     columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
   });
 
-  it('should return two columns', () => {
+  it('should return two columns', (): void => {
     expect(columns).toHaveLength(2);
   });
 
-  it('should return a primary key column for identity property', () => {
+  it('should return a primary key column for identity property', (): void => {
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
     expect(columns[0].name).toBe(propertyName1);
@@ -200,7 +200,7 @@ describe('when collecting primary key columns for identity property and inline c
     expect(columns[0].sourceEntityProperties[0]).toBe(property1);
   });
 
-  it('should return a primary key column for inline common property', () => {
+  it('should return a primary key column for inline common property', (): void => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].dataType).toBe('[INT]');
     expect(columns[1].name).toBe(propertyName2);
@@ -213,12 +213,12 @@ describe('when collecting primary key columns for identity property and inline c
   });
 });
 
-describe('when collecting primary key columns for two inline common properties with primary key to same inline common entity', () => {
+describe('when collecting primary key columns for two inline common properties with primary key to same inline common entity', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -277,11 +277,11 @@ describe('when collecting primary key columns for two inline common properties w
     columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
   });
 
-  it('should return two columns', () => {
+  it('should return two columns', (): void => {
     expect(columns).toHaveLength(2);
   });
 
-  it('should return a primary key column', () => {
+  it('should return a primary key column', (): void => {
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
     expect(columns[0].name).toBe(propertyName);
@@ -293,7 +293,7 @@ describe('when collecting primary key columns for two inline common properties w
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 
-  it('should return a primary key column role name', () => {
+  it('should return a primary key column role name', (): void => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].dataType).toBe('[INT]');
     expect(columns[1].name).toBe(contextName + propertyName);

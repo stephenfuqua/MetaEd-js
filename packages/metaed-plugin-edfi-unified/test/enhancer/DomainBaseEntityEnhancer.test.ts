@@ -24,7 +24,7 @@ import {
 
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';
 
-describe('when enhancing domain', () => {
+describe('when enhancing domain', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -139,32 +139,32 @@ describe('when enhancing domain', () => {
     enhance(metaEd);
   });
 
-  it('should have references to domain entities', () => {
+  it('should have references to domain entities', (): void => {
     const domain: any = namespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(domainEntity1);
     expect(domain.entities).toContain(domainEntity2);
   });
 
-  it('should have references to domain subclasses', () => {
+  it('should have references to domain subclasses', (): void => {
     const domain: any = namespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(domainEntitySubclass1);
     expect(domain.entities).toContain(domainEntitySubclass2);
   });
 
-  it('should have references to associations', () => {
+  it('should have references to associations', (): void => {
     const domain: any = namespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(association1);
     expect(domain.entities).toContain(association2);
   });
 
-  it('should have references to association subclasses', () => {
+  it('should have references to association subclasses', (): void => {
     const domain: any = namespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(associationSubclass1);
     expect(domain.entities).toContain(associationSubclass2);
   });
 });
 
-describe('when enhancing domain with references across namespaces', () => {
+describe('when enhancing domain with references across namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -282,32 +282,32 @@ describe('when enhancing domain with references across namespaces', () => {
     enhance(metaEd);
   });
 
-  it('should have references to domain entities', () => {
+  it('should have references to domain entities', (): void => {
     const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(domainEntity1);
     expect(domain.entities).toContain(domainEntity2);
   });
 
-  it('should have references to domain subclasses', () => {
+  it('should have references to domain subclasses', (): void => {
     const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(domainEntitySubclass1);
     expect(domain.entities).toContain(domainEntitySubclass2);
   });
 
-  it('should have references to associations', () => {
+  it('should have references to associations', (): void => {
     const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(association1);
     expect(domain.entities).toContain(association2);
   });
 
-  it('should have references to association subclasses', () => {
+  it('should have references to association subclasses', (): void => {
     const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
     expect(domain.entities).toContain(associationSubclass1);
     expect(domain.entities).toContain(associationSubclass2);
   });
 });
 
-describe('when enhancing subdomain', () => {
+describe('when enhancing subdomain', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -422,25 +422,25 @@ describe('when enhancing subdomain', () => {
     enhance(metaEd);
   });
 
-  it('should have references to domain entities', () => {
+  it('should have references to domain entities', (): void => {
     const subdomain: any = namespace.entity.subdomain.get(subdomainMetaEdName);
     expect(subdomain.entities).toContain(domainEntity1);
     expect(subdomain.entities).toContain(domainEntity2);
   });
 
-  it('should have references to domain subclasses', () => {
+  it('should have references to domain subclasses', (): void => {
     const subdomain: any = namespace.entity.subdomain.get(subdomainMetaEdName);
     expect(subdomain.entities).toContain(domainEntitySubclass1);
     expect(subdomain.entities).toContain(domainEntitySubclass2);
   });
 
-  it('should have references to associations', () => {
+  it('should have references to associations', (): void => {
     const subdomain: any = namespace.entity.subdomain.get(subdomainMetaEdName);
     expect(subdomain.entities).toContain(association1);
     expect(subdomain.entities).toContain(association2);
   });
 
-  it('should have references to association subclasses', () => {
+  it('should have references to association subclasses', (): void => {
     const subdomain: any = namespace.entity.subdomain.get(subdomainMetaEdName);
     expect(subdomain.entities).toContain(associationSubclass1);
     expect(subdomain.entities).toContain(associationSubclass2);

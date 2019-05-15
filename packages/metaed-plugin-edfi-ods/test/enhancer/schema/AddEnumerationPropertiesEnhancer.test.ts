@@ -2,7 +2,7 @@ import { newEnumerationProperty, newMetaEdEnvironment } from 'metaed-core';
 import { EnumerationProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/property/EnumerationProperty';
 
-describe('when EnumerationProperty enhances enumeration property', () => {
+describe('when EnumerationProperty enhances enumeration property', (): void => {
   const enumerationPropertyName = 'EnumerationPropertyName';
   let enumerationProperty: EnumerationProperty;
 
@@ -15,16 +15,16 @@ describe('when EnumerationProperty enhances enumeration property', () => {
     enhance(metaEd);
   });
 
-  it('should have ods name with type suffix', () => {
+  it('should have ods name with type suffix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsName).toBe(`${enumerationPropertyName}Type`);
   });
 
-  it('should have ods typeified base name with type suffix', () => {
+  it('should have ods typeified base name with type suffix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });
 
-describe('when EnumerationProperty enhances enumeration property role name', () => {
+describe('when EnumerationProperty enhances enumeration property role name', (): void => {
   const enumerationPropertyName = 'EnumerationPropertyName';
   const contextName = 'ContextName';
   let enumerationProperty: EnumerationProperty;
@@ -39,16 +39,16 @@ describe('when EnumerationProperty enhances enumeration property role name', () 
     enhance(metaEd);
   });
 
-  it('should have ods name with type suffix and context prefix', () => {
+  it('should have ods name with type suffix and context prefix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsName).toBe(`${contextName}${enumerationPropertyName}Type`);
   });
 
-  it('should have ods typeified base name with type suffix', () => {
+  it('should have ods typeified base name with type suffix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });
 
-describe('when EnumerationProperty enhances enumeration property with type suffix', () => {
+describe('when EnumerationProperty enhances enumeration property with type suffix', (): void => {
   const enumerationPropertyName = 'EnumerationPropertyName';
   let enumerationProperty: EnumerationProperty;
 
@@ -61,11 +61,11 @@ describe('when EnumerationProperty enhances enumeration property with type suffi
     enhance(metaEd);
   });
 
-  it('should have ods name with normalized type suffix', () => {
+  it('should have ods name with normalized type suffix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsName).toBe(`${enumerationPropertyName}Type`);
   });
 
-  it('should have ods typeified base name normalized type suffix', () => {
+  it('should have ods typeified base name normalized type suffix', (): void => {
     expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });

@@ -19,7 +19,7 @@ import { addMergedInterchangeEdfiOdsApiTo } from '../../../src/model/MergedInter
 import { addInterchangeItemEdfiOdsApiTo } from '../../../src/model/InterchangeItem';
 import { enhance, sortGraph } from '../../../src/enhancer/interchangeOrderMetadata/InterchangeOrderMetadataEnhancer';
 
-describe('when sorting graph with no cycles', () => {
+describe('when sorting graph with no cycles', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -28,12 +28,12 @@ describe('when sorting graph with no cycles', () => {
     graph.setEdge('A', 'B', { isRequired: false });
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C']);
   });
 });
 
-describe('when sorting graph with reflexive cycle', () => {
+describe('when sorting graph with reflexive cycle', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -44,16 +44,16 @@ describe('when sorting graph with reflexive cycle', () => {
     graph.setEdge('D', 'D', { isRequired: true });
   });
 
-  it('should have cycle edge', () => {
+  it('should have cycle edge', (): void => {
     expect(graphlib.alg.findCycles(graph)[0]).toEqual(['D']);
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C', 'D']);
   });
 });
 
-describe('when sorting graph with symmetric cycle', () => {
+describe('when sorting graph with symmetric cycle', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -65,16 +65,16 @@ describe('when sorting graph with symmetric cycle', () => {
     graph.setEdge('E', 'D', { isRequired: true });
   });
 
-  it('should have cycle edges', () => {
+  it('should have cycle edges', (): void => {
     expect(graphlib.alg.findCycles(graph)[0]).toEqual(['E', 'D']);
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C', 'E', 'D']);
   });
 });
 
-describe('when sorting graph with transitive cycle', () => {
+describe('when sorting graph with transitive cycle', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -83,16 +83,16 @@ describe('when sorting graph with transitive cycle', () => {
     graph.setEdge('A', 'B', { isRequired: false });
   });
 
-  it('should not have cycle edges', () => {
+  it('should not have cycle edges', (): void => {
     expect(graphlib.alg.findCycles(graph)).toEqual([]);
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C']);
   });
 });
 
-describe('when sorting graph with extended cycle', () => {
+describe('when sorting graph with extended cycle', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -105,16 +105,16 @@ describe('when sorting graph with extended cycle', () => {
     graph.setEdge('F', 'D', { isRequired: true });
   });
 
-  it('should have cycle edges', () => {
+  it('should have cycle edges', (): void => {
     expect(graphlib.alg.findCycles(graph)[0]).toEqual(['F', 'E', 'D']);
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C', 'E', 'F', 'D']);
   });
 });
 
-describe('when sorting graph with optional cycle', () => {
+describe('when sorting graph with optional cycle', (): void => {
   const graph = new Graph();
 
   beforeAll(() => {
@@ -135,16 +135,16 @@ describe('when sorting graph with optional cycle', () => {
     graph.setEdge('I', 'G', { isRequired: false });
   });
 
-  it('should have cycle edges', () => {
+  it('should have cycle edges', (): void => {
     expect(graphlib.alg.findCycles(graph)[0]).toEqual(['I', 'H', 'G']);
   });
 
-  it('should sort correctly', () => {
+  it('should sort correctly', (): void => {
     expect(sortGraph(graph)).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']);
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange', (): void => {
   let mergedInterchange: MergedInterchange;
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
@@ -174,7 +174,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: domainEntityName },
@@ -182,7 +182,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0', (): void => {
   let mergedInterchange: MergedInterchange;
   const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
@@ -212,7 +212,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: domainEntityName },
@@ -220,7 +220,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with different interchange item name', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with different interchange item name', (): void => {
   let mergedInterchange: MergedInterchange;
   const namespaceName = 'EdFi';
   const interchangeItemName = 'InterchangeItemName';
@@ -251,7 +251,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: interchangeItemName },
@@ -259,7 +259,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with internal dependency', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with internal dependency', (): void => {
   let mergedInterchange: MergedInterchange;
   const namespaceName = 'EdFi';
   const domainEntityName1 = 'DomainEntityName1';
@@ -312,7 +312,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: domainEntityName2 },
@@ -321,7 +321,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency', (): void => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
   const namespaceName = 'EdFi';
@@ -384,7 +384,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange1.data.edfiOdsApi.apiOrder).toBe(20);
     expect(mergedInterchange1.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 2, name: domainEntityName1 },
@@ -397,7 +397,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension', (): void => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
   let mergedInterchange2Extension: MergedInterchange;
@@ -480,7 +480,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange1.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange1.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: domainEntityName2 },
@@ -498,7 +498,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
   });
 });
 
-describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension with duplicate name', () => {
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension with duplicate name', (): void => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
   const namespaceName = 'EdFi';
@@ -557,7 +557,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     enhance(metaEd);
   });
 
-  it('should have interchange order properties', () => {
+  it('should have interchange order properties', (): void => {
     expect(mergedInterchange1.data.edfiOdsApi.apiOrder).toBe(10);
     expect(mergedInterchange1.data.edfiOdsApi.apiOrderedElements).toEqual([
       { globalDependencyOrder: 1, name: domainEntityName1 },

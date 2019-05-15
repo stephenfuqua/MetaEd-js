@@ -14,7 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
     if (handbookRepository == null) return;
-    (getEntitiesOfTypeForNamespaces([namespace], 'common') as Array<Common>).filter(notInlineCommon).forEach(entity => {
+    (getEntitiesOfTypeForNamespaces([namespace], 'common') as Common[]).filter(notInlineCommon).forEach(entity => {
       handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Common', metaEd));
     });
   });

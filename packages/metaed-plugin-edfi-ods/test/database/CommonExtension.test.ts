@@ -28,14 +28,14 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when common extension is a required common override property on association extension', () => {
+describe('when common extension is a required common override property on association extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
   const associationName = 'AssociationName';
-  const associationExtensionName: string = `${associationName}Extension`;
+  const associationExtensionName = `${associationName}Extension`;
   const commonName = 'CommonName';
-  const commonExtensionName: string = `${associationName + commonName}Extension`;
+  const commonExtensionName = `${associationName + commonName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -198,14 +198,14 @@ describe('when common extension is a required common override property on associ
   });
 });
 
-describe('when common extension is a required common override property on domain entity extension', () => {
+describe('when common extension is a required common override property on domain entity extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const extension = 'Extension';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
-  const domainEntityExtensionName: string = `${domainEntityName}Extension`;
-  const commonExtensionName: string = `${domainEntityName + commonName}Extension`;
+  const domainEntityExtensionName = `${domainEntityName}Extension`;
+  const commonExtensionName = `${domainEntityName + commonName}Extension`;
   const integerPropertyName2 = 'IntegerPropertyName1';
   const integerPropertyName1 = 'IntegerPropertyName2';
   const integerPropertyName3 = 'IntegerPropertyName3';

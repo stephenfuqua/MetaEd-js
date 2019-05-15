@@ -8,7 +8,7 @@ winston.configure({ transports: [new winston.transports.Console()], format: wins
 export async function generateTables(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const { targetTechnologyVersion } = metaEd.plugin.get('edfiOds') as PluginEnvironment;
 
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().table({
@@ -33,7 +33,7 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
 }
 
 export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().foreignKey({
@@ -57,7 +57,7 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
 }
 
 export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().extendedProperties({ tables: namespace.data.edfiOds.odsSchema.tables });
@@ -79,7 +79,7 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
 }
 
 export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().enumerationRow({
@@ -103,7 +103,7 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
 }
 
 export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().schoolYearEnumerationRow({
@@ -128,7 +128,7 @@ export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<Ge
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   registerPartials();
-  const results: Array<GeneratedOutput> = [];
+  const results: GeneratedOutput[] = [];
 
   const tablesResult: GeneratorResult = await generateTables(metaEd);
   const foreignKeysResult: GeneratorResult = await generateForeignKeys(metaEd);
@@ -136,7 +136,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const enumerationsResult: GeneratorResult = await generateEnumerations(metaEd);
   const schoolYearsResult: GeneratorResult = await generateSchoolYears(metaEd);
 
-  const generatorResults: Array<GeneratorResult> = [
+  const generatorResults: GeneratorResult[] = [
     tablesResult,
     foreignKeysResult,
     extendedPropertiesResult,

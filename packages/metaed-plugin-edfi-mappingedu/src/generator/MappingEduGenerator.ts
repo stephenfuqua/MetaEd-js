@@ -18,7 +18,7 @@ import {
   pluginEnumerationItemDefinitionsForNamespace,
 } from '../enhancer/EnhancerHelper';
 
-const generatorName: string = 'edfiMappingedu.MappingEduGenerator';
+const generatorName = 'edfiMappingedu.MappingEduGenerator';
 
 const normalizeLineBreaks = (str: string): string => {
   if (str == null) return '';
@@ -31,10 +31,10 @@ const removeOuterQuotes = (string: string): string =>
 const normalizeDefinition = (definition: string): string =>
   removeOuterQuotes(removeExtraWhitespace(normalizeLineBreaks(definition)).trim());
 
-const normalizeEntityPath = (entityPath: Array<string>): string => entityPath.join('.');
+const normalizeEntityPath = (entityPath: string[]): string => entityPath.join('.');
 const normalizeDataType = (string: string): string => string.replace('xs:', '');
 
-const sortBy = (...props: Array<string>) => (a: Object, b: Object): number => {
+const sortBy = (...props: string[]) => (a: Record<string, any>, b: Record<string, any>): number => {
   // eslint-disable-next-line no-restricted-syntax
   for (const prop of props) {
     // eslint-disable-next-line no-continue
@@ -51,14 +51,11 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const workbook: Workbook = newWorkbook();
 
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const elementGroupDefinitions: Array<ElementGroupDefinition> = pluginElementGroupDefinitionsForNamespace(
-      metaEd,
-      namespace,
-    );
-    const entityDefinitions: Array<EntityDefinition> = pluginEntityDefinitionsForNamespace(metaEd, namespace);
-    const elementDefinitions: Array<ElementDefinition> = pluginElementDefinitionsForNamespace(metaEd, namespace);
-    const enumerationDefinitions: Array<EnumerationDefinition> = pluginEnumerationDefinitionsForNamespace(metaEd, namespace);
-    const enumerationItemDefinitions: Array<EnumerationItemDefinition> = pluginEnumerationItemDefinitionsForNamespace(
+    const elementGroupDefinitions: ElementGroupDefinition[] = pluginElementGroupDefinitionsForNamespace(metaEd, namespace);
+    const entityDefinitions: EntityDefinition[] = pluginEntityDefinitionsForNamespace(metaEd, namespace);
+    const elementDefinitions: ElementDefinition[] = pluginElementDefinitionsForNamespace(metaEd, namespace);
+    const enumerationDefinitions: EnumerationDefinition[] = pluginEnumerationDefinitionsForNamespace(metaEd, namespace);
+    const enumerationItemDefinitions: EnumerationItemDefinition[] = pluginEnumerationItemDefinitionsForNamespace(
       metaEd,
       namespace,
     );
@@ -153,7 +150,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     enumerationItemDefinitionSheet['!cols'] = [{ wpx: 100 }, { wpx: 250 }, { wpx: 250 }, { wpx: 250 }, { wpx: 250 }];
   });
 
-  const generatedOutput: Array<GeneratedOutput> = [
+  const generatedOutput: GeneratedOutput[] = [
     {
       name: 'MappingEdu',
       namespace: 'Documentation',

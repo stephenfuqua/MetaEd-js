@@ -1,7 +1,7 @@
 import { MetaEdEnvironment, PropertyIndex, ValidationFailure, EntityProperty } from 'metaed-core';
 
-function propertiesNeedingChecking(properties: PropertyIndex): Array<EntityProperty> {
-  const result: Array<EntityProperty> = [];
+function propertiesNeedingChecking(properties: PropertyIndex): EntityProperty[] {
+  const result: EntityProperty[] = [];
 
   result.push(...properties.association);
   result.push(...properties.choice);
@@ -17,8 +17,8 @@ function propertiesNeedingChecking(properties: PropertyIndex): Array<EntityPrope
   return result;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   propertiesNeedingChecking(metaEd.propertyIndex).forEach(property => {
     if (property.referencedNamespaceName && !metaEd.namespace.has(property.referencedNamespaceName)) {

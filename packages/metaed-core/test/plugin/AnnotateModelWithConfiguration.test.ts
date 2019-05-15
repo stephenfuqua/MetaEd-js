@@ -11,14 +11,14 @@ import { PluginEnvironment } from '../../src/plugin/PluginEnvironment';
 import { newPluginEnvironment } from '../../src/plugin/PluginEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-function namespaceRepository(...namespaces: Array<Namespace>): Map<string, Namespace> {
-  const stringNamespacePairs: Array<[string, Namespace]> = namespaces.map(
+function namespaceRepository(...namespaces: Namespace[]): Map<string, Namespace> {
+  const stringNamespacePairs: [string, Namespace][] = namespaces.map(
     (namespace: Namespace) => [namespace.namespaceName, namespace] as [string, Namespace],
   );
   return new Map(stringNamespacePairs);
 }
 
-describe('when config rule is plugin-wide', () => {
+describe('when config rule is plugin-wide', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -39,27 +39,27 @@ describe('when config rule is plugin-wide', () => {
   const association: Association = { ...newAssociation(), namespace, metaEdName: 'AssociationName' };
   addEntityForNamespace(association);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should annotate plugin environment', () => {
+  it('should annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBe('info');
   });
 
-  it('should not annotate entities', () => {
+  it('should not annotate entities', (): void => {
     expect(domainEntity.config.pluginName).toBeUndefined();
     expect(association.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when multiple config rules are plugin-wide and the data does not overlap', () => {
+describe('when multiple config rules are plugin-wide and the data does not overlap', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -86,31 +86,31 @@ describe('when multiple config rules are plugin-wide and the data does not overl
   const association: Association = { ...newAssociation(), namespace, metaEdName: 'AssociationName' };
   addEntityForNamespace(association);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should annotate plugin environment with first rule', () => {
+  it('should annotate plugin environment with first rule', (): void => {
     expect(pluginEnvironment.config.explainer).toBe('info');
   });
 
-  it('should annotate plugin environment with second rule', () => {
+  it('should annotate plugin environment with second rule', (): void => {
     expect(pluginEnvironment.config.special).toBe('sauce');
   });
 
-  it('should not annotate entities', () => {
+  it('should not annotate entities', (): void => {
     expect(domainEntity.config.pluginName).toBeUndefined();
     expect(association.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when multiple config rules are plugin-wide and the data does overlap', () => {
+describe('when multiple config rules are plugin-wide and the data does overlap', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -137,35 +137,35 @@ describe('when multiple config rules are plugin-wide and the data does overlap',
   const association: Association = { ...newAssociation(), namespace, metaEdName: 'AssociationName' };
   addEntityForNamespace(association);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should annotate plugin environment with two elements', () => {
+  it('should annotate plugin environment with two elements', (): void => {
     expect(pluginEnvironment.config.explainer).toHaveLength(2);
   });
 
-  it('should annotate plugin environment with first rule', () => {
+  it('should annotate plugin environment with first rule', (): void => {
     expect(pluginEnvironment.config.explainer).toContain('info');
   });
 
-  it('should annotate plugin environment with second rule', () => {
+  it('should annotate plugin environment with second rule', (): void => {
     expect(pluginEnvironment.config.explainer).toContain('sauce');
   });
 
-  it('should not annotate entities', () => {
+  it('should not annotate entities', (): void => {
     expect(domainEntity.config.pluginName).toBeUndefined();
     expect(association.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type', () => {
+describe('when config rule is for a single entity type', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -189,30 +189,30 @@ describe('when config rule is for a single entity type', () => {
   const association: Association = { ...newAssociation(), namespace, metaEdName: 'AssociationName' };
   addEntityForNamespace(association);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity', () => {
+  it('should annotate domainEntity', (): void => {
     expect(domainEntity.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate association', () => {
+  it('should not annotate association', (): void => {
     expect(association.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for multiple entity type', () => {
+describe('when config rule is for multiple entity type', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -236,30 +236,30 @@ describe('when config rule is for multiple entity type', () => {
   const association: Association = { ...newAssociation(), namespace, metaEdName: 'AssociationName' };
   addEntityForNamespace(association);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity', () => {
+  it('should annotate domainEntity', (): void => {
     expect(domainEntity.config.pluginName.explainer).toBe('info');
   });
 
-  it('should annotate association', () => {
+  it('should annotate association', (): void => {
     expect(association.config.pluginName.explainer).toBe('info');
   });
 });
 
-describe('when config rule is for a single entity type in a core namespace', () => {
+describe('when config rule is for a single entity type in a core namespace', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -289,30 +289,30 @@ describe('when config rule is for a single entity type in a core namespace', () 
   };
   addEntityForNamespace(domainEntityInExtension);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace, extensionNamespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity in core', () => {
+  it('should annotate domainEntity in core', (): void => {
     expect(domainEntity.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity in extension', () => {
+  it('should not annotate domainEntity in extension', (): void => {
     expect(domainEntityInExtension.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type in an extension namespace', () => {
+describe('when config rule is for a single entity type in an extension namespace', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -350,34 +350,34 @@ describe('when config rule is for a single entity type in an extension namespace
   };
   addEntityForNamespace(domainEntityInExtension2);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace, extensionNamespace1, extensionNamespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should not annotate domainEntity in core', () => {
+  it('should not annotate domainEntity in core', (): void => {
     expect(domainEntity.config.pluginName).toBeUndefined();
   });
 
-  it('should annotate domainEntity in extension1', () => {
+  it('should annotate domainEntity in extension1', (): void => {
     expect(domainEntityInExtension1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should annotate domainEntity in extension2', () => {
+  it('should annotate domainEntity in extension2', (): void => {
     expect(domainEntityInExtension2.config.pluginName.explainer).toBe('info');
   });
 });
 
-describe('when config rule is for a single entity type in a single named namespace', () => {
+describe('when config rule is for a single entity type in a single named namespace', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -407,30 +407,30 @@ describe('when config rule is for a single entity type in a single named namespa
   };
   addEntityForNamespace(domainEntity2);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should not annotate domainEntity1 in namespace1', () => {
+  it('should not annotate domainEntity1 in namespace1', (): void => {
     expect(domainEntity1.config.pluginName).toBeUndefined();
   });
 
-  it('should annotate domainEntity2 in namespace2', () => {
+  it('should annotate domainEntity2 in namespace2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 });
 
-describe('when config rule is for a single entity type in multiple named namespaces', () => {
+describe('when config rule is for a single entity type in multiple named namespaces', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -460,30 +460,30 @@ describe('when config rule is for a single entity type in multiple named namespa
   };
   addEntityForNamespace(domainEntity2);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1 in namespace1', () => {
+  it('should annotate domainEntity1 in namespace1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should annotate domainEntity2 in namespace2', () => {
+  it('should annotate domainEntity2 in namespace2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 });
 
-describe('when config rule is for a single named namespace that does not exist', () => {
+describe('when config rule is for a single named namespace that does not exist', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -506,27 +506,27 @@ describe('when config rule is for a single named namespace that does not exist',
   const domainEntity1: DomainEntity = { ...newDomainEntity(), namespace: namespace1, metaEdName: 'DomainEntity1Name' };
   addEntityForNamespace(domainEntity1);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1),
   );
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchSnapshot();
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should not annotate domainEntity1 in namespace1', () => {
+  it('should not annotate domainEntity1 in namespace1', (): void => {
     expect(domainEntity1.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type in a single named namespace with a specific name', () => {
+describe('when config rule is for a single entity type in a single named namespace with a specific name', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -556,30 +556,30 @@ describe('when config rule is for a single entity type in a single named namespa
   };
   addEntityForNamespace(domainEntity2);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity2', () => {
+  it('should not annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type in a single named namespace with a list of names', () => {
+describe('when config rule is for a single entity type in a single named namespace with a list of names', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -615,34 +615,34 @@ describe('when config rule is for a single entity type in a single named namespa
   };
   addEntityForNamespace(domainEntity3);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should annotate domainEntity2', () => {
+  it('should annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity3', () => {
+  it('should not annotate domainEntity3', (): void => {
     expect(domainEntity3.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type in a single named namespace with a specific name with no match', () => {
+describe('when config rule is for a single entity type in a single named namespace with a specific name with no match', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -672,31 +672,31 @@ describe('when config rule is for a single entity type in a single named namespa
   };
   addEntityForNamespace(domainEntity2);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace),
   );
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchSnapshot();
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should not annotate domainEntity1', () => {
+  it('should not annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName).toBeUndefined();
   });
 
-  it('should not annotate domainEntity2', () => {
+  it('should not annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule is for a single entity type in multiple extension namespaces with duplicate names', () => {
+describe('when config rule is for a single entity type in multiple extension namespaces with duplicate names', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -733,34 +733,34 @@ describe('when config rule is for a single entity type in multiple extension nam
   };
   addEntityForNamespace(domainEntity3);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should annotate domainEntity2', () => {
+  it('should annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity3', () => {
+  it('should not annotate domainEntity3', (): void => {
     expect(domainEntity3.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule has multiple match definitions that do not overlap', () => {
+describe('when config rule has multiple match definitions that do not overlap', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -803,34 +803,34 @@ describe('when config rule has multiple match definitions that do not overlap', 
   };
   addEntityForNamespace(domainEntity3);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity2', () => {
+  it('should not annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName).toBeUndefined();
   });
 
-  it('should not annotate domainEntity3', () => {
+  it('should not annotate domainEntity3', (): void => {
     expect(domainEntity3.config.pluginName.explainer).toBe('info');
   });
 });
 
-describe('when config rule has multiple match definitions that overlap', () => {
+describe('when config rule has multiple match definitions that overlap', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -873,34 +873,34 @@ describe('when config rule has multiple match definitions that overlap', () => {
   };
   addEntityForNamespace(domainEntity3);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should be valid', () => {
+  it('should be valid', (): void => {
     expect(result).toHaveLength(0);
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity2', () => {
+  it('should not annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity3', () => {
+  it('should not annotate domainEntity3', (): void => {
     expect(domainEntity3.config.pluginName).toBeUndefined();
   });
 });
 
-describe('when config rule has multiple match definitions where one is invalid', () => {
+describe('when config rule has multiple match definitions where one is invalid', (): void => {
   const pluginConfiguration: PluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -943,30 +943,30 @@ describe('when config rule has multiple match definitions where one is invalid',
   };
   addEntityForNamespace(domainEntity3);
 
-  const result: Array<ValidationFailure> = annotateModelWithConfiguration(
+  const result: ValidationFailure[] = annotateModelWithConfiguration(
     pluginConfiguration,
     pluginEnvironment,
     namespaceRepository(namespace1, namespace2),
   );
 
-  it('should not be valid', () => {
+  it('should not be valid', (): void => {
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchSnapshot();
   });
 
-  it('should not annotate plugin environment', () => {
+  it('should not annotate plugin environment', (): void => {
     expect(pluginEnvironment.config.explainer).toBeUndefined();
   });
 
-  it('should annotate domainEntity1', () => {
+  it('should annotate domainEntity1', (): void => {
     expect(domainEntity1.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity2', () => {
+  it('should not annotate domainEntity2', (): void => {
     expect(domainEntity2.config.pluginName.explainer).toBe('info');
   });
 
-  it('should not annotate domainEntity3', () => {
+  it('should not annotate domainEntity3', (): void => {
     expect(domainEntity3.config.pluginName).toBeUndefined();
   });
 });

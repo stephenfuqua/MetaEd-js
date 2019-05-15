@@ -23,7 +23,7 @@ export const NoAssociation: Association = {
 };
 
 // Focused unit test confirming prefix added for domain entities
-describe('when enhancing domain entity', () => {
+describe('when enhancing domain entity', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'example' };
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -44,13 +44,13 @@ describe('when enhancing domain entity', () => {
     enhance(metaEd);
   });
 
-  it('should add an "Example" prefix', () => {
+  it('should add an "Example" prefix', (): void => {
     expect(domainEntity.data.orgExample.exampleName).toBe(`Example${entityName}`);
   });
 });
 
 // Focused unit test confirming prefix not added for associations
-describe('when enhancing association', () => {
+describe('when enhancing association', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'example' };
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -70,13 +70,13 @@ describe('when enhancing association', () => {
     enhance(metaEd);
   });
 
-  it('should not add an "Example" prefix', () => {
+  it('should not add an "Example" prefix', (): void => {
     expect(association.data.orgExample).toBeUndefined();
   });
 });
 
 // Focused unit test confirming prefix not added for domain entities on 2.0 data standard
-describe('when enhancing domain entity for DS 2.0', () => {
+describe('when enhancing domain entity for DS 2.0', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'example' };
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '2.0.0' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -96,7 +96,7 @@ describe('when enhancing domain entity for DS 2.0', () => {
     enhance(metaEd);
   });
 
-  it('should not add an "Example" prefix', () => {
+  it('should not add an "Example" prefix', (): void => {
     expect(domainEntity.data.orgExample).toBeUndefined();
   });
 });

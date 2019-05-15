@@ -24,7 +24,7 @@ import { SharedStringBuilder } from './SharedStringBuilder';
 import { StringTypeBuilder } from './StringTypeBuilder';
 
 export async function execute(state: State): Promise<void> {
-  const builders: Array<MetaEdGrammarListener> = [];
+  const builders: MetaEdGrammarListener[] = [];
 
   // NamespaceBuilder goes first, all others have a dependency on it
   builders.push(new NamespaceBuilder(state.metaEd, state.validationFailure));

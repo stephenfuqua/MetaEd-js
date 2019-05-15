@@ -19,9 +19,9 @@ import {
 jest.unmock('final-fs');
 jest.setTimeout(40000);
 
-describe('when running enhancers and validators against DS 3.1 and a simple extension', () => {
+describe('when running enhancers and validators against DS 3.1 and a simple extension', (): void => {
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
-  let failures: Array<ValidationFailure> = [];
+  let failures: ValidationFailure[] = [];
 
   beforeAll(async () => {
     const metaEdConfiguration = {

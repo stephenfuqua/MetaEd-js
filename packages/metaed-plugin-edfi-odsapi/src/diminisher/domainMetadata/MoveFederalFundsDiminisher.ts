@@ -8,7 +8,7 @@ const enhancerName = 'MoveFederalFundsDiminisher';
 const targetVersions = '2.x';
 const affectedTables = ['LocalEducationAgencyFederalFunds', 'StateEducationAgencyFederalFunds'];
 
-function remove(array: Array<EntityTable>, element: EntityTable) {
+function remove(array: EntityTable[], element: EntityTable) {
   const index = array.indexOf(element);
   if (index !== -1) {
     array.splice(index, 1);

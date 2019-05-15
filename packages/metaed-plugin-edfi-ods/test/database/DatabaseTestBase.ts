@@ -44,10 +44,7 @@ export function column(parentTableSchema: string, parentTableName: string, name:
   };
 }
 
-export function foreignKey(
-  parentTableColumn: Array<DatabaseColumn>,
-  foreignTableColumn: Array<DatabaseColumn>,
-): DatabaseForeignKey {
+export function foreignKey(parentTableColumn: DatabaseColumn[], foreignTableColumn: DatabaseColumn[]): DatabaseForeignKey {
   return {
     parentTable: table(parentTableColumn[0].parentTableSchema, parentTableColumn[0].parentTableName),
     parentColumns: parentTableColumn.map((dbColumn: DatabaseColumn) => dbColumn.name),
@@ -86,7 +83,7 @@ export async function enhanceGenerateAndExecuteSql(
   initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
   initializeOdsPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
-  const sql: Array<string> = [];
+  const sql: string[] = [];
   (await schemaGenerate(metaEd)).generatedOutput.forEach(result => sql.push(result.resultString));
   (await odsGenerate(metaEd)).generatedOutput.forEach(result => sql.push(result.resultString));
   await executeGeneratedSql(sql.join(''), databaseName);

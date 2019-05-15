@@ -13,10 +13,10 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CrossSimpleProperty/SimplePropertiesCannotDuplicateNames';
 
-describe('when two integer properties in different DEs have the same name', () => {
+describe('when two integer properties in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -41,12 +41,12 @@ describe('when two integer properties in different DEs have the same name', () =
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, and one integer property', () => {
+  it('should build two domain entities, and one integer property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('SimplePropertiesCannotDuplicateNames');
     expect(failures[0].category).toBe('error');
@@ -60,10 +60,10 @@ describe('when two integer properties in different DEs have the same name', () =
   });
 });
 
-describe('when two integer properties in different DEs in different namespaces have the same name', () => {
+describe('when two integer properties in different DEs in different namespaces have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -93,21 +93,21 @@ describe('when two integer properties in different DEs in different namespaces h
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, and one integer property', () => {
+  it('should build two domain entities, and one integer property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
     expect(metaEd.propertyIndex.integer.length).toBe(2);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when an integer property and a decimal property in different DEs have the same name', () => {
+describe('when an integer property and a decimal property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -133,21 +133,21 @@ describe('when an integer property and a decimal property in different DEs have 
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one integer property, one decimal property', () => {
+  it('should build two domain entities, one integer property, one decimal property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when a integer property and a string property in different DEs have the same name', () => {
+describe('when a integer property and a string property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -173,20 +173,20 @@ describe('when a integer property and a string property in different DEs have th
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one integer property, one string property', () => {
+  it('should build two domain entities, one integer property, one string property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.string.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
-describe('when an string property and a string property in different DEs have the same name', () => {
+describe('when an string property and a string property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -211,19 +211,19 @@ describe('when an string property and a string property in different DEs have th
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, two string properties', () => {
+  it('should build two domain entities, two string properties', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
-describe('when an string property and a decimal property in different DEs have the same name', () => {
+describe('when an string property and a decimal property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -249,21 +249,21 @@ describe('when an string property and a decimal property in different DEs have t
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one string property, one decimal property', () => {
+  it('should build two domain entities, one string property, one decimal property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when an decimal property and a decimal property in different DEs have the same name', () => {
+describe('when an decimal property and a decimal property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -288,20 +288,20 @@ describe('when an decimal property and a decimal property in different DEs have 
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, two decimal properties', () => {
+  it('should build two domain entities, two decimal properties', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.decimal.length).toBe(2);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when a decimal property and a shared decimal property in different DEs have the same name', () => {
+describe('when a decimal property and a shared decimal property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -327,21 +327,21 @@ describe('when a decimal property and a shared decimal property in different DEs
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared decimal, one decimal property', () => {
+  it('should build two domain entities, one shared decimal, one decimal property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
     expect(metaEd.propertyIndex.sharedDecimal.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when a string property and a shared string property in different DEs have the same name', () => {
+describe('when a string property and a shared string property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -367,21 +367,21 @@ describe('when a string property and a shared string property in different DEs h
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared string, one string property', () => {
+  it('should build two domain entities, one shared string, one string property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.sharedString.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when a string property and a shared string property in different DEs in different namespaces have the same name', () => {
+describe('when a string property and a shared string property in different DEs in different namespaces have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -412,22 +412,22 @@ describe('when a string property and a shared string property in different DEs i
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared string, one string property', () => {
+  it('should build two domain entities, one shared string, one string property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.sharedString.length).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when an integer property and a shared integer property in different DEs have the same name', () => {
+describe('when an integer property and a shared integer property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -453,20 +453,20 @@ describe('when an integer property and a shared integer property in different DE
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared integer, one integer property', () => {
+  it('should build two domain entities, one shared integer, one integer property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.sharedInteger.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
-describe('when a short property and a shared short property in different DEs have the same name', () => {
+describe('when a short property and a shared short property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -492,21 +492,21 @@ describe('when a short property and a shared short property in different DEs hav
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared short, one short property', () => {
+  it('should build two domain entities, one shared short, one short property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.short.length).toBe(1);
     expect(metaEd.propertyIndex.sharedShort.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });
 
-describe('when a string property and a shared decimal property in different DEs have the same name', () => {
+describe('when a string property and a shared decimal property in different DEs have the same name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -532,13 +532,13 @@ describe('when a string property and a shared decimal property in different DEs 
     failures = validate(metaEd);
   });
 
-  it('should build two domain entities, one shared string, one string property', () => {
+  it('should build two domain entities, one shared string, one string property', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.sharedDecimal.length).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', (): void => {
     expect(failures).toHaveLength(2);
   });
 });

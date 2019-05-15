@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, SharedDecimalBuilder, Namespac
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedDecimal/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
 
-describe('when validating shared decimal with max value greater than min value', () => {
+describe('when validating shared decimal with max value greater than min value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -24,14 +24,14 @@ describe('when validating shared decimal with max value greater than min value',
     failures = validate(metaEd);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating shared decimal with min value greater than max value', () => {
+describe('when validating shared decimal with min value greater than max value', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -53,11 +53,11 @@ describe('when validating shared decimal with min value greater than max value',
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
+  it('should build one shared decimal', (): void => {
     expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
+  it('should have validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedDecimalMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');

@@ -8,9 +8,9 @@ import {
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/IntegerProperty/IntegerPropertyMustNotMatchASharedString';
 
-describe('when validating integer property does not match shared string', () => {
+describe('when validating integer property does not match shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -34,23 +34,23 @@ describe('when validating integer property does not match shared string', () => 
     failures = validate(metaEd);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when validating integer property matches shared string', () => {
+describe('when validating integer property matches shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -74,15 +74,15 @@ describe('when validating integer property matches shared string', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one shared string', () => {
+  it('should build one shared string', (): void => {
     expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
-  it('should build one abstract entity', () => {
+  it('should build one abstract entity', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures', () => {
+  it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IntegerPropertyMustNotMatchASharedString');
     expect(failures[0].category).toBe('error');

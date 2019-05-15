@@ -28,12 +28,12 @@ import {
 } from './PackageSettings';
 import { OutputWindow } from './OutputWindow';
 
-type BuildPaths = {
+interface BuildPaths {
   metaEdConsoleDirectory: string;
   cmdExePath: string;
   metaEdConsolePath: string;
   metaEdDeployPath: string;
-};
+}
 
 // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
 async function collapseTreeViewDirectory(pathString: string): Promise<void> {
@@ -72,7 +72,7 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, outputWindow: O
 
   try {
     if (await fs.exists(artifactDirectory)) {
-      const metaEdFilePaths: Array<string> = klawSync(artifactDirectory, {
+      const metaEdFilePaths: string[] = klawSync(artifactDirectory, {
         filter: item => ['.metaed', '.metaEd', '.MetaEd', '.METAED'].includes(path.extname(item.path)),
       });
       if (metaEdFilePaths.length > 0) {
@@ -209,7 +209,7 @@ async function executeBuild(
   });
 }
 
-function validProjectMetadata(metaEdProjectMetadata: Array<MetaEdProjectMetadata>, outputWindow: OutputWindow): boolean {
+function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[], outputWindow: OutputWindow): boolean {
   let hasInvalidProject = false;
   // eslint-disable-next-line no-restricted-syntax
   for (const pm of metaEdProjectMetadata) {
@@ -221,7 +221,7 @@ function validProjectMetadata(metaEdProjectMetadata: Array<MetaEdProjectMetadata
   if (hasInvalidProject) return false;
 
   const hasExtensionProjects: boolean = R.any((pm: MetaEdProjectMetadata) => pm.isExtensionProject, metaEdProjectMetadata);
-  const coreProjectMetadata: Array<MetaEdProjectMetadata> = metaEdProjectMetadata.filter(
+  const coreProjectMetadata: MetaEdProjectMetadata[] = metaEdProjectMetadata.filter(
     (pm: MetaEdProjectMetadata) => !pm.isExtensionProject,
   );
 
@@ -273,7 +273,7 @@ export async function build(outputWindow: OutputWindow): Promise<boolean> {
     const buildPaths: BuildPaths | null = await verifyBuildPaths(outputWindow);
     if (!buildPaths) return false;
 
-    const metaEdProjectMetadata: Array<MetaEdProjectMetadata> = await findMetaEdProjectMetadata(true);
+    const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata(true);
     if (!validProjectMetadata(metaEdProjectMetadata, outputWindow)) return false;
 
     const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver());
@@ -384,7 +384,7 @@ export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boole
     const buildPaths: BuildPaths | null = await verifyBuildPaths(outputWindow);
     if (!buildPaths) return false;
 
-    const metaEdProjectMetadata: Array<MetaEdProjectMetadata> = await findMetaEdProjectMetadata(true);
+    const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata(true);
     if (!validProjectMetadata(metaEdProjectMetadata, outputWindow)) return false;
 
     const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver());

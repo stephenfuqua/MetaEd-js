@@ -15,7 +15,7 @@ function assignReference(namespace: Namespace, item: InterchangeItem) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'interchange', 'interchangeExtension') as Array<Interchange>).forEach(interchangeBase => {
+  (getAllEntitiesOfType(metaEd, 'interchange', 'interchangeExtension') as Interchange[]).forEach(interchangeBase => {
     const interchange: Interchange = asInterchange(interchangeBase);
     interchange.elements.forEach(item => assignReference(interchange.namespace, item));
     interchange.identityTemplates.forEach(item => assignReference(interchange.namespace, item));

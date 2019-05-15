@@ -6,7 +6,7 @@ import { NoSourceMap } from '../SourceMap';
 /**
  *
  */
-export type MergeDirectiveSourceMap = {
+export interface MergeDirectiveSourceMap {
   type: SourceMap;
   sourcePropertyPathStrings: SourceMap;
   targetPropertyPathStrings: SourceMap;
@@ -14,7 +14,7 @@ export type MergeDirectiveSourceMap = {
   targetPropertyChain: SourceMap;
   sourceProperty: SourceMap;
   targetProperty: SourceMap;
-};
+}
 
 /**
  *
@@ -34,15 +34,15 @@ export function newMergeDirectiveSourceMap() {
 /**
  *
  */
-export type MergeDirective = {
-  sourcePropertyPathStrings: Array<string>;
-  targetPropertyPathStrings: Array<string>;
-  sourcePropertyChain: Array<EntityProperty>;
-  targetPropertyChain: Array<EntityProperty>;
+export interface MergeDirective {
+  sourcePropertyPathStrings: string[];
+  targetPropertyPathStrings: string[];
+  sourcePropertyChain: EntityProperty[];
+  targetPropertyChain: EntityProperty[];
   sourceProperty: EntityProperty | null;
   targetProperty: EntityProperty | null;
   sourceMap: MergeDirectiveSourceMap;
-};
+}
 
 /**
  *

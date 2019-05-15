@@ -27,7 +27,7 @@ import { templateNamed, registerPartials } from '../../../src/generator/XsdGener
 
 const simpleType = nextHead;
 
-describe('when generating integer simple type', () => {
+describe('when generating integer simple type', (): void => {
   const documentation = 'Documentation';
   const simpleTypeName = 'Simple Type Name';
   const baseType = 'xs:int';
@@ -41,12 +41,12 @@ describe('when generating integer simple type', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be simple type only', () => {
+  it('should be simple type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:simpleType');
   });
 
-  it('should have annotation and restriction', () => {
+  it('should have annotation and restriction', (): void => {
     expect(
       R.view(
         R.compose(
@@ -58,7 +58,7 @@ describe('when generating integer simple type', () => {
     ).toBe(2);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -81,7 +81,7 @@ describe('when generating integer simple type', () => {
     ).toBe(documentation);
   });
 
-  it('should have simple type name', () => {
+  it('should have simple type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -93,7 +93,7 @@ describe('when generating integer simple type', () => {
     ).toBe(simpleTypeName);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -116,7 +116,7 @@ describe('when generating integer simple type', () => {
     ).toBe(documentation);
   });
 
-  it('should have base', () => {
+  it('should have base', (): void => {
     expect(
       R.view(
         R.compose(
@@ -141,7 +141,7 @@ describe('when generating integer simple type', () => {
     ).toBe(baseType);
   });
 
-  it('should not have further restrictions', () => {
+  it('should not have further restrictions', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -158,7 +158,7 @@ describe('when generating integer simple type', () => {
   });
 });
 
-describe('when generating string simple type with min and max length', () => {
+describe('when generating string simple type with min and max length', (): void => {
   const documentation = 'Documentation';
   const simpleTypeName = 'Simple Type Name';
   const baseType = 'xs:string';
@@ -174,12 +174,12 @@ describe('when generating string simple type with min and max length', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be simple type only', () => {
+  it('should be simple type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:simpleType');
   });
 
-  it('should have annotation and restriction', () => {
+  it('should have annotation and restriction', (): void => {
     expect(
       R.view(
         R.compose(
@@ -191,7 +191,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(2);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -214,7 +214,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(documentation);
   });
 
-  it('should have simple type name', () => {
+  it('should have simple type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -226,7 +226,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(simpleTypeName);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -249,7 +249,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(documentation);
   });
 
-  it('should have base', () => {
+  it('should have base', (): void => {
     expect(
       R.view(
         R.compose(
@@ -274,7 +274,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(baseType);
   });
 
-  it('should have two restrictions', () => {
+  it('should have two restrictions', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -290,7 +290,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(2);
   });
 
-  it('should have min length', () => {
+  it('should have min length', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -316,7 +316,7 @@ describe('when generating string simple type with min and max length', () => {
     ).toBe(minLength);
   });
 
-  it('should have max length', () => {
+  it('should have max length', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -343,7 +343,7 @@ describe('when generating string simple type with min and max length', () => {
   });
 });
 
-describe('when generating decimal simple type with min and max value', () => {
+describe('when generating decimal simple type with min and max value', (): void => {
   const documentation = 'Documentation';
   const simpleTypeName = 'Simple Type Name';
   const baseType = 'xs:string';
@@ -369,12 +369,12 @@ describe('when generating decimal simple type with min and max value', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be simple type only', () => {
+  it('should be simple type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:simpleType');
   });
 
-  it('should have annotation and restriction', () => {
+  it('should have annotation and restriction', (): void => {
     expect(
       R.view(
         R.compose(
@@ -386,7 +386,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(2);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -409,7 +409,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(documentation);
   });
 
-  it('should have simple type name', () => {
+  it('should have simple type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -421,7 +421,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(simpleTypeName);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -444,7 +444,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(documentation);
   });
 
-  it('should have base', () => {
+  it('should have base', (): void => {
     expect(
       R.view(
         R.compose(
@@ -469,7 +469,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(baseType);
   });
 
-  it('should have four restrictions', () => {
+  it('should have four restrictions', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -485,7 +485,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(4);
   });
 
-  it('should have min value', () => {
+  it('should have min value', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -511,7 +511,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(minValue);
   });
 
-  it('should have max value', () => {
+  it('should have max value', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -537,7 +537,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(maxValue);
   });
 
-  it('should have total digits', () => {
+  it('should have total digits', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -563,7 +563,7 @@ describe('when generating decimal simple type with min and max value', () => {
     ).toBe(totalDigits);
   });
 
-  it('should have decimal places', () => {
+  it('should have decimal places', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -590,7 +590,7 @@ describe('when generating decimal simple type with min and max value', () => {
   });
 });
 
-describe('when generating enumeration simple type with token', () => {
+describe('when generating enumeration simple type with token', (): void => {
   const documentation = 'Documentation';
   const simpleTypeName = 'Simple Type Name';
   const baseType = 'xs:token';
@@ -608,12 +608,12 @@ describe('when generating enumeration simple type with token', () => {
     result = xmlParser.xml2js(rawXsd);
   });
 
-  it('should be simple type only', () => {
+  it('should be simple type only', (): void => {
     expect(R.view(nextLength, result)).toBe(1);
     expect(R.view(nextHeadName, result)).toBe('xs:simpleType');
   });
 
-  it('should have annotation and restriction', () => {
+  it('should have annotation and restriction', (): void => {
     expect(
       R.view(
         R.compose(
@@ -625,7 +625,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(2);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -648,7 +648,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(documentation);
   });
 
-  it('should have simple type name', () => {
+  it('should have simple type name', (): void => {
     expect(
       R.view(
         R.compose(
@@ -660,7 +660,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(simpleTypeName);
   });
 
-  it('should have annotation', () => {
+  it('should have annotation', (): void => {
     expect(
       R.view(
         R.compose(
@@ -683,7 +683,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(documentation);
   });
 
-  it('should have base', () => {
+  it('should have base', (): void => {
     expect(
       R.view(
         R.compose(
@@ -708,7 +708,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(baseType);
   });
 
-  it('should have one restriction', () => {
+  it('should have one restriction', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -724,7 +724,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(1);
   });
 
-  it('should have enumeration', () => {
+  it('should have enumeration', (): void => {
     const restrictionElement = R.compose(
       simpleType,
       nextSecond,
@@ -750,7 +750,7 @@ describe('when generating enumeration simple type with token', () => {
     ).toBe(tokenValue);
   });
 
-  it('should have enumeration documentation', () => {
+  it('should have enumeration documentation', (): void => {
     const enumerationElement = R.compose(
       simpleType,
       nextSecond,

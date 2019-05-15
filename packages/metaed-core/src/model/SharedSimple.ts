@@ -29,7 +29,7 @@ export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
 
 export interface SharedSimple extends ModelBase {
   typeHumanizedName: string;
-  inReferences: Array<SimpleProperty>;
+  inReferences: SimpleProperty[];
   sourceMap: SharedSimpleSourceMap;
 }
 

@@ -16,9 +16,12 @@ import { Table } from '../model/database/Table';
 // Add foreign key to the table
 const enhancerName = 'ForeignKeyCreatingTableEnhancer';
 
-export type PropertyColumnPair = { property: EntityProperty; columns: Array<Column> };
+export interface PropertyColumnPair {
+  property: EntityProperty;
+  columns: Column[];
+}
 
-export function getReferencePropertiesAndAssociatedColumns(table: Table): Array<PropertyColumnPair> {
+export function getReferencePropertiesAndAssociatedColumns(table: Table): PropertyColumnPair[] {
   return R.compose(
     R.map((pair: PropertyColumnPair) => ({ property: R.head(pair).property, columns: R.chain(x => x.columns)(pair) })),
     R.values,
@@ -33,11 +36,8 @@ export function getReferencePropertiesAndAssociatedColumns(table: Table): Array<
   )(table);
 }
 
-export function getMatchingColumnFromSourceEntityProperties(
-  columnToMatch: Column,
-  columns: Array<Column>,
-): Column | undefined {
-  const matchingColumns: Array<Column> = columns.filter((column: Column) =>
+export function getMatchingColumnFromSourceEntityProperties(columnToMatch: Column, columns: Column[]): Column | undefined {
+  const matchingColumns: Column[] = columns.filter((column: Column) =>
     R.not(R.isEmpty(R.intersection(columnToMatch.sourceEntityProperties, column.sourceEntityProperties))),
   );
   if (matchingColumns.length === 1) return R.head(matchingColumns);
@@ -65,7 +65,7 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
     )
       return;
 
-    const expandedTargetProperties: Array<EntityProperty> = [];
+    const expandedTargetProperties: EntityProperty[] = [];
     if (mergeDirective.targetProperty != null) {
       if (isOdsReferenceProperty(mergeDirective.targetProperty)) {
         // if (isOdsMergeableProperty(mergeDirective.targetProperty)) {
@@ -107,9 +107,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const tables: Map<string, Table> = tableEntities(metaEd, namespace);
 
     tables.forEach((parentTable: Table) => {
-      const parentTablePropertyColumnPairs: Array<PropertyColumnPair> = getReferencePropertiesAndAssociatedColumns(
-        parentTable,
-      );
+      const parentTablePropertyColumnPairs: PropertyColumnPair[] = getReferencePropertiesAndAssociatedColumns(parentTable);
       parentTablePropertyColumnPairs.forEach((parentTablePairs: PropertyColumnPair) => {
         const foreignTableNamespace: Namespace = asReferentialProperty(parentTablePairs.property).referencedEntity.namespace;
         const foreignTable: Table | undefined = tableEntities(metaEd, foreignTableNamespace).get(

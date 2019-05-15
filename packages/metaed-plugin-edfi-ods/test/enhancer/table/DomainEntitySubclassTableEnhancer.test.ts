@@ -13,7 +13,7 @@ import { enhance } from '../../../src/enhancer/table/DomainEntitySubclassTableEn
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
-describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass', () => {
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -86,22 +86,22 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
   });
 
-  it('should have schema equal to namespace', () => {
+  it('should have schema equal to namespace', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table).schema).toBe('extension');
   });
 
-  it('should have description equal to documentation', () => {
+  it('should have description equal to documentation', (): void => {
     expect((tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table).description).toBe(
       documentation,
     );
   });
 
-  it('should have one column', () => {
+  it('should have one column', (): void => {
     const table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassPropertyName);
@@ -109,7 +109,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 });
 
-describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with primary key', () => {
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with primary key', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -182,12 +182,12 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
   });
 
-  it('should have one primary key column', () => {
+  it('should have one primary key column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassPkPropertyName);
@@ -195,7 +195,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 });
 
-describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with identity rename property', () => {
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with identity rename property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -269,19 +269,19 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     enhance(metaEd);
   });
 
-  it('should create a table', () => {
+  it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
   });
 
-  it('should have one column', () => {
+  it('should have one column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassRenamePropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
 
-  it('should create foreign key to from identity rename property to base entity property', () => {
+  it('should create foreign key to from identity rename property to base entity property', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
     expect(table.foreignKeys).toHaveLength(1);
     expect(R.head(table.foreignKeys).parentTableName).toBe(domainEntitySubclassName);

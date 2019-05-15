@@ -5,7 +5,7 @@ import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedDecimalPropertySourceMap extends DecimalPropertySourceMap {
-  mergeDirectives: Array<SourceMap>;
+  mergeDirectives: SourceMap[];
 }
 
 /**
@@ -20,7 +20,7 @@ export function newSharedDecimalPropertySourceMap(): SharedDecimalPropertySource
 
 export interface SharedDecimalProperty extends DecimalProperty {
   sourceMap: SharedDecimalPropertySourceMap;
-  mergeDirectives: Array<MergeDirective>;
+  mergeDirectives: MergeDirective[];
 }
 
 /**

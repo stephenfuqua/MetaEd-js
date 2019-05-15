@@ -2,9 +2,9 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, EnumerationBuilder, NamespaceB
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Enumeration/EnumerationItemsMustBeUnique';
 
-describe('when enumeration items have different short descriptions', () => {
+describe('when enumeration items have different short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -24,18 +24,18 @@ describe('when enumeration items have different short descriptions', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures()', (): void => {
     expect(failures).toHaveLength(0);
   });
 });
 
-describe('when enumeration items have duplicate short descriptions', () => {
+describe('when enumeration items have duplicate short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -55,11 +55,11 @@ describe('when enumeration items have duplicate short descriptions', () => {
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
+  it('should have validation failure', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
@@ -68,9 +68,9 @@ describe('when enumeration items have duplicate short descriptions', () => {
   });
 });
 
-describe('when enumeration items have multiple duplicate short descriptions', () => {
+describe('when enumeration items have multiple duplicate short descriptions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
+  let failures: ValidationFailure[];
   let coreNamespace: any = null;
 
   beforeAll(() => {
@@ -92,11 +92,11 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
     failures = validate(metaEd);
   });
 
-  it('should build one enumeration', () => {
+  it('should build one enumeration', (): void => {
     expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
-  it('should have multiple validation failure', () => {
+  it('should have multiple validation failure', (): void => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');

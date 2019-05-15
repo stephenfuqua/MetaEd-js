@@ -27,7 +27,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when creating extension domain entity', () => {
+describe('when creating extension domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const extension = 'Extension';
@@ -152,7 +152,7 @@ describe('when creating extension domain entity', () => {
   });
 });
 
-describe('when creating domain entity based on abstract entity', () => {
+describe('when creating domain entity based on abstract entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
@@ -261,7 +261,7 @@ describe('when creating domain entity based on abstract entity', () => {
   });
 });
 
-describe('when creating domain entity based on abstract entity with identity rename', () => {
+describe('when creating domain entity based on abstract entity with identity rename', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
@@ -334,13 +334,13 @@ describe('when creating domain entity based on abstract entity with identity ren
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 });
-describe('when domain entity based on abstract entity both have collection properties', () => {
+describe('when domain entity based on abstract entity both have collection properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const abstractEntityName = 'AbstractEntityName';
   const commonName = 'CommonName';
   const descriptorName = 'DescriptorName';
-  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorColumnName = `${descriptorName}DescriptorId`;
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';

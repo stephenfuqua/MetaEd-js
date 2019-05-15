@@ -6,7 +6,7 @@ import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { enhance } from '../../src/diminisher/ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher';
 
-describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes credential common type', () => {
+describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes credential common type', (): void => {
   const expectedElementName = 'StateOfIssueStateAbbreviationType';
   let commonEntity: Common;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -43,12 +43,12 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
     enhance(metaEd);
   });
 
-  it('should have element name set to legacy name', () => {
+  it('should have element name set to legacy name', (): void => {
     expect(R.head(R.head(commonEntity.data.edfiXsd.xsdComplexTypes).items).name).toBe(expectedElementName);
   });
 });
 
-describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes with no credential common type', () => {
+describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes with no credential common type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -92,7 +92,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
     metaEd.dataStandardVersion = '2.0.0';
   });
 
-  it('should run without error', () => {
+  it('should run without error', (): void => {
     expect(enhance(metaEd).success).toBe(true);
   });
 });

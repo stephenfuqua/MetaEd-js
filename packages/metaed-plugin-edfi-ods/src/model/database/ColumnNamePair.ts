@@ -1,7 +1,7 @@
-export type ColumnNamePair = {
+export interface ColumnNamePair {
   parentTableColumnName: string;
   foreignTableColumnName: string;
-};
+}
 
 export function newColumnNamePair(): ColumnNamePair {
   return {

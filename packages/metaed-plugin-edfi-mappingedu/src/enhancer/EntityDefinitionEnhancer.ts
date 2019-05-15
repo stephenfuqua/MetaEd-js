@@ -20,12 +20,12 @@ import {
   referenceFor,
 } from './ReferenceDefintionHelper';
 
-const enhancerName: string = 'EntityDefinitionEnhancer';
+const enhancerName = 'EntityDefinitionEnhancer';
 
 const collectElementsFor = (
   element: ComplexType | ElementGroup,
-  entityPath: Array<string>,
-  elements: Array<{ value: Element | ElementGroup; entityPath: Array<string> }>,
+  entityPath: string[],
+  elements: { value: Element | ElementGroup; entityPath: string[] }[],
 ): void => {
   element.items.forEach((value: ComplexTypeItem) =>
     elements.push({
@@ -39,19 +39,19 @@ const createEntityDefinitionsFor = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
   complexType: ComplexType,
-  entityPath: Array<string> = [complexType.name],
+  entityPath: string[] = [complexType.name],
 ) => {
   /* eslint-disable no-continue */
-  const elements: Array<{ value: Element | ElementGroup; entityPath: Array<string> }> = [];
+  const elements: { value: Element | ElementGroup; entityPath: string[] }[] = [];
   collectElementsFor(complexType, entityPath, elements);
 
   while (elements.length > 0) {
-    const elementOrElementGroup: { value: Element | ElementGroup; entityPath: Array<string> } = elements.pop() as {
+    const elementOrElementGroup: { value: Element | ElementGroup; entityPath: string[] } = elements.pop() as {
       value: Element | ElementGroup;
-      entityPath: Array<string>;
+      entityPath: string[];
     };
     if (isElementGroup(elementOrElementGroup.value)) {
-      const elementGroup: { value: ElementGroup; entityPath: Array<string> } = {
+      const elementGroup: { value: ElementGroup; entityPath: string[] } = {
         value: elementOrElementGroup.value as ElementGroup,
         entityPath: elementOrElementGroup.entityPath,
       };
@@ -60,7 +60,7 @@ const createEntityDefinitionsFor = (
       continue;
     }
 
-    const element: { value: Element; entityPath: Array<string> } = {
+    const element: { value: Element; entityPath: string[] } = {
       value: elementOrElementGroup.value as Element,
       entityPath: elementOrElementGroup.entityPath,
     };
@@ -77,7 +77,7 @@ const createEntityDefinitionsFor = (
     if (reference == null || isSimpleType(reference) || isEnumeration(reference)) continue;
 
     const referencedComplexType: ComplexType = reference as ComplexType;
-    const referencedEntityPath: Array<string> = [...element.entityPath, element.value.name];
+    const referencedEntityPath: string[] = [...element.entityPath, element.value.name];
     pluginEntityDefinitionsForNamespace(metaEd, namespace).push({
       ...newEntityDefinition(),
       elementGroup: elementGroupNameFor(namespace),
@@ -94,7 +94,7 @@ const createEntityDefinitionForBaseType = (
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
   complexType: ComplexType,
-  entityPath: Array<string> = [complexType.name],
+  entityPath: string[] = [complexType.name],
 ) => {
   if (
     complexType.baseType == null ||
@@ -111,7 +111,7 @@ const createEntityDefinitionForBaseType = (
 
 export const enhance = (metaEd: MetaEdEnvironment): EnhancerResult => {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const xsdElements: Array<ComplexType> = [
+    const xsdElements: ComplexType[] = [
       ...pluginDescriptorsForNamespace(metaEd, namespace).values(),
       ...pluginDomainEntitiesForNamespace(metaEd, namespace).values(),
       ...pluginAssociationsForNamespace(metaEd, namespace).values(),

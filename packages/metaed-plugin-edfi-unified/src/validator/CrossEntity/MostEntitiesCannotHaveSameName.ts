@@ -3,10 +3,10 @@ import { generateValidationErrorsForDuplicates } from '../ValidatorShared/Errors
 
 // Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
 // and extension entities don't define a new identifier
-function entitiesNeedingDuplicateChecking(...namespaces: Array<Namespace>): Array<ModelBase> {
-  const result: Array<ModelBase> = [];
+function entitiesNeedingDuplicateChecking(...namespaces: Namespace[]): ModelBase[] {
+  const result: ModelBase[] = [];
 
-  const entityRepositories: Array<EntityRepository> = namespaces.map((n: Namespace) => n.entity);
+  const entityRepositories: EntityRepository[] = namespaces.map((n: Namespace) => n.entity);
   entityRepositories.forEach((entityRepository: EntityRepository) => {
     result.push(...entityRepository.association.values());
     result.push(...entityRepository.associationSubclass.values());
@@ -21,8 +21,8 @@ function entitiesNeedingDuplicateChecking(...namespaces: Array<Namespace>): Arra
   return result;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  const failures: Array<ValidationFailure> = [];
+export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
+  const failures: ValidationFailure[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     failures.push(

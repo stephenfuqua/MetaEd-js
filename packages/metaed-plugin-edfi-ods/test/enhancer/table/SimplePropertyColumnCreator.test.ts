@@ -40,12 +40,12 @@ import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy'
 import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
-describe('when converting boolean property to column', () => {
+describe('when converting boolean property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: BooleanProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newBooleanProperty(), {
@@ -68,7 +68,7 @@ describe('when converting boolean property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('boolean');
     expect(columns[0].dataType).toBe('[BIT]');
@@ -82,12 +82,12 @@ describe('when converting boolean property to column', () => {
   });
 });
 
-describe('when converting currency property to column', () => {
+describe('when converting currency property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: CurrencyProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newCurrencyProperty(), {
@@ -110,7 +110,7 @@ describe('when converting currency property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('currency');
     expect(columns[0].dataType).toBe('[MONEY]');
@@ -124,12 +124,12 @@ describe('when converting currency property to column', () => {
   });
 });
 
-describe('when converting date property to column', () => {
+describe('when converting date property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: DateProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDateProperty(), {
@@ -152,7 +152,7 @@ describe('when converting date property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('date');
     expect(columns[0].dataType).toBe('[DATE]');
@@ -166,12 +166,12 @@ describe('when converting date property to column', () => {
   });
 });
 
-describe('when converting datetime property to column', () => {
+describe('when converting datetime property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: DatetimeProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDatetimeProperty(), {
@@ -194,7 +194,7 @@ describe('when converting datetime property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('datetime');
     expect(columns[0].dataType).toBe('[DATETIME2](7)');
@@ -208,14 +208,14 @@ describe('when converting datetime property to column', () => {
   });
 });
 
-describe('when converting decimal property to column', () => {
+describe('when converting decimal property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const precision = '10';
   const scale = '2';
   let property: DecimalProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
@@ -240,7 +240,7 @@ describe('when converting decimal property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('decimal');
     expect(columns[0].dataType).toBe(`[DECIMAL](${precision}, ${scale})`);
@@ -254,12 +254,12 @@ describe('when converting decimal property to column', () => {
   });
 });
 
-describe('when converting duration property to column', () => {
+describe('when converting duration property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: DurationProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newDurationProperty(), {
@@ -282,7 +282,7 @@ describe('when converting duration property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('duration');
     expect(columns[0].dataType).toBe('[NVARCHAR](30)');
@@ -296,12 +296,12 @@ describe('when converting duration property to column', () => {
   });
 });
 
-describe('when converting integer property to column', () => {
+describe('when converting integer property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: IntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -324,7 +324,7 @@ describe('when converting integer property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -338,12 +338,12 @@ describe('when converting integer property to column', () => {
   });
 });
 
-describe('when converting percent property to column', () => {
+describe('when converting percent property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: PercentProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newPercentProperty(), {
@@ -366,7 +366,7 @@ describe('when converting percent property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('percent');
     expect(columns[0].dataType).toBe('[DECIMAL](5, 4)');
@@ -380,14 +380,14 @@ describe('when converting percent property to column', () => {
   });
 });
 
-describe('when converting shared decimal property to column', () => {
+describe('when converting shared decimal property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const precision = '10';
   const scale = '2';
   let property: SharedDecimalProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
@@ -412,7 +412,7 @@ describe('when converting shared decimal property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('decimal');
     expect(columns[0].dataType).toBe(`[DECIMAL](${precision}, ${scale})`);
@@ -426,12 +426,12 @@ describe('when converting shared decimal property to column', () => {
   });
 });
 
-describe('when converting shared integer property to column', () => {
+describe('when converting shared integer property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: SharedIntegerProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
@@ -454,7 +454,7 @@ describe('when converting shared integer property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
     expect(columns[0].dataType).toBe('[INT]');
@@ -468,12 +468,12 @@ describe('when converting shared integer property to column', () => {
   });
 });
 
-describe('when converting shared short property to column', () => {
+describe('when converting shared short property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: SharedShortProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSharedShortProperty(), {
@@ -496,7 +496,7 @@ describe('when converting shared short property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -510,13 +510,13 @@ describe('when converting shared short property to column', () => {
   });
 });
 
-describe('when converting shared string property to column', () => {
+describe('when converting shared string property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const length = '100';
   let property: SharedStringProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
@@ -540,7 +540,7 @@ describe('when converting shared string property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
     expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
@@ -554,12 +554,12 @@ describe('when converting shared string property to column', () => {
   });
 });
 
-describe('when converting short property to column', () => {
+describe('when converting short property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: ShortProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newShortProperty(), {
@@ -582,7 +582,7 @@ describe('when converting short property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
     expect(columns[0].dataType).toBe('[SMALLINT]');
@@ -596,13 +596,13 @@ describe('when converting short property to column', () => {
   });
 });
 
-describe('when converting string property to column', () => {
+describe('when converting string property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const length = '100';
   let property: StringProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
@@ -626,7 +626,7 @@ describe('when converting string property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
     expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
@@ -640,12 +640,12 @@ describe('when converting string property to column', () => {
   });
 });
 
-describe('when converting time property to column', () => {
+describe('when converting time property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: TimeProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newTimeProperty(), {
@@ -668,7 +668,7 @@ describe('when converting time property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('time');
     expect(columns[0].dataType).toBe('[TIME](7)');
@@ -682,12 +682,12 @@ describe('when converting time property to column', () => {
   });
 });
 
-describe('when converting year property to column', () => {
+describe('when converting year property to column', (): void => {
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   let property: YearProperty;
-  let columns: Array<Column>;
+  let columns: Column[];
 
   beforeAll(() => {
     property = Object.assign(newYearProperty(), {
@@ -710,7 +710,7 @@ describe('when converting year property to column', () => {
     columns = columnCreator.createColumns(property, BuildStrategyDefault);
   });
 
-  it('should return converted column', () => {
+  it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('year');
     expect(columns[0].dataType).toBe('[SMALLINT]');

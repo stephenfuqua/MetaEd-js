@@ -14,7 +14,7 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
-describe('when enhances MergedInterchange with domainEntity extension', () => {
+describe('when enhances MergedInterchange with domainEntity extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -83,7 +83,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
     enhance(metaEd);
   });
 
-  it('should create additional extension interchange', () => {
+  it('should create additional extension interchange', (): void => {
     const expectedExtensionInterchangeName = `EXTENSION-${interchangeName}`;
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
       metaEd,
@@ -108,7 +108,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
   });
 });
 
-describe('when enhances existing MergedInterchange with domainEntity extension', () => {
+describe('when enhances existing MergedInterchange with domainEntity extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -217,7 +217,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     enhance(metaEd);
   });
 
-  it('should not create additional extension interchange', () => {
+  it('should not create additional extension interchange', (): void => {
     const coreRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (coreRepository == null) throw new Error();
     expect(coreRepository.mergedInterchange.size).toBe(1);
@@ -227,7 +227,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     expect(extensionRepository.mergedInterchange.size).toBe(1);
   });
 
-  it('should add extension interchange item to existing interchange', () => {
+  it('should add extension interchange item to existing interchange', (): void => {
     const expectedExtensionInterchangeName = `EXTENSION-${interchangeName}`;
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
       metaEd,
@@ -251,7 +251,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
   });
 });
 
-describe('when enhances MergedInterchange with multiple domainEntity extension', () => {
+describe('when enhances MergedInterchange with multiple domainEntity extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -377,7 +377,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     enhance(metaEd);
   });
 
-  it('should create additional extension interchange', () => {
+  it('should create additional extension interchange', (): void => {
     const expectedExtensionInterchangeName = `EXTENSION-${interchangeName}`;
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
       metaEd,
@@ -414,7 +414,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
   });
 });
 
-describe('when enhances MergedInterchange in extension namespace with multiple domainEntity', () => {
+describe('when enhances MergedInterchange in extension namespace with multiple domainEntity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -508,7 +508,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     enhance(metaEd);
   });
 
-  it('should create interchange with correct elements', () => {
+  it('should create interchange with correct elements', (): void => {
     const expectedExtensionInterchangeName = `EXTENSION-${interchangeName}`;
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
       metaEd,

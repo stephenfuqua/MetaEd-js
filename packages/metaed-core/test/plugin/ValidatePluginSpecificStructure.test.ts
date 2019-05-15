@@ -3,7 +3,7 @@ import { validatePluginSpecificStructure } from '../../src/plugin/LoadPluginConf
 import { ConfigurationSchema } from '../../src/plugin/ConfigurationSchema';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when config matches rule', () => {
+describe('when config matches rule', (): void => {
   const pluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -27,13 +27,13 @@ describe('when config matches rule', () => {
     ],
   ]);
 
-  it('should be valid', () => {
-    const result: Array<ValidationFailure> = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
+  it('should be valid', (): void => {
+    const result: ValidationFailure[] = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
     expect(result).toHaveLength(0);
   });
 });
 
-describe('when config does not match rule schema', () => {
+describe('when config does not match rule schema', (): void => {
   const pluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -57,15 +57,15 @@ describe('when config does not match rule schema', () => {
     ],
   ]);
 
-  it('should not be valid', () => {
-    const result: Array<ValidationFailure> = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
+  it('should not be valid', (): void => {
+    const result: ValidationFailure[] = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
     expect(result).toHaveLength(2);
     expect(result[0]).toMatchSnapshot();
     expect(result[1]).toMatchSnapshot();
   });
 });
 
-describe('when config does not match rule schema', () => {
+describe('when config does not match rule schema', (): void => {
   const pluginConfiguration = {
     filepath: 'file/path',
     configObject: {
@@ -89,8 +89,8 @@ describe('when config does not match rule schema', () => {
     ],
   ]);
 
-  it('should not be valid', () => {
-    const result: Array<ValidationFailure> = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
+  it('should not be valid', (): void => {
+    const result: ValidationFailure[] = validatePluginSpecificStructure(pluginConfiguration, configurationSchemas);
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchSnapshot();
   });

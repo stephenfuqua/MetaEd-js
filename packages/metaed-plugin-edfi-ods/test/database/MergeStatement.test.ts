@@ -28,7 +28,7 @@ jest.setTimeout(40000);
 
 afterAll(async () => testSuiteAfterAll());
 
-describe('when domain entity merges references', () => {
+describe('when domain entity merges references', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -93,7 +93,7 @@ describe('when domain entity merges references', () => {
   });
 });
 
-describe('when domain entity merges abstract references', () => {
+describe('when domain entity merges abstract references', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
@@ -163,7 +163,7 @@ describe('when domain entity merges abstract references', () => {
   });
 });
 
-describe('when domain entity merges collection references', () => {
+describe('when domain entity merges collection references', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
@@ -248,7 +248,7 @@ describe('when domain entity merges collection references', () => {
   });
 });
 
-describe('when association merges domain entity property', () => {
+describe('when association merges domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const shortenTo = 'ShortenTo';
@@ -334,7 +334,7 @@ describe('when association merges domain entity property', () => {
   });
 });
 
-describe('when domain entity merges deep path', () => {
+describe('when domain entity merges deep path', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
@@ -421,7 +421,7 @@ describe('when domain entity merges deep path', () => {
   });
 });
 
-describe('when domain entity merges collection property', () => {
+describe('when domain entity merges collection property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const domainEntityName1 = 'DomainEntityName1';
@@ -529,7 +529,7 @@ describe('when domain entity merges collection property', () => {
   });
 });
 
-describe('when domain entity merges self reference property', () => {
+describe('when domain entity merges self reference property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const contextName = 'ContextName';
@@ -595,12 +595,12 @@ describe('when domain entity merges self reference property', () => {
   });
 });
 
-describe('when domain entity merges descriptor property', () => {
+describe('when domain entity merges descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const contextName = 'ContextName';
   const descriptorName = 'DescriptorName';
-  const descriptorIdColumnName: string = `${descriptorName}DescriptorId`;
+  const descriptorIdColumnName = `${descriptorName}DescriptorId`;
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const domainEntityName3 = 'DomainEntityName3';
@@ -693,12 +693,12 @@ describe('when domain entity merges descriptor property', () => {
   });
 });
 
-describe('when domain entity merges enumeration property', () => {
+describe('when domain entity merges enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
   const contextName = 'ContextName';
   const enumerationName = 'EnumerationName';
-  const enumerationIdColumnName: string = `${enumerationName}TypeId`;
+  const enumerationIdColumnName = `${enumerationName}TypeId`;
   const enumerationItemName = 'EnumerationItemName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';

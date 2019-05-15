@@ -11,7 +11,7 @@ import { MetaEdEnvironment, Common, Association, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
-describe('when enhancing association with inline string property', () => {
+describe('when enhancing association with inline string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const inlineName = 'InlineName';
   const entityName = 'EntityName';
@@ -67,14 +67,14 @@ describe('when enhancing association with inline string property', () => {
     enhance(metaEd);
   });
 
-  it('should add identity properties to association', () => {
+  it('should add identity properties to association', (): void => {
     expect(association.properties[0].type).toBe('inlineCommon');
     expect(association.data.edfiXsd.xsdIdentityProperties.length).toBe(1);
     expect(association.data.edfiXsd.xsdIdentityProperties[0].metaEdName).toBe(propertyName2);
   });
 });
 
-describe('when enhancing association with inline nested string property', () => {
+describe('when enhancing association with inline nested string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const inline1Name = 'Inline1Name';
   const inline2Name = 'Inline2Name';
@@ -141,7 +141,7 @@ describe('when enhancing association with inline nested string property', () => 
     enhance(metaEd);
   });
 
-  it('should add identity properties to association', () => {
+  it('should add identity properties to association', (): void => {
     expect(association.properties[0].type).toBe('inlineCommon');
     expect(association.data.edfiXsd.xsdIdentityProperties.length).toBe(1);
     expect(association.data.edfiXsd.xsdIdentityProperties[0].metaEdName).toBe(propertyName);

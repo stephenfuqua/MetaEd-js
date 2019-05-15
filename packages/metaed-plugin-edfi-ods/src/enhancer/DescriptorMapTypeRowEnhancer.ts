@@ -12,7 +12,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'descriptor').forEach((entity: ModelBase) => {
     if (!entity.data.edfiOds.odsIsMapType) return;
 
-    const rows: Array<EnumerationRow> = enumerationRowCreator.createRows(
+    const rows: EnumerationRow[] = enumerationRowCreator.createRows(
       entity.namespace.namespaceName,
       normalizeEnumerationSuffix(entity.metaEdName),
       R.path(['mapTypeEnumeration', 'enumerationItems'])(entity),

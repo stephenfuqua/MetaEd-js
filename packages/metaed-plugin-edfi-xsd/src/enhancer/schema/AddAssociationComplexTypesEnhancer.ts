@@ -11,7 +11,7 @@ import {
 const enhancerName = 'AddAssociationComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'association') as Array<Association>).forEach((association: Association) => {
+  (getAllEntitiesOfType(metaEd, 'association') as Association[]).forEach((association: Association) => {
     association.data.edfiXsd.xsdComplexTypes = createDefaultComplexType(
       association,
       typeGroupAssociation,

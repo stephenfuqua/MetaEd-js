@@ -14,7 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
     const tables: Map<string, Table> = tableEntities(metaEd, namespace);
     tables.forEach((table: Table) => {
-      const primaryKeyColumnNames: Array<string> = getPrimaryKeys(table).map((pk: Column) => pk.name);
+      const primaryKeyColumnNames: string[] = getPrimaryKeys(table).map((pk: Column) => pk.name);
 
       R.compose(
         R.forEach((fk: ForeignKey) => {

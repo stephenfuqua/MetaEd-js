@@ -10,13 +10,13 @@ import { newRow, createRow, setRow } from '../model/Row';
 import { Worksheet } from '../model/Worksheet';
 import { newWorksheet } from '../model/Worksheet';
 
-function byEntityNameAscending(a: Object, b: Object) {
+function byEntityNameAscending(a: Record<string, any>, b: Record<string, any>) {
   if (a['Entity Name'] < b['Entity Name']) return -1;
   if (a['Entity Name'] > b['Entity Name']) return 1;
   return 0;
 }
 
-function byTableAndColumnNameAscending(a: Object, b: Object) {
+function byTableAndColumnNameAscending(a: Record<string, any>, b: Record<string, any>) {
   if (a['Table Name'] < b['Table Name']) return -1;
   if (a['Table Name'] > b['Table Name']) return 1;
 
@@ -30,13 +30,13 @@ function isForeignKey(table: Table, column: Column) {
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const allTables: Array<Table> = [];
+  const allTables: Table[] = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     allTables.push(...tableEntities(metaEd, namespace).values());
   });
 
-  const orderedTables: Array<Table> = orderByProp('name')(allTables);
+  const orderedTables: Table[] = orderByProp('name')(allTables);
 
   const workbook: Workbook = newWorkbook();
   const tablesSheet: Worksheet = newWorksheet('Tables');
@@ -81,7 +81,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     });
   });
 
-  const generatedOutput: Array<GeneratedOutput> = [
+  const generatedOutput: GeneratedOutput[] = [
     {
       name: 'SqlDataDictionary',
       namespace: 'Documentation',

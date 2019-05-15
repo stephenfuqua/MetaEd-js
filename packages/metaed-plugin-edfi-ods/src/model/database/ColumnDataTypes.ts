@@ -1,4 +1,4 @@
-export type ColumnData = {
+export interface ColumnData {
   boolean: string;
   currency: string;
   date: string;
@@ -11,7 +11,7 @@ export type ColumnData = {
   string: (length: string) => string;
   time: string;
   year: string;
-};
+}
 
 export const ColumnDataTypes: ColumnData = {
   boolean: '[BIT]',
