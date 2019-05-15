@@ -7,6 +7,7 @@ import {
   ReferentialProperty,
   SimpleProperty,
   ModelBase,
+  isSharedProperty,
 } from 'metaed-core';
 
 function allPropertiesAfterTheFirstAreIdentity(outPath: (ReferentialProperty | SimpleProperty)[]): boolean {
@@ -32,6 +33,17 @@ function noMergeDirectives(
   const result: (ReferentialProperty | SimpleProperty)[][] = [];
   outPaths.forEach(outPath => {
     if (outPath.every(property => (property as ReferentialProperty).mergeDirectives.length === 0)) result.push(outPath);
+  });
+  return result;
+}
+
+function addOutPathsForEntitiesWithSharedSimples(
+  outPaths: (ReferentialProperty | SimpleProperty)[][],
+): (ReferentialProperty | SimpleProperty)[][] {
+  const result: (ReferentialProperty | SimpleProperty)[][] = [...outPaths];
+  outPaths.forEach(outPath => {
+    const outPathEndpoint = outPath[outPath.length - 1];
+    if (isSharedProperty(outPathEndpoint)) result.push(outPath.slice(0, outPath.length - 1));
   });
   return result;
 }
@@ -72,9 +84,7 @@ function mergeOutReferenceEntityEndpointsMap(
     if (!targetMap.has(entityAsKey)) {
       targetMap.set(entityAsKey, []);
     }
-    listOfOutReferencePathsFromBase.forEach(outReferencePathFromBase => {
-      (targetMap.get(entityAsKey) as (ReferentialProperty | SimpleProperty)[][]).push(outReferencePathFromBase);
-    });
+    (targetMap.get(entityAsKey) as (ReferentialProperty | SimpleProperty)[][]).push(...listOfOutReferencePathsFromBase);
   });
 }
 
@@ -135,11 +145,15 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       // exit if there are not still multiple paths
       if (possibleProblemOutPaths3.length < 2) return;
 
-      const problemPathsAsString = possibleProblemOutPaths3.reduce(pathStringReducer, '');
+      // Running this to get additional out paths, but they are duplicates of error messages
+      const possibleProblemOutPaths4 = addOutPathsForEntitiesWithSharedSimples(possibleProblemOutPaths3);
 
+      const problemPathsAsString = possibleProblemOutPaths4.reduce(pathStringReducer, '');
+
+      // Using outpaths 3 for individual errors but outpaths 4 for path listing
       possibleProblemOutPaths3.forEach(outPath => {
         failures.push({
-          validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrroleName',
+          validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName',
           category: 'error',
           message: `Ambiguous merge paths exist from ${outPath[0].parentEntityName}.${outPath[0].metaEdName} to ${entityAtEndpoint.metaEdName}. Paths are${problemPathsAsString}.  Either add a merge directive, use 'role name', or change the model.`,
           sourceMap: outPath[0].sourceMap.metaEdName,

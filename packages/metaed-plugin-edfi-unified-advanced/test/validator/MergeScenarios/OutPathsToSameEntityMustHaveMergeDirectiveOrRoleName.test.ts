@@ -15,6 +15,7 @@ import {
   domainEntityExtensionBaseClassEnhancer,
   domainEntitySubclassBaseClassEnhancer,
   sharedStringPropertyEnhancer,
+  stringReferenceEnhancer,
 } from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
 
@@ -196,18 +197,18 @@ describe('when domain entity has two out paths to the same entity that start wit
 
   it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
       `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
-Object {
-  "column": 18,
-  "line": 5,
-  "tokenText": "DE2a",
-}
-`);
+      Object {
+        "column": 18,
+        "line": 5,
+        "tokenText": "DE2a",
+      }
+    `);
   });
 });
 
@@ -256,18 +257,30 @@ describe('when domain entity has two out paths to the same entity and only one s
 
   it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
       `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
-Object {
-  "column": 18,
-  "line": 5,
-  "tokenText": "DE2a",
-}
-`);
+      Object {
+        "column": 18,
+        "line": 5,
+        "tokenText": "DE2a",
+      }
+    `);
+    expect(failures[1].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchInlineSnapshot(
+      `"Ambiguous merge paths exist from DE1.DE2b to DE3. Paths are [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
+    );
+    expect(failures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 18,
+        "line": 9,
+        "tokenText": "DE2b",
+      }
+    `);
   });
 });
 
@@ -440,18 +453,30 @@ describe('when domain entity extension has out paths to the same entity as base 
 
   it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
       `"Ambiguous merge paths exist from DE1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
-Object {
-  "column": 23,
-  "line": 33,
-  "tokenText": "DE2b",
-}
-`);
+      Object {
+        "column": 23,
+        "line": 33,
+        "tokenText": "DE2b",
+      }
+    `);
+    expect(failures[1].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchInlineSnapshot(
+      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
+    );
+    expect(failures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 18,
+        "line": 5,
+        "tokenText": "DE2a",
+      }
+    `);
   });
 });
 
@@ -581,18 +606,30 @@ describe('when domain entity subclass has out paths to the same entity as base a
 
   it('should have two validation failures', (): void => {
     expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrroleName');
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
       `"Ambiguous merge paths exist from DES1.DE2b to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
     );
     expect(failures[0].sourceMap).toMatchInlineSnapshot(`
-Object {
-  "column": 23,
-  "line": 35,
-  "tokenText": "DE2b",
-}
-`);
+      Object {
+        "column": 23,
+        "line": 35,
+        "tokenText": "DE2b",
+      }
+    `);
+    expect(failures[1].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchInlineSnapshot(
+      `"Ambiguous merge paths exist from DE1.DE2a to DE3. Paths are [DE2b.DE3] [DE2a.DE3].  Either add a merge directive, use 'role name', or change the model."`,
+    );
+    expect(failures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 18,
+        "line": 5,
+        "tokenText": "DE2a",
+      }
+    `);
   });
 });
 
@@ -648,11 +685,92 @@ describe('when domain entity has reference to entity with identity of shared str
     failures = validate(metaEd);
   });
 
-  it('should build four domain entities', (): void => {
+  it('should build two domain entities', (): void => {
     expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should have no validation failures', (): void => {
     expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when domain entity has reference to entity with identity of shared string', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let coreNamespace: any = null;
+  let failures: ValidationFailure[];
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('DE1')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('DE2a', 'doc')
+      .withDomainEntityIdentity('DE2b', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DE2a')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('DE3', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DE2b')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('DE3', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DE3')
+      .withDocumentation('doc')
+      .withSharedStringIdentity('SS', null, 'doc')
+      .withEndDomainEntity()
+
+      .withStartSharedString('SS')
+      .withDocumentation('doc')
+      .withStringRestrictions('5', '10')
+      .withEndSharedString()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    stringReferenceEnhancer(metaEd);
+    sharedStringPropertyEnhancer(metaEd);
+    outReferencePathEnhancer(metaEd);
+    failures = validate(metaEd);
+  });
+
+  it('should build four domain entities', (): void => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(4);
+  });
+
+  it('should have two validation failures', (): void => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchInlineSnapshot(
+      `"Ambiguous merge paths exist from DE1.DE2a to SS. Paths are [DE2a.DE3.SS] [DE2b.DE3.SS] [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
+    );
+    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 18,
+        "line": 5,
+        "tokenText": "DE2a",
+      }
+    `);
+
+    expect(failures[1].validatorName).toBe('OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchInlineSnapshot(
+      `"Ambiguous merge paths exist from DE1.DE2b to SS. Paths are [DE2a.DE3.SS] [DE2b.DE3.SS] [DE2a.DE3] [DE2b.DE3].  Either add a merge directive, use 'role name', or change the model."`,
+    );
+    expect(failures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 18,
+        "line": 9,
+        "tokenText": "DE2b",
+      }
+    `);
   });
 });
