@@ -677,6 +677,11 @@
   resolved "https://www.myget.org/F/ed-fi/npm/@types/node/-/@types/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
 
+"@types/node@^8.0.47":
+  version "8.10.48"
+  resolved "https://www.myget.org/F/ed-fi/npm/@types/node/-/@types/node-8.10.48.tgz#e385073561643a9ba6199a1985ffc03530f90781"
+  integrity sha1-44UHNWFkOpumGZoZhf/ANTD5B4E=
+
 "@types/semver@^5.5.0":
   version "5.5.0"
   resolved "https://www.myget.org/F/ed-fi/npm/@types/semver/-/@types/semver-5.5.0.tgz#146c2a29ee7d3bae4bf2fcb274636e264c813c45"
@@ -727,6 +732,21 @@ acorn@^6.0.1, acorn@^6.0.2:
   version "6.0.5"
   resolved "https://www.myget.org/F/ed-fi/npm/acorn/-/acorn-6.0.5.tgz#81730c0815f3f3b34d8efa95cb7430965f4d887a"
   integrity sha1-gXMMCBXz87NNjvqVy3Qwll9NiHo=
+
+adal-node@^0.1.22:
+  version "0.1.28"
+  resolved "https://www.myget.org/F/ed-fi/npm/adal-node/-/adal-node-0.1.28.tgz#468c4bb3ebbd96b1270669f4b9cba4e0065ea485"
+  integrity sha1-RoxLs+u9lrEnBmn0ucuk4AZepIU=
+  dependencies:
+    "@types/node" "^8.0.47"
+    async ">=0.6.0"
+    date-utils "*"
+    jws "3.x.x"
+    request ">= 2.52.0"
+    underscore ">= 1.3.1"
+    uuid "^3.1.0"
+    xmldom ">= 0.1.x"
+    xpath.js "~1.1.0"
 
 adler-32@~1.2.0:
   version "1.2.0"
@@ -989,6 +1009,13 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
   integrity sha1-ePrtjD0HSrgfIrTphdeehzj3IPg=
+
+async@>=0.6.0:
+  version "2.6.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/async/-/async-2.6.2.tgz#18330ea7e6e313887f5d2f2a904bac6fe4dd5381"
+  integrity sha1-GDMOp+bjE4h/XS8qkEusb+TdU4E=
+  dependencies:
+    lodash "^4.17.11"
 
 async@^2.1.4, async@^2.5.0, async@^2.6.0:
   version "2.6.1"
@@ -1915,10 +1942,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-big-number@0.3.1:
-  version "0.3.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/big-number/-/big-number-0.3.1.tgz#ac73020c0a59bb79eb17c2ce2db77f77d974e013"
-  integrity sha1-rHMCDApZu3nrF8LOLbd/d9l04BM=
+big-number@1.0.0:
+  version "1.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/big-number/-/big-number-1.0.0.tgz#a0277607a0adb06492d3099546ef0d547785df18"
+  integrity sha1-oCd2B6CtsGSS0wmVRu8NVHeF3xg=
 
 bin-links@^1.1.2:
   version "1.1.2"
@@ -1941,10 +1968,10 @@ binaryextensions@^2.1.2:
   resolved "https://www.myget.org/F/ed-fi/npm/binaryextensions/-/binaryextensions-2.1.2.tgz#c83c3d74233ba7674e4f313cb2a2b70f54e94b7c"
   integrity sha1-yDw9dCM7p2dOTzE8sqK3D1TpS3w=
 
-bl@^1.2.2:
-  version "1.2.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"
-  integrity sha1-oWCRFxcQPAdBDO9j71Gzl8Alr5w=
+bl@^2.0.1:
+  version "2.2.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/bl/-/bl-2.2.0.tgz#e1a574cdf528e4053019bb800b041c0ac88da493"
+  integrity sha1-4aV0zfUo5AUwGbuACwQcCsiNpJM=
   dependencies:
     readable-stream "^2.3.5"
     safe-buffer "^5.1.1"
@@ -2050,6 +2077,11 @@ buffer-alloc@^1.2.0:
   dependencies:
     buffer-alloc-unsafe "^1.1.0"
     buffer-fill "^1.0.0"
+
+buffer-equal-constant-time@1.0.1:
+  version "1.0.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
+  integrity sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=
 
 buffer-equal@^1.0.0:
   version "1.0.0"
@@ -2879,6 +2911,11 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+date-utils@*:
+  version "1.2.21"
+  resolved "https://www.myget.org/F/ed-fi/npm/date-utils/-/date-utils-1.2.21.tgz#61fb16cdc1274b3c9acaaffe9fc69df8720a2b64"
+  integrity sha1-YfsWzcEnSzyayq/+n8ad+HIKK2Q=
+
 dateformat@^3.0.0, dateformat@^3.0.3:
   version "3.0.3"
   resolved "https://www.myget.org/F/ed-fi/npm/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
@@ -3262,6 +3299,13 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
+
+ecdsa-sig-formatter@1.0.11:
+  version "1.0.11"
+  resolved "https://www.myget.org/F/ed-fi/npm/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz#ae0f0fa2d85045ef14a817daa3ce9acd0489e5bf"
+  integrity sha1-rg8PothQRe8UqBfao86azQSJ5b8=
+  dependencies:
+    safe-buffer "^5.0.1"
 
 ed-fi-model-2.0@2.0.0:
   version "2.0.0"
@@ -4219,10 +4263,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-generic-pool@^3.4.2:
-  version "3.5.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/generic-pool/-/generic-pool-3.5.0.tgz#acac4fd743a175ff20574f380910036464cb61f7"
-  integrity sha1-rKxP10Ohdf8gV084CRADZGTLYfc=
+generic-pool@^3.6.1:
+  version "3.7.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/generic-pool/-/generic-pool-3.7.1.tgz#36fe5bb83e7e0e032e5d32cd05dc00f5ff119aa8"
+  integrity sha1-Nv5buD5+DgMuXTLNBdwA9f8Rmqg=
 
 genfun@^5.0.0:
   version "5.0.0"
@@ -5956,6 +6000,23 @@ just-extend@^4.0.2:
   resolved "https://www.myget.org/F/ed-fi/npm/just-extend/-/just-extend-4.0.2.tgz#f3f47f7dfca0f989c55410a7ebc8854b07108afc"
   integrity sha1-8/R/ffyg+YnFVBCn68iFSwcQivw=
 
+jwa@^1.4.1:
+  version "1.4.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/jwa/-/jwa-1.4.1.tgz#743c32985cb9e98655530d53641b66c8645b039a"
+  integrity sha1-dDwymFy56YZVUw1TZBtmyGRbA5o=
+  dependencies:
+    buffer-equal-constant-time "1.0.1"
+    ecdsa-sig-formatter "1.0.11"
+    safe-buffer "^5.0.1"
+
+jws@3.x.x:
+  version "3.2.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/jws/-/jws-3.2.2.tgz#001099f3639468c9414000e99995fa52fb478304"
+  integrity sha1-ABCZ82OUaMlBQADpmZX6UvtHgwQ=
+  dependencies:
+    jwa "^1.4.1"
+    safe-buffer "^5.0.1"
+
 kebab-case@^1.0.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/kebab-case/-/kebab-case-1.0.0.tgz#3f9e4990adcad0c686c0e701f7645868f75f91eb"
@@ -6294,7 +6355,7 @@ lodash.unescape@4.0.1:
   resolved "https://www.myget.org/F/ed-fi/npm/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
-lodash@^4.11.1, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0:
+lodash@^4.11.1, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0:
   version "4.17.11"
   resolved "https://www.myget.org/F/ed-fi/npm/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
@@ -6812,19 +6873,21 @@ ms@^2.0.0, ms@^2.1.1:
   resolved "https://www.myget.org/F/ed-fi/npm/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha1-MKWGTrPrsKZvLr5tcnrwagnYbgo=
 
-msnodesqlv8@0.6.12:
-  version "0.6.12"
-  resolved "https://www.myget.org/F/ed-fi/npm/msnodesqlv8/-/msnodesqlv8-0.6.12.tgz#cf87d2d988203da8fc29bdbcfa95b5ac3a109da7"
-  integrity sha1-z4fS2YggPaj8Kb28+pW1rDoQnac=
+msnodesqlv8@0.7.1:
+  version "0.7.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/msnodesqlv8/-/msnodesqlv8-0.7.1.tgz#96329c7da2224deb0edfa861b3c9c076e5591c5b"
+  integrity sha1-ljKcfaIiTesO36hhs8nAduVZHFs=
+  dependencies:
+    node-gyp "^3.8.0"
 
-mssql@^4.3.0:
-  version "4.3.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/mssql/-/mssql-4.3.0.tgz#1ff6d1392a3332236fefd66b48c3d44e9630ff80"
-  integrity sha1-H/bROSozMiNv79ZrSMPUTpYw/4A=
+mssql@5.1.0:
+  version "5.1.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/mssql/-/mssql-5.1.0.tgz#a06d75866802a8e7e8b69df6a2dc7d2ada82bc4b"
+  integrity sha1-oG11hmgCqOfotp32otx9KtqCvEs=
   dependencies:
     debug "^3.2.6"
-    generic-pool "^3.4.2"
-    tedious "^2.7.1"
+    generic-pool "^3.6.1"
+    tedious "^4.2.0"
 
 multimatch@^2.0.0, multimatch@^2.1.0:
   version "2.1.0"
@@ -8118,6 +8181,15 @@ read@1, read@~1.0.1:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
+readable-stream@^3.0.3:
+  version "3.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/readable-stream/-/readable-stream-3.3.0.tgz#cb8011aad002eb717bf040291feba8569c986fb9"
+  integrity sha1-y4ARqtAC63F78EApH+uoVpyYb7k=
+  dependencies:
+    inherits "^2.0.3"
+    string_decoder "^1.1.1"
+    util-deprecate "^1.0.1"
+
 readable-stream@~1.0.31:
   version "1.0.34"
   resolved "https://www.myget.org/F/ed-fi/npm/readable-stream/-/readable-stream-1.0.34.tgz#125820e34bc842d2f2aaafafe4c2916ee32c157c"
@@ -8430,7 +8502,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@^2.81.0, request@^2.87.0:
+"request@>= 2.52.0", request@^2.81.0, request@^2.87.0:
   version "2.88.0"
   resolved "https://www.myget.org/F/ed-fi/npm/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha1-nC/KT301tZLv5Xx/ClXoEFIST+8=
@@ -9097,6 +9169,13 @@ string_decoder@0.10, string_decoder@~0.10.x:
   resolved "https://www.myget.org/F/ed-fi/npm/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
   integrity sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=
 
+string_decoder@^1.1.1:
+  version "1.2.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/string_decoder/-/string_decoder-1.2.0.tgz#fe86e738b19544afe70469243b2a1ee9240eae8d"
+  integrity sha1-/obnOLGVRK/nBGkkOyoe6SQOro0=
+  dependencies:
+    safe-buffer "~5.1.0"
+
 string_decoder@~1.1.1:
   version "1.1.1"
   resolved "https://www.myget.org/F/ed-fi/npm/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
@@ -9300,19 +9379,19 @@ tar@^4, tar@^4.4.8:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-tedious@^2.7.1:
-  version "2.7.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/tedious/-/tedious-2.7.1.tgz#5308edebdd33767ca67b36fc71b2ab9c54675278"
-  integrity sha1-Uwjt690zdnymezb8cbKrnFRnUng=
+tedious@^4.2.0:
+  version "4.2.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/tedious/-/tedious-4.2.0.tgz#ced27d46c3e3c2f643888bb62f2ea4f463650793"
+  integrity sha1-ztJ9RsPjwvZDiIu2Ly6k9GNlB5M=
   dependencies:
-    babel-runtime "^6.26.0"
-    big-number "0.3.1"
-    bl "^1.2.2"
+    adal-node "^0.1.22"
+    big-number "1.0.0"
+    bl "^2.0.1"
     depd "^1.1.2"
     iconv-lite "^0.4.23"
     native-duplexpair "^1.0.0"
     punycode "^2.1.0"
-    readable-stream "^2.3.6"
+    readable-stream "^3.0.3"
     sprintf-js "^1.1.1"
 
 temp-dir@^1.0.0:
@@ -9706,6 +9785,11 @@ underscore-plus@1.x:
   dependencies:
     underscore "~1.8.3"
 
+"underscore@>= 1.3.1":
+  version "1.9.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
+  integrity sha1-BtzjSg5op7q8KbNluOdLiSUgOWE=
+
 underscore@~1.8.3:
   version "1.8.3"
   resolved "https://www.myget.org/F/ed-fi/npm/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
@@ -9863,7 +9947,7 @@ use@^3.1.0:
   resolved "https://www.myget.org/F/ed-fi/npm/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha1-1QyMrHmhn7wg8pEfVuuXP04QBw8=
 
-util-deprecate@~1.0.1:
+util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://www.myget.org/F/ed-fi/npm/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
@@ -9888,7 +9972,7 @@ uuid@3.0.1:
   resolved "https://www.myget.org/F/ed-fi/npm/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
   integrity sha1-ZUS7ot/ajBzxfmKaOjBeK7H+5sE=
 
-uuid@^3.0.1, uuid@^3.3.2:
+uuid@^3.0.1, uuid@^3.1.0, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://www.myget.org/F/ed-fi/npm/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha1-G0r0lV6zB3xQHCOHL8ZROBFYcTE=
@@ -10305,10 +10389,15 @@ xml-name-validator@^3.0.0:
   resolved "https://www.myget.org/F/ed-fi/npm/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha1-auc+Bt5NjG5H+fsYH3jWSK1FfGo=
 
-xmldom@^0.1.27:
+"xmldom@>= 0.1.x", xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://www.myget.org/F/ed-fi/npm/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
+
+xpath.js@~1.1.0:
+  version "1.1.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/xpath.js/-/xpath.js-1.1.0.tgz#3816a44ed4bb352091083d002a383dd5104a5ff1"
+  integrity sha1-OBakTtS7NSCRCD0AKjg91RBKX/E=
 
 xpath@^0.0.27:
   version "0.0.27"
