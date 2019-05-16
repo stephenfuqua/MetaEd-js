@@ -4,24 +4,62 @@ import path from 'path';
 import hash from 'hash.js';
 import { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
 
-function maxComponentLength(tableNameComponents: string[], maxLengthBeforeHash: number): number {
-  const evenLength = Math.floor(maxLengthBeforeHash / tableNameComponents.length);
-  let totalLengthOfShorterComponents = 0;
+type ComponentInfo = {
+  nameComponent: string;
+  truncatedLength: number;
+};
+
+function populateTruncatedLengths(availableLength: number, components: ComponentInfo[]) {
+  // ignore if already allocated
+  const uncalculatedComponents: ComponentInfo[] = components.filter(component => component.truncatedLength === 0);
+  if (uncalculatedComponents.length === 0) return;
+
+  const evenLength = Math.floor(availableLength / uncalculatedComponents.length);
+  let contributedLengthFromShorterComponents = 0;
   let countOfLongerComponents = 0;
-  tableNameComponents.forEach(nameComponent => {
-    if (nameComponent.length < evenLength) {
-      totalLengthOfShorterComponents += nameComponent.length;
+
+  // gather statistics
+  uncalculatedComponents.forEach(component => {
+    if (component.nameComponent.length <= evenLength) {
+      contributedLengthFromShorterComponents += evenLength - component.nameComponent.length;
     } else {
       countOfLongerComponents += 1;
     }
   });
-  return Math.floor((maxLengthBeforeHash - totalLengthOfShorterComponents) / countOfLongerComponents);
+
+  if (contributedLengthFromShorterComponents === 0) {
+    // no more help from shorter components, need to truncate everything
+    uncalculatedComponents.forEach(component => {
+      component.truncatedLength = Math.floor(evenLength);
+    });
+  } else {
+    // can take smaller ones as is, larger ones wait for next round
+    uncalculatedComponents.forEach(component => {
+      if (component.nameComponent.length <= evenLength) {
+        component.truncatedLength = component.nameComponent.length;
+      }
+    });
+  }
+
+  populateTruncatedLengths(
+    countOfLongerComponents * evenLength + contributedLengthFromShorterComponents,
+    uncalculatedComponents,
+  );
 }
 
-function truncatedTableName(tableNameComponents: string[]): string {
+export function postgresqlTableName(tableNameComponents: string[]): string {
+  const overallMaxLength = 63;
+  const untruncatedName = tableNameComponents.join('');
+  if (untruncatedName.length <= overallMaxLength) return untruncatedName;
+
+  const componentInfos: ComponentInfo[] = tableNameComponents.map(nameComponent => ({ nameComponent, truncatedLength: 0 }));
+
   const maxLengthBeforeHash = 56;
-  const componentLength = maxComponentLength(tableNameComponents, maxLengthBeforeHash);
-  const tableNameBeforeHash = tableNameComponents.reduce((acc, current) => acc + current.substring(0, componentLength), '');
+  populateTruncatedLengths(maxLengthBeforeHash, componentInfos);
+  const tableNameBeforeHash = componentInfos.reduce(
+    (acc, current) => acc + current.nameComponent.substring(0, current.truncatedLength),
+    '',
+  );
   return `${tableNameBeforeHash}-${hash
     .sha256()
     .update(tableNameComponents.join(''))
@@ -42,9 +80,8 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       originalTooLong: table.name.length > 63,
       components: table.nameComponents,
       numberOfComponents: table.nameComponents.length,
-      truncated: truncatedTableName(table.nameComponents),
-      truncatedAgain: truncatedTableName(table.nameComponents),
-      truncatedLength: truncatedTableName(table.nameComponents).length,
+      truncated: postgresqlTableName(table.nameComponents),
+      truncatedLength: postgresqlTableName(table.nameComponents).length,
     }));
 
     const generatedResult: string = templateFunction({

@@ -20,6 +20,8 @@ describe('when school year enumeration property has valid identifier', (): void 
       .withBeginNamespace('EdFi')
       .withStartEnumeration(entityName)
       .withDocumentation('EntityDocumentation')
+      .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
+      .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
 
@@ -85,8 +87,16 @@ describe('when enumeration property has invalid reference', (): void => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SchoolYearEnumerationPropertyMustMatchASchoolYearEnumeration');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[0].message).toMatchInlineSnapshot(
+      `"Enumeration property 'SchoolYear' does not match any declared Enumeration in namespace EdFi."`,
+    );
+    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 16,
+        "line": 10,
+        "tokenText": "SchoolYear",
+      }
+    `);
   });
 });
 
@@ -102,6 +112,8 @@ describe('when school year enumeration property is missing namespace reference t
       .withBeginNamespace('EdFi')
       .withStartEnumeration(entityName)
       .withDocumentation('EntityDocumentation')
+      .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
+      .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
 
@@ -136,7 +148,15 @@ describe('when school year enumeration property is missing namespace reference t
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SchoolYearEnumerationPropertyMustMatchASchoolYearEnumeration');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[0].message).toMatchInlineSnapshot(
+      `"Enumeration property 'SchoolYear' does not match any declared Enumeration in namespace Extension."`,
+    );
+    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 16,
+        "line": 21,
+        "tokenText": "SchoolYear",
+      }
+    `);
   });
 });

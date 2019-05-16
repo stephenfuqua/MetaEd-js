@@ -70,6 +70,7 @@ import { validate as enumerationItemsMustBeUnique } from './validator/Enumeratio
 import { validate as enumerationExistsOnlyInCoreNamespace } from './validator/Enumeration/EnumerationExistsOnlyInCoreNamespace';
 
 import { validate as enumerationPropertyMustMatchAnEnumeration } from './validator/EnumerationProperty/EnumerationPropertyMustMatchAnEnumeration';
+import { validate as schoolYearEnumerationPropertyMustMatchAnEnumeration } from './validator/SchoolYearEnumerationProperty/SchoolYearEnumerationPropertyMustMatchASchoolYearEnumeration';
 
 import { validate as identityExistsOnlyIfIdentityIsAllowed } from './validator/Identity/IdentityExistsOnlyIfIdentityIsAllowed';
 
@@ -270,6 +271,7 @@ function validatorList(): Validator[] {
     enumerationExistsOnlyInCoreNamespace,
 
     enumerationPropertyMustMatchAnEnumeration,
+    schoolYearEnumerationPropertyMustMatchAnEnumeration,
 
     identityExistsOnlyIfIdentityIsAllowed,
 
