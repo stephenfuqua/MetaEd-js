@@ -6,6 +6,7 @@ import { getAssociation } from '../TestHelper';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 import { EntityProperty } from '../../src/model/property/EntityProperty';
+import { DomainEntityProperty } from '../../src/model/property/DomainEntityProperty';
 
 describe('when building association in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -74,39 +75,43 @@ describe('when building association in extension namespace', (): void => {
   });
 
   it('should have first domain entity property', (): void => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
+    const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0] as DomainEntityProperty;
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.definesAssociation).toBe(true);
   });
 
   it('should have first domain entity property as identity property', (): void => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
+    const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0] as DomainEntityProperty;
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.definesAssociation).toBe(true);
   });
 
   it('should have second domain entity property', (): void => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1];
+    const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[1] as DomainEntityProperty;
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.definesAssociation).toBe(true);
   });
 
   it('should have second domain entity property as identity property', (): void => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1];
+    const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[1] as DomainEntityProperty;
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.definesAssociation).toBe(true);
   });
 });
 

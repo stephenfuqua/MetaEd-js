@@ -6,6 +6,7 @@ import { EntityProperty } from './EntityProperty';
 
 export interface DomainEntityPropertySourceMap extends ReferentialPropertySourceMap {
   isWeak: SourceMap;
+  definesAssociation: SourceMap;
 }
 
 /**
@@ -15,12 +16,14 @@ export function newDomainEntityPropertySourceMap(): DomainEntityPropertySourceMa
   return {
     ...newReferentialPropertySourceMap(),
     isWeak: NoSourceMap,
+    definesAssociation: NoSourceMap,
   };
 }
 
 export interface DomainEntityProperty extends ReferentialProperty {
   sourceMap: DomainEntityPropertySourceMap;
   isWeak: boolean;
+  definesAssociation: boolean;
 }
 
 /**
@@ -32,6 +35,7 @@ export function newDomainEntityProperty(): DomainEntityProperty {
     type: 'domainEntity',
     typeHumanizedName: 'Domain Entity Property',
     isWeak: false,
+    definesAssociation: false,
     sourceMap: newDomainEntityPropertySourceMap(),
   };
 }

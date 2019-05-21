@@ -71,6 +71,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "definesAssociation": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 6,
     "line": 7,
@@ -198,6 +203,11 @@ Object {
 exports[`when building association source map should have two identity properties with sourceMaps: Property 1 1`] = `
 Object {
   "baseKeyName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "definesAssociation": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
