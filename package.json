@@ -17,6 +17,7 @@
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-json": "1.4.0",
     "eslint-plugin-prettier": "3.1.0",
+    "husky": "^2.3.0",
     "jest": "24.8.0",
     "jest-teamcity-reporter": "^0.9.0",
     "jsinspect": "^0.12.7",
@@ -30,6 +31,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn test:pre-push"
+    }
+  },
   "scripts": {
     "antlr-gen": "java -jar ./antlr/antlr-4.6-complete.jar -Dlanguage=JavaScript -o ./packages/metaed-core/src/grammar/gen ./packages/metaed-core/src/grammar/language/BaseLexer.g4 ./packages/metaed-core/src/grammar/language/MetaEdGrammar.g4",
     "doc-gen": "yarn rimraf docs/ && yarn documentation build packages/metaed-core/src/** --sort-order alpha -f html -o docs",
