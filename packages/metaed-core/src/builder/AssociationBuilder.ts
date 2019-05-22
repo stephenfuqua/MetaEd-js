@@ -42,15 +42,7 @@ export class AssociationBuilder extends TopLevelEntityBuilder {
     }
   }
 
-  enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception) return;
-    this.currentProperty = Object.assign(newDomainEntityProperty(), { definesAssociation: true });
-    this.currentProperty.sourceMap.type = sourceMapFrom(context);
-    this.enteringIdentity(context);
-  }
-
-  enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
+  enterDefiningDomainEntity(context: MetaEdGrammar.DefiningDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception) return;
     this.currentProperty = Object.assign(newDomainEntityProperty(), { definesAssociation: true });
@@ -59,12 +51,7 @@ export class AssociationBuilder extends TopLevelEntityBuilder {
   }
 
   // @ts-ignore
-  exitFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
-    this.exitingProperty();
-  }
-
-  // @ts-ignore
-  exitSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
+  exitDefiningDomainEntity(context: MetaEdGrammar.DefiningDomainEntityContext) {
     this.exitingProperty();
   }
 }

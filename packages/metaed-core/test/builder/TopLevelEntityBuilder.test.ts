@@ -1,9 +1,10 @@
 import { DomainEntityBuilder } from '../../src/builder/DomainEntityBuilder';
+import { AssociationBuilder } from '../../src/builder/AssociationBuilder';
 import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { NoSourceMap } from '../../src/model/SourceMap';
-import { getDomainEntity } from '../TestHelper';
+import { getDomainEntity, getAssociation } from '../TestHelper';
 import { asAssociationProperty } from '../../src/model/property/AssociationProperty';
 import { asCommonProperty } from '../../src/model/property/CommonProperty';
 import { asDecimalProperty } from '../../src/model/property/DecimalProperty';
@@ -1566,7 +1567,7 @@ describe('when building merge directive reference', (): void => {
   });
 });
 
-describe('when building multiple merge property references', (): void => {
+describe('when building multiple merge directives', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const entityName = 'EntityName';
@@ -1654,7 +1655,7 @@ describe('when building multiple merge property references', (): void => {
   });
 });
 
-describe('when building multiple merge property references for a shared simple type', (): void => {
+describe('when building multiple merge directives for a shared simple type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
   const entityName = 'EntityName';
@@ -1737,6 +1738,86 @@ describe('when building multiple merge property references for a shared simple t
   it('should have source map for second merge directive', (): void => {
     expect(
       asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap,
+    ).toMatchSnapshot();
+  });
+});
+
+describe('when building merge directive for defining association domain entity property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+
+  const entityName = 'EntityName';
+  const firstDomainEntityName = 'FirstDomainEntityName';
+  const secondDomainEntityName = 'SecondDomainEntityName';
+  const sourcePropertyPathStrings = 'Entity.Property';
+  const targetPropertyPathStrings = 'TargetEntity.TargetProperty';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new AssociationBuilder(metaEd, []);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartAssociation(entityName)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty(firstDomainEntityName, 'doc')
+      .withMergeDirective(sourcePropertyPathStrings, targetPropertyPathStrings)
+      .withAssociationDomainEntityProperty(secondDomainEntityName, 'doc')
+      .withEndAssociation()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have property in merge properties', (): void => {
+    expect(asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives).toHaveLength(
+      1,
+    );
+  });
+
+  it('should have sourcePropertyPathStrings', (): void => {
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .sourcePropertyPathStrings,
+    ).toHaveLength(2);
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .sourcePropertyPathStrings[0],
+    ).toBe(sourcePropertyPathStrings.split('.')[0]);
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .sourcePropertyPathStrings[1],
+    ).toBe(sourcePropertyPathStrings.split('.')[1]);
+  });
+
+  it('should have source map for sourcePropertyPathStrings with line, column, text', (): void => {
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
+        .sourcePropertyPathStrings,
+    ).toMatchSnapshot();
+  });
+
+  it('should have targetPropertyPathStrings', (): void => {
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .targetPropertyPathStrings,
+    ).toHaveLength(2);
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .targetPropertyPathStrings[0],
+    ).toBe(targetPropertyPathStrings.split('.')[0]);
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0]
+        .targetPropertyPathStrings[1],
+    ).toBe(targetPropertyPathStrings.split('.')[1]);
+  });
+
+  it('should have source map for targetPropertyPathStrings with line, column, text', (): void => {
+    expect(
+      asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
+        .targetPropertyPathStrings,
     ).toMatchSnapshot();
   });
 });

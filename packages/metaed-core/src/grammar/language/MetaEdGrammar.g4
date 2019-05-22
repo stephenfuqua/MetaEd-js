@@ -81,21 +81,16 @@ association
     : ASSOCIATION associationName metaEdId?
       documentation
       entityConfiguration?
-      firstDomainEntity
-      secondDomainEntity
+      definingDomainEntity
+      definingDomainEntity
       property*
     ;
 
-firstDomainEntity
+definingDomainEntity
     :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
        propertyDocumentation
        roleName?
-    ;
-
-secondDomainEntity
-    :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
-       propertyDocumentation
-       roleName?
+       mergeDirective*
     ;
 
 // AssociationExtension

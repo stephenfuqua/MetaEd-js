@@ -466,6 +466,22 @@ Object {
 }
 `;
 
+exports[`when building merge directive for defining association domain entity property should have source map for sourcePropertyPathStrings with line, column, text 1`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "Entity",
+}
+`;
+
+exports[`when building merge directive for defining association domain entity property should have source map for targetPropertyPathStrings with line, column, text 1`] = `
+Object {
+  "column": 31,
+  "line": 8,
+  "tokenText": "TargetEntity",
+}
+`;
+
 exports[`when building merge directive reference should have source map for sourcePropertyPathStrings with line, column, text 1`] = `
 Object {
   "column": 10,
@@ -482,7 +498,7 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references for a shared simple type should have source map for first merge directive 1`] = `
+exports[`when building multiple merge directives for a shared simple type should have source map for first merge directive 1`] = `
 Object {
   "sourceProperty": Object {
     "column": 0,
@@ -522,7 +538,7 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references for a shared simple type should have source map for second merge directive 1`] = `
+exports[`when building multiple merge directives for a shared simple type should have source map for second merge directive 1`] = `
 Object {
   "sourceProperty": Object {
     "column": 0,
@@ -562,7 +578,7 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references should have source map for first merge directive 1`] = `
+exports[`when building multiple merge directives should have source map for first merge directive 1`] = `
 Object {
   "sourceProperty": Object {
     "column": 0,
@@ -602,7 +618,7 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references should have source map for second merge directive 1`] = `
+exports[`when building multiple merge directives should have source map for second merge directive 1`] = `
 Object {
   "sourceProperty": Object {
     "column": 0,

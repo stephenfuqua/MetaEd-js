@@ -617,11 +617,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   enteringIdentity(
-    context:
-      | MetaEdGrammar.FirstDomainEntityContext
-      | MetaEdGrammar.SecondDomainEntityContext
-      | MetaEdGrammar.IdentityContext
-      | MetaEdGrammar.IdentityRenameContext,
+    context: MetaEdGrammar.DefiningDomainEntityContext | MetaEdGrammar.IdentityContext | MetaEdGrammar.IdentityRenameContext,
   ) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;

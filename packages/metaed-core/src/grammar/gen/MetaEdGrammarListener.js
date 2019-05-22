@@ -119,21 +119,12 @@ MetaEdGrammarListener.prototype.exitAssociation = function(ctx) {
 };
 
 
-// Enter a parse tree produced by MetaEdGrammar#firstDomainEntity.
-MetaEdGrammarListener.prototype.enterFirstDomainEntity = function(ctx) {
+// Enter a parse tree produced by MetaEdGrammar#definingDomainEntity.
+MetaEdGrammarListener.prototype.enterDefiningDomainEntity = function(ctx) {
 };
 
-// Exit a parse tree produced by MetaEdGrammar#firstDomainEntity.
-MetaEdGrammarListener.prototype.exitFirstDomainEntity = function(ctx) {
-};
-
-
-// Enter a parse tree produced by MetaEdGrammar#secondDomainEntity.
-MetaEdGrammarListener.prototype.enterSecondDomainEntity = function(ctx) {
-};
-
-// Exit a parse tree produced by MetaEdGrammar#secondDomainEntity.
-MetaEdGrammarListener.prototype.exitSecondDomainEntity = function(ctx) {
+// Exit a parse tree produced by MetaEdGrammar#definingDomainEntity.
+MetaEdGrammarListener.prototype.exitDefiningDomainEntity = function(ctx) {
 };
 
 
