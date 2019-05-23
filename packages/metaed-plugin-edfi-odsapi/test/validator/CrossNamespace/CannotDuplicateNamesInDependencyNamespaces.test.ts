@@ -1,5 +1,6 @@
 import {
   newMetaEdEnvironment,
+  newPluginEnvironment,
   MetaEdTextBuilder,
   CommonBuilder,
   DomainEntityBuilder,
@@ -38,6 +39,12 @@ describe('when DEs have different names across dependency-linked namespaces', ()
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -83,6 +90,12 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -97,10 +110,18 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
   it('should have validation failure for extension entity', (): void => {
     expect(failures).toHaveLength(1);
 
-    expect(failures[0].validatorName).toBe('CannotDuplicateNamesInDependencyNamespace');
+    expect(failures[0].validatorName).toBe('CannotDuplicateNamesInDependencyNamespaces');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[0].message).toMatchInlineSnapshot(
+      `"Domain Entity named DomainEntity is a duplicate declaration of that name. Name already exists in project EdFi. ODS/API 2.x does not support duplicate names."`,
+    );
+    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 16,
+        "line": 11,
+        "tokenText": "DomainEntity",
+      }
+    `);
   });
 });
 
@@ -143,6 +164,12 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     extensionNamespacea.dependencies.push(coreNamespace);
     extensionNamespaceb.dependencies.push(coreNamespace);
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -193,6 +220,12 @@ describe('when DE has same name as DE extension across dependency-linked namespa
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -240,6 +273,12 @@ describe('when DE has same name as Common across dependency-linked namespaces', 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
 
     failures = validate(metaEd);
   });

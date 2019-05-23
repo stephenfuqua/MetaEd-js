@@ -10,6 +10,7 @@ import { validate as includingRequiredPropertiesInExtendedDomainEntitiesProhibit
 import { validate as subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2 } from './UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2';
 import { validate as subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported } from './UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 import { validate as subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported } from './UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
+import { validate as cannotDuplicateNamesInDependencyNamespaces } from './CrossNamespace/CannotDuplicateNamesInDependencyNamespaces';
 
 export function validatorList(): Validator[] {
   return [
@@ -23,5 +24,7 @@ export function validatorList(): Validator[] {
     subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2,
     subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported,
     subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported,
+
+    cannotDuplicateNamesInDependencyNamespaces,
   ];
 }

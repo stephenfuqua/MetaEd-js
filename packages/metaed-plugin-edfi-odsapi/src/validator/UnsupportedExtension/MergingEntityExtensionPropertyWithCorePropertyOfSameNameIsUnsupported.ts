@@ -1,6 +1,9 @@
 // 2.x - METAED-711 - ODS-1732
-import { asTopLevelEntity, getAllEntitiesOfType, versionSatisfies, V2Only } from 'metaed-core';
 import {
+  asTopLevelEntity,
+  getAllEntitiesOfType,
+  versionSatisfies,
+  V2Only,
   EntityProperty,
   MetaEdEnvironment,
   ModelBase,
