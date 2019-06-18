@@ -96,7 +96,8 @@ export async function findMetaEdProjectMetadata(createProjectJson: boolean = fal
         return {
           ...newMetaEdProjectMetadata(projectPath),
           invalidProject: true,
-          invalidProjectReason: 'metaEdProject.projectName definition has no leading alphabetic character',
+          invalidProjectReason:
+            'metaEdProject.projectName definition must begin with an uppercase character. All other characters must be alphanumeric only.',
         };
       }
 
@@ -105,7 +106,8 @@ export async function findMetaEdProjectMetadata(createProjectJson: boolean = fal
         return {
           ...newMetaEdProjectMetadata(projectPath),
           invalidProject: true,
-          invalidProjectReason: 'metaEdProject.projectVersion is not a valid version declaration',
+          invalidProjectReason:
+            'metaEdProject.projectVersion is not a valid version declaration. Version declarations must follow the semver.org standard.',
         };
       }
 
