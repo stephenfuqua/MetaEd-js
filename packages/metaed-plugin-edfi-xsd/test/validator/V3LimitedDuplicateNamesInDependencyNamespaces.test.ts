@@ -8,7 +8,7 @@ import {
   NamespaceBuilder,
 } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/CrossNamespace/V3LimitedDuplicateNamesInDependencyNamespaces';
+import { validate } from '../../src/validator/V3LimitedDuplicateNamesInDependencyNamespaces';
 
 describe('when DEs have different names across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
