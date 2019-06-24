@@ -75,6 +75,9 @@ export {
 export { NoComplexType } from './model/schema/ComplexType';
 export { NoSimpleType } from './model/schema/SimpleType';
 
+// Generator helpers
+export { hasDuplicateEntityNameInAtLeastOneDependencyNamespace } from './generator/XsdGeneratorBase';
+
 // Utilities
 export { edfiXsdRepositoryForNamespace } from './enhancer/EnhancerHelper';
 

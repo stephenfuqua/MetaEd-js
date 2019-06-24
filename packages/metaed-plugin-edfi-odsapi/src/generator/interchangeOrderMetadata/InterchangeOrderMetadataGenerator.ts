@@ -3,8 +3,12 @@ import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
 import { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
-import { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
-import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
+import {
+  EdFiXsdEntityRepository,
+  MergedInterchange,
+  edfiXsdRepositoryForNamespace,
+  hasDuplicateEntityNameInAtLeastOneDependencyNamespace,
+} from 'metaed-plugin-edfi-xsd';
 
 const generatorName = 'edfiOdsApi.InterchangeOrderMetadataGeneratorV2';
 const outputName = 'Interchange Order Metadata';
@@ -54,6 +58,9 @@ function getInterchangeMetadataFor(interchange: MergedInterchange): InterchangeM
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
+
+  // METAED-997
+  if (hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd)) return { generatorName, generatedOutput: results };
 
   if (metaEd.namespace.size > 0) {
     const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
