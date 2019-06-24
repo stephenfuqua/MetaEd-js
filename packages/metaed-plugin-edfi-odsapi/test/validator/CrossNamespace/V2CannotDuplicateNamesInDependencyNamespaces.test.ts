@@ -8,7 +8,7 @@ import {
   NamespaceBuilder,
 } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/CrossNamespace/CannotDuplicateNamesInDependencyNamespaces';
+import { validate } from '../../../src/validator/CrossNamespace/V2CannotDuplicateNamesInDependencyNamespaces';
 
 describe('when DEs have different names across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -110,7 +110,7 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
   it('should have validation failure for extension entity', (): void => {
     expect(failures).toHaveLength(1);
 
-    expect(failures[0].validatorName).toBe('CannotDuplicateNamesInDependencyNamespaces');
+    expect(failures[0].validatorName).toBe('V2CannotDuplicateNamesInDependencyNamespaces');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchInlineSnapshot(
       `"Domain Entity named DomainEntity is a duplicate declaration of that name. Name already exists in project EdFi. ODS/API 2.x does not support duplicate names."`,
