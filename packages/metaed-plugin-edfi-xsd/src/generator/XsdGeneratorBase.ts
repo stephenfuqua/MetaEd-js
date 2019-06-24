@@ -4,7 +4,9 @@ import { html as beautify } from 'js-beautify';
 import fs from 'fs';
 import path from 'path';
 import semverLib from 'semver';
-import { SemVer } from 'metaed-core';
+import { SemVer, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
+import { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 // Handlebars instance scoped for this plugin
 export const xsdHandlebars = handlebars.create();
@@ -67,4 +69,15 @@ export function formatVersionForSchema(version: SemVer): string {
   const patch = '0';
   const prerelease: string = semverified.prerelease.length ? `-${semverified.prerelease.join('.')}` : '';
   return `${major}${minor}${patch}${prerelease}`;
+}
+
+// METAED-997
+export function hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd: MetaEdEnvironment): boolean {
+  let result = false;
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    if (edFiXsdEntityRepository.hasDuplicateEntityNameInDependencyNamespace) result = true;
+  });
+  return result;
 }

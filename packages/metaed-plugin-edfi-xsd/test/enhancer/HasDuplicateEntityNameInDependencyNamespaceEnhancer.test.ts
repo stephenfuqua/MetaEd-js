@@ -9,7 +9,7 @@ import {
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/HasDuplicateEntityNameInDependencyNamespaceEnhancer';
 import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
-import { EdFiXsdEntityRepository,addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
+import { EdFiXsdEntityRepository, addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when DEs have different names across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

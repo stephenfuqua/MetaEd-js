@@ -1,5 +1,10 @@
 import { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Namespace } from 'metaed-core';
-import { formatAndPrependHeader, template, formatVersionForSchema } from './XsdGeneratorBase';
+import {
+  formatAndPrependHeader,
+  template,
+  formatVersionForSchema,
+  hasDuplicateEntityNameInAtLeastOneDependencyNamespace,
+} from './XsdGeneratorBase';
 import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import { MergedInterchange } from '../model/MergedInterchange';
 import { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
@@ -10,6 +15,9 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const generatedOutput: GeneratedOutput[] = [];
 
   const orderedInterchange: MergedInterchange[] = [];
+
+  // METAED-997
+  if (hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd)) return { generatorName, generatedOutput };
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);

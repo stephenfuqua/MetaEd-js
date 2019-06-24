@@ -1,9 +1,19 @@
-import { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Namespace } from 'metaed-core';
-import { getAllEntitiesOfType, orderByProp } from 'metaed-core';
-import { formatAndPrependHeader, template } from './XsdGeneratorBase';
+import {
+  MetaEdEnvironment,
+  GeneratorResult,
+  GeneratedOutput,
+  Namespace,
+  getAllEntitiesOfType,
+  orderByProp,
+} from 'metaed-core';
+import { formatAndPrependHeader, template, hasDuplicateEntityNameInAtLeastOneDependencyNamespace } from './XsdGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: GeneratedOutput[] = [];
+  const generatorName = 'edfiXsd.SchemaAnnotationGenerator';
+  const generatedOutput: GeneratedOutput[] = [];
+
+  // METAED-997
+  if (hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd)) return { generatorName, generatedOutput };
 
   const descriptors: { name: string }[] = orderByProp('name')(
     getAllEntitiesOfType(metaEd, 'descriptor').map(x => ({ name: x.data.edfiXsd.xsdDescriptorName })),
@@ -11,7 +21,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const formattedGeneratedResult = formatAndPrependHeader(template().schemaAnnotation({ descriptors }));
 
   const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
-  results.push({
+  generatedOutput.push({
     name: 'Core XSD Schema Annotation',
     namespace: coreNamespace ? coreNamespace.namespaceName : '',
     folderName: 'XSD',
@@ -21,7 +31,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   return {
-    generatorName: 'edfiXsd.SchemaAnnotationGenerator',
-    generatedOutput: results,
+    generatorName,
+    generatedOutput,
   };
 }
