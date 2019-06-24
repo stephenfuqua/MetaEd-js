@@ -59,6 +59,8 @@ import { enhance as modifyOrderOfPriorityToUsePositiveIntegerDiminisher } from '
 import { enhance as modifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher } from '../diminisher/ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher';
 import { enhance as modifyTotalInstructionalDaysToUseIntDiminisher } from '../diminisher/ModifyTotalInstructionalDaysToUseIntDiminisher';
 
+import { enhance as hasDuplicateEntityNameInDependencyNamespaceEnhancer } from './HasDuplicateEntityNameInDependencyNamespaceEnhancer';
+
 export function enhancerList(): Enhancer[] {
   return [
     // *********************
@@ -149,5 +151,7 @@ export function enhancerList(): Enhancer[] {
 
     // MergeInterchangeElementOrderPhase
     mergedInterchangeElementOrderEnhancer,
+
+    hasDuplicateEntityNameInDependencyNamespaceEnhancer,
   ];
 }

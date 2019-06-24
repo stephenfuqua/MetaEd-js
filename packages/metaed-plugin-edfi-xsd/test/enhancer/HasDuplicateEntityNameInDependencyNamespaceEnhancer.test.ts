@@ -2,17 +2,17 @@ import {
   newMetaEdEnvironment,
   newPluginEnvironment,
   MetaEdTextBuilder,
-  CommonBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   NamespaceBuilder,
+  MetaEdEnvironment,
 } from 'metaed-core';
-import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../src/validator/V3LimitedDuplicateNamesInDependencyNamespaces';
+import { enhance } from '../../src/enhancer/HasDuplicateEntityNameInDependencyNamespaceEnhancer';
+import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
+import { EdFiXsdEntityRepository,addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when DEs have different names across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -38,6 +38,7 @@ describe('when DEs have different names across dependency-linked namespaces', ()
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -45,7 +46,7 @@ describe('when DEs have different names across dependency-linked namespaces', ()
         targetTechnologyVersion: '3.0.0',
       }),
     );
-    failures = validate(metaEd);
+    enhance(metaEd);
   });
 
   it('should build one core domain entity', (): void => {
@@ -56,14 +57,14 @@ describe('when DEs have different names across dependency-linked namespaces', ()
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have no validation failures()', (): void => {
-    expect(failures).toHaveLength(0);
+  it('should not flag duplicates', (): void => {
+    const repository = edfiXsdRepositoryForNamespace(metaEd, extensionNamespace) as EdFiXsdEntityRepository;
+    expect(repository.hasDuplicateEntityNameInDependencyNamespace).toBe(false);
   });
 });
 
 describe('when DEs have same names across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -89,6 +90,7 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -96,7 +98,7 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
         targetTechnologyVersion: '3.0.0',
       }),
     );
-    failures = validate(metaEd);
+    enhance(metaEd);
   });
 
   it('should build one core domain entity', (): void => {
@@ -107,28 +109,15 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should have validation failure for extension entity', (): void => {
-    expect(failures).toHaveLength(1);
-
-    expect(failures[0].validatorName).toBe('V3LimitedDuplicateNamesInDependencyNamespaces');
-    expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchInlineSnapshot(
-      `"Domain Entity named DomainEntity already exists in project EdFi. The XSD specification for this is currently undefined. MetaEd XSD generation and ODS/API bulk data loading will be disabled."`,
-    );
-    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "column": 16,
-              "line": 11,
-              "tokenText": "DomainEntity",
-            }
-        `);
+  it('should flag duplicates', (): void => {
+    const repository = edfiXsdRepositoryForNamespace(metaEd, extensionNamespace) as EdFiXsdEntityRepository;
+    expect(repository.hasDuplicateEntityNameInDependencyNamespace).toBe(true);
   });
 });
 
 // not a name collision because they are completely separate namespaces
 describe('when DE Extension has same name as DE Extension that is not across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespacea: any = null;
   let extensionNamespaceb: any = null;
@@ -163,6 +152,7 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     extensionNamespaceb = metaEd.namespace.get('Extensionb');
     extensionNamespacea.dependencies.push(coreNamespace);
     extensionNamespaceb.dependencies.push(coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -170,7 +160,7 @@ describe('when DE Extension has same name as DE Extension that is not across dep
         targetTechnologyVersion: '3.0.0',
       }),
     );
-    failures = validate(metaEd);
+    enhance(metaEd);
   });
 
   it('should build one core domain entity', (): void => {
@@ -185,15 +175,18 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     expect(extensionNamespaceb.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', (): void => {
-    expect(failures).toHaveLength(0);
+  it('should not flag duplicates', (): void => {
+    const repositorya = edfiXsdRepositoryForNamespace(metaEd, extensionNamespacea) as EdFiXsdEntityRepository;
+    expect(repositorya.hasDuplicateEntityNameInDependencyNamespace).toBe(false);
+
+    const repositoryb = edfiXsdRepositoryForNamespace(metaEd, extensionNamespaceb) as EdFiXsdEntityRepository;
+    expect(repositoryb.hasDuplicateEntityNameInDependencyNamespace).toBe(false);
   });
 });
 
 // not a problem for this validator because they are different types
 describe('when DE has same name as DE extension across dependency-linked namespaces', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: ValidationFailure[];
   let coreNamespace: any = null;
   let extensionNamespace: any = null;
 
@@ -219,6 +212,7 @@ describe('when DE has same name as DE extension across dependency-linked namespa
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -226,7 +220,7 @@ describe('when DE has same name as DE extension across dependency-linked namespa
         targetTechnologyVersion: '3.0.0',
       }),
     );
-    failures = validate(metaEd);
+    enhance(metaEd);
   });
 
   it('should build one core domain entity', (): void => {
@@ -237,61 +231,8 @@ describe('when DE has same name as DE extension across dependency-linked namespa
     expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should have no validation failures()', (): void => {
-    expect(failures).toHaveLength(0);
-  });
-});
-
-// not a problem for this validator because they are different types
-// however this is not legal, and should be handled by a separate validator
-describe('when DE has same name as Common across dependency-linked namespaces', (): void => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: ValidationFailure[];
-  let coreNamespace: any = null;
-  let extensionNamespace: any = null;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('EdFi')
-      .withStartDomainEntity('MyEntity')
-      .withDocumentation('doc')
-      .withBooleanProperty('Prop1', 'doc', true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-
-      .withBeginNamespace('Extension', 'Extension')
-      .withStartCommon('MyEntity')
-      .withDocumentation('doc')
-      .withBooleanProperty('Prop2', 'doc', true, false)
-      .withEndCommon()
-      .withEndNamespace()
-
-      .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new CommonBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
-
-    coreNamespace = metaEd.namespace.get('EdFi');
-    extensionNamespace = metaEd.namespace.get('Extension');
-    extensionNamespace.dependencies.push(coreNamespace);
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
-
-    failures = validate(metaEd);
-  });
-
-  it('should build one core domain entity', (): void => {
-    expect(coreNamespace.entity.domainEntity.size).toBe(1);
-  });
-
-  it('should build one extension common', (): void => {
-    expect(extensionNamespace.entity.common.size).toBe(1);
-  });
-
-  it('should have no validation failures()', (): void => {
-    expect(failures).toHaveLength(0);
+  it('should not flag duplicates', (): void => {
+    const repository = edfiXsdRepositoryForNamespace(metaEd, extensionNamespace) as EdFiXsdEntityRepository;
+    expect(repository.hasDuplicateEntityNameInDependencyNamespace).toBe(false);
   });
 });

@@ -4,6 +4,7 @@ import { MergedInterchange } from './MergedInterchange';
 
 export interface EdFiXsdEntityRepository {
   mergedInterchange: Map<string, MergedInterchange>;
+  hasDuplicateEntityNameInDependencyNamespace: boolean;
 }
 
 const enhancerName = 'EdFiXsdEntityRepositorySetupEnhancer';
@@ -11,6 +12,7 @@ const enhancerName = 'EdFiXsdEntityRepositorySetupEnhancer';
 export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
   return {
     mergedInterchange: new Map(),
+    hasDuplicateEntityNameInDependencyNamespace: false,
   };
 }
 

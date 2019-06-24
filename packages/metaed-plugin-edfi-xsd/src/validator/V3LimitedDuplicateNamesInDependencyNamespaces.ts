@@ -30,7 +30,7 @@ function failureCollector(
       entityWithDuplicateName.metaEdName
     } already exists in project ${
       dependencyNamespace.projectName
-    }. ODS/API 3.x can only support this by disabling its bulk data loading feature.`,
+    }. The XSD specification for this is currently undefined. MetaEd XSD generation and ODS/API bulk data loading will be disabled.`,
     sourceMap: entityWithDuplicateName.sourceMap.metaEdName,
     fileMap: null,
   });

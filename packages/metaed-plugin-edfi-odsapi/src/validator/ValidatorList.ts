@@ -11,7 +11,6 @@ import { validate as subclassingAnyAssociationExceptStudentProgramAssociationIsU
 import { validate as subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported } from './UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 import { validate as subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported } from './UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
 import { validate as v2CannotDuplicateNamesInDependencyNamespaces } from './CrossNamespace/V2CannotDuplicateNamesInDependencyNamespaces';
-import { validate as v3LimitedDuplicateNamesInDependencyNamespaces } from './CrossNamespace/V3LimitedDuplicateNamesInDependencyNamespaces';
 
 export function validatorList(): Validator[] {
   return [
@@ -27,6 +26,5 @@ export function validatorList(): Validator[] {
     subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported,
 
     v2CannotDuplicateNamesInDependencyNamespaces,
-    v3LimitedDuplicateNamesInDependencyNamespaces,
   ];
 }
