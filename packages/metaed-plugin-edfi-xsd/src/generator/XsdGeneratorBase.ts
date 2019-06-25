@@ -72,12 +72,8 @@ export function formatVersionForSchema(version: SemVer): string {
 }
 
 // METAED-997
-export function hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd: MetaEdEnvironment): boolean {
-  let result = false;
-  metaEd.namespace.forEach((namespace: Namespace) => {
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    if (edFiXsdEntityRepository.hasDuplicateEntityNameInDependencyNamespace) result = true;
-  });
-  return result;
+export function hasDuplicateEntityNameInNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): boolean {
+  const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+  if (edFiXsdEntityRepository == null) return false;
+  return edFiXsdEntityRepository.hasDuplicateEntityNameInDependencyNamespace;
 }

@@ -6,7 +6,7 @@ import {
   registerPartials,
   template,
   formatVersionForSchema,
-  hasDuplicateEntityNameInAtLeastOneDependencyNamespace,
+  hasDuplicateEntityNameInNamespace,
 } from './XsdGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
@@ -15,10 +15,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const generatorName = 'edfiXsd.XsdGenerator';
   const generatedOutput: GeneratedOutput[] = [];
 
-  // METAED-997
-  if (hasDuplicateEntityNameInAtLeastOneDependencyNamespace(metaEd)) return { generatorName, generatedOutput };
-
   metaEd.namespace.forEach(namespace => {
+    // METAED-997
+    if (hasDuplicateEntityNameInNamespace(metaEd, namespace)) return;
+
     const schema: SchemaContainer = (namespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
     schema.schemaVersion = formatVersionForSchema(metaEd.dataStandardVersion);
     const formattedGeneratedResult = formatAndPrependHeader(template().schema(schema));
