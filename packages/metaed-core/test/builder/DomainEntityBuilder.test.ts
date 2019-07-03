@@ -77,6 +77,10 @@ describe('when building simple domain entity in extension namespace', (): void =
     expect(getDomainEntity(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).isDeprecated).toBe(false);
+  });
+
   it('should have two properties', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(2);
   });
@@ -101,6 +105,48 @@ describe('when building simple domain entity in extension namespace', (): void =
 
   it('should not have queryable fields', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).queryableFields).toHaveLength(0);
+  });
+});
+
+describe('when building deprecated domain entity', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  const documentation = 'Doc';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartDomainEntity(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one domain entity', (): void => {
+    expect(namespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -155,21 +201,29 @@ describe('when building duplicate domain entities', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate domain entities should have validation failures for each entity -> DE 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Domain Entity named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 16,
+        "line": 15,
+        "tokenText": "EntityName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate domain entities should have validation failures for each entity -> DE 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Domain Entity named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate domain entities should have validation failures for each entity -> DE 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 16,
+        "line": 2,
+        "tokenText": "EntityName",
+      }
+    `);
   });
 });
 
@@ -207,21 +261,29 @@ describe('when building duplicate property names', (): void => {
   it('should have validation failures for each property', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate property names should have validation failures for each property -> property 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Property named StringPropertyName is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate property names should have validation failures for each property -> property 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 11,
+        "line": 15,
+        "tokenText": "StringPropertyName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate property names should have validation failures for each property -> property 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate property names should have validation failures for each property -> property 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 11,
+        "line": 9,
+        "tokenText": "StringPropertyName",
+      }
+    `);
   });
 });
 
@@ -291,21 +353,29 @@ describe('when building duplicate property names with same role name name', (): 
   it('should have validation failures for each property', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate property names with same role name name should have validation failures for each property -> property 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Property named StringPropertyName is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate property names with same role name name should have validation failures for each property -> property 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 11,
+        "line": 16,
+        "tokenText": "StringPropertyName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate property names with same role name name should have validation failures for each property -> property 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Property named StringPropertyName is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate property names with same role name name should have validation failures for each property -> property 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 11,
+        "line": 9,
+        "tokenText": "StringPropertyName",
+      }
+    `);
   });
 });
 
@@ -704,7 +774,151 @@ describe('when building domain entity with shared integer reference', (): void =
   });
 
   it('should have correct sourcemap', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "mergeDirectives": Array [],
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 44,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "minValue": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 19,
+          "line": 5,
+          "tokenText": "SharedPropertyType",
+        },
+        "referencedType": Object {
+          "column": 19,
+          "line": 5,
+          "tokenText": "SharedPropertyType",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "shared integer",
+        },
+      }
+    `);
   });
 });
 
@@ -743,7 +957,151 @@ describe('when building domain entity with shared integer reference without name
   });
 
   it('should have correct sourcemap', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "mergeDirectives": Array [],
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 19,
+          "line": 5,
+          "tokenText": "SharedPropertyType",
+        },
+        "minValue": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 19,
+          "line": 5,
+          "tokenText": "SharedPropertyType",
+        },
+        "referencedType": Object {
+          "column": 19,
+          "line": 5,
+          "tokenText": "SharedPropertyType",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "shared integer",
+        },
+      }
+    `);
   });
 });
 
@@ -1102,7 +1460,14 @@ describe('when building domain entity with no project extension', (): void => {
   });
 
   it('should have extraneous input and mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
+      ]
+    `);
   });
 });
 
@@ -1135,7 +1500,12 @@ describe('when building domain entity with lowercase project extension', (): voi
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'p' expecting {'core', ID}, column: 26, line: 1, token: p",
+        "mismatched input 'p' expecting {'core', ID}, column: 26, line: 1, token: p",
+      ]
+    `);
   });
 });
 
@@ -1168,7 +1538,14 @@ describe('when building domain entity with no namespace', (): void => {
   });
 
   it('should have missing namespace id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
+      ]
+    `);
   });
 });
 
@@ -1200,7 +1577,12 @@ describe('when building domain entity with no end namespace', (): void => {
   });
 
   it('should have extraneous input eof error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "missing 'End Namespace' at '<EOF>', column: 19, line: 14, token: <EOF>",
+        "missing 'End Namespace' at '<EOF>', column: 19, line: 14, token: <EOF>",
+      ]
+    `);
   });
 });
 
@@ -1229,7 +1611,12 @@ describe('when building domain entity with no top level entity', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 2, line: 2, token: documentation",
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 2, line: 2, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -1269,7 +1656,12 @@ describe('when building domain entity with no domain entity name', (): void => {
   });
 
   it('should have no viable alternative error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "no viable alternative at input 'Domain Entity[1]', column: 17, line: 2, token: [1]",
+        "no viable alternative at input 'Domain Entity[1]', column: 17, line: 2, token: [1]",
+      ]
+    `);
   });
 });
 
@@ -1309,7 +1701,12 @@ describe('when building domain entity with lowercase domain entity name', (): vo
   });
 
   it('should have no viable alternative error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
+        "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
+      ]
+    `);
   });
 });
 
@@ -1342,7 +1739,12 @@ describe('when building domain entity with no metaed id', (): void => {
   });
 
   it('should have syntax error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
+        "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
+      ]
+    `);
   });
 });
 
@@ -1391,22 +1793,17 @@ describe('when building domain entity with no documentation', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have two properties', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(2);
-  });
-
-  it('should have integer property', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe('integer');
-  });
-
-  it('should have string property', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[1].metaEdName).toBe(stringPropertyName);
-    expect(getDomainEntity(namespace.entity, entityName).properties[1].type).toBe('string');
+  it('should have no properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
+      ]
+    `);
   });
 });
 
@@ -1457,7 +1854,12 @@ describe('when building domain entity with no properties', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}, column: 0, line: 5, token: End Namespace",
+        "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}, column: 0, line: 5, token: End Namespace",
+      ]
+    `);
   });
 });
 
@@ -1525,7 +1927,12 @@ describe('when building domain entity with invalid trailing text', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 15, token: TrailingText",
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 15, token: TrailingText",
+      ]
+    `);
   });
 });
 
@@ -1584,7 +1991,68 @@ describe('when building domain entity source map', (): void => {
   });
 
   it('should have line, column, text for each property', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "allow primary key updates",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "identityProperties": Array [],
+        "isAbstract": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 27,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+      }
+    `);
   });
 });
 
@@ -1642,6 +2110,67 @@ describe('when building abstract entity source map', (): void => {
   });
 
   it('should have line, column, text for each property', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "identityProperties": Array [],
+        "isAbstract": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Abstract Entity",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 29,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 18,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Abstract Entity",
+        },
+      }
+    `);
   });
 });

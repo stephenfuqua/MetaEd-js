@@ -4,7 +4,7 @@ import { Namespace } from '../model/Namespace';
 import { ValidationFailure } from '../validator/ValidationFailure';
 import { newStringType, NoStringType } from '../model/StringType';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { extractDocumentation, squareBracketRemoval, isErrorText, extractDeprecationReason } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -47,6 +47,17 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
   ) {
     this.currentStringType = { ...newStringType(), namespace: this.currentNamespace, generatedSimpleType };
     this.currentStringType.sourceMap.type = sourceMapFrom(context);
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentStringType === NoStringType) return;
+
+    if (!context.exception) {
+      this.currentStringType.isDeprecated = true;
+      this.currentStringType.deprecationReason = extractDeprecationReason(context);
+      this.currentStringType.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentStringType.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {

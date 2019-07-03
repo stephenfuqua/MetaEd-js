@@ -14,7 +14,7 @@ import { Namespace } from '../model/Namespace';
 import { NoNamespace } from '../model/Namespace';
 import { isSharedProperty } from '../model/property/PropertyType';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, extractDeprecationReason, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { newBooleanProperty } from '../model/property/BooleanProperty';
 import { newCurrencyProperty } from '../model/property/CurrencyProperty';
 import { newDateProperty } from '../model/property/DateProperty';
@@ -202,6 +202,17 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     } else {
       this.currentTopLevelEntity.baseEntityNamespaceName = baseNamespaceContext.ID().getText();
       this.currentTopLevelEntity.sourceMap.baseEntityNamespaceName = sourceMapFrom(baseNamespaceContext);
+    }
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
+
+    if (!context.exception) {
+      this.currentTopLevelEntity.isDeprecated = true;
+      this.currentTopLevelEntity.deprecationReason = extractDeprecationReason(context);
+      this.currentTopLevelEntity.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentTopLevelEntity.sourceMap.deprecationReason = sourceMapFrom(context);
     }
   }
 
@@ -483,6 +494,17 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     }
 
     this.currentProperty = NoEntityProperty;
+  }
+
+  enterPropertyDeprecated(context: MetaEdGrammar.PropertyDeprecatedContext) {
+    if (this.currentProperty === NoEntityProperty) return;
+
+    if (!context.exception) {
+      this.currentProperty.isDeprecated = true;
+      this.currentProperty.deprecationReason = extractDeprecationReason(context);
+      this.currentProperty.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentProperty.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterPropertyDocumentation(context: MetaEdGrammar.PropertyDocumentationContext) {

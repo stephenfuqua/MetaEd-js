@@ -4,7 +4,7 @@ import { Namespace } from '../model/Namespace';
 import { ValidationFailure } from '../validator/ValidationFailure';
 import { newIntegerType, newShortType, NoIntegerType } from '../model/IntegerType';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { extractDocumentation, extractDeprecationReason, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -61,6 +61,17 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     this.currentIntegerType = { ...factory(), namespace: this.currentNamespace, generatedSimpleType };
 
     this.currentIntegerType.sourceMap.type = sourceMapFrom(context);
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentIntegerType === NoIntegerType) return;
+
+    if (!context.exception) {
+      this.currentIntegerType.isDeprecated = true;
+      this.currentIntegerType.deprecationReason = extractDeprecationReason(context);
+      this.currentIntegerType.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentIntegerType.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {

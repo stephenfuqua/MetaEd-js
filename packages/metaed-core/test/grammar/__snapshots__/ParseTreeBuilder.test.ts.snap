@@ -53,7 +53,7 @@ Array [
   Object {
     "category": "error",
     "fileMap": null,
-    "message": "mismatched input 'x' expecting {'documentation', METAED_ID}",
+    "message": "mismatched input 'x' expecting {'deprecated', 'documentation', METAED_ID}",
     "sourceMap": Object {
       "column": 23,
       "line": 5,
@@ -144,7 +144,7 @@ Array [
   Object {
     "category": "error",
     "fileMap": null,
-    "message": "mismatched input 'x' expecting {'documentation', METAED_ID}",
+    "message": "mismatched input 'x' expecting {'deprecated', 'documentation', METAED_ID}",
     "sourceMap": Object {
       "column": 23,
       "line": 4,

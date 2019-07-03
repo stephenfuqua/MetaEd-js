@@ -64,12 +64,58 @@ describe('when building shared string in extension namespace', (): void => {
     expect(getSharedString(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getSharedString(namespace.entity, entityName).isDeprecated).toBe(false);
+  });
+
   it('should have min length', (): void => {
     expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
   });
 
   it('should have max length', (): void => {
     expect(getSharedString(namespace.entity, entityName).maxLength).toBe(maxLength);
+  });
+});
+
+describe('when building deprecated shared string', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const documentation = 'doc';
+  const minLength = '2';
+  const maxLength = '100';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new SharedStringBuilder(metaEd, validationFailures);
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartSharedString(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation(documentation)
+      .withStringRestrictions(minLength, maxLength)
+      .withEndSharedString()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one shared string', (): void => {
+    expect(namespace.entity.sharedString.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getSharedString(namespace.entity, entityName).isDeprecated).toBe(true);
+    expect(getSharedString(namespace.entity, entityName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -122,21 +168,29 @@ describe('when building duplicate shared strings', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate shared strings should have validation failures for each entity -> SS 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Shared String named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate shared strings should have validation failures for each entity -> SS 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+            Object {
+              "column": 16,
+              "line": 7,
+              "tokenText": "EntityName",
+            }
+        `);
 
     expect(validationFailures[1].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate shared strings should have validation failures for each entity -> SS 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Shared String named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate shared strings should have validation failures for each entity -> SS 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+            Object {
+              "column": 16,
+              "line": 2,
+              "tokenText": "EntityName",
+            }
+        `);
   });
 });
 
@@ -175,7 +229,12 @@ describe('when building shared string with no shared string name', (): void => {
   });
 
   it('should have missing id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing ID at '[123]', column: 17, line: 2, token: [123]",
+              "missing ID at '[123]', column: 17, line: 2, token: [123]",
+            ]
+        `);
   });
 });
 
@@ -214,7 +273,12 @@ describe('when building shared string with lowercase shared string name', (): vo
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
+              "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
+            ]
+        `);
   });
 });
 
@@ -262,16 +326,21 @@ describe('when building shared string with no documentation', (): void => {
     expect(getSharedString(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have min length', (): void => {
-    expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
+  it('should have no min length', (): void => {
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe('');
   });
 
-  it('should have max length', (): void => {
-    expect(getSharedString(namespace.entity, entityName).maxLength).toBe(maxLength);
+  it('should have no max length', (): void => {
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe('');
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'min length' expecting {'deprecated', 'documentation'}, column: 6, line: 3, token: min length",
+              "mismatched input 'min length' expecting {'deprecated', 'documentation'}, column: 6, line: 3, token: min length",
+            ]
+        `);
   });
 });
 
@@ -330,7 +399,14 @@ describe('when building shared string with no min length', (): void => {
   });
 
   it('should have extraneous input and mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'max length' expecting UNSIGNED_INT, column: 6, line: 6, token: max length",
+              "mismatched input 'End Namespace' expecting 'max length', column: 0, line: 7, token: End Namespace",
+              "extraneous input 'max length' expecting UNSIGNED_INT, column: 6, line: 6, token: max length",
+              "mismatched input 'End Namespace' expecting 'max length', column: 0, line: 7, token: End Namespace",
+            ]
+        `);
   });
 });
 
@@ -389,7 +465,12 @@ describe('when building shared string with no max length', (): void => {
   });
 
   it('should have missing unsigned int error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+              "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+            ]
+        `);
   });
 });
 
@@ -450,7 +531,12 @@ describe('when building shared string with invalid trailing text', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
+            ]
+        `);
   });
 });
 
@@ -512,6 +598,49 @@ describe('when building shared string source map', (): void => {
   });
 
   it('should have line, column, text for each property', (): void => {
-    expect(getSharedString(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getSharedString(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxLength": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "max length",
+        },
+        "metaEdId": Object {
+          "column": 27,
+          "line": 2,
+          "tokenText": "[123]",
+        },
+        "metaEdName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "minLength": Object {
+          "column": 6,
+          "line": 5,
+          "tokenText": "min length",
+        },
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Shared String",
+        },
+      }
+    `);
   });
 });

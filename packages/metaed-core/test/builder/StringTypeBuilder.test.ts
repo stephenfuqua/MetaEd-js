@@ -72,6 +72,10 @@ describe('when building shared string in extension namespace', (): void => {
     expect(getStringType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getStringType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(false);
+  });
+
   it('should have minLength', (): void => {
     expect(getStringType(namespace.entity, expectedRepositoryId).minLength).toBe(minLength);
   });
@@ -86,6 +90,48 @@ describe('when building shared string in extension namespace', (): void => {
 
   it('should not be a generated type', (): void => {
     expect(getStringType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
+  });
+});
+
+describe('when building deprecated shared string', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const minLength = '2';
+  const maxLength = '100';
+
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+  let namespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartSharedString(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withStringRestrictions(minLength, maxLength)
+      .withEndSharedString()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new StringTypeBuilder(metaEd, validationFailures));
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one string type', (): void => {
+    expect(namespace.entity.stringType.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getStringType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(true);
+    expect(getStringType(namespace.entity, expectedRepositoryId).deprecationReason).toBe(deprecationReason);
   });
 });
 

@@ -4,7 +4,7 @@ import { Namespace } from '../model/Namespace';
 import { ValidationFailure } from '../validator/ValidationFailure';
 import { newDecimalType, NoDecimalType } from '../model/DecimalType';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { extractDocumentation, extractDeprecationReason, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -47,6 +47,17 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   ) {
     this.currentDecimalType = { ...newDecimalType(), namespace: this.currentNamespace, generatedSimpleType };
     this.currentDecimalType.sourceMap.type = sourceMapFrom(context);
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentDecimalType === NoDecimalType) return;
+
+    if (!context.exception) {
+      this.currentDecimalType.isDeprecated = true;
+      this.currentDecimalType.deprecationReason = extractDeprecationReason(context);
+      this.currentDecimalType.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentDecimalType.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {

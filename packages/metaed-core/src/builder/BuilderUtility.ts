@@ -27,3 +27,4 @@ function extractText(contextWithText: any): string {
 
 export const extractShortDescription = extractText;
 export const extractDocumentation = extractText;
+export const extractDeprecationReason = extractText;

@@ -11,7 +11,7 @@ import { newDomainItem, NoDomainItem } from '../model/DomainItem';
 import { newDomain, NoDomain } from '../model/Domain';
 import { newSubdomain } from '../model/Subdomain';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { extractDocumentation, extractDeprecationReason, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 import { TopLevelEntity } from '../model/TopLevelEntity';
@@ -42,6 +42,17 @@ export class DomainBuilder extends MetaEdGrammarListener {
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
     const namespace: Namespace | undefined = this.metaEd.namespace.get(namespaceNameFrom(context));
     this.currentNamespace = namespace == null ? NoNamespace : namespace;
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentDomain === NoDomain) return;
+
+    if (!context.exception) {
+      this.currentDomain.isDeprecated = true;
+      this.currentDomain.deprecationReason = extractDeprecationReason(context);
+      this.currentDomain.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentDomain.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {

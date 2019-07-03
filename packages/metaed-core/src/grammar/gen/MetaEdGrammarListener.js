@@ -47,6 +47,24 @@ MetaEdGrammarListener.prototype.exitTopLevelEntity = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#deprecated.
+MetaEdGrammarListener.prototype.enterDeprecated = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#deprecated.
+MetaEdGrammarListener.prototype.exitDeprecated = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#propertyDeprecated.
+MetaEdGrammarListener.prototype.enterPropertyDeprecated = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#propertyDeprecated.
+MetaEdGrammarListener.prototype.exitPropertyDeprecated = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#documentation.
 MetaEdGrammarListener.prototype.enterDocumentation = function(ctx) {
 };

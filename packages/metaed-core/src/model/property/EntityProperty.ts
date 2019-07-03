@@ -19,6 +19,8 @@ export type HasReferencedEntity = ReferentialProperty | SimpleProperty;
  */
 export interface EntityPropertySourceMap {
   type: SourceMap;
+  isDeprecated: SourceMap;
+  deprecationReason: SourceMap;
   documentation: SourceMap;
   documentationInherited: SourceMap;
   metaEdName: SourceMap;
@@ -49,6 +51,8 @@ export interface EntityPropertySourceMap {
 export function newEntityPropertySourceMap(): EntityPropertySourceMap {
   return {
     type: NoSourceMap,
+    isDeprecated: NoSourceMap,
+    deprecationReason: NoSourceMap,
     documentation: NoSourceMap,
     documentationInherited: NoSourceMap,
     metaEdName: NoSourceMap,
@@ -80,6 +84,10 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  * **type** is the property type as a string enumeration.  Examples are "domainEntity", "descriptor", "sharedString".
  *
  * **typeHumanizedName** is the property type as a displayable string for end user messages.
+ *
+ * **isDeprecated** is true if this property is marked as deprecated.
+ *
+ * **deprecationReason** is the reason why this property was deprecated.
  *
  * **documentation** is the property documentation corresponding to the "documentation" keyword.
  *
@@ -134,6 +142,8 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
 export interface EntityProperty {
   type: PropertyType;
   typeHumanizedName: string;
+  isDeprecated: boolean;
+  deprecationReason: string;
   documentation: string;
   documentationInherited: boolean;
   metaEdName: string;
@@ -168,6 +178,8 @@ export function newEntityProperty(): EntityProperty {
   return {
     type: 'unknown',
     typeHumanizedName: '',
+    isDeprecated: false,
+    deprecationReason: '',
     documentation: '',
     documentationInherited: false,
     metaEdName: '',

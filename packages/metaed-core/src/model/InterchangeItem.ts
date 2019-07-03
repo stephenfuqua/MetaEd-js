@@ -1,10 +1,7 @@
 import deepFreeze from 'deep-freeze';
 import { ModelType } from './ModelType';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespace } from './Namespace';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
+import { SourceMap, NoSourceMap } from './SourceMap';
 import { NoTopLevelEntity } from './TopLevelEntity';
 import { TopLevelEntity } from './TopLevelEntity';
 
@@ -41,18 +38,13 @@ export interface InterchangeItem extends ModelBase {
  */
 export function newInterchangeItem(): InterchangeItem {
   return {
+    ...newModelBase(),
     type: 'interchangeItem',
     typeHumanizedName: 'Interchange Item',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
-    namespace: newNamespace(),
     referencedType: [],
     referencedNamespaceName: '',
     referencedEntity: NoTopLevelEntity,
     sourceMap: newInterchangeItemSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

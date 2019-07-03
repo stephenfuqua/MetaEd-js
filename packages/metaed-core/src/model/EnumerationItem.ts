@@ -1,9 +1,6 @@
 import deepFreeze from 'deep-freeze';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespace } from './Namespace';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
+import { SourceMap, NoSourceMap } from './SourceMap';
 
 export interface EnumerationItemSourceMap extends ModelBaseSourceMap {
   shortDescription: SourceMap;
@@ -32,16 +29,11 @@ export interface EnumerationItem extends ModelBase {
  */
 export function newEnumerationItem(): EnumerationItem {
   return {
+    ...newModelBase(),
     type: 'enumerationItem',
     typeHumanizedName: 'Enumeration Item',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
-    namespace: newNamespace(),
     shortDescription: '',
     sourceMap: newEnumerationItemSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

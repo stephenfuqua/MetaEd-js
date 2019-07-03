@@ -58,6 +58,10 @@ describe('when building association property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have type', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
@@ -70,7 +74,48 @@ describe('when building association property', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "association",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated association property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withAssociationProperty(propertyName, 'doc', false, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have association property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -114,7 +159,13 @@ describe('when building association property with weak reference', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "association",
+      }
+    `);
   });
 
   it('should have isWeak', (): void => {
@@ -128,9 +179,14 @@ describe('when building association property with weak reference', (): void => {
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as AssociationPropertySourceMap).isWeak,
     ).not.toBe(NoSourceMap);
-    expect(
-      (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as AssociationPropertySourceMap).isWeak,
-    ).toMatchSnapshot();
+    expect((getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as AssociationPropertySourceMap).isWeak)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 9,
+        "tokenText": "is weak",
+      }
+    `);
   });
 });
 
@@ -171,10 +227,56 @@ describe('when building boolean property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "bool",
+      }
+    `);
+  });
+});
+
+// BooleanProperty
+describe('when building deprecated boolean property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have boolean property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -215,10 +317,55 @@ describe('when building choice property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "choice",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated choice property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withChoiceProperty(propertyName, 'doc', false, false, null, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have choice property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -259,10 +406,55 @@ describe('when building common property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "common",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated common property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withCommonProperty(propertyName, 'doc', false, false, null, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have common property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -305,7 +497,13 @@ describe('when building common property with extension override', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "common extension",
+      }
+    `);
   });
 
   it('should have isExtensionOverride', (): void => {
@@ -321,7 +519,13 @@ describe('when building common property with extension override', (): void => {
     ).not.toBe(NoSourceMap);
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as CommonPropertySourceMap).isExtensionOverride,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "common extension",
+      }
+    `);
   });
 });
 
@@ -362,10 +566,55 @@ describe('when building currency property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "currency",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated currency property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withCurrencyProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have currency property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -406,10 +655,55 @@ describe('when building date property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "date",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated date property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDateProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have date property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -450,10 +744,55 @@ describe('when building datetime property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "datetime",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated datetime property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDatetimeProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have datetime property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -489,12 +828,16 @@ describe('when building decimal property', (): void => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should have integer property in entity properties', (): void => {
+  it('should have decimal property in entity properties', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
   });
 
   it('should have type', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
   });
 
   it('should have source map for type', (): void => {
@@ -564,7 +907,194 @@ describe('when building decimal property', (): void => {
   });
 
   it('should have source map with line, column, text', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "decimalPlaces": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "decimal places",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 6,
+          "line": 12,
+          "tokenText": "max value",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 6,
+          "line": 12,
+          "tokenText": "max value",
+        },
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 12,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "minValue": Object {
+          "column": 6,
+          "line": 11,
+          "tokenText": "min value",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 12,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "referencedType": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "totalDigits": Object {
+          "column": 6,
+          "line": 9,
+          "tokenText": "total digits",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "decimal",
+        },
+      }
+    `);
+  });
+});
+
+describe('when building deprecated decimal property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, []);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDecimalProperty(propertyName, 'doc', true, false, '6', '2', '100', '1000', null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have decimal property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -605,10 +1135,55 @@ describe('when building descriptor property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "descriptor",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated descriptor property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDescriptorProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have descriptor property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -650,10 +1225,55 @@ describe('when building domain entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "domain entity",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated domain entity property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDomainEntityProperty(propertyName, 'doc', false, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have domain entity property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -698,7 +1318,13 @@ describe('when building domain entity property with weak reference', (): void =>
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "domain entity",
+      }
+    `);
   });
 
   it('should have isWeak', (): void => {
@@ -712,9 +1338,14 @@ describe('when building domain entity property with weak reference', (): void =>
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as DomainEntityPropertySourceMap).isWeak,
     ).not.toBe(NoSourceMap);
-    expect(
-      (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as DomainEntityPropertySourceMap).isWeak,
-    ).toMatchSnapshot();
+    expect((getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as DomainEntityPropertySourceMap).isWeak)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 8,
+        "tokenText": "is weak",
+      }
+    `);
   });
 });
 
@@ -755,10 +1386,55 @@ describe('when building duration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "duration",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated duration property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDurationProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have duration property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -870,7 +1546,146 @@ describe('when building required entity properties', (): void => {
   });
 
   it('should have source map with line, column, text for each property', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isWeak": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "mergeDirectives": Array [],
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 29,
+          "line": 5,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 16,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 16,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "referencedType": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "association",
+        },
+      }
+    `);
   });
 });
 
@@ -914,7 +1729,14 @@ describe('when building entity property with inherited documentation', (): void 
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.documentationInherited).not.toBe(
       NoSourceMap,
     );
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.documentationInherited).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.documentationInherited)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 6,
+        "line": 6,
+        "tokenText": "documentation",
+      }
+    `);
   });
 });
 
@@ -954,7 +1776,15 @@ describe('when building identity entity property', (): void => {
   it('should have entity source map for identity properties with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).toHaveLength(1);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "column": 4,
+          "line": 8,
+          "tokenText": "is part of identity",
+        },
+      ]
+    `);
   });
 
   it('should have source map for isPartOfIdentity with line, column, text', (): void => {
@@ -962,7 +1792,14 @@ describe('when building identity entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).not.toBe(
       NoSourceMap,
     );
-    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 8,
+        "tokenText": "is part of identity",
+      }
+    `);
   });
 });
 
@@ -1000,7 +1837,13 @@ describe('when building optional entity property', (): void => {
   it('should have source map for isOptional with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).toMatchInlineSnapshot(`
+      Object {
+        "column": 6,
+        "line": 8,
+        "tokenText": "is optional",
+      }
+    `);
   });
 });
 
@@ -1038,7 +1881,14 @@ describe('when building required collection entity property', (): void => {
   it('should have source map for isRequiredCollection with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 6,
+        "line": 8,
+        "tokenText": "is required collection",
+      }
+    `);
   });
 });
 
@@ -1076,7 +1926,14 @@ describe('when building optional collection entity property', (): void => {
   it('should have source map for isOptionalCollection with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 6,
+        "line": 8,
+        "tokenText": "is optional collection",
+      }
+    `);
   });
 });
 
@@ -1123,7 +1980,13 @@ describe('when building entity property role name', (): void => {
   it('should have source map for contextName with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toMatchInlineSnapshot(`
+      Object {
+        "column": 14,
+        "line": 9,
+        "tokenText": "ContextName",
+      }
+    `);
   });
 });
 
@@ -1164,7 +2027,13 @@ describe('when building entity property with shortened context', (): void => {
   it('should have source map for shortenTo with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).toMatchInlineSnapshot(`
+      Object {
+        "column": 37,
+        "line": 9,
+        "tokenText": "ShortenToName",
+      }
+    `);
   });
 });
 
@@ -1218,13 +2087,26 @@ describe('when building renamed identity entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).not.toBe(
       NoSourceMap,
     );
-    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isIdentityRename)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 11,
+        "tokenText": "renames identity property",
+      }
+    `);
   });
 
   it('should have source map for baseKeyName with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).toMatchInlineSnapshot(`
+      Object {
+        "column": 30,
+        "line": 11,
+        "tokenText": "BaseName",
+      }
+    `);
   });
 });
 
@@ -1264,13 +2146,28 @@ describe('when building queryable entity property ', (): void => {
   it('should have entity source map for queryable field with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).toHaveLength(1);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "column": 4,
+          "line": 8,
+          "tokenText": "is queryable only",
+        },
+      ]
+    `);
   });
 
   it('should have source map for isQueryableOnly with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly)
+      .toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 8,
+        "tokenText": "is queryable only",
+      }
+    `);
   });
 });
 
@@ -1311,7 +2208,47 @@ describe('when building shared entity property', (): void => {
   it('should have source map for referencedType with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).toMatchInlineSnapshot(`
+      Object {
+        "column": 19,
+        "line": 5,
+        "tokenText": "PropertyName",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated shared entity property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withSharedDecimalProperty(propertyName, '', 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have entity property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -1352,10 +2289,55 @@ describe('when building enumeration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "enumeration",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated enumeration property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withEnumerationProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have enumeration property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -1396,10 +2378,57 @@ describe('when building inline common property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "inline common",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated inline common property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withInlineCommonProperty(propertyName, propertyDocumentation, false, false, null, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have inline common property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -1439,6 +2468,10 @@ describe('when building integer property', (): void => {
 
   it('should have type', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
   });
 
   it('should have source map for type', (): void => {
@@ -1482,7 +2515,198 @@ describe('when building integer property', (): void => {
   });
 
   it('should have source map with line, column, text', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max value",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max value",
+        },
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 12,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "minValue": Object {
+          "column": 6,
+          "line": 9,
+          "tokenText": "min value",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 12,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "referencedType": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "integer",
+        },
+      }
+    `);
+  });
+});
+
+describe('when building deprecated integer property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  const minValue = '100';
+  const maxValue = '1000';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, []);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withIntegerProperty(
+        propertyName,
+        propertyDocumentation,
+        true,
+        false,
+        maxValue,
+        minValue,
+        null,
+        null,
+        deprecationReason,
+      )
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have integer property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -1541,7 +2765,13 @@ describe('when building merge directive reference', (): void => {
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .sourcePropertyPathStrings,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "column": 10,
+        "line": 9,
+        "tokenText": "Entity",
+      }
+    `);
   });
 
   it('should have targetPropertyPathStrings', (): void => {
@@ -1563,7 +2793,13 @@ describe('when building merge directive reference', (): void => {
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .targetPropertyPathStrings,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "column": 31,
+        "line": 9,
+        "tokenText": "TargetEntity",
+      }
+    `);
   });
 });
 
@@ -1624,9 +2860,46 @@ describe('when building multiple merge directives', (): void => {
   });
 
   it('should have source map for first merge directive', (): void => {
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap,
-    ).toMatchSnapshot();
+    expect(asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap)
+      .toMatchInlineSnapshot(`
+      Object {
+        "sourceProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyPathStrings": Object {
+          "column": 10,
+          "line": 9,
+          "tokenText": "SourcePropertyPath0",
+        },
+        "targetProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyPathStrings": Object {
+          "column": 35,
+          "line": 9,
+          "tokenText": "TargetPropertyPath0",
+        },
+        "type": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 
   it('should have sourcePropertyPathStrings and targetPropertyPathStrings for second merge directive', (): void => {
@@ -1649,9 +2922,46 @@ describe('when building multiple merge directives', (): void => {
   });
 
   it('should have source map for second merge directive', (): void => {
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap,
-    ).toMatchSnapshot();
+    expect(asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap)
+      .toMatchInlineSnapshot(`
+      Object {
+        "sourceProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyPathStrings": Object {
+          "column": 10,
+          "line": 10,
+          "tokenText": "SourcePropertyPath1",
+        },
+        "targetProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyPathStrings": Object {
+          "column": 35,
+          "line": 10,
+          "tokenText": "TargetPropertyPath1",
+        },
+        "type": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 });
 
@@ -1711,9 +3021,46 @@ describe('when building multiple merge directives for a shared simple type', ():
   });
 
   it('should have source map for first merge directive', (): void => {
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap,
-    ).toMatchSnapshot();
+    expect(asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap)
+      .toMatchInlineSnapshot(`
+      Object {
+        "sourceProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyPathStrings": Object {
+          "column": 10,
+          "line": 9,
+          "tokenText": "SourcePropertyPath0",
+        },
+        "targetProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyPathStrings": Object {
+          "column": 35,
+          "line": 9,
+          "tokenText": "TargetPropertyPath0",
+        },
+        "type": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 
   it('should have sourcePropertyPathStrings and targetPropertyPathStrings for second merge directive', (): void => {
@@ -1736,9 +3083,46 @@ describe('when building multiple merge directives for a shared simple type', ():
   });
 
   it('should have source map for second merge directive', (): void => {
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap,
-    ).toMatchSnapshot();
+    expect(asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap)
+      .toMatchInlineSnapshot(`
+      Object {
+        "sourceProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "sourcePropertyPathStrings": Object {
+          "column": 10,
+          "line": 10,
+          "tokenText": "SourcePropertyPath1",
+        },
+        "targetProperty": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyChain": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "targetPropertyPathStrings": Object {
+          "column": 35,
+          "line": 10,
+          "tokenText": "TargetPropertyPath1",
+        },
+        "type": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 });
 
@@ -1796,7 +3180,13 @@ describe('when building merge directive for defining association domain entity p
     expect(
       asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .sourcePropertyPathStrings,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "column": 10,
+        "line": 8,
+        "tokenText": "Entity",
+      }
+    `);
   });
 
   it('should have targetPropertyPathStrings', (): void => {
@@ -1818,7 +3208,13 @@ describe('when building merge directive for defining association domain entity p
     expect(
       asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .targetPropertyPathStrings,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Object {
+        "column": 31,
+        "line": 8,
+        "tokenText": "TargetEntity",
+      }
+    `);
   });
 });
 
@@ -1859,10 +3255,57 @@ describe('when building percent property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "percent",
+      }
+    `);
+  });
+});
+
+describe('when building percent property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withPercentProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have percent property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -1912,7 +3355,15 @@ describe('when building referential property with merge directives', (): void =>
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as ReferentialPropertySourceMap)
         .mergeDirectives,
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "column": 4,
+          "line": 8,
+          "tokenText": "merge",
+        },
+      ]
+    `);
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as ReferentialPropertySourceMap)
         .mergeDirectives,
@@ -1957,10 +3408,57 @@ describe('when building school year enumeration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "enumeration",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated school year enumeration property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'SchoolYear';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withEnumerationProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have school year enumeration property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -2004,7 +3502,13 @@ describe('when building shared decimal property', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "shared decimal",
+      }
+    `);
   });
 });
 
@@ -2048,7 +3552,13 @@ describe('when building shared integer property', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "shared integer",
+      }
+    `);
   });
 });
 
@@ -2092,7 +3602,13 @@ describe('when building shared string property', (): void => {
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "shared string",
+      }
+    `);
   });
 });
 
@@ -2175,7 +3691,150 @@ describe('when building short property', (): void => {
   });
 
   it('should have source map with line, column, text', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max value",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max value",
+        },
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 10,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "minValue": Object {
+          "column": 6,
+          "line": 9,
+          "tokenText": "min value",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 10,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "referencedType": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "short",
+        },
+      }
+    `);
   });
 });
 
@@ -2215,6 +3874,10 @@ describe('when building string property', (): void => {
 
   it('should have type', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
   });
 
   it('should have source map for type', (): void => {
@@ -2258,7 +3921,198 @@ describe('when building string property', (): void => {
   });
 
   it('should have source map with line, column, text', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "baseKeyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "documentationInherited": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "fullPropertyName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "hasRestriction": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max length",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isIdentityRename": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptional": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isOptionalCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isPartOfIdentity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isQueryableOnly": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isRequired": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "is required",
+        },
+        "isRequiredCollection": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxLength": Object {
+          "column": 6,
+          "line": 10,
+          "tokenText": "max length",
+        },
+        "mergeTargetedBy": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 11,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "minLength": Object {
+          "column": 6,
+          "line": 9,
+          "tokenText": "min length",
+        },
+        "namespace": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "parentEntity": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+        "parentEntityName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 11,
+          "line": 5,
+          "tokenText": "PropertyName",
+        },
+        "referencedType": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "roleName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortenTo": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "string",
+        },
+      }
+    `);
+  });
+});
+
+describe('when building deprecated string property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  const minLength = '100';
+  const maxLength = '1000';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, []);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withStringProperty(
+        propertyName,
+        propertyDocumentation,
+        true,
+        false,
+        maxLength,
+        minLength,
+        null,
+        null,
+        deprecationReason,
+      )
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have string property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -2299,10 +4153,57 @@ describe('when building time property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "time",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated time property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withTimeProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have time property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -2343,9 +4244,56 @@ describe('when building year property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(false);
+  });
+
   it('should have source map for type with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
+      Object {
+        "column": 4,
+        "line": 5,
+        "tokenText": "year",
+      }
+    `);
+  });
+});
+
+describe('when building deprecated year property', (): void => {
+  const validationFailures: ValidationFailure[] = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'Namespace';
+  const deprecationReason = 'DeprecationReason';
+  const entityName = 'EntityName';
+  const entityDocumentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withYearProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have year property in entity properties', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].isDeprecated).toBe(true);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].deprecationReason).toBe(deprecationReason);
   });
 });

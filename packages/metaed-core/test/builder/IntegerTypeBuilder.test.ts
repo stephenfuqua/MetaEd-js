@@ -71,6 +71,10 @@ describe('when building shared integer in extension namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getIntegerType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(false);
+  });
+
   it('should have minValue', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).minValue).toBe(minValue);
   });
@@ -89,6 +93,48 @@ describe('when building shared integer in extension namespace', (): void => {
 
   it('should not be a short type', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).isShort).toBe(false);
+  });
+});
+
+describe('when building deprecated shared integer', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const minValue = '2';
+  const maxValue = '100';
+
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+  let namespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartSharedInteger(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withNumericRestrictions(minValue, maxValue)
+      .withEndSharedInteger()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one integer type', (): void => {
+    expect(namespace.entity.integerType.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getIntegerType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(true);
+    expect(getIntegerType(namespace.entity, expectedRepositoryId).deprecationReason).toBe(deprecationReason);
   });
 });
 

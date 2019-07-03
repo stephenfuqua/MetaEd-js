@@ -67,6 +67,10 @@ describe('when building shared decimal in extension namespace', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).isDeprecated).toBe(false);
+  });
+
   it('should have total digits', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
   });
@@ -81,6 +85,50 @@ describe('when building shared decimal in extension namespace', (): void => {
 
   it('should have maxValue', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
+  });
+});
+
+describe('when building deprecated shared decimal', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const totalDigits = '10';
+  const decimalPlaces = '3';
+  const minValue = '2';
+  const maxValue = '100';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartSharedDecimal(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
+      .withEndSharedDecimal()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one shared decimal', (): void => {
+    expect(namespace.entity.sharedDecimal.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).isDeprecated).toBe(true);
+    expect(getSharedDecimal(namespace.entity, entityName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -136,21 +184,29 @@ describe('when building duplicate shared decimals', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate shared decimals should have validation failures for each entity -> SD 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Shared Decimal named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate shared decimals should have validation failures for each entity -> SD 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+            Object {
+              "column": 17,
+              "line": 9,
+              "tokenText": "EntityName",
+            }
+        `);
 
     expect(validationFailures[1].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate shared decimals should have validation failures for each entity -> SD 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Shared Decimal named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate shared decimals should have validation failures for each entity -> SD 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+            Object {
+              "column": 17,
+              "line": 2,
+              "tokenText": "EntityName",
+            }
+        `);
   });
 });
 
@@ -191,7 +247,12 @@ describe('when building shared decimal with no shared decimal name', (): void =>
   });
 
   it('should have missing id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing ID at '[123]', column: 18, line: 2, token: [123]",
+              "missing ID at '[123]', column: 18, line: 2, token: [123]",
+            ]
+        `);
   });
 });
 
@@ -232,7 +293,12 @@ describe('when building shared decimal with lowercase shared decimal name', (): 
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'e' expecting ID, column: 17, line: 2, token: e",
+              "mismatched input 'e' expecting ID, column: 17, line: 2, token: e",
+            ]
+        `);
   });
 });
 
@@ -282,24 +348,29 @@ describe('when building shared decimal with no documentation', (): void => {
     expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe('');
   });
 
-  it('should have total digits', (): void => {
-    expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
+  it('should not have total digits', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe('');
   });
 
-  it('should have decimal places', (): void => {
-    expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
+  it('should not have decimal places', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe('');
   });
 
-  it('should have minValue', (): void => {
-    expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
+  it('should not have minValue', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe('');
   });
 
-  it('should have maxValue', (): void => {
-    expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
+  it('should not have maxValue', (): void => {
+    expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe('');
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'total digits' expecting {'deprecated', 'documentation'}, column: 6, line: 3, token: total digits",
+              "mismatched input 'total digits' expecting {'deprecated', 'documentation'}, column: 6, line: 3, token: total digits",
+            ]
+        `);
   });
 });
 
@@ -333,7 +404,12 @@ describe('when building shared decimal with no metaed id', (): void => {
   });
 
   it('should have token recognition error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input '[' expecting {'deprecated', 'documentation', METAED_ID}, column: 28, line: 2, token: [",
+              "mismatched input '[' expecting {'deprecated', 'documentation', METAED_ID}, column: 28, line: 2, token: [",
+            ]
+        `);
   });
 });
 
@@ -403,7 +479,12 @@ describe('when building shared decimal with no total digits property', (): void 
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'decimal places' expecting 'total digits', column: 4, line: 5, token: decimal places",
+              "mismatched input 'decimal places' expecting 'total digits', column: 4, line: 5, token: decimal places",
+            ]
+        `);
   });
 });
 
@@ -475,7 +556,14 @@ describe('when building shared decimal with no total digits value', (): void => 
   });
 
   it('should have extraneous input and mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'decimal places' expecting UNSIGNED_INT, column: 4, line: 6, token: decimal places",
+              "mismatched input 'min value' expecting 'decimal places', column: 4, line: 7, token: min value",
+              "extraneous input 'decimal places' expecting UNSIGNED_INT, column: 4, line: 6, token: decimal places",
+              "mismatched input 'min value' expecting 'decimal places', column: 4, line: 7, token: min value",
+            ]
+        `);
   });
 });
 
@@ -545,7 +633,12 @@ describe('when building shared decimal with no decimal places property', (): voi
   });
 
   it('should have mismatched input and extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'min value' expecting 'decimal places', column: 4, line: 6, token: min value",
+              "mismatched input 'min value' expecting 'decimal places', column: 4, line: 6, token: min value",
+            ]
+        `);
   });
 });
 
@@ -617,7 +710,12 @@ describe('when building shared decimal with no min value', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'max value' expecting {UNSIGNED_INT, DECIMAL_VALUE, '+', '-'}, column: 4, line: 8, token: max value",
+              "extraneous input 'max value' expecting {UNSIGNED_INT, DECIMAL_VALUE, '+', '-'}, column: 4, line: 8, token: max value",
+            ]
+        `);
   });
 });
 
@@ -689,7 +787,12 @@ describe('when building shared decimal with no max value', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'End Namespace' expecting {UNSIGNED_INT, DECIMAL_VALUE, '+', '-'}, column: 0, line: 9, token: End Namespace",
+              "mismatched input 'End Namespace' expecting {UNSIGNED_INT, DECIMAL_VALUE, '+', '-'}, column: 0, line: 9, token: End Namespace",
+            ]
+        `);
   });
 });
 
@@ -760,7 +863,12 @@ describe('when building shared decimal with invalid trailing text', (): void => 
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 9, token: TrailingText",
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 9, token: TrailingText",
+            ]
+        `);
   });
 });
 
@@ -832,6 +940,59 @@ describe('when building shared decimal source map', (): void => {
   });
 
   it('should have line, column, text for each property', (): void => {
-    expect(getSharedDecimal(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getSharedDecimal(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "decimalPlaces": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "decimal places",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "maxValue": Object {
+          "column": 6,
+          "line": 8,
+          "tokenText": "max value",
+        },
+        "metaEdId": Object {
+          "column": 28,
+          "line": 2,
+          "tokenText": "[123]",
+        },
+        "metaEdName": Object {
+          "column": 17,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "minValue": Object {
+          "column": 6,
+          "line": 7,
+          "tokenText": "min value",
+        },
+        "totalDigits": Object {
+          "column": 6,
+          "line": 5,
+          "tokenText": "total digits",
+        },
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Shared Decimal",
+        },
+      }
+    `);
   });
 });

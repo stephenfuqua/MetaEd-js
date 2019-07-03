@@ -66,6 +66,10 @@ describe('when building single enumeration', (): void => {
     expect(getEnumeration(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getEnumeration(namespace.entity, entityName).isDeprecated).toBe(false);
+  });
+
   it('should have no properties', (): void => {
     expect(getEnumeration(namespace.entity, entityName).properties).toHaveLength(0);
   });
@@ -84,6 +88,47 @@ describe('when building single enumeration', (): void => {
 
   it('should have enumeration item with metaEdId ', (): void => {
     expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+  });
+});
+
+describe('when building deprecated enumeration', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartEnumeration(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withEnumerationItem('SD', 'doc')
+      .withEndEnumeration()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one enumeration', (): void => {
+    expect(namespace.entity.enumeration.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getEnumeration(namespace.entity, entityName).isDeprecated).toBe(true);
+    expect(getEnumeration(namespace.entity, entityName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -133,7 +178,70 @@ describe('when building school year enumeration', (): void => {
   });
 
   it('should have source map with line, column, text', (): void => {
-    expect(getSchoolYearEnumeration(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getSchoolYearEnumeration(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "enumerationItems": Array [
+          Object {
+            "column": 4,
+            "line": 5,
+            "tokenText": "item",
+          },
+        ],
+        "identityProperties": Array [],
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 14,
+          "line": 2,
+          "tokenText": "SchoolYear",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 14,
+          "line": 2,
+          "tokenText": "SchoolYear",
+        },
+      }
+    `);
   });
 });
 
@@ -188,21 +296,29 @@ describe('when building duplicate enumerations', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Enumeration named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 14,
+        "line": 8,
+        "tokenText": "EntityName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Enumeration named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 14,
+        "line": 2,
+        "tokenText": "EntityName",
+      }
+    `);
   });
 });
 
@@ -330,7 +446,12 @@ describe('when building enumeration with no enumeration name', (): void => {
   });
 
   it('should have missing id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -370,7 +491,12 @@ describe('when building enumeration with lowercase enumeration name', (): void =
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'e' expecting ID, column: 14, line: 2, token: e",
+        "mismatched input 'e' expecting ID, column: 14, line: 2, token: e",
+      ]
+    `);
   });
 });
 
@@ -436,24 +562,17 @@ describe('when building enumeration with no documentation', (): void => {
     expect(getEnumeration(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
-  it('should have one enumeration item', (): void => {
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems).toHaveLength(1);
-  });
-
-  it('should have enumeration item with short description', (): void => {
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
-  });
-
-  it('should have enumeration item with documentation', (): void => {
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
-  });
-
-  it('should have enumeration item with metaEdId ', (): void => {
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+  it('should have no enumeration items', (): void => {
+    expect(getEnumeration(namespace.entity, entityName).enumerationItems).toHaveLength(0);
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'item' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: item",
+        "mismatched input 'item' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: item",
+      ]
+    `);
   });
 });
 
@@ -522,7 +641,12 @@ describe('when building enumeration with no enumeration item', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'End Namespace' expecting 'item', column: 0, line: 5, token: End Namespace",
+        "mismatched input 'End Namespace' expecting 'item', column: 0, line: 5, token: End Namespace",
+      ]
+    `);
   });
 });
 
@@ -606,11 +730,21 @@ describe('when building enumeration with empty enumeration item description', ()
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "missing TEXT at '[2]', column: 6, line: 5, token: [2]",
+        "missing TEXT at '[2]', column: 6, line: 5, token: [2]",
+      ]
+    `);
   });
 
   it('should have missing text error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "missing TEXT at '[2]', column: 6, line: 5, token: [2]",
+        "missing TEXT at '[2]', column: 6, line: 5, token: [2]",
+      ]
+    `);
   });
 });
 
@@ -697,7 +831,12 @@ describe('when building enumeration with invalid trailing text', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'item'}, column: 0, line: 8, token: TrailingText",
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'item'}, column: 0, line: 8, token: TrailingText",
+      ]
+    `);
   });
 });
 
@@ -790,8 +929,162 @@ describe('when building enumeration source map', (): void => {
   });
 
   it('should have line, column, text for each property', (): void => {
-    expect(getEnumeration(namespace.entity, entityName).sourceMap).toMatchSnapshot();
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].sourceMap).toMatchSnapshot();
-    expect(getEnumeration(namespace.entity, entityName).enumerationItems[1].sourceMap).toMatchSnapshot();
+    expect(getEnumeration(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "enumerationItems": Array [
+          Object {
+            "column": 4,
+            "line": 5,
+            "tokenText": "item",
+          },
+          Object {
+            "column": 4,
+            "line": 8,
+            "tokenText": "item",
+          },
+        ],
+        "identityProperties": Array [],
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 25,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 14,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Enumeration",
+        },
+      }
+    `);
+    expect(getEnumeration(namespace.entity, entityName).enumerationItems[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 6,
+          "tokenText": "documentation",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 32,
+          "line": 5,
+          "tokenText": "[2]",
+        },
+        "metaEdName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortDescription": Object {
+          "column": 9,
+          "line": 5,
+          "tokenText": "\\"ItemShortDescription\\"",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "item",
+        },
+        "typeHumanizedName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
+    expect(getEnumeration(namespace.entity, entityName).enumerationItems[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 6,
+          "line": 9,
+          "tokenText": "documentation",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 33,
+          "line": 8,
+          "tokenText": "[3]",
+        },
+        "metaEdName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "shortDescription": Object {
+          "column": 9,
+          "line": 8,
+          "tokenText": "\\"ItemShortDescription2\\"",
+        },
+        "type": Object {
+          "column": 4,
+          "line": 8,
+          "tokenText": "item",
+        },
+        "typeHumanizedName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 });

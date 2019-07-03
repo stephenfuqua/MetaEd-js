@@ -1,10 +1,7 @@
 import deepFreeze from 'deep-freeze';
 import { InterchangeItem } from './InterchangeItem';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespace } from './Namespace';
+import { SourceMap, NoSourceMap } from './SourceMap';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
 
 export interface InterchangeSourceMap extends ModelBaseSourceMap {
   elements: SourceMap[];
@@ -49,13 +46,9 @@ export interface Interchange extends ModelBase {
  */
 export function newInterchange(): Interchange {
   return {
+    ...newModelBase(),
     type: 'interchange',
     typeHumanizedName: 'Interchange',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
-    namespace: newNamespace(),
-
     elements: [],
     identityTemplates: [],
     extendedDocumentation: '',
@@ -63,10 +56,7 @@ export function newInterchange(): Interchange {
     baseEntityName: '',
     baseEntityNamespaceName: '',
     baseEntity: null,
-
     sourceMap: newInterchangeSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

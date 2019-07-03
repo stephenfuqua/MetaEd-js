@@ -1,10 +1,7 @@
 import deepFreeze from 'deep-freeze';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespace } from './Namespace';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
 import { ModelType } from './ModelType';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
+import { SourceMap, NoSourceMap } from './SourceMap';
 
 export interface DomainItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
@@ -36,17 +33,12 @@ export interface DomainItem extends ModelBase {
  */
 export function newDomainItem(): DomainItem {
   return {
+    ...newModelBase(),
     type: 'domainItem',
     typeHumanizedName: 'Domain Item',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
-    namespace: newNamespace(),
     referencedType: 'unknown',
     referencedNamespaceName: '',
     sourceMap: newDomainItemSourceMap(),
-    data: {},
-    config: {},
   };
 }
 
