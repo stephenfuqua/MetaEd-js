@@ -34,6 +34,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;
+      property.referencedEntityDeprecated = referencedEntity.isDeprecated;
       referencedEntity.inReferences.push(property);
       property.parentEntity.outReferences.push(property);
     }

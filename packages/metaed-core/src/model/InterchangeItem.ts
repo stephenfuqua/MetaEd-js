@@ -2,13 +2,13 @@ import deepFreeze from 'deep-freeze';
 import { ModelType } from './ModelType';
 import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
 import { SourceMap, NoSourceMap } from './SourceMap';
-import { NoTopLevelEntity } from './TopLevelEntity';
-import { TopLevelEntity } from './TopLevelEntity';
+import { NoTopLevelEntity, TopLevelEntity } from './TopLevelEntity';
 
 export interface InterchangeItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
   referencedNamespaceName: SourceMap;
   referencedEntity: SourceMap;
+  referencedEntityDeprecated: SourceMap;
   typeHumanizedName: SourceMap;
 }
 
@@ -21,6 +21,7 @@ export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
     referencedType: NoSourceMap,
     referencedNamespaceName: NoSourceMap,
     referencedEntity: NoSourceMap,
+    referencedEntityDeprecated: NoSourceMap,
     typeHumanizedName: NoSourceMap,
   };
 }
@@ -30,6 +31,7 @@ export interface InterchangeItem extends ModelBase {
   referencedType: ModelType[];
   referencedNamespaceName: string;
   referencedEntity: TopLevelEntity;
+  referencedEntityDeprecated: boolean;
   typeHumanizedName: string;
 }
 
@@ -44,6 +46,7 @@ export function newInterchangeItem(): InterchangeItem {
     referencedType: [],
     referencedNamespaceName: '',
     referencedEntity: NoTopLevelEntity,
+    referencedEntityDeprecated: false,
     sourceMap: newInterchangeItemSourceMap(),
   };
 }

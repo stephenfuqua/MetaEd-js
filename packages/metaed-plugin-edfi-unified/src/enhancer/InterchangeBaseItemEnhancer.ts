@@ -11,7 +11,10 @@ function assignReference(namespace: Namespace, item: InterchangeItem) {
     ...item.referencedType,
   ) as TopLevelEntity | null;
 
-  if (referencedEntity) item.referencedEntity = referencedEntity;
+  if (referencedEntity) {
+    item.referencedEntity = referencedEntity;
+    item.referencedEntityDeprecated = referencedEntity.isDeprecated;
+  }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

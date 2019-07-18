@@ -101,6 +101,48 @@ describe('when enhancing shared integer property', (): void => {
   });
 });
 
+describe('when enhancing property referring to deprecated shared integer', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+  let property: SharedIntegerProperty;
+  let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
+
+  beforeAll(() => {
+    property = Object.assign(newSharedIntegerProperty(), {
+      metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
+      parentEntityName,
+      namespace,
+      referencedType: referencedEntityName,
+    });
+    metaEd.propertyIndex.sharedInteger.push(property);
+
+    referencedEntity = Object.assign(newSharedInteger(), {
+      metaEdName: referencedEntityName,
+      namespace,
+      isDeprecated: true,
+    });
+    namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
+
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
+
+    enhance(metaEd);
+  });
+
+  it('should have deprecation flag set', (): void => {
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(property.referencedEntityDeprecated).toBe(true);
+  });
+});
+
 describe('when enhancing integer property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };

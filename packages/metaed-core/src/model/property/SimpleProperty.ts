@@ -7,6 +7,7 @@ import { NoSourceMap } from '../SourceMap';
 
 export interface SimplePropertySourceMap extends EntityPropertySourceMap {
   referencedEntity: SourceMap;
+  referencedEntityDeprecated: SourceMap;
 }
 
 /**
@@ -16,11 +17,13 @@ export function newSimplePropertySourceMap(): SimplePropertySourceMap {
   return {
     ...newEntityPropertySourceMap(),
     referencedEntity: NoSourceMap,
+    referencedEntityDeprecated: NoSourceMap,
   };
 }
 
 export interface SimpleProperty extends EntityProperty {
   referencedEntity: SharedSimple;
+  referencedEntityDeprecated: boolean;
 }
 
 /**
@@ -30,6 +33,7 @@ export function newSimpleProperty() {
   return {
     ...newEntityProperty(),
     referencedEntity: NoSharedSimple,
+    referencedEntityDeprecated: false,
     sourceMap: newSimplePropertySourceMap(),
   };
 }

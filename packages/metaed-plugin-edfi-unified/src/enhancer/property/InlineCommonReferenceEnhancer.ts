@@ -13,6 +13,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     ) as Common | null;
     if (referencedEntity && referencedEntity.inlineInOds) {
       property.referencedEntity = referencedEntity;
+      property.referencedEntityDeprecated = referencedEntity.isDeprecated;
       referencedEntity.inReferences.push(property);
       property.parentEntity.outReferences.push(property);
     }

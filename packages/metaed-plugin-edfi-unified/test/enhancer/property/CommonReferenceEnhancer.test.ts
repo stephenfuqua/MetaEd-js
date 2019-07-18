@@ -44,6 +44,46 @@ describe('when enhancing common property', (): void => {
   });
 });
 
+describe('when enhancing common property referring to deprecated common', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: CommonProperty = Object.assign(newCommonProperty(), {
+      metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
+      namespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.common.push(property);
+
+    const parentEntity: Common = Object.assign(newCommon(), {
+      metaEdName: parentEntityName,
+      namespace,
+      properties: [property],
+    });
+    namespace.entity.common.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: Common = Object.assign(newCommon(), {
+      metaEdName: referencedEntityName,
+      namespace,
+      isDeprecated: true,
+    });
+    namespace.entity.common.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have deprecation flag set', (): void => {
+    const property = R.head(metaEd.propertyIndex.common.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntityDeprecated).toBe(true);
+  });
+});
+
 describe('when enhancing common property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };

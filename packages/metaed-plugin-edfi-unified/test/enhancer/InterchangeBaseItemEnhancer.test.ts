@@ -137,6 +137,7 @@ describe('when enhancing interchange extension', (): void => {
   it('should have references for all entities', (): void => {
     const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
     expect(interchange.elements[0].referencedEntity).toBe(domainEntity);
+    expect(interchange.elements[0].referencedEntityDeprecated).toBe(false);
 
     const interchangeExtension: any = getEntityFromNamespace(
       interchangeMetaEdName,
@@ -144,5 +145,78 @@ describe('when enhancing interchange extension', (): void => {
       'interchangeExtension',
     );
     expect(interchangeExtension.elements[0].referencedEntity).toBe(domainEntityExtension);
+    expect(interchangeExtension.elements[0].referencedEntityDeprecated).toBe(false);
+  });
+});
+
+describe('when enhancing with deprecated references', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+
+  const interchangeMetaEdName = 'InterchangeMetaEdName';
+
+  const domainEntity = {
+    ...newDomainEntity(),
+    metaEdName: 'DomainEntity',
+    namespace,
+    isDeprecated: true,
+  };
+  const domainEntityExtension = {
+    ...newDomainEntityExtension(),
+    metaEdName: 'DomainEntity',
+    namespace: extensionNamespace,
+    isDeprecated: true,
+  };
+
+  beforeAll(() => {
+    addEntityForNamespace(domainEntity);
+    addEntityForNamespace(domainEntityExtension);
+
+    const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName, namespace });
+    addEntityForNamespace(interchange);
+
+    const interchangeExtension = Object.assign(newInterchangeExtension(), {
+      metaEdName: interchangeMetaEdName,
+      namespace: extensionNamespace,
+    });
+    addEntityForNamespace(interchangeExtension);
+
+    interchange.elements.push(
+      Object.assign(newInterchangeItem(), {
+        metaEdName: domainEntity.metaEdName,
+        referencedType: [domainEntity.type],
+        referencedNamespaceName: namespace.namespaceName,
+        namespace,
+      }),
+    );
+
+    interchangeExtension.elements.push(
+      Object.assign(newInterchangeItem(), {
+        metaEdName: domainEntityExtension.metaEdName,
+        referencedType: [domainEntityExtension.type],
+        referencedNamespaceName: extensionNamespace.namespaceName,
+        extensionNamespace,
+      }),
+    );
+
+    enhance(metaEd);
+  });
+
+  it('should have references for all entities', (): void => {
+    const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
+    expect(interchange.elements[0].referencedEntity).toBe(domainEntity);
+    expect(interchange.elements[0].referencedEntityDeprecated).toBe(true);
+
+    const interchangeExtension: any = getEntityFromNamespace(
+      interchangeMetaEdName,
+      extensionNamespace,
+      'interchangeExtension',
+    );
+    expect(interchangeExtension.elements[0].referencedEntity).toBe(domainEntityExtension);
+    expect(interchangeExtension.elements[0].referencedEntityDeprecated).toBe(true);
   });
 });

@@ -1,11 +1,14 @@
 import deepFreeze from 'deep-freeze';
 import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
+import { TopLevelEntity, NoTopLevelEntity } from './TopLevelEntity';
 import { ModelType } from './ModelType';
 import { SourceMap, NoSourceMap } from './SourceMap';
 
 export interface DomainItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
   referencedNamespaceName: SourceMap;
+  referencedEntity: SourceMap;
+  referencedEntityDeprecated: SourceMap;
   typeHumanizedName: SourceMap;
 }
 
@@ -17,6 +20,8 @@ export function newDomainItemSourceMap(): DomainItemSourceMap {
     ...newModelBaseSourceMap(),
     referencedType: NoSourceMap,
     referencedNamespaceName: NoSourceMap,
+    referencedEntity: NoSourceMap,
+    referencedEntityDeprecated: NoSourceMap,
     typeHumanizedName: NoSourceMap,
   };
 }
@@ -25,6 +30,8 @@ export interface DomainItem extends ModelBase {
   sourceMap: DomainItemSourceMap;
   referencedType: ModelType;
   referencedNamespaceName: string;
+  referencedEntity: TopLevelEntity;
+  referencedEntityDeprecated: boolean;
   typeHumanizedName: string;
 }
 
@@ -38,6 +45,8 @@ export function newDomainItem(): DomainItem {
     typeHumanizedName: 'Domain Item',
     referencedType: 'unknown',
     referencedNamespaceName: '',
+    referencedEntity: NoTopLevelEntity,
+    referencedEntityDeprecated: false,
     sourceMap: newDomainItemSourceMap(),
   };
 }
