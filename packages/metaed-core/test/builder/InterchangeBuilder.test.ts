@@ -271,12 +271,12 @@ describe('when building duplicate interchanges', (): void => {
       `"Interchange named InterchangeName is a duplicate declaration of that name."`,
     );
     expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "column": 14,
-              "line": 11,
-              "tokenText": "InterchangeName",
-            }
-        `);
+                  Object {
+                    "column": 14,
+                    "line": 11,
+                    "tokenText": "InterchangeName",
+                  }
+            `);
 
     expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[1].category).toBe('error');
@@ -284,12 +284,12 @@ describe('when building duplicate interchanges', (): void => {
       `"Interchange named InterchangeName is a duplicate declaration of that name."`,
     );
     expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "column": 14,
-              "line": 2,
-              "tokenText": "InterchangeName",
-            }
-        `);
+                  Object {
+                    "column": 14,
+                    "line": 2,
+                    "tokenText": "InterchangeName",
+                  }
+            `);
   });
 });
 
@@ -607,12 +607,12 @@ describe('when building duplicate interchange extensions', (): void => {
       `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`,
     );
     expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "column": 14,
-              "line": 5,
-              "tokenText": "InterchangeName",
-            }
-        `);
+                  Object {
+                    "column": 14,
+                    "line": 5,
+                    "tokenText": "InterchangeName",
+                  }
+            `);
 
     expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[1].category).toBe('error');
@@ -620,12 +620,12 @@ describe('when building duplicate interchange extensions', (): void => {
       `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`,
     );
     expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "column": 14,
-              "line": 2,
-              "tokenText": "InterchangeName",
-            }
-        `);
+                  Object {
+                    "column": 14,
+                    "line": 2,
+                    "tokenText": "InterchangeName",
+                  }
+            `);
   });
 });
 
@@ -665,11 +665,11 @@ describe('when building interchange with no interchange name', (): void => {
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
-              "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
-            ]
-        `);
+                  Array [
+                    "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
+                    "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
+                  ]
+            `);
   });
 });
 
@@ -709,11 +709,11 @@ describe('when building interchange with lowercase interchange name', (): void =
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
-              "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
-            ]
-        `);
+                  Array [
+                    "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+                    "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+                  ]
+            `);
   });
 });
 
@@ -776,11 +776,11 @@ describe('when building interchange with no documentation', (): void => {
 
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
-              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
-            ]
-        `);
+                  Array [
+                    "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+                    "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+                  ]
+            `);
   });
 });
 
@@ -841,11 +841,11 @@ describe('when building interchange with no interchange component property', ():
 
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'extended documentation', 'use case documentation'}, column: 0, line: 5, token: End Namespace",
-              "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'extended documentation', 'use case documentation'}, column: 0, line: 5, token: End Namespace",
-            ]
-        `);
+                  Array [
+                    "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'extended documentation', 'use case documentation'}, column: 0, line: 5, token: End Namespace",
+                    "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'extended documentation', 'use case documentation'}, column: 0, line: 5, token: End Namespace",
+                  ]
+            `);
   });
 });
 
@@ -914,11 +914,11 @@ describe('when building interchange with invalid trailing text', (): void => {
 
   it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 6, token: TrailingText",
-              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 6, token: TrailingText",
-            ]
-        `);
+                  Array [
+                    "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 6, token: TrailingText",
+                    "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 6, token: TrailingText",
+                  ]
+            `);
   });
 });
 
@@ -956,11 +956,11 @@ describe('when building interchange extension with no interchange extension name
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Interchangeadditions', column: 15, line: 2, token: additions",
-              "no viable alternative at input 'Interchangeadditions', column: 15, line: 2, token: additions",
-            ]
-        `);
+                  Array [
+                    "no viable alternative at input 'Interchangeadditions', column: 15, line: 2, token: additions",
+                    "no viable alternative at input 'Interchangeadditions', column: 15, line: 2, token: additions",
+                  ]
+            `);
   });
 });
 
@@ -998,11 +998,11 @@ describe('when building interchange extension with lowercase interchange extensi
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
-              "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
-            ]
-        `);
+                  Array [
+                    "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+                    "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+                  ]
+            `);
   });
 });
 
@@ -1058,11 +1058,11 @@ describe('when building interchange extension with no element property', (): voi
 
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-      Array [
-        "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'deprecated'}, column: 0, line: 3, token: End Namespace",
-        "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'deprecated'}, column: 0, line: 3, token: End Namespace",
-      ]
-    `);
+            Array [
+              "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'deprecated'}, column: 0, line: 3, token: End Namespace",
+              "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'deprecated'}, column: 0, line: 3, token: End Namespace",
+            ]
+        `);
   });
 });
 
@@ -1121,11 +1121,11 @@ describe('when building interchange extension with invalid trailing text', (): v
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 4, token: TrailingText",
-              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 4, token: TrailingText",
-            ]
-        `);
+                  Array [
+                    "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 4, token: TrailingText",
+                    "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 4, token: TrailingText",
+                  ]
+            `);
   });
 });
 
@@ -1209,78 +1209,78 @@ describe('when building single interchange source map', (): void => {
 
   it('should have line, column, text for each property', (): void => {
     expect(getInterchange(namespace.entity, interchangeName).sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "baseEntity": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityNamespaceName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "deprecationReason": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "documentation": Object {
-                "column": 4,
-                "line": 3,
-                "tokenText": "documentation",
-              },
-              "elements": Array [
-                Object {
-                  "column": 4,
-                  "line": 9,
-                  "tokenText": "domain entity",
-                },
-              ],
-              "extendedDocumentation": Object {
-                "column": 4,
-                "line": 5,
-                "tokenText": "extended documentation",
-              },
-              "identityTemplates": Array [
-                Object {
-                  "column": 4,
-                  "line": 10,
-                  "tokenText": "domain entity identity",
-                },
-              ],
-              "isDeprecated": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "metaEdId": Object {
-                "column": 30,
-                "line": 2,
-                "tokenText": "[1]",
-              },
-              "metaEdName": Object {
-                "column": 14,
-                "line": 2,
-                "tokenText": "InterchangeName",
-              },
-              "type": Object {
-                "column": 2,
-                "line": 2,
-                "tokenText": "Interchange",
-              },
-              "useCaseDocumentation": Object {
-                "column": 4,
-                "line": 7,
-                "tokenText": "use case documentation",
-              },
-            }
-        `);
+                  Object {
+                    "baseEntity": Object {
+                      "column": 0,
+                      "line": 0,
+                      "tokenText": "NoSourceMap",
+                    },
+                    "baseEntityName": Object {
+                      "column": 0,
+                      "line": 0,
+                      "tokenText": "NoSourceMap",
+                    },
+                    "baseEntityNamespaceName": Object {
+                      "column": 0,
+                      "line": 0,
+                      "tokenText": "NoSourceMap",
+                    },
+                    "deprecationReason": Object {
+                      "column": 0,
+                      "line": 0,
+                      "tokenText": "NoSourceMap",
+                    },
+                    "documentation": Object {
+                      "column": 4,
+                      "line": 3,
+                      "tokenText": "documentation",
+                    },
+                    "elements": Array [
+                      Object {
+                        "column": 4,
+                        "line": 9,
+                        "tokenText": "domain entity",
+                      },
+                    ],
+                    "extendedDocumentation": Object {
+                      "column": 4,
+                      "line": 5,
+                      "tokenText": "extended documentation",
+                    },
+                    "identityTemplates": Array [
+                      Object {
+                        "column": 4,
+                        "line": 10,
+                        "tokenText": "domain entity identity",
+                      },
+                    ],
+                    "isDeprecated": Object {
+                      "column": 0,
+                      "line": 0,
+                      "tokenText": "NoSourceMap",
+                    },
+                    "metaEdId": Object {
+                      "column": 30,
+                      "line": 2,
+                      "tokenText": "[1]",
+                    },
+                    "metaEdName": Object {
+                      "column": 14,
+                      "line": 2,
+                      "tokenText": "InterchangeName",
+                    },
+                    "type": Object {
+                      "column": 2,
+                      "line": 2,
+                      "tokenText": "Interchange",
+                    },
+                    "useCaseDocumentation": Object {
+                      "column": 4,
+                      "line": 7,
+                      "tokenText": "use case documentation",
+                    },
+                  }
+            `);
   });
 
   // InterchangeItemSourceMap
@@ -1298,59 +1298,64 @@ describe('when building single interchange source map', (): void => {
 
   it('should have element line, column, text for each property', (): void => {
     expect(getInterchange(namespace.entity, interchangeName).elements[0].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "deprecationReason": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "documentation": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "isDeprecated": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "metaEdId": Object {
-                "column": 41,
-                "line": 9,
-                "tokenText": "[2]",
-              },
-              "metaEdName": Object {
-                "column": 18,
-                "line": 9,
-                "tokenText": "InterchangeElementName",
-              },
-              "referencedEntity": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "referencedNamespaceName": Object {
-                "column": 18,
-                "line": 9,
-                "tokenText": "InterchangeElementName",
-              },
-              "referencedType": Object {
-                "column": 18,
-                "line": 9,
-                "tokenText": "InterchangeElementName",
-              },
-              "type": Object {
-                "column": 18,
-                "line": 9,
-                "tokenText": "InterchangeElementName",
-              },
-              "typeHumanizedName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-            }
-        `);
+      Object {
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 41,
+          "line": 9,
+          "tokenText": "[2]",
+        },
+        "metaEdName": Object {
+          "column": 18,
+          "line": 9,
+          "tokenText": "InterchangeElementName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 18,
+          "line": 9,
+          "tokenText": "InterchangeElementName",
+        },
+        "referencedType": Object {
+          "column": 18,
+          "line": 9,
+          "tokenText": "InterchangeElementName",
+        },
+        "type": Object {
+          "column": 18,
+          "line": 9,
+          "tokenText": "InterchangeElementName",
+        },
+        "typeHumanizedName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 
   it('should have identityTemplate type', (): void => {
@@ -1367,58 +1372,63 @@ describe('when building single interchange source map', (): void => {
 
   it('should have identityTemplate line, column, text for each property', (): void => {
     expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "deprecationReason": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "documentation": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "isDeprecated": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "metaEdId": Object {
-                "column": 59,
-                "line": 10,
-                "tokenText": "[3]",
-              },
-              "metaEdName": Object {
-                "column": 27,
-                "line": 10,
-                "tokenText": "InterchangeIdentityTemplateName",
-              },
-              "referencedEntity": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "referencedNamespaceName": Object {
-                "column": 27,
-                "line": 10,
-                "tokenText": "InterchangeIdentityTemplateName",
-              },
-              "referencedType": Object {
-                "column": 27,
-                "line": 10,
-                "tokenText": "InterchangeIdentityTemplateName",
-              },
-              "type": Object {
-                "column": 27,
-                "line": 10,
-                "tokenText": "InterchangeIdentityTemplateName",
-              },
-              "typeHumanizedName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-            }
-        `);
+      Object {
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 59,
+          "line": 10,
+          "tokenText": "[3]",
+        },
+        "metaEdName": Object {
+          "column": 27,
+          "line": 10,
+          "tokenText": "InterchangeIdentityTemplateName",
+        },
+        "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedNamespaceName": Object {
+          "column": 27,
+          "line": 10,
+          "tokenText": "InterchangeIdentityTemplateName",
+        },
+        "referencedType": Object {
+          "column": 27,
+          "line": 10,
+          "tokenText": "InterchangeIdentityTemplateName",
+        },
+        "type": Object {
+          "column": 27,
+          "line": 10,
+          "tokenText": "InterchangeIdentityTemplateName",
+        },
+        "typeHumanizedName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+      }
+    `);
   });
 });

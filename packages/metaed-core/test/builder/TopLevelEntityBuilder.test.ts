@@ -75,12 +75,12 @@ describe('when building association property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "association",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "association",
+            }
+        `);
   });
 });
 
@@ -160,12 +160,12 @@ describe('when building association property with weak reference', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "association",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "association",
+            }
+        `);
   });
 
   it('should have isWeak', (): void => {
@@ -181,12 +181,12 @@ describe('when building association property with weak reference', (): void => {
     ).not.toBe(NoSourceMap);
     expect((getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as AssociationPropertySourceMap).isWeak)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 9,
-        "tokenText": "is weak",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 9,
+              "tokenText": "is weak",
+            }
+        `);
   });
 });
 
@@ -235,12 +235,12 @@ describe('when building boolean property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "bool",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "bool",
+            }
+        `);
   });
 });
 
@@ -325,12 +325,12 @@ describe('when building choice property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "choice",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "choice",
+            }
+        `);
   });
 });
 
@@ -414,12 +414,12 @@ describe('when building common property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "common",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "common",
+            }
+        `);
   });
 });
 
@@ -498,12 +498,12 @@ describe('when building common property with extension override', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "common extension",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "common extension",
+            }
+        `);
   });
 
   it('should have isExtensionOverride', (): void => {
@@ -520,12 +520,12 @@ describe('when building common property with extension override', (): void => {
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as CommonPropertySourceMap).isExtensionOverride,
     ).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "common extension",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "common extension",
+            }
+        `);
   });
 });
 
@@ -574,12 +574,12 @@ describe('when building currency property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "currency",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "currency",
+            }
+        `);
   });
 });
 
@@ -663,12 +663,12 @@ describe('when building date property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "date",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "date",
+            }
+        `);
   });
 });
 
@@ -752,12 +752,12 @@ describe('when building datetime property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "datetime",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "datetime",
+            }
+        `);
   });
 });
 
@@ -1029,6 +1029,11 @@ describe('when building decimal property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedNamespaceName": Object {
           "column": 12,
           "line": 5,
@@ -1143,12 +1148,12 @@ describe('when building descriptor property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "descriptor",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "descriptor",
+            }
+        `);
   });
 });
 
@@ -1233,12 +1238,12 @@ describe('when building domain entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "domain entity",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "domain entity",
+            }
+        `);
   });
 });
 
@@ -1319,12 +1324,12 @@ describe('when building domain entity property with weak reference', (): void =>
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "domain entity",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "domain entity",
+            }
+        `);
   });
 
   it('should have isWeak', (): void => {
@@ -1340,12 +1345,12 @@ describe('when building domain entity property with weak reference', (): void =>
     ).not.toBe(NoSourceMap);
     expect((getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as DomainEntityPropertySourceMap).isWeak)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 8,
-        "tokenText": "is weak",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 8,
+              "tokenText": "is weak",
+            }
+        `);
   });
 });
 
@@ -1394,12 +1399,12 @@ describe('when building duration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "duration",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "duration",
+            }
+        `);
   });
 });
 
@@ -1659,6 +1664,11 @@ describe('when building required entity properties', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedNamespaceName": Object {
           "column": 16,
           "line": 5,
@@ -1731,12 +1741,12 @@ describe('when building entity property with inherited documentation', (): void 
     );
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.documentationInherited)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 6,
-        "line": 6,
-        "tokenText": "documentation",
-      }
-    `);
+            Object {
+              "column": 6,
+              "line": 6,
+              "tokenText": "documentation",
+            }
+        `);
   });
 });
 
@@ -1777,14 +1787,14 @@ describe('when building identity entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).toHaveLength(1);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.identityProperties).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "column": 4,
-          "line": 8,
-          "tokenText": "is part of identity",
-        },
-      ]
-    `);
+            Array [
+              Object {
+                "column": 4,
+                "line": 8,
+                "tokenText": "is part of identity",
+              },
+            ]
+        `);
   });
 
   it('should have source map for isPartOfIdentity with line, column, text', (): void => {
@@ -1794,12 +1804,12 @@ describe('when building identity entity property', (): void => {
     );
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 8,
-        "tokenText": "is part of identity",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 8,
+              "tokenText": "is part of identity",
+            }
+        `);
   });
 });
 
@@ -1838,12 +1848,12 @@ describe('when building optional entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptional).toMatchInlineSnapshot(`
-      Object {
-        "column": 6,
-        "line": 8,
-        "tokenText": "is optional",
-      }
-    `);
+            Object {
+              "column": 6,
+              "line": 8,
+              "tokenText": "is optional",
+            }
+        `);
   });
 });
 
@@ -1883,12 +1893,12 @@ describe('when building required collection entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isRequiredCollection)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 6,
-        "line": 8,
-        "tokenText": "is required collection",
-      }
-    `);
+            Object {
+              "column": 6,
+              "line": 8,
+              "tokenText": "is required collection",
+            }
+        `);
   });
 });
 
@@ -1928,12 +1938,12 @@ describe('when building optional collection entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.isOptionalCollection)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 6,
-        "line": 8,
-        "tokenText": "is optional collection",
-      }
-    `);
+            Object {
+              "column": 6,
+              "line": 8,
+              "tokenText": "is optional collection",
+            }
+        `);
   });
 });
 
@@ -1981,12 +1991,12 @@ describe('when building entity property role name', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.roleName).toMatchInlineSnapshot(`
-      Object {
-        "column": 14,
-        "line": 9,
-        "tokenText": "ContextName",
-      }
-    `);
+            Object {
+              "column": 14,
+              "line": 9,
+              "tokenText": "ContextName",
+            }
+        `);
   });
 });
 
@@ -2028,12 +2038,12 @@ describe('when building entity property with shortened context', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.shortenTo).toMatchInlineSnapshot(`
-      Object {
-        "column": 37,
-        "line": 9,
-        "tokenText": "ShortenToName",
-      }
-    `);
+            Object {
+              "column": 37,
+              "line": 9,
+              "tokenText": "ShortenToName",
+            }
+        `);
   });
 });
 
@@ -2089,24 +2099,24 @@ describe('when building renamed identity entity property', (): void => {
     );
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.isIdentityRename)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 11,
-        "tokenText": "renames identity property",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 11,
+              "tokenText": "renames identity property",
+            }
+        `);
   });
 
   it('should have source map for baseKeyName with line, column, text', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).identityProperties[0].sourceMap.baseKeyName).toMatchInlineSnapshot(`
-      Object {
-        "column": 30,
-        "line": 11,
-        "tokenText": "BaseName",
-      }
-    `);
+            Object {
+              "column": 30,
+              "line": 11,
+              "tokenText": "BaseName",
+            }
+        `);
   });
 });
 
@@ -2147,14 +2157,14 @@ describe('when building queryable entity property ', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).toHaveLength(1);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.queryableFields).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "column": 4,
-          "line": 8,
-          "tokenText": "is queryable only",
-        },
-      ]
-    `);
+            Array [
+              Object {
+                "column": 4,
+                "line": 8,
+                "tokenText": "is queryable only",
+              },
+            ]
+        `);
   });
 
   it('should have source map for isQueryableOnly with line, column, text', (): void => {
@@ -2162,12 +2172,12 @@ describe('when building queryable entity property ', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).queryableFields[0].sourceMap.isQueryableOnly)
       .toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 8,
-        "tokenText": "is queryable only",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 8,
+              "tokenText": "is queryable only",
+            }
+        `);
   });
 });
 
@@ -2209,12 +2219,12 @@ describe('when building shared entity property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.referencedType).toMatchInlineSnapshot(`
-      Object {
-        "column": 19,
-        "line": 5,
-        "tokenText": "PropertyName",
-      }
-    `);
+            Object {
+              "column": 19,
+              "line": 5,
+              "tokenText": "PropertyName",
+            }
+        `);
   });
 });
 
@@ -2297,12 +2307,12 @@ describe('when building enumeration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "enumeration",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "enumeration",
+            }
+        `);
   });
 });
 
@@ -2386,12 +2396,12 @@ describe('when building inline common property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "inline common",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "inline common",
+            }
+        `);
   });
 });
 
@@ -2632,6 +2642,11 @@ describe('when building integer property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedNamespaceName": Object {
           "column": 12,
           "line": 5,
@@ -2766,12 +2781,12 @@ describe('when building merge directive reference', (): void => {
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .sourcePropertyPathStrings,
     ).toMatchInlineSnapshot(`
-      Object {
-        "column": 10,
-        "line": 9,
-        "tokenText": "Entity",
-      }
-    `);
+            Object {
+              "column": 10,
+              "line": 9,
+              "tokenText": "Entity",
+            }
+        `);
   });
 
   it('should have targetPropertyPathStrings', (): void => {
@@ -2794,12 +2809,12 @@ describe('when building merge directive reference', (): void => {
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .targetPropertyPathStrings,
     ).toMatchInlineSnapshot(`
-      Object {
-        "column": 31,
-        "line": 9,
-        "tokenText": "TargetEntity",
-      }
-    `);
+            Object {
+              "column": 31,
+              "line": 9,
+              "tokenText": "TargetEntity",
+            }
+        `);
   });
 });
 
@@ -2862,44 +2877,44 @@ describe('when building multiple merge directives', (): void => {
   it('should have source map for first merge directive', (): void => {
     expect(asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap)
       .toMatchInlineSnapshot(`
-      Object {
-        "sourceProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyPathStrings": Object {
-          "column": 10,
-          "line": 9,
-          "tokenText": "SourcePropertyPath0",
-        },
-        "targetProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyPathStrings": Object {
-          "column": 35,
-          "line": 9,
-          "tokenText": "TargetPropertyPath0",
-        },
-        "type": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-      }
-    `);
+            Object {
+              "sourceProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyPathStrings": Object {
+                "column": 10,
+                "line": 9,
+                "tokenText": "SourcePropertyPath0",
+              },
+              "targetProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyPathStrings": Object {
+                "column": 35,
+                "line": 9,
+                "tokenText": "TargetPropertyPath0",
+              },
+              "type": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+            }
+        `);
   });
 
   it('should have sourcePropertyPathStrings and targetPropertyPathStrings for second merge directive', (): void => {
@@ -2924,44 +2939,44 @@ describe('when building multiple merge directives', (): void => {
   it('should have source map for second merge directive', (): void => {
     expect(asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap)
       .toMatchInlineSnapshot(`
-      Object {
-        "sourceProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyPathStrings": Object {
-          "column": 10,
-          "line": 10,
-          "tokenText": "SourcePropertyPath1",
-        },
-        "targetProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyPathStrings": Object {
-          "column": 35,
-          "line": 10,
-          "tokenText": "TargetPropertyPath1",
-        },
-        "type": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-      }
-    `);
+            Object {
+              "sourceProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyPathStrings": Object {
+                "column": 10,
+                "line": 10,
+                "tokenText": "SourcePropertyPath1",
+              },
+              "targetProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyPathStrings": Object {
+                "column": 35,
+                "line": 10,
+                "tokenText": "TargetPropertyPath1",
+              },
+              "type": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+            }
+        `);
   });
 });
 
@@ -3023,44 +3038,44 @@ describe('when building multiple merge directives for a shared simple type', ():
   it('should have source map for first merge directive', (): void => {
     expect(asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap)
       .toMatchInlineSnapshot(`
-      Object {
-        "sourceProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyPathStrings": Object {
-          "column": 10,
-          "line": 9,
-          "tokenText": "SourcePropertyPath0",
-        },
-        "targetProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyPathStrings": Object {
-          "column": 35,
-          "line": 9,
-          "tokenText": "TargetPropertyPath0",
-        },
-        "type": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-      }
-    `);
+            Object {
+              "sourceProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyPathStrings": Object {
+                "column": 10,
+                "line": 9,
+                "tokenText": "SourcePropertyPath0",
+              },
+              "targetProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyPathStrings": Object {
+                "column": 35,
+                "line": 9,
+                "tokenText": "TargetPropertyPath0",
+              },
+              "type": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+            }
+        `);
   });
 
   it('should have sourcePropertyPathStrings and targetPropertyPathStrings for second merge directive', (): void => {
@@ -3085,44 +3100,44 @@ describe('when building multiple merge directives for a shared simple type', ():
   it('should have source map for second merge directive', (): void => {
     expect(asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap)
       .toMatchInlineSnapshot(`
-      Object {
-        "sourceProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "sourcePropertyPathStrings": Object {
-          "column": 10,
-          "line": 10,
-          "tokenText": "SourcePropertyPath1",
-        },
-        "targetProperty": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyChain": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "targetPropertyPathStrings": Object {
-          "column": 35,
-          "line": 10,
-          "tokenText": "TargetPropertyPath1",
-        },
-        "type": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-      }
-    `);
+            Object {
+              "sourceProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "sourcePropertyPathStrings": Object {
+                "column": 10,
+                "line": 10,
+                "tokenText": "SourcePropertyPath1",
+              },
+              "targetProperty": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyChain": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+              "targetPropertyPathStrings": Object {
+                "column": 35,
+                "line": 10,
+                "tokenText": "TargetPropertyPath1",
+              },
+              "type": Object {
+                "column": 0,
+                "line": 0,
+                "tokenText": "NoSourceMap",
+              },
+            }
+        `);
   });
 });
 
@@ -3181,12 +3196,12 @@ describe('when building merge directive for defining association domain entity p
       asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .sourcePropertyPathStrings,
     ).toMatchInlineSnapshot(`
-      Object {
-        "column": 10,
-        "line": 8,
-        "tokenText": "Entity",
-      }
-    `);
+            Object {
+              "column": 10,
+              "line": 8,
+              "tokenText": "Entity",
+            }
+        `);
   });
 
   it('should have targetPropertyPathStrings', (): void => {
@@ -3209,12 +3224,12 @@ describe('when building merge directive for defining association domain entity p
       asReferentialProperty(getAssociation(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .targetPropertyPathStrings,
     ).toMatchInlineSnapshot(`
-      Object {
-        "column": 31,
-        "line": 8,
-        "tokenText": "TargetEntity",
-      }
-    `);
+            Object {
+              "column": 31,
+              "line": 8,
+              "tokenText": "TargetEntity",
+            }
+        `);
   });
 });
 
@@ -3263,12 +3278,12 @@ describe('when building percent property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "percent",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "percent",
+            }
+        `);
   });
 });
 
@@ -3356,14 +3371,14 @@ describe('when building referential property with merge directives', (): void =>
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as ReferentialPropertySourceMap)
         .mergeDirectives,
     ).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "column": 4,
-          "line": 8,
-          "tokenText": "merge",
-        },
-      ]
-    `);
+            Array [
+              Object {
+                "column": 4,
+                "line": 8,
+                "tokenText": "merge",
+              },
+            ]
+        `);
     expect(
       (getDomainEntity(namespace.entity, entityName).properties[0].sourceMap as ReferentialPropertySourceMap)
         .mergeDirectives,
@@ -3416,12 +3431,12 @@ describe('when building school year enumeration property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "enumeration",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "enumeration",
+            }
+        `);
   });
 });
 
@@ -3503,12 +3518,12 @@ describe('when building shared decimal property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "shared decimal",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "shared decimal",
+            }
+        `);
   });
 });
 
@@ -3553,12 +3568,12 @@ describe('when building shared integer property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "shared integer",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "shared integer",
+            }
+        `);
   });
 });
 
@@ -3603,12 +3618,12 @@ describe('when building shared string property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "shared string",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "shared string",
+            }
+        `);
   });
 });
 
@@ -3804,6 +3819,11 @@ describe('when building short property', (): void => {
           "tokenText": "EntityName",
         },
         "referencedEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "referencedEntityDeprecated": Object {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
@@ -4038,6 +4058,11 @@ describe('when building string property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
+        "referencedEntityDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedNamespaceName": Object {
           "column": 11,
           "line": 5,
@@ -4161,12 +4186,12 @@ describe('when building time property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "time",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "time",
+            }
+        `);
   });
 });
 
@@ -4252,12 +4277,12 @@ describe('when building year property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchInlineSnapshot(`
-      Object {
-        "column": 4,
-        "line": 5,
-        "tokenText": "year",
-      }
-    `);
+            Object {
+              "column": 4,
+              "line": 5,
+              "tokenText": "year",
+            }
+        `);
   });
 });
 
