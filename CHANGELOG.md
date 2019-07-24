@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.0.0-dev.20...v2.0.0) (2019-07-24)
+
+**Note:** Version bump only for package metaed-js
+
+
+
+
+
 # [2.0.0-dev.20](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.0.0-dev.19...v2.0.0-dev.20) (2019-07-01)
 
 **Note:** Version bump only for package metaed-js
@@ -182,4 +190,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [2.0.0-dev.1](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.4.0...v2.0.0-dev.1) (2019-02-11)
 
 **Note:** Version bump only for package metaed-js
-
