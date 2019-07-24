@@ -39,6 +39,16 @@ topLevelEntity
     | subdomain
     ;
 
+// Deprecated
+
+deprecated
+    : DEPRECATED TEXT
+    ;
+
+propertyDeprecated
+    : DEPRECATED TEXT
+    ;
+
 // Documentation
 
 documentation
@@ -61,6 +71,7 @@ propertyDocumentation
 
 abstractEntity
     : ABSTRACT_ENTITY abstractEntityName metaEdId?
+      deprecated?
       documentation
       property+
     ;
@@ -79,6 +90,7 @@ cascadeUpdate
 
 association
     : ASSOCIATION associationName metaEdId?
+      deprecated?
       documentation
       entityConfiguration?
       definingDomainEntity
@@ -88,6 +100,7 @@ association
 
 definingDomainEntity
     :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
+       propertyDeprecated?
        propertyDocumentation
        roleName?
        mergeDirective*
@@ -97,6 +110,7 @@ definingDomainEntity
 
 associationExtension
      : ASSOCIATION extendeeName ADDITIONS metaEdId?
+       deprecated?
        property+
     ;
 
@@ -104,6 +118,7 @@ associationExtension
 
 associationSubclass
     : ASSOCIATION associationName BASED_ON baseName metaEdId?
+      deprecated?
       documentation
       property+
    ;
@@ -112,6 +127,7 @@ associationSubclass
 
 choice
      : CHOICE choiceName metaEdId?
+      deprecated? 
       documentation
       property+
     ;
@@ -120,6 +136,7 @@ choice
 
 sharedDecimal
      : SHARED_DECIMAL sharedDecimalName metaEdId?
+      deprecated?
       documentation
       totalDigits
       decimalPlaces
@@ -132,6 +149,7 @@ sharedDecimal
 
 sharedInteger
      : SHARED_INTEGER sharedIntegerName metaEdId?
+      deprecated?
       documentation
       minValue?
       maxValue?
@@ -141,6 +159,7 @@ sharedInteger
 
 sharedShort
      : SHARED_SHORT sharedShortName metaEdId?
+      deprecated?
       documentation
       minValue?
       maxValue?
@@ -150,6 +169,7 @@ sharedShort
 
 sharedString
      : SHARED_STRING sharedStringName metaEdId?
+      deprecated?
       documentation
       minLength?
       maxLength
@@ -159,6 +179,7 @@ sharedString
 
 common
     : COMMON commonName metaEdId?
+      deprecated?
       documentation
       property+
     ;
@@ -167,6 +188,7 @@ common
 
 commonExtension
     : COMMON extendeeName ADDITIONS metaEdId?
+      deprecated?
       property+
     ;
 
@@ -174,6 +196,7 @@ commonExtension
 
 descriptor
     : DESCRIPTOR descriptorName metaEdId?
+      deprecated?
       documentation
       property*
       withMapType?
@@ -193,6 +216,7 @@ optionalMapType : WITH_OPTIONAL_MAP_TYPE ;
 
 domain
      : DOMAIN domainName metaEdId?
+      deprecated?
       documentation
       domainItem+
       footerDocumentation?
@@ -215,6 +239,7 @@ footerDocumentation
 
 domainEntity
     : DOMAIN_ENTITY entityName metaEdId?
+     deprecated?
      documentation
      entityConfiguration?
      property+
@@ -222,11 +247,13 @@ domainEntity
 
 domainEntityExtension
     : DOMAIN_ENTITY extendeeName ADDITIONS metaEdId?
+      deprecated?    
       property+
     ;
 
 domainEntitySubclass
     : DOMAIN_ENTITY entityName BASED_ON baseName metaEdId?
+      deprecated?
       documentation
       property+
     ;
@@ -235,6 +262,7 @@ domainEntitySubclass
 
 enumeration
 	: ENUMERATION enumerationName metaEdId?
+      deprecated?
 	  documentation
 	  enumerationItem+
 	;
@@ -249,6 +277,7 @@ shortDescription : TEXT ;
 // InlineCommon
 inlineCommon
     : INLINE_COMMON inlineCommonName metaEdId?
+      deprecated?
       documentation
       property+
     ;
@@ -257,6 +286,7 @@ inlineCommon
 
 interchange
     : INTERCHANGE interchangeName metaEdId?
+      deprecated?
       documentation
       extendedDocumentation?
       useCaseDocumentation?
@@ -287,6 +317,7 @@ interchangeIdentity
 
 interchangeExtension
 	: INTERCHANGE extendeeName ADDITIONS metaEdId?
+      deprecated?
 	  interchangeExtensionComponent
 	;
 
@@ -298,6 +329,7 @@ interchangeExtensionComponent
 
 subdomain
     : SUBDOMAIN subdomainName SUBDOMAIN_OF parentDomainName metaEdId?
+      deprecated?
       documentation
       domainItem+
       (SUBDOMAIN_POSITION subdomainPosition)?
@@ -344,7 +376,8 @@ optionalCollection : OPTIONAL_COLLECTION ;
 isQueryableOnly : IS_QUERYABLE_ONLY ;
 
 propertyComponents
-    : propertyDocumentation
+    : propertyDeprecated?
+      propertyDocumentation
       propertyAnnotation
       roleName?
       isQueryableField?

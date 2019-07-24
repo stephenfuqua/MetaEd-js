@@ -1,17 +1,14 @@
 import deepFreeze from 'deep-freeze';
 import { ModelType } from './ModelType';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespace } from './Namespace';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
-import { NoTopLevelEntity } from './TopLevelEntity';
-import { TopLevelEntity } from './TopLevelEntity';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
+import { SourceMap, NoSourceMap } from './SourceMap';
+import { NoTopLevelEntity, TopLevelEntity } from './TopLevelEntity';
 
 export interface InterchangeItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
   referencedNamespaceName: SourceMap;
   referencedEntity: SourceMap;
+  referencedEntityDeprecated: SourceMap;
   typeHumanizedName: SourceMap;
 }
 
@@ -24,6 +21,7 @@ export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
     referencedType: NoSourceMap,
     referencedNamespaceName: NoSourceMap,
     referencedEntity: NoSourceMap,
+    referencedEntityDeprecated: NoSourceMap,
     typeHumanizedName: NoSourceMap,
   };
 }
@@ -33,6 +31,7 @@ export interface InterchangeItem extends ModelBase {
   referencedType: ModelType[];
   referencedNamespaceName: string;
   referencedEntity: TopLevelEntity;
+  referencedEntityDeprecated: boolean;
   typeHumanizedName: string;
 }
 
@@ -41,18 +40,14 @@ export interface InterchangeItem extends ModelBase {
  */
 export function newInterchangeItem(): InterchangeItem {
   return {
+    ...newModelBase(),
     type: 'interchangeItem',
     typeHumanizedName: 'Interchange Item',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
-    namespace: newNamespace(),
     referencedType: [],
     referencedNamespaceName: '',
     referencedEntity: NoTopLevelEntity,
+    referencedEntityDeprecated: false,
     sourceMap: newInterchangeItemSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

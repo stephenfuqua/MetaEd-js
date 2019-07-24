@@ -174,6 +174,7 @@ import { enhance as outReferencePathEnhancer } from './enhancer/OutReferencePath
 export { enhance as outReferencePathEnhancer } from './enhancer/OutReferencePathEnhancer';
 export { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
 export { enhance as interchangeBaseItemEnhancer } from './enhancer/InterchangeBaseItemEnhancer';
+export { enhance as domainBaseEntityEnhancer } from './enhancer/DomainBaseEntityEnhancer';
 export { enhance as associationReferenceEnhancer } from './enhancer/property/AssociationReferenceEnhancer';
 export { enhance as choiceReferenceEnhancer } from './enhancer/property/ChoiceReferenceEnhancer';
 export { enhance as commonReferenceEnhancer } from './enhancer/property/CommonReferenceEnhancer';

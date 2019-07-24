@@ -94,6 +94,48 @@ describe('when enhancing shared string property', (): void => {
   });
 });
 
+describe('when enhancing property referring to deprecated shared string', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+  let property: SharedStringProperty;
+  let referencedEntity: SharedString;
+  let stringType: StringType;
+
+  beforeAll(() => {
+    property = Object.assign(newSharedStringProperty(), {
+      metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
+      parentEntityName,
+      namespace,
+      referencedType: referencedEntityName,
+    });
+    metaEd.propertyIndex.sharedString.push(property);
+
+    referencedEntity = Object.assign(newSharedString(), {
+      metaEdName: referencedEntityName,
+      namespace,
+      isDeprecated: true,
+    });
+    namespace.entity.sharedString.set(referencedEntity.metaEdName, referencedEntity);
+
+    stringType = Object.assign(newStringType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.stringType.set(referencedEntity.metaEdName, stringType);
+
+    enhance(metaEd);
+  });
+
+  it('should have deprecation flag set', (): void => {
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(property.referencedEntityDeprecated).toBe(true);
+  });
+});
+
 describe('when enhancing string property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };

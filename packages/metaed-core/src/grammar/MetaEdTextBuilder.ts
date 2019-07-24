@@ -158,6 +158,14 @@ export class MetaEdTextBuilder {
   /**
    *
    */
+  withDeprecated(deprecationReason: string): MetaEdTextBuilder {
+    this.addLine(`deprecated "${deprecationReason}"`);
+    return this;
+  }
+
+  /**
+   *
+   */
   withDocumentation(documentation: string): MetaEdTextBuilder {
     const documentationToken = 'documentation';
     this.addLine(documentationToken);
@@ -711,8 +719,10 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     shortenTo: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     this.withStartProperty(propertyType, propertyIdentifier, metaEdId);
+    if (deprecatedReason != null) this.withDeprecated(deprecatedReason);
     this.withPropertyElements(documentation, isRequired, isCollection, context, shortenTo);
     this.withEndProperty();
     return this;
@@ -727,8 +737,10 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     this.withStartSharedProperty(propertyType, propertyIdentifier, named, metaEdId);
+    if (deprecatedReason != null) this.withDeprecated(deprecatedReason);
     this.withPropertyElements(documentation, isRequired, isCollection, context, null);
     this.withEndProperty();
     return this;
@@ -800,8 +812,10 @@ export class MetaEdTextBuilder {
     documentation: string,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     this.withStartProperty('domain entity', identifier, metaEdId);
+    if (deprecatedReason != null) this.withDeprecated(deprecatedReason);
     this.withDocumentation(documentation);
     this.roleName(context);
     this.withEndProperty();
@@ -818,8 +832,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('bool', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'bool',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -833,8 +858,19 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     shortenTo: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('choice', choiceName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
+    return this.withProperty(
+      'choice',
+      choiceName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      shortenTo,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -848,8 +884,19 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     shortenTo: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('common', commonName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
+    return this.withProperty(
+      'common',
+      commonName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      shortenTo,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -886,8 +933,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('date', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'date',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -900,8 +958,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('datetime', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'datetime',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -914,8 +983,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('descriptor', descriptorName, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'descriptor',
+      descriptorName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -928,8 +1008,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('duration', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'duration',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -942,8 +1033,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('enumeration', enumerationName, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'enumeration',
+      enumerationName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -957,6 +1059,7 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     shortenTo: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     return this.withProperty(
       'inline common',
@@ -967,6 +1070,7 @@ export class MetaEdTextBuilder {
       context,
       metaEdId,
       shortenTo,
+      deprecatedReason,
     );
   }
 
@@ -980,8 +1084,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('percent', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'percent',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -994,8 +1109,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('time', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'time',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -1008,8 +1134,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('year', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'year',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   withMinLength(minLength: string | null): MetaEdTextBuilder {
@@ -1112,8 +1249,19 @@ export class MetaEdTextBuilder {
     minLength: string | null = null,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('string', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'string',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withStringRestrictions(minLength, maxLength);
 
     return this;
@@ -1128,8 +1276,19 @@ export class MetaEdTextBuilder {
     minLength: string | null = null,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('string', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'string',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.addLine('is queryable field');
     this.withStringRestrictions(minLength, maxLength);
     return this;
@@ -1145,8 +1304,19 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    return this.withProperty('currency', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    return this.withProperty(
+      'currency',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
   }
 
   /**
@@ -1161,8 +1331,19 @@ export class MetaEdTextBuilder {
     minValue: string | null = null,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('integer', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'integer',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withNumericRestrictions(minValue, maxValue);
     return this;
   }
@@ -1179,8 +1360,19 @@ export class MetaEdTextBuilder {
     minValue: string | null = null,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('short', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'short',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withNumericRestrictions(minValue, maxValue);
     return this;
   }
@@ -1199,8 +1391,19 @@ export class MetaEdTextBuilder {
     maxValue: string | null = null,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('decimal', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'decimal',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue);
     return this;
   }
@@ -1216,8 +1419,19 @@ export class MetaEdTextBuilder {
     isWeak: boolean = false,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('association', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'association',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withReferenceAdditions(isWeak);
     return this;
   }
@@ -1233,8 +1447,19 @@ export class MetaEdTextBuilder {
     isWeak: boolean = false,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
-    this.withProperty('domain entity', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withProperty(
+      'domain entity',
+      propertyIdentifier,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      null,
+      deprecatedReason,
+    );
     this.withReferenceAdditions(isWeak);
     return this;
   }
@@ -1259,6 +1484,7 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     return this.withSharedProperty(
       'decimal',
@@ -1269,6 +1495,7 @@ export class MetaEdTextBuilder {
       isCollection,
       context,
       metaEdId,
+      deprecatedReason,
     );
   }
 
@@ -1283,6 +1510,7 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     return this.withSharedProperty(
       'integer',
@@ -1293,6 +1521,7 @@ export class MetaEdTextBuilder {
       isCollection,
       context,
       metaEdId,
+      deprecatedReason,
     );
   }
 
@@ -1307,6 +1536,7 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     return this.withSharedProperty(
       'short',
@@ -1317,6 +1547,7 @@ export class MetaEdTextBuilder {
       isCollection,
       context,
       metaEdId,
+      deprecatedReason,
     );
   }
 
@@ -1331,6 +1562,7 @@ export class MetaEdTextBuilder {
     isCollection: boolean,
     context: string | null = null,
     metaEdId: string | null = null,
+    deprecatedReason: string | null = null,
   ): MetaEdTextBuilder {
     return this.withSharedProperty(
       'string',
@@ -1341,6 +1573,7 @@ export class MetaEdTextBuilder {
       isCollection,
       context,
       metaEdId,
+      deprecatedReason,
     );
   }
 

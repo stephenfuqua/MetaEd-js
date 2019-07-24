@@ -44,6 +44,46 @@ describe('when enhancing enumeration property', (): void => {
   });
 });
 
+describe('when enhancing deprecated enumeration property', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: EnumerationProperty = Object.assign(newEnumerationProperty(), {
+      metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
+      namespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.enumeration.push(property);
+
+    const parentEntity: Enumeration = Object.assign(newEnumeration(), {
+      metaEdName: parentEntityName,
+      namespace,
+      properties: [property],
+    });
+    namespace.entity.enumeration.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: Enumeration = Object.assign(newEnumeration(), {
+      metaEdName: referencedEntityName,
+      namespace,
+      isDeprecated: true,
+    });
+    namespace.entity.enumeration.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have deprecation flag set', (): void => {
+    const property = R.head(metaEd.propertyIndex.enumeration.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntityDeprecated).toBe(true);
+  });
+});
+
 describe('when enhancing enumeration property across namespaces', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };

@@ -4,15 +4,23 @@ import { validate as sourcePropertyAndTargetPropertyMustMatch } from './validato
 import { validate as sourcePropertyPathStringsMustExist } from './validator/MergeDirective/SourcePropertyPathMustExist';
 import { validate as targetPropertyPathStringsMustExist } from './validator/MergeDirective/TargetPropertyPathMustExist';
 import { validate as outPathsToSameEntityMustHaveMergeDirectiveOrRoleName } from './validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
+import { validate as deprecatedEntityWarning } from './validator/Deprecated/DeprecatedEntityWarning';
+import { validate as deprecatedPropertyWarning } from './validator/Deprecated/DeprecatedPropertyWarning';
+import { validate as deprecatedDomainItemReferenceWarning } from './validator/Deprecated/DeprecatedDomainItemReferenceWarning';
+import { validate as deprecatedInterchangeItemReferenceWarning } from './validator/Deprecated/DeprecatedInterchangeItemReferenceWarning';
 
 export function initialize(): MetaEdPlugin {
-  return Object.assign(newMetaEdPlugin(), {
+  return {
+    ...newMetaEdPlugin(),
     validator: [
       sourcePropertyPathStringsMustExist,
       targetPropertyPathStringsMustExist,
       sourcePropertyAndTargetPropertyMustMatch,
       outPathsToSameEntityMustHaveMergeDirectiveOrRoleName,
+      deprecatedEntityWarning,
+      deprecatedPropertyWarning,
+      deprecatedDomainItemReferenceWarning,
+      deprecatedInterchangeItemReferenceWarning,
     ],
-    enhancer: [],
-  });
+  };
 }

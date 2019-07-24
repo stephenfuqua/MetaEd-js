@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 import { EntityProperty } from './property/EntityProperty';
 import { ReferentialProperty } from './property/ReferentialProperty';
 import { SimpleProperty } from './property/SimpleProperty';
-import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap } from './ModelBase';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
 import { NoNamespace } from './Namespace';
 import { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
@@ -59,10 +59,7 @@ export interface TopLevelEntity extends ModelBase {
  */
 export function newTopLevelEntity(): TopLevelEntity {
   return {
-    type: 'unknown',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
+    ...newModelBase(),
     namespace: NoNamespace,
 
     properties: [],
@@ -82,9 +79,6 @@ export function newTopLevelEntity(): TopLevelEntity {
     outReferenceEntitiesMap: new Map(),
     outReferenceEntityEndpointsMap: new Map(),
     sourceMap: newTopLevelEntitySourceMap(),
-
-    data: {},
-    config: {},
   };
 }
 

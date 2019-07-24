@@ -73,6 +73,10 @@ describe('when building shared decimal in extension namespace', (): void => {
     expect(getDecimalType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDecimalType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(false);
+  });
+
   it('should have total digits', (): void => {
     expect(getDecimalType(namespace.entity, expectedRepositoryId).totalDigits).toBe(totalDigits);
   });
@@ -95,6 +99,50 @@ describe('when building shared decimal in extension namespace', (): void => {
 
   it('should not be a generated type', (): void => {
     expect(getDecimalType(namespace.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
+  });
+});
+
+describe('when building deprecated shared decimal', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const totalDigits = '10';
+  const decimalPlaces = '3';
+  const minValue = '2';
+  const maxValue = '100';
+
+  let namespace: any = null;
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartSharedDecimal(entityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
+      .withEndSharedDecimal()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one decimal type', (): void => {
+    expect(namespace.entity.decimalType.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDecimalType(namespace.entity, expectedRepositoryId).isDeprecated).toBe(true);
+    expect(getDecimalType(namespace.entity, expectedRepositoryId).deprecationReason).toBe(deprecationReason);
   });
 });
 

@@ -68,6 +68,10 @@ describe('when building domain in extension namespace', (): void => {
     expect(getDomain(namespace.entity, domainName).documentation).toBe(entityDocumentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getDomain(namespace.entity, domainName).isDeprecated).toBe(false);
+  });
+
   it('should have one domain item in default namespace', (): void => {
     expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(1);
     expect(getDomain(namespace.entity, domainName).domainItems[0].referencedType).toBe('domainEntity');
@@ -80,6 +84,48 @@ describe('when building domain in extension namespace', (): void => {
   it('should have footer documentation', (): void => {
     expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(1);
     expect(getDomain(namespace.entity, domainName).footerDocumentation).toBe(footerDocumentation);
+  });
+});
+
+describe('when building deprecated domain', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+
+  const projectExtension = 'ProjectExtension';
+  const domainName = 'DomainName';
+  const deprecationReason = 'reason';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartDomain(domainName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem('DomainItemName')
+      .withFooterDocumentation('doc')
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one domain', (): void => {
+    expect(namespace.entity.domain.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getDomain(namespace.entity, domainName).isDeprecated).toBe(true);
+    expect(getDomain(namespace.entity, domainName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -329,21 +375,29 @@ describe('when building duplicate domains', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('DomainBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate domains should have validation failures for each entity -> Domain 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Domain named DomainName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 9,
+        "line": 8,
+        "tokenText": "DomainName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('DomainBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate domains should have validation failures for each entity -> Domain 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Domain named DomainName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 9,
+        "line": 2,
+        "tokenText": "DomainName",
+      }
+    `);
   });
 });
 
@@ -452,7 +506,12 @@ describe('when building domain with no domain name', (): void => {
   });
 
   it('should have missing id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing ID at '[1]', column: 10, line: 2, token: [1]",
+              "missing ID at '[1]', column: 10, line: 2, token: [1]",
+            ]
+        `);
   });
 });
 
@@ -493,7 +552,12 @@ describe('when building domain with lowercase domain name', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'd' expecting ID, column: 9, line: 2, token: d",
+              "mismatched input 'd' expecting ID, column: 9, line: 2, token: d",
+            ]
+        `);
   });
 });
 
@@ -556,19 +620,21 @@ describe('when building domain with no documentation', (): void => {
     expect(getDomain(namespace.entity, domainName).documentation).toBe('');
   });
 
-  it('should have one domain item', (): void => {
-    expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(1);
-    expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdName).toBe(domainItemName);
-    expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  it('should have no domain item', (): void => {
+    expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(0);
   });
 
-  it('should have footer documentation', (): void => {
-    expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(1);
-    expect(getDomain(namespace.entity, domainName).footerDocumentation).toBe(footerDocumentation);
+  it('should have no footer documentation', (): void => {
+    expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(0);
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+            ]
+        `);
   });
 });
 
@@ -639,7 +705,12 @@ describe('when building domain with no domain item', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'footer documentation' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: footer documentation",
+              "mismatched input 'footer documentation' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: footer documentation",
+            ]
+        `);
   });
 });
 
@@ -716,7 +787,12 @@ describe('when building domain with no text in footer documentation', (): void =
   });
 
   it('should have missing text error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing TEXT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+              "missing TEXT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+            ]
+        `);
   });
 });
 
@@ -788,7 +864,12 @@ describe('when building domain with invalid trailing text', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'common', 'descriptor', 'domain entity', 'inline common', 'footer documentation'}, column: 0, line: 6, token: TrailingText",
+              "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'common', 'descriptor', 'domain entity', 'inline common', 'footer documentation'}, column: 0, line: 6, token: TrailingText",
+            ]
+        `);
   });
 });
 
@@ -830,7 +911,14 @@ describe('when building subdomain with no subdomain name', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "extraneous input 'of' expecting ID, column: 13, line: 2, token: of",
+              "mismatched input '[10]' expecting 'of', column: 33, line: 2, token: [10]",
+              "extraneous input 'of' expecting ID, column: 13, line: 2, token: of",
+              "mismatched input '[10]' expecting 'of', column: 33, line: 2, token: [10]",
+            ]
+        `);
   });
 });
 
@@ -872,7 +960,12 @@ describe('when building subdomain with lowercase subdomain name', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'd' expecting ID, column: 12, line: 2, token: d",
+              "mismatched input 'd' expecting ID, column: 12, line: 2, token: d",
+            ]
+        `);
   });
 });
 
@@ -952,7 +1045,12 @@ describe('when building subdomain with no parent domain name', (): void => {
   });
 
   it('should have missing id error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "missing ID at '[10]', column: 27, line: 2, token: [10]",
+              "missing ID at '[10]', column: 27, line: 2, token: [10]",
+            ]
+        `);
   });
 });
 
@@ -987,7 +1085,12 @@ describe('when building subdomain with lowercase parent domain name', (): void =
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'p' expecting ID, column: 26, line: 2, token: p",
+              "mismatched input 'p' expecting ID, column: 26, line: 2, token: p",
+            ]
+        `);
   });
 });
 
@@ -1055,18 +1158,17 @@ describe('when building subdomain with no documentation', (): void => {
     expect(getSubdomain(namespace.entity, domainName).documentation).toBe('');
   });
 
-  it('should have one domain item', (): void => {
-    expect(getSubdomain(namespace.entity, domainName).domainItems).toHaveLength(1);
-    expect(getSubdomain(namespace.entity, domainName).domainItems[0].metaEdName).toBe(domainItemName);
-    expect(getSubdomain(namespace.entity, domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
-  });
-
-  it('should have position', (): void => {
-    expect(getSubdomain(namespace.entity, domainName).position).toBe(subdomainPosition);
+  it('should have no domain item', (): void => {
+    expect(getSubdomain(namespace.entity, domainName).domainItems).toHaveLength(0);
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+            Array [
+              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+              "mismatched input 'domain entity' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: domain entity",
+            ]
+        `);
   });
 });
 
@@ -1142,7 +1244,12 @@ describe('when building subdomain with no domain item', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'position' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: position",
+        "mismatched input 'position' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: position",
+      ]
+    `);
   });
 });
 
@@ -1223,7 +1330,12 @@ describe('when building subdomain with no unsigned int in position', (): void =>
   });
 
   it('should have missing unsigned int error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+        "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+      ]
+    `);
   });
 });
 
@@ -1306,7 +1418,12 @@ describe('when building subdomain with invalid trailing text', (): void => {
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
+      ]
+    `);
   });
 });
 
@@ -1366,7 +1483,77 @@ describe('when building domain source map', (): void => {
   });
 
   it('should have line, column, text', (): void => {
-    expect(getDomain(namespace.entity, domainName).sourceMap).toMatchSnapshot();
+    expect(getDomain(namespace.entity, domainName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "domainItems": Array [
+          Object {
+            "column": 4,
+            "line": 5,
+            "tokenText": "domain entity",
+          },
+        ],
+        "entities": Array [],
+        "footerDocumentation": Object {
+          "column": 4,
+          "line": 6,
+          "tokenText": "footer documentation",
+        },
+        "identityProperties": Array [],
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 20,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 9,
+          "line": 2,
+          "tokenText": "DomainName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "subdomains": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain",
+        },
+      }
+    `);
   });
 });
 
@@ -1438,6 +1625,85 @@ describe('when building subdomain source map', (): void => {
   });
 
   it('should have line, column, text', (): void => {
-    expect(getSubdomain(namespace.entity, domainName).sourceMap).toMatchSnapshot();
+    expect(getSubdomain(namespace.entity, domainName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "domainItems": Array [
+          Object {
+            "column": 4,
+            "line": 5,
+            "tokenText": "domain entity",
+          },
+        ],
+        "entities": Array [],
+        "identityProperties": Array [],
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 46,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 12,
+          "line": 2,
+          "tokenText": "SubdomainName",
+        },
+        "parent": Object {
+          "column": 29,
+          "line": 2,
+          "tokenText": "ParentDomainName",
+        },
+        "parentMetaEdName": Object {
+          "column": 29,
+          "line": 2,
+          "tokenText": "ParentDomainName",
+        },
+        "position": Object {
+          "column": 13,
+          "line": 6,
+          "tokenText": "1",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Subdomain",
+        },
+      }
+    `);
   });
 });

@@ -1,8 +1,6 @@
 import deepFreeze from 'deep-freeze';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newModelBaseSourceMap } from './ModelBase';
+import { SourceMap, NoSourceMap } from './SourceMap';
+import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap, newModelBase } from './ModelBase';
 import { EntityProperty } from './property/EntityProperty';
 import { newNamespace } from './Namespace';
 
@@ -39,11 +37,9 @@ export interface IntegerType extends ModelBase {
 
 export function newIntegerType(): IntegerType {
   return {
-    type: 'integerType',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
+    ...newModelBase(),
     namespace: newNamespace(),
+    type: 'integerType',
     generatedSimpleType: false,
     documentationInherited: false,
     typeHumanizedName: 'Integer Type',
@@ -52,8 +48,6 @@ export function newIntegerType(): IntegerType {
     maxValue: '',
     referringSimpleProperties: [],
     sourceMap: newIntegerTypeSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

@@ -1,30 +1,18 @@
 import deepFreeze from 'deep-freeze';
 import { NoNamespace } from './Namespace';
-import { ModelBase } from './ModelBase';
-import { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
+import { ModelBase, newModelBase, ModelBaseSourceMap, newModelBaseSourceMap } from './ModelBase';
 import { SimpleProperty } from './property/SimpleProperty';
 
 /**
  *
  */
-export interface SharedSimpleSourceMap {
-  type: SourceMap;
-  documentation: SourceMap;
-  metaEdName: SourceMap;
-  metaEdId: SourceMap;
-}
+export type SharedSimpleSourceMap = ModelBaseSourceMap;
 
 /**
  *
  */
 export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
-  return {
-    type: NoSourceMap,
-    documentation: NoSourceMap,
-    metaEdName: NoSourceMap,
-    metaEdId: NoSourceMap,
-  };
+  return newModelBaseSourceMap();
 }
 
 export interface SharedSimple extends ModelBase {
@@ -38,16 +26,11 @@ export interface SharedSimple extends ModelBase {
  */
 export function newSharedSimple(): SharedSimple {
   return {
-    type: 'unknown',
+    ...newModelBase(),
     typeHumanizedName: 'unknown',
-    documentation: '',
-    metaEdName: '',
-    metaEdId: '',
     namespace: NoNamespace,
     inReferences: [],
     sourceMap: newSharedSimpleSourceMap(),
-    data: {},
-    config: {},
   };
 }
 

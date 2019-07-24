@@ -66,6 +66,10 @@ describe('when building association subclass in extension namespace', (): void =
     expect(getAssociationSubclass(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
+  it('should not be deprecated', (): void => {
+    expect(getAssociationSubclass(namespace.entity, entityName).isDeprecated).toBe(false);
+  });
+
   it('should have one property', (): void => {
     expect(getAssociationSubclass(namespace.entity, entityName).properties).toHaveLength(1);
   });
@@ -76,6 +80,48 @@ describe('when building association subclass in extension namespace', (): void =
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
     expect(integerProperty.isRequired).toBe(true);
+  });
+});
+
+describe('when building deprecated association subclass', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const projectExtension = 'ProjectExtension';
+  const deprecationReason = 'reason';
+  const entityName = 'EntityName';
+  const baseEntityName = 'BaseEntityName';
+  const documentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartAssociationSubclass(entityName, baseEntityName)
+      .withDeprecated(deprecationReason)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should build one association subclass', (): void => {
+    expect(namespace.entity.associationSubclass.size).toBe(1);
+  });
+
+  it('should have no validation failures', (): void => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should be deprecated', (): void => {
+    expect(getAssociationSubclass(namespace.entity, entityName).isDeprecated).toBe(true);
+    expect(getAssociationSubclass(namespace.entity, entityName).deprecationReason).toBe(deprecationReason);
   });
 });
 
@@ -167,21 +213,29 @@ describe('when building duplicate association subclasses', (): void => {
   it('should have validation failures for each entity', (): void => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when building duplicate association subclasses should have validation failures for each entity -> Association 1 message',
+    expect(validationFailures[0].message).toMatchInlineSnapshot(
+      `"Association Subclass named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when building duplicate association subclasses should have validation failures for each entity -> Association 1 sourceMap',
-    );
+    expect(validationFailures[0].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 14,
+        "line": 9,
+        "tokenText": "EntityName",
+      }
+    `);
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when building duplicate association subclasses should have validation failures for each entity -> Association 2 message',
+    expect(validationFailures[1].message).toMatchInlineSnapshot(
+      `"Association Subclass named EntityName is a duplicate declaration of that name."`,
     );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when building duplicate association subclasses should have validation failures for each entity -> Association 2 sourceMap',
-    );
+    expect(validationFailures[1].sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "column": 14,
+        "line": 2,
+        "tokenText": "EntityName",
+      }
+    `);
   });
 });
 
@@ -218,7 +272,12 @@ describe('when building association subclass with no association subclass name',
   });
 
   it('should have no viable alternative error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "no viable alternative at input 'Associationbased on', column: 15, line: 2, token: based on",
+        "no viable alternative at input 'Associationbased on', column: 15, line: 2, token: based on",
+      ]
+    `);
   });
 });
 
@@ -255,7 +314,12 @@ describe('when building association subclass with lowercase association subclass
   });
 
   it('should have no viable alternative error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
+        "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
+      ]
+    `);
   });
 });
 
@@ -329,7 +393,12 @@ describe('when building association subclass with no based on name', (): void =>
   });
 
   it('should have error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
+        "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -399,7 +468,12 @@ describe('when building association subclass with lowercase based on name', (): 
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'b' expecting ID, column: 34, line: 2, token: b",
+        "mismatched input 'b' expecting ID, column: 34, line: 2, token: b",
+      ]
+    `);
   });
 });
 
@@ -463,7 +537,12 @@ describe('when building association subclass with no documentation', (): void =>
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
+      ]
+    `);
   });
 });
 
@@ -527,7 +606,12 @@ describe('when building association subclass with no property', (): void => {
   });
 
   it('should have mismatched input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 5, token: End Namespace",
+        "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 5, token: End Namespace",
+      ]
+    `);
   });
 });
 
@@ -603,7 +687,12 @@ describe('when building association subclass with invalid trailing text', (): vo
   });
 
   it('should have extraneous input error', (): void => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
+      Array [
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'min value', 'max value', 'role name'}, column: 0, line: 9, token: TrailingText",
+        "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'min value', 'max value', 'role name'}, column: 0, line: 9, token: TrailingText",
+      ]
+    `);
   });
 });
 
@@ -655,6 +744,62 @@ describe('when building association subclass source map', (): void => {
   });
 
   it('should have source map data', (): void => {
-    expect(getAssociationSubclass(namespace.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getAssociationSubclass(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 34,
+          "line": 2,
+          "tokenText": "BaseEntityName",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 34,
+          "line": 2,
+          "tokenText": "BaseEntityName",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "identityProperties": Array [],
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdId": Object {
+          "column": 49,
+          "line": 2,
+          "tokenText": "[1]",
+        },
+        "metaEdName": Object {
+          "column": 14,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Association",
+        },
+      }
+    `);
   });
 });

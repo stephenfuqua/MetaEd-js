@@ -15,7 +15,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         ...topLevelCoreEntityModelTypes,
       ) as TopLevelEntity | null;
 
-      if (referencedEntity) (entity as DomainBase).entities.push(referencedEntity);
+      if (referencedEntity) {
+        (entity as DomainBase).entities.push(referencedEntity);
+        domainItem.referencedEntity = referencedEntity;
+        domainItem.referencedEntityDeprecated = referencedEntity.isDeprecated;
+      }
     });
   });
 

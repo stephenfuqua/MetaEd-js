@@ -12,7 +12,7 @@ import { newInterchange, NoInterchange } from '../model/Interchange';
 import { newInterchangeItem, NoInterchangeItem } from '../model/InterchangeItem';
 import { newInterchangeExtension } from '../model/InterchangeExtension';
 import { namespaceNameFrom } from './NamespaceBuilder';
-import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { extractDocumentation, squareBracketRemoval, isErrorText, extractDeprecationReason } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 import { ValidationFailure } from '../validator/ValidationFailure';
 
@@ -44,6 +44,17 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
     const namespace: Namespace | undefined = this.metaEd.namespace.get(namespaceNameFrom(context));
     this.currentNamespace = namespace == null ? NoNamespace : namespace;
+  }
+
+  enterDeprecated(context: MetaEdGrammar.DeprecatedContext) {
+    if (this.currentInterchange === NoInterchange) return;
+
+    if (!context.exception) {
+      this.currentInterchange.isDeprecated = true;
+      this.currentInterchange.deprecationReason = extractDeprecationReason(context);
+      this.currentInterchange.sourceMap.isDeprecated = sourceMapFrom(context);
+      this.currentInterchange.sourceMap.deprecationReason = sourceMapFrom(context);
+    }
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
