@@ -6,4 +6,6 @@ export interface ApiProperty {
   description: string;
   isIdentifying: boolean;
   isServerAssigned: boolean;
+  isDeprecated?: boolean;
+  deprecationReasons?: string[];
 }

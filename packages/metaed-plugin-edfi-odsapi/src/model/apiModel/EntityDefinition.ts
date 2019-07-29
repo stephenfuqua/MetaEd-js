@@ -8,4 +8,6 @@ export interface EntityDefinition {
   identifiers: EntityIdentifier[];
   isAbstract: boolean;
   description: string;
+  isDeprecated?: boolean;
+  deprecationReasons?: string[];
 }

@@ -23,6 +23,8 @@ export interface Column {
   isIdentityDatabaseType: boolean;
   sourceEntityProperties: EntityProperty[];
   mergedReferenceContexts: string[];
+  isDeprecated: boolean;
+  deprecationReasons: string[];
 }
 
 export interface DecimalColumn extends Column {
@@ -50,6 +52,8 @@ export function newColumn(): Column {
     isIdentityDatabaseType: false,
     sourceEntityProperties: [],
     mergedReferenceContexts: [],
+    isDeprecated: false,
+    deprecationReasons: [],
   };
 }
 

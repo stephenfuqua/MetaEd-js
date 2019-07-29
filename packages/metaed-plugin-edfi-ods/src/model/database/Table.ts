@@ -41,6 +41,8 @@ export interface Table {
   isAggregateRootTable: boolean;
   hideFromApiMetadata: boolean;
   hasDiscriminatorColumn: boolean;
+  isDeprecated: boolean;
+  deprecationReasons: string[];
 }
 
 export function newTable(): Table {
@@ -69,6 +71,8 @@ export function newTable(): Table {
     isAggregateRootTable: false,
     hideFromApiMetadata: false,
     hasDiscriminatorColumn: false,
+    isDeprecated: false,
+    deprecationReasons: [],
   };
 }
 

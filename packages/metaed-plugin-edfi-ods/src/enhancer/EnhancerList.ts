@@ -40,6 +40,9 @@ import { enhance as templateSpecificTablePropertyEnhancer } from './TemplateSpec
 import { enhance as topLevelEntityBaseReferenceEnhancer } from './TopLevelEntityBaseReferenceEnhancer';
 import { enhance as updateCascadeTopLevelEntityEnhancer } from './UpdateCascadeTopLevelEntityEnhancer';
 
+import { enhance as columnDeprecationEnhancer } from './ColumnDeprecationEnhancer';
+import { enhance as tableDeprecationEnhancer } from './TableDeprecationEnhancer';
+
 import { enhance as addApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher } from '../diminisher/AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher';
 import { enhance as addExtraBeginDateColumnToStudentLearningObjectiveDiminisher } from '../diminisher/AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher';
 import { enhance as addExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher } from '../diminisher/AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher';
@@ -139,6 +142,8 @@ export function enhancerList(): Enhancer[] {
     templateSpecificTablePropertyEnhancerV2,
     templateSpecificTablePropertyEnhancer,
     discriminatorColumnFlaggingEnhancer,
+    columnDeprecationEnhancer,
+    tableDeprecationEnhancer,
 
     namespace,
     addSchemaContainerEnhancer,

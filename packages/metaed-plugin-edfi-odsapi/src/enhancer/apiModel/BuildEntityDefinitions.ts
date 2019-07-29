@@ -175,6 +175,8 @@ function buildSingleEntityDefinitionFrom(
     identifiers: identifiersFrom(table, options),
     isAbstract: options.isAbstract,
     description: table.description,
+    isDeprecated: table.isDeprecated ? true : undefined,
+    deprecationReasons: table.deprecationReasons.length > 0 ? table.deprecationReasons : undefined,
   };
 }
 

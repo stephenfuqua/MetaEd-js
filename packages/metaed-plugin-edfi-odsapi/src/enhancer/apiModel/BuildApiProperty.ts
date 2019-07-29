@@ -61,5 +61,7 @@ export function buildApiProperty(column: Column): ApiProperty {
     description: column.description,
     isIdentifying: column.isPartOfPrimaryKey,
     isServerAssigned: column.isIdentityDatabaseType,
+    isDeprecated: column.isDeprecated ? true : undefined,
+    deprecationReasons: column.deprecationReasons.length > 0 ? column.deprecationReasons : undefined,
   };
 }
