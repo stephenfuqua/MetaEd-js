@@ -132,8 +132,6 @@ import { validate as subdomainParentDomainNameMustMatchADomain } from './validat
 
 import { enhance as abstractGeneralStudentProgramAssociationDiminisher } from './diminisher/AbstractGeneralStudentProgramAssociationDiminisher';
 
-import { enhance as deleteExtraneousImplicitExtensionSimpleTypesEnhancer } from './enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
-
 import { enhance as domainBaseEntityEnhancer } from './enhancer/DomainBaseEntityEnhancer';
 import { enhance as subdomainParentEntityEnhancer } from './enhancer/SubdomainParentEntityEnhancer';
 import { enhance as domainSubdomainEnhancer } from './enhancer/DomainSubdomainEnhancer';
@@ -338,9 +336,6 @@ function enhancerList(): Enhancer[] {
   return [
     // diminish :: () => isAbstract
     abstractGeneralStudentProgramAssociationDiminisher,
-
-    // enhance :: () => simpleTypes without extension duplicates
-    deleteExtraneousImplicitExtensionSimpleTypesEnhancer,
 
     // enhance :: () => domainItems.entities
     domainBaseEntityEnhancer,
