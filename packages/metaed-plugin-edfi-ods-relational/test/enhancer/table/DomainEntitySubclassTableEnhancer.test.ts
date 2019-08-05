@@ -1,0 +1,290 @@
+import R from 'ramda';
+import {
+  addEntityForNamespace,
+  newDomainEntity,
+  newDomainEntitySubclass,
+  newIntegerProperty,
+  newMetaEdEnvironment,
+  newNamespace,
+} from 'metaed-core';
+import { DomainEntity, DomainEntitySubclass, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
+import { enhance } from '../../../src/enhancer/table/DomainEntitySubclassTableEnhancer';
+import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { Table } from '../../../src/model/database/Table';
+
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const documentation = 'Documentation';
+  const domainEntitySubclassName = 'DomainEntitySubclassName';
+  const domainEntitySubclassPropertyName = 'DomainEntitySubclassPropertyName';
+
+  beforeAll(() => {
+    const domainEntityName = 'DomainEntityName';
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
+      documentation,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntityName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityPkPropertyName = 'DomainEntityPkPropertyName';
+    const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsName: domainEntityPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntity.data.edfiOds.odsProperties.push(domainEntityPkProperty);
+    addEntityForNamespace(domainEntity);
+
+    const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+      namespace: extensionNamespace,
+      documentation,
+      metaEdName: domainEntitySubclassName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntitySubclassName,
+          odsExtensionName: domainEntitySubclassName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntitySubclassProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      namespace: extensionNamespace,
+      metaEdName: domainEntitySubclassPropertyName,
+      isPartOfIdentity: false,
+      parentEntity: domainEntitySubclass,
+      data: {
+        edfiOds: {
+          odsName: domainEntitySubclassPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntitySubclass.data.edfiOds.odsProperties.push(domainEntitySubclassProperty);
+    addEntityForNamespace(domainEntitySubclass);
+
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create a table', (): void => {
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
+  });
+
+  it('should have schema equal to namespace', (): void => {
+    expect((tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table).schema).toBe('extension');
+  });
+
+  it('should have description equal to documentation', (): void => {
+    expect((tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table).description).toBe(
+      documentation,
+    );
+  });
+
+  it('should have one column', (): void => {
+    const table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].name).toBe(domainEntitySubclassPropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
+  });
+});
+
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with primary key', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const documentation = 'Documentation';
+  const domainEntitySubclassName = 'DomainEntitySubclassName';
+  const domainEntitySubclassPkPropertyName = 'DomainEntitySubclassPkPropertyName';
+
+  beforeAll(() => {
+    const domainEntityName = 'DomainEntityName';
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
+      documentation,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntityName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityPkPropertyName = 'DomainEntityPkPropertyName';
+    const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsName: domainEntityPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntity.data.edfiOds.odsProperties.push(domainEntityPkProperty);
+    addEntityForNamespace(domainEntity);
+
+    const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+      namespace: extensionNamespace,
+      documentation,
+      metaEdName: domainEntitySubclassName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntitySubclassName,
+          odsExtensionName: domainEntitySubclassName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntitySubclassPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      namespace: extensionNamespace,
+      metaEdName: domainEntitySubclassPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntitySubclass,
+      data: {
+        edfiOds: {
+          odsName: domainEntitySubclassPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntitySubclass.data.edfiOds.odsProperties.push(domainEntitySubclassPkProperty);
+    addEntityForNamespace(domainEntitySubclass);
+
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create a table', (): void => {
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
+  });
+
+  it('should have one primary key column', (): void => {
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].name).toBe(domainEntitySubclassPkPropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+  });
+});
+
+describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with identity rename property', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const documentation = 'Documentation';
+  const domainEntityName = 'DomainEntityName';
+  const domainEntitySubclassName = 'DomainEntitySubclassName';
+  const domainEntitySubclassRenamePropertyName = 'DomainEntitySubclassRenamePropertyName';
+
+  const domainEntityPkPropertyName = 'DomainEntityPkPropertyName';
+  beforeAll(() => {
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
+      documentation,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntityName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsName: domainEntityPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntity.data.edfiOds.odsProperties.push(domainEntityPkProperty);
+    addEntityForNamespace(domainEntity);
+
+    const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+      namespace: extensionNamespace,
+      documentation,
+      metaEdName: domainEntitySubclassName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOds: {
+          odsTableName: domainEntitySubclassName,
+          odsExtensionName: domainEntitySubclassName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    });
+    const domainEntitySubclassRenameProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      namespace: extensionNamespace,
+      metaEdName: domainEntitySubclassRenamePropertyName,
+      isIdentityRename: true,
+      baseKeyName: domainEntityPkPropertyName,
+      parentEntity: domainEntitySubclass,
+      data: {
+        edfiOds: {
+          odsName: domainEntitySubclassRenamePropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    });
+    domainEntitySubclass.data.edfiOds.odsProperties.push(domainEntitySubclassRenameProperty);
+    addEntityForNamespace(domainEntitySubclass);
+
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create a table', (): void => {
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).toBeDefined();
+  });
+
+  it('should have one column', (): void => {
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].name).toBe(domainEntitySubclassRenamePropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
+  });
+
+  it('should create foreign key to from identity rename property to base entity property', (): void => {
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName) as Table;
+    expect(table.foreignKeys).toHaveLength(1);
+    expect(R.head(table.foreignKeys).parentTableName).toBe(domainEntitySubclassName);
+    expect(R.head(table.foreignKeys).foreignTableName).toBe(domainEntityName);
+  });
+});

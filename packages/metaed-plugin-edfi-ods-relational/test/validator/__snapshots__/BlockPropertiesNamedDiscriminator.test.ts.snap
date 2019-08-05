@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity has property named Discriminator on tech version 3.1 should have validation failure 1`] = `
+Array [
+  Object {
+    "category": "warning",
+    "fileMap": null,
+    "message": "The ODS does not allow properties named 'Discriminator'.  ODS generation will likely fail.",
+    "sourceMap": Object {
+      "column": 11,
+      "line": 5,
+      "tokenText": "Discriminator",
+    },
+    "validatorName": "BlockPropertiesNamedDiscriminator",
+  },
+]
+`;

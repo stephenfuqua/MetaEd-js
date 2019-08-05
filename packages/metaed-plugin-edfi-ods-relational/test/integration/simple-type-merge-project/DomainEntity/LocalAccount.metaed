@@ -1,0 +1,27 @@
+Domain Entity LocalAccount
+    documentation "This is documentation."
+    shared string EdFi.AccountIdentifier
+        documentation "This is documentation."
+        is part of identity
+    domain entity EdFi.EducationOrganization
+        documentation "A reference to the education organization for which the account is applicable."
+        is part of identity
+        is queryable field
+    shared short MyFiscalYear named FiscalYear
+        documentation "Fiscal year for the account"
+        is part of identity
+        is queryable field
+
+    shared string EdFi.AccountName
+      documentation "A descriptive name for the account"
+      is optional
+    domain entity ChartOfAccount
+      documentation "The standard account under which the local ccount is reported."
+      is required
+      role name ChartOfAccount
+      merge ChartOfAccount.FiscalYear with FiscalYear
+
+    //Optional Collection
+    descriptor ReportingTag
+        documentation "Optional tag for accountability reporting (e.g. ESSA)."
+        is optional collection

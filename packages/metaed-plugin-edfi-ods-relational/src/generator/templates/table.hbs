@@ -1,0 +1,48 @@
+{{#tables}}
+-- Table [{{{schema}}}].[{{{name}}}] --
+CREATE TABLE [{{{schema}}}].[{{{name}}}] (
+{{#columns}}
+    {{> column}}
+{{/columns}}
+{{#if hasDiscriminatorColumn}}
+    [Discriminator] [NVARCHAR](128) NULL,
+{{/if}}
+{{#if includeCreateDateColumn}}
+    [CreateDate] {{#if ../useDatetime2}}[DATETIME2]{{else}}[DATETIME]{{/if}} NOT NULL,
+{{/if}}
+{{#if includeLastModifiedDateAndIdColumn}}
+    [LastModifiedDate] {{#if ../useDatetime2}}[DATETIME2]{{else}}[DATETIME]{{/if}} NOT NULL,
+    [Id] [UNIQUEIDENTIFIER] NOT NULL,
+{{/if}}
+    CONSTRAINT [{{{name}}}_PK] PRIMARY KEY CLUSTERED (
+{{#primaryKeys}}
+        [{{{name}}}] ASC{{#unless @last}},{{/unless}}
+{{/primaryKeys}}
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]{{#if hasAlternateKeys}},{{/if}}
+{{#if hasAlternateKeys}}
+    CONSTRAINT [{{name}}_AK] UNIQUE NONCLUSTERED (
+{{#alternateKeys}}
+        [{{{name}}}] ASC{{#unless @last}},{{/unless}}
+{{/alternateKeys}}
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+{{/if}}
+) ON [PRIMARY]
+GO
+{{#uniqueIndexes}}
+CREATE UNIQUE NONCLUSTERED INDEX [{{{../name}}}_UI_{{{name}}}] ON [{{{../schema}}}].[{{{../name}}}] (
+    [{{{name}}}] ASC
+) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+{{/uniqueIndexes}}
+{{#if includeCreateDateColumn}}
+ALTER TABLE [{{{schema}}}].[{{{name}}}] ADD CONSTRAINT [{{{name}}}_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
+GO
+{{/if}}
+{{#if includeLastModifiedDateAndIdColumn}}
+ALTER TABLE [{{{schema}}}].[{{{name}}}] ADD CONSTRAINT [{{{name}}}_DF_Id] DEFAULT (newid()) FOR [Id]
+GO
+ALTER TABLE [{{{schema}}}].[{{{name}}}] ADD CONSTRAINT [{{{name}}}_DF_LastModifiedDate] DEFAULT (getdate()) FOR [LastModifiedDate]
+GO
+{{/if}}
+
+{{/tables}}
