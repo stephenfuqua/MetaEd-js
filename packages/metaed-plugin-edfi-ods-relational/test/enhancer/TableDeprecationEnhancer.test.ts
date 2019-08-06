@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, Namespace, newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/TableDeprecationEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newTable, Table } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 
@@ -12,10 +12,10 @@ describe('when table parent entity has deprecation', (): void => {
   const deprecationReason = 'DeprecationReason';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const parentEntity = { ...newDomainEntity(), isDeprecated: true, deprecationReason };
-    const table: Table = { ...newTable(), name: tableName, parentEntity };
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: tableName, parentEntity };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });

@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newAssociation, newAssociationExtension, newNamespace, NoNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Association, AssociationExtension, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, initializeEdFiOdsRelationalEntityRepository, tableEntities } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/AssociationExtensionAggregateEnhancer';
 import { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -9,8 +9,6 @@ import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 
 describe('when enhancing association extensions', (): void => {
-  const baseEntityName = 'BaseEntityName';
-  const baseTableName = 'BaseTableName';
   const entityName = 'EntityName';
   const tableName = 'TableName';
   const namespaceName = 'Namespace';
@@ -45,31 +43,43 @@ describe('when enhancing association extensions', (): void => {
     metaEd.namespace.set(namespace.namespaceName, namespace);
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+
     const baseEntity: Association = Object.assign(newAssociation(), {
-      metaEdName: baseEntityName,
+      metaEdName: entityName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: baseTableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
         },
         edfiOdsApi: {},
       },
     });
     namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
+    const baseEntityTable: Table = {
+      ...newTable(),
+      tableId: tableName,
+      schema: 'namespace',
+      data: { edfiOdsSqlServer: { tableName } },
+    };
+    tableEntities(metaEd, namespace).set(baseEntityTable.tableId, baseEntityTable);
+
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema: extensionSchema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, extensionNamespace).set(table.tableId, table);
 
     const entity: AssociationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: entityName,
       namespace: extensionNamespace,
+      baseEntity,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},

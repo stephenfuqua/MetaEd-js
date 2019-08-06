@@ -2,7 +2,7 @@ import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyCascadingUpdatesDefinitionsDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -17,19 +17,14 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
   const courseOffering = 'CourseOffering';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: courseOfferingCurriculumUsed,
-      nameComponents: [courseOfferingCurriculumUsed],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: courseOffering,
-          withDeleteCascade: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: courseOfferingCurriculumUsed,
+      foreignKeys: [{ ...newForeignKey(), foreignTableId: courseOffering, withDeleteCascade: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -39,7 +34,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(courseOfferingCurriculumUsed) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(courseOffering);
+    expect(foreignKey.foreignTableId).toBe(courseOffering);
     expect(foreignKey.withUpdateCascade).toBe(false);
   });
 });
@@ -49,22 +44,17 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matchi
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName,
-          withDeleteCascade: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
+      foreignKeys: [{ ...newForeignKey(), foreignTableId, withDeleteCascade: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -72,7 +62,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matchi
 
   it('should not modify with delete cascade', (): void => {
     const foreignKey: ForeignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
-    expect(foreignKey.foreignTableName).toBe(foreignTableName);
+    expect(foreignKey.foreignTableId).toBe(foreignTableId);
     expect(foreignKey.withDeleteCascade).toBe(true);
   });
 });

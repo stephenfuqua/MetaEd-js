@@ -7,7 +7,7 @@ const targetVersions: SemVer = '<3.1.1';
 
 // Schema definition is the database schema and project name for a namespace
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edfiOdsPlugin: PluginEnvironment | undefined = metaEd.plugin.get('edfiOds');
+  const edfiOdsPlugin: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
   if (edfiOdsPlugin == null || !versionSatisfies(edfiOdsPlugin.targetTechnologyVersion, targetVersions))
     return { enhancerName, success: true };
 

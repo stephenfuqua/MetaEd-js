@@ -1,6 +1,5 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { getForeignKeys, getForeignKeyName } from '../model/database/Table';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { ForeignKey } from '../model/database/ForeignKey';
 import { Table } from '../model/database/Table';
@@ -11,16 +10,14 @@ const enhancerName = 'ModifyReverseForeignKeyIndexesDiminisher';
 const targetVersions = '2.x';
 
 const modifyReverseForeignKeyIndex = (tablesForCoreNamespace: Map<string, Table>) => (
-  parentTableName: string,
-  foreignKeyName: string,
+  parentTableId: string,
+  foreignTableId: string,
   withReverseForeignKeyIndex: boolean = true,
 ): void => {
-  const table: Table | undefined = tablesForCoreNamespace.get(parentTableName);
+  const table: Table | undefined = tablesForCoreNamespace.get(parentTableId);
   if (table == null) return;
 
-  const foreignKey: ForeignKey | undefined = getForeignKeys(table).find(
-    (x: ForeignKey) => getForeignKeyName(x) === foreignKeyName,
-  );
+  const foreignKey: ForeignKey | undefined = table.foreignKeys.find((x: ForeignKey) => x.foreignTableId === foreignTableId);
   if (foreignKey == null) return;
   foreignKey.withReverseForeignKeyIndex = withReverseForeignKeyIndex;
 };
@@ -33,126 +30,78 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   const modifyReverseForeignKeyIndexFor = modifyReverseForeignKeyIndex(tablesForCoreNamespace);
   // one to one optional relationships
-  modifyReverseForeignKeyIndexFor('AssessmentContentStandard', 'FK_AssessmentContentStandard_Assessment');
-  modifyReverseForeignKeyIndexFor('AssessmentFamilyContentStandard', 'FK_AssessmentFamilyContentStandard_AssessmentFamily');
+  modifyReverseForeignKeyIndexFor('AssessmentContentStandard', 'Assessment');
+  modifyReverseForeignKeyIndexFor('AssessmentFamilyContentStandard', 'AssessmentFamily');
   modifyReverseForeignKeyIndexFor(
-    'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel',
-    'FK_GraduationPlanRequiredAssessmentAssessmentPerformanceLevel_GraduationPlanRequiredAssessment',
+    'GraduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel',
+    'GraduationPlanRequiredAssessment',
   );
-  modifyReverseForeignKeyIndexFor(
-    'LearningObjectiveContentStandard',
-    'FK_LearningObjectiveContentStandard_LearningObjective',
-  );
-  modifyReverseForeignKeyIndexFor('LearningStandardContentStandard', 'FK_LearningStandardContentStandard_LearningStandard');
-  modifyReverseForeignKeyIndexFor(
-    'PostSecondaryEventPostSecondaryInstitution',
-    'FK_PostSecondaryEventPostSecondaryInstitution_PostSecondaryEvent',
-  );
-  modifyReverseForeignKeyIndexFor(
-    'StudentAcademicRecordClassRanking',
-    'FK_StudentAcademicRecordClassRanking_StudentAcademicRecord',
-  );
-  modifyReverseForeignKeyIndexFor('StudentLearningStyle', 'FK_StudentLearningStyle_Student');
+  modifyReverseForeignKeyIndexFor('LearningObjectiveContentStandard', 'LearningObjective');
+  modifyReverseForeignKeyIndexFor('LearningStandardContentStandard', 'LearningStandard');
+  modifyReverseForeignKeyIndexFor('PostSecondaryEventPostSecondaryInstitution', 'PostSecondaryEvent');
+  modifyReverseForeignKeyIndexFor('StudentAcademicRecordClassRanking', 'StudentAcademicRecord');
+  modifyReverseForeignKeyIndexFor('StudentLearningStyle', 'Student');
   // subclass relationships
-  modifyReverseForeignKeyIndexFor('EducationOrganizationNetwork', 'FK_EducationOrganizationNetwork_EducationOrganization');
-  modifyReverseForeignKeyIndexFor('EducationServiceCenter', 'FK_EducationServiceCenter_EducationOrganization');
-  modifyReverseForeignKeyIndexFor('LocalEducationAgency', 'FK_LocalEducationAgency_EducationOrganization');
-  modifyReverseForeignKeyIndexFor('School', 'FK_School_EducationOrganization');
-  modifyReverseForeignKeyIndexFor('StateEducationAgency', 'FK_StateEducationAgency_EducationOrganization');
-  modifyReverseForeignKeyIndexFor(
-    'StudentCTEProgramAssociation',
-    'FK_StudentCTEProgramAssociation_StudentProgramAssociation',
-  );
-  modifyReverseForeignKeyIndexFor(
-    'StudentMigrantEducationProgramAssociation',
-    'FK_StudentMigrantEducationProgramAssociation_StudentProgramAssociation',
-  );
-  modifyReverseForeignKeyIndexFor(
-    'StudentSpecialEducationProgramAssociation',
-    'FK_StudentSpecialEducationProgramAssociation_StudentProgramAssociation',
-  );
-  modifyReverseForeignKeyIndexFor(
-    'StudentTitleIPartAProgramAssociation',
-    'FK_StudentTitleIPartAProgramAssociation_StudentProgramAssociation',
-  );
+  modifyReverseForeignKeyIndexFor('EducationOrganizationNetwork', 'EducationOrganization');
+  modifyReverseForeignKeyIndexFor('EducationServiceCenter', 'EducationOrganization');
+  modifyReverseForeignKeyIndexFor('LocalEducationAgency', 'EducationOrganization');
+  modifyReverseForeignKeyIndexFor('School', 'EducationOrganization');
+  modifyReverseForeignKeyIndexFor('StateEducationAgency', 'EducationOrganization');
+  modifyReverseForeignKeyIndexFor('StudentCTEProgramAssociation', 'StudentProgramAssociation');
+  modifyReverseForeignKeyIndexFor('StudentMigrantEducationProgramAssociation', 'StudentProgramAssociation');
+  modifyReverseForeignKeyIndexFor('StudentSpecialEducationProgramAssociation', 'StudentProgramAssociation');
+  modifyReverseForeignKeyIndexFor('StudentTitleIPartAProgramAssociation', 'StudentProgramAssociation');
   // descriptors
-  modifyReverseForeignKeyIndexFor('AcademicSubjectDescriptor', 'FK_AcademicSubjectDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('AccommodationDescriptor', 'FK_AccommodationDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('AccountCodeDescriptor', 'FK_AccountCodeDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('AchievementCategoryDescriptor', 'FK_AchievementCategoryDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'AdministrativeFundingControlDescriptor',
-    'FK_AdministrativeFundingControlDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('AssessmentCategoryDescriptor', 'FK_AssessmentCategoryDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'AssessmentIdentificationSystemDescriptor',
-    'FK_AssessmentIdentificationSystemDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('AssessmentPeriodDescriptor', 'FK_AssessmentPeriodDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('AttendanceEventCategoryDescriptor', 'FK_AttendanceEventCategoryDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('BehaviorDescriptor', 'FK_BehaviorDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('CalendarEventDescriptor', 'FK_CalendarEventDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ClassroomPositionDescriptor', 'FK_ClassroomPositionDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('CompetencyLevelDescriptor', 'FK_CompetencyLevelDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'ContinuationOfServicesReasonDescriptor',
-    'FK_ContinuationOfServicesReasonDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('CountryDescriptor', 'FK_CountryDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'CourseIdentificationSystemDescriptor',
-    'FK_CourseIdentificationSystemDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('CredentialFieldDescriptor', 'FK_CredentialFieldDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('DiagnosisDescriptor', 'FK_DiagnosisDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('DisabilityDescriptor', 'FK_DisabilityDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('DisciplineDescriptor', 'FK_DisciplineDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'EducationOrganizationIdentificationSystemDescriptor',
-    'FK_EducationOrganizationIdentificationSystemDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('EmploymentStatusDescriptor', 'FK_EmploymentStatusDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('EntryTypeDescriptor', 'FK_EntryTypeDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ExitWithdrawTypeDescriptor', 'FK_ExitWithdrawTypeDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('GradeLevelDescriptor', 'FK_GradeLevelDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('GradingPeriodDescriptor', 'FK_GradingPeriodDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('GraduationPlanTypeDescriptor', 'FK_GraduationPlanTypeDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('LanguageDescriptor', 'FK_LanguageDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('LevelDescriptor', 'FK_LevelDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('LevelOfEducationDescriptor', 'FK_LevelOfEducationDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'LimitedEnglishProficiencyDescriptor',
-    'FK_LimitedEnglishProficiencyDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('PerformanceLevelDescriptor', 'FK_PerformanceLevelDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ProgramAssignmentDescriptor', 'FK_ProgramAssignmentDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ProgramCharacteristicDescriptor', 'FK_ProgramCharacteristicDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ReasonExitedDescriptor', 'FK_ReasonExitedDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ReporterDescriptionDescriptor', 'FK_ReporterDescriptionDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ResidencyStatusDescriptor', 'FK_ResidencyStatusDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ResponsibilityDescriptor', 'FK_ResponsibilityDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'SchoolFoodServicesEligibilityDescriptor',
-    'FK_SchoolFoodServicesEligibilityDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('SectionCharacteristicDescriptor', 'FK_SectionCharacteristicDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('SeparationReasonDescriptor', 'FK_SeparationReasonDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('ServiceDescriptor', 'FK_ServiceDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('SpecialEducationSettingDescriptor', 'FK_SpecialEducationSettingDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('StaffClassificationDescriptor', 'FK_StaffClassificationDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'StaffIdentificationSystemDescriptor',
-    'FK_StaffIdentificationSystemDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('StudentCharacteristicDescriptor', 'FK_StudentCharacteristicDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor(
-    'StudentIdentificationSystemDescriptor',
-    'FK_StudentIdentificationSystemDescriptor_Descriptor',
-  );
-  modifyReverseForeignKeyIndexFor('TeachingCredentialDescriptor', 'FK_TeachingCredentialDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('TermDescriptor', 'FK_TermDescriptor_Descriptor');
-  modifyReverseForeignKeyIndexFor('WeaponDescriptor', 'FK_WeaponDescriptor_Descriptor');
+  modifyReverseForeignKeyIndexFor('AcademicSubjectDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AccommodationDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AccountCodeDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AchievementCategoryDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AdministrativeFundingControlDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AssessmentCategoryDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AssessmentIdentificationSystemDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AssessmentPeriodDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('AttendanceEventCategoryDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('BehaviorDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('CalendarEventDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ClassroomPositionDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('CompetencyLevelDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ContinuationOfServicesReasonDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('CountryDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('CourseIdentificationSystemDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('CredentialFieldDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('DiagnosisDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('DisabilityDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('DisciplineDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('EducationOrganizationIdentificationSystemDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('EmploymentStatusDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('EntryTypeDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ExitWithdrawTypeDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('GradeLevelDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('GradingPeriodDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('GraduationPlanTypeDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('LanguageDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('LevelDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('LevelOfEducationDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('LimitedEnglishProficiencyDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('PerformanceLevelDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ProgramAssignmentDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ProgramCharacteristicDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ReasonExitedDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ReporterDescriptionDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ResidencyStatusDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ResponsibilityDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('SchoolFoodServicesEligibilityDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('SectionCharacteristicDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('SeparationReasonDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('ServiceDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('SpecialEducationSettingDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('StaffClassificationDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('StaffIdentificationSystemDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('StudentCharacteristicDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('StudentIdentificationSystemDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('TeachingCredentialDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('TermDescriptor', 'Descriptor');
+  modifyReverseForeignKeyIndexFor('WeaponDescriptor', 'Descriptor');
 
   return {
     enhancerName,

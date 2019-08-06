@@ -1,8 +1,8 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumn } from '../model/database/Table';
-import { renameForeignKeyColumn } from './DiminisherHelper';
-import { newDateColumn } from '../model/database/Column';
+import { rewriteForeignKeyId } from './DiminisherHelper';
+import { newColumn, newColumnNameComponent } from '../model/database/Column';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
 import { Table } from '../model/database/Table';
@@ -25,13 +25,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
   const table: Table | undefined = tablesForCoreNamespace.get(studentLearningObjective);
-  if (table != null && table.columns.find((x: Column) => x.name === studentSectionAssociationBeginDate) == null) {
-    const column: Column = Object.assign(newDateColumn(), {
-      name: studentSectionAssociationBeginDate,
+  if (table != null && table.columns.find((x: Column) => x.columnId === studentSectionAssociationBeginDate) == null) {
+    const column: Column = {
+      ...newColumn(),
+      type: 'date',
+      columnId: studentSectionAssociationBeginDate,
+      nameComponents: [{ ...newColumnNameComponent(), name: studentSectionAssociationBeginDate, isSynthetic: true }],
       isNullable: true,
-    });
+    };
     addColumn(table, column);
-    renameForeignKeyColumn(
+    rewriteForeignKeyId(
       table,
       studentSectionAssociation,
       beginDate,

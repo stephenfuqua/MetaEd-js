@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newDomainEntity, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, DomainEntity, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, tableEntities, initializeEdFiOdsRelationalEntityRepository } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/DomainEntityAggregateEnhancer';
 import { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -28,19 +28,21 @@ describe('when enhancing a domain entity', (): void => {
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},
@@ -94,20 +96,22 @@ describe('when enhancing a domain entity that allows primary key updates', (): v
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
       allowPrimaryKeyUpdates: true,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},
@@ -155,20 +159,22 @@ describe('when enhancing a domain entity that has a required collection table', 
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
       isRequiredCollectionTable: true,
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},

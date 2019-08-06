@@ -2,9 +2,9 @@ import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/ForeignKeyReverseIndexEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -19,29 +19,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
   const tableName = 'TableName';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-      schema: 'edfi',
-    });
-    const primaryKey: Column = Object.assign(newColumn(), {
-      name: 'PrimaryKeyName',
-      isPartOfPrimaryKey: true,
-    });
+    const table: Table = { ...newTable(), tableId: tableName, schema: 'edfi' };
+    const primaryKey: Column = { ...newColumn(), columnId: 'PrimaryKeyName', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey);
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withReverseForeignKeyIndex: false,
-      columnNames: [
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: primaryKey.name,
-          foreignTableColumnName: primaryKey.name,
-        }),
+      columnPairs: [
+        { ...newColumnPair(), parentTableColumnId: primaryKey.columnId, foreignTableColumnId: primaryKey.columnId },
       ],
-    });
+    };
     table.foreignKeys.push(foreignKey);
 
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
     enhance(metaEd);
   });
 
@@ -58,31 +49,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
   const tableName = 'TableName';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-    });
-    const primaryKey: Column = Object.assign(newColumn(), {
-      isPartOfPrimaryKey: true,
-    });
+    const table: Table = { ...newTable(), tableId: tableName };
+    const primaryKey: Column = { ...newColumn(), isPartOfPrimaryKey: true };
     table.columns.push(primaryKey);
-    const column: Column = Object.assign(newColumn(), {
-      name: 'columnName',
-    });
+    const column: Column = { ...newColumn(), columnId: 'columnName' };
     table.columns.push(column);
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withReverseForeignKeyIndex: false,
-      columnNames: [
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: column.name,
-          foreignTableColumnName: column.name,
-        }),
-      ],
-    });
+      columnPairs: [{ ...newColumnPair(), parentTableColumnId: column.columnId, foreignTableColumnId: column.columnId }],
+    };
     table.foreignKeys.push(foreignKey);
 
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
     enhance(metaEd);
   });
 
@@ -99,37 +79,23 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
   const tableName = 'TableName';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-    });
-    const primaryKey1: Column = Object.assign(newColumn(), {
-      name: 'primaryKeyName1',
-      isPartOfPrimaryKey: true,
-    });
+    const table: Table = { ...newTable(), tableId: tableName };
+    const primaryKey1: Column = { ...newColumn(), columnId: 'primaryKeyName1', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey1);
-    const primaryKey2: Column = Object.assign(newColumn(), {
-      name: 'primaryKeyName2',
-      isPartOfPrimaryKey: true,
-    });
+    const primaryKey2: Column = { ...newColumn(), columnId: 'primaryKeyName2', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey2);
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withReverseForeignKeyIndex: false,
-      columnNames: [
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: primaryKey1.name,
-          foreignTableColumnName: primaryKey1.name,
-        }),
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: primaryKey2.name,
-          foreignTableColumnName: primaryKey2.name,
-        }),
+      columnPairs: [
+        { ...newColumnPair(), parentTableColumnId: primaryKey1.columnId, foreignTableColumnId: primaryKey1.columnId },
+        { ...newColumnPair(), parentTableColumnId: primaryKey2.columnId, foreignTableColumnId: primaryKey2.columnId },
       ],
-    });
+    };
     table.foreignKeys.push(foreignKey);
 
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
     enhance(metaEd);
   });
 
@@ -146,33 +112,22 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   const tableName = 'TableName';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-    });
-    const primaryKey1: Column = Object.assign(newColumn(), {
-      name: 'primaryKeyName1',
-      isPartOfPrimaryKey: true,
-    });
+    const table: Table = { ...newTable(), tableId: tableName };
+    const primaryKey1: Column = { ...newColumn(), columnId: 'primaryKeyName1', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey1);
-    const primaryKey2: Column = Object.assign(newColumn(), {
-      name: 'primaryKeyName2',
-      isPartOfPrimaryKey: true,
-    });
+    const primaryKey2: Column = { ...newColumn(), columnId: 'primaryKeyName2', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey2);
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withReverseForeignKeyIndex: false,
-      columnNames: [
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: primaryKey1.name,
-          foreignTableColumnName: primaryKey1.name,
-        }),
+      columnPairs: [
+        { ...newColumnPair(), parentTableColumnId: primaryKey1.columnId, foreignTableColumnId: primaryKey1.columnId },
       ],
-    });
+    };
     table.foreignKeys.push(foreignKey);
 
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
     enhance(metaEd);
   });
 
@@ -189,36 +144,23 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   const tableName = 'TableName';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-    });
-    const primaryKey: Column = Object.assign(newColumn(), {
-      name: 'primaryKeyName',
-      isPartOfPrimaryKey: true,
-    });
+    const table: Table = { ...newTable(), tableId: tableName };
+    const primaryKey: Column = { ...newColumn(), columnId: 'primaryKeyName', isPartOfPrimaryKey: true };
     table.columns.push(primaryKey);
-    const column: Column = Object.assign(newColumn(), {
-      name: 'columnName',
-    });
+    const column: Column = { ...newColumn(), columnId: 'columnName' };
     table.columns.push(column);
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withReverseForeignKeyIndex: false,
-      columnNames: [
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: primaryKey.name,
-          foreignTableColumnName: primaryKey.name,
-        }),
-        Object.assign(newColumnNamePair(), {
-          parentTableColumnName: column.name,
-          foreignTableColumnName: column.name,
-        }),
+      columnPairs: [
+        { ...newColumnPair(), parentTableColumnId: primaryKey.columnId, foreignTableColumnId: primaryKey.columnId },
+        { ...newColumnPair(), parentTableColumnId: column.columnId, foreignTableColumnId: column.columnId },
       ],
-    });
+    };
     table.foreignKeys.push(foreignKey);
 
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
     enhance(metaEd);
   });
 

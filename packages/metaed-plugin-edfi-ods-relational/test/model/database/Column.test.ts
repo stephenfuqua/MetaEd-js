@@ -4,8 +4,7 @@ import {
   addMergedReferenceContext,
   addSourceEntityProperty,
   columnConstraintMerge,
-  initializeColumn,
-  newIntegerColumn,
+  newColumn,
 } from '../../../src/model/database/Column';
 import { Column } from '../../../src/model/database/Column';
 
@@ -22,8 +21,10 @@ describe('when merging column constraints on existing primary key column', (): v
     });
 
     column = columnConstraintMerge(
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName1,
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName1,
         isPartOfAlternateKey: true,
         isPartOfPrimaryKey: true,
         isUniqueIndex: true,
@@ -33,9 +34,11 @@ describe('when merging column constraints on existing primary key column', (): v
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: 'IntegerColumnName2',
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: 'IntegerColumnName2',
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -45,12 +48,12 @@ describe('when merging column constraints on existing primary key column', (): v
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
-      }),
+      },
     );
   });
 
   it('should return the existing column', (): void => {
-    expect(column.name).toBe(integerColumnName1);
+    expect(column.columnId).toBe(integerColumnName1);
   });
 
   it('should be part of alternate key', (): void => {
@@ -91,8 +94,10 @@ describe('when merging column constraints on received primary key column', (): v
     });
 
     column = columnConstraintMerge(
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName1,
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName1,
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -102,9 +107,11 @@ describe('when merging column constraints on received primary key column', (): v
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: 'IntegerColumnName2',
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: 'IntegerColumnName2',
         isPartOfAlternateKey: true,
         isPartOfPrimaryKey: true,
         isUniqueIndex: true,
@@ -114,12 +121,12 @@ describe('when merging column constraints on received primary key column', (): v
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
-      }),
+      },
     );
   });
 
   it('should return the existing column', (): void => {
-    expect(column.name).toBe(integerColumnName1);
+    expect(column.columnId).toBe(integerColumnName1);
   });
 
   it('should be part of alternate key', (): void => {
@@ -160,8 +167,10 @@ describe('when merging column constraints on existing non nullable column', (): 
     });
 
     column = columnConstraintMerge(
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName1,
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName1,
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -171,9 +180,11 @@ describe('when merging column constraints on existing non nullable column', (): 
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: 'IntegerColumnName2',
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: 'IntegerColumnName2',
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -183,12 +194,12 @@ describe('when merging column constraints on existing non nullable column', (): 
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
-      }),
+      },
     );
   });
 
   it('should return the existing column', (): void => {
-    expect(column.name).toBe(integerColumnName1);
+    expect(column.columnId).toBe(integerColumnName1);
   });
 
   it('should be part of alternate key', (): void => {
@@ -229,8 +240,10 @@ describe('when merging column constraints on received non nullable column', (): 
     });
 
     column = columnConstraintMerge(
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName1,
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName1,
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -240,9 +253,11 @@ describe('when merging column constraints on received non nullable column', (): 
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: 'IntegerColumnName2',
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: 'IntegerColumnName2',
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -252,12 +267,12 @@ describe('when merging column constraints on received non nullable column', (): 
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
-      }),
+      },
     );
   });
 
   it('should return the existing column', (): void => {
-    expect(column.name).toBe(integerColumnName1);
+    expect(column.columnId).toBe(integerColumnName1);
   });
 
   it('should be part of alternate key', (): void => {
@@ -298,8 +313,10 @@ describe('when merging column constraints on nullable column', (): void => {
     });
 
     column = columnConstraintMerge(
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName1,
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName1,
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -309,9 +326,11 @@ describe('when merging column constraints on nullable column', (): void => {
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: 'IntegerColumnName2',
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: 'IntegerColumnName2',
         isPartOfAlternateKey: false,
         isPartOfPrimaryKey: false,
         isUniqueIndex: false,
@@ -321,12 +340,12 @@ describe('when merging column constraints on nullable column', (): void => {
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
         mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
-      }),
+      },
     );
   });
 
   it('should return the existing column', (): void => {
-    expect(column.name).toBe(integerColumnName1);
+    expect(column.columnId).toBe(integerColumnName1);
   });
 
   it('should be part of alternate key', (): void => {
@@ -354,72 +373,12 @@ describe('when merging column constraints on nullable column', (): void => {
   });
 });
 
-describe('when using initialize column', (): void => {
-  const mockColumnNamer = jest.fn(() => 'MockColumnNamer');
-  const propertyDocumentation = 'PropertyDocumentation';
-  const contextPrefix = 'ContextPrefix';
-  let domainEntityProperty: DomainEntityProperty;
-  let column: Column;
-
-  beforeAll(() => {
-    const domainEntityPropertyName1 = 'DomainEntityPropertyName1';
-    domainEntityProperty = Object.assign(newDomainEntityProperty(), {
-      metaEdName: domainEntityPropertyName1,
-      documentation: propertyDocumentation,
-      isPartOfIdentity: true,
-      isOptional: true,
-      data: {
-        edfiOds: {
-          odsIsIdentityDatabaseType: true,
-          odsContextPrefix: contextPrefix,
-          odsIsUniqueIndex: true,
-        },
-      },
-    });
-
-    column = newIntegerColumn();
-    initializeColumn(column, domainEntityProperty, mockColumnNamer, false);
-  });
-
-  it('should call column namer', (): void => {
-    expect(mockColumnNamer).toBeCalled();
-  });
-
-  it('should be part of alternate key', (): void => {
-    expect(column.description).toBe(propertyDocumentation);
-  });
-
-  it('should be part of alternate key', (): void => {
-    expect(column.isIdentityDatabaseType).toBe(true);
-  });
-
-  it('should be part of primary key', (): void => {
-    expect(column.isPartOfPrimaryKey).toBe(true);
-  });
-
-  it('should be part of unique index', (): void => {
-    expect(column.isNullable).toBe(true);
-  });
-
-  it('should not be nullable', (): void => {
-    expect(column.originalContextPrefix).toBe(contextPrefix);
-  });
-
-  it('should merge reference contexts', (): void => {
-    expect(column.isUniqueIndex).toBe(true);
-  });
-
-  it('should merge source entity properties', (): void => {
-    expect(column.sourceEntityProperties[0]).toBe(domainEntityProperty);
-  });
-});
-
 describe('when using add source entity property to a column with no existing duplicate', (): void => {
   const domainEntityPropertyName = 'DomainEntityPropertyName';
   let column: Column;
 
   beforeAll(() => {
-    column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
+    column = { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' };
     addSourceEntityProperty(
       column,
       Object.assign(newDomainEntityProperty(), {
@@ -439,7 +398,7 @@ describe('when using add source entity property to a column with existing duplic
   let column: Column;
 
   beforeAll(() => {
-    column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
+    column = { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' };
     addSourceEntityProperty(
       column,
       Object.assign(newDomainEntityProperty(), {
@@ -465,7 +424,7 @@ describe('when using add merged reference context to a column with no existing d
   let column: Column;
 
   beforeAll(() => {
-    column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
+    column = { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' };
     addMergedReferenceContext(column, domainEntityPropertyName);
   });
 
@@ -480,7 +439,7 @@ describe('when using add merged reference context to a column with existing dupl
   let column: Column;
 
   beforeAll(() => {
-    column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
+    column = { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' };
     addMergedReferenceContext(column, domainEntityPropertyName);
     addMergedReferenceContext(column, domainEntityPropertyName);
   });

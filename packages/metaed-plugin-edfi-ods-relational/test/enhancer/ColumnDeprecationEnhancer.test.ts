@@ -7,7 +7,7 @@ import {
   newBooleanProperty,
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/ColumnDeprecationEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { newColumn } from '../../src/model/database/Column';
@@ -23,8 +23,8 @@ describe('when column source property has deprecation', (): void => {
   const table = { ...newTable(), name: 'TableName', parentEntity, columns: [column] };
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
-    tableEntities(metaEd, namespace).set(table.name, table);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });

@@ -1,4 +1,4 @@
-import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces, Enumeration } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { enumerationTableCreator } from './EnumerationTableCreator';
@@ -8,9 +8,9 @@ const enhancerName = 'EnumerationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'enumeration').forEach((entity: ModelBase) => {
-    const table: Table = enumerationTableCreator.build(metaEd, entity.metaEdName, entity.namespace, entity.documentation);
-    entity.data.edfiOds.odsTables = [table];
-    entity.data.edfiOds.odsEntityTable = table;
+    const table: Table = enumerationTableCreator.build(metaEd, entity as Enumeration, entity.documentation);
+    entity.data.edfiOdsRelational.odsTables = [table];
+    entity.data.edfiOdsRelational.odsEntityTable = table;
     addTables(metaEd, [table]);
   });
 

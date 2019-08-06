@@ -1,6 +1,6 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { rewriteColumnId, rewriteForeignKeyId } from './DiminisherHelper';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
 import { Table } from '../model/database/Table';
@@ -21,10 +21,10 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 ): void {
   const table: Table | undefined = tablesForCoreNamespace.get(reportCardStudentCompetencyObjective);
   if (table == null) return;
-  if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
+  if (table.columns.find((column: Column) => column.columnId === reportCardEducationOrganizationId) != null) return;
 
-  renameColumn(table, educationOrganizationId, reportCardEducationOrganizationId);
-  renameForeignKeyColumn(
+  rewriteColumnId(table, educationOrganizationId, reportCardEducationOrganizationId);
+  rewriteForeignKeyId(
     table,
     reportCard,
     educationOrganizationId,
@@ -39,10 +39,10 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 ): void {
   const table: Table | undefined = tablesForCoreNamespace.get(reportCardStudentLearningObjective);
   if (table == null) return;
-  if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
+  if (table.columns.find((column: Column) => column.columnId === reportCardEducationOrganizationId) != null) return;
 
-  renameColumn(table, educationOrganizationId, reportCardEducationOrganizationId);
-  renameForeignKeyColumn(
+  rewriteColumnId(table, educationOrganizationId, reportCardEducationOrganizationId);
+  rewriteForeignKeyId(
     table,
     reportCard,
     educationOrganizationId,

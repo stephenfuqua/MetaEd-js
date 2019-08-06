@@ -1,0 +1,13 @@
+{{#tables}}
+-- Extended Properties [{{{schema}}}].[{{{data.edfiOdsPostgresql.tableName}}}] --
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{{{sqlEscapedDescription}}}', @level0type=N'SCHEMA',
+@level0name=N'{{{schema}}}', @level1type=N'TABLE', @level1name=N'{{{data.edfiOdsPostgresql.tableName}}}'
+GO
+{{#columns}}
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{{{sqlEscapedDescription}}}', @level0type=N'SCHEMA',
+@level0name=N'{{{../schema}}}', @level1type=N'TABLE', @level1name=N'{{{../data.edfiOdsPostgresql.tableName}}}',
+@level2type=N'COLUMN', @level2name=N'{{{data.edfiOdsPostgresql.columnName}}}'
+GO
+{{/columns}}
+
+{{/tables}}

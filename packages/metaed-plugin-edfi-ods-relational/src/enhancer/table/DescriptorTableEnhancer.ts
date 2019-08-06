@@ -1,12 +1,13 @@
-import R from 'ramda';
 import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import {
   addColumns,
   addForeignKey,
-  createForeignKeyUsingSourceReference,
   getPrimaryKeys,
   newTable,
+  newTableNameComponent,
+  newTableExistenceReason,
+  newTableNameGroup,
 } from '../../model/database/Table';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
@@ -15,12 +16,16 @@ import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { enumerationTableCreator } from './EnumerationTableCreator';
 import { ForeignKeyStrategyDefault } from '../../model/database/ForeignKeyStrategy';
-import { newColumnNamePair } from '../../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePair, newForeignKeySourceReference } from '../../model/database/ForeignKey';
-import { newIntegerColumn } from '../../model/database/Column';
+import { newColumnPair } from '../../model/database/ColumnPair';
+import {
+  newForeignKey,
+  addColumnPair,
+  newForeignKeySourceReference,
+  createForeignKeyUsingSourceReference,
+} from '../../model/database/ForeignKey';
 import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
-import { Column } from '../../model/database/Column';
+import { Column, newColumn, newColumnNameComponent } from '../../model/database/Column';
 import { ForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
@@ -33,33 +38,67 @@ const PRIMARY_KEY_DESCRIPTOR =
 function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[] {
   const tables: Table[] = [];
 
-  const mainTable: Table = Object.assign(newTable(), {
+  const mainTable: Table = {
+    ...newTable(),
     namespace: descriptor.namespace,
     schema: descriptor.namespace.namespaceName.toLowerCase(),
-    name: descriptor.data.edfiOds.odsTableName,
-    nameComponents: [descriptor.data.edfiOds.odsTableName],
+    tableId: descriptor.data.edfiOdsRelational.odsTableId,
+    nameGroup: {
+      ...newTableNameGroup(),
+      nameElements: [
+        {
+          ...newTableNameComponent(),
+          name: descriptor.data.edfiOdsRelational.odsTableId,
+          isDerivedFromEntityMetaEdName: true,
+          sourceEntity: descriptor,
+        },
+      ],
+      sourceEntity: descriptor,
+    },
+
+    existenceReason: {
+      ...newTableExistenceReason(),
+      isEntityMainTable: true,
+      parentEntity: descriptor,
+    },
     description: descriptor.documentation,
     parentEntity: descriptor,
-  });
-  descriptor.data.edfiOds.odsEntityTable = mainTable;
+  };
+  descriptor.data.edfiOdsRelational.odsEntityTable = mainTable;
 
   tables.push(mainTable);
 
-  const primaryKey: Column = Object.assign(newIntegerColumn(), {
-    name: `${descriptor.metaEdName}DescriptorId`,
+  const primaryKey: Column = {
+    ...newColumn(),
+    type: 'integer',
+    columnId: `${descriptor.metaEdName}DescriptorId`,
+    nameComponents: [
+      {
+        ...newColumnNameComponent(),
+        name: descriptor.metaEdName,
+        isMetaEdName: true,
+        sourceEntity: descriptor,
+      },
+      {
+        ...newColumnNameComponent(),
+        name: 'DescriptorId',
+        isSynthetic: true,
+      },
+    ],
     isPartOfPrimaryKey: true,
     isNullable: false,
     description: PRIMARY_KEY_DESCRIPTOR,
-  });
+  };
   addColumns(mainTable, [primaryKey], ColumnTransformUnchanged);
 
   const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   // Bail out if core namespace isn't defined
   if (coreNamespace == null) return tables;
 
-  const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+  const foreignKey: ForeignKey = {
+    ...newForeignKey(),
     foreignTableSchema: coreNamespace.namespaceName.toLowerCase(),
-    foreignTableName: 'Descriptor',
+    foreignTableId: 'Descriptor',
     foreignTableNamespace: coreNamespace,
     withDeleteCascade: true,
     sourceReference: {
@@ -67,37 +106,34 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
       isPartOfIdentity: true,
       isSubclassRelationship: true,
     },
+  };
+  addColumnPair(foreignKey, {
+    ...newColumnPair(),
+    parentTableColumnId: `${mainTable.tableId}Id`,
+    foreignTableColumnId: 'DescriptorId',
   });
-  addColumnNamePair(
-    foreignKey,
-    Object.assign(newColumnNamePair(), {
-      parentTableColumnName: `${mainTable.name}Id`,
-      foreignTableColumnName: 'DescriptorId',
-    }),
-  );
   addForeignKey(mainTable, foreignKey);
 
-  if (descriptor.data.edfiOds.odsIsMapType) {
+  if (descriptor.data.edfiOdsRelational.odsIsMapType) {
     const mapTypeTable: Table = enumerationTableCreator.build(
       metaEd,
-      descriptor.metaEdName,
-      descriptor.namespace,
+      descriptor,
       descriptor.mapTypeEnumeration.documentation,
     );
     tables.push(mapTypeTable);
 
-    addColumns(
-      mainTable,
-      [
-        Object.assign(newIntegerColumn(), {
-          name: R.head(getPrimaryKeys(mapTypeTable)).name,
-          isPartOfPrimaryKey: false,
-          isNullable: descriptor.isMapTypeOptional,
-          description: PRIMARY_KEY_DESCRIPTOR,
-        }),
-      ],
-      ColumnTransformUnchanged,
-    );
+    const firstPrimaryKey: Column = getPrimaryKeys(mapTypeTable)[0];
+    const mapTypeColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: firstPrimaryKey.columnId,
+      nameComponents: firstPrimaryKey.nameComponents,
+      isPartOfPrimaryKey: false,
+      isNullable: descriptor.isMapTypeOptional,
+      description: PRIMARY_KEY_DESCRIPTOR,
+    };
+
+    addColumns(mainTable, [mapTypeColumn], ColumnTransformUnchanged);
 
     const mapTypeForeignKey: ForeignKey = createForeignKeyUsingSourceReference(
       {
@@ -107,7 +143,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
       getPrimaryKeys(mapTypeTable),
       mapTypeTable.schema,
       mapTypeTable.namespace,
-      mapTypeTable.name,
+      mapTypeTable.tableId,
       ForeignKeyStrategyDefault,
     );
     addForeignKey(mainTable, mapTypeForeignKey);
@@ -115,7 +151,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
 
   const primaryKeys: Column[] = collectPrimaryKeys(descriptor, BuildStrategyDefault, columnCreatorFactory);
   primaryKeys.push(primaryKey);
-  descriptor.data.edfiOds.odsProperties.forEach((property: EntityProperty) => {
+  descriptor.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
     tableBuilder.buildTables(property, TableStrategy.default(mainTable), primaryKeys, BuildStrategyDefault, tables, null);
   });
@@ -126,7 +162,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'descriptor').forEach((entity: ModelBase) => {
     const tables: Table[] = createTables(metaEd, entity as Descriptor);
-    entity.data.edfiOds.odsTables = tables;
+    entity.data.edfiOdsRelational.odsTables = tables;
     addTables(metaEd, tables);
   });
 

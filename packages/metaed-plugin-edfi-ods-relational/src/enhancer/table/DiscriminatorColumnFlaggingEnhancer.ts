@@ -8,7 +8,10 @@ const targetTechnologyVersion: SemVer = '>=3.1';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (
-    !versionSatisfies((metaEd.plugin.get('edfiOds') as PluginEnvironment).targetTechnologyVersion, targetTechnologyVersion)
+    !versionSatisfies(
+      (metaEd.plugin.get('edfiOdsRelational') as PluginEnvironment).targetTechnologyVersion,
+      targetTechnologyVersion,
+    )
   )
     return { enhancerName, success: true };
   metaEd.namespace.forEach((namespace: Namespace) => {

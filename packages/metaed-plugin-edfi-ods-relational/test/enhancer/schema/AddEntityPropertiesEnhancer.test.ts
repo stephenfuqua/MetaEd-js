@@ -19,15 +19,15 @@ describe('when PropertyEnhancer enhances integer property', (): void => {
   });
 
   it('should have ods name', (): void => {
-    expect(integerProperty.data.edfiOds.odsName).toBe(integerPropertyName);
+    expect(integerProperty.data.edfiOdsRelational.odsName).toBe(integerPropertyName);
   });
 
   it('should have empty ods context prefix', (): void => {
-    expect(integerProperty.data.edfiOds.odsContextPrefix).toBe('');
+    expect(integerProperty.data.edfiOdsRelational.odsContextPrefix).toBe('');
   });
 
   it('should have false ods is collection', (): void => {
-    expect(integerProperty.data.edfiOds.odsIsCollection).toBe(false);
+    expect(integerProperty.data.edfiOdsRelational.odsIsCollection).toBe(false);
   });
 });
 
@@ -49,7 +49,7 @@ describe('when PropertyEnhancer enhances property with required collection', ():
   });
 
   it('should have true ods is collection', (): void => {
-    expect(integerProperty.data.edfiOds.odsIsCollection).toBe(true);
+    expect(integerProperty.data.edfiOdsRelational.odsIsCollection).toBe(true);
   });
 });
 
@@ -71,7 +71,7 @@ describe('when PropertyEnhancer enhances property with optional collection', ():
   });
 
   it('should have true ods is collection', (): void => {
-    expect(integerProperty.data.edfiOds.odsIsCollection).toBe(true);
+    expect(integerProperty.data.edfiOdsRelational.odsIsCollection).toBe(true);
   });
 });
 
@@ -94,11 +94,11 @@ describe('when PropertyEnhancer enhances property role name', (): void => {
   });
 
   it('should have ods name prefixed role name', (): void => {
-    expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
+    expect(integerProperty.data.edfiOdsRelational.odsName).toBe(contextName + integerPropertyName);
   });
 
   it('should have ods context prefix', (): void => {
-    expect(integerProperty.data.edfiOds.odsContextPrefix).toBe(contextName);
+    expect(integerProperty.data.edfiOdsRelational.odsContextPrefix).toBe(contextName);
   });
 });
 
@@ -123,10 +123,10 @@ describe('when PropertyEnhancer enhances property with shortened context', (): v
   });
 
   it('should have ods name prefixed role name', (): void => {
-    expect(integerProperty.data.edfiOds.odsName).toBe(contextName + integerPropertyName);
+    expect(integerProperty.data.edfiOdsRelational.odsName).toBe(contextName + integerPropertyName);
   });
 
   it('should have ods context prefix with shortened name', (): void => {
-    expect(integerProperty.data.edfiOds.odsContextPrefix).toBe(shortenToName);
+    expect(integerProperty.data.edfiOdsRelational.odsContextPrefix).toBe(shortenToName);
   });
 });

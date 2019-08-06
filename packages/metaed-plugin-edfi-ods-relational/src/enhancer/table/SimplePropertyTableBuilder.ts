@@ -1,15 +1,15 @@
 import R from 'ramda';
 import { EntityProperty, MergeDirective } from 'metaed-core';
 import { isSharedProperty, asReferentialProperty } from 'metaed-core';
-import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
-import { baseNameCollapsingJoinTableNamer } from './TableNaming';
+import { addColumns, addForeignKey, newTable, newTableExistenceReason } from '../../model/database/Table';
+import { joinTableNamer } from './TableNaming';
 import { ColumnTransform, ColumnTransformPrimaryKey, ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
 import { ColumnCreator } from './ColumnCreator';
 import { ColumnCreatorFactory } from './ColumnCreatorFactory';
-import { ForeignKey } from '../../model/database/ForeignKey';
+import { ForeignKey, createForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
 import { TableStrategy } from '../../model/database/TableStrategy';
@@ -36,43 +36,47 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
         );
       }
 
-      if (property.data.edfiOds.odsIsCollection) {
-        const { name, nameComponents } = baseNameCollapsingJoinTableNamer(
-          property,
-          parentTableStrategy.name,
-          parentTableStrategy.nameComponents,
-          strategy.parentContext(),
-        );
-        const joinTable: Table = Object.assign(newTable(), {
+      if (property.data.edfiOdsRelational.odsIsCollection) {
+        const { tableId, nameGroup } = joinTableNamer(property, parentTableStrategy, strategy);
+        const joinTable: Table = {
+          ...newTable(),
           // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
           namespace: parentTableStrategy.table.namespace,
           schema: parentTableStrategy.table.schema.toLowerCase(),
-          name,
-          nameComponents,
+          tableId,
+          nameGroup,
+          existenceReason: {
+            ...newTableExistenceReason(),
+            isImplementingCollection: true,
+            sourceProperty: property,
+          },
           description: property.documentation,
           isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,
           parentEntity: property.parentEntity,
-        });
+        };
 
         const foreignKey: ForeignKey = createForeignKey(
           property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
           parentTableStrategy.schemaNamespace,
-          parentTableStrategy.name,
-          ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
+          parentTableStrategy.tableId,
+          ForeignKeyStrategy.foreignColumnCascade(
+            true,
+            property.parentEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates,
+          ),
         );
         addForeignKey(joinTable, foreignKey);
 
         addColumns(
           joinTable,
           parentPrimaryKeys,
-          ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
+          ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.tableId),
         );
         addColumns(
           joinTable,
-          columnCreator.createColumns(property, strategy.columnNamerIgnoresroleName()),
+          columnCreator.createColumns(property, strategy.columnNamerIgnoresRoleName()),
           ColumnTransformPrimaryKey,
         );
 

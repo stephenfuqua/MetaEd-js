@@ -18,7 +18,7 @@ describe('when enhancing entity with unique id property', (): void => {
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
         },
@@ -29,7 +29,7 @@ describe('when enhancing entity with unique id property', (): void => {
       metaEdName: domainEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [integerProperty],
           odsIdentityProperties: [integerProperty],
         },
@@ -42,26 +42,28 @@ describe('when enhancing entity with unique id property', (): void => {
 
   it('should remove unique id property', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    expect(domainEntity.data.edfiOds.odsProperties).not.toContain(integerProperty);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).not.toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).not.toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).not.toContain(integerProperty);
   });
 
   it('should add unique id copy as not part of identity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    const property: any = domainEntity.data.edfiOds.odsProperties.find(x => x.metaEdName === integerProperty.metaEdName);
+    const property: any = domainEntity.data.edfiOdsRelational.odsProperties.find(
+      x => x.metaEdName === integerProperty.metaEdName,
+    );
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe(integerProperty.metaEdName);
     expect(property.roleName).toBe(integerProperty.roleName);
     expect(property.shortenTo).toBe(integerProperty.shortenTo);
     expect(property.documentation).toBe(integerProperty.documentation);
     expect(property.isPartOfIdentity).toBe(false);
-    expect(property.data.edfiOds.odsIsIdentityDatabaseType).toBe(false);
-    expect(property.data.edfiOds.odsIsUniqueIndex).toBe(true);
+    expect(property.data.edfiOdsRelational.odsIsIdentityDatabaseType).toBe(false);
+    expect(property.data.edfiOdsRelational.odsIsUniqueIndex).toBe(true);
   });
 
   it('should add usi property', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    const property: any = domainEntity.data.edfiOds.odsProperties.find(x => x.metaEdName === 'USI');
+    const property: any = domainEntity.data.edfiOdsRelational.odsProperties.find(x => x.metaEdName === 'USI');
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe('USI');
     expect(property.roleName).toBe(integerProperty.roleName);
@@ -70,13 +72,13 @@ describe('when enhancing entity with unique id property', (): void => {
     expect(property.isPartOfIdentity).toBe(true);
     expect(property.parentEntityName).toBe(integerProperty.parentEntityName);
     expect(property.parentEntity).toBe(integerProperty.parentEntity);
-    expect(property.data.edfiOds.odsName).toBe(`${integerProperty.roleName}USI`);
-    expect(property.data.edfiOds.odsIsCollection).toBe(false);
-    expect(property.data.edfiOds.odsContextPrefix).toBe(integerProperty.shortenTo);
-    expect(property.data.edfiOds.odsIsIdentityDatabaseType).toBe(true);
-    expect(property.data.edfiOds.odsIsUniqueIndex).toBe(false);
-    expect(domainEntity.data.edfiOds.odsProperties).toContain(property);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toContain(property);
+    expect(property.data.edfiOdsRelational.odsName).toBe(`${integerProperty.roleName}USI`);
+    expect(property.data.edfiOdsRelational.odsIsCollection).toBe(false);
+    expect(property.data.edfiOdsRelational.odsContextPrefix).toBe(integerProperty.shortenTo);
+    expect(property.data.edfiOdsRelational.odsIsIdentityDatabaseType).toBe(true);
+    expect(property.data.edfiOdsRelational.odsIsUniqueIndex).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toContain(property);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toContain(property);
   });
 });
 
@@ -96,7 +98,7 @@ describe('when enhancing entity with non unique id property', (): void => {
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
         },
@@ -107,7 +109,7 @@ describe('when enhancing entity with non unique id property', (): void => {
       metaEdName: domainEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [integerProperty],
           odsIdentityProperties: [integerProperty],
         },
@@ -120,14 +122,14 @@ describe('when enhancing entity with non unique id property', (): void => {
 
   it('should not remove property', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    expect(domainEntity.data.edfiOds.odsProperties).toContain(integerProperty);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toContain(integerProperty);
   });
 
   it('should not add additional properties', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    expect(domainEntity.data.edfiOds.odsProperties).toHaveLength(1);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
   });
 });
 
@@ -148,7 +150,7 @@ describe('when enhancing entity with unique id property in extension namespace',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
         },
@@ -159,7 +161,7 @@ describe('when enhancing entity with unique id property in extension namespace',
       metaEdName: domainEntityName,
       namespace: extensionNamespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [integerProperty],
           odsIdentityProperties: [integerProperty],
         },
@@ -172,13 +174,13 @@ describe('when enhancing entity with unique id property in extension namespace',
 
   it('should not remove property', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    expect(domainEntity.data.edfiOds.odsProperties).toContain(integerProperty);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toContain(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toContain(integerProperty);
   });
 
   it('should not add additional properties', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
-    expect(domainEntity.data.edfiOds.odsProperties).toHaveLength(1);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
   });
 });

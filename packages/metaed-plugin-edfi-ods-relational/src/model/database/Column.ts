@@ -2,35 +2,47 @@ import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import winston from 'winston';
 import { EntityProperty, TopLevelEntity } from 'metaed-core';
-import { ColumnDataTypes } from './ColumnDataTypes';
 import { ColumnType } from './ColumnType';
-import { ColumnNamer } from './ColumnNamer';
 import { NoTable, Table } from './Table';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
+export interface ColumnNaming {
+  columnId: string;
+  nameComponents: ColumnNameComponent[];
+}
+
 /** A single component of the name of the column used by dependent plugins to construct the actual name */
 export interface ColumnNameComponent {
   /** the string name component itself */
-  nameComponent: string;
+  name: string;
   /** is the source of the name component a property 'shorten to' directive */
   isShortenToRename: boolean;
   /** is the source of the name component a property 'role name' directive */
   isPropertyRoleName: boolean;
-  /** is the source of the name component a property MetaEdName */
-  isPropertyMetaEdName: boolean;
+  /** is the source of the name component a MetaEdName */
+  isMetaEdName: boolean;
+  /** is the source of the name component derived from a MetaEdName (e.g. MetaEdName plus 'Descriptor' suffix for a Descriptor entity) */
+  isDerivedFromMetaEdName: boolean;
+  /** is the source of the name component a property 'role name' or 'shorten to' directive from further up the chain */
+  isParentPropertyContext: boolean;
+  /** is the source of the name component hardcoded and/or made up from somewhere */
+  isSynthetic: boolean;
   /** the source property for the name component, if applicable */
   sourceProperty?: EntityProperty;
   /** the source entity for the name component, if applicable */
-  sourceEntity?: EntityProperty;
+  sourceEntity?: TopLevelEntity;
 }
 
 export function newColumnNameComponent(): ColumnNameComponent {
   return {
-    nameComponent: '',
+    name: '',
     isShortenToRename: false,
     isPropertyRoleName: false,
-    isPropertyMetaEdName: false,
+    isMetaEdName: false,
+    isDerivedFromMetaEdName: false,
+    isParentPropertyContext: false,
+    isSynthetic: false,
   };
 }
 
@@ -88,11 +100,11 @@ export interface Column {
   // new stuff here
   nameComponents: ColumnNameComponent[];
   existenceReason: ColumnExistenceReason;
-  parentTable: Table,
+  parentTable: Table;
+  /** The string identifier for the column, independent of the column name */
+  columnId: string;
 
-  name: string;
   type: ColumnType;
-  dataType: string;
   referenceContext: string;
   description: string;
   sqlEscapedDescription: string;
@@ -106,6 +118,7 @@ export interface Column {
   mergedReferenceContexts: string[];
   isDeprecated: boolean;
   deprecationReasons: string[];
+  data: any;
 }
 
 export interface DecimalColumn extends Column {
@@ -122,10 +135,8 @@ export function newColumn(): Column {
     nameComponents: [],
     existenceReason: NoColumnExistenceReason,
     parentTable: NoTable,
-
-    name: '',
+    columnId: '',
     type: 'unknown',
-    dataType: '',
     referenceContext: '',
     description: '',
     sqlEscapedDescription: '',
@@ -139,36 +150,38 @@ export function newColumn(): Column {
     mergedReferenceContexts: [],
     isDeprecated: false,
     deprecationReasons: [],
+    data: {},
   };
 }
 
-export const NoColumn: Column = deepFreeze(
-  Object.assign(newColumn(), {
-    name: 'NoColumn',
-  }),
-);
+export const NoColumn: Column = deepFreeze({
+  ...newColumn(),
+  columnId: 'NoColumn',
+});
 
 export function initializeColumn(
   column: Column,
   property: EntityProperty,
-  columnNamer: ColumnNamer,
+  columnNamer: () => ColumnNaming,
   suppressPrimaryKey: boolean,
 ): Column {
+  const columnNaming: ColumnNaming = columnNamer();
   Object.assign(column, {
-    name: columnNamer(),
+    columnId: columnNaming.columnId,
+    nameComponents: columnNaming.nameComponents,
     description: property.documentation,
-    isIdentityDatabaseType: property.data.edfiOds.odsIsIdentityDatabaseType,
+    isIdentityDatabaseType: property.data.edfiOdsRelational.odsIsIdentityDatabaseType,
     isNullable: property.isOptional,
     isPartOfPrimaryKey: suppressPrimaryKey ? false : property.isPartOfIdentity,
-    isUniqueIndex: property.data.edfiOds.odsIsUniqueIndex,
-    originalContextPrefix: property.data.edfiOds.odsContextPrefix,
+    isUniqueIndex: property.data.edfiOdsRelational.odsIsUniqueIndex,
+    originalContextPrefix: property.data.edfiOdsRelational.odsContextPrefix,
   });
   column.sourceEntityProperties.push(property);
   return column;
 }
 
 export function cloneColumn(column: Column): Column {
-  return { ...column };
+  return { ...column, data: { ...column.data } };
 }
 
 export function columnConstraintMerge(existing: Column, received: Column): Column {
@@ -210,7 +223,7 @@ export function addSourceEntityProperty(column: Column, property: EntityProperty
     winston.warn(
       `  Attempt to add duplicate source entity property: ${property.metaEdName} (${
         property.typeHumanizedName
-      })  to column ${column.name} failed.`,
+      })  to column ${column.columnId} failed.`,
     );
   }
 }
@@ -220,93 +233,6 @@ export function addMergedReferenceContext(column: Column, referenceContext: stri
   if (existingProperty == null) {
     column.mergedReferenceContexts.push(referenceContext);
   } else {
-    // winston.warn(`Attempt to add duplicate merged reference context: ${referenceContext} to column ${column.name} failed.`);
+    // winston.warn(`Attempt to add duplicate merged reference context: ${referenceContext} to column ${column.columnId} failed.`);
   }
-}
-
-export function newBooleanColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'boolean',
-    dataType: ColumnDataTypes.boolean,
-  });
-}
-
-export function newCurrencyColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'currency',
-    dataType: ColumnDataTypes.currency,
-  });
-}
-
-export function newDateColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'date',
-    dataType: ColumnDataTypes.date,
-  });
-}
-
-export function newDatetimeColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'datetime',
-    dataType: ColumnDataTypes.datetime,
-  });
-}
-
-export function newDecimalColumn(precision: string, scale: string): DecimalColumn {
-  return Object.assign({}, newColumn(), {
-    type: 'decimal',
-    dataType: ColumnDataTypes.decimal(precision, scale),
-    precision,
-    scale,
-  });
-}
-
-export function newDurationColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'duration',
-    dataType: ColumnDataTypes.duration,
-  });
-}
-
-export function newIntegerColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'integer',
-    dataType: ColumnDataTypes.integer,
-  });
-}
-
-export function newPercentColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'percent',
-    dataType: ColumnDataTypes.percent,
-  });
-}
-
-export function newShortColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'short',
-    dataType: ColumnDataTypes.short,
-  });
-}
-
-export function newStringColumn(length: string): StringColumn {
-  return Object.assign({}, newColumn(), {
-    type: 'string',
-    dataType: ColumnDataTypes.string(length),
-    length,
-  });
-}
-
-export function newTimeColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'time',
-    dataType: ColumnDataTypes.time,
-  });
-}
-
-export function newYearColumn(): Column {
-  return Object.assign({}, newColumn(), {
-    type: 'year',
-    dataType: ColumnDataTypes.year,
-  });
 }

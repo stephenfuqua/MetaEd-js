@@ -16,7 +16,7 @@ function primaryKeyOrderFor(table: Table): string[] {
     AcademicWeek: ['WeekIdentifier', 'SchoolId'],
     Account: ['EducationOrganizationId', 'AccountNumber', 'FiscalYear'],
     AccountabilityRating: ['RatingTitle', 'EducationOrganizationId', 'SchoolYear'],
-    AccountCode: ['EducationOrganizationId', 'AccountNumber', 'FiscalYear', 'AccountCodeDescriptorId'],
+    AccountAccountCode: ['EducationOrganizationId', 'AccountNumber', 'FiscalYear', 'AccountCodeDescriptorId'],
     Actual: ['EducationOrganizationId', 'AccountNumber', 'FiscalYear', 'AsOfDate'],
     Assessment: ['AssessmentTitle', 'AssessedGradeLevelDescriptorId', 'AcademicSubjectDescriptorId', 'Version'],
     AssessmentContentStandard: [
@@ -32,7 +32,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'AssessedGradeLevelDescriptorId',
       'Author',
     ],
-    AssessmentIdentificationCode: [
+    AssessmentAssessmentIdentificationCode: [
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
       'AssessedGradeLevelDescriptorId',
@@ -61,7 +61,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'Version',
       'LanguageDescriptorId',
     ],
-    AssessmentPerformanceLevel: [
+    AssessmentAssessmentPerformanceLevel: [
       'PerformanceLevelDescriptorId',
       'AssessmentReportingMethodTypeId',
       'AssessmentTitle',
@@ -78,7 +78,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'ProgramTypeId',
       'ProgramName',
     ],
-    AssessmentScore: [
+    AssessmentAssessmentScore: [
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
       'AssessedGradeLevelDescriptorId',
@@ -116,14 +116,14 @@ function primaryKeyOrderFor(table: Table): string[] {
       'EducationOrganizationId',
       'CohortIdentifier',
       'ProgramEducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
     ],
     CompetencyObjective: ['Objective', 'ObjectiveGradeLevelDescriptorId', 'EducationOrganizationId'],
     ContractedStaff: ['StaffUSI', 'EducationOrganizationId', 'AccountNumber', 'FiscalYear', 'AsOfDate'],
     Course: ['EducationOrganizationId', 'CourseCode'],
     CourseCompetencyLevel: ['EducationOrganizationId', 'CourseCode', 'CompetencyLevelDescriptorId'],
-    CourseIdentificationCode: ['EducationOrganizationId', 'CourseCode', 'CourseIdentificationSystemDescriptorId'],
+    CourseCourseIdentificationCode: ['EducationOrganizationId', 'CourseCode', 'CourseIdentificationSystemDescriptorId'],
     CourseLearningObjective: [
       'EducationOrganizationId',
       'CourseCode',
@@ -132,7 +132,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'ObjectiveGradeLevelDescriptorId',
     ],
     CourseLearningStandard: ['EducationOrganizationId', 'CourseCode', 'LearningStandardId'],
-    CourseLevelCharacteristic: ['EducationOrganizationId', 'CourseCode', 'CourseLevelCharacteristicTypeId'],
+    CourseCourseLevelCharacteristic: ['EducationOrganizationId', 'CourseCode', 'CourseLevelCharacteristicTypeId'],
     CourseOfferedGradeLevel: ['EducationOrganizationId', 'CourseCode', 'GradeLevelDescriptorId'],
     CourseOfferingCurriculumUsed: ['SchoolId', 'SchoolYear', 'LocalCourseCode', 'CurriculumUsedTypeId', 'TermDescriptorId'],
     CourseTranscript: [
@@ -142,7 +142,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'CourseEducationOrganizationId',
       'SchoolYear',
       'TermDescriptorId',
-      'CourseCode',
+      'CourseCourseCode',
     ],
     CourseTranscriptEarnedAdditionalCredits: [
       'AdditionalCreditTypeId',
@@ -152,7 +152,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'CourseEducationOrganizationId',
       'SchoolYear',
       'TermDescriptorId',
-      'CourseCode',
+      'CourseCourseCode',
     ],
     DisciplineAction: ['DisciplineActionIdentifier', 'StudentUSI', 'DisciplineDate'],
     DisciplineActionDiscipline: ['StudentUSI', 'DisciplineActionIdentifier', 'DisciplineDate', 'DisciplineDescriptorId'],
@@ -169,7 +169,7 @@ function primaryKeyOrderFor(table: Table): string[] {
     EdFiException: ['EdFiExceptionId'],
     EducationContentAuthor: ['ContentIdentifier', 'Author'],
     EducationOrganizationAddress: ['EducationOrganizationId', 'AddressTypeId'],
-    EducationOrganizationCategory: ['EducationOrganizationId', 'EducationOrganizationCategoryTypeId'],
+    EducationOrganizationEducationOrganizationCategory: ['EducationOrganizationId', 'EducationOrganizationCategoryTypeId'],
     EducationOrganizationInternationalAddress: ['EducationOrganizationId', 'AddressTypeId'],
     EducationOrganizationInterventionPrescriptionAssociation: [
       'EducationOrganizationId',
@@ -179,7 +179,7 @@ function primaryKeyOrderFor(table: Table): string[] {
     EducationOrganizationNetworkAssociation: ['MemberEducationOrganizationId', 'EducationOrganizationNetworkId'],
     FeederSchoolAssociation: ['FeederSchoolId', 'SchoolId', 'BeginDate'],
     Grade: [
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'GradeTypeId',
       'StudentUSI',
@@ -247,7 +247,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'GraduationSchoolYear',
       'CourseSetName',
       'CourseEducationOrganizationId',
-      'CourseCode',
+      'CourseCourseCode',
     ],
     GraduationPlanCreditsBySubject: [
       'EducationOrganizationId',
@@ -264,7 +264,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'GraduationPlanTypeDescriptorId',
       'GraduationSchoolYear',
     ],
-    GraduationPlanRequiredAssessmentAssessmentPerformanceLevel: [
+    GraduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel: [
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
       'AssessedGradeLevelDescriptorId',
@@ -273,7 +273,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'GraduationPlanTypeDescriptorId',
       'GraduationSchoolYear',
     ],
-    GraduationPlanRequiredAssessmentScore: [
+    GraduationPlanRequiredAssessmentRequiredAssessmentScore: [
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
       'AssessedGradeLevelDescriptorId',
@@ -295,7 +295,7 @@ function primaryKeyOrderFor(table: Table): string[] {
     InterventionInterventionPrescription: [
       'InterventionIdentificationCode',
       'EducationOrganizationId',
-      'InterventionPrescriptionIdentificationCode',
+      'InterventionPrescriptionInterventionPrescriptionIdentificationCode',
       'InterventionPrescriptionEducationOrganizationId',
     ],
     InterventionLearningResourceMetadataURI: [
@@ -390,10 +390,10 @@ function primaryKeyOrderFor(table: Table): string[] {
     ],
     LearningStandardContentStandardAuthor: ['LearningStandardId', 'Author'],
     LearningStandardGradeLevel: ['LearningStandardId', 'GradeLevelDescriptorId'],
-    LearningStandardIdentificationCode: ['LearningStandardId', 'IdentificationCode', 'ContentStandardName'],
+    LearningStandardLearningStandardIdentificationCode: ['LearningStandardId', 'IdentificationCode', 'ContentStandardName'],
     LeaveEvent: ['StaffUSI', 'EventDate', 'LeaveEventCategoryTypeId'],
     LevelDescriptorGradeLevel: ['LevelDescriptorId', 'GradeLevelDescriptorId'],
-    LocalEducationAgencyFederalFunds: ['LocalEducationAgencyId', 'FiscalYear'],
+    LocalEducationAgencyLocalEducationAgencyFederalFunds: ['LocalEducationAgencyId', 'FiscalYear'],
     Location: ['SchoolId', 'ClassroomIdentificationCode'],
     ObjectiveAssessment: [
       'AssessmentTitle',
@@ -426,7 +426,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'IdentificationCode',
       'LearningStandardId',
     ],
-    ObjectiveAssessmentPerformanceLevel: [
+    ObjectiveAssessmentAssessmentPerformanceLevel: [
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
       'AssessedGradeLevelDescriptorId',
@@ -466,7 +466,7 @@ function primaryKeyOrderFor(table: Table): string[] {
     Payroll: ['StaffUSI', 'EducationOrganizationId', 'AccountNumber', 'FiscalYear', 'AsOfDate'],
     PostSecondaryEvent: ['StudentUSI', 'PostSecondaryEventCategoryTypeId', 'EventDate'],
     PostSecondaryEventPostSecondaryInstitution: ['StudentUSI', 'PostSecondaryEventCategoryTypeId', 'EventDate'],
-    PostSecondaryEventPostSecondaryInstitutionIdentificationCode: [
+    PostSecondaryEventPostSecondaryInstitutionPostSecondaryInstitutionIdentificationCode: [
       'StudentUSI',
       'PostSecondaryEventCategoryTypeId',
       'EventDate',
@@ -479,7 +479,12 @@ function primaryKeyOrderFor(table: Table): string[] {
       'MediumOfInstructionTypeId',
     ],
     Program: ['EducationOrganizationId', 'ProgramTypeId', 'ProgramName'],
-    ProgramCharacteristic: ['EducationOrganizationId', 'ProgramTypeId', 'ProgramCharacteristicDescriptorId', 'ProgramName'],
+    ProgramProgramCharacteristic: [
+      'EducationOrganizationId',
+      'ProgramTypeId',
+      'ProgramCharacteristicDescriptorId',
+      'ProgramName',
+    ],
     ProgramLearningObjective: [
       'EducationOrganizationId',
       'ProgramTypeId',
@@ -490,10 +495,16 @@ function primaryKeyOrderFor(table: Table): string[] {
     ],
     ProgramLearningStandard: ['EducationOrganizationId', 'ProgramTypeId', 'LearningStandardId', 'ProgramName'],
     ProgramService: ['EducationOrganizationId', 'ProgramTypeId', 'ServiceDescriptorId', 'ProgramName'],
-    ReportCard: ['StudentUSI', 'EducationOrganizationId', 'GradingPeriodDescriptorId', 'GradingPeriodBeginDate', 'SchoolId'],
+    ReportCard: [
+      'StudentUSI',
+      'EducationOrganizationId',
+      'GradingPeriodGradingPeriodDescriptorId',
+      'GradingPeriodBeginDate',
+      'SchoolId',
+    ],
     ReportCardGrade: [
       'EducationOrganizationId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'GradeTypeId',
       'StudentUSI',
@@ -509,10 +520,10 @@ function primaryKeyOrderFor(table: Table): string[] {
     ],
     ReportCardStudentCompetencyObjective: [
       'StudentUSI',
-      'Objective',
-      'ObjectiveGradeLevelDescriptorId',
+      'ObjectiveObjective',
+      'ObjectiveObjectiveGradeLevelDescriptorId',
       'ObjectiveEducationOrganizationId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'SchoolId',
       'ReportCardEducationOrganizationId',
@@ -523,7 +534,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'Objective',
       'AcademicSubjectDescriptorId',
       'ObjectiveGradeLevelDescriptorId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'SchoolId',
     ],
@@ -537,8 +548,14 @@ function primaryKeyOrderFor(table: Table): string[] {
       'ProgramName',
       'EducationOrganizationId',
     ],
-    RestraintEventReason: ['StudentUSI', 'SchoolId', 'RestraintEventIdentifier', 'EventDate', 'RestraintEventReasonTypeId'],
-    SchoolCategory: ['SchoolId', 'SchoolCategoryTypeId'],
+    RestraintEventRestraintEventReason: [
+      'StudentUSI',
+      'SchoolId',
+      'RestraintEventIdentifier',
+      'EventDate',
+      'RestraintEventReasonTypeId',
+    ],
+    SchoolSchoolCategory: ['SchoolId', 'SchoolCategoryTypeId'],
     SchoolGradeLevel: ['SchoolId', 'GradeLevelDescriptorId'],
     Section: [
       'SchoolId',
@@ -561,7 +578,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'SequenceOfCourse',
       'Date',
     ],
-    SectionCharacteristic: [
+    SectionSectionCharacteristic: [
       'SectionCharacteristicDescriptorId',
       'ClassroomIdentificationCode',
       'SchoolId',
@@ -610,13 +627,19 @@ function primaryKeyOrderFor(table: Table): string[] {
       'HireDate',
     ],
     StaffElectronicMail: ['StaffUSI', 'ElectronicMailTypeId'],
-    StaffIdentificationCode: ['StaffUSI', 'StaffIdentificationSystemDescriptorId'],
+    StaffStaffIdentificationCode: ['StaffUSI', 'StaffIdentificationSystemDescriptorId'],
     StaffIdentificationDocument: ['PersonalInformationVerificationTypeId', 'IdentificationDocumentUseTypeId', 'StaffUSI'],
     StaffInternationalAddress: ['StaffUSI', 'AddressTypeId'],
     StaffLanguage: ['StaffUSI', 'LanguageDescriptorId'],
-    StaffLanguageUse: ['StaffUSI', 'LanguageDescriptorId', 'LanguageUseTypeId'],
+    StaffLanguageLanguageUse: ['StaffUSI', 'LanguageDescriptorId', 'LanguageUseTypeId'],
     StaffOtherName: ['StaffUSI', 'OtherNameTypeId'],
-    StaffProgramAssociation: ['ProgramEducationOrganizationId', 'ProgramTypeId', 'StaffUSI', 'BeginDate', 'ProgramName'],
+    StaffProgramAssociation: [
+      'ProgramEducationOrganizationId',
+      'ProgramProgramTypeId',
+      'StaffUSI',
+      'BeginDate',
+      'ProgramProgramName',
+    ],
     StaffRace: ['StaffUSI', 'RaceTypeId'],
     StaffSchoolAssociation: ['StaffUSI', 'ProgramAssignmentDescriptorId', 'SchoolId'],
     StaffSchoolAssociationAcademicSubject: [
@@ -637,8 +660,8 @@ function primaryKeyOrderFor(table: Table): string[] {
       'UniqueSectionCode',
       'SequenceOfCourse',
     ],
-    StateEducationAgencyAccountability: ['StateEducationAgencyId', 'SchoolYear'],
-    StateEducationAgencyFederalFunds: ['StateEducationAgencyId', 'FiscalYear'],
+    StateEducationAgencyStateEducationAgencyAccountability: ['StateEducationAgencyId', 'SchoolYear'],
+    StateEducationAgencyStateEducationAgencyFederalFunds: ['StateEducationAgencyId', 'FiscalYear'],
     StudentAcademicRecord: ['StudentUSI', 'EducationOrganizationId', 'SchoolYear', 'TermDescriptorId'],
     StudentAcademicRecordAcademicHonor: [
       'AcademicHonorCategoryTypeId',
@@ -668,7 +691,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'SchoolYear',
       'TermDescriptorId',
       'EducationOrganizationId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'SchoolId',
     ],
@@ -690,7 +713,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'AdministrationDate',
       'AccommodationDescriptorId',
     ],
-    StudentAssessmentItem: [
+    StudentAssessmentStudentAssessmentItem: [
       'StudentUSI',
       'AssessmentTitle',
       'AcademicSubjectDescriptorId',
@@ -746,7 +769,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'AdministrationDate',
       'AssessmentReportingMethodTypeId',
     ],
-    StudentCharacteristic: ['StudentUSI', 'StudentCharacteristicDescriptorId'],
+    StudentStudentCharacteristic: ['StudentUSI', 'StudentCharacteristicDescriptorId'],
     StudentCohortAssociation: ['StudentUSI', 'EducationOrganizationId', 'CohortIdentifier', 'BeginDate'],
     StudentCohortAssociationSection: [
       'StudentUSI',
@@ -765,28 +788,28 @@ function primaryKeyOrderFor(table: Table): string[] {
     StudentCohortYear: ['StudentUSI', 'CohortYearTypeId', 'SchoolYear'],
     StudentCompetencyObjective: [
       'StudentUSI',
-      'Objective',
-      'ObjectiveGradeLevelDescriptorId',
+      'ObjectiveObjective',
+      'ObjectiveObjectiveGradeLevelDescriptorId',
       'ObjectiveEducationOrganizationId',
       'SchoolId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
     ],
     StudentCTEProgramAssociation: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
     ],
     StudentCTEProgramAssociationCTEProgram: [
       'StudentUSI',
-      'ProgramTypeId',
+      'ProgramProgramTypeId',
       'ProgramEducationOrganizationId',
       'BeginDate',
       'CareerPathwayTypeId',
-      'ProgramName',
+      'ProgramProgramName',
       'EducationOrganizationId',
     ],
     StudentDisability: ['StudentUSI', 'DisabilityDescriptorId'],
@@ -808,7 +831,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'GradebookEntryTitle',
       'DateAssigned',
     ],
-    StudentIdentificationCode: [
+    StudentStudentIdentificationCode: [
       'StudentUSI',
       'AssigningOrganizationIdentificationCode',
       'StudentIdentificationSystemDescriptorId',
@@ -818,7 +841,7 @@ function primaryKeyOrderFor(table: Table): string[] {
       'IdentificationDocumentUseTypeId',
       'StudentUSI',
     ],
-    StudentIndicator: ['StudentUSI', 'IndicatorName'],
+    StudentStudentIndicator: ['StudentUSI', 'IndicatorName'],
     StudentInternationalAddress: ['StudentUSI', 'AddressTypeId'],
     StudentInterventionAssociation: ['StudentUSI', 'InterventionIdentificationCode', 'EducationOrganizationId'],
     StudentInterventionAssociationInterventionEffectiveness: [
@@ -837,21 +860,21 @@ function primaryKeyOrderFor(table: Table): string[] {
       'AttendanceEventCategoryDescriptorId',
     ],
     StudentLanguage: ['StudentUSI', 'LanguageDescriptorId'],
-    StudentLanguageUse: ['StudentUSI', 'LanguageDescriptorId', 'LanguageUseTypeId'],
+    StudentLanguageLanguageUse: ['StudentUSI', 'LanguageDescriptorId', 'LanguageUseTypeId'],
     StudentLearningObjective: [
       'StudentUSI',
       'Objective',
       'AcademicSubjectDescriptorId',
       'ObjectiveGradeLevelDescriptorId',
-      'GradingPeriodDescriptorId',
+      'GradingPeriodGradingPeriodDescriptorId',
       'GradingPeriodBeginDate',
       'SchoolId',
     ],
     StudentMigrantEducationProgramAssociation: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
     ],
@@ -860,16 +883,16 @@ function primaryKeyOrderFor(table: Table): string[] {
     StudentProgramAssociation: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
     ],
     StudentProgramAssociationService: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
       'ServiceDescriptorId',
@@ -877,10 +900,10 @@ function primaryKeyOrderFor(table: Table): string[] {
     StudentProgramAttendanceEvent: [
       'StudentUSI',
       'ProgramEducationOrganizationId',
-      'ProgramTypeId',
+      'ProgramProgramTypeId',
       'EventDate',
       'AttendanceEventCategoryDescriptorId',
-      'ProgramName',
+      'ProgramProgramName',
       'EducationOrganizationId',
     ],
     StudentProgramParticipation: ['StudentUSI', 'ProgramTypeId'],
@@ -924,31 +947,31 @@ function primaryKeyOrderFor(table: Table): string[] {
     StudentSpecialEducationProgramAssociation: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
     ],
     StudentSpecialEducationProgramAssociationServiceProvider: [
       'StudentUSI',
-      'ProgramTypeId',
+      'ProgramProgramTypeId',
       'ProgramEducationOrganizationId',
       'BeginDate',
       'StaffUSI',
-      'ProgramName',
+      'ProgramProgramName',
       'EducationOrganizationId',
     ],
     StudentTitleIPartAProgramAssociation: [
       'StudentUSI',
       'EducationOrganizationId',
-      'ProgramTypeId',
-      'ProgramName',
+      'ProgramProgramTypeId',
+      'ProgramProgramName',
       'ProgramEducationOrganizationId',
       'BeginDate',
     ],
   };
 
-  return R.propOr([], table.name, primaryKeysFor);
+  return R.propOr([], table.tableId, primaryKeysFor);
 }
 
 function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
@@ -958,9 +981,9 @@ function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
 
     // ignore table if primary keys have been modified
     const primaryKeys: Column[] = getPrimaryKeys(table);
-    if (R.symmetricDifference(primaryKeyOrder, primaryKeys.map(x => x.name)).length > 0) return;
+    if (R.symmetricDifference(primaryKeyOrder, primaryKeys.map(x => x.columnId)).length > 0) return;
 
-    const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('name'), primaryKeys);
+    const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('columnId'), primaryKeys);
     table.primaryKeys = R.chain((pkName: string) => primaryKeyLookup[pkName], primaryKeyOrder);
   });
 }

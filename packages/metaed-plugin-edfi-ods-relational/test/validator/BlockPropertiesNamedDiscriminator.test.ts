@@ -11,7 +11,7 @@ import { validate } from '../../src/validator/BlockPropertiesNamedDiscriminator'
 describe('when domain entity has no properties named Discriminator on tech version 3.1', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.1.0',
     }),
@@ -42,7 +42,7 @@ describe('when domain entity has no properties named Discriminator on tech versi
 describe('when domain entity has property named Discriminator on tech version 3.1', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.1.0',
     }),
@@ -74,7 +74,7 @@ describe('when domain entity has property named Discriminator on tech version 3.
 describe('when domain entity has property named Discriminator on tech version below 3.1', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.0.0',
     }),

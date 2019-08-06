@@ -1,5 +1,5 @@
 import { Namespace } from 'metaed-core';
-import { Table } from './Table';
+import { TableNameGroup, Table } from './Table';
 
 export class TableStrategy {
   table: Table;
@@ -8,16 +8,17 @@ export class TableStrategy {
 
   schemaNamespace: Namespace;
 
-  name: string;
+  tableId: string;
 
-  nameComponents: string[];
+  nameGroup: TableNameGroup;
 
   constructor(table: Table) {
     this.table = table;
     this.schema = table.schema;
     this.schemaNamespace = table.namespace;
-    this.name = table.name;
-    this.nameComponents = table.nameComponents;
+    /* eslint-disable-next-line no-underscore-dangle */
+    this.tableId = table.tableId;
+    this.nameGroup = table.nameGroup;
   }
 
   static default(table: Table) {
@@ -28,11 +29,11 @@ export class TableStrategy {
     table: Table,
     baseSchemaName: string,
     baseSchemaNamespace: Namespace,
-    baseTableName: string,
-    baseTableNameComponents: string[],
+    baseTableId: string,
+    baseTableNameGroup: TableNameGroup,
   ) {
     // eslint-disable-next-line no-use-before-define
-    return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableName, baseTableNameComponents);
+    return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableId, baseTableNameGroup);
   }
 }
 
@@ -41,13 +42,13 @@ class ExtensionTableStrategy extends TableStrategy {
     table: Table,
     baseSchemaName: string,
     baseSchemaNamespace: Namespace,
-    baseTableName: string,
-    baseTableNameComponents: string[],
+    baseTableId: string,
+    baseTableNameGroup: TableNameGroup,
   ) {
     super(table);
     this.schema = baseSchemaName;
     this.schemaNamespace = baseSchemaNamespace;
-    this.name = baseTableName;
-    this.nameComponents = baseTableNameComponents;
+    this.tableId = baseTableId;
+    this.nameGroup = baseTableNameGroup;
   }
 }

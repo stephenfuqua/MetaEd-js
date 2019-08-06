@@ -1,6 +1,6 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { renameColumn } from './DiminisherHelper';
+import { rewriteColumnId } from './DiminisherHelper';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
 import { Table } from '../model/database/Table';
@@ -12,14 +12,15 @@ const targetVersions = '2.x';
 
 const innovativeDollarsSpentOnStrategicPriorities = 'InnovativeDollarsSpentOnStrategicPriorities';
 const innovativeDollarsSpentStrategicPriorities = 'InnovativeDollarsSpentStrategicPriorities';
-const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';
+const localEducationAgencyFederalFunds = 'LocalEducationAgencyLocalEducationAgencyFederalFunds';
 
 function changeNameOfInnovativeDollarsSpentStrategicPriorities(tablesForCoreNamespace: Map<string, Table>): void {
   const table: Table | undefined = tablesForCoreNamespace.get(localEducationAgencyFederalFunds);
   if (table == null) return;
-  if (table.columns.find((column: Column) => column.name === innovativeDollarsSpentOnStrategicPriorities) != null) return;
+  if (table.columns.find((column: Column) => column.columnId === innovativeDollarsSpentOnStrategicPriorities) != null)
+    return;
 
-  renameColumn(table, innovativeDollarsSpentStrategicPriorities, innovativeDollarsSpentOnStrategicPriorities);
+  rewriteColumnId(table, innovativeDollarsSpentStrategicPriorities, innovativeDollarsSpentOnStrategicPriorities);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

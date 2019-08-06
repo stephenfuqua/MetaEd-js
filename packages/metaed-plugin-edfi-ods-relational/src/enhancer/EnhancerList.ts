@@ -1,11 +1,7 @@
 import { Enhancer } from 'metaed-core';
 
-import { enhance as associationExtension } from '../model/AssociationExtension';
-import { enhance as commonExtension } from '../model/CommonExtension';
 import { enhance as descriptor } from '../model/Descriptor';
-import { enhance as domainEntityExtension } from '../model/DomainEntityExtension';
-import { enhance as edFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
-import { enhance as namespace } from '../model/Namespace';
+import { enhance as edFiOdsEntityRepository } from '../model/EdFiOdsRelationalEntityRepository';
 import { enhance as topLevelEntity } from '../model/TopLevelEntity';
 
 import { enhance as descriptorProperty } from '../model/property/DescriptorProperty';
@@ -17,7 +13,7 @@ import { enhance as associationExtensionTableEnhancerV2 } from './table/Associat
 import { enhance as associationExtensionTableEnhancer } from './table/AssociationExtensionTableEnhancer';
 import { enhance as associationSubclassTableEnhancer } from './table/AssociationSubclassTableEnhancer';
 import { enhance as associationTableEnhancer } from './table/AssociationTableEnhancer';
-import { enhance as baseDescriptorTableCreatingEnhancer } from './table/BaseDescriptorTableCreatingEnhancer';
+import { enhance as baseDescriptorTableCreatingEnhancer } from './table/BaseDescriptorTableEnhancer';
 import { enhance as descriptorTableEnhancer } from './table/DescriptorTableEnhancer';
 import { enhance as discriminatorColumnFlaggingEnhancer } from './table/DiscriminatorColumnFlaggingEnhancer';
 import { enhance as domainEntityExtensionTableEnhancerV2 } from './table/DomainEntityExtensionTableEnhancerV2';
@@ -27,18 +23,16 @@ import { enhance as domainEntityTableEnhancer } from './table/DomainEntityTableE
 import { enhance as enumerationTableEnhancer } from './table/EnumerationTableEnhancer';
 import { enhance as schoolYearEnumerationTableEnhancer } from './table/SchoolYearEnumerationTableEnhancer';
 
-import { enhance as addSchemaContainerEnhancer } from './AddSchemaContainerEnhancer';
 import { enhance as createUsisFromUniqueIdsEnhancer } from './CreateUsisFromUniqueIdsEnhancer';
 import { enhance as descriptorMapTypeRowEnhancer } from './DescriptorMapTypeRowEnhancer';
 import { enhance as enumerationRowEnhancer } from './EnumerationRowEnhancer';
 import { enhance as foreignKeyCreatingTableEnhancer } from './ForeignKeyCreatingTableEnhancer';
 import { enhance as foreignKeyReverseIndexEnhancer } from './ForeignKeyReverseIndexEnhancer';
-import { enhance as odsTableNameEnhancer } from './OdsTableNameEnhancer';
+import { enhance as odsTableIdEnhancer } from './OdsTableIdEnhancer';
 import { enhance as schoolYearEnumerationRowEnhancer } from './SchoolYearEnumerationRowEnhancer';
-import { enhance as templateSpecificTablePropertyEnhancerV2 } from './TemplateSpecificTablePropertyEnhancerV2';
-import { enhance as templateSpecificTablePropertyEnhancer } from './TemplateSpecificTablePropertyEnhancer';
 import { enhance as topLevelEntityBaseReferenceEnhancer } from './TopLevelEntityBaseReferenceEnhancer';
 import { enhance as updateCascadeTopLevelEntityEnhancer } from './UpdateCascadeTopLevelEntityEnhancer';
+import { enhance as foreignKeyForeignTableReferenceEnhancer } from './ForeignKeyForeignTableReferenceEnhancer';
 
 import { enhance as columnDeprecationEnhancer } from './ColumnDeprecationEnhancer';
 import { enhance as tableDeprecationEnhancer } from './TableDeprecationEnhancer';
@@ -55,7 +49,7 @@ import { enhance as graduationPlanRequiredAssessmentPerformanceLevelDiminisher }
 import { enhance as identificationDocumentTableDiminisher } from '../diminisher/IdentificationDocumentTableDiminisher';
 import { enhance as modifyCascadingDeletesDefinitionsDiminisher } from '../diminisher/ModifyCascadingDeletesDefinitionsDiminisher';
 import { enhance as modifyCascadingUpdatesDefinitionsDiminisher } from '../diminisher/ModifyCascadingUpdatesDefinitionsDiminisher';
-import { enhance as modifyColumnDataTypesDiminisher } from '../diminisher/ModifyColumnDataTypesDiminisher';
+import { enhance as modifyStringColumnLengthDiminisher } from '../diminisher/ModifyStringColumnLengthDiminisher';
 import { enhance as modifyIdentityForEducationOrganizationAndSubTypesDiminisher } from '../diminisher/ModifyIdentityForEducationOrganizationAndSubTypesDiminisher';
 import { enhance as modifyReverseForeignKeyIndexesDiminisher } from '../diminisher/ModifyReverseForeignKeyIndexesDiminisher';
 import { enhance as primaryKeyOrderDiminisher } from '../diminisher/PrimaryKeyOrderDiminisher';
@@ -74,9 +68,6 @@ export function enhancerList(): Enhancer[] {
     modifyIdentityForEducationOrganizationAndSubTypesDiminisher,
 
     // Builder Post Processing Phase
-    associationExtension,
-    commonExtension,
-    domainEntityExtension,
     topLevelEntityBaseReferenceEnhancer,
     descriptor,
 
@@ -85,7 +76,7 @@ export function enhancerList(): Enhancer[] {
     descriptorProperty,
     enumerationProperty,
     referenceProperty,
-    odsTableNameEnhancer,
+    odsTableIdEnhancer,
     createUsisFromUniqueIdsEnhancer,
     // tablePropertyEnhancer no longer needed?
 
@@ -113,6 +104,7 @@ export function enhancerList(): Enhancer[] {
 
     // Foreign Key Creation Phase
     foreignKeyCreatingTableEnhancer,
+
     addApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher,
     addExtraBeginDateColumnToStudentLearningObjectiveDiminisher,
     addExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher,
@@ -122,7 +114,7 @@ export function enhancerList(): Enhancer[] {
     changeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher,
     modifyCascadingDeletesDefinitionsDiminisher,
     modifyCascadingUpdatesDefinitionsDiminisher,
-    modifyColumnDataTypesDiminisher,
+    modifyStringColumnLengthDiminisher,
     // eslint-disable-next-line camelcase
     removeGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_0_x,
     // eslint-disable-next-line camelcase
@@ -139,13 +131,10 @@ export function enhancerList(): Enhancer[] {
     foreignKeyReverseIndexEnhancer,
     modifyReverseForeignKeyIndexesDiminisher,
     primaryKeyOrderDiminisher,
-    templateSpecificTablePropertyEnhancerV2,
-    templateSpecificTablePropertyEnhancer,
+
     discriminatorColumnFlaggingEnhancer,
     columnDeprecationEnhancer,
     tableDeprecationEnhancer,
-
-    namespace,
-    addSchemaContainerEnhancer,
+    foreignKeyForeignTableReferenceEnhancer,
   ];
 }

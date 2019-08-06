@@ -1,8 +1,7 @@
-import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -16,13 +15,10 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
   const periodSequence = 'PeriodSequence';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: gradingPeriodType,
-      nameComponents: [gradingPeriodType],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: gradingPeriodType };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -32,8 +28,8 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
     const table: Table | undefined = tableEntities(metaEd, namespace).get(gradingPeriodType);
     expect(table).toBeDefined();
     if (table == null) throw new Error();
-    expect(R.head(table.columns).name).toBe(periodSequence);
-    expect(R.head(table.columns).isNullable).toBe(true);
+    expect(table.columns[0].columnId).toBe(periodSequence);
+    expect(table.columns[0].isNullable).toBe(true);
   });
 });
 
@@ -45,19 +41,14 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
   const periodSequence = 'PeriodSequence';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: gradingPeriodType,
-      nameComponents: [gradingPeriodType],
-      columns: [
-        Object.assign(newColumn(), {
-          name: periodSequence,
-          isNullable: false,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: gradingPeriodType,
+      columns: [{ ...newColumn(), columnId: periodSequence, isNullable: false }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -68,7 +59,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
     expect(table).toBeDefined();
     if (table == null) throw new Error();
     expect(table.columns).toHaveLength(1);
-    expect(R.head(table.columns).name).toBe(periodSequence);
-    expect(R.head(table.columns).isNullable).toBe(false);
+    expect(table.columns[0].columnId).toBe(periodSequence);
+    expect(table.columns[0].isNullable).toBe(false);
   });
 });

@@ -21,7 +21,7 @@ describe('when building common property table', (): void => {
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -32,7 +32,7 @@ describe('when building common property table', (): void => {
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -40,12 +40,12 @@ describe('when building common property table', (): void => {
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -55,7 +55,7 @@ describe('when building common property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -68,7 +68,7 @@ describe('when building common property table', (): void => {
       parentEntity: entity,
       referencedEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPropertyName,
         },
       },
@@ -76,11 +76,7 @@ describe('when building common property table', (): void => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -94,15 +90,15 @@ describe('when building common property table', (): void => {
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + commonPropertyName);
+    expect(tables[0].tableId).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
   it('should have two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(commonPkName);
+    expect(tables[0].columns[0].columnId).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(entityPkName);
+    expect(tables[0].columns[1].columnId).toBe(entityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -111,12 +107,12 @@ describe('when building common property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + commonPropertyName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + commonPropertyName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
   });
 });
 
@@ -132,7 +128,7 @@ describe('when building optional common property table', (): void => {
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -143,7 +139,7 @@ describe('when building optional common property table', (): void => {
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -151,12 +147,12 @@ describe('when building optional common property table', (): void => {
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -166,7 +162,7 @@ describe('when building optional common property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -180,7 +176,7 @@ describe('when building optional common property table', (): void => {
       referencedEntity: common,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
         },
       },
@@ -188,11 +184,7 @@ describe('when building optional common property table', (): void => {
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -206,15 +198,15 @@ describe('when building optional common property table', (): void => {
 
   it('should return join table table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + commonName);
+    expect(tables[0].tableId).toBe(tableName + commonName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
   it('should have two columns with one primary key', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(commonPkName);
+    expect(tables[0].columns[0].columnId).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(false);
-    expect(tables[0].columns[1].name).toBe(entityPkName);
+    expect(tables[0].columns[1].columnId).toBe(entityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -223,12 +215,12 @@ describe('when building optional common property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + commonName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + commonName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
   });
 });
 
@@ -243,7 +235,7 @@ describe('when building required collection common property table', (): void => 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -254,7 +246,7 @@ describe('when building required collection common property table', (): void => 
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -262,12 +254,12 @@ describe('when building required collection common property table', (): void => 
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -276,7 +268,7 @@ describe('when building required collection common property table', (): void => 
       metaEdName: entityPkName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -290,7 +282,7 @@ describe('when building required collection common property table', (): void => 
       referencedEntity: common,
       isRequiredCollection: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPropertyName,
           odsIsCollection: true,
         },
@@ -299,11 +291,7 @@ describe('when building required collection common property table', (): void => 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -317,16 +305,16 @@ describe('when building required collection common property table', (): void => 
 
   it('should return required collection table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + commonPropertyName);
+    expect(tables[0].tableId).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
     expect(tables[0].isRequiredCollectionTable).toBe(true);
   });
 
   it('should have two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(commonPkName);
+    expect(tables[0].columns[0].columnId).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(entityPkName);
+    expect(tables[0].columns[1].columnId).toBe(entityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
@@ -342,7 +330,7 @@ describe('when building required collection common property table with make leaf
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -353,7 +341,7 @@ describe('when building required collection common property table with make leaf
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -361,12 +349,12 @@ describe('when building required collection common property table with make leaf
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -375,7 +363,7 @@ describe('when building required collection common property table with make leaf
       metaEdName: entityPkName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -389,7 +377,7 @@ describe('when building required collection common property table with make leaf
       referencedEntity: common,
       isRequiredCollection: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPropertyName,
           odsIsCollection: true,
         },
@@ -398,11 +386,7 @@ describe('when building required collection common property table with make leaf
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -416,16 +400,16 @@ describe('when building required collection common property table with make leaf
 
   it('should return required collection table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + commonPropertyName);
+    expect(tables[0].tableId).toBe(tableName + commonPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
     expect(tables[0].isRequiredCollectionTable).toBe(true);
   });
 
   it('should have two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(commonPkName);
+    expect(tables[0].columns[0].columnId).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(entityPkName);
+    expect(tables[0].columns[1].columnId).toBe(entityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });

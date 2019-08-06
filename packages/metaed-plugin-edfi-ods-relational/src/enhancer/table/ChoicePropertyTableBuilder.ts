@@ -28,7 +28,7 @@ export function choicePropertyTableBuilder(factory: TableBuilderFactory): TableB
         );
       }
 
-      choice.referencedEntity.data.edfiOds.odsProperties.forEach((odsProperty: EntityProperty) => {
+      choice.referencedEntity.data.edfiOdsRelational.odsProperties.forEach((odsProperty: EntityProperty) => {
         const tableBuilder: TableBuilder = factory.tableBuilderFor(odsProperty);
 
         tableBuilder.buildTables(

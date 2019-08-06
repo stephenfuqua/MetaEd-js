@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { getAllProperties, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-core';
-import { prependroleNameToMetaEdName } from '../../shared/Utility';
+import { prependRoleNameToMetaEdName } from '../../shared/Utility';
 
 export interface EntityPropertyEdfiOds {
   odsName: string;
@@ -15,7 +15,7 @@ export interface EntityPropertyEdfiOds {
 const enhancerName = 'EntityPropertySetupEnhancer';
 
 export function odsName(property: EntityProperty): string {
-  return prependroleNameToMetaEdName(property.metaEdName, property.roleName);
+  return prependRoleNameToMetaEdName(property.metaEdName, property.roleName);
 }
 
 export function odsIsCollection(property: EntityProperty): boolean {
@@ -27,9 +27,9 @@ export function odsContextPrefix(property: EntityProperty): string {
 }
 
 export function addEntityPropertyEdfiOdsTo(property: EntityProperty) {
-  if (property.data.edfiOds == null) property.data.edfiOds = {};
+  if (property.data.edfiOdsRelational == null) property.data.edfiOdsRelational = {};
 
-  Object.assign(property.data.edfiOds, {
+  Object.assign(property.data.edfiOdsRelational, {
     odsName: odsName(property),
     odsIsCollection: odsIsCollection(property),
     odsContextPrefix: odsContextPrefix(property),

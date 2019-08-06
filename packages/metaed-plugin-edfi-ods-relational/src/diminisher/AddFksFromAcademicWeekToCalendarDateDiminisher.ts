@@ -1,10 +1,10 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { addColumnNamePairs, newForeignKey, newForeignKeySourceReference } from '../model/database/ForeignKey';
-import { addForeignKey, getForeignKeys } from '../model/database/Table';
-import { newColumnNamePair } from '../model/database/ColumnNamePair';
+import { addColumnPairs, newForeignKey, newForeignKeySourceReference } from '../model/database/ForeignKey';
+import { addForeignKey } from '../model/database/Table';
+import { newColumnPair } from '../model/database/ColumnPair';
 import { tableEntities } from '../enhancer/EnhancerHelper';
-import { ColumnNamePair } from '../model/database/ColumnNamePair';
+import { ColumnPair } from '../model/database/ColumnPair';
 import { ForeignKey } from '../model/database/ForeignKey';
 import { Table } from '../model/database/Table';
 
@@ -23,45 +23,44 @@ const date = 'Date';
 const endDate = 'EndDate';
 const schoolId = 'SchoolId';
 
-function addForeignKeyToCalendarDate(
-  table: Table | undefined,
-  parentTableColumnName: string,
-  coreNamespace: Namespace,
-): void {
+function addForeignKeyToCalendarDate(table: Table | undefined, parentTableColumnId: string, coreNamespace: Namespace): void {
   if (
     table == null ||
-    getForeignKeys(table).find(
+    table.foreignKeys.find(
       (fk: ForeignKey) =>
         fk.foreignTableSchema === coreSchema &&
-        fk.foreignTableName === calendarDate &&
-        !!fk.columnNames.find(
-          (columnNamePair: ColumnNamePair) =>
-            columnNamePair.parentTableColumnName === parentTableColumnName && columnNamePair.foreignTableColumnName === date,
+        fk.foreignTableId === calendarDate &&
+        !!fk.columnPairs.find(
+          (columnPair: ColumnPair) =>
+            columnPair.parentTableColumnId === parentTableColumnId && columnPair.foreignTableColumnId === date,
         ),
     ) != null
   )
     return;
 
-  const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+  const foreignKey: ForeignKey = {
+    ...newForeignKey(),
     foreignTableSchema: coreSchema,
     foreignTableNamespace: coreNamespace,
-    foreignTableName: calendarDate,
+    foreignTableId: calendarDate,
     withDeleteCascade: false,
     sourceReference: {
       ...newForeignKeySourceReference(),
       isSyntheticRelationship: true,
     },
-  });
+  };
 
-  addColumnNamePairs(foreignKey, [
-    Object.assign(newColumnNamePair(), {
-      parentTableColumnName: schoolId,
-      foreignTableColumnName: schoolId,
-    }),
-    Object.assign(newColumnNamePair(), {
-      parentTableColumnName,
-      foreignTableColumnName: date,
-    }),
+  addColumnPairs(foreignKey, [
+    {
+      ...newColumnPair(),
+      parentTableColumnId: schoolId,
+      foreignTableColumnId: schoolId,
+    },
+    {
+      ...newColumnPair(),
+      parentTableColumnId,
+      foreignTableColumnId: date,
+    },
   ]);
   addForeignKey(table, foreignKey);
 }

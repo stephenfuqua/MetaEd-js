@@ -21,7 +21,7 @@
     "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-unified-advanced",
-      "metaed-plugin-edfi-ods",
+      "metaed-plugin-edfi-ods-relational",
       "metaed-plugin-edfi-xsd"
     ]
   },
@@ -30,7 +30,7 @@
     "js-beautify": "^1.7.5",
     "marked": "^0.4.0",
     "metaed-core": "2.0.1-dev.1",
-    "metaed-plugin-edfi-ods": "2.0.1-dev.1",
+    "metaed-plugin-edfi-ods-relational": "2.0.1-dev.1",
     "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.1",
     "metaed-plugin-edfi-xsd": "2.0.1-dev.1",
     "ramda": "^0.25.0",

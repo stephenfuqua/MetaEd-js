@@ -2,7 +2,7 @@ import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -17,20 +17,14 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
 
   beforeAll(() => {
     const startTime = 'StartTime';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: interventionMeetingTime,
-      nameComponents: [interventionMeetingTime],
-      columns: [
-        Object.assign(newColumn(), {
-          name: startTime,
-          isPartOfPrimaryKey: true,
-          isNullable: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: interventionMeetingTime,
+      columns: [{ ...newColumn(), columnId: startTime, isPartOfPrimaryKey: true, isNullable: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -51,20 +45,14 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
 
   beforeAll(() => {
     const columnName = 'ColumnName';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-      columns: [
-        Object.assign(newColumn(), {
-          name: columnName,
-          isPartOfPrimaryKey: true,
-          isNullable: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
+      columns: [{ ...newColumn(), columnId: columnName, isPartOfPrimaryKey: true, isNullable: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);

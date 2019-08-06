@@ -14,7 +14,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     R.prop('enumerationItems')(entity).forEach((item: EnumerationItem) => {
       const name: string = R.takeLast(4)(item.shortDescription);
 
-      const row: SchoolYearEnumerationRow = Object.assign(newSchoolYearEnumerationRow(), {
+      const row: SchoolYearEnumerationRow = {
+        ...newSchoolYearEnumerationRow(),
         name,
         namespace: entity.namespace.namespaceName,
         schemaName: entity.namespace.namespaceName.toLowerCase(),
@@ -22,7 +23,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         documentation: item.documentation,
         schoolYear: parseInt(name, 10),
         schoolYearDescription: escapeSqlSingleQuote(item.shortDescription),
-      });
+      };
 
       rowEntities(metaEd, entity.namespace).set(row.name + row.schoolYearDescription, row);
     });

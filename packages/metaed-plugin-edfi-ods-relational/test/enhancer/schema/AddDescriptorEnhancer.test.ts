@@ -20,11 +20,11 @@ describe('when Descriptor enhances descriptor entity', (): void => {
   });
 
   it('should have ods descriptor name with descriptor suffix', (): void => {
-    expect(descriptor.data.edfiOds.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
+    expect(descriptor.data.edfiOdsRelational.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
   });
 
   it('should have false ods is map type', (): void => {
-    expect(descriptor.data.edfiOds.odsIsMapType).toBe(false);
+    expect(descriptor.data.edfiOdsRelational.odsIsMapType).toBe(false);
   });
 });
 
@@ -46,11 +46,11 @@ describe('when Descriptor enhances descriptor entity with descriptor suffix', ()
   });
 
   it('should have ods descriptor name with normalized suffix', (): void => {
-    expect(descriptor.data.edfiOds.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
+    expect(descriptor.data.edfiOdsRelational.odsDescriptorName).toBe(`${descriptorName}Descriptor`);
   });
 
   it('should have false ods is map type', (): void => {
-    expect(descriptor.data.edfiOds.odsIsMapType).toBe(false);
+    expect(descriptor.data.edfiOdsRelational.odsIsMapType).toBe(false);
   });
 });
 
@@ -71,7 +71,7 @@ describe('when Descriptor enhances descriptor entity with is map type required',
   });
 
   it('should have true ods is map type', (): void => {
-    expect(descriptor.data.edfiOds.odsIsMapType).toBe(true);
+    expect(descriptor.data.edfiOdsRelational.odsIsMapType).toBe(true);
   });
 });
 
@@ -92,6 +92,6 @@ describe('when Descriptor enhances descriptor entity with is amp type optional',
   });
 
   it('should have true ods is map type', (): void => {
-    expect(descriptor.data.edfiOds.odsIsMapType).toBe(true);
+    expect(descriptor.data.edfiOdsRelational.odsIsMapType).toBe(true);
   });
 });

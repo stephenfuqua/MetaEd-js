@@ -1,20 +1,26 @@
 import { getAllEntitiesOfType, asAssociation } from 'metaed-core';
 import { MetaEdEnvironment, ModelBase, EnhancerResult, Association } from 'metaed-core';
-import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods-relational';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 
 const enhancerName = 'AssociationAggregateEnhancer';
 
-export function enhanceEntityTable(association: Association, table: Table, entityTable: EntityTable): void {
-  if ((association.data.edfiOds as TopLevelEntityEdfiOds).odsTableName === table.name && association.isAbstract) {
+export function enhanceEntityTable(
+  // @ts-ignore - value never read
+  metaEd: MetaEdEnvironment,
+  association: Association,
+  table: Table,
+  entityTable: EntityTable,
+): void {
+  if ((association.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsTableId === table.tableId && association.isAbstract) {
     entityTable.isAbstract = true;
   }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'association').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asAssociation(modelBase), metaEd.namespace, enhanceEntityTable);
+    enhanceSingleEntity(metaEd, asAssociation(modelBase), metaEd.namespace, enhanceEntityTable);
   });
 
   return {

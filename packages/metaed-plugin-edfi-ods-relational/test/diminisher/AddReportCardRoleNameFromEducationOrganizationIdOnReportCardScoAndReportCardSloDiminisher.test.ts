@@ -1,10 +1,9 @@
-import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -20,29 +19,27 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   const reportCardEducationOrganizationId = 'ReportCardEducationOrganizationId';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: reportCardStudentCompetencyObjective,
-      nameComponents: [reportCardStudentCompetencyObjective],
-      columns: [
-        Object.assign(newColumn(), {
-          name: educationOrganizationId,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: reportCardStudentCompetencyObjective,
+      columns: [{ ...newColumn(), columnId: educationOrganizationId }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: reportCard,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: educationOrganizationId,
-              foreignTableColumnName: educationOrganizationId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: reportCard,
+          columnPairs: [
+            {
+              ...newColumnPair(),
+              parentTableColumnId: educationOrganizationId,
+              foreignTableColumnId: educationOrganizationId,
+            },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -52,16 +49,16 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
     const {
       columns: [column],
     } = tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective) as Table;
-    expect(column.name).toBe(reportCardEducationOrganizationId);
+    expect(column.columnId).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', (): void => {
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective) as Table;
-    expect(foreignKey.foreignTableName).toBe(reportCard);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(educationOrganizationId);
+    expect(foreignKey.foreignTableId).toBe(reportCard);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(reportCardEducationOrganizationId);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(educationOrganizationId);
   });
 });
 
@@ -75,29 +72,27 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   const reportCardEducationOrganizationId = 'ReportCardEducationOrganizationId';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: reportCardStudentLearningObjective,
-      nameComponents: [reportCardStudentLearningObjective],
-      columns: [
-        Object.assign(newColumn(), {
-          name: educationOrganizationId,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: reportCardStudentLearningObjective,
+      columns: [{ ...newColumn(), columnId: educationOrganizationId }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: reportCard,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: educationOrganizationId,
-              foreignTableColumnName: educationOrganizationId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: reportCard,
+          columnPairs: [
+            {
+              ...newColumnPair(),
+              parentTableColumnId: educationOrganizationId,
+              foreignTableColumnId: educationOrganizationId,
+            },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -107,15 +102,15 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
     const {
       columns: [column],
     } = tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective) as Table;
-    expect(column.name).toBe(reportCardEducationOrganizationId);
+    expect(column.columnId).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', (): void => {
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective) as Table;
-    expect(foreignKey.foreignTableName).toBe(reportCard);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(educationOrganizationId);
+    expect(foreignKey.foreignTableId).toBe(reportCard);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(reportCardEducationOrganizationId);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(educationOrganizationId);
   });
 });

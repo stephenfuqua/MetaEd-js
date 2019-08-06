@@ -23,7 +23,7 @@ import {
 } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancer enhances association extension', (): void => {
@@ -36,6 +36,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
 
   const documentation = 'Documentation';
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
   const associationExtensionPropertyName = 'AssociationExtensionPropertyName';
 
   beforeAll(() => {
@@ -45,8 +46,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
       documentation,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -58,13 +59,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
@@ -74,9 +75,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -88,46 +88,46 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
       isPartOfIdentity: false,
       parentEntity: associationExtension,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionProperty);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
   it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeDefined();
   });
 
   it('should have schema equal to namespace', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).schema).toBe('extension');
+    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).description).toBe(
+    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).description).toBe(
       documentation,
     );
   });
 
   it('should have one column', (): void => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table;
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(associationExtensionPropertyName);
+    expect(table.columns[0].columnId).toBe(associationExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
 
   it('should include create date column', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(
+      (tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).includeCreateDateColumn,
+    ).toBe(true);
   });
 });
 
@@ -139,6 +139,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
   const associationExtensionPkPropertyName = 'AssociationExtensionPkPropertyName';
 
   beforeAll(() => {
@@ -147,8 +148,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       namespace,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -160,13 +161,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
@@ -175,9 +176,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -189,36 +189,36 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: associationExtension,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionPkProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionPkProperty);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
   it('should create a table', (): void => {
     expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeDefined();
   });
 
   it('should have one primary key column', (): void => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table;
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
+    expect(table.columns[0].columnId).toBe(associationExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should include create date column', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(
+      (tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).includeCreateDateColumn,
+    ).toBe(true);
   });
 });
 
@@ -233,14 +233,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const commonExtensionName = 'CommonExtensionName';
   const associationName = 'AssociationName';
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -252,22 +253,22 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
     addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -279,13 +280,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
@@ -294,8 +295,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: common.metaEdName,
       baseEntity: common,
       data: {
-        edfiOds: {
-          odsTableName: commonExtensionName,
+        edfiOdsRelational: {
+          odsTableId: commonExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -307,13 +308,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isRequired: true,
       parentEntity: commonExtension,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonExtensionRequiredPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    commonExtension.data.edfiOds.odsProperties.push(commonExtensionRequiredProperty);
+    commonExtension.data.edfiOdsRelational.odsProperties.push(commonExtensionRequiredProperty);
     addEntityForNamespace(commonExtension);
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
       namespace: extensionNamespace,
@@ -321,9 +322,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -336,13 +336,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isRequired: true,
       parentEntity: associationExtension,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionRequiredPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionRequiredProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionRequiredProperty);
     const associationExtensionReferencePropertyName = 'AssociationExtensionReferencePropertyName';
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       namespace: extensionNamespace,
@@ -352,15 +352,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       parentEntity: associationExtension,
       referencedEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionReferencePropertyName,
           odsContextPrefix: '',
           odsDeleteCascadePrimaryKey: true,
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionReferenceProperty);
-    associationExtension.data.edfiOds.odsIdentityProperties.push(associationExtensionReferenceProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionReferenceProperty);
+    associationExtension.data.edfiOdsRelational.odsIdentityProperties.push(associationExtensionReferenceProperty);
     const associationExtensionCommonExtensionOverrideProperty: CommonProperty = Object.assign(newCommonProperty(), {
       namespace: extensionNamespace,
       metaEdName: commonExtensionName,
@@ -370,17 +370,17 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       referencedEntity: commonExtension,
       isExtensionOverride: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonExtensionName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionCommonExtensionOverrideProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionCommonExtensionOverrideProperty);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -389,13 +389,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should create table for association extension', (): void => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeDefined();
   });
 
   it('should include create date column', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(
+      (tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).includeCreateDateColumn,
+    ).toBe(true);
   });
 
   it('should not create common extension override join table', (): void => {
@@ -413,14 +413,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const commonName = 'CommonName';
   const associationName = 'AssociationName';
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -432,22 +433,22 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
     addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -459,13 +460,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
@@ -474,9 +475,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -489,13 +489,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isRequired: true,
       parentEntity: associationExtension,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionRequiredPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionRequiredProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionRequiredProperty);
     const associationExtensionReferencePropertyName = 'AssociationExtensionReferencePropertyName';
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       namespace: extensionNamespace,
@@ -505,15 +505,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       parentEntity: associationExtension,
       referencedEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationExtensionReferencePropertyName,
           odsContextPrefix: '',
           odsDeleteCascadePrimaryKey: true,
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionReferenceProperty);
-    associationExtension.data.edfiOds.odsIdentityProperties.push(associationExtensionReferenceProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionReferenceProperty);
+    associationExtension.data.edfiOdsRelational.odsIdentityProperties.push(associationExtensionReferenceProperty);
     const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       namespace: extensionNamespace,
       metaEdName: commonName,
@@ -523,17 +523,17 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       referencedEntity: common,
       isExtensionOverride: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionCommonProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionCommonProperty);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -542,13 +542,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should create a table for association extension', (): void => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeDefined();
   });
 
   it('should include create date column', (): void => {
-    expect((tableEntities(metaEd, extensionNamespace).get(associationExtensionName) as Table).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(
+      (tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName) as Table).includeCreateDateColumn,
+    ).toBe(true);
   });
 
   it('should create join table from association and common', (): void => {
@@ -566,14 +566,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const commonName = 'CommonName';
   const associationName = 'AssociationName';
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -585,22 +586,22 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
     addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -612,13 +613,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
@@ -627,9 +628,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -644,17 +644,17 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       referencedEntity: common,
       isExtensionOverride: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionCommonProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionCommonProperty);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -663,7 +663,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should not create a table for association extension', (): void => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeUndefined();
   });
 
   it('should create join table from association and common', (): void => {
@@ -682,14 +682,15 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const commonName2 = 'CommonName2';
   const associationName = 'AssociationName';
   const associationExtensionName = 'AssociationExtensionName';
+  const associationExtensionTableName = 'AssociationExtensionNameExtension';
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName1,
       data: {
-        edfiOds: {
-          odsTableName: commonName1,
+        edfiOdsRelational: {
+          odsTableId: commonName1,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -701,22 +702,22 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
     addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -728,13 +729,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
@@ -743,9 +744,8 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationExtensionName,
-          odsExtensionName: associationExtensionName,
+        edfiOdsRelational: {
+          odsTableId: associationExtensionName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -760,13 +760,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       referencedEntity: common,
       isExtensionOverride: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName1,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionCommonProperty);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionCommonProperty);
     const associationExtensionCommonProperty2: CommonProperty = Object.assign(newCommonProperty(), {
       namespace: extensionNamespace,
       metaEdName: commonName2,
@@ -776,17 +776,17 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       referencedEntity: common,
       isExtensionOverride: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName2,
           odsContextPrefix: '',
         },
       },
     });
-    associationExtension.data.edfiOds.odsProperties.push(associationExtensionCommonProperty2);
+    associationExtension.data.edfiOdsRelational.odsProperties.push(associationExtensionCommonProperty2);
     addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -795,7 +795,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should not create a table for association extension', (): void => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionTableName)).toBeUndefined();
   });
 
   it('should create join table from association and common', (): void => {

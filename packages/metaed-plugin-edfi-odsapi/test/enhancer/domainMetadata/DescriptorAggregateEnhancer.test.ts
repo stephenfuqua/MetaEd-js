@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newDescriptor, newNamespace, normalizeEnumerationSuffix } from 'metaed-core';
 import { MetaEdEnvironment, Descriptor, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, initializeEdFiOdsRelationalEntityRepository, tableEntities } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/DescriptorAggregateEnhancer';
 import { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -30,15 +30,17 @@ describe('when enhancing descriptor with no map type', (): void => {
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName,
@@ -46,8 +48,8 @@ describe('when enhancing descriptor with no map type', (): void => {
       isMapTypeOptional: false,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {
@@ -108,22 +110,25 @@ describe('when enhancing descriptor with map type', (): void => {
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
     const descriptorTable: Table = {
       ...newTable(),
-      name: descriptorTableName,
-      nameComponents: [descriptorTableName],
+      tableId: descriptorTableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName: descriptorTableName } },
     };
+    tableEntities(metaEd, namespace).set(descriptorTable.tableId, descriptorTable);
 
     const typeTable: Table = {
       ...newTable(),
-      name: typeTableName,
-      nameComponents: [typeTableName],
+      tableId: typeTableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName: typeTableName } },
     };
+    tableEntities(metaEd, namespace).set(typeTable.tableId, typeTable);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: entityName,
@@ -131,8 +136,8 @@ describe('when enhancing descriptor with map type', (): void => {
       isMapTypeOptional: false,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: descriptorTableName,
+        edfiOdsRelational: {
+          odsTableId: descriptorTableName,
           odsTables: [descriptorTable, typeTable],
           odsIsMapType: true,
         },

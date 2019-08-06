@@ -38,12 +38,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   const referenceEntityProperties: EntityProperty[] = R.chain(
     (entity: TopLevelEntity) =>
-      entity.data.edfiOds.odsProperties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
+      entity.data.edfiOdsRelational.odsProperties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
     getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())),
   );
 
   declaredCascadingEntities.forEach((declaredCascadingEntity: TopLevelEntity) => {
-    declaredCascadingEntity.data.edfiOds.odsCascadePrimaryKeyUpdates = true;
+    declaredCascadingEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates = true;
 
     const cascadeGraph: BidirectionalGraph<TopLevelEntity> = { vertices: [], edges: [] };
     cascadeGraph.vertices.push(declaredCascadingEntity);
@@ -58,7 +58,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         if (!topLevelCascadingEntities.includes(asReferentialProperty(referenceEntityProperty).referencedEntity)) return;
         if (!referenceEntityProperty.isPartOfIdentity && !referenceEntityProperty.isIdentityRename) return;
 
-        referenceEntityProperty.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates = true;
+        referenceEntityProperty.parentEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates = true;
         newCascades.push(referenceEntityProperty.parentEntity);
 
         cascadeGraph.vertices.push(referenceEntityProperty.parentEntity);
@@ -80,16 +80,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         R.sortBy(
           R.compose(
             R.toLower,
-            R.path(['source', 'data', 'edfiOds', 'odsTableName']),
+            R.path(['source', 'data', 'edfiOdsRelational', 'odsTableId']),
           ),
         ),
       )(inEdges(cascadeGraph, multipleCascadeTopLevelEntity));
 
       edgesToPrune.forEach((edge: Edge<TopLevelEntity>) => {
-        multipleCascadeTopLevelEntity.data.edfiOds.odsIdentityProperties.forEach((property: EntityProperty) => {
+        multipleCascadeTopLevelEntity.data.edfiOdsRelational.odsIdentityProperties.forEach((property: EntityProperty) => {
           if (!isOdsReferenceProperty(property) || asReferentialProperty(property).referencedEntity !== edge.source) return;
 
-          property.data.edfiOds.odsCausesCyclicUpdateCascade = true;
+          property.data.edfiOdsRelational.odsCausesCyclicUpdateCascade = true;
           cascadeGraph.edges = R.reject(x => x.edge === edge)(cascadeGraph).edges;
         });
       });

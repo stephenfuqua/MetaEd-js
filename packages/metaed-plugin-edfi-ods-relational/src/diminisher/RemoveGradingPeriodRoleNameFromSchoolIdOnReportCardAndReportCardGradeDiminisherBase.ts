@@ -1,6 +1,6 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { removeColumn, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { removeColumn, rewriteColumnId, rewriteForeignKeyId } from './DiminisherHelper';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Table } from '../model/database/Table';
 
@@ -37,8 +37,8 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(tablesForCoreNam
   const table: Table | undefined = tablesForCoreNamespace.get(reportCard);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
@@ -47,7 +47,7 @@ function removeGradingPeriodSchoolIdOnReportCardGradeTable(tablesForCoreNamespac
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
-  renameForeignKeyColumn(table, reportCard, ...gradingPeriodToSchoolId);
+  rewriteForeignKeyId(table, reportCard, ...gradingPeriodToSchoolId);
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
@@ -57,9 +57,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjec
   const table: Table | undefined = tablesForCoreNamespace.get(reportCard + studentCompetencyObjective);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, reportCard, ...gradingPeriodToSchoolId);
-  renameForeignKeyColumn(table, studentCompetencyObjective, ...gradingPeriodToSchoolId);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, reportCard, ...gradingPeriodToSchoolId);
+  rewriteForeignKeyId(table, studentCompetencyObjective, ...gradingPeriodToSchoolId);
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
@@ -69,9 +69,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjecti
   const table: Table | undefined = tablesForCoreNamespace.get(reportCard + studentLearningObjective);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, reportCard, ...gradingPeriodToSchoolId);
-  renameForeignKeyColumn(table, studentLearningObjective, ...gradingPeriodToSchoolId);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, reportCard, ...gradingPeriodToSchoolId);
+  rewriteForeignKeyId(table, studentLearningObjective, ...gradingPeriodToSchoolId);
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
@@ -81,8 +81,8 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardT
   const table: Table | undefined = tablesForCoreNamespace.get(studentAcademicRecord + reportCard);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, reportCard, ...gradingPeriodToSchoolId);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, reportCard, ...gradingPeriodToSchoolId);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

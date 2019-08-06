@@ -2,9 +2,9 @@ import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -21,29 +21,21 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   beforeAll(() => {
     const gradingPeriod = 'GradingPeriod';
     const gradingPeriodSchoolId: string = gradingPeriod + schoolId;
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentLearningObjective,
-      nameComponents: [studentLearningObjective],
-      columns: [
-        Object.assign(newColumn(), {
-          name: gradingPeriodSchoolId,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentLearningObjective,
+      columns: [{ ...newColumn(), columnId: gradingPeriodSchoolId }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: gradingPeriod,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: schoolId,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: gradingPeriod,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: schoolId }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -51,13 +43,13 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should rename column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(studentLearningObjective) as Table).columns);
-    expect(column.name).toBe(schoolId);
+    expect(column.columnId).toBe(schoolId);
   });
 
   it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(studentLearningObjective) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });
 
@@ -71,29 +63,21 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   beforeAll(() => {
     const gradingPeriod = 'GradingPeriod';
     const gradingPeriodSchoolId: string = gradingPeriod + schoolId;
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentCompetencyObjective,
-      nameComponents: [studentCompetencyObjective],
-      columns: [
-        Object.assign(newColumn(), {
-          name: gradingPeriodSchoolId,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentCompetencyObjective,
+      columns: [{ ...newColumn(), columnId: gradingPeriodSchoolId }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: gradingPeriod,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: schoolId,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: gradingPeriod,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: schoolId }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -101,13 +85,13 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should rename column', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(studentCompetencyObjective) as Table).columns);
-    expect(column.name).toBe(schoolId);
+    expect(column.columnId).toBe(schoolId);
   });
 
   it('should rename foreign key columns', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(studentCompetencyObjective) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });
 
@@ -121,24 +105,22 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   const studentCompetencyObjectiveStudentProgramAssociation = `${studentCompetencyObjective}StudentProgramAssociation`;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentCompetencyObjectiveStudentProgramAssociation,
-      nameComponents: [studentCompetencyObjectiveStudentProgramAssociation],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentCompetencyObjectiveStudentProgramAssociation,
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: studentCompetencyObjective,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: gradingPeriodSchoolId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: studentCompetencyObjective,
+          columnPairs: [
+            { ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: gradingPeriodSchoolId },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -148,8 +130,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentCompetencyObjectiveStudentProgramAssociation,
     ) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(gradingPeriodSchoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });
 
@@ -163,24 +145,22 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   const studentCompetencyObjectiveStudentSectionAssociation = `${studentCompetencyObjective}StudentSectionAssociation`;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentCompetencyObjectiveStudentSectionAssociation,
-      nameComponents: [studentCompetencyObjectiveStudentSectionAssociation],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentCompetencyObjectiveStudentSectionAssociation,
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: studentCompetencyObjective,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: gradingPeriodSchoolId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: studentCompetencyObjective,
+          columnPairs: [
+            { ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: gradingPeriodSchoolId },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -190,8 +170,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentCompetencyObjectiveStudentSectionAssociation,
     ) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(gradingPeriodSchoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });
 
@@ -205,24 +185,22 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   const studentLearningObjectiveStudentStudentProgramAssociation = `${studentLearningObjective}StudentProgramAssociation`;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentLearningObjectiveStudentStudentProgramAssociation,
-      nameComponents: [studentLearningObjectiveStudentStudentProgramAssociation],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentLearningObjectiveStudentStudentProgramAssociation,
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: studentLearningObjective,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: gradingPeriodSchoolId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: studentLearningObjective,
+          columnPairs: [
+            { ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: gradingPeriodSchoolId },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -232,8 +210,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentLearningObjectiveStudentStudentProgramAssociation,
     ) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(gradingPeriodSchoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });
 
@@ -247,24 +225,22 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   const studentLearningObjectiveStudentStudentSectionAssociation = `${studentLearningObjective}StudentSectionAssociation`;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: studentLearningObjectiveStudentStudentSectionAssociation,
-      nameComponents: [studentLearningObjectiveStudentStudentSectionAssociation],
+    const table: Table = {
+      ...newTable(),
+      tableId: studentLearningObjectiveStudentStudentSectionAssociation,
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: studentLearningObjective,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: gradingPeriodSchoolId,
-              foreignTableColumnName: gradingPeriodSchoolId,
-            }),
+        {
+          ...newForeignKey(),
+          foreignTableId: studentLearningObjective,
+          columnPairs: [
+            { ...newColumnPair(), parentTableColumnId: gradingPeriodSchoolId, foreignTableColumnId: gradingPeriodSchoolId },
           ],
-        }),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.1.0';
     enhance(metaEd);
@@ -274,7 +250,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
       studentLearningObjectiveStudentStudentSectionAssociation,
     ) as Table;
-    expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
-    expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
+    expect(R.head(foreignKeys[0].columnPairs).parentTableColumnId).toBe(gradingPeriodSchoolId);
+    expect(R.head(foreignKeys[0].columnPairs).foreignTableColumnId).toBe(schoolId);
   });
 });

@@ -22,23 +22,23 @@ describe('when enhancing domainEntity with string properties', (): void => {
   });
 
   it('should have ods table name', (): void => {
-    expect(domainEntity.data.edfiOds.odsTableName).toBeDefined();
-    expect(domainEntity.data.edfiOds.odsTableName).toBe('');
+    expect(domainEntity.data.edfiOdsRelational.odsTableId).toBeDefined();
+    expect(domainEntity.data.edfiOdsRelational.odsTableId).toBe('');
   });
 
   it('should have ods cascade primary key updates', (): void => {
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBeDefined();
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBeDefined();
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
   it('should have ods entity table', (): void => {
-    expect(domainEntity.data.edfiOds.odsEntityTable).toBeDefined();
-    expect(domainEntity.data.edfiOds.odsEntityTable).toBe(NoTable);
+    expect(domainEntity.data.edfiOdsRelational.odsEntityTable).toBeDefined();
+    expect(domainEntity.data.edfiOdsRelational.odsEntityTable).toBe(NoTable);
   });
 
   it('should have ods tables', (): void => {
-    expect(domainEntity.data.edfiOds.odsTables).toBeDefined();
-    expect(domainEntity.data.edfiOds.odsTables).toHaveLength(0);
+    expect(domainEntity.data.edfiOdsRelational.odsTables).toBeDefined();
+    expect(domainEntity.data.edfiOdsRelational.odsTables).toHaveLength(0);
   });
 });
 
@@ -73,13 +73,13 @@ describe('when enhancing domainEntity with string properties', (): void => {
   });
 
   it('should add identity property to ods identity properties', (): void => {
-    expect(domainEntity.data.edfiOds.odsIdentityProperties.length).toBe(1);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties[0]).toBe(integerIdentityProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties.length).toBe(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties[0]).toBe(integerIdentityProperty);
   });
 
   it('should add properties to ods properties', (): void => {
-    expect(domainEntity.data.edfiOds.odsProperties.length).toBe(2);
-    expect(domainEntity.data.edfiOds.odsProperties[0]).toBe(integerIdentityProperty);
-    expect(domainEntity.data.edfiOds.odsProperties[1]).toBe(integerProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties.length).toBe(2);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties[0]).toBe(integerIdentityProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties[1]).toBe(integerProperty);
   });
 });

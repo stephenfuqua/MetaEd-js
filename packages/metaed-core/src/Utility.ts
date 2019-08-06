@@ -30,6 +30,14 @@ export const orderByProp = (prop: string) =>
     ),
   );
 
+export const orderByPath = (path: string[]) =>
+  R.sortBy(
+    R.compose(
+      R.toLower,
+      R.path(path),
+    ),
+  );
+
 /**
  *
  */

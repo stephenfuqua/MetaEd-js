@@ -1,9 +1,8 @@
-import R from 'ramda';
 import { addEntityForNamespace, newMetaEdEnvironment, newNamespace, newSchoolYearEnumeration } from 'metaed-core';
 import { MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 
 describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -19,13 +18,13 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
       documentation: schoolYearEnumerationDocumentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [],
         },
       },
     });
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(schoolYearEnumeration);
     enhance(metaEd);
   });
@@ -33,7 +32,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
   it('should create table', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
     expect(table).toBeDefined();
-    expect(table.name).toBe(schoolYearType);
+    expect(table.tableId).toBe(schoolYearType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(schoolYearEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
@@ -47,15 +46,15 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
-    expect(R.head(table.columns).name).toBe(schoolYear);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(schoolYear);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have school year description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'SchoolYearDescription'));
+    const column = table.columns.filter(x => x.columnId === 'SchoolYearDescription')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -65,7 +64,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
 
   it('should have current school year column', (): void => {
     const table = tableEntities(metaEd, namespace).get(schoolYearType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'CurrentSchoolYear'));
+    const column = table.columns.filter(x => x.columnId === 'CurrentSchoolYear')[0];
     expect(column).toBeDefined();
     expect(column.isPartOfPrimaryKey).toBe(false);
     expect(column.isNullable).toBe(false);

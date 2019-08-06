@@ -9,15 +9,15 @@ export interface EnumerationRow extends EnumerationRowBase {
 }
 
 export function newEnumerationRow(): EnumerationRow {
-  return Object.assign({}, newEnumerationRowBase(), {
+  return {
+    ...newEnumerationRowBase(),
     codeValue: '',
     description: '',
     shortDescription: '',
-  });
+  };
 }
 
-export const NoEnumerationRow: EnumerationRow = deepFreeze(
-  Object.assign(newEnumerationRow(), {
-    name: 'NoEnumerationRow',
-  }),
-);
+export const NoEnumerationRow: EnumerationRow = deepFreeze({
+  ...newEnumerationRow(),
+  name: 'NoEnumerationRow',
+});

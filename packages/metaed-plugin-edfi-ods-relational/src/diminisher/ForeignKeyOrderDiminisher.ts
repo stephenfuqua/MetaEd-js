@@ -1,10 +1,9 @@
 import R from 'ramda';
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { getForeignKeys } from '../model/database/Table';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
-import { ColumnNamePair } from '../model/database/ColumnNamePair';
+import { ColumnPair } from '../model/database/ColumnPair';
 import { ForeignKey } from '../model/database/ForeignKey';
 import { Table } from '../model/database/Table';
 
@@ -18,26 +17,25 @@ const schemaName = 'edfi';
 
 function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
   const foreignKeys: ForeignKey[] = R.chain((table: Table) =>
-    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === schemaName),
+    table.foreignKeys.filter((fk: ForeignKey) => fk.columnPairs.length > 1 && fk.foreignTableSchema === schemaName),
   )([...tablesForCoreNamespace.values()]);
   if (foreignKeys.length === 0) return;
 
-  foreignKeys.forEach((fk: ForeignKey) => {
-    const foreignTable: Table | undefined = tablesForCoreNamespace.get(fk.foreignTableName);
+  foreignKeys.forEach((foreignKey: ForeignKey) => {
+    const foreignTable: Table | undefined = tablesForCoreNamespace.get(foreignKey.foreignTableId);
     if (foreignTable == null) return;
 
-    const primaryKeyOrder: string[] = foreignTable.primaryKeys.map((pk: Column) => pk.name);
-    const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnNamePair } = R.groupBy(
-      R.prop('foreignTableColumnName'),
-      fk.columnNames,
+    const primaryKeyOrder: string[] = foreignTable.primaryKeys.map((pk: Column) => pk.columnId);
+    const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnPair } = R.groupBy(
+      R.prop('foreignTableColumnId'),
+      foreignKey.columnPairs,
     );
     // eslint-disable-next-line no-underscore-dangle
-    const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnNamePair = R.prop(R.__, foreignKeyColumnPairLookup);
+    const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnPair = R.prop(R.__, foreignKeyColumnPairLookup);
 
-    const foreignKeyOrder: ColumnNamePair[] = R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
+    const newForeignKeyOrder: ColumnPair[] = R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
 
-    fk.parentTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.parentTableColumnName);
-    fk.foreignTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.foreignTableColumnName);
+    foreignKey.columnPairs = newForeignKeyOrder;
   });
 }
 

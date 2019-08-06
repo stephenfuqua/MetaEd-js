@@ -12,7 +12,8 @@ export const enumerationRowCreator = {
       const name: string = normalizeEnumerationSuffix(tableName);
       const description: string = escapeSqlSingleQuote(item.shortDescription);
 
-      return Object.assign(newEnumerationRow(), {
+      return {
+        ...newEnumerationRow(),
         name,
         namespace: namespaceName,
         schemaName: namespaceName.toLowerCase(),
@@ -21,7 +22,7 @@ export const enumerationRowCreator = {
         codeValue: '',
         description,
         shortDescription: description,
-      });
+      };
     });
   },
 };

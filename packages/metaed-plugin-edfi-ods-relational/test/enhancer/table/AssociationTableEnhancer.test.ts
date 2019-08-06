@@ -28,7 +28,7 @@ import {
 } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { ForeignKey } from '../../../src/model/database/ForeignKey';
 import { Table } from '../../../src/model/database/Table';
 
@@ -46,8 +46,8 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -57,15 +57,15 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
       metaEdName: propertyName,
       roleName: '',
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(property);
+    entity.data.edfiOdsRelational.odsProperties.push(property);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -86,7 +86,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
   it('should have one column', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(propertyName);
+    expect(table.columns[0].columnId).toBe(propertyName);
   });
 });
 
@@ -106,8 +106,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -118,7 +118,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -130,23 +130,23 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       roleName: '',
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(requiredCollectionProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(requiredCollectionProperty);
 
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: associationName,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -157,17 +157,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       isPartOfIdentity: true,
       roleName: '',
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    association.data.edfiOds.odsIdentityProperties.push(associationPkProperty);
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsIdentityProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     requiredCollectionProperty.referencedEntity = association;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(association);
     enhance(metaEd);
@@ -182,7 +182,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(entityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -191,7 +191,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(associationPkPropertyName);
+    expect(table.columns[0].columnId).toBe(associationPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -205,13 +205,13 @@ describe('when AssociationTableEnhancer enhances entity with required collection
 
   it('should have join table with foreign key to entity', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName) as Table;
-    expect(joinTable.columns[0].name).toBe(entityPkPropertyName);
+    expect(joinTable.columns[0].columnId).toBe(entityPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to association', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName) as Table;
-    expect(joinTable.columns[1].name).toBe(associationPkPropertyName);
+    expect(joinTable.columns[1].columnId).toBe(associationPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
@@ -232,8 +232,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -244,7 +244,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -256,24 +256,24 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       roleName: '',
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(requiredCollectionProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(requiredCollectionProperty);
 
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -284,17 +284,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
       isPartOfIdentity: true,
       roleName: '',
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
     requiredCollectionProperty.referencedEntity = common;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(common);
     enhance(metaEd);
@@ -309,7 +309,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(entityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -323,13 +323,13 @@ describe('when AssociationTableEnhancer enhances entity with required collection
 
   it('should have join table with foreign key to common', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName) as Table;
-    expect(joinTable.columns[0].name).toBe(commonPkPropertyName);
+    expect(joinTable.columns[0].columnId).toBe(commonPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to entity', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName) as Table;
-    expect(joinTable.columns[1].name).toBe(entityPkPropertyName);
+    expect(joinTable.columns[1].columnId).toBe(entityPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
@@ -352,8 +352,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -364,7 +364,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -376,23 +376,23 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isRequired: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(requiredProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(requiredProperty);
 
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: referencedEntityName,
+        edfiOdsRelational: {
+          odsTableId: referencedEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -403,7 +403,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -415,15 +415,15 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isRequired: true,
       parentEntity: referencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    referencedEntity.data.edfiOds.odsIdentityProperties.push(referencedEntityPkProperty);
-    referencedEntity.data.edfiOds.odsProperties.push(referencedEntityPkProperty);
-    referencedEntity.data.edfiOds.odsProperties.push(referencedEntityRequiredProperty);
+    referencedEntity.data.edfiOdsRelational.odsIdentityProperties.push(referencedEntityPkProperty);
+    referencedEntity.data.edfiOdsRelational.odsProperties.push(referencedEntityPkProperty);
+    referencedEntity.data.edfiOdsRelational.odsProperties.push(referencedEntityRequiredProperty);
     requiredProperty.referencedEntity = referencedEntity;
 
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
@@ -431,8 +431,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: subReferencedEntityName,
+        edfiOdsRelational: {
+          odsTableId: subReferencedEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -443,17 +443,17 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: subReferencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    subReferencedEntity.data.edfiOds.odsIdentityProperties.push(subReferencedEntityPkProperty);
-    subReferencedEntity.data.edfiOds.odsProperties.push(subReferencedEntityPkProperty);
+    subReferencedEntity.data.edfiOdsRelational.odsIdentityProperties.push(subReferencedEntityPkProperty);
+    subReferencedEntity.data.edfiOdsRelational.odsProperties.push(subReferencedEntityPkProperty);
     referencedEntityRequiredProperty.referencedEntity = subReferencedEntity;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(referencedEntity);
     addEntityForNamespace(subReferencedEntity);
@@ -469,10 +469,10 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
-    expect(table.columns[0].name).toBe(entityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
 
-    expect(table.columns[1].name).toBe(referencedEntityPkPropertyName);
+    expect(table.columns[1].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
   });
 
@@ -481,10 +481,10 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
-    expect(table.columns[0].name).toBe(referencedEntityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
 
-    expect(table.columns[1].name).toBe(subReferencedEntityPkPropertyName);
+    expect(table.columns[1].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
   });
 });
@@ -507,8 +507,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -519,7 +519,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -531,23 +531,23 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isRequired: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityRequiredProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityRequiredProperty);
 
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: referencedEntityName,
+        edfiOdsRelational: {
+          odsTableId: referencedEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -558,7 +558,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -570,16 +570,16 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    referencedEntity.data.edfiOds.odsIdentityProperties.push(referencedEntityPkProperty1);
-    referencedEntity.data.edfiOds.odsIdentityProperties.push(referencedEntityPkProperty2);
-    referencedEntity.data.edfiOds.odsProperties.push(referencedEntityPkProperty1);
-    referencedEntity.data.edfiOds.odsProperties.push(referencedEntityPkProperty2);
+    referencedEntity.data.edfiOdsRelational.odsIdentityProperties.push(referencedEntityPkProperty1);
+    referencedEntity.data.edfiOdsRelational.odsIdentityProperties.push(referencedEntityPkProperty2);
+    referencedEntity.data.edfiOdsRelational.odsProperties.push(referencedEntityPkProperty1);
+    referencedEntity.data.edfiOdsRelational.odsProperties.push(referencedEntityPkProperty2);
     entityRequiredProperty.referencedEntity = referencedEntity;
 
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
@@ -587,8 +587,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: subReferencedEntityName,
+        edfiOdsRelational: {
+          odsTableId: subReferencedEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -599,17 +599,17 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
       isPartOfIdentity: true,
       parentEntity: subReferencedEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    subReferencedEntity.data.edfiOds.odsIdentityProperties.push(subReferencedEntityPkProperty);
-    subReferencedEntity.data.edfiOds.odsProperties.push(subReferencedEntityPkProperty);
+    subReferencedEntity.data.edfiOdsRelational.odsIdentityProperties.push(subReferencedEntityPkProperty);
+    subReferencedEntity.data.edfiOdsRelational.odsProperties.push(subReferencedEntityPkProperty);
     referencedEntityPkProperty2.referencedEntity = subReferencedEntity;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(referencedEntity);
     addEntityForNamespace(subReferencedEntity);
@@ -625,13 +625,13 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);
-    expect(table.columns[0].name).toBe(entityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
 
-    expect(table.columns[1].name).toBe(referencedEntityPkPropertyName);
+    expect(table.columns[1].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
 
-    expect(table.columns[2].name).toBe(subReferencedEntityPkPropertyName);
+    expect(table.columns[2].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[2].isPartOfPrimaryKey).toBe(false);
   });
 
@@ -640,10 +640,10 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
-    expect(table.columns[0].name).toBe(referencedEntityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
 
-    expect(table.columns[1].name).toBe(subReferencedEntityPkPropertyName);
+    expect(table.columns[1].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
@@ -662,8 +662,8 @@ describe("when AssociationTableEnhancer enhances entity with collection property
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -674,21 +674,21 @@ describe("when AssociationTableEnhancer enhances entity with collection property
       referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(entityCollectionProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityCollectionProperty);
 
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: referencedEntityName,
+        edfiOdsRelational: {
+          odsTableId: referencedEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -696,7 +696,7 @@ describe("when AssociationTableEnhancer enhances entity with collection property
     });
     entityCollectionProperty.referencedEntity = referencedEntity;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(referencedEntity);
     enhance(metaEd);
@@ -723,8 +723,8 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -736,7 +736,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -748,24 +748,24 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty1);
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty2);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty1);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty2);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty1);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty2);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty1);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty2);
 
     const referencedEntity1: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName1,
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: referencedEntityName1,
+        edfiOdsRelational: {
+          odsTableId: referencedEntityName1,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -776,14 +776,14 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       isPartOfIdentity: true,
       parentEntity: referencedEntity1,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    referencedEntity1.data.edfiOds.odsIdentityProperties.push(referencedEntity1PkProperty);
-    referencedEntity1.data.edfiOds.odsProperties.push(referencedEntity1PkProperty);
+    referencedEntity1.data.edfiOdsRelational.odsIdentityProperties.push(referencedEntity1PkProperty);
+    referencedEntity1.data.edfiOdsRelational.odsProperties.push(referencedEntity1PkProperty);
     entityPkProperty1.referencedEntity = referencedEntity1;
 
     const referencedEntity2: Association = Object.assign(newAssociation(), {
@@ -791,8 +791,8 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: referencedEntityName2,
+        edfiOdsRelational: {
+          odsTableId: referencedEntityName2,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -803,17 +803,17 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
       isPartOfIdentity: true,
       parentEntity: referencedEntity2,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    referencedEntity2.data.edfiOds.odsIdentityProperties.push(referencedEntity2PkProperty);
-    referencedEntity2.data.edfiOds.odsProperties.push(referencedEntity2PkProperty);
+    referencedEntity2.data.edfiOdsRelational.odsIdentityProperties.push(referencedEntity2PkProperty);
+    referencedEntity2.data.edfiOdsRelational.odsProperties.push(referencedEntity2PkProperty);
     entityPkProperty2.referencedEntity = referencedEntity2;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     addEntityForNamespace(referencedEntity1);
     addEntityForNamespace(referencedEntity2);
@@ -828,7 +828,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
   it('should create single column in entity table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(commonPkPropertyName);
+    expect(table.columns[0].columnId).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 });
@@ -848,8 +848,8 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
       documentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -863,22 +863,22 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
       parentEntity: entity,
       referencedEntity: Object.assign(newEnumeration(), {
         data: {
-          edfiOds: {
-            odsTableName: 'EnumerationEntityName',
+          edfiOdsRelational: {
+            odsTableId: 'EnumerationEntityName',
           },
         },
       }),
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTypeifiedBaseName: `${optionalCollectionPropertyName}Type`,
           odsContextPrefix: contextName,
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(optionalCollectionProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(optionalCollectionProperty);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -910,9 +910,9 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -924,26 +924,26 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTypeifiedBaseName: `${enumerationName}Type`,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(enumerationProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(enumerationProperty);
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationName,
       data: {
-        edfiOds: {
-          odsTableName: `${enumerationName}Type`,
+        edfiOdsRelational: {
+          odsTableId: `${enumerationName}Type`,
         },
       },
     });
     enumerationProperty.referencedEntity = enumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -962,9 +962,9 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
 
   it('should have join table with foreign key to enumeration table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName + enumerationName) as Table;
-    const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
+    const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableId !== entityName));
     expect(foreignKey).toBeDefined();
-    expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
+    expect(foreignKey.foreignTableId).toBe(`${enumerationName}Type`);
   });
 });
 
@@ -982,9 +982,9 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -995,26 +995,26 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
       referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTypeifiedBaseName: `${enumerationName}Type`,
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(enumerationProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(enumerationProperty);
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationName,
       data: {
-        edfiOds: {
-          odsTableName: `${enumerationName}Type`,
+        edfiOdsRelational: {
+          odsTableId: `${enumerationName}Type`,
         },
       },
     });
     enumerationProperty.referencedEntity = enumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1025,9 +1025,9 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
 
   it('should have foreign key to enumeration table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
-    const foreignKey: ForeignKey = R.head(table.foreignKeys);
+    const foreignKey: ForeignKey = table.foreignKeys[0];
     expect(foreignKey).toBeDefined();
-    expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
+    expect(foreignKey.foreignTableId).toBe(`${enumerationName}Type`);
   });
 });
 
@@ -1045,9 +1045,9 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1058,26 +1058,26 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
       referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTypeifiedBaseName: `${enumerationName}Type`,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(enumerationProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(enumerationProperty);
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationName,
       data: {
-        edfiOds: {
-          odsTableName: `${enumerationName}Type`,
+        edfiOdsRelational: {
+          odsTableId: `${enumerationName}Type`,
         },
       },
     });
     enumerationProperty.referencedEntity = enumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1091,7 +1091,7 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
   });
 
   it('should create join table that does not conflict with the parent entity table name', (): void => {
-    expect(tableEntities(metaEd, namespace).get(enumerationName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + enumerationName)).toBeDefined();
   });
 });
 
@@ -1109,9 +1109,9 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1123,27 +1123,27 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorifiedBaseName: `${descriptorName}Descriptor`,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(descriptorProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(descriptorProperty);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorName: `${descriptorName}Descriptor`,
-          odsTableName: `${descriptorName}Descriptor`,
+          odsTableId: `${descriptorName}Descriptor`,
         },
       },
     });
     descriptorProperty.referencedEntity = descriptor;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1162,9 +1162,9 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
 
   it('should have join table with foreign key to descriptor table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName + descriptorName) as Table;
-    const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
+    const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableId !== entityName));
     expect(foreignKey).toBeDefined();
-    expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
+    expect(foreignKey.foreignTableId).toBe(`${descriptorName}Descriptor`);
   });
 });
 
@@ -1182,9 +1182,9 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1195,27 +1195,27 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
       referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorifiedBaseName: `${descriptorName}Descriptor`,
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(descriptorProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(descriptorProperty);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorName: `${descriptorName}Descriptor`,
-          odsTableName: `${descriptorName}Type`,
+          odsTableId: `${descriptorName}Type`,
         },
       },
     });
     descriptorProperty.referencedEntity = descriptor;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1226,9 +1226,9 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
 
   it('should have foreign key to descriptor table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
-    const foreignKey: ForeignKey = R.head(table.foreignKeys);
+    const foreignKey: ForeignKey = table.foreignKeys[0];
     expect(foreignKey).toBeDefined();
-    expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
+    expect(foreignKey.foreignTableId).toBe(`${descriptorName}Descriptor`);
   });
 });
 
@@ -1246,9 +1246,9 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1260,27 +1260,27 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorifiedBaseName: `${descriptorName}Descriptor`,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsProperties.push(descriptorProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(descriptorProperty);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorName: `${descriptorName}Descriptor`,
-          odsTableName: `${descriptorName}Descriptor`,
+          odsTableId: `${descriptorName}Descriptor`,
         },
       },
     });
     descriptorProperty.referencedEntity = descriptor;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1294,7 +1294,7 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
   });
 
   it('should create join table that does not conflict with the parent entity table name', (): void => {
-    expect(tableEntities(metaEd, namespace).get(descriptorName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + descriptorName)).toBeDefined();
   });
 });
 
@@ -1315,9 +1315,9 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
       documentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: entityName,
-          odsTableName: entityName,
+          odsTableId: entityName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1328,7 +1328,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -1340,22 +1340,22 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
           odsContextPrefix: '',
           odsIsCollection: true,
         },
       },
     });
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(entityPkProperty);
-    entity.data.edfiOds.odsProperties.push(commonProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(commonProperty);
 
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -1366,7 +1366,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
@@ -1377,18 +1377,18 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
       isPartOfIdentity: false,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsProperties.push(commonNonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonNonPkProperty);
     commonProperty.referencedEntity = common;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -1402,22 +1402,22 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(entityPkPropertyName);
+    expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should create join table with two primary keys and one non primary key', (): void => {
-    const table: Table = tableEntities(metaEd, namespace).get(commonName) as Table;
+    const table: Table = tableEntities(metaEd, namespace).get(entityName + commonName) as Table;
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);
-    expect(table.columns[0].name).toBe(commonPkPropertyName);
+    expect(table.columns[0].columnId).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
 
-    expect(table.columns[1].name).toBe(commonNonPkPropertyName);
+    expect(table.columns[1].columnId).toBe(commonNonPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
 
-    expect(table.columns[2].name).toBe(entityPkPropertyName);
+    expect(table.columns[2].columnId).toBe(entityPkPropertyName);
     expect(table.columns[2].isPartOfPrimaryKey).toBe(true);
   });
 });

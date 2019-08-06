@@ -1,8 +1,15 @@
 import R from 'ramda';
 import { asCommonProperty } from 'metaed-core';
 import { EntityProperty, MergeDirective, ReferentialProperty, Namespace } from 'metaed-core';
-import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
-import { appendOverlapping } from './TableNaming';
+import {
+  TableNameGroup,
+  addColumns,
+  addForeignKey,
+  newTable,
+  newTableNameComponent,
+  newTableExistenceReason,
+  newTableNameGroup,
+} from '../../model/database/Table';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
@@ -10,14 +17,10 @@ import { TableStrategy } from '../../model/database/TableStrategy';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
 import { ColumnCreatorFactory } from './ColumnCreatorFactory';
-import { ForeignKey } from '../../model/database/ForeignKey';
+import { ForeignKey, createForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
 import { TableBuilderFactory } from './TableBuilderFactory';
-
-function overlapCollapsingJoinTableName(parentEntityName: string, odsName: string) {
-  return appendOverlapping(parentEntityName, odsName);
-}
 
 function buildJoinTables(
   property: ReferentialProperty,
@@ -25,36 +28,42 @@ function buildJoinTables(
   parentPrimaryKeys: Column[],
   primaryKeys: Column[],
   buildStrategy: BuildStrategy,
-  joinTableName: string,
-  joinTableNameComponents: string[],
+  joinTableId: string,
+  joinTableNameGroup: TableNameGroup,
   joinTableNamespace: Namespace,
   joinTableSchema: string,
   tables: Table[],
   tableFactory: TableBuilderFactory,
   parentIsRequired: boolean | null,
 ): void {
-  const joinTable: Table = Object.assign(newTable(), {
+  const joinTable: Table = {
+    ...newTable(),
     namespace: joinTableNamespace,
     schema: joinTableSchema.toLowerCase(),
-    name: joinTableName,
-    nameComponents: joinTableNameComponents,
+    tableId: joinTableId,
+    nameGroup: joinTableNameGroup,
+    existenceReason: {
+      ...newTableExistenceReason(),
+      isImplementingCommon: true,
+      sourceProperty: property,
+    },
     description: property.documentation,
     isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
     includeCreateDateColumn: true,
     parentEntity: property.parentEntity,
-  });
+  };
   tables.push(joinTable);
 
   let strategy: BuildStrategy = buildStrategy.undoLeafColumnsNullable();
   if (strategy != null) {
     if (property.isOptional) {
       strategy = strategy.suppressPrimaryKeyCreationFromPropertiesStrategy();
-    } else if (property.data.edfiOds.odsIsCollection) {
+    } else if (property.data.edfiOdsRelational.odsIsCollection) {
       strategy = strategy.undoSuppressPrimaryKeyCreationFromProperties();
     }
   }
 
-  property.referencedEntity.data.edfiOds.odsProperties.forEach((referenceProperty: EntityProperty) => {
+  property.referencedEntity.data.edfiOdsRelational.odsProperties.forEach((referenceProperty: EntityProperty) => {
     const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(referenceProperty);
     tableBuilder.buildTables(referenceProperty, TableStrategy.default(joinTable), primaryKeys, strategy, tables, null);
   });
@@ -64,11 +73,11 @@ function buildJoinTables(
     parentPrimaryKeys,
     parentTableStrategy.schema,
     parentTableStrategy.schemaNamespace,
-    parentTableStrategy.name,
-    ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
+    parentTableStrategy.tableId,
+    ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates),
   );
   addForeignKey(joinTable, foreignKey);
-  addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
+  addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.tableId));
 }
 
 export function commonPropertyTableBuilder(
@@ -99,12 +108,21 @@ export function commonPropertyTableBuilder(
       }
       primaryKeys.push(...parentPrimaryKeys);
 
-      const joinTableName: string = overlapCollapsingJoinTableName(
-        parentTableStrategy.name,
-        commonProperty.data.edfiOds.odsName,
-      );
+      const joinTableId: string = parentTableStrategy.tableId + commonProperty.data.edfiOdsRelational.odsName;
 
-      const joinTableNameComponents = [...parentTableStrategy.nameComponents, commonProperty.data.edfiOds.odsName];
+      const joinTableNameGroup: TableNameGroup = {
+        ...newTableNameGroup(),
+        nameElements: [
+          parentTableStrategy.nameGroup,
+          {
+            ...newTableNameComponent(),
+            name: commonProperty.data.edfiOdsRelational.odsName,
+            isPropertyOdsName: true,
+            sourceProperty: commonProperty,
+          },
+        ],
+        sourceProperty: commonProperty,
+      };
 
       buildJoinTables(
         commonProperty,
@@ -112,8 +130,8 @@ export function commonPropertyTableBuilder(
         parentPrimaryKeys,
         primaryKeys,
         buildStrategy,
-        joinTableName,
-        joinTableNameComponents,
+        joinTableId,
+        joinTableNameGroup,
         parentTableStrategy.table.namespace,
         parentTableStrategy.table.schema,
         tables,

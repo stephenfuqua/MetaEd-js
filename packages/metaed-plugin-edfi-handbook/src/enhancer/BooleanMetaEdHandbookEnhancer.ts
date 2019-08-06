@@ -1,5 +1,5 @@
 import { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
+import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
 import { createDefaultHandbookEntry } from './XsdBuiltinTypeMetaEdHandbookEnhancerBase';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';

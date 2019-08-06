@@ -1,28 +1,42 @@
 import R from 'ramda';
-import { Namespace, TopLevelEntity } from 'metaed-core';
-import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import { Namespace, TopLevelEntity, MetaEdEnvironment } from 'metaed-core';
+import { Table, TopLevelEntityEdfiOds, tableEntity } from 'metaed-plugin-edfi-ods-relational';
 import { TopLevelEntityEdfiOdsApi } from '../../model/TopLevelEntity';
 import { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 
-export type EnhanceEntityTable = (entity: TopLevelEntity, table: Table, entityTable: EntityTable) => void;
+export type EnhanceEntityTable = (
+  metaEd: MetaEdEnvironment,
+  entity: TopLevelEntity,
+  table: Table,
+  entityTable: EntityTable,
+) => void;
 export type IsAggregateExtension = () => boolean;
 export type OrderedAndUniqueTablesFor = (entity: TopLevelEntity, namespace: Namespace) => Table[];
 
-// @ts-ignore - parameters never read
-export function nullEnhanceEntityTable(entity: TopLevelEntity, table: Table, entityTable: EntityTable): void {} // eslint-disable-line no-unused-vars
+export function nullEnhanceEntityTable(
+  // @ts-ignore - value never read
+  metaEd: MetaEdEnvironment,
+  // @ts-ignore - value never read
+  entity: TopLevelEntity,
+  // @ts-ignore - value never read
+  table: Table,
+  // @ts-ignore - value never read
+  entityTable: EntityTable,
+): void {} // eslint-disable-line no-unused-vars
 
 export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Table[] {
-  const tablesForNamespace = (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTables.filter(
+  const tablesForNamespace = (entity.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsTables.filter(
     (t: Table) => t.schema === namespace.namespaceName.toLowerCase(),
   );
   // TODO: why is unique necessary?
-  const uniquedTables = R.uniqBy(R.prop('name'), tablesForNamespace);
-  return R.sortBy(R.prop('name'), uniquedTables);
+  const uniquedTables = R.uniqBy(R.prop('tableId'), tablesForNamespace);
+  return R.sortBy(R.path(['data', 'edfiOdsSqlServer', 'tableName']), uniquedTables);
 }
 
 function generateAggregate(
+  metaEd: MetaEdEnvironment,
   entity: TopLevelEntity,
   namespace: Namespace,
   enhanceEntityTable: EnhanceEntityTable,
@@ -31,8 +45,17 @@ function generateAggregate(
 ): Aggregate | null {
   const tables: Table[] = orderedAndUniqueTablesFor(entity, namespace).filter((table: Table) => !table.hideFromApiMetadata);
   if (tables.length === 0) return null;
+  let rootTable: Table | undefined;
+  if (isAggregateExtension()) {
+    if (entity.baseEntity != null) {
+      rootTable = tableEntity(metaEd, entity.baseEntity.namespace, entity.data.edfiOdsRelational.odsTableId);
+    }
+  } else {
+    rootTable = tableEntity(metaEd, entity.namespace, entity.data.edfiOdsRelational.odsTableId);
+  }
+
   const aggregate: Aggregate = {
-    root: (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName,
+    root: rootTable == null ? '' : rootTable.data.edfiOdsSqlServer.tableName,
     schema: entity.namespace.namespaceName.toLowerCase(),
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: isAggregateExtension(),
@@ -41,7 +64,7 @@ function generateAggregate(
 
   tables.forEach((table: Table) => {
     const entityTable: EntityTable = {
-      table: table.name,
+      table: table.data.edfiOdsSqlServer.tableName,
       isA: null,
       isAbstract: false,
       isRequiredCollection: table.isRequiredCollectionTable,
@@ -49,13 +72,14 @@ function generateAggregate(
       hasIsA: false,
       requiresSchema: namespace.isExtension,
     };
-    enhanceEntityTable(entity, table, entityTable);
+    enhanceEntityTable(metaEd, entity, table, entityTable);
     aggregate.entityTables.push(entityTable);
   });
   return aggregate;
 }
 
 export function enhanceSingleEntity(
+  metaEd: MetaEdEnvironment,
   entity: TopLevelEntity,
   namespaceMap: Map<string, Namespace>,
   enhanceEntityTable: EnhanceEntityTable = nullEnhanceEntityTable,
@@ -66,6 +90,7 @@ export function enhanceSingleEntity(
     Array.from(namespaceMap.values()).filter(n => n.namespaceName === entity.namespace.namespaceName),
   );
   const aggregate = generateAggregate(
+    metaEd,
     entity,
     entityNamespace,
     enhanceEntityTable,

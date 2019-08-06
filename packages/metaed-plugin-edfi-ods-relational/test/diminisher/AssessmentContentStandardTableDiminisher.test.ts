@@ -2,9 +2,9 @@ import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AssessmentContentStandardTableDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -22,29 +22,21 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   const version = 'Version';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentContentStandard,
-      nameComponents: [assessmentContentStandard],
-      columns: [
-        Object.assign(newColumn(), {
-          name: version,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: assessmentContentStandard,
+      columns: [{ ...newColumn(), columnId: version }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: assessment,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: version,
-              foreignTableColumnName: version,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: assessment,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: version, foreignTableColumnId: version }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -53,13 +45,13 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   it('should add AssessmentVersion column', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table;
     expect(columns).toHaveLength(2);
-    expect(R.head(columns).name).toBe(version);
-    expect(R.last(columns).name).toBe(assessmentVersion);
+    expect(columns[0].columnId).toBe(version);
+    expect(columns[columns.length - 1].columnId).toBe(assessmentVersion);
   });
 
   it('should modify assessment column to be nullable non primary key', (): void => {
     const column: Column = R.head((tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table).columns);
-    expect(column.name).toBe(version);
+    expect(column.columnId).toBe(version);
     expect(column.isNullable).toBe(true);
     expect(column.isPartOfPrimaryKey).toBe(false);
   });
@@ -68,9 +60,9 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(assessment);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(assessmentVersion);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);
+    expect(foreignKey.foreignTableId).toBe(assessment);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(assessmentVersion);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(version);
   });
 });
 
@@ -84,29 +76,21 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   const version = 'Version';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentContentStandardAuthor,
-      nameComponents: [assessmentContentStandardAuthor],
-      columns: [
-        Object.assign(newColumn(), {
-          name: version,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: assessmentContentStandardAuthor,
+      columns: [{ ...newColumn(), columnId: version }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: assessmentContentStandard,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: version,
-              foreignTableColumnName: version,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: assessmentContentStandard,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: version, foreignTableColumnId: version }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -115,16 +99,16 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   it('should rename Version column to AssessmentVersion', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor) as Table;
     expect(columns).toHaveLength(1);
-    expect(R.head(columns).name).toBe(assessmentVersion);
+    expect(columns[0].columnId).toBe(assessmentVersion);
   });
 
   it('should have correct foreign key relationship', (): void => {
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(assessmentContentStandard);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(assessmentVersion);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(assessmentVersion);
+    expect(foreignKey.foreignTableId).toBe(assessmentContentStandard);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(assessmentVersion);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(assessmentVersion);
   });
 });
 
@@ -138,29 +122,21 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   const version = 'Version';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentContentStandard,
-      nameComponents: [assessmentContentStandard],
-      columns: [
-        Object.assign(newColumn(), {
-          name: assessmentVersion,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: assessmentContentStandard,
+      columns: [{ ...newColumn(), columnId: assessmentVersion }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: assessment,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: version,
-              foreignTableColumnName: version,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: assessment,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: version, foreignTableColumnId: version }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -169,16 +145,16 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   it('should not add additional columns', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table;
     expect(columns).toHaveLength(1);
-    expect(R.head(columns).name).toBe(assessmentVersion);
+    expect(columns[0].columnId).toBe(assessmentVersion);
   });
 
   it('should have unmodified foreign key relationship', (): void => {
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(assessment);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(version);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);
+    expect(foreignKey.foreignTableId).toBe(assessment);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(version);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(version);
   });
 });
 
@@ -192,29 +168,21 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   const version = 'Version';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentContentStandardAuthor,
-      nameComponents: [assessmentContentStandardAuthor],
-      columns: [
-        Object.assign(newColumn(), {
-          name: assessmentVersion,
-        }),
-      ],
+    const table: Table = {
+      ...newTable(),
+      tableId: assessmentContentStandardAuthor,
+      columns: [{ ...newColumn(), columnId: assessmentVersion }],
       foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: assessmentContentStandard,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: version,
-              foreignTableColumnName: version,
-            }),
-          ],
-        }),
+        {
+          ...newForeignKey(),
+          foreignTableId: assessmentContentStandard,
+          columnPairs: [{ ...newColumnPair(), parentTableColumnId: version, foreignTableColumnId: version }],
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -223,15 +191,15 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   it('should have AssessmentVersion column', (): void => {
     const { columns } = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor) as Table;
     expect(columns).toHaveLength(1);
-    expect(R.head(columns).name).toBe(assessmentVersion);
+    expect(columns[0].columnId).toBe(assessmentVersion);
   });
 
   it('should have unmodified foreign key relationship', (): void => {
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(assessmentContentStandard);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(version);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);
+    expect(foreignKey.foreignTableId).toBe(assessmentContentStandard);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(version);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(version);
   });
 });

@@ -6,7 +6,7 @@ const enhancerName = 'EnumerationAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'enumeration').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.namespace);
+    enhanceSingleEntity(metaEd, asTopLevelEntity(modelBase), metaEd.namespace);
   });
 
   return {

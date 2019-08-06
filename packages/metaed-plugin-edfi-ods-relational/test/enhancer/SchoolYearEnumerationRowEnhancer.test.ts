@@ -8,7 +8,7 @@ import {
 import { EnumerationItem, MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 
 describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -25,8 +25,8 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', (): void 
       metaEdName: entityName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
         },
       },
     });
@@ -41,7 +41,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', (): void 
     entity.enumerationItems.push(item1);
     entity.enumerationItems.push(item2);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });

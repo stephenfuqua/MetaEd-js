@@ -18,15 +18,11 @@ describe('when building choice property table with two integer properties', (): 
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: 'TableName',
-      nameComponents: ['TableName'],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -36,7 +32,7 @@ describe('when building choice property table with two integer properties', (): 
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -48,13 +44,13 @@ describe('when building choice property table with two integer properties', (): 
     const entityChoiceProperty: ChoiceProperty = Object.assign(newChoiceProperty(), {
       parentEntity: entity,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
 
     const choice: Choice = Object.assign(newChoice(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
         },
       },
@@ -62,7 +58,7 @@ describe('when building choice property table with two integer properties', (): 
     const choiceEntityProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: choiceEntityPropertyName1,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
@@ -71,13 +67,13 @@ describe('when building choice property table with two integer properties', (): 
     const choiceEntityProperty2: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: choiceEntityPropertyName2,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    choice.data.edfiOds.odsProperties.push(...[choiceEntityProperty1, choiceEntityProperty2]);
+    choice.data.edfiOdsRelational.odsProperties.push(...[choiceEntityProperty1, choiceEntityProperty2]);
     entityChoiceProperty.referencedEntity = choice;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -100,7 +96,7 @@ describe('when building choice property table with two integer properties', (): 
 
   it('should have two columns', (): void => {
     expect(table.columns).toHaveLength(2);
-    expect(table.columns[0].name).toBe(choiceEntityPropertyName1);
-    expect(table.columns[1].name).toBe(choiceEntityPropertyName2);
+    expect(table.columns[0].columnId).toBe(choiceEntityPropertyName1);
+    expect(table.columns[1].columnId).toBe(choiceEntityPropertyName2);
   });
 });

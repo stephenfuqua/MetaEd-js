@@ -4,7 +4,7 @@ import { NoTable } from './database/Table';
 import { Table } from './database/Table';
 
 export interface TopLevelEntityEdfiOds {
-  odsTableName: string;
+  odsTableId: string;
   odsCascadePrimaryKeyUpdates: boolean;
   odsProperties: EntityProperty[];
   odsIdentityProperties: EntityProperty[];
@@ -15,10 +15,10 @@ export interface TopLevelEntityEdfiOds {
 const enhancerName = 'OdsTopLevelEntitySetupEnhancer';
 
 export function addTopLevelEntityEdfiOdsTo(topLevelEntity: TopLevelEntity) {
-  if (topLevelEntity.data.edfiOds == null) topLevelEntity.data.edfiOds = {};
+  if (topLevelEntity.data.edfiOdsRelational == null) topLevelEntity.data.edfiOdsRelational = {};
 
-  Object.assign(topLevelEntity.data.edfiOds, {
-    odsTableName: '',
+  Object.assign(topLevelEntity.data.edfiOdsRelational, {
+    odsTableId: '',
     odsCascadePrimaryKeyUpdates: false,
     odsProperties: [...topLevelEntity.properties],
     odsIdentityProperties: [...topLevelEntity.identityProperties],

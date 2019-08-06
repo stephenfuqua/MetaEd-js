@@ -1,9 +1,9 @@
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/GraduationPlanRequiredAssessmentPerformanceLevelDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
-import { newTable } from '../../src/model/database/Table';
+import { newTable, TableNameComponent } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
@@ -11,48 +11,38 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  const graduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel =
+    'GraduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel';
   const graduationPlanRequiredAssessmentAssessmentPerformanceLevel =
     'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
-  const graduationPlanRequiredAssessmentPerformanceLevel = 'GraduationPlanRequiredAssessmentPerformanceLevel';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: graduationPlanRequiredAssessmentPerformanceLevel,
-      nameComponents: [graduationPlanRequiredAssessmentPerformanceLevel],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          parentTableName: graduationPlanRequiredAssessmentPerformanceLevel,
-        }),
-        Object.assign(newForeignKey(), {
-          parentTableName: graduationPlanRequiredAssessmentPerformanceLevel,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: graduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel };
+    table.foreignKeys = [{ ...newForeignKey(), parentTable: table }, { ...newForeignKey(), parentTable: table }];
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should rename GraduationPlanRequiredAssessmentPerformanceLevel table', (): void => {
-    const table: Table | undefined = tableEntities(metaEd, namespace).get(graduationPlanRequiredAssessmentPerformanceLevel);
-    expect(table).toBeUndefined();
-
     const targetTable: Table = tableEntities(metaEd, namespace).get(
-      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+      graduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel,
     ) as Table;
     expect(targetTable).toBeDefined();
-    expect(targetTable.name).toBe(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
+    expect((targetTable.nameGroup.nameElements[0] as TableNameComponent).name).toBe(
+      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+    );
   });
 
   it('should update foreign key parent table name', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(
-      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+      graduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel,
     ) as Table;
-    expect(foreignKeys.every(fk => fk.parentTableName === graduationPlanRequiredAssessmentAssessmentPerformanceLevel)).toBe(
-      true,
-    );
+    expect(
+      foreignKeys.every(fk => fk.parentTable.tableId === graduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel),
+    ).toBe(true);
   });
 });

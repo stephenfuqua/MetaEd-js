@@ -9,24 +9,18 @@ export function collectPrimaryKeys(
   strategy: BuildStrategy,
   factory: ColumnCreatorFactory,
 ): Column[] {
-  if (!entity.data.edfiOds) return [];
+  if (!entity.data.edfiOdsRelational) return [];
 
   const columns: Column[] = [];
 
-  entity.data.edfiOds.odsIdentityProperties.forEach((property: ReferentialProperty) => {
+  entity.data.edfiOdsRelational.odsIdentityProperties.forEach((property: ReferentialProperty) => {
     const columnCreator: ColumnCreator = factory.columnCreatorFor(property);
     columns.push(...columnCreator.createColumns(property, strategy));
   });
 
-  entity.data.edfiOds.odsProperties.forEach((property: ReferentialProperty) => {
+  entity.data.edfiOdsRelational.odsProperties.forEach((property: ReferentialProperty) => {
     if (property.type !== 'inlineCommon') return;
-    columns.push(
-      ...collectPrimaryKeys(
-        property.referencedEntity,
-        strategy.appendParentContext(property.data.edfiOds.odsContextPrefix),
-        factory,
-      ),
-    );
+    columns.push(...collectPrimaryKeys(property.referencedEntity, strategy.appendParentContextProperty(property), factory));
   });
 
   return columns;

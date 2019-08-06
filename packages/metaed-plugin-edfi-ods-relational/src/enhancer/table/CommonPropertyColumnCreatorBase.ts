@@ -12,8 +12,8 @@ export function collectColumns(
 ): Column[] {
   const entity: TopLevelEntity = R.prop('referencedEntity', entityProperty);
 
-  return entity.data.edfiOds.odsProperties.reduce((columns: Column[], property: EntityProperty): Column[] => {
-    if (property.data.edfiOds.odsIsCollection) return columns;
+  return entity.data.edfiOdsRelational.odsProperties.reduce((columns: Column[], property: EntityProperty): Column[] => {
+    if (property.data.edfiOdsRelational.odsIsCollection) return columns;
 
     const columnCreator: ColumnCreator = factory.columnCreatorFor(property);
     return columns.concat(columnCreator.createColumns(property, strategy));

@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newAssociation, newAssociationSubclass, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Association, AssociationSubclass, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, initializeEdFiOdsRelationalEntityRepository, tableEntities } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/AssociationSubclassAggregateEnhancer';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -29,33 +29,43 @@ describe('when enhancing association extensions', (): void => {
       },
     };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
     const baseEntity: Association = Object.assign(newAssociation(), {
       metaEdName: baseEntityName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: baseTableName,
+        edfiOdsRelational: {
+          odsTableId: baseTableName,
         },
         edfiOdsApi: {},
       },
     });
     namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
+    const baseTable: Table = {
+      ...newTable(),
+      tableId: baseTableName,
+      schema,
+      data: { edfiOdsSqlServer: { tableName: baseTableName } },
+    };
+    tableEntities(metaEd, namespace).set(baseTable.tableId, baseTable);
+
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const entity: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: entityName,
       baseEntity,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},

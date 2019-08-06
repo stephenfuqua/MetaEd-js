@@ -2,40 +2,22 @@ import { newNamespace, Namespace } from 'metaed-core';
 import {
   addColumn,
   addColumns,
-  addForeignKey,
-  createForeignKeyUsingSourceReference,
-  hasAlternateKeys,
-  isForeignKey,
   getAllColumns,
-  getAlternateKeys,
-  getColumnView,
   getColumnWithStrongestConstraint,
-  getForeignKeys,
   getNonPrimaryKeys,
   getPrimaryKeys,
-  getUniqueIndexes,
   newTable,
+  Table,
 } from '../../../src/model/database/Table';
-import {
-  newBooleanColumn,
-  newCurrencyColumn,
-  newDateColumn,
-  newDecimalColumn,
-  newDurationColumn,
-  newIntegerColumn,
-  newPercentColumn,
-  newShortColumn,
-  newStringColumn,
-  newTimeColumn,
-  newYearColumn,
-} from '../../../src/model/database/Column';
-import { newColumnNamePair } from '../../../src/model/database/ColumnNamePair';
+import { newColumn, Column, StringColumn, DecimalColumn, newColumnNameComponent } from '../../../src/model/database/Column';
 import { ColumnTransformUnchanged } from '../../../src/model/database/ColumnTransform';
-import { newForeignKey, newForeignKeySourceReference } from '../../../src/model/database/ForeignKey';
+import {
+  ForeignKey,
+  createForeignKeyUsingSourceReference,
+  newForeignKey,
+  newForeignKeySourceReference,
+} from '../../../src/model/database/ForeignKey';
 import { ForeignKeyStrategyDefault } from '../../../src/model/database/ForeignKeyStrategy';
-import { Column } from '../../../src/model/database/Column';
-import { Table } from '../../../src/model/database/Table';
-import { ForeignKey } from '../../../src/model/database/ForeignKey';
 
 describe('when getting strongest constrain column with no existing column', (): void => {
   const mockStrategy = jest.fn((existing: Column) => existing);
@@ -45,7 +27,7 @@ describe('when getting strongest constrain column with no existing column', (): 
   beforeAll(() => {
     column = getColumnWithStrongestConstraint(
       newTable(),
-      Object.assign(newBooleanColumn(), { name: columnName }),
+      { ...newColumn(), type: 'boolean', columnId: columnName },
       mockStrategy,
     );
   });
@@ -55,7 +37,7 @@ describe('when getting strongest constrain column with no existing column', (): 
   });
 
   it('should return the column', (): void => {
-    expect(column.name).toBe(columnName);
+    expect(column.columnId).toBe(columnName);
     expect(column.type).toBe('boolean');
   });
 });
@@ -69,11 +51,11 @@ describe('when getting strongest constrain column with an existing column', (): 
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: 'TableName', nameComponents: ['TableName'] });
-    existingColumn = Object.assign(newBooleanColumn(), { name: columnName });
+    table = { ...newTable(), tableId: 'TableName' };
+    existingColumn = { ...newColumn(), type: 'boolean', columnId: columnName };
     table.columns.push(existingColumn);
 
-    receivedColumn = Object.assign(newBooleanColumn(), { name: columnName });
+    receivedColumn = { ...newColumn(), type: 'boolean', columnId: columnName };
     column = getColumnWithStrongestConstraint(table, receivedColumn, mockStrategy);
   });
 
@@ -94,12 +76,12 @@ describe('when using add column', (): void => {
 
   beforeAll(() => {
     table = newTable();
-    addColumn(table, Object.assign(newBooleanColumn(), { name: columnName }));
+    addColumn(table, { ...newColumn(), type: 'boolean', columnId: columnName });
   });
 
   it('should add column to table', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(columnName);
+    expect(table.columns[0].columnId).toBe(columnName);
     expect(table.columns[0].type).toBe('boolean');
   });
 });
@@ -108,23 +90,23 @@ describe('when using add column range', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), { name: 'TableName', nameComponents: ['TableName'] });
-    table.columns.push(Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }));
+    table = { ...newTable(), tableId: 'TableName' };
+    table.columns.push({ ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' });
 
     addColumns(
       table,
       [
-        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }),
-        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName' }),
-        Object.assign(newDateColumn(), { name: 'DateColumnName' }),
-        Object.assign(newDecimalColumn('10', '4'), { name: 'DecimalColumnName' }),
-        Object.assign(newDurationColumn(), { name: 'DurationColumnName' }),
-        Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' }),
-        Object.assign(newPercentColumn(), { name: 'PercentColumnName' }),
-        Object.assign(newShortColumn(), { name: 'ShortColumnName' }),
-        Object.assign(newStringColumn('100'), { name: 'StringColumnName' }),
-        Object.assign(newTimeColumn(), { name: 'TimeColumnName' }),
-        Object.assign(newYearColumn(), { name: 'YearColumnName' }),
+        { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' },
+        { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName' },
+        { ...newColumn(), type: 'date', columnId: 'DateColumnName' },
+        { ...newColumn(), type: 'decimal', scale: '10', precision: '4', columnId: 'DecimalColumnName' } as DecimalColumn,
+        { ...newColumn(), type: 'duration', columnId: 'DurationColumnName' },
+        { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' },
+        { ...newColumn(), type: 'percent', columnId: 'PercentColumnName' },
+        { ...newColumn(), type: 'short', columnId: 'ShortColumnName' },
+        { ...newColumn(), type: 'string', length: '100', columnId: 'StringColumnName' } as StringColumn,
+        { ...newColumn(), type: 'time', columnId: 'TimeColumnName' },
+        { ...newColumn(), type: 'year', columnId: 'YearColumnName' },
       ],
       ColumnTransformUnchanged,
     );
@@ -154,86 +136,111 @@ describe('when using table column getters', (): void => {
   beforeAll(() => {
     table = newTable();
     table.columns.push(
-      ...[
-        Object.assign(newBooleanColumn(), {
-          name: booleanColumnName,
-          isPartOfAlternateKey: true,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newCurrencyColumn(), {
-          name: currencyColumnName,
-          isPartOfAlternateKey: true,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newDateColumn(), {
-          name: dateColumnName,
-          isPartOfAlternateKey: true,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newDecimalColumn('10', '4'), {
-          name: decimalColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: true,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newDurationColumn(), {
-          name: durationColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: true,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newIntegerColumn(), {
-          name: integerColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: true,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newPercentColumn(), {
-          name: percentColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: true,
-        }),
-        Object.assign(newShortColumn(), {
-          name: shortColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: true,
-        }),
-        Object.assign(newStringColumn('100'), {
-          name: stringColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: false,
-          isUniqueIndex: true,
-        }),
-        Object.assign(newTimeColumn(), {
-          name: timeColumnName,
-          isPartOfAlternateKey: true,
-          isPartOfPrimaryKey: true,
-          isUniqueIndex: false,
-        }),
-        Object.assign(newYearColumn(), {
-          name: yearColumnName,
-          isPartOfAlternateKey: false,
-          isPartOfPrimaryKey: true,
-          isUniqueIndex: true,
-        }),
-      ],
+      {
+        ...newColumn(),
+        type: 'boolean',
+        columnId: booleanColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: booleanColumnName }],
+        isPartOfAlternateKey: true,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'currency',
+        columnId: currencyColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: currencyColumnName }],
+        isPartOfAlternateKey: true,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'date',
+        columnId: dateColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: dateColumnName }],
+        isPartOfAlternateKey: true,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'decimal',
+        scale: '10',
+        precision: '4',
+        columnId: decimalColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: decimalColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: true,
+        isUniqueIndex: false,
+      } as DecimalColumn,
+      {
+        ...newColumn(),
+        type: 'duration',
+        columnId: durationColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: durationColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: true,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'integer',
+        columnId: integerColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: integerColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: true,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'percent',
+        columnId: percentColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: percentColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: true,
+      },
+      {
+        ...newColumn(),
+        type: 'short',
+        columnId: shortColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: shortColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: true,
+      },
+      {
+        ...newColumn(),
+        type: 'string',
+        length: '100',
+        columnId: stringColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: stringColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: false,
+        isUniqueIndex: true,
+      } as StringColumn,
+      {
+        ...newColumn(),
+        type: 'time',
+        columnId: timeColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: timeColumnName }],
+        isPartOfAlternateKey: true,
+        isPartOfPrimaryKey: true,
+        isUniqueIndex: false,
+      },
+      {
+        ...newColumn(),
+        type: 'year',
+        columnId: yearColumnName,
+        nameComponents: [{ ...newColumnNameComponent(), name: yearColumnName }],
+        isPartOfAlternateKey: false,
+        isPartOfPrimaryKey: true,
+        isUniqueIndex: true,
+      },
     );
 
-    table.foreignKeys.push(
-      ...[
-        Object.assign(newForeignKey(), {
-          name: ForeignKeyName1,
-        }),
-        Object.assign(newForeignKey(), {
-          name: ForeignKeyName2,
-        }),
-      ],
-    );
+    table.foreignKeys.push({ ...newForeignKey(), name: ForeignKeyName1 }, { ...newForeignKey(), name: ForeignKeyName2 });
   });
 
   it('should get all columns with primary keys first', (): void => {
@@ -252,38 +259,37 @@ describe('when using table column getters', (): void => {
     ];
     const columns = getAllColumns(table);
     expect(columns).toHaveLength(11);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 
   it('should get all alternate keys', (): void => {
     const expectedOrder = [booleanColumnName, currencyColumnName, dateColumnName, timeColumnName];
-    const columns = getAlternateKeys(table);
+    const columns = table.columns.filter(x => x.isPartOfAlternateKey);
     expect(columns).toHaveLength(4);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 
   it('should get column view with primary keys first', (): void => {
     const expectedOrder = [
-      decimalColumnName,
-      durationColumnName,
-      integerColumnName,
-      timeColumnName,
-      yearColumnName,
       booleanColumnName,
       currencyColumnName,
       dateColumnName,
+      decimalColumnName,
+      durationColumnName,
+      integerColumnName,
       percentColumnName,
       shortColumnName,
       stringColumnName,
+      timeColumnName,
+      yearColumnName,
     ];
-    const columns = getColumnView(table);
-    expect(columns).toHaveLength(11);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(table.columns).toHaveLength(11);
+    expect(table.columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 
   it('should get all foreign keys', (): void => {
     const expectedOrder = [ForeignKeyName1, ForeignKeyName2];
-    const columns = getForeignKeys(table);
+    const columns = table.foreignKeys;
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
@@ -299,21 +305,21 @@ describe('when using table column getters', (): void => {
     ];
     const columns = getNonPrimaryKeys(table);
     expect(columns).toHaveLength(6);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 
   it('should get all primary keys', (): void => {
     const expectedOrder = [decimalColumnName, durationColumnName, integerColumnName, timeColumnName, yearColumnName];
     const columns = getPrimaryKeys(table);
     expect(columns).toHaveLength(5);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 
   it('should get all unique indexes', (): void => {
     const expectedOrder = [percentColumnName, shortColumnName, stringColumnName, yearColumnName];
-    const columns = getUniqueIndexes(table);
+    const columns = table.columns.filter(x => x.isUniqueIndex);
     expect(columns).toHaveLength(4);
-    expect(columns.map(x => x.name)).toEqual(expectedOrder);
+    expect(columns.map(x => x.columnId)).toEqual(expectedOrder);
   });
 });
 
@@ -323,12 +329,10 @@ describe('when using has alternate keys on table with no alternate keys', (): vo
   beforeAll(() => {
     const table: Table = newTable();
     table.columns.push(
-      ...[
-        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
-        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: true }),
-      ],
+      { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName', isPartOfAlternateKey: false },
+      { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName', isPartOfAlternateKey: true },
     );
-    result = hasAlternateKeys(table);
+    result = table.columns.some(x => x.isPartOfAlternateKey);
   });
 
   it('should return true', (): void => {
@@ -342,12 +346,10 @@ describe('when using has alternate keys on table with no alternate keys', (): vo
   beforeAll(() => {
     const table: Table = newTable();
     table.columns.push(
-      ...[
-        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
-        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: false }),
-      ],
+      { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName', isPartOfAlternateKey: false },
+      { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName', isPartOfAlternateKey: false },
     );
-    result = hasAlternateKeys(table);
+    result = table.columns.some(x => x.isPartOfAlternateKey);
   });
 
   it('should return false', (): void => {
@@ -355,131 +357,20 @@ describe('when using has alternate keys on table with no alternate keys', (): vo
   });
 });
 
-describe('when using is foreign key', (): void => {
-  let booleanColumnResult: boolean;
-  let currencyColumnResult: boolean;
-
-  beforeAll(() => {
-    const booleanColumnName = 'BooleanColumnName';
-
-    const booleanForeignKey: ForeignKey = Object.assign(newForeignKey(), {
-      name: booleanColumnName,
-      columnNames: [Object.assign(newColumnNamePair(), { parentTableColumnName: booleanColumnName })],
-    });
-
-    const table: Table = Object.assign(newTable(), {
-      foreignKeys: [booleanForeignKey, Object.assign(newForeignKey(), { name: 'CurrencyColumnName' })],
-    });
-
-    const booleanColumn: Column = Object.assign(newBooleanColumn(), {
-      name: booleanColumnName,
-      isPartOfAlternateKey: false,
-    });
-    const currencyColumn: Column = Object.assign(newCurrencyColumn(), {
-      name: 'CurrencyColumnName',
-      isPartOfAlternateKey: false,
-    });
-    booleanColumnResult = isForeignKey(table, booleanColumn);
-    currencyColumnResult = isForeignKey(table, currencyColumn);
-  });
-
-  it('should return true when column is a foreign key', (): void => {
-    expect(booleanColumnResult).toBe(true);
-  });
-
-  it('should return false when column is not a foreign key', (): void => {
-    expect(currencyColumnResult).toBe(false);
-  });
-});
-
-describe('when adding a foreign key with no existing foreign keys', (): void => {
-  const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
-  const foreignTableName = 'ForeignTableName';
-  let table: Table;
-
-  beforeAll(() => {
-    table = Object.assign(newTable(), { name: tableName, nameComponents: [tableName], schema: tableSchema });
-    addForeignKey(table, Object.assign(newForeignKey(), { foreignTableName }));
-  });
-
-  it('should add foreign key', (): void => {
-    expect(table.foreignKeys).toHaveLength(1);
-    expect(table.foreignKeys[0].parentTable).toBe(table);
-    expect(table.foreignKeys[0].parentTableName).toBe(tableName);
-    expect(table.foreignKeys[0].parentTableSchema).toBe(tableSchema);
-    expect(table.foreignKeys[0].foreignKeyNameSuffix).toBe('');
-  });
-});
-
-describe('when adding a foreign key with existing foreign key', (): void => {
-  const parentTableName = 'ParentTableName';
-  const parentTableSchema = 'ParentTableSchema';
-  const foreignTableName = 'ForeignTableName';
-  let table: Table;
-
-  beforeAll(() => {
-    table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      schema: parentTableSchema,
-    });
-    addForeignKey(
-      table,
-      Object.assign(newForeignKey(), {
-        parentTableName,
-        foreignTableName,
-      }),
-    );
-    addForeignKey(
-      table,
-      Object.assign(newForeignKey(), {
-        parentTableName,
-        foreignTableName,
-      }),
-    );
-    addForeignKey(
-      table,
-      Object.assign(newForeignKey(), {
-        parentTableName,
-        foreignTableName,
-      }),
-    );
-  });
-
-  it('should add foreign keys', (): void => {
-    expect(table.foreignKeys).toHaveLength(3);
-    expect(table.foreignKeys[0].parentTable).toBe(table);
-    expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
-    expect(table.foreignKeys[0].parentTableSchema).toBe(parentTableSchema);
-    expect(table.foreignKeys[0].foreignKeyNameSuffix).toBe('');
-
-    expect(table.foreignKeys[1].parentTable).toBe(table);
-    expect(table.foreignKeys[1].parentTableName).toBe(parentTableName);
-    expect(table.foreignKeys[1].parentTableSchema).toBe(parentTableSchema);
-    expect(table.foreignKeys[1].foreignKeyNameSuffix).toBe('1');
-
-    expect(table.foreignKeys[2].parentTable).toBe(table);
-    expect(table.foreignKeys[2].parentTableName).toBe(parentTableName);
-    expect(table.foreignKeys[2].parentTableSchema).toBe(parentTableSchema);
-    expect(table.foreignKeys[2].foreignKeyNameSuffix).toBe('2');
-  });
-});
-
 describe('when creating foreign key with single column', (): void => {
   const booleanColumnName = 'BooleanColumnName';
   const foreignTableSchema = 'ForeignTableSchema';
   const foreignTableNamespace: Namespace = { ...newNamespace(), namespaceName: foreignTableSchema };
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
     foreignKey = createForeignKeyUsingSourceReference(
       newForeignKeySourceReference(),
-      [Object.assign(newBooleanColumn(), { name: booleanColumnName })],
+      [{ ...newColumn(), type: 'boolean', columnId: booleanColumnName }],
       foreignTableSchema,
       foreignTableNamespace,
-      foreignTableName,
+      foreignTableId,
       ForeignKeyStrategyDefault,
     );
   });
@@ -489,7 +380,7 @@ describe('when creating foreign key with single column', (): void => {
   });
 
   it('should set foreign table name', (): void => {
-    expect(foreignKey.foreignTableName).toBe(foreignTableName);
+    expect(foreignKey.foreignTableId).toBe(foreignTableId);
   });
 
   it('should set delete cascade to false', (): void => {
@@ -501,11 +392,11 @@ describe('when creating foreign key with single column', (): void => {
   });
 
   it('should have parent table column name', (): void => {
-    expect(foreignKey.columnNames[0].parentTableColumnName).toBe(booleanColumnName);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(booleanColumnName);
   });
 
   it('should have foreign table column name', (): void => {
-    expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(booleanColumnName);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(booleanColumnName);
   });
 });
 
@@ -514,19 +405,19 @@ describe('when creating foreign key with multiple columns', (): void => {
   const booleanColumnName2 = 'BooleanColumnName2';
   const foreignTableSchema = 'ForeignTableSchema';
   const foreignTableNamespace: Namespace = { ...newNamespace(), namespaceName: foreignTableSchema };
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
     foreignKey = createForeignKeyUsingSourceReference(
       newForeignKeySourceReference(),
       [
-        Object.assign(newBooleanColumn(), { name: booleanColumnName1 }),
-        Object.assign(newBooleanColumn(), { name: booleanColumnName2 }),
+        { ...newColumn(), type: 'boolean', columnId: booleanColumnName1 },
+        { ...newColumn(), type: 'boolean', columnId: booleanColumnName2 },
       ],
       foreignTableSchema,
       foreignTableNamespace,
-      foreignTableName,
+      foreignTableId,
       ForeignKeyStrategyDefault,
     );
   });
@@ -536,7 +427,7 @@ describe('when creating foreign key with multiple columns', (): void => {
   });
 
   it('should set foreign table name', (): void => {
-    expect(foreignKey.foreignTableName).toBe(foreignTableName);
+    expect(foreignKey.foreignTableId).toBe(foreignTableId);
   });
 
   it('should set delete cascade to false', (): void => {
@@ -548,18 +439,18 @@ describe('when creating foreign key with multiple columns', (): void => {
   });
 
   it('should have first parent table column name', (): void => {
-    expect(foreignKey.columnNames[0].parentTableColumnName).toBe(booleanColumnName1);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(booleanColumnName1);
   });
 
   it('should have first foreign table column name', (): void => {
-    expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(booleanColumnName1);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(booleanColumnName1);
   });
 
   it('should have second parent table column name', (): void => {
-    expect(foreignKey.columnNames[1].parentTableColumnName).toBe(booleanColumnName2);
+    expect(foreignKey.columnPairs[1].parentTableColumnId).toBe(booleanColumnName2);
   });
 
   it('should have second foreign table column name', (): void => {
-    expect(foreignKey.columnNames[1].foreignTableColumnName).toBe(booleanColumnName2);
+    expect(foreignKey.columnPairs[1].foreignTableColumnId).toBe(booleanColumnName2);
   });
 });

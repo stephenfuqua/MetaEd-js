@@ -9,7 +9,7 @@ import {
 import { Association, AssociationSubclass, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationSubclassTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationSubclassTableEnhancer enhances association subclass', (): void => {
@@ -29,8 +29,8 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
       documentation,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -42,13 +42,13 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationSubclass: AssociationSubclass = Object.assign(newAssociationSubclass(), {
@@ -58,9 +58,8 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationSubclassName,
-          odsExtensionName: associationSubclassName,
+        edfiOdsRelational: {
+          odsTableId: associationSubclassName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -72,16 +71,16 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
       isPartOfIdentity: false,
       parentEntity: associationSubclass,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationSubclassPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationSubclass.data.edfiOds.odsProperties.push(associationSubclassProperty);
+    associationSubclass.data.edfiOdsRelational.odsProperties.push(associationSubclassProperty);
     addEntityForNamespace(associationSubclass);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -103,7 +102,7 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
   it('should have one column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(associationSubclassName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(associationSubclassPropertyName);
+    expect(table.columns[0].columnId).toBe(associationSubclassPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
 });
@@ -125,8 +124,8 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
       documentation,
       metaEdName: associationName,
       data: {
-        edfiOds: {
-          odsTableName: associationName,
+        edfiOdsRelational: {
+          odsTableId: associationName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -138,13 +137,13 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
       isPartOfIdentity: true,
       parentEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    association.data.edfiOds.odsProperties.push(associationPkProperty);
+    association.data.edfiOdsRelational.odsProperties.push(associationPkProperty);
     addEntityForNamespace(association);
 
     const associationSubclass: AssociationSubclass = Object.assign(newAssociationSubclass(), {
@@ -154,9 +153,8 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
       baseEntityName: associationName,
       baseEntity: association,
       data: {
-        edfiOds: {
-          odsTableName: associationSubclassName,
-          odsExtensionName: associationSubclassName,
+        edfiOdsRelational: {
+          odsTableId: associationSubclassName,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -168,16 +166,16 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
       isPartOfIdentity: true,
       parentEntity: associationSubclass,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: associationSubclassPkPropertyName,
           odsContextPrefix: '',
         },
       },
     });
-    associationSubclass.data.edfiOds.odsProperties.push(associationSubclassPkProperty);
+    associationSubclass.data.edfiOdsRelational.odsProperties.push(associationSubclassPkProperty);
     addEntityForNamespace(associationSubclass);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     enhance(metaEd);
   });
 
@@ -189,7 +187,7 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
   it('should have one primary key column', (): void => {
     const table: Table = tableEntities(metaEd, extensionNamespace).get(associationSubclassName) as Table;
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(associationSubclassPkPropertyName);
+    expect(table.columns[0].columnId).toBe(associationSubclassPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 });

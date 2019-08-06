@@ -1,21 +1,32 @@
 import { getAllEntitiesOfType, asTopLevelEntity } from 'metaed-core';
 import { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity } from 'metaed-core';
-import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import { Table, TopLevelEntityEdfiOds, tableEntity } from 'metaed-plugin-edfi-ods-relational';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 
 const enhancerName = 'AssociationSubclassAggregateEnhancer';
 
-export function enhanceEntityTable(entity: TopLevelEntity, table: Table, entityTable: EntityTable): void {
-  if ((entity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName === table.name && entity.baseEntity != null) {
-    entityTable.isA = (entity.baseEntity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName;
+export function enhanceEntityTable(
+  metaEd: MetaEdEnvironment,
+  entity: TopLevelEntity,
+  table: Table,
+  entityTable: EntityTable,
+): void {
+  if ((entity.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsTableId === table.tableId && entity.baseEntity != null) {
+    const isaTable: Table | undefined = tableEntity(
+      metaEd,
+      entity.baseEntity.namespace,
+      entity.baseEntity.data.edfiOdsRelational.odsTableId,
+    );
+
+    entityTable.isA = isaTable ? isaTable.data.edfiOdsSqlServer.tableName : '';
     entityTable.hasIsA = true;
   }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'associationSubclass').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.namespace, enhanceEntityTable);
+    enhanceSingleEntity(metaEd, asTopLevelEntity(modelBase), metaEd.namespace, enhanceEntityTable);
   });
 
   return {

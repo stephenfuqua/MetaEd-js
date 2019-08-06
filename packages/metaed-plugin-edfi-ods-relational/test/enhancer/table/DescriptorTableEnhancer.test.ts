@@ -10,7 +10,7 @@ import {
 import { MetaEdEnvironment, Descriptor, IntegerProperty, MapTypeEnumeration, Namespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/DescriptorTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when DescriptorTableEnhancer enhances simple descriptor', (): void => {
@@ -28,8 +28,8 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', (): void => 
       documentation: descriptorDocumentation,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: descriptorNameDescriptor,
+        edfiOdsRelational: {
+          odsTableId: descriptorNameDescriptor,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -39,15 +39,15 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', (): void => 
       metaEdName: integerPropertyName,
       documentation: 'IntegerPropertyDocumentation',
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: false,
         },
       },
     });
-    descriptor.data.edfiOds.odsProperties.push(property);
+    descriptor.data.edfiOdsRelational.odsProperties.push(property);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
@@ -55,7 +55,7 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', (): void => 
   it('should create table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameDescriptor);
+    expect(table.tableId).toBe(descriptorNameDescriptor);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
@@ -67,30 +67,30 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', (): void => 
 
   it('should have primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.head(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorName}DescriptorId`);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[0].description).not.toBe('');
   });
 
   it('should have property column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.columns).name).toBe(integerPropertyName);
-    expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
-    expect(R.last(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[table.columns.length - 1].columnId).toBe(integerPropertyName);
+    expect(table.columns[table.columns.length - 1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[table.columns.length - 1].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have foreign key to descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.foreignKeys).columnNames).toHaveLength(1);
-    expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
+    expect(table.foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[0].withDeleteCascade).toBe(true);
 
-    expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.head(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameDescriptor}Id`);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[0].columnPairs).parentTableColumnId).toBe(`${descriptorNameDescriptor}Id`);
 
-    expect(R.head(table.foreignKeys).foreignTableName).toBe('Descriptor');
-    expect(R.head(R.head(table.foreignKeys).columnNames).foreignTableColumnName).toBe('DescriptorId');
+    expect(table.foreignKeys[0].foreignTableId).toBe('Descriptor');
+    expect(R.head(table.foreignKeys[0].columnPairs).foreignTableColumnId).toBe('DescriptorId');
   });
 });
 
@@ -112,9 +112,9 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
       isMapTypeRequired: true,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsMapType: true,
-          odsTableName: descriptorNameDescriptor,
+          odsTableId: descriptorNameDescriptor,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -126,7 +126,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
     });
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
@@ -138,7 +138,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   it('should have descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameDescriptor);
+    expect(table.tableId).toBe(descriptorNameDescriptor);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
@@ -150,18 +150,18 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 
   it('should have primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.head(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorName}DescriptorId`);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[0].description).not.toBe('');
   });
 
   it('should have type column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
-    expect(R.last(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[table.columns.length - 1].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[table.columns.length - 1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[table.columns.length - 1].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have two foreign keys', (): void => {
@@ -171,31 +171,35 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 
   it('should have foreign key to descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
+    expect(table.foreignKeys[0].withDeleteCascade).toBe(true);
 
-    expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.head(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameDescriptor}Id`);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[0].columnPairs).parentTableColumnId).toBe(`${descriptorNameDescriptor}Id`);
 
-    expect(R.head(table.foreignKeys).foreignTableName).toBe('Descriptor');
-    expect(R.head(R.head(table.foreignKeys).columnNames).foreignTableColumnName).toBe('DescriptorId');
+    expect(table.foreignKeys[0].foreignTableId).toBe('Descriptor');
+    expect(R.head(table.foreignKeys[0].columnPairs).foreignTableColumnId).toBe('DescriptorId');
   });
 
   it('should have foreign key to map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
-    expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].withDeleteCascade).toBe(false);
 
-    expect(R.last(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.last(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).parentTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
 
-    expect(R.last(table.foreignKeys).foreignTableName).toBe(descriptorNameType);
-    expect(R.head(R.last(table.foreignKeys).columnNames).foreignTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].foreignTableId).toBe(descriptorNameType);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).foreignTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
   });
 
   it('should have map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameType);
+    expect(table.tableId).toBe(descriptorNameType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
@@ -209,16 +213,16 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[0].isIdentityDatabaseType).toBe(true);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have code value column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -228,7 +232,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 
   it('should have description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'Description'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -238,7 +242,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 
   it('should have short description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -265,9 +269,9 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
       isMapTypeOptional: true,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsMapType: true,
-          odsTableName: descriptorNameDescriptor,
+          odsTableId: descriptorNameDescriptor,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -279,7 +283,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
     });
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
@@ -291,7 +295,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   it('should have descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameDescriptor);
+    expect(table.tableId).toBe(descriptorNameDescriptor);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
@@ -303,18 +307,18 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 
   it('should have primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.head(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorName}DescriptorId`);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[0].description).not.toBe('');
   });
 
   it('should have type column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
-    expect(R.last(table.columns).isNullable).toBe(true);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[table.columns.length - 1].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[table.columns.length - 1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[table.columns.length - 1].isNullable).toBe(true);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have two foreign keys', (): void => {
@@ -324,31 +328,35 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 
   it('should have foreign key to descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
+    expect(table.foreignKeys[0].withDeleteCascade).toBe(true);
 
-    expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.head(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameDescriptor}Id`);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[0].columnPairs).parentTableColumnId).toBe(`${descriptorNameDescriptor}Id`);
 
-    expect(R.head(table.foreignKeys).foreignTableName).toBe('Descriptor');
-    expect(R.head(R.head(table.foreignKeys).columnNames).foreignTableColumnName).toBe('DescriptorId');
+    expect(table.foreignKeys[0].foreignTableId).toBe('Descriptor');
+    expect(R.head(table.foreignKeys[0].columnPairs).foreignTableColumnId).toBe('DescriptorId');
   });
 
   it('should have foreign key to map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
-    expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].withDeleteCascade).toBe(false);
 
-    expect(R.last(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.last(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).parentTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
 
-    expect(R.last(table.foreignKeys).foreignTableName).toBe(descriptorNameType);
-    expect(R.head(R.last(table.foreignKeys).columnNames).foreignTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].foreignTableId).toBe(descriptorNameType);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).foreignTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
   });
 
   it('should have map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameType);
+    expect(table.tableId).toBe(descriptorNameType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
@@ -362,16 +370,16 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[0].isIdentityDatabaseType).toBe(true);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have code value column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -381,7 +389,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 
   it('should have description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'Description'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -391,7 +399,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 
   it('should have short description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -418,9 +426,9 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
       isMapTypeOptional: true,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsMapType: true,
-          odsTableName: descriptorNameDescriptor,
+          odsTableId: descriptorNameDescriptor,
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -432,7 +440,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
     });
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
@@ -444,7 +452,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   it('should have descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameDescriptor);
+    expect(table.tableId).toBe(descriptorNameDescriptor);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
@@ -456,18 +464,18 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
 
   it('should have primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorNameType}DescriptorId`);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.head(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorNameType}DescriptorId`);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[0].description).not.toBe('');
   });
 
   it('should have type column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
-    expect(R.last(table.columns).isNullable).toBe(true);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[table.columns.length - 1].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[table.columns.length - 1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[table.columns.length - 1].isNullable).toBe(true);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have two foreign keys', (): void => {
@@ -477,31 +485,35 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
 
   it('should have foreign key to descriptor table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
+    expect(table.foreignKeys[0].withDeleteCascade).toBe(true);
 
-    expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.head(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameDescriptor}Id`);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[0].columnPairs).parentTableColumnId).toBe(`${descriptorNameDescriptor}Id`);
 
-    expect(R.head(table.foreignKeys).foreignTableName).toBe('Descriptor');
-    expect(R.head(R.head(table.foreignKeys).columnNames).foreignTableColumnName).toBe('DescriptorId');
+    expect(table.foreignKeys[0].foreignTableId).toBe('Descriptor');
+    expect(R.head(table.foreignKeys[0].columnPairs).foreignTableColumnId).toBe('DescriptorId');
   });
 
   it('should have foreign key to map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor) as Table;
-    expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
-    expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].withDeleteCascade).toBe(false);
 
-    expect(R.last(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
-    expect(R.head(R.last(table.foreignKeys).columnNames).parentTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].parentTable.tableId).toBe(descriptorNameDescriptor);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).parentTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
 
-    expect(R.last(table.foreignKeys).foreignTableName).toBe(descriptorNameType);
-    expect(R.head(R.last(table.foreignKeys).columnNames).foreignTableColumnName).toBe(`${descriptorNameType}Id`);
+    expect(table.foreignKeys[table.foreignKeys.length - 1].foreignTableId).toBe(descriptorNameType);
+    expect(R.head(table.foreignKeys[table.foreignKeys.length - 1].columnPairs).foreignTableColumnId).toBe(
+      `${descriptorNameType}Id`,
+    );
   });
 
   it('should have map type enumeration table', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
     expect(table).toBeDefined();
-    expect(table.name).toBe(descriptorNameType);
+    expect(table.tableId).toBe(descriptorNameType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
@@ -515,16 +527,16 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
-    expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${descriptorNameType}Id`);
+    expect(table.columns[0].isIdentityDatabaseType).toBe(true);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have code value column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -534,7 +546,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
 
   it('should have description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'Description'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -544,7 +556,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
 
   it('should have short description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(descriptorNameType) as Table;
-    const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
+    const column = R.head(table.columns.filter(x => x.columnId === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
     expect(column.isPartOfPrimaryKey).toBe(false);

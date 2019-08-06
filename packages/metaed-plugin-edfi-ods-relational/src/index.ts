@@ -1,64 +1,74 @@
-import { Validator, MetaEdPlugin } from 'metaed-core';
+import { MetaEdPlugin } from 'metaed-core';
 import { enhancerList } from './enhancer/EnhancerList';
-import { generate as OdsGenerator } from './generator/OdsGenerator';
-import { generate as SchemaGenerator } from './generator/SchemaGenerator';
-import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
-// import { generate as PostgresqlTableNameGenerator } from './generator/PostgresqlTableNameGenerator';
-
-export { ColumnDataTypes } from './model/database/ColumnDataTypes';
+import { validate as blockPropertiesNamedDiscriminator } from './validator/BlockPropertiesNamedDiscriminator';
 
 // Entities
-export { Column, DecimalColumn, StringColumn } from './model/database/Column';
-export { ColumnData } from './model/database/ColumnDataTypes';
-export { ColumnNamePair } from './model/database/ColumnNamePair';
+export {
+  Column,
+  DecimalColumn,
+  StringColumn,
+  NoColumn,
+  ColumnNameComponent,
+  ColumnExistenceReason,
+  newColumn,
+  newColumnNameComponent,
+  newColumnExistenceReason,
+} from './model/database/Column';
+export { ColumnPair, newColumnPair } from './model/database/ColumnPair';
 export { ColumnType } from './model/database/ColumnType';
 export { EnumerationRow } from './model/database/EnumerationRow';
-export { ForeignKey, ForeignKeySourceReference } from './model/database/ForeignKey';
+export { EnumerationRowBase } from './model/database/EnumerationRowBase';
+export {
+  ForeignKey,
+  ForeignKeySourceReference,
+  newForeignKey,
+  newForeignKeySourceReference,
+  getForeignTableColumns,
+  getForeignTableColumnIds,
+  getParentTableColumnIds,
+  getParentTableColumns,
+} from './model/database/ForeignKey';
 export { SchoolYearEnumerationRow } from './model/database/SchoolYearEnumerationRow';
-export { Table } from './model/database/Table';
+export {
+  Table,
+  NoTable,
+  TableExistenceReason,
+  TableNameComponent,
+  TableNameElement,
+  TableNameGroup,
+  getPrimaryKeys,
+  getNonPrimaryKeys,
+  isTableNameGroup,
+  isTableNameComponent,
+  newTableNameComponent,
+  newTableNameGroup,
+  newTableExistenceReason,
+  newTable,
+  NoTableExistenceReason,
+  NoTableNameGroup,
+} from './model/database/Table';
+export { flattenNameComponentsFromGroup, simpleTableNameGroupConcat } from './model/database/TableNameGroupHelper';
 export { TopLevelEntityEdfiOds } from './model/TopLevelEntity';
 export { DescriptorEdfiOds } from './model/Descriptor';
-export { AssociationExtensionEdfiOds } from './model/AssociationExtension';
-export { DomainEntityExtensionEdfiOds } from './model/DomainEntityExtension';
 export { ReferencePropertyEdfiOds } from './model/property/ReferenceProperty';
 
-// ODS Repository
-export { EdFiOdsEntityRepository } from './model/EdFiOdsEntityRepository';
-export { newEdFiOdsEntityRepository, addEdFiOdsEntityRepositoryTo } from './model/EdFiOdsEntityRepository';
-
-// Factories
 export {
-  newColumn,
-  newBooleanColumn,
-  newCurrencyColumn,
-  newDateColumn,
-  newDecimalColumn,
-  newDurationColumn,
-  newIntegerColumn,
-  newPercentColumn,
-  newShortColumn,
-  newStringColumn,
-  newTimeColumn,
-} from './model/database/Column';
-export { newTable } from './model/database/Table';
+  EdFiOdsRelationalEntityRepository,
+  newEdFiOdsRelationalEntityRepository,
+  addEdFiOdsRelationalEntityRepositoryTo,
+  enhance as initializeEdFiOdsRelationalEntityRepository,
+} from './model/EdFiOdsRelationalEntityRepository';
 
-// Utilities
-export { edfiOdsRepositoryForNamespace, tableEntities, rowEntities } from './enhancer/EnhancerHelper';
-export { getPrimaryKeys } from './model/database/Table';
-export { newForeignKey, newForeignKeySourceReference } from './model/database/ForeignKey';
+export { edfiOdsRepositoryForNamespace, tableEntities, tableEntity, rowEntities } from './enhancer/EnhancerHelper';
 
 // Enhancer for testing
-export { enhance as baseDescriptorTableCreatingEnhancer } from './enhancer/table/BaseDescriptorTableCreatingEnhancer';
-
-function validatorList(): Validator[] {
-  return [];
-}
+export { enhance as baseDescriptorTableCreatingEnhancer } from './enhancer/table/BaseDescriptorTableEnhancer';
 
 export function initialize(): MetaEdPlugin {
   return {
-    validator: validatorList(),
+    validator: [blockPropertiesNamedDiscriminator],
     enhancer: enhancerList(),
-    generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator /* , PostgresqlTableNameGenerator */],
+    generator: [],
     configurationSchemas: new Map(),
   };
 }

@@ -1,4 +1,4 @@
-import { Column, DecimalColumn, StringColumn } from 'metaed-plugin-edfi-ods';
+import { Column, DecimalColumn, StringColumn } from 'metaed-plugin-edfi-ods-relational';
 import { ApiProperty } from '../../model/apiModel/ApiProperty';
 import { ApiPropertyType } from '../../model/apiModel/ApiPropertyType';
 import { DbType } from '../../model/apiModel/DbType';
@@ -56,7 +56,7 @@ function apiPropertyTypeFrom(column: Column): ApiPropertyType {
 // locally defined "properties" are the columns on a table minus the columns there to provide a FK reference
 export function buildApiProperty(column: Column): ApiProperty {
   return {
-    propertyName: column.name,
+    propertyName: column.data.edfiOdsSqlServer.columnName,
     propertyType: apiPropertyTypeFrom(column),
     description: column.description,
     isIdentifying: column.isPartOfPrimaryKey,

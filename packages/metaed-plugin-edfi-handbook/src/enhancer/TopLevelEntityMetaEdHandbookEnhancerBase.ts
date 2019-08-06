@@ -72,9 +72,9 @@ const getHandbookTableTemplate: () => (x: any) => string = ramda.once(() =>
 );
 
 function generatedTableSqlFor(entity: TopLevelEntity): string[] {
-  if (entity.data.edfiOds == null || entity.data.edfiOds.odsTables == null) return [];
+  if (entity.data.edfiOdsRelational == null || entity.data.edfiOdsRelational.odsTables == null) return [];
 
-  const tables = entity.data.edfiOds.odsTables;
+  const tables = entity.data.edfiOdsRelational.odsTables;
   const results: string[] = [];
 
   tables.forEach(x => {

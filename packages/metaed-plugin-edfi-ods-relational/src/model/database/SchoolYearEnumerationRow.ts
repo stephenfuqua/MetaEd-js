@@ -8,15 +8,15 @@ export interface SchoolYearEnumerationRow extends EnumerationRowBase {
 }
 
 export function newSchoolYearEnumerationRow(): SchoolYearEnumerationRow {
-  return Object.assign({}, newEnumerationRowBase(), {
+  return {
+    ...newEnumerationRowBase(),
     type: 'schoolYearEnumerationRow',
     schoolYear: 0,
     schoolYearDescription: '',
-  });
+  };
 }
 
-export const NoSchoolYearEnumerationRow: SchoolYearEnumerationRow = deepFreeze(
-  Object.assign(newSchoolYearEnumerationRow(), {
-    name: 'NoSchoolYearEnumerationRow',
-  }),
-);
+export const NoSchoolYearEnumerationRow: SchoolYearEnumerationRow = deepFreeze({
+  ...newSchoolYearEnumerationRow(),
+  name: 'NoSchoolYearEnumerationRow',
+});

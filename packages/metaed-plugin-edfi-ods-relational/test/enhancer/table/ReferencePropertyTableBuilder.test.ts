@@ -15,15 +15,11 @@ describe('when building domain entity property table that is not an identity, re
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: 'TableName',
-      nameComponents: ['TableName'],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -33,7 +29,7 @@ describe('when building domain entity property table that is not an identity, re
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -45,7 +41,7 @@ describe('when building domain entity property table that is not an identity, re
     const entityDomainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsCollection: false,
         },
       },
@@ -53,7 +49,7 @@ describe('when building domain entity property table that is not an identity, re
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
         },
       },
@@ -61,7 +57,7 @@ describe('when building domain entity property table that is not an identity, re
     const domainEntityEntityProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'DomainEntityPropertyName1',
     });
-    domainEntity.data.edfiOds.odsProperties.push(domainEntityEntityProperty1);
+    domainEntity.data.edfiOdsRelational.odsProperties.push(domainEntityEntityProperty1);
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -93,15 +89,11 @@ describe('when building identity domain entity property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: 'TableName',
-      nameComponents: ['TableName'],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -111,7 +103,7 @@ describe('when building identity domain entity property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -124,7 +116,7 @@ describe('when building identity domain entity property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_name: 'EntityDomainEntityProperty',
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -134,7 +126,7 @@ describe('when building identity domain entity property table', (): void => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_DomainEntityName: 'DomainEntityName',
           odsProperties: [],
           odsIdentityProperties: [],
@@ -144,13 +136,13 @@ describe('when building identity domain entity property table', (): void => {
     const domainEntityPk: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: domainEntityPkName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    domainEntity.data.edfiOds.odsIdentityProperties.push(domainEntityPk);
+    domainEntity.data.edfiOdsRelational.odsIdentityProperties.push(domainEntityPk);
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -173,7 +165,7 @@ describe('when building identity domain entity property table', (): void => {
 
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(domainEntityPkName);
+    expect(table.columns[0].columnId).toBe(domainEntityPkName);
   });
 
   it('should create no foreign keys', (): void => {
@@ -187,15 +179,11 @@ describe('when building required domain entity property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: 'TableName',
-      nameComponents: ['TableName'],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -205,7 +193,7 @@ describe('when building required domain entity property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -218,7 +206,7 @@ describe('when building required domain entity property table', (): void => {
       parentEntity: entity,
       isRequired: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_name: 'EntityDomainEntityProperty',
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -228,7 +216,7 @@ describe('when building required domain entity property table', (): void => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_DomainEntityName: 'DomainEntityName',
           odsProperties: [],
           odsIdentityProperties: [],
@@ -238,13 +226,13 @@ describe('when building required domain entity property table', (): void => {
     const domainEntityPk: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: domainEntityPkName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    domainEntity.data.edfiOds.odsIdentityProperties.push(domainEntityPk);
+    domainEntity.data.edfiOdsRelational.odsIdentityProperties.push(domainEntityPk);
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -267,7 +255,7 @@ describe('when building required domain entity property table', (): void => {
 
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(domainEntityPkName);
+    expect(table.columns[0].columnId).toBe(domainEntityPkName);
   });
 
   it('should create no foreign keys', (): void => {
@@ -281,15 +269,11 @@ describe('when building optional domain entity property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: 'TableName',
-      nameComponents: ['TableName'],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -299,7 +283,7 @@ describe('when building optional domain entity property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -312,7 +296,7 @@ describe('when building optional domain entity property table', (): void => {
       parentEntity: entity,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_name: 'EntityDomainEntityProperty',
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -322,7 +306,7 @@ describe('when building optional domain entity property table', (): void => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_DomainEntityName: 'DomainEntityName',
           odsProperties: [],
           odsIdentityProperties: [],
@@ -332,13 +316,13 @@ describe('when building optional domain entity property table', (): void => {
     const domainEntityPk: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: domainEntityPkName,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    domainEntity.data.edfiOds.odsIdentityProperties.push(domainEntityPk);
+    domainEntity.data.edfiOdsRelational.odsIdentityProperties.push(domainEntityPk);
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -361,7 +345,7 @@ describe('when building optional domain entity property table', (): void => {
 
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(domainEntityPkName);
+    expect(table.columns[0].columnId).toBe(domainEntityPkName);
   });
 
   it('should create no foreign keys', (): void => {
@@ -379,15 +363,11 @@ describe('when building collection domain entity property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -397,7 +377,7 @@ describe('when building collection domain entity property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -410,7 +390,7 @@ describe('when building collection domain entity property table', (): void => {
       metaEdName: domainEntityName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: true,
         },
@@ -419,7 +399,7 @@ describe('when building collection domain entity property table', (): void => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           ods_DomainEntityName: domainEntityName,
           odsProperties: [],
           odsIdentityProperties: [],
@@ -430,14 +410,14 @@ describe('when building collection domain entity property table', (): void => {
       metaEdName: domainEntityPkName,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    domainEntity.data.edfiOds.odsProperties.push(domainEntityEntityProperty1);
-    domainEntity.data.edfiOds.odsIdentityProperties.push(domainEntityEntityProperty1);
+    domainEntity.data.edfiOdsRelational.odsProperties.push(domainEntityEntityProperty1);
+    domainEntity.data.edfiOdsRelational.odsIdentityProperties.push(domainEntityEntityProperty1);
     entityDomainEntityProperty.referencedEntity = domainEntity;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -456,15 +436,15 @@ describe('when building collection domain entity property table', (): void => {
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + domainEntityName);
+    expect(tables[0].tableId).toBe(tableName + domainEntityName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
   it('should create two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(entityPkName);
+    expect(tables[0].columns[0].columnId).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(domainEntityPkName);
+    expect(tables[0].columns[1].columnId).toBe(domainEntityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -473,11 +453,11 @@ describe('when building collection domain entity property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + domainEntityName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + domainEntityName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
   });
 });

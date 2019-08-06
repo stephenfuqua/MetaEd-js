@@ -16,7 +16,7 @@ function modifyStartTimeColumnOnInterventionMeetingTimeTable(tablesForCoreNamesp
   const table: Table | undefined = tablesForCoreNamespace.get(interventionMeetingTime);
   if (table == null) return;
 
-  const column: Column | undefined = table.columns.find((x: Column) => x.name === startTime);
+  const column: Column | undefined = table.columns.find((x: Column) => x.columnId === startTime);
   if (column == null) return;
 
   column.isPartOfPrimaryKey = false;

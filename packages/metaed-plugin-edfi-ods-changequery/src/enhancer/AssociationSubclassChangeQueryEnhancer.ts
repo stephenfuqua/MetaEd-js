@@ -1,5 +1,5 @@
 import { MetaEdEnvironment, ModelBase, EnhancerResult } from 'metaed-core';
-import { Table, ForeignKey } from 'metaed-plugin-edfi-ods';
+import { Table, ForeignKey } from 'metaed-plugin-edfi-ods-relational';
 import { getAllEntitiesOfType } from 'metaed-core';
 import { changeQueryIndicated } from './ChangeQueryIndicator';
 import { createDeleteTrackingTable } from './DeleteTrackingTableCreator';

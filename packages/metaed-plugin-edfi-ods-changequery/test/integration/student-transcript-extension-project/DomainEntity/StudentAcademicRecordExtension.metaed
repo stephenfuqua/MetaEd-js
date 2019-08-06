@@ -1,4 +1,4 @@
-Domain Entity StudentAcademicRecord additions
+Domain Entity EdFi.StudentAcademicRecord additions
     domain entity PostSecondaryOrganization
         documentation "A reference to the postsecondary organization."
         is optional

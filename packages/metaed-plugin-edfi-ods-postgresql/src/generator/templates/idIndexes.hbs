@@ -1,0 +1,13 @@
+{{#tables}}
+BEGIN TRANSACTION
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id =
+OBJECT_ID(N'{{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}}') AND name =
+N'UX_{{{data.edfiOdsPostgresql.tableName}}}_Id')
+CREATE UNIQUE NONCLUSTERED INDEX UX_{{{data.edfiOdsPostgresql.tableName}}}_Id ON
+[{{{schema}}}].[{{{data.edfiOdsPostgresql.tableName}}}]
+(Id) WITH (PAD_INDEX = ON, FILLFACTOR = {{#if isTypeTable}}100{{else}}75{{/if}}, STATISTICS_NORECOMPUTE = OFF) ON
+[PRIMARY]
+GO
+COMMIT
+
+{{/tables}}

@@ -1,7 +1,7 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumn } from '../model/database/Table';
-import { newIntegerColumn } from '../model/database/Column';
+import { newColumn, newColumnNameComponent } from '../model/database/Column';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
 import { Table } from '../model/database/Table';
@@ -21,11 +21,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
   const table: Table | undefined = tablesForCoreNamespace.get(gradingPeriodType);
-  if (table != null && table.columns.find((x: Column) => x.name === periodSequence) == null) {
-    const column: Column = Object.assign(newIntegerColumn(), {
-      name: periodSequence,
+  if (table != null && table.columns.find((x: Column) => x.columnId === periodSequence) == null) {
+    const column: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: periodSequence,
+      nameComponents: [{ ...newColumnNameComponent(), name: periodSequence, isSynthetic: true }],
       isNullable: true,
-    });
+    };
     addColumn(table, column);
   }
 

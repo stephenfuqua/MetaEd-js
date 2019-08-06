@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, EnhancerResult, EnumerationProperty } from 'metaed-core';
 import { normalizeEnumerationSuffix } from 'metaed-core';
-import { prependroleNameToMetaEdName } from '../../shared/Utility';
+import { prependRoleNameToMetaEdName } from '../../shared/Utility';
 import { EntityPropertyEdfiOds } from './EntityProperty';
 
 export type EnumerationPropertyEdfiOds = EntityPropertyEdfiOds & {
@@ -15,13 +15,13 @@ export function odsTypeifiedBaseName(property: EnumerationProperty) {
 }
 
 export function odsEnumerationName(property: EnumerationProperty) {
-  return normalizeEnumerationSuffix(prependroleNameToMetaEdName(property.metaEdName, property.roleName));
+  return normalizeEnumerationSuffix(prependRoleNameToMetaEdName(property.metaEdName, property.roleName));
 }
 
 export function addEnumerationPropertyEdfiOdsTo(property: EnumerationProperty) {
-  if (property.data.edfiOds == null) property.data.edfiOds = {};
+  if (property.data.edfiOdsRelational == null) property.data.edfiOdsRelational = {};
 
-  Object.assign(property.data.edfiOds, {
+  Object.assign(property.data.edfiOdsRelational, {
     odsTypeifiedBaseName: odsTypeifiedBaseName(property),
     odsName: odsEnumerationName(property),
   });

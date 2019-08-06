@@ -5,10 +5,10 @@ import { addForeignKey } from '../../model/database/Table';
 import { addTables, buildMainTable, buildTablesFromProperties } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { columnCreatorFactory } from './ColumnCreatorFactory';
-import { newColumnNamePair } from '../../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePairs, newForeignKeySourceReference } from '../../model/database/ForeignKey';
+import { newColumnPair } from '../../model/database/ColumnPair';
+import { newForeignKey, addColumnPairs, newForeignKeySourceReference } from '../../model/database/ForeignKey';
 import { Column } from '../../model/database/Column';
-import { ColumnNamePair } from '../../model/database/ColumnNamePair';
+import { ColumnPair } from '../../model/database/ColumnPair';
 import { ForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 
@@ -17,50 +17,50 @@ const enhancerName = 'DomainEntitySubclassTableEnhancer';
 function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): void {
   if (entity.baseEntity == null) return;
 
-  entity.data.edfiOds.odsProperties.forEach((keyRenameProperty: EntityProperty) => {
+  entity.data.edfiOdsRelational.odsProperties.forEach((keyRenameProperty: EntityProperty) => {
     if (!keyRenameProperty.isIdentityRename) return;
 
-    const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
+    const foreignKey: ForeignKey = {
+      ...newForeignKey(),
       withDeleteCascade: true,
       sourceReference: {
         ...newForeignKeySourceReference(),
         isPartOfIdentity: true,
         isSubclassRelationship: true,
       },
-    });
+    };
 
     // null check for typescript
     if (entity.baseEntity != null) {
       foreignKey.foreignTableSchema = entity.baseEntity.namespace.namespaceName.toLowerCase();
       foreignKey.foreignTableNamespace = entity.baseEntity.namespace;
-      foreignKey.foreignTableName = entity.baseEntity.data.edfiOds.odsTableName;
+      foreignKey.foreignTableId = entity.baseEntity.data.edfiOdsRelational.odsTableId;
     }
 
-    const localColumnNames: string[] = columnCreatorFactory
+    const localColumnIds: string[] = columnCreatorFactory
       .columnCreatorFor(keyRenameProperty)
       .createColumns(keyRenameProperty, BuildStrategyDefault)
-      .map((x: Column) => x.name);
+      .map((x: Column) => x.columnId);
 
     const baseColumnProperty: EntityProperty = R.head(
       // @ts-ignore - baseEntity can't be null/undefined due to setting above
-      entity.baseEntity.data.edfiOds.odsProperties.filter(
-        (property: EntityProperty) => property.data.edfiOds.odsName === keyRenameProperty.baseKeyName,
+      entity.baseEntity.data.edfiOdsRelational.odsProperties.filter(
+        (property: EntityProperty) => property.data.edfiOdsRelational.odsName === keyRenameProperty.baseKeyName,
       ),
     );
 
-    const baseColumnNames: string[] = columnCreatorFactory
+    const baseColumnIds: string[] = columnCreatorFactory
       .columnCreatorFor(baseColumnProperty)
       .createColumns(baseColumnProperty, BuildStrategyDefault)
-      .map((x: Column) => x.name);
+      .map((x: Column) => x.columnId);
 
-    const columnNamePairs: ColumnNamePair[] = R.zipWith((localColumnName, baseColumnName) =>
-      Object.assign(newColumnNamePair(), {
-        parentTableColumnName: localColumnName,
-        foreignTableColumnName: baseColumnName,
-      }),
-    )(localColumnNames, baseColumnNames);
+    const columnPairs: ColumnPair[] = R.zipWith((localColumnName, baseColumnName) => ({
+      ...newColumnPair(),
+      parentTableColumnId: localColumnName,
+      foreignTableColumnId: baseColumnName,
+    }))(localColumnIds, baseColumnIds);
 
-    addColumnNamePairs(foreignKey, columnNamePairs);
+    addColumnPairs(foreignKey, columnPairs);
     addForeignKey(table, foreignKey);
   });
 }
@@ -74,7 +74,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       tables.push(mainTable);
       addForeignKeyToPrimaryKeyRename(mainTable, entity);
       buildTablesFromProperties(entity, mainTable, tables);
-      entity.data.edfiOds.odsTables = tables;
+      entity.data.edfiOdsRelational.odsTables = tables;
       addTables(metaEd, tables);
     });
 

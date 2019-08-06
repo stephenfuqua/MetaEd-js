@@ -9,10 +9,10 @@ import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 export function referencePropertyColumnCreator(factory: ColumnCreatorFactory): ColumnCreator {
   return {
     createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
-      if (!strategy.buildColumns(property) || property.data.edfiOds.odsIsCollection) return [];
+      if (!strategy.buildColumns(property) || property.data.edfiOdsRelational.odsIsCollection) return [];
 
       const referentialProperty: ReferentialProperty = asReferentialProperty(property);
-      let buildStrategy: BuildStrategy = strategy.appendParentContext(referentialProperty.data.edfiOds.odsContextPrefix);
+      let buildStrategy: BuildStrategy = strategy.appendParentContextProperty(referentialProperty);
       // NOTE: Add test coverage here once we understand how skip path should work? see SkipPathStrategy class in BuildStrategy
       buildStrategy =
         referentialProperty.mergeDirectives.length > 0
@@ -21,7 +21,7 @@ export function referencePropertyColumnCreator(factory: ColumnCreatorFactory): C
 
       const columns: Column[] = collectPrimaryKeys(referentialProperty.referencedEntity, buildStrategy, factory);
       columns.forEach((column: Column) => {
-        column.referenceContext = referentialProperty.data.edfiOds.odsName + column.referenceContext;
+        column.referenceContext = referentialProperty.data.edfiOdsRelational.odsName + column.referenceContext;
       });
       return columns;
     },

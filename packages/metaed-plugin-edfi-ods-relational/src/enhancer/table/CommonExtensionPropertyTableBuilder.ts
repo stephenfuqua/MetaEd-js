@@ -1,7 +1,14 @@
 import { asCommonProperty, getEntityFromNamespaceChain, Namespace } from 'metaed-core';
 import { ModelBase, EntityProperty, MergeDirective, ReferentialProperty } from 'metaed-core';
-import { addColumns, addForeignKey, newTable, createForeignKeyUsingSourceReference } from '../../model/database/Table';
-import { appendOverlapping } from './TableNaming';
+import {
+  TableNameGroup,
+  addColumns,
+  addForeignKey,
+  newTable,
+  newTableNameComponent,
+  newTableExistenceReason,
+  newTableNameGroup,
+} from '../../model/database/Table';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
@@ -11,22 +18,18 @@ import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
 import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 import { foreignKeySourceReferenceFrom } from '../../model/database/ForeignKey';
-import { ForeignKey } from '../../model/database/ForeignKey';
+import { ForeignKey, createForeignKeyUsingSourceReference } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
 import { TableBuilderFactory } from './TableBuilderFactory';
-
-function overlapCollapsingJoinTableName(parentEntityName: string, odsName: string) {
-  return appendOverlapping(parentEntityName, odsName);
-}
 
 function buildExtensionTables(
   property: ReferentialProperty,
   parentTableStrategy: TableStrategy,
   primaryKeys: Column[],
   _buildStrategy: BuildStrategy,
-  joinTableName: string,
-  joinTableNameComponents: string[],
+  joinTableId: string,
+  joinTableNameGroup: TableNameGroup,
   joinTableSchema: string,
   joinTableNamespace: Namespace,
   tables: Table[],
@@ -41,28 +44,49 @@ function buildExtensionTables(
   );
   if (commonExtension == null) return;
 
-  const extensionTable: Table = Object.assign(newTable(), {
+  const extensionTable: Table = {
+    ...newTable(),
     namespace: commonExtension.namespace,
     schema: commonExtension.namespace.namespaceName.toLowerCase(),
-    name: overlapCollapsingJoinTableName(
-      parentTableStrategy.name,
-      property.data.edfiOds.odsName + commonExtension.namespace.extensionEntitySuffix,
-    ),
-    nameComponents: [
-      ...parentTableStrategy.nameComponents,
-      property.data.edfiOds.odsName + commonExtension.namespace.extensionEntitySuffix,
-    ],
+    tableId:
+      parentTableStrategy.tableId +
+      property.data.edfiOdsRelational.odsName +
+      commonExtension.namespace.extensionEntitySuffix,
+    nameGroup: {
+      ...newTableNameGroup(),
+      nameElements: [
+        parentTableStrategy.nameGroup,
+        {
+          ...newTableNameComponent(),
+          name: property.data.edfiOdsRelational.odsName,
+          isPropertyOdsName: true,
+          sourceProperty: property,
+        },
+        {
+          ...newTableNameComponent(),
+          name: commonExtension.namespace.extensionEntitySuffix,
+          isExtensionSuffix: true,
+        },
+      ],
+      sourceProperty: property,
+    },
+
+    existenceReason: {
+      ...newTableExistenceReason(),
+      isExtensionTable: true,
+      parentEntity: property.parentEntity,
+    },
     description: property.documentation,
     parentEntity: property.parentEntity,
     includeCreateDateColumn: true,
     hideFromApiMetadata: true,
-  });
+  };
 
   // don't add table unless the extension table will have columns that are not just the fk to the base table
   if (
-    commonExtension.data.edfiOds.odsProperties.some(
+    commonExtension.data.edfiOdsRelational.odsProperties.some(
       (propertyOnCommonExtension: EntityProperty) =>
-        !propertyOnCommonExtension.data.edfiOds.odsIsCollection && propertyOnCommonExtension.type !== 'common',
+        !propertyOnCommonExtension.data.edfiOdsRelational.odsIsCollection && propertyOnCommonExtension.type !== 'common',
     )
   ) {
     tables.push(extensionTable);
@@ -76,18 +100,18 @@ function buildExtensionTables(
     primaryKeys,
     joinTableSchema,
     joinTableNamespace,
-    joinTableName,
-    ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
+    joinTableId,
+    ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates),
   );
 
   addForeignKey(extensionTable, foreignKey);
-  addColumns(extensionTable, primaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(joinTableName));
+  addColumns(extensionTable, primaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(joinTableId));
 
-  commonExtension.data.edfiOds.odsProperties.forEach((odsProperty: EntityProperty) => {
+  commonExtension.data.edfiOdsRelational.odsProperties.forEach((odsProperty: EntityProperty) => {
     const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(odsProperty);
     tableBuilder.buildTables(
       odsProperty,
-      TableStrategy.extension(extensionTable, joinTableSchema, joinTableNamespace, joinTableName, joinTableNameComponents),
+      TableStrategy.extension(extensionTable, joinTableSchema, joinTableNamespace, joinTableId, joinTableNameGroup),
       primaryKeys,
       BuildStrategyDefault,
       tables,
@@ -123,20 +147,29 @@ export function commonExtensionPropertyTableBuilder(
       }
       primaryKeys.push(...parentPrimaryKeys);
 
-      const joinTableName: string = overlapCollapsingJoinTableName(
-        parentTableStrategy.name,
-        commonProperty.data.edfiOds.odsName,
-      );
+      const joinTableId: string = parentTableStrategy.tableId + commonProperty.data.edfiOdsRelational.odsName;
 
-      const joinTableNameComponents = [...parentTableStrategy.nameComponents, commonProperty.data.edfiOds.odsName];
+      const joinTableNameGroup: TableNameGroup = {
+        ...newTableNameGroup(),
+        nameElements: [
+          parentTableStrategy.nameGroup,
+          {
+            ...newTableNameComponent(),
+            name: commonProperty.data.edfiOdsRelational.odsName,
+            isPropertyOdsName: true,
+            sourceProperty: commonProperty,
+          },
+        ],
+        sourceProperty: commonProperty,
+      };
 
       buildExtensionTables(
         commonProperty,
         parentTableStrategy,
         primaryKeys,
         buildStrategy,
-        joinTableName,
-        joinTableNameComponents,
+        joinTableId,
+        joinTableNameGroup,
         commonProperty.referencedEntity.namespace.namespaceName.toLowerCase(),
         commonProperty.referencedEntity.namespace,
         tables,

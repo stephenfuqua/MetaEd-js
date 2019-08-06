@@ -1,21 +1,30 @@
 import { getAllEntitiesOfType, asTopLevelEntity, asDomainEntity } from 'metaed-core';
 import { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, DomainEntity } from 'metaed-core';
-import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods-relational';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 
 const enhancerName = 'DomainEntityAggregateEnhancer';
 
-export function enhanceEntityTable(entity: TopLevelEntity, table: Table, entityTable: EntityTable): void {
+export function enhanceEntityTable(
+  // @ts-ignore - value never read
+  metaEd: MetaEdEnvironment,
+  entity: TopLevelEntity,
+  table: Table,
+  entityTable: EntityTable,
+): void {
   const domainEntity: DomainEntity = asDomainEntity(entity);
-  if ((domainEntity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName === table.name && domainEntity.isAbstract) {
+  if (
+    (domainEntity.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsTableId === table.tableId &&
+    domainEntity.isAbstract
+  ) {
     entityTable.isAbstract = true;
   }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'domainEntity').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.namespace, enhanceEntityTable);
+    enhanceSingleEntity(metaEd, asTopLevelEntity(modelBase), metaEd.namespace, enhanceEntityTable);
   });
 
   return {

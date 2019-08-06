@@ -6,11 +6,15 @@ import {
   newMergeDirective,
   newMetaEdEnvironment,
   newNamespace,
+  DomainEntity,
+  DomainEntityProperty,
+  IntegerProperty,
+  MetaEdEnvironment,
+  Namespace,
 } from 'metaed-core';
-import { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
-import { newTable } from '../../src/model/database/Table';
-import { newIntegerColumn } from '../../src/model/database/Column';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
+import { newTable, Table } from '../../src/model/database/Table';
+import { newColumn, Column } from '../../src/model/database/Column';
 import {
   enhance,
   getMatchingColumnFromSourceEntityProperties,
@@ -18,9 +22,7 @@ import {
   getReferencePropertiesAndAssociatedColumns,
 } from '../../src/enhancer/ForeignKeyCreatingTableEnhancer';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
-import { Column } from '../../src/model/database/Column';
 import { PropertyColumnPair } from '../../src/enhancer/ForeignKeyCreatingTableEnhancer';
-import { Table } from '../../src/model/database/Table';
 
 describe('when using get reference properties and associated columns with non reference properties', (): void => {
   let propertyColumnPair: PropertyColumnPair[];
@@ -30,10 +32,13 @@ describe('when using get reference properties and associated columns with non re
   const columnName2 = 'ColumnName2';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
+    const table: Table = {
+      ...newTable(),
       columns: [
-        Object.assign(newIntegerColumn(), {
-          name: columnName1,
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: columnName1,
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: domainEntityPropertyName1,
@@ -42,9 +47,11 @@ describe('when using get reference properties and associated columns with non re
               metaEdName: 'IntegerPropertyName2',
             }),
           ],
-        }),
-        Object.assign(newIntegerColumn(), {
-          name: columnName2,
+        },
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: columnName2,
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: domainEntityPropertyName2,
@@ -53,9 +60,9 @@ describe('when using get reference properties and associated columns with non re
               metaEdName: 'IntegerPropertyName2',
             }),
           ],
-        }),
+        },
       ],
-    });
+    };
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
@@ -67,13 +74,13 @@ describe('when using get reference properties and associated columns with non re
   it('should have first reference pair', (): void => {
     expect(R.head(propertyColumnPair).columns).toHaveLength(1);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName1);
-    expect(R.head(R.head(propertyColumnPair).columns).name).toBe(columnName1);
+    expect(R.head(R.head(propertyColumnPair).columns).columnId).toBe(columnName1);
   });
 
   it('should have second reference pair', (): void => {
-    expect(R.last(propertyColumnPair).columns).toHaveLength(1);
-    expect(R.last(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName2);
-    expect(R.head(R.last(propertyColumnPair).columns).name).toBe(columnName2);
+    expect(propertyColumnPair[propertyColumnPair.length - 1].columns).toHaveLength(1);
+    expect(propertyColumnPair[propertyColumnPair.length - 1].property.metaEdName).toBe(domainEntityPropertyName2);
+    expect(R.head(propertyColumnPair[propertyColumnPair.length - 1].columns).columnId).toBe(columnName2);
   });
 });
 
@@ -83,27 +90,32 @@ describe('when using get reference properties and associated columns with weak r
   const columnName1 = 'ColumnName1';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
+    const table: Table = {
+      ...newTable(),
       columns: [
-        Object.assign(newIntegerColumn(), {
-          name: columnName1,
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: columnName1,
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: domainEntityPropertyName,
             }),
           ],
-        }),
-        Object.assign(newIntegerColumn(), {
-          name: 'ColumnName2',
+        },
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: 'ColumnName2',
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: 'WeakReferencePropertyName',
               isWeak: true,
             }),
           ],
-        }),
+        },
       ],
-    });
+    };
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
@@ -111,7 +123,7 @@ describe('when using get reference properties and associated columns with weak r
     expect(propertyColumnPair).toBeDefined();
     expect(R.head(propertyColumnPair).columns).toHaveLength(1);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName);
-    expect(R.head(R.head(propertyColumnPair).columns).name).toBe(columnName1);
+    expect(R.head(R.head(propertyColumnPair).columns).columnId).toBe(columnName1);
   });
 });
 
@@ -123,10 +135,13 @@ describe('when using get reference properties and associated columns', (): void 
   const columnName2 = 'ColumnName2';
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
+    const table: Table = {
+      ...newTable(),
       columns: [
-        Object.assign(newIntegerColumn(), {
-          name: columnName1,
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: columnName1,
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: domainEntityPropertyName1,
@@ -135,17 +150,19 @@ describe('when using get reference properties and associated columns', (): void 
               metaEdName: domainEntityPropertyName2,
             }),
           ],
-        }),
-        Object.assign(newIntegerColumn(), {
-          name: columnName2,
+        },
+        {
+          ...newColumn(),
+          type: 'integer',
+          columnId: columnName2,
           sourceEntityProperties: [
             Object.assign(newDomainEntityProperty(), {
               metaEdName: domainEntityPropertyName1,
             }),
           ],
-        }),
+        },
       ],
-    });
+    };
     propertyColumnPair = getReferencePropertiesAndAssociatedColumns(table);
   });
 
@@ -157,14 +174,14 @@ describe('when using get reference properties and associated columns', (): void 
   it('should have first pair with two columns', (): void => {
     expect(R.head(propertyColumnPair).columns).toHaveLength(2);
     expect(R.head(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName1);
-    expect(R.head(R.head(propertyColumnPair).columns).name).toBe(columnName1);
-    expect(R.last(R.head(propertyColumnPair).columns).name).toBe(columnName2);
+    expect(R.head(R.head(propertyColumnPair).columns).columnId).toBe(columnName1);
+    expect(R.last(R.head(propertyColumnPair).columns).columnId).toBe(columnName2);
   });
 
   it('should have second pair with one column', (): void => {
-    expect(R.last(propertyColumnPair).columns).toHaveLength(1);
-    expect(R.last(propertyColumnPair).property.metaEdName).toBe(domainEntityPropertyName2);
-    expect(R.head(R.last(propertyColumnPair).columns).name).toBe(columnName1);
+    expect(propertyColumnPair[propertyColumnPair.length - 1].columns).toHaveLength(1);
+    expect(propertyColumnPair[propertyColumnPair.length - 1].property.metaEdName).toBe(domainEntityPropertyName2);
+    expect(R.head(propertyColumnPair[propertyColumnPair.length - 1].columns).columnId).toBe(columnName1);
   });
 });
 
@@ -173,28 +190,34 @@ describe('when using get matching column from source entity properties with no m
 
   beforeAll(() => {
     const integerPropertyName1 = 'IntegerPropertyName1';
-    const integerColumn1: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName1',
+    const integerColumn1: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName1',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 })],
       referenceContext: integerPropertyName1,
       mergedReferenceContexts: [integerPropertyName1],
-    });
+    };
 
     const integerPropertyName2 = 'IntegerPropertyName2';
-    const integerColumn2: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName2',
+    const integerColumn2: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName2',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 })],
       referenceContext: integerPropertyName2,
       mergedReferenceContexts: [integerPropertyName2],
-    });
+    };
 
     const integerPropertyName3 = 'IntegerPropertyName3';
-    const integerColumn3: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName3',
+    const integerColumn3: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName3',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
       mergedReferenceContexts: [integerPropertyName3],
-    });
+    };
 
     column = getMatchingColumnFromSourceEntityProperties(integerColumn1, [integerColumn2, integerColumn3]) as Column;
   });
@@ -214,34 +237,40 @@ describe('when using get matching column from source entity properties with matc
       metaEdName: matchingIntegerPropertyName,
     });
 
-    const columnToMatch: Column = Object.assign(newIntegerColumn(), {
-      name: 'ColumnToMatch',
+    const columnToMatch: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'ColumnToMatch',
       sourceEntityProperties: [
         matchingIntegerProperty,
         Object.assign(newIntegerProperty(), { metaEdName: 'IntegerPropertyName1' }),
       ],
       referenceContext: matchingIntegerPropertyName,
       mergedReferenceContexts: [matchingIntegerPropertyName],
-    });
+    };
 
     const integerPropertyName2 = 'IntegerPropertyName2';
-    matchingColumn = Object.assign(newIntegerColumn(), {
-      name: 'MatchingColumn',
+    matchingColumn = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'MatchingColumn',
       sourceEntityProperties: [
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 }),
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
       mergedReferenceContexts: [integerPropertyName2],
-    });
+    };
 
     const integerPropertyName3 = 'IntegerPropertyName3';
-    const integerColumn: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName',
+    const integerColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
       mergedReferenceContexts: [integerPropertyName3],
-    });
+    };
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]) as Column;
   });
@@ -264,45 +293,53 @@ describe('when using get matching column from source entity properties with matc
     });
 
     const integerPropertyName1 = 'IntegerPropertyName1';
-    const columnToMatch: Column = Object.assign(newIntegerColumn(), {
-      name: matchingColumnName,
+    const columnToMatch: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: matchingColumnName,
       sourceEntityProperties: [
         matchingIntegerProperty,
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 }),
       ],
       referenceContext: matchingIntegerPropertyName,
       mergedReferenceContexts: [integerPropertyName1],
-    });
+    };
 
     const integerPropertyName2 = 'IntegerPropertyName2';
-    matchingColumn1 = Object.assign(newIntegerColumn(), {
-      name: matchingColumnName,
+    matchingColumn1 = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: matchingColumnName,
       sourceEntityProperties: [
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 }),
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
       mergedReferenceContexts: [integerPropertyName2],
-    });
+    };
 
     const integerPropertyName3 = 'IntegerPropertyName3';
-    const matchingColumn2: Column = Object.assign(newIntegerColumn(), {
-      name: 'matchingColumnName2',
+    const matchingColumn2: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'matchingColumnName2',
       sourceEntityProperties: [
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 }),
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
       mergedReferenceContexts: [integerPropertyName2],
-    });
+    };
 
     const integerPropertyName4 = 'IntegerPropertyName4';
-    const integerColumn: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName',
+    const integerColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4 })],
       referenceContext: integerPropertyName3,
       mergedReferenceContexts: [integerPropertyName3],
-    });
+    };
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [
       matchingColumn1,
@@ -328,42 +365,48 @@ describe('when using get matching column from source entity properties with matc
     });
 
     const integerPropertyName1 = 'IntegerPropertyName1';
-    const columnToMatch: Column = Object.assign(newIntegerColumn(), {
-      name: matchingColumnName,
+    const columnToMatch: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: matchingColumnName,
       sourceEntityProperties: [
         matchingIntegerProperty,
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 }),
       ],
       referenceContext: matchingIntegerPropertyName,
       mergedReferenceContexts: [matchingIntegerPropertyName, integerPropertyName1],
-    });
+    };
 
     const integerPropertyName2 = 'IntegerPropertyName2';
-    const matchingColumn: Column = Object.assign(newIntegerColumn(), {
-      name: matchingColumnName,
+    const matchingColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: matchingColumnName,
       sourceEntityProperties: [
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 }),
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
       mergedReferenceContexts: [integerPropertyName2, matchingIntegerPropertyName],
-    });
+    };
 
     const integerPropertyName3 = 'IntegerPropertyName3';
-    const integerColumn: Column = Object.assign(newIntegerColumn(), {
-      name: 'IntegerColumnName',
+    const integerColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: 'IntegerColumnName',
       sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
       mergedReferenceContexts: [integerPropertyName3],
-    });
+    };
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]) as Column;
   });
 
   it('should return matching column', (): void => {
     expect(column).toBeDefined();
-    expect(R.prop('name')(column)).toBe(matchingColumnName);
-    expect(R.prop('sourceEntityProperties')(column)).toContain(matchingIntegerProperty);
+    expect(column.columnId).toBe(matchingColumnName);
+    expect(column.sourceEntityProperties).toContain(matchingIntegerProperty);
   });
 });
 
@@ -380,7 +423,7 @@ describe('when using get merge property column with property that is not include
       ],
     });
 
-    column = getMergePropertyColumn(newTable(), newIntegerColumn(), domainEntity1Property3) as Column;
+    column = getMergePropertyColumn(newTable(), newColumn(), domainEntity1Property3) as Column;
   });
 
   it('should return undefined', (): void => {
@@ -404,18 +447,20 @@ describe('when using get merge property column with column that has invalid merg
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
-    const referencedColumn: Column = Object.assign(newIntegerColumn(), {
-      name: domainEntityName3,
+    const referencedColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: domainEntityName3,
       isPartOfPrimaryKey: true,
       sourceEntityProperties: [newIntegerProperty()],
       mergedReferenceContexts: ['InvalidReferenceContext'],
-    });
+    };
 
-    const referencedTable: Table = Object.assign(newTable(), {
-      name: `DomainEntityName1${domainEntityName2}`,
-      nameComponents: [`DomainEntityName1${domainEntityName2}`],
+    const referencedTable: Table = {
+      ...newTable(),
+      tableId: `DomainEntityName1${domainEntityName2}`,
       columns: [referencedColumn],
-    });
+    };
 
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
@@ -440,8 +485,8 @@ describe('when using get merge property column with non reference target propert
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName1,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName1,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName1,
         },
       },
     });
@@ -457,18 +502,20 @@ describe('when using get merge property column with non reference target propert
     });
     domainEntityProperty.mergeDirectives.push(mergedProperty);
 
-    const referencedColumn: Column = Object.assign(newIntegerColumn(), {
-      name: domainEntityName3,
+    const referencedColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: domainEntityName3,
       isPartOfPrimaryKey: true,
       sourceEntityProperties: [domainEntityProperty],
       mergedReferenceContexts: [domainEntityName1 + nonReferencePropertyName],
-    });
+    };
 
-    const referencedTable: Table = Object.assign(newTable(), {
-      name: domainEntityName1 + nonReferencePropertyName,
-      nameComponents: [domainEntityName1 + nonReferencePropertyName],
+    const referencedTable: Table = {
+      ...newTable(),
+      tableId: domainEntityName1 + nonReferencePropertyName,
       columns: [referencedColumn],
-    });
+    };
 
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntityProperty) as Column;
   });
@@ -488,12 +535,12 @@ describe('when using get merge property column with reference property', (): voi
   beforeAll(() => {
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
-      data: { edfiOds: {} },
+      data: { edfiOdsRelational: {} },
     });
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
-      data: { edfiOds: {} },
+      data: { edfiOdsRelational: {} },
     });
     const domainEntity3Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,
@@ -504,8 +551,8 @@ describe('when using get merge property column with reference property', (): voi
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName1,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName1,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName1,
         },
       },
     });
@@ -522,32 +569,32 @@ describe('when using get merge property column with reference property', (): voi
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
-    const referencedColumn: Column = Object.assign(newIntegerColumn(), {
-      name: domainEntityName3,
+    const referencedColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: domainEntityName3,
       isPartOfPrimaryKey: true,
       sourceEntityProperties: [domainEntity1Property3],
       mergedReferenceContexts: [domainEntityName1 + domainEntityName2],
-    });
+    };
 
-    const parentTable: Table = Object.assign(newTable(), {
-      columns: [referencedColumn],
-    });
-    domainEntity2.data.edfiOds.odsEntityTable = parentTable;
+    const parentTable: Table = { ...newTable(), columns: [referencedColumn] };
+    domainEntity2.data.edfiOdsRelational.odsEntityTable = parentTable;
 
-    const referencedTable: Table = Object.assign(newTable(), {
-      name: domainEntityName1 + domainEntityName2,
-      nameComponents: [domainEntityName1 + domainEntityName2],
+    const referencedTable: Table = {
+      ...newTable(),
+      tableId: domainEntityName1 + domainEntityName2,
       columns: [referencedColumn],
-    });
+    };
 
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
 
   it('should return merge property column', (): void => {
     expect(column).toBeDefined();
-    expect(column.name).toBe(domainEntityName3);
-    expect(R.head(column.sourceEntityProperties)).toBe(domainEntity1Property3);
-    expect(R.head(column.mergedReferenceContexts)).toBe(domainEntityName1 + domainEntityName2);
+    expect(column.columnId).toBe(domainEntityName3);
+    expect(column.sourceEntityProperties[0]).toBe(domainEntity1Property3);
+    expect(column.mergedReferenceContexts[0]).toBe(domainEntityName1 + domainEntityName2);
   });
 });
 
@@ -561,12 +608,12 @@ describe('when using get merge property column with multiple source entity prope
   beforeAll(() => {
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
-      data: { edfiOds: {} },
+      data: { edfiOdsRelational: {} },
     });
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
-      data: { edfiOds: {} },
+      data: { edfiOdsRelational: {} },
     });
     const domainEntity3Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,
@@ -577,8 +624,8 @@ describe('when using get merge property column with multiple source entity prope
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName1,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName1,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName1,
         },
       },
     });
@@ -595,30 +642,30 @@ describe('when using get merge property column with multiple source entity prope
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
-    const referencedColumn: Column = Object.assign(newIntegerColumn(), {
-      name: domainEntityName3,
+    const referencedColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: domainEntityName3,
       isPartOfPrimaryKey: true,
       sourceEntityProperties: [domainEntity1Property3, newDomainEntityProperty()],
       mergedReferenceContexts: [domainEntityName1 + domainEntityName2],
-    });
+    };
 
-    const parentTable: Table = Object.assign(newTable(), {
-      columns: [referencedColumn],
-    });
-    domainEntity2.data.edfiOds.odsEntityTable = parentTable;
+    const parentTable: Table = { ...newTable(), columns: [referencedColumn] };
+    domainEntity2.data.edfiOdsRelational.odsEntityTable = parentTable;
 
-    const referencedTable: Table = Object.assign(newTable(), {
-      name: domainEntityName1 + domainEntityName2,
-      nameComponents: [domainEntityName1 + domainEntityName2],
+    const referencedTable: Table = {
+      ...newTable(),
+      tableId: domainEntityName1 + domainEntityName2,
       columns: [referencedColumn],
-    });
+    };
 
     column = getMergePropertyColumn(referencedTable, referencedColumn, domainEntity1Property3) as Column;
   });
 
   it('should return merge property column', (): void => {
     expect(column).toBeDefined();
-    expect(column.name).toBe(domainEntityName3);
+    expect(column.columnId).toBe(domainEntityName3);
     expect(R.head(column.sourceEntityProperties)).toBe(domainEntity1Property3);
     expect(R.head(column.mergedReferenceContexts)).toBe(domainEntityName1 + domainEntityName2);
   });
@@ -637,7 +684,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       metaEdName: sourceEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -654,51 +701,48 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       namespace,
       referencedEntity: sourceEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDeleteCascadePrimaryKey: false,
           odsCausesCyclicUpdateCascade: false,
         },
       },
     });
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const parentTable: Table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      schema: 'edfi',
-    });
-    const sourceColumn: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityName,
+    const parentTable: Table = { ...newTable(), tableId: parentTableName, schema: 'edfi' };
+    const sourceColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityName,
       referenceContext: sourceEntityName,
       mergedReferenceContexts: [sourceEntityName],
       sourceEntityProperties: [sourceReference],
-    });
+    };
     parentTable.columns.push(sourceColumn);
-    const sourceColumnPk: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityPkName,
+    const sourceColumnPk: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityPkName,
       referenceContext: sourceEntityName + sourceEntityPkName,
       mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
       sourceEntityProperties: [sourceReference, sourceEntityPK],
-    });
+    };
     parentTable.columns.push(sourceColumnPk);
-    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
+    tableEntities(metaEd, namespace).set(parentTable.tableId, parentTable);
 
-    const foreignTable: Table = Object.assign(newTable(), {
-      name: sourceEntityName,
-      nameComponents: [sourceEntityName],
-      schema: 'edfi',
-      columns: [],
-    });
-    const foreignColumn: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityPkName,
+    const foreignTable: Table = { ...newTable(), tableId: sourceEntityName, schema: 'edfi', columns: [] };
+    const foreignColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityPkName,
       isPartOfPrimaryKey: true,
       referenceContext: sourceEntityName + sourceEntityPkName,
       mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
       sourceEntityProperties: [sourceEntityPK],
-    });
+    };
     foreignTable.columns.push(foreignColumn);
-    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
+    tableEntities(metaEd, namespace).set(foreignTable.tableId, foreignTable);
 
     enhance(metaEd);
   });
@@ -710,14 +754,14 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
   it('should have correct foreign key relationship', (): void => {
     const table = tableEntities(metaEd, namespace).get(parentTableName) as Table;
-    expect(table.foreignKeys[0].columnNames).toHaveLength(1);
-    expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
-    expect(table.foreignKeys[0].parentTableSchema).toBe('edfi');
-    expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(sourceEntityPkName);
+    expect(table.foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(parentTableName);
+    expect(table.foreignKeys[0].parentTable.schema).toBe('edfi');
+    expect(table.foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(sourceEntityPkName);
 
-    expect(table.foreignKeys[0].foreignTableName).toBe(sourceEntityName);
+    expect(table.foreignKeys[0].foreignTableId).toBe(sourceEntityName);
     expect(table.foreignKeys[0].foreignTableSchema).toBe('edfi');
-    expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(sourceEntityPkName);
+    expect(table.foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(sourceEntityPkName);
   });
 });
 
@@ -736,7 +780,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       metaEdName: sourceEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -753,51 +797,48 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       namespace: extensionNamespace,
       referencedEntity: sourceEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDeleteCascadePrimaryKey: false,
           odsCausesCyclicUpdateCascade: false,
         },
       },
     });
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const parentTable: Table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      schema: 'extension',
-    });
-    const sourceColumn: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityName,
+    const parentTable: Table = { ...newTable(), tableId: parentTableName, schema: 'extension' };
+    const sourceColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityName,
       referenceContext: sourceEntityName,
       mergedReferenceContexts: [sourceEntityName],
       sourceEntityProperties: [sourceReference],
-    });
+    };
     parentTable.columns.push(sourceColumn);
-    const sourceColumnPk: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityPkName,
+    const sourceColumnPk: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityPkName,
       referenceContext: sourceEntityName + sourceEntityPkName,
       mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
       sourceEntityProperties: [sourceReference, sourceEntityPK],
-    });
+    };
     parentTable.columns.push(sourceColumnPk);
-    tableEntities(metaEd, extensionNamespace).set(parentTable.name, parentTable);
+    tableEntities(metaEd, extensionNamespace).set(parentTable.tableId, parentTable);
 
-    const foreignTable: Table = Object.assign(newTable(), {
-      name: sourceEntityName,
-      nameComponents: [sourceEntityName],
-      columns: [],
-      schema: 'edfi',
-    });
-    const foreignColumn: Column = Object.assign(newIntegerColumn(), {
-      name: sourceEntityPkName,
+    const foreignTable: Table = { ...newTable(), tableId: sourceEntityName, columns: [], schema: 'edfi' };
+    const foreignColumn: Column = {
+      ...newColumn(),
+      type: 'integer',
+      columnId: sourceEntityPkName,
       isPartOfPrimaryKey: true,
       referenceContext: sourceEntityName + sourceEntityPkName,
       mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
       sourceEntityProperties: [sourceEntityPK],
-    });
+    };
     foreignTable.columns.push(foreignColumn);
-    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
+    tableEntities(metaEd, namespace).set(foreignTable.tableId, foreignTable);
 
     enhance(metaEd);
   });
@@ -809,13 +850,13 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
   it('should have correct foreign key relationship', (): void => {
     const table = tableEntities(metaEd, extensionNamespace).get(parentTableName) as Table;
-    expect(table.foreignKeys[0].columnNames).toHaveLength(1);
-    expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
-    expect(table.foreignKeys[0].parentTableSchema).toBe('extension');
-    expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(sourceEntityPkName);
+    expect(table.foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(parentTableName);
+    expect(table.foreignKeys[0].parentTable.schema).toBe('extension');
+    expect(table.foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(sourceEntityPkName);
 
-    expect(table.foreignKeys[0].foreignTableName).toBe(sourceEntityName);
+    expect(table.foreignKeys[0].foreignTableId).toBe(sourceEntityName);
     expect(table.foreignKeys[0].foreignTableSchema).toBe('edfi');
-    expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(sourceEntityPkName);
+    expect(table.foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(sourceEntityPkName);
   });
 });

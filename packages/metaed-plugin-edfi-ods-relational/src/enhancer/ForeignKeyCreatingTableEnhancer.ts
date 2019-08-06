@@ -2,8 +2,8 @@ import R from 'ramda';
 import { asReferentialProperty } from 'metaed-core';
 import { EnhancerResult, EntityProperty, MergeDirective, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { getAllColumns, getPrimaryKeys, addForeignKey } from '../model/database/Table';
-import { newColumnNamePair } from '../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePair, foreignKeySourceReferenceFrom } from '../model/database/ForeignKey';
+import { newColumnPair } from '../model/database/ColumnPair';
+import { newForeignKey, addColumnPair, foreignKeySourceReferenceFrom } from '../model/database/ForeignKey';
 import { tableEntities } from './EnhancerHelper';
 import { isOdsReferenceProperty } from '../model/property/ReferenceProperty';
 import { Column } from '../model/database/Column';
@@ -42,8 +42,10 @@ export function getMatchingColumnFromSourceEntityProperties(columnToMatch: Colum
   );
   if (matchingColumns.length === 1) return R.head(matchingColumns);
 
-  const nameMatch: Column | undefined = matchingColumns.find((column: Column) => column.name === columnToMatch.name);
-  if (nameMatch != null) return nameMatch;
+  const columnIdMatch: Column | undefined = matchingColumns.find(
+    (column: Column) => column.columnId === columnToMatch.columnId,
+  );
+  if (columnIdMatch != null) return columnIdMatch;
 
   const contextMatch: Column | undefined = matchingColumns.find((column: Column) =>
     column.mergedReferenceContexts.includes(columnToMatch.referenceContext),
@@ -74,7 +76,7 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
             R.compose(
               R.uniq,
               getPrimaryKeys,
-            )(asReferentialProperty(mergeDirective.targetProperty).referencedEntity.data.edfiOds.odsEntityTable),
+            )(asReferentialProperty(mergeDirective.targetProperty).referencedEntity.data.edfiOdsRelational.odsEntityTable),
           ),
         );
       } else {
@@ -88,9 +90,12 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
         : R.head(expandedTargetProperties.filter((x: EntityProperty) => column.sourceEntityProperties.includes(x)));
 
     let targetPropertyPathStrings: string = R.join('')(mergeDirective.targetPropertyPathStrings);
-    if (property.parentEntity.type !== 'choice' && table.name !== property.parentEntity.data.edfiOds.odsTableName) {
+    if (
+      property.parentEntity.type !== 'choice' &&
+      table.tableId !== property.parentEntity.data.edfiOdsRelational.odsTableId
+    ) {
       // If dealing with a property from a parent table for a join table primary key, add the parent entity name to make paths match
-      targetPropertyPathStrings = property.parentEntity.data.edfiOds.odsTableName + targetPropertyPathStrings;
+      targetPropertyPathStrings = property.parentEntity.data.edfiOdsRelational.odsTableId + targetPropertyPathStrings;
     }
     result = getAllColumns(table).find(
       (x: Column) =>
@@ -116,12 +121,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         // something is very wrong if table is not there, but for now just ignore
         if (foreignTable == null) return;
 
-        const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-          foreignTableName: foreignTable.name,
+        const foreignKey: ForeignKey = {
+          ...newForeignKey(),
+          foreignTableId: foreignTable.tableId,
           foreignTableSchema: foreignTable.schema,
           foreignTableNamespace: foreignTable.namespace,
           sourceReference: foreignKeySourceReferenceFrom(parentTablePairs.property),
-        });
+        };
 
         getPrimaryKeys(foreignTable).forEach((foreignTablePk: Column) => {
           const matchingColumn: Column | undefined = getMatchingColumnFromSourceEntityProperties(
@@ -134,29 +140,31 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               : getMergePropertyColumn(parentTable, foreignTablePk, parentTablePairs.property);
           if (parentTableColumn == null) {
             throw new Error(
-              `Could not find matching foreign key columns for parent property ${parentTable.schema}.${parentTable.name}.${
-                parentTablePairs.property.metaEdName
-              } and referenced field ${foreignTable.schema}.${foreignTable.name}.${foreignTablePk.name}`,
+              `Could not find matching foreign key columns for parent property ${parentTable.schema}.${
+                parentTable.tableId
+              }.${parentTablePairs.property.metaEdName} and referenced field ${foreignTable.schema}.${
+                foreignTable.tableId
+              }.${foreignTablePk.columnId}`,
             );
           }
 
-          addColumnNamePair(
-            foreignKey,
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: parentTableColumn.name,
-              foreignTableColumnName: foreignTablePk.name,
-            }),
-          );
+          addColumnPair(foreignKey, {
+            ...newColumnPair(),
+            parentTableColumnId: parentTableColumn.columnId,
+            foreignTableColumnId: foreignTablePk.columnId,
+          });
         });
 
         const isReference = parentTablePairs.property != null && isOdsReferenceProperty(parentTablePairs.property);
 
-        foreignKey.withDeleteCascade = isReference && parentTablePairs.property.data.edfiOds.odsDeleteCascadePrimaryKey;
+        foreignKey.withDeleteCascade =
+          isReference && parentTablePairs.property.data.edfiOdsRelational.odsDeleteCascadePrimaryKey;
 
         foreignKey.withUpdateCascade =
           isReference &&
-          asReferentialProperty(parentTablePairs.property).referencedEntity.data.edfiOds.odsCascadePrimaryKeyUpdates &&
-          !parentTablePairs.property.data.edfiOds.odsCausesCyclicUpdateCascade;
+          asReferentialProperty(parentTablePairs.property).referencedEntity.data.edfiOdsRelational
+            .odsCascadePrimaryKeyUpdates &&
+          !parentTablePairs.property.data.edfiOdsRelational.odsCausesCyclicUpdateCascade;
 
         addForeignKey(parentTable, foreignKey);
       });

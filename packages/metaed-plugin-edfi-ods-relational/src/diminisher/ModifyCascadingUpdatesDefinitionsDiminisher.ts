@@ -1,6 +1,5 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { getForeignKeys } from '../model/database/Table';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { ForeignKey } from '../model/database/ForeignKey';
 import { Table } from '../model/database/Table';
@@ -13,16 +12,14 @@ const enhancerName = 'ModifyCascadingUpdatesDefinitionsDiminisher';
 const targetVersions = '2.x';
 
 const modifyCascadingUpdates = (tablesForCoreNamespace: Map<string, Table>) => (
-  parentTableName: string,
-  foreignTableName: string,
+  parentTableId: string,
+  foreignTableId: string,
   withUpdateCascade: boolean = false,
 ): void => {
-  const table: Table | undefined = tablesForCoreNamespace.get(parentTableName);
+  const table: Table | undefined = tablesForCoreNamespace.get(parentTableId);
   if (table == null) return;
 
-  const foreignKey: ForeignKey | undefined = getForeignKeys(table).find(
-    (x: ForeignKey) => x.foreignTableName === foreignTableName,
-  );
+  const foreignKey: ForeignKey | undefined = table.foreignKeys.find((x: ForeignKey) => x.foreignTableId === foreignTableId);
   if (foreignKey == null) return;
   foreignKey.withUpdateCascade = withUpdateCascade;
 };

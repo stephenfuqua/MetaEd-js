@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this, no-use-before-define */
-import { appendOverlapping } from '../../enhancer/table/TableNaming';
-import { addMergedReferenceContext, cloneColumn } from './Column';
+import { EntityProperty } from 'metaed-core';
+import { addMergedReferenceContext, cloneColumn, ColumnNameComponent, newColumnNameComponent } from './Column';
 import { Column } from './Column';
 
 export class ColumnTransform {
@@ -10,38 +10,24 @@ export class ColumnTransform {
     this.myDecoratedStrategy = decoratedStrategy;
   }
 
-  static roleName(contextPrefix: string): ColumnTransform {
-    return new PrefixroleName(ColumnTransformUnchanged, contextPrefix);
+  static primaryKeyRoleName(property: EntityProperty): ColumnTransform {
+    return new PrefixRoleName(ColumnTransformPrimaryKey, property);
   }
 
-  static primaryKeyroleName(contextPrefix: string): ColumnTransform {
-    return new PrefixroleName(ColumnTransformPrimaryKey, contextPrefix);
-  }
-
-  static primaryKeyroleNameCollapsible(contextPrefix: string): ColumnTransform {
-    return new ColumnTransformPrefixroleNameCollapsible(ColumnTransformPrimaryKey, contextPrefix);
+  static primaryKeyRoleNameCollapsible(property: EntityProperty): ColumnTransform {
+    return new ColumnTransformPrefixRoleNameCollapsible(ColumnTransformPrimaryKey, property);
   }
 
   static primaryKeyWithNewReferenceContext(referenceContext: string): ColumnTransform {
     return new ColumnTransformPrependReferenceContext(ColumnTransformPrimaryKey, referenceContext);
   }
 
-  static primaryKeyroleNameCollapsibleAndNewReferenceContext(
-    contextPrefix: string,
-    referenceContext: string,
-  ): ColumnTransform {
-    return new ColumnTransformPrependReferenceContext(
-      ColumnTransform.primaryKeyroleNameCollapsible(contextPrefix),
-      referenceContext,
-    );
+  static notNullRoleName(property: EntityProperty): ColumnTransform {
+    return new PrefixRoleName(ColumnTransformNotNull, property);
   }
 
-  static notNullroleName(contextPrefix: string): ColumnTransform {
-    return new PrefixroleName(ColumnTransformNotNull, contextPrefix);
-  }
-
-  static nullroleName(contextPrefix: string): ColumnTransform {
-    return new PrefixroleName(ColumnTransformNull, contextPrefix);
+  static nullRoleName(property: EntityProperty): ColumnTransform {
+    return new PrefixRoleName(ColumnTransformNull, property);
   }
 
   static myInvertStrategies(strategyStack: ColumnTransform[], strategy: ColumnTransform | null): void {
@@ -73,36 +59,52 @@ export class ColumnTransform {
   }
 }
 
-export class PrefixroleName extends ColumnTransform {
-  myContextPrefix: string;
+class PrefixRoleName extends ColumnTransform {
+  myProperty: EntityProperty;
 
-  constructor(decoratedStrategy: ColumnTransform, contextPrefix: string) {
+  constructor(decoratedStrategy: ColumnTransform, property: EntityProperty) {
     super(decoratedStrategy);
-    this.myContextPrefix = contextPrefix != null ? contextPrefix : '';
+    this.myProperty = property;
   }
 
   transformSingle(column: Column): void {
-    column.name = appendOverlapping(this.myContextPrefix, column.name);
+    const contextPrefix = this.myProperty.data.edfiOdsRelational.odsContextPrefix || '';
+    const contextPrefixNameComponent: ColumnNameComponent = {
+      ...newColumnNameComponent(),
+      name: contextPrefix,
+      isParentPropertyContext: true,
+      sourceProperty: this.myProperty,
+    };
+    column.nameComponents = [contextPrefixNameComponent, ...column.nameComponents];
+    column.columnId = contextPrefix + column.columnId;
   }
 }
 
-export class ColumnTransformPrefixroleNameCollapsible extends ColumnTransform {
-  myContextPrefix: string;
+class ColumnTransformPrefixRoleNameCollapsible extends ColumnTransform {
+  myProperty: EntityProperty;
 
-  constructor(decoratedStrategy: ColumnTransform, contextPrefix: string) {
+  constructor(decoratedStrategy: ColumnTransform, property: EntityProperty) {
     super(decoratedStrategy);
-    this.myContextPrefix = contextPrefix != null ? contextPrefix : '';
+    this.myProperty = property;
   }
 
   transformSingle(column: Column): void {
-    column.name =
-      column.originalContextPrefix === this.myContextPrefix
-        ? column.name
-        : appendOverlapping(this.myContextPrefix, column.name);
+    const contextPrefix = this.myProperty.data.edfiOdsRelational.odsContextPrefix || '';
+    if (column.originalContextPrefix !== contextPrefix) {
+      const contextPrefixNameComponent: ColumnNameComponent = {
+        ...newColumnNameComponent(),
+        name: contextPrefix,
+        isParentPropertyContext: true,
+        sourceProperty: this.myProperty,
+      };
+
+      column.nameComponents = [contextPrefixNameComponent, ...column.nameComponents];
+      column.columnId = contextPrefix + column.columnId;
+    }
   }
 }
 
-export class ColumnTransformPrependReferenceContext extends ColumnTransform {
+class ColumnTransformPrependReferenceContext extends ColumnTransform {
   myNewReferenceContext: string;
 
   constructor(decoratedStrategy: ColumnTransform, newReferenceContext: string) {
@@ -116,7 +118,7 @@ export class ColumnTransformPrependReferenceContext extends ColumnTransform {
   }
 }
 
-export class ColumnTransformMakePrimaryKey extends ColumnTransform {
+class ColumnTransformMakePrimaryKey extends ColumnTransform {
   transformSingle(column: Column): void {
     Object.assign(column, {
       isPartOfPrimaryKey: true,
@@ -126,7 +128,7 @@ export class ColumnTransformMakePrimaryKey extends ColumnTransform {
   }
 }
 
-export class ColumnTransformMakeNotNull extends ColumnTransform {
+class ColumnTransformMakeNotNull extends ColumnTransform {
   transformSingle(column: Column): void {
     Object.assign(column, {
       isPartOfPrimaryKey: false,

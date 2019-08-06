@@ -1,20 +1,20 @@
 import R from 'ramda';
 import { getAllEntitiesOfType, asTopLevelEntity } from 'metaed-core';
 import { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, Namespace } from 'metaed-core';
-import { Table, TopLevelEntityEdfiOds, AssociationExtensionEdfiOds } from 'metaed-plugin-edfi-ods';
+import { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods-relational';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
 
 const enhancerName = 'AssociationExtensionAggregateEnhancer';
 
 function orderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Table[] {
-  const tablesForNamespace = (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTables.filter(
+  const tablesForNamespace = (entity.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsTables.filter(
     (t: Table) =>
       t.schema === namespace.namespaceName.toLowerCase() &&
-      t.name !== (entity.data.edfiOds as AssociationExtensionEdfiOds).odsExtensionName,
+      t.tableId !== entity.metaEdName + entity.namespace.extensionEntitySuffix,
   );
   // TODO: why is unique necessary?
-  const uniquedTables = R.uniqBy(R.prop('name'), tablesForNamespace);
-  return R.sortBy(R.prop('name'), uniquedTables);
+  const uniquedTables = R.uniqBy(R.prop('tableId'), tablesForNamespace);
+  return R.sortBy(R.path(['data', 'edfiOdsSqlServer', 'tableName']), uniquedTables);
 }
 
 const isAggregateExtension = () => true;
@@ -22,6 +22,7 @@ const isAggregateExtension = () => true;
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'associationExtension').forEach((modelBase: ModelBase) => {
     enhanceSingleEntity(
+      metaEd,
       asTopLevelEntity(modelBase),
       metaEd.namespace,
       undefined,

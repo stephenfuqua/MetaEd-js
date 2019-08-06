@@ -174,7 +174,7 @@ describe('when generating xsd and comparing it to data standard 3.1 authoritativ
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
-        edfiOds: {
+        edfiOdsRelational: {
           targetTechnologyVersion: '3.1.0',
         },
         edfiOdsApi: {
@@ -322,7 +322,7 @@ describe('when generating xsd with extension and comparing it to data standard 3
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
-        edfiOds: {
+        edfiOdsRelational: {
           targetTechnologyVersion: '3.1.0',
         },
         edfiOdsApi: {

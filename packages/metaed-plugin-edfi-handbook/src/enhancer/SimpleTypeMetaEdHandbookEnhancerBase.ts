@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import ramda from 'ramda';
 import handlebars from 'handlebars';
-import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
+import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
 import { ModelBase, MetaEdEnvironment, EntityProperty } from 'metaed-core';
 import { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';

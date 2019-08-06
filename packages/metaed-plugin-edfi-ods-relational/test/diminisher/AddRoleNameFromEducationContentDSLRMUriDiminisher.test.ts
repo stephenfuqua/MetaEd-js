@@ -1,9 +1,8 @@
-import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddRoleNameFromEducationContentDSLRMUriDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
-import { newStringColumn } from '../../src/model/database/Column';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
+import { newColumn, StringColumn } from '../../src/model/database/Column';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
@@ -18,37 +17,40 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   const learningResourceMetadataURI = 'LearningResourceMetadataURI';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
     const derivativeSourceLearningResourceMetadataURI = 'DerivativeSourceLearningResourceMetadataURI';
-    const table: Table = Object.assign(newTable(), {
-      name: educationContentDerivativeSourceLearningResourceMetadataURI,
-      nameComponents: [educationContentDerivativeSourceLearningResourceMetadataURI],
+    const table: Table = {
+      ...newTable(),
+      tableId: educationContentDerivativeSourceLearningResourceMetadataURI,
       columns: [
-        Object.assign(newStringColumn('123'), {
-          name: derivativeSourceLearningResourceMetadataURI,
-        }),
+        {
+          ...newColumn(),
+          columnId: derivativeSourceLearningResourceMetadataURI,
+          type: 'string',
+          length: '123',
+        } as StringColumn,
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should rename DerivativeSourceLearningResourceMetadataURI column to LearningResourceMetadataURI', (): void => {
-    const column: Column = R.head(
-      (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI) as Table).columns,
-    );
-    expect(column.name).toBe(learningResourceMetadataURI);
+    const column: Column = (tableEntities(metaEd, namespace).get(
+      educationContentDerivativeSourceLearningResourceMetadataURI,
+    ) as Table).columns[0];
+    expect(column.columnId).toBe(learningResourceMetadataURI);
   });
 
   it('should set column length', (): void => {
-    const column: Column = R.head(
-      (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI) as Table).columns,
-    );
-    expect(R.prop('length', column)).toBe('225');
-    expect(column.dataType).toBe('[NVARCHAR](225)');
+    const column: Column = (tableEntities(metaEd, namespace).get(
+      educationContentDerivativeSourceLearningResourceMetadataURI,
+    ) as Table).columns[0];
+    expect(column.type).toBe('string');
+    expect((column as StringColumn).length).toBe('225');
   });
 });
 
@@ -60,36 +62,34 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   const uri = 'URI';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
     const derivativeSourceURI = 'DerivativeSourceURI';
-    const table: Table = Object.assign(newTable(), {
-      name: educationContentDerivativeSourceURI,
-      nameComponents: [educationContentDerivativeSourceURI],
+    const table: Table = {
+      ...newTable(),
+      tableId: educationContentDerivativeSourceURI,
       columns: [
-        Object.assign(newStringColumn('123'), {
-          name: derivativeSourceURI,
-        }),
+        {
+          ...newColumn(),
+          columnId: derivativeSourceURI,
+          length: '123',
+        } as StringColumn,
       ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should rename DerivativeSourceURI column to URI', (): void => {
-    const column: Column = R.head(
-      (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
-    );
-    expect(column.name).toBe(uri);
+    const column: Column = (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns[0];
+    expect(column.columnId).toBe(uri);
   });
 
   it('should set column length', (): void => {
-    const column: Column = R.head(
-      (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
-    );
-    expect(R.prop('length', column)).toBe('225');
-    expect(column.dataType).toBe('[NVARCHAR](225)');
+    const column: Column = (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns[0];
+    expect(column.type).toBe('string');
+    expect((column as StringColumn).length).toBe('225');
   });
 });

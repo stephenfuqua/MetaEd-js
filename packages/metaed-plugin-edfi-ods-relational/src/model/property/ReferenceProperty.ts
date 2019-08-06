@@ -12,9 +12,9 @@ export interface ReferencePropertyEdfiOds {
 const enhancerName = 'ReferencePropertySetupEnhancer';
 
 export function addReferencePropertyEdfiOdsTo(property: EntityProperty) {
-  if (property.data.edfiOds == null) property.data.edfiOds = {};
+  if (property.data.edfiOdsRelational == null) property.data.edfiOdsRelational = {};
 
-  Object.assign(property.data.edfiOds, {
+  Object.assign(property.data.edfiOdsRelational, {
     odsDeleteCascadePrimaryKey: false,
     odsCausesCyclicUpdateCascade: false,
     odsIsReferenceToSuperclass: false,

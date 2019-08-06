@@ -13,7 +13,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const mainTable: Table = buildMainTable(metaEd, entity, true);
       tables.push(mainTable);
       buildTablesFromProperties(entity, mainTable, tables);
-      entity.data.edfiOds.odsTables = tables;
+      entity.data.edfiOdsRelational.odsTables = tables;
       addTables(metaEd, tables);
     });
 

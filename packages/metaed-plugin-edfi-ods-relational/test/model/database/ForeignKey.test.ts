@@ -1,66 +1,48 @@
 import { DomainEntityProperty } from 'metaed-core';
 import { newDomainEntityProperty } from 'metaed-core';
-import { addColumnNamePair, newForeignKey, foreignKeySourceReferenceFrom } from '../../../src/model/database/ForeignKey';
-import { newColumnNamePair } from '../../../src/model/database/ColumnNamePair';
+import { addColumnPair, newForeignKey, foreignKeySourceReferenceFrom } from '../../../src/model/database/ForeignKey';
+import { newColumnPair } from '../../../src/model/database/ColumnPair';
 import { ForeignKey, ForeignKeySourceReference } from '../../../src/model/database/ForeignKey';
 
 describe('when using add column name pair to a foreign key with no existing duplicates', (): void => {
-  const parentTableColumnName = 'ParentTableColumnName';
-  const foreignTableColumnName = 'ForeignTableColumnName';
+  const parentTableColumnId = 'ParentTableColumnName';
+  const foreignTableColumnId = 'ForeignTableColumnName';
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
-    foreignKey = Object.assign(newForeignKey(), { name: 'ForeignKeyName' });
-    addColumnNamePair(
-      foreignKey,
-      Object.assign(newColumnNamePair(), {
-        parentTableColumnName,
-        foreignTableColumnName,
-      }),
-    );
+    foreignKey = { ...newForeignKey(), name: 'ForeignKeyName' };
+    addColumnPair(foreignKey, { ...newColumnPair(), parentTableColumnId, foreignTableColumnId });
   });
 
   it('should successfully add column name pair', (): void => {
-    expect(foreignKey.columnNames).toHaveLength(1);
-    expect(foreignKey.columnNames[0].parentTableColumnName).toBe(parentTableColumnName);
-    expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(foreignTableColumnName);
+    expect(foreignKey.columnPairs).toHaveLength(1);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(parentTableColumnId);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(foreignTableColumnId);
   });
 });
 
 describe('when using add column name pair to a foreign key with existing duplicate', (): void => {
-  const parentTableColumnName = 'ParentTableColumnName';
-  const foreignTableColumnName = 'ForeignTableColumnName';
+  const parentTableColumnId = 'ParentTableColumnName';
+  const foreignTableColumnId = 'ForeignTableColumnName';
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
-    foreignKey = Object.assign(newForeignKey(), { name: 'ForeignKeyName' });
-    addColumnNamePair(
-      foreignKey,
-      Object.assign(newColumnNamePair(), {
-        parentTableColumnName,
-        foreignTableColumnName,
-      }),
-    );
-    addColumnNamePair(
-      foreignKey,
-      Object.assign(newColumnNamePair(), {
-        parentTableColumnName,
-        foreignTableColumnName,
-      }),
-    );
+    foreignKey = { ...newForeignKey(), name: 'ForeignKeyName' };
+    addColumnPair(foreignKey, { ...newColumnPair(), parentTableColumnId, foreignTableColumnId });
+    addColumnPair(foreignKey, { ...newColumnPair(), parentTableColumnId, foreignTableColumnId });
   });
 
   it('should reject incoming column name pair', (): void => {
-    expect(foreignKey.columnNames).toHaveLength(1);
-    expect(foreignKey.columnNames[0].parentTableColumnName).toBe(parentTableColumnName);
-    expect(foreignKey.columnNames[0].foreignTableColumnName).toBe(foreignTableColumnName);
+    expect(foreignKey.columnPairs).toHaveLength(1);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(parentTableColumnId);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(foreignTableColumnId);
   });
 });
 
 describe('when creating foreign key sourceReference from identity property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -79,7 +61,7 @@ describe('when creating foreign key sourceReference from identity property', ():
 describe('when creating foreign key sourceReference from required property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isRequired: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -98,7 +80,7 @@ describe('when creating foreign key sourceReference from required property', ():
 describe('when creating foreign key sourceReference from optional property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isOptional: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -117,7 +99,7 @@ describe('when creating foreign key sourceReference from optional property', ():
 describe('when creating foreign key sourceReference from required collection property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isRequiredCollection: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -136,7 +118,7 @@ describe('when creating foreign key sourceReference from required collection pro
 describe('when creating foreign key sourceReference from optional collection property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isOptionalCollection: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -155,7 +137,7 @@ describe('when creating foreign key sourceReference from optional collection pro
 describe('when creating foreign key sourceReference from subclass relationship property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: true, odsIsReferenceToExtensionParent: false } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: true, odsIsReferenceToExtensionParent: false } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 
@@ -174,7 +156,7 @@ describe('when creating foreign key sourceReference from subclass relationship p
 describe('when creating foreign key sourceReference from extension relationship property', (): void => {
   const entityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
     isPartOfIdentity: true,
-    data: { edfiOds: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: true } },
+    data: { edfiOdsRelational: { odsIsReferenceToSuperclass: false, odsIsReferenceToExtensionParent: true } },
   });
   const sourceReference: ForeignKeySourceReference = foreignKeySourceReferenceFrom(entityProperty);
 

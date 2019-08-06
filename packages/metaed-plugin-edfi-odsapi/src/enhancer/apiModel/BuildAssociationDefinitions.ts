@@ -1,7 +1,6 @@
 import R from 'ramda';
 import { Namespace, MetaEdEnvironment } from 'metaed-core';
-import { Table, Column, ForeignKey, ColumnNamePair } from 'metaed-plugin-edfi-ods';
-import { tableEntities } from 'metaed-plugin-edfi-ods';
+import { Table, Column, ForeignKey, ColumnPair, tableEntities } from 'metaed-plugin-edfi-ods-relational';
 import { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 import { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
@@ -32,19 +31,19 @@ function cardinalityFrom(
   if (foreignKey.sourceReference.isSubclassRelationship) return 'OneToOneInheritance';
   if (foreignKey.sourceReference.isExtensionRelationship) return 'OneToOneExtension';
 
-  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTableSchema);
+  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTable.schema);
   if (parentSchemaTableMap == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTableSchema}'.`);
-  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTableName);
+    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTable.schema}'.`);
+  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTable.tableId);
   if (parentTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTable.tableId}'.`);
 
   const foreignSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.foreignTableSchema);
   if (foreignSchemaTableMap == null)
     throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.foreignTableSchema}'.`);
-  const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableName);
+  const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableId);
   if (foreignTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableName}'.`);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableId}'.`);
 
   // this is what the if statement in the C# code had: count of PK columns on both sides are
   // equal -- this feels like too weak a constraint
@@ -55,12 +54,13 @@ function cardinalityFrom(
   const rootAggregate: Aggregate | null = findAggregateWithEntity(
     domainMetadataAggregatesForNamespace,
     foreignKey.foreignTableSchema,
-    foreignKey.foreignTableName,
+    foreignKey.foreignTableId,
   );
   if (rootAggregate == null) return 'OneToZeroOrMore';
 
   const childEntitySearch: EntityTable[] = rootAggregate.entityTables.filter(
-    (et: EntityTable) => et.table === foreignKey.parentTableName && et.schema === foreignKey.parentTableSchema,
+    (et: EntityTable) =>
+      et.table === foreignKey.parentTable.data.edfiOdsSqlServer.tableName && et.schema === foreignKey.parentTable.schema,
   );
   if (childEntitySearch.length !== 1) return 'OneToZeroOrMore';
   if (childEntitySearch[0].isRequiredCollection) return 'OneToOneOrMore';
@@ -76,13 +76,13 @@ function getPrimaryEntityProperties(
   const foreignSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.foreignTableSchema);
   if (foreignSchemaTableMap == null)
     throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.foreignTableSchema}'.`);
-  const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableName);
+  const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableId);
   if (foreignTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableName}'.`);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableId}'.`);
 
   // maintain foreign key column order
-  return foreignKey.foreignTableColumnNames
-    .map((columnName: string) => foreignTable.columns.filter(c => c.name === columnName))
+  return foreignKey.data.edfiOdsSqlServer.foreignTableColumnNames
+    .map((columnName: string) => foreignTable.columns.filter(c => c.data.edfiOdsSqlServer.columnName === columnName))
     .map((columnArray: Column[]) => columnArray[0])
     .map((c: Column) => ({ ...buildApiProperty(c), isIdentifying }));
 }
@@ -111,14 +111,14 @@ function buildApiPropertyWithServerAssignedOverride(
     const foreignSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.foreignTableSchema);
     if (foreignSchemaTableMap == null)
       throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.foreignTableSchema}'.`);
-    const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableName);
+    const foreignTable: Table | undefined = foreignSchemaTableMap.get(foreignKey.foreignTableId);
     if (foreignTable == null)
-      throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableName}'.`);
-    const columnNamePair: ColumnNamePair = foreignKey.columnNames.filter(
-      (cnp: ColumnNamePair) => cnp.parentTableColumnName === column.name,
+      throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableId}'.`);
+    const columnPair: ColumnPair = foreignKey.columnPairs.filter(
+      (cnp: ColumnPair) => cnp.parentTableColumnId === column.columnId,
     )[0];
     const otherColumn: Column = foreignTable.columns.filter(
-      (c: Column) => c.name === columnNamePair.foreignTableColumnName,
+      (c: Column) => c.columnId === columnPair.foreignTableColumnId,
     )[0];
     return { ...result, isServerAssigned: otherColumn.isIdentityDatabaseType };
   }
@@ -132,16 +132,16 @@ function getSecondaryEntityProperties(
   isIdentifying: boolean,
   domainMetadataAggregatesForNamespace: Aggregate[],
 ): ApiProperty[] {
-  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTableSchema);
+  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTable.schema);
   if (parentSchemaTableMap == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTableSchema}'.`);
-  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTableName);
+    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTable.schema}'.`);
+  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTable.tableId);
   if (parentTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTable.tableId}'.`);
 
   // maintain foreign key column order
-  return foreignKey.parentTableColumnNames
-    .map((columnName: string) => parentTable.columns.filter(c => c.name === columnName))
+  return foreignKey.data.edfiOdsSqlServer.parentTableColumnNames
+    .map((columnName: string) => parentTable.columns.filter(c => c.data.edfiOdsSqlServer.columnName === columnName))
     .map((columnArray: Column[]) => columnArray[0])
     .map((c: Column) =>
       buildApiPropertyWithServerAssignedOverride(
@@ -156,15 +156,15 @@ function getSecondaryEntityProperties(
 
 // For some reason, this is where all of the source columns in the foreign key are part of the PK
 function isIdentifyingForeignKey(foreignKey: ForeignKey, schemasTables: Map<string, Map<string, Table>>): boolean {
-  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTableSchema);
+  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTable.schema);
   if (parentSchemaTableMap == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTableSchema}'.`);
-  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTableName);
+    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTable.schema}'.`);
+  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTable.tableId);
   if (parentTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
-  const primaryKeyColumnNames: string[] = parentTable.primaryKeys.map((c: Column) => c.name);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTable.tableId}'.`);
+  const primaryKeyColumnNames: string[] = parentTable.primaryKeys.map((c: Column) => c.data.edfiOdsSqlServer.columnName);
 
-  return foreignKey.parentTableColumnNames.every(foreignKeyColumnName =>
+  return foreignKey.data.edfiOdsSqlServer.parentTableColumnNames.every(foreignKeyColumnName =>
     primaryKeyColumnNames.includes(foreignKeyColumnName),
   );
 }
@@ -177,15 +177,15 @@ function isRequiredFrom(
   if (cardinality === 'OneToOneInheritance' || cardinality === 'OneToOneExtension' || cardinality === 'OneToOne')
     return true;
 
-  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTableSchema);
+  const parentSchemaTableMap: Map<string, Table> | undefined = schemasTables.get(foreignKey.parentTable.schema);
   if (parentSchemaTableMap == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTableSchema}'.`);
-  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTableName);
+    throw new Error(`BuildAssociationDefinitions: could not find table schema '${foreignKey.parentTable.schema}'.`);
+  const parentTable: Table | undefined = parentSchemaTableMap.get(foreignKey.parentTable.tableId);
   if (parentTable == null)
-    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
+    throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTable.tableId}'.`);
 
   const parentTableForeignKeyColumns: Column[] = parentTable.columns.filter((c: Column) =>
-    foreignKey.parentTableColumnNames.includes(c.name),
+    foreignKey.data.edfiOdsSqlServer.parentTableColumnNames.includes(c.data.edfiOdsSqlServer.columnName),
   );
   return parentTableForeignKeyColumns.every((c: Column) => !c.isNullable);
 }
@@ -218,17 +218,17 @@ export function buildAssociationDefinitions(metaEd: MetaEdEnvironment, namespace
       result.push({
         fullName: {
           schema: table.schema,
-          name: foreignKey.name,
+          name: foreignKey.data.edfiOdsSqlServer.name,
         },
         cardinality,
         primaryEntityFullName: {
           schema: foreignKey.foreignTableSchema,
-          name: foreignKey.foreignTableName,
+          name: foreignKey.foreignTable.data.edfiOdsSqlServer.tableName,
         },
         primaryEntityProperties: getPrimaryEntityProperties(foreignKey, schemasTables, isIdentifying),
         secondaryEntityFullName: {
-          schema: foreignKey.parentTableSchema,
-          name: foreignKey.parentTableName,
+          schema: foreignKey.parentTable.schema,
+          name: foreignKey.parentTable.data.edfiOdsSqlServer.tableName,
         },
         secondaryEntityProperties: getSecondaryEntityProperties(
           foreignKey,

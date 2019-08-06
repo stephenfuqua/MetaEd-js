@@ -9,8 +9,8 @@ import { Table } from '../model/database/Table';
 const enhancerName = 'AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher';
 const targetVersions = '2.x';
 
-const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';
-const stateEducationAgencyFederalFunds = 'StateEducationAgencyFederalFunds';
+const localEducationAgencyFederalFunds = 'LocalEducationAgencyLocalEducationAgencyFederalFunds';
+const stateEducationAgencyFederalFunds = 'StateEducationAgencyStateEducationAgencyFederalFunds';
 
 function addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(
   tablesForCoreNamespace: Map<string, Table>,

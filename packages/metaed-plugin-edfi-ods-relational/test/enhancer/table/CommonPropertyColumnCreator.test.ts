@@ -2,7 +2,7 @@ import { newCommon, newCommonProperty, newIntegerProperty, newStringProperty } f
 import { Common, CommonProperty, IntegerProperty, StringProperty } from 'metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
-import { Column } from '../../../src/model/database/Column';
+import { Column, StringColumn } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when creating columns for common with is collection property', (): void => {
@@ -17,8 +17,8 @@ describe('when creating columns for common with is collection property', (): voi
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
         },
       },
@@ -28,7 +28,7 @@ describe('when creating columns for common with is collection property', (): voi
       metaEdName: commonName,
       referencedEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsCollection: false,
         },
       },
@@ -39,7 +39,7 @@ describe('when creating columns for common with is collection property', (): voi
       documentation: propertyDocumentation,
       maxLength: length,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -49,7 +49,7 @@ describe('when creating columns for common with is collection property', (): voi
       },
     });
 
-    common.data.edfiOds.odsProperties.push(property);
+    common.data.edfiOdsRelational.odsProperties.push(property);
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(commonProperty);
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
@@ -72,8 +72,8 @@ describe('when creating columns for common with only one property', (): void => 
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
         },
       },
@@ -83,7 +83,7 @@ describe('when creating columns for common with only one property', (): void => 
       metaEdName: commonName,
       referencedEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsCollection: false,
         },
       },
@@ -94,7 +94,7 @@ describe('when creating columns for common with only one property', (): void => 
       documentation: propertyDocumentation,
       maxLength: length,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -103,7 +103,7 @@ describe('when creating columns for common with only one property', (): void => 
       },
     });
 
-    common.data.edfiOds.odsProperties.push(property);
+    common.data.edfiOdsRelational.odsProperties.push(property);
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(commonProperty);
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
@@ -112,8 +112,8 @@ describe('when creating columns for common with only one property', (): void => 
   it('should return a single column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
-    expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
-    expect(columns[0].name).toBe(propertyName);
+    expect((columns[0] as StringColumn).length).toBe(length);
+    expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -137,8 +137,8 @@ describe('when creating columns for common with two properties', (): void => {
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       data: {
-        edfiOds: {
-          odsTableName: commonName,
+        edfiOdsRelational: {
+          odsTableId: commonName,
           odsProperties: [],
         },
       },
@@ -148,7 +148,7 @@ describe('when creating columns for common with two properties', (): void => {
       metaEdName: commonName,
       referencedEntity: common,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsCollection: false,
         },
       },
@@ -159,7 +159,7 @@ describe('when creating columns for common with two properties', (): void => {
       documentation: propertyDocumentation,
       maxLength: length,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: stringPropertyName,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -172,7 +172,7 @@ describe('when creating columns for common with two properties', (): void => {
       metaEdName: integerPropertyName,
       documentation: propertyDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: integerPropertyName,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -181,8 +181,8 @@ describe('when creating columns for common with two properties', (): void => {
       },
     });
 
-    common.data.edfiOds.odsProperties.push(stringProperty);
-    common.data.edfiOds.odsProperties.push(integerProperty);
+    common.data.edfiOdsRelational.odsProperties.push(stringProperty);
+    common.data.edfiOdsRelational.odsProperties.push(integerProperty);
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(commonProperty);
     columns = columnCreator.createColumns(commonProperty, BuildStrategyDefault);
@@ -194,8 +194,8 @@ describe('when creating columns for common with two properties', (): void => {
 
   it('should return a string column', (): void => {
     expect(columns[0].type).toBe('string');
-    expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
-    expect(columns[0].name).toBe(stringPropertyName);
+    expect((columns[0] as StringColumn).length).toBe(length);
+    expect(columns[0].columnId).toBe(stringPropertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -206,8 +206,7 @@ describe('when creating columns for common with two properties', (): void => {
 
   it('should return an integer column', (): void => {
     expect(columns[1].type).toBe('integer');
-    expect(columns[1].dataType).toBe('[INT]');
-    expect(columns[1].name).toBe(integerPropertyName);
+    expect(columns[1].columnId).toBe(integerPropertyName);
     expect(columns[1].description).toBe(propertyDocumentation);
     expect(columns[1].isIdentityDatabaseType).toBe(false);
     expect(columns[1].isNullable).toBe(false);

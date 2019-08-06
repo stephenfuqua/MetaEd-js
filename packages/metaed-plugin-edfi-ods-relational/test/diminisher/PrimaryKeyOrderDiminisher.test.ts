@@ -1,7 +1,7 @@
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/PrimaryKeyOrderDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -45,19 +45,14 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', (): void =>
   ];
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: gradebookEntryLearningObjective,
-      nameComponents: [gradebookEntryLearningObjective],
-      columns: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-          isPartOfPrimaryKey: true,
-        }),
-      ),
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: gradebookEntryLearningObjective,
+      columns: primaryKeyNames.map((columnId: string) => ({ ...newColumn(), columnId, isPartOfPrimaryKey: true })),
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -65,7 +60,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', (): void =>
 
   it('should have correct primary key order', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective) as Table;
-    expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
+    expect(primaryKeys.map((pk: Column) => pk.columnId)).toEqual(expectedPrimaryKeyOrder);
   });
 });
 
@@ -102,19 +97,14 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
   const expectedPrimaryKeyOrder: string[] = [];
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: gradebookEntryLearningObjective,
-      nameComponents: [gradebookEntryLearningObjective],
-      columns: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-          isPartOfPrimaryKey: true,
-        }),
-      ),
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: gradebookEntryLearningObjective,
+      columns: primaryKeyNames.map((columnId: string) => ({ ...newColumn(), columnId, isPartOfPrimaryKey: true })),
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -122,7 +112,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
 
   it('should have ignored primary key ordering for this table', (): void => {
     const { primaryKeys } = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective) as Table;
-    expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
+    expect(primaryKeys.map((pk: Column) => pk.columnId)).toEqual(expectedPrimaryKeyOrder);
   });
 });
 
@@ -145,19 +135,14 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', (): voi
   ];
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: TableName,
-      nameComponents: [TableName],
-      columns: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-          isPartOfPrimaryKey: true,
-        }),
-      ),
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: TableName,
+      columns: primaryKeyNames.map((columnId: string) => ({ ...newColumn(), columnId, isPartOfPrimaryKey: true })),
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);

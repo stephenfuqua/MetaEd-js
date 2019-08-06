@@ -9,7 +9,7 @@ import {
 import { Descriptor, EnumerationItem, MapTypeEnumeration, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/DescriptorMapTypeRowEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 
 describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -24,9 +24,9 @@ describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor', (): v
       metaEdName: entityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsMapType: true,
-          odsTableName: entityName,
+          odsTableId: entityName,
         },
       },
     });
@@ -42,7 +42,7 @@ describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor', (): v
     mapTypeEnumeration.enumerationItems.push(item1);
     entity.mapTypeEnumeration = mapTypeEnumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -79,9 +79,9 @@ describe("when DescriptorMapTypeRowEnhancer enhances map type descriptor with na
       metaEdName: `${entityName}Type`,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsIsMapType: true,
-          odsTableName: `${entityName}Type`,
+          odsTableId: `${entityName}Type`,
         },
       },
     });
@@ -97,7 +97,7 @@ describe("when DescriptorMapTypeRowEnhancer enhances map type descriptor with na
     mapTypeEnumeration.enumerationItems.push(item1);
     entity.mapTypeEnumeration = mapTypeEnumeration;
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });

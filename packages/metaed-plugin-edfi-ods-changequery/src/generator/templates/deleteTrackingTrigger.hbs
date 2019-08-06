@@ -9,7 +9,7 @@ BEGIN
     INSERT INTO [{{{deleteTrackingTableSchema}}}].[{{{deleteTrackingTableName}}}]({{#primaryKeyColumnNames}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, ChangeVersion)
     SELECT  {{#primaryKeyColumnNames}}{{#if ../targetTableIsSubclass}}d.{{/if}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, (NEXT VALUE FOR [changes].[ChangeVersionSequence])
     FROM    deleted d{{#if targetTableIsSubclass}}{{#foreignKeyToSuperclass}}
-            INNER JOIN {{{foreignTableSchema}}}.{{{foreignTableName}}} b ON {{#columnNames}}d.{{{parentTableColumnName}}} = b.{{{foreignTableColumnName}}}{{#unless @last}} AND {{/unless}}{{/columnNames}}{{/foreignKeyToSuperclass}}{{/if}}
+            INNER JOIN {{{foreignTableSchema}}}.{{{foreignTable.data.edfiOdsSqlServer.tableName}}} b ON {{#data.edfiOdsChangeQuery.columnNames}}d.{{{parentTableColumnName}}} = b.{{{foreignTableColumnName}}}{{#unless @last}} AND {{/unless}}{{/data.edfiOdsChangeQuery.columnNames}}{{/foreignKeyToSuperclass}}{{/if}}
 END
 GO
 

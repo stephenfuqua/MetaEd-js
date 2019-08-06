@@ -18,15 +18,11 @@ describe('when building enumeration property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -36,7 +32,7 @@ describe('when building enumeration property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -48,7 +44,7 @@ describe('when building enumeration property table', (): void => {
     const entityEnumerationProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsTypeifiedBaseName: enumerationPropertyName,
           odsIsCollection: false,
@@ -58,8 +54,8 @@ describe('when building enumeration property table', (): void => {
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       data: {
-        edfiOds: {
-          odsTableName: enumerationName,
+        edfiOdsRelational: {
+          odsTableId: enumerationName,
           ods_EnumerationName: enumerationName,
           odsProperties: [],
         },
@@ -69,13 +65,13 @@ describe('when building enumeration property table', (): void => {
       metaEdName: 'EnumerationPropertyName1',
       isPartOfIdentity: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    enumeration.data.edfiOds.odsProperties.push(enumerationEntityProperty1);
+    enumeration.data.edfiOdsRelational.odsProperties.push(enumerationEntityProperty1);
     entityEnumerationProperty.referencedEntity = enumeration;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -98,7 +94,7 @@ describe('when building enumeration property table', (): void => {
 
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(`${enumerationPropertyName}Id`);
+    expect(table.columns[0].columnId).toBe(`${enumerationPropertyName}Id`);
   });
 
   it('should create one foreign key', (): void => {
@@ -106,12 +102,12 @@ describe('when building enumeration property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(table.foreignKeys[0].columnNames).toHaveLength(1);
-    expect(table.foreignKeys[0].parentTableName).toBe(tableName);
-    expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(`${enumerationPropertyName}Id`);
+    expect(table.foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(tableName);
+    expect(table.foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(`${enumerationPropertyName}Id`);
 
-    expect(table.foreignKeys[0].foreignTableName).toBe(enumerationName);
-    expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(`${enumerationPropertyName}Id`);
+    expect(table.foreignKeys[0].foreignTableId).toBe(enumerationName);
+    expect(table.foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(`${enumerationPropertyName}Id`);
   });
 });
 
@@ -125,15 +121,11 @@ describe('when building collection enumeration property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -143,7 +135,7 @@ describe('when building collection enumeration property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -156,7 +148,7 @@ describe('when building collection enumeration property table', (): void => {
       metaEdName: enumerationName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsTypeifiedBaseName: enumerationName,
           odsIsCollection: true,
@@ -166,8 +158,8 @@ describe('when building collection enumeration property table', (): void => {
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       data: {
-        edfiOds: {
-          odsTableName: enumerationName,
+        edfiOdsRelational: {
+          odsTableId: enumerationName,
           ods_EnumerationName: enumerationName,
           odsProperties: [],
         },
@@ -177,13 +169,13 @@ describe('when building collection enumeration property table', (): void => {
       metaEdName: enumerationEntityPropertyName1,
       isPartOfIdentity: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    enumeration.data.edfiOds.odsProperties.push(enumerationEntityProperty1);
+    enumeration.data.edfiOdsRelational.odsProperties.push(enumerationEntityProperty1);
     entityEnumerationProperty.referencedEntity = enumeration;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -202,15 +194,15 @@ describe('when building collection enumeration property table', (): void => {
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + enumerationName);
+    expect(tables[0].tableId).toBe(tableName + enumerationName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
   it('should create two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(entityPkName);
+    expect(tables[0].columns[0].columnId).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(`${enumerationName}Id`);
+    expect(tables[0].columns[1].columnId).toBe(`${enumerationName}Id`);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -219,18 +211,18 @@ describe('when building collection enumeration property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + enumerationName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + enumerationName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[1].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[1].parentTableName).toBe(tableName + enumerationName);
-    expect(tables[0].foreignKeys[1].columnNames[0].parentTableColumnName).toBe(`${enumerationName}Id`);
+    expect(tables[0].foreignKeys[1].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[1].parentTable.tableId).toBe(tableName + enumerationName);
+    expect(tables[0].foreignKeys[1].columnPairs[0].parentTableColumnId).toBe(`${enumerationName}Id`);
 
-    expect(tables[0].foreignKeys[1].foreignTableName).toBe(enumerationName);
-    expect(tables[0].foreignKeys[1].columnNames[0].foreignTableColumnName).toBe(`${enumerationName}Id`);
+    expect(tables[0].foreignKeys[1].foreignTableId).toBe(enumerationName);
+    expect(tables[0].foreignKeys[1].columnPairs[0].foreignTableColumnId).toBe(`${enumerationName}Id`);
   });
 });

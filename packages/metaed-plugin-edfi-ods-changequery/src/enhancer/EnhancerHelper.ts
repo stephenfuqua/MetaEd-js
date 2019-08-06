@@ -1,4 +1,5 @@
-import { MetaEdEnvironment, PluginEnvironment, Namespace } from 'metaed-core';
+import { MetaEdEnvironment, PluginEnvironment, Namespace, orderByPath } from 'metaed-core';
+import { Column, Table } from 'metaed-plugin-edfi-ods-relational';
 import { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 import { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 import { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
@@ -45,4 +46,8 @@ export function createTriggerUpdateChangeVersionEntities(
 ): CreateTriggerUpdateChangeVersion[] {
   const repository: EdFiOdsChangeQueryEntityRepository | null = edfiOdsChangeQueryRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.createTriggerUpdateChangeVersion;
+}
+
+export function getPrimaryKeys(table: Table): Column[] {
+  return orderByPath(['data', 'edfiOdsSqlServer', 'columnName'])(table.columns.filter(x => x.isPartOfPrimaryKey));
 }

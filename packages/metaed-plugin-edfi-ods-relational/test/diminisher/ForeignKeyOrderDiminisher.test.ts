@@ -1,15 +1,13 @@
-import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ForeignKeyOrderDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Column } from '../../src/model/database/Column';
-import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyOrderDiminisher diminishes matching table', (): void => {
@@ -52,42 +50,40 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', (): void =>
   ];
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const foreignTable: Table = Object.assign(newTable(), {
-      name: gradebookEntryLearningObjective,
-      nameComponents: [gradebookEntryLearningObjective],
-      primaryKeys: primaryKeyOrder.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-          isPartOfPrimaryKey: true,
-        }),
-      ),
-    });
-    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
+    const foreignTable: Table = {
+      ...newTable(),
+      tableId: gradebookEntryLearningObjective,
+      primaryKeys: primaryKeyOrder.map((columnId: string) => ({
+        ...newColumn(),
+        columnId,
+        isPartOfPrimaryKey: true,
+      })),
+    };
+    tableEntities(metaEd, namespace).set(foreignTable.tableId, foreignTable);
 
-    const parentTable: Table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      columns: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-        }),
-      ),
+    const parentTable: Table = {
+      ...newTable(),
+      tableId: parentTableName,
+      columns: primaryKeyNames.map((columnId: string) => ({
+        ...newColumn(),
+        columnId,
+      })),
       foreignKeys: [
-        Object.assign(newForeignKey(), {
+        {
+          ...newForeignKey(),
           foreignTableSchema: schemaName,
-          foreignTableName: foreignTable.name,
-          columnNames: primaryKeyNames.map((name: string) =>
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: name,
-              foreignTableColumnName: name,
-            }),
-          ),
-        }),
+          foreignTableId: foreignTable.tableId,
+          columnPairs: primaryKeyNames.map((name: string) => ({
+            ...newColumnPair(),
+            parentTableColumnId: name,
+            foreignTableColumnId: name,
+          })),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
+    };
+    tableEntities(metaEd, namespace).set(parentTable.tableId, parentTable);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -95,17 +91,17 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', (): void =>
 
   it('should have correct foreign key order', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
-    expect(foreignKeys).toBeDefined();
-    expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyOrder);
+    expect(foreignKeys).toHaveLength(1);
+    expect(foreignKeys[0].columnPairs.map(cp => cp.parentTableColumnId)).toEqual(primaryKeyOrder);
   });
 
   it('should have order parity with foreign table primary keys', (): void => {
     const primaryKeyNamesOnForeignTable: string[] = (tableEntities(metaEd, namespace).get(
       gradebookEntryLearningObjective,
-    ) as Table).primaryKeys.map((pk: Column) => pk.name);
-    const foreignKeyNames: string[] = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
-      (tableEntities(metaEd, namespace).get(parentTableName) as Table).foreignKeys,
-    );
+    ) as Table).primaryKeys.map((pk: Column) => pk.columnId);
+
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
+    const foreignKeyNames = foreignKeys[0].columnPairs.map(cp => cp.foreignTableColumnId);
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
   });
 });
@@ -117,7 +113,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', (): voi
   const namespaceName = 'EdFi';
   const schemaName = namespaceName.toLowerCase();
   const parentTableName = 'ParentTableName';
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
   const primaryKeyNames: string[] = [
     'PrimaryKeyNameF',
     'PrimaryKeyNameA',
@@ -132,42 +128,33 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', (): voi
   ];
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const foreignTable: Table = Object.assign(newTable(), {
-      name: foreignTableName,
-      nameComponents: [foreignTableName],
-      primaryKeys: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-          isPartOfPrimaryKey: true,
-        }),
-      ),
-    });
-    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
+    const foreignTable: Table = {
+      ...newTable(),
+      tableId: foreignTableId,
+      primaryKeys: primaryKeyNames.map((columnId: string) => ({ ...newColumn(), columnId, isPartOfPrimaryKey: true })),
+    };
+    tableEntities(metaEd, namespace).set(foreignTable.tableId, foreignTable);
 
-    const parentTable: Table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      columns: primaryKeyNames.map((name: string) =>
-        Object.assign(newColumn(), {
-          name,
-        }),
-      ),
+    const parentTable: Table = {
+      ...newTable(),
+      tableId: parentTableName,
+      columns: primaryKeyNames.map((columnId: string) => ({ ...newColumn(), columnId })),
       foreignKeys: [
-        Object.assign(newForeignKey(), {
+        {
+          ...newForeignKey(),
           foreignTableSchema: schemaName,
-          foreignTableName: foreignTable.name,
-          columnNames: primaryKeyNames.map((name: string) =>
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: name,
-              foreignTableColumnName: name,
-            }),
-          ),
-        }),
+          foreignTableId: foreignTable.tableId,
+          columnPairs: primaryKeyNames.map((name: string) => ({
+            ...newColumnPair(),
+            parentTableColumnId: name,
+            foreignTableColumnId: name,
+          })),
+        },
       ],
-    });
-    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
+    };
+    tableEntities(metaEd, namespace).set(parentTable.tableId, parentTable);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -175,17 +162,17 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', (): voi
 
   it('should have correct foreign key order', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
-    expect(foreignKeys).toBeDefined();
-    expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyNames);
+    expect(foreignKeys).toHaveLength(1);
+    expect(foreignKeys[0].columnPairs.map(cp => cp.parentTableColumnId)).toEqual(primaryKeyNames);
   });
 
   it('should have order parity with foreign table primary keys', (): void => {
-    const primaryKeyNamesOnForeignTable = (tableEntities(metaEd, namespace).get(foreignTableName) as Table).primaryKeys.map(
-      (pk: Column) => pk.name,
+    const primaryKeyNamesOnForeignTable = (tableEntities(metaEd, namespace).get(foreignTableId) as Table).primaryKeys.map(
+      (pk: Column) => pk.columnId,
     );
-    const foreignKeyNames = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
-      (tableEntities(metaEd, namespace).get(parentTableName) as Table).foreignKeys,
-    );
+
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(parentTableName) as Table;
+    const foreignKeyNames = foreignKeys[0].columnPairs.map(cp => cp.foreignTableColumnId);
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
   });
 });

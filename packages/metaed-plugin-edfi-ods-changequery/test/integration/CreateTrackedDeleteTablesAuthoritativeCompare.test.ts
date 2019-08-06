@@ -36,7 +36,10 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
-        edfiOds: {
+        edfiOdsRelational: {
+          targetTechnologyVersion: '3.1.0',
+        },
+        edfiOdsSqlServer: {
           targetTechnologyVersion: '3.1.0',
         },
         edfiOdsApi: {
@@ -80,7 +83,8 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiOdsChangeQuery',
     );
     loadFiles(state);
@@ -133,7 +137,10 @@ describe('when generating change event scripts with simple extensions and compar
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
-        edfiOds: {
+        edfiOdsRelational: {
+          targetTechnologyVersion: '3.1.0',
+        },
+        edfiOdsSqlServer: {
           targetTechnologyVersion: '3.1.0',
         },
         edfiOdsApi: {
@@ -183,7 +190,8 @@ describe('when generating change event scripts with simple extensions and compar
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiOdsChangeQuery',
     );
     loadFiles(state);

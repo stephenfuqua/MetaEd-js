@@ -1,32 +1,29 @@
 import { versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { tableEntities } from '../enhancer/EnhancerHelper';
-import { ForeignKey } from '../model/database/ForeignKey';
-import { Table } from '../model/database/Table';
+import { Table, newTableNameGroup, newTableNameComponent } from '../model/database/Table';
 
 // METAED-77
 // Adjusting name to duplicate the word 'Assessment' for GraduationPlanRequiredAssessmentPerformanceLevel
 const enhancerName = 'GraduationPlanRequiredAssessmentPerformanceLevelDiminisher';
 const targetVersions = '2.x';
 
-const graduationPlanRequiredAssessmentPerformanceLevel = 'GraduationPlanRequiredAssessmentPerformanceLevel';
-const graduationPlanRequiredAssessmentAssessmentPerformanceLevel =
-  'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
-
+const targetTableId = 'GraduationPlanRequiredAssessmentRequiredAssessmentPerformanceLevel';
+const nameOverride = 'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
 function renameGraduationPlanRequiredAssessmentPerformanceLevelTable(tablesForCoreNamespace: Map<string, Table>): void {
-  const table: Table | undefined = tablesForCoreNamespace.get(graduationPlanRequiredAssessmentPerformanceLevel);
-  const targetTable: Table | undefined = tablesForCoreNamespace.get(
-    graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
-  );
-  if (table == null || targetTable != null) return;
+  const targetTable: Table | undefined = tablesForCoreNamespace.get(targetTableId);
+  if (targetTable == null) return;
 
-  table.name = graduationPlanRequiredAssessmentAssessmentPerformanceLevel;
-  tablesForCoreNamespace.set(table.name, table);
-  tablesForCoreNamespace.delete(graduationPlanRequiredAssessmentPerformanceLevel);
-
-  table.foreignKeys.forEach((fk: ForeignKey) => {
-    fk.parentTableName = table.name;
-  });
+  targetTable.nameGroup = {
+    ...newTableNameGroup(),
+    nameElements: [
+      {
+        ...newTableNameComponent(),
+        name: nameOverride,
+        isSynthetic: true,
+      },
+    ],
+  };
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

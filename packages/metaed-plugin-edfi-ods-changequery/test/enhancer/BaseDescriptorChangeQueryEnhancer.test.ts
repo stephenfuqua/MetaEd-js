@@ -1,5 +1,13 @@
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
-import { baseDescriptorTableCreatingEnhancer, addEdFiOdsEntityRepositoryTo } from 'metaed-plugin-edfi-ods';
+import {
+  baseDescriptorTableCreatingEnhancer,
+  addEdFiOdsRelationalEntityRepositoryTo,
+} from 'metaed-plugin-edfi-ods-relational';
+import {
+  sqlServerTableSetupEnhancer,
+  sqlServerTableNamingEnhancer,
+  sqlServerColumnNamingEnhancer,
+} from 'metaed-plugin-edfi-ods-sqlserver';
 import { addEdFiOdsChangeQueryEntityRepositoryTo } from '../../src/model/EdFiOdsChangeQueryEntityRepository';
 import { enhance } from '../../src/enhancer/BaseDescriptorChangeQueryEnhancer';
 import { metaEdEnvironmentForApiVersion, newCoreNamespace } from './TestHelper';
@@ -10,10 +18,13 @@ describe('when enhancing base descriptor targeting 2.3 ODS/API', (): void => {
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeQueryEntityRepositoryTo(metaEd);
-  addEdFiOdsEntityRepositoryTo(metaEd);
+  addEdFiOdsRelationalEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     baseDescriptorTableCreatingEnhancer(metaEd);
+    sqlServerTableSetupEnhancer(metaEd);
+    sqlServerTableNamingEnhancer(metaEd);
+    sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -33,10 +44,13 @@ describe('when enhancing base descriptor targeting 2.5 ODS/API', (): void => {
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeQueryEntityRepositoryTo(metaEd);
-  addEdFiOdsEntityRepositoryTo(metaEd);
+  addEdFiOdsRelationalEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     baseDescriptorTableCreatingEnhancer(metaEd);
+    sqlServerTableSetupEnhancer(metaEd);
+    sqlServerTableNamingEnhancer(metaEd);
+    sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -60,10 +74,13 @@ describe('when enhancing base descriptor targeting 3.1 ODS/API', (): void => {
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeQueryEntityRepositoryTo(metaEd);
-  addEdFiOdsEntityRepositoryTo(metaEd);
+  addEdFiOdsRelationalEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     baseDescriptorTableCreatingEnhancer(metaEd);
+    sqlServerTableSetupEnhancer(metaEd);
+    sqlServerTableNamingEnhancer(metaEd);
+    sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -73,12 +90,12 @@ describe('when enhancing base descriptor targeting 3.1 ODS/API', (): void => {
     expect(deleteTrackingTables[0].schema).toBe('changes');
     expect(deleteTrackingTables[0].tableName).toBe(`${schema}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
-    expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
-    expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].columns[0].data.edfiOdsSqlServer.columnName).toBe(pkColumnName);
+    expect(deleteTrackingTables[0].columns[1].data.edfiOdsSqlServer.columnName).toBe('Id');
+    expect(deleteTrackingTables[0].columns[2].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${schema}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
-    expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].primaryKeyColumns[0].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
   });
 
   it('should create delete tracking trigger', (): void => {

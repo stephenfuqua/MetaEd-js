@@ -16,11 +16,11 @@ describe('when EnumerationProperty enhances enumeration property', (): void => {
   });
 
   it('should have ods name with type suffix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsName).toBe(`${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsName).toBe(`${enumerationPropertyName}Type`);
   });
 
   it('should have ods typeified base name with type suffix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });
 
@@ -40,11 +40,11 @@ describe('when EnumerationProperty enhances enumeration property role name', ():
   });
 
   it('should have ods name with type suffix and context prefix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsName).toBe(`${contextName}${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsName).toBe(`${contextName}${enumerationPropertyName}Type`);
   });
 
   it('should have ods typeified base name with type suffix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });
 
@@ -62,10 +62,10 @@ describe('when EnumerationProperty enhances enumeration property with type suffi
   });
 
   it('should have ods name with normalized type suffix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsName).toBe(`${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsName).toBe(`${enumerationPropertyName}Type`);
   });
 
   it('should have ods typeified base name normalized type suffix', (): void => {
-    expect(enumerationProperty.data.edfiOds.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
+    expect(enumerationProperty.data.edfiOdsRelational.odsTypeifiedBaseName).toBe(`${enumerationPropertyName}Type`);
   });
 });

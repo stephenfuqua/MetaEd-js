@@ -7,7 +7,10 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
 
   if (
-    !versionSatisfies((metaEd.plugin.get('edfiOds') as PluginEnvironment).targetTechnologyVersion, targetTechnologyVersion)
+    !versionSatisfies(
+      (metaEd.plugin.get('edfiOdsRelational') as PluginEnvironment).targetTechnologyVersion,
+      targetTechnologyVersion,
+    )
   )
     return failures;
 

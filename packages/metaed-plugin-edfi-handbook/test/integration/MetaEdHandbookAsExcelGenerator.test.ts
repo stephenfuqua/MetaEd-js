@@ -7,7 +7,8 @@ import {
   EnumerationBuilder,
 } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
-import { initialize as initializeOdsPlugin } from 'metaed-plugin-edfi-ods';
+import { initialize as initializeOdsRelationalPlugin } from 'metaed-plugin-edfi-ods-relational';
+import { initialize as initializeOdsSqlServerPlugin } from 'metaed-plugin-edfi-ods-sqlserver';
 import { initialize as initializeXsdPlugin } from 'metaed-plugin-edfi-xsd';
 import { initialize as initializeHandbookPlugin } from '../../src/index';
 import { generate } from '../../src/generator/MetaEdHandbookAsExcelGenerator';
@@ -55,7 +56,8 @@ describe('when generating a simple sql data dictionary', (): void => {
       .sendToListener(domainEntityBuilder);
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
-    initializeOdsPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeOdsRelationalPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeOdsSqlServerPlugin().enhancer.forEach(enhance => enhance(metaEd));
     initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
     initializeHandbookPlugin().enhancer.forEach(enhance => enhance(metaEd));
 

@@ -2,7 +2,7 @@ import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyReverseForeignKeyIndexesDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -17,20 +17,13 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
   const assessment = 'Assessment';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentContentStandard,
-      nameComponents: [assessmentContentStandard],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          parentTableName: assessmentContentStandard,
-          foreignTableName: assessment,
-          withReverseForeignKeyIndex: false,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: assessmentContentStandard };
+    table.foreignKeys = [
+      { ...newForeignKey(), parentTable: table, foreignTableId: assessment, withReverseForeignKeyIndex: false },
+    ];
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -40,8 +33,8 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentContentStandard) as Table).foreignKeys,
     );
-    expect(foreignKey.parentTableName).toBe(assessmentContentStandard);
-    expect(foreignKey.foreignTableName).toBe(assessment);
+    expect(foreignKey.parentTable.tableId).toBe(assessmentContentStandard);
+    expect(foreignKey.foreignTableId).toBe(assessment);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });
@@ -51,23 +44,14 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentTableName = 'ParentTableName';
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: parentTableName,
-      nameComponents: [parentTableName],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          parentTableName,
-          foreignTableName,
-          withReverseForeignKeyIndex: false,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: parentTableName };
+    table.foreignKeys = [{ ...newForeignKey(), parentTable: table, foreignTableId, withReverseForeignKeyIndex: false }];
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -75,8 +59,8 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching 
 
   it('should not modify with reverse foreign key index', (): void => {
     const foreignKey: ForeignKey = R.head((tableEntities(metaEd, namespace).get(parentTableName) as Table).foreignKeys);
-    expect(foreignKey.parentTableName).toBe(parentTableName);
-    expect(foreignKey.foreignTableName).toBe(foreignTableName);
+    expect(foreignKey.parentTable.tableId).toBe(parentTableName);
+    expect(foreignKey.foreignTableId).toBe(foreignTableId);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
 });

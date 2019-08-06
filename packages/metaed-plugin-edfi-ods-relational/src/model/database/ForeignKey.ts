@@ -3,10 +3,11 @@ import winston from 'winston';
 import { orderByProp, asCommonProperty, NoNamespace } from 'metaed-core';
 import { EntityProperty, PropertyType, Namespace } from 'metaed-core';
 import { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
-import { NoTable, getPrimaryKeys } from './Table';
-import { ColumnNamePair } from './ColumnNamePair';
+import { NoTable, getPrimaryKeys, getColumn } from './Table';
+import { ColumnPair, newColumnPair } from './ColumnPair';
 import { Table } from './Table';
 import { Column } from './Column';
+import { ForeignKeyStrategy } from './ForeignKeyStrategy';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
@@ -24,20 +25,17 @@ export interface ForeignKeySourceReference {
 
 export interface ForeignKey {
   name: string;
-  columnNames: ColumnNamePair[];
+  columnPairs: ColumnPair[];
   parentTable: Table;
-  parentTableName: string;
-  parentTableSchema: string;
-  foreignTableName: string;
+  foreignTableId: string;
   foreignTableSchema: string;
   foreignTableNamespace: Namespace;
-  foreignKeyNameSuffix: string;
-  parentTableColumnNames: string[];
-  foreignTableColumnNames: string[];
+  foreignTable: Table;
   withDeleteCascade: boolean;
   withUpdateCascade: boolean;
   withReverseForeignKeyIndex: boolean;
   sourceReference: ForeignKeySourceReference;
+  data: any;
 }
 
 export function newForeignKeySourceReference(): ForeignKeySourceReference {
@@ -54,12 +52,29 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
   };
 }
 
+export function newForeignKey(): ForeignKey {
+  return {
+    name: '',
+    columnPairs: [],
+    parentTable: NoTable,
+    foreignTableId: '',
+    foreignTableSchema: '',
+    foreignTableNamespace: NoNamespace,
+    foreignTable: NoTable,
+    withDeleteCascade: false,
+    withUpdateCascade: false,
+    withReverseForeignKeyIndex: false,
+    sourceReference: newForeignKeySourceReference(),
+    data: {},
+  };
+}
+
 const referenceProperty: PropertyType[] = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
 const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
 
 function isSubclassRelationship(property: EntityProperty): boolean {
   if (isReferenceProperty(property)) {
-    return !!(property.data.edfiOds as ReferencePropertyEdfiOds).odsIsReferenceToSuperclass;
+    return !!(property.data.edfiOdsRelational as ReferencePropertyEdfiOds).odsIsReferenceToSuperclass;
   }
   return false;
 }
@@ -67,7 +82,7 @@ function isSubclassRelationship(property: EntityProperty): boolean {
 function isExtensionRelationship(property: EntityProperty): boolean {
   if (property.type === 'common' && asCommonProperty(property).isExtensionOverride) return true;
   if (isReferenceProperty(property)) {
-    return !!(property.data.edfiOds as ReferencePropertyEdfiOds).odsIsReferenceToExtensionParent;
+    return !!(property.data.edfiOdsRelational as ReferencePropertyEdfiOds).odsIsReferenceToExtensionParent;
   }
   return false;
 }
@@ -86,71 +101,130 @@ export function foreignKeySourceReferenceFrom(property: EntityProperty): Foreign
   };
 }
 
-export function newForeignKey(): ForeignKey {
-  return {
-    name: '',
-    columnNames: [],
-    parentTable: NoTable,
-    parentTableName: '',
-    parentTableSchema: '',
-    foreignTableName: '',
-    foreignTableSchema: '',
-    foreignTableNamespace: NoNamespace,
-    foreignKeyNameSuffix: '',
-    parentTableColumnNames: [],
-    foreignTableColumnNames: [],
-    withDeleteCascade: false,
-    withUpdateCascade: false,
-    withReverseForeignKeyIndex: false,
-    sourceReference: newForeignKeySourceReference(),
-  };
-}
-
-export function getOrderedColumnNamePairs(foreignKey: ForeignKey, foreignTable: Table | null = null): ColumnNamePair[] {
+export function getOrderedColumnPairs(foreignKey: ForeignKey, foreignTable: Table | null = null): ColumnPair[] {
   if (foreignTable == null) {
-    return orderByProp('foreignTableColumnName')(foreignKey.columnNames);
+    return orderByProp('foreignTableColumnId')(foreignKey.columnPairs);
   }
 
   const primaryKeyOrder: string[] = (foreignTable.primaryKeys.length === 0
     ? getPrimaryKeys(foreignTable)
     : foreignTable.primaryKeys
-  ).map((pk: Column) => pk.name);
-  const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnNamePair } = R.groupBy(
-    R.prop('foreignTableColumnName'),
-    foreignKey.columnNames,
+  ).map((pk: Column) => pk.columnId);
+  const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnPair } = R.groupBy(
+    R.prop('foreignTableColumnId'),
+    foreignKey.columnPairs,
   );
   // eslint-disable-next-line no-underscore-dangle
-  const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnNamePair = R.prop(R.__, foreignKeyColumnPairLookup);
+  const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnPair = R.prop(R.__, foreignKeyColumnPairLookup);
 
   return R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
 }
 
-export function getParentTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
-  return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.parentTableColumnName);
-}
-
-export function getForeignTableColumnNames(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
-  return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.foreignTableColumnName);
-}
-
-export function addColumnNamePair(foreignKey: ForeignKey, columnNamePair: ColumnNamePair): void {
-  const existingPair = foreignKey.columnNames.find(
-    (x: ColumnNamePair) =>
-      x.parentTableColumnName === columnNamePair.parentTableColumnName &&
-      x.foreignTableColumnName === columnNamePair.foreignTableColumnName,
+export function addColumnPair(foreignKey: ForeignKey, columnPair: ColumnPair): void {
+  const existingPair = foreignKey.columnPairs.find(
+    (x: ColumnPair) =>
+      x.parentTableColumnId === columnPair.parentTableColumnId && x.foreignTableColumnId === columnPair.foreignTableColumnId,
   );
 
   if (existingPair == null) {
-    foreignKey.columnNames.push(columnNamePair);
+    foreignKey.columnPairs.push(columnPair);
   } else {
     winston.info(
-      `  Attempt to add duplicate column name pair: [${columnNamePair.parentTableColumnName}, ${
-        columnNamePair.foreignTableColumnName
-      }] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableName} failed.`,
+      `  Attempt to add duplicate column pair: [${columnPair.parentTableColumnId}, ${
+        columnPair.foreignTableColumnId
+      }] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableId} failed.`,
     );
   }
 }
 
-export function addColumnNamePairs(foreignKey: ForeignKey, columnNamePairs: ColumnNamePair[]): void {
-  columnNamePairs.forEach((columnNamePair: ColumnNamePair) => addColumnNamePair(foreignKey, columnNamePair));
+export function addColumnPairs(foreignKey: ForeignKey, columnPairs: ColumnPair[]): void {
+  columnPairs.forEach((columnPair: ColumnPair) => addColumnPair(foreignKey, columnPair));
+}
+
+export function getParentTableColumnIds(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
+  const pairs = getOrderedColumnPairs(foreignKey, foreignTable);
+  const result = pairs.map((x: ColumnPair) => x.parentTableColumnId);
+  return result;
+  // return getOrderedColumnPairs(foreignKey, foreignTable).map((x: ColumnPair) => x.parentTableColumnId);
+}
+
+export function getParentTableColumns(foreignKey: ForeignKey, foreignTable: Table | null = null): Column[] {
+  return getParentTableColumnIds(foreignKey, foreignTable).map((columnId: string) =>
+    getColumn(foreignKey.parentTable, columnId),
+  );
+}
+
+export function getForeignTableColumnIds(foreignKey: ForeignKey, foreignTable: Table | null = null): string[] {
+  return getOrderedColumnPairs(foreignKey, foreignTable).map((x: ColumnPair) => x.foreignTableColumnId);
+}
+
+export function getForeignTableColumns(foreignKey: ForeignKey, foreignTable: Table | null = null): Column[] {
+  return getForeignTableColumnIds(foreignKey, foreignTable).map((columnId: string) =>
+    getColumn(foreignKey.foreignTable, columnId),
+  );
+}
+
+function createForeignKeyInternal(
+  sourceReference: ForeignKeySourceReference,
+  foreignKeyColumns: Column[],
+  foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
+  foreignTableId: string,
+  strategy: ForeignKeyStrategy,
+): ForeignKey {
+  const foreignKey: ForeignKey = {
+    ...newForeignKey(),
+    foreignTableSchema,
+    foreignTableId,
+    foreignTableNamespace,
+    withDeleteCascade: strategy.hasDeleteCascade(),
+    withUpdateCascade: strategy.hasUpdateCascade(),
+    sourceReference,
+  };
+
+  foreignKeyColumns.forEach(column =>
+    addColumnPair(foreignKey, {
+      ...newColumnPair(),
+      parentTableColumnId: strategy.parentColumnId(column),
+      foreignTableColumnId: strategy.foreignColumnId(column),
+    }),
+  );
+
+  return foreignKey;
+}
+
+export function createForeignKey(
+  sourceProperty: EntityProperty,
+  foreignKeyColumns: Column[],
+  foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
+  foreignTableId: string,
+  strategy: ForeignKeyStrategy,
+): ForeignKey {
+  return createForeignKeyInternal(
+    foreignKeySourceReferenceFrom(sourceProperty),
+    foreignKeyColumns,
+    foreignTableSchema,
+    foreignTableNamespace,
+    foreignTableId,
+    strategy,
+  );
+}
+
+export function createForeignKeyUsingSourceReference(
+  sourceReference: ForeignKeySourceReference,
+  foreignKeyColumns: Column[],
+  foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
+  foreignTableId: string,
+  strategy: ForeignKeyStrategy,
+): ForeignKey {
+  return createForeignKeyInternal(
+    sourceReference,
+    foreignKeyColumns,
+    foreignTableSchema,
+    foreignTableNamespace,
+    foreignTableId,
+    strategy,
+  );
 }

@@ -24,7 +24,7 @@ export function addEdFiOdsRelationalEntityRepositoryTo(metaEd: MetaEdEnvironment
     namespaces.set(namespace, newEdFiOdsRelationalEntityRepository());
   });
 
-  const edfiOdsPlugin = metaEd.plugin.get('edfiOds');
+  const edfiOdsPlugin = metaEd.plugin.get('edfiOdsRelational');
   if (edfiOdsPlugin == null) {
     metaEd.plugin.set('edfiOdsRelational', {
       ...newPluginEnvironment(),

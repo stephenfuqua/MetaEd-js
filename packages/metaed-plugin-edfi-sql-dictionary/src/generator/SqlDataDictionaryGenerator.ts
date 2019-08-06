@@ -1,7 +1,5 @@
-import { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
-import { orderByProp } from 'metaed-core';
-import { tableEntities } from 'metaed-plugin-edfi-ods';
-import { Table, Column } from 'metaed-plugin-edfi-ods';
+import { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace, orderByPath } from 'metaed-core';
+import { tableEntities, Table, Column } from 'metaed-plugin-edfi-ods-relational';
 
 import { Workbook } from '../model/Workbook';
 import { newWorkbook, exportWorkbook } from '../model/Workbook';
@@ -26,7 +24,7 @@ function byTableAndColumnNameAscending(a: Record<string, any>, b: Record<string,
 }
 
 function isForeignKey(table: Table, column: Column) {
-  return table.foreignKeys.some(fk => fk.columnNames.some(cnp => cnp.parentTableColumnName === column.name));
+  return table.foreignKeys.some(fk => fk.columnPairs.some(cnp => cnp.parentTableColumnId === column.columnId));
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
@@ -36,7 +34,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     allTables.push(...tableEntities(metaEd, namespace).values());
   });
 
-  const orderedTables: Table[] = orderByProp('name')(allTables);
+  const orderedTables: Table[] = orderByPath(['data', 'edfiOdsSqlServer', 'tableName'])(allTables);
 
   const workbook: Workbook = newWorkbook();
   const tablesSheet: Worksheet = newWorksheet('Tables');
@@ -46,7 +44,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   orderedTables.forEach((table: Table) => {
     const tableRow: Row = newRow();
-    setRow(tableRow, 'Entity Name', table.name);
+    setRow(tableRow, 'Entity Name', table.data.edfiOdsSqlServer.tableName);
     setRow(tableRow, 'Entity Schema', table.schema);
     setRow(tableRow, 'Entity Definition', table.description);
 
@@ -54,17 +52,17 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     tablesSheet.rows.sort(byEntityNameAscending);
     tablesSheet['!cols'] = [{ wpx: 300 }, { wpx: 100 }, { wpx: 500 }];
 
-    table.columns.forEach((field: Column) => {
+    table.columns.forEach((column: Column) => {
       const columnRow: Row = newRow();
       setRow(columnRow, 'Entity/Table Owner', table.schema);
-      setRow(columnRow, 'Table Name', table.name);
-      setRow(columnRow, 'Column Name', field.name);
-      setRow(columnRow, 'Attribute/Column Definition', field.description);
-      setRow(columnRow, 'Column Data Type', field.dataType);
-      setRow(columnRow, 'Column Null Option', field.isNullable ? 'NULL' : 'NOT NULL');
-      setRow(columnRow, 'Identity', field.isIdentityDatabaseType ? 'Yes' : 'No');
-      setRow(columnRow, 'Primary Key', field.isPartOfPrimaryKey ? 'Yes' : 'No');
-      setRow(columnRow, 'Foreign Key', isForeignKey(table, field) ? 'Yes' : 'No');
+      setRow(columnRow, 'Table Name', table.data.edfiOdsSqlServer.tableName);
+      setRow(columnRow, 'Column Name', column.data.edfiOdsSqlServer.columnName);
+      setRow(columnRow, 'Attribute/Column Definition', column.description);
+      setRow(columnRow, 'Column Data Type', column.data.edfiOdsSqlServer.dataType);
+      setRow(columnRow, 'Column Null Option', column.isNullable ? 'NULL' : 'NOT NULL');
+      setRow(columnRow, 'Identity', column.isIdentityDatabaseType ? 'Yes' : 'No');
+      setRow(columnRow, 'Primary Key', column.isPartOfPrimaryKey ? 'Yes' : 'No');
+      setRow(columnRow, 'Foreign Key', isForeignKey(table, column) ? 'Yes' : 'No');
       columnsSheet.rows.push(createRow(columnRow));
       columnsSheet.rows.sort(byTableAndColumnNameAscending);
       columnsSheet['!cols'] = [

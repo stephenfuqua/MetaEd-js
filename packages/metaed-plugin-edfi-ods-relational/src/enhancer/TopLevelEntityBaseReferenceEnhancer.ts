@@ -29,9 +29,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   )
     .map(x => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
-      if (entity.data.edfiOds.odsProperties.some(x => x.isIdentityRename)) return;
+      if (entity.data.edfiOdsRelational.odsProperties.some(x => x.isIdentityRename)) return;
 
-      const referenceToBase: ReferentialProperty = Object.assign(newReferentialProperty(), {
+      const referenceToBase: ReferentialProperty = {
+        ...newReferentialProperty(),
         metaEdName: entity.baseEntity ? entity.baseEntity.metaEdName : '',
         documentation: entity.baseEntity ? entity.baseEntity.documentation : '',
         type: entity.baseEntity ? propertyTypeFor(entity.baseEntity) : 'unknown',
@@ -40,7 +41,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         referencedEntity: entity.baseEntity ? entity.baseEntity : NoTopLevelEntity,
         namespace: entity.namespace,
         data: {
-          edfiOds: {
+          edfiOdsRelational: {
             odsDeleteCascadePrimaryKey: true,
             odsCausesCyclicUpdateCascade: false,
             odsIsReferenceToSuperclass: entity.type === 'associationSubclass' || entity.type === 'domainEntitySubclass',
@@ -48,10 +49,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               entity.type === 'associationExtension' || entity.type === 'domainEntityExtension',
           },
         },
-      });
+      };
       addEntityPropertyEdfiOdsTo(referenceToBase);
-      entity.data.edfiOds.odsProperties.push(referenceToBase);
-      entity.data.edfiOds.odsIdentityProperties.push(referenceToBase);
+      entity.data.edfiOdsRelational.odsProperties.push(referenceToBase);
+      entity.data.edfiOdsRelational.odsIdentityProperties.push(referenceToBase);
     });
 
   return {

@@ -21,7 +21,8 @@
     "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-unified-advanced",
-      "metaed-plugin-edfi-ods",
+      "metaed-plugin-edfi-ods-relational",
+      "metaed-plugin-edfi-ods-sqlserver",
       "metaed-plugin-edfi-xsd"
     ]
   },
@@ -30,7 +31,8 @@
     "deep-freeze": "^0.0.1",
     "handlebars": "^4.0.11",
     "metaed-core": "2.0.1-dev.1",
-    "metaed-plugin-edfi-ods": "2.0.1-dev.1",
+    "metaed-plugin-edfi-ods-relational": "2.0.1-dev.1",
+    "metaed-plugin-edfi-ods-sqlserver": "2.0.1-dev.1",
     "metaed-plugin-edfi-unified": "2.0.1-dev.1",
     "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.1",
     "metaed-plugin-edfi-xsd": "2.0.1-dev.1",

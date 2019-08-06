@@ -1,7 +1,7 @@
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace, newDomainEntity, newPluginEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/DiscriminatorColumnFlaggingEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { newTable } from '../../../src/model/database/Table';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { Table } from '../../../src/model/database/Table';
@@ -11,7 +11,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.1.0',
     }),
@@ -20,16 +20,16 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
   const tableName = 'TableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: true,
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });
@@ -44,7 +44,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '2.0.0',
     }),
@@ -53,16 +53,16 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
   const tableName = 'TableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: true,
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });
@@ -77,7 +77,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.1.0',
     }),
@@ -86,15 +86,15 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent
   const tableName = 'TableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
       schema: namespace.namespaceName,
       isAggregateRootTable: true, // FYI: not actually possible to be aggregate root without parent
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });
@@ -109,7 +109,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root t
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
-    'edfiOds',
+    'edfiOdsRelational',
     Object.assign(newPluginEnvironment(), {
       targetTechnologyVersion: '3.1.0',
     }),
@@ -118,16 +118,16 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root t
   const tableName = 'TableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
       schema: namespace.namespaceName,
       parentEntity: newDomainEntity(),
       isAggregateRootTable: false,
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     enhance(metaEd);
   });

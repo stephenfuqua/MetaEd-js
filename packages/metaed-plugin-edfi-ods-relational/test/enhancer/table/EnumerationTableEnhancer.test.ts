@@ -1,9 +1,8 @@
-import R from 'ramda';
 import { Enumeration, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addEntityForNamespace, newEnumeration, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/EnumerationTableEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 
 describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -19,13 +18,13 @@ describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
       documentation: enumerationDocumentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [],
         },
       },
     });
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(enumeration);
     enhance(metaEd);
   });
@@ -33,7 +32,7 @@ describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
   it('should create table', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
     expect(table).toBeDefined();
-    expect(table.name).toBe(enumerationNameType);
+    expect(table.tableId).toBe(enumerationNameType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(enumerationDocumentation);
   });
@@ -45,16 +44,16 @@ describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    expect(R.head(table.columns).name).toBe(`${enumerationNameType}Id`);
-    expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${enumerationNameType}Id`);
+    expect(table.columns[0].isIdentityDatabaseType).toBe(true);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have code value column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
+    const column = table.columns.filter(x => x.columnId === 'CodeValue')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -64,7 +63,7 @@ describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
 
   it('should have description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'Description'));
+    const column = table.columns.filter(x => x.columnId === 'Description')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -74,7 +73,7 @@ describe('when EnumerationTableEnhancer enhances enumeration', (): void => {
 
   it('should have short description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
+    const column = table.columns.filter(x => x.columnId === 'ShortDescription')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -96,13 +95,13 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
       documentation: enumerationDocumentation,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [],
         },
       },
     });
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(enumeration);
     enhance(metaEd);
   });
@@ -110,7 +109,7 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
   it('should create table', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
     expect(table).toBeDefined();
-    expect(table.name).toBe(enumerationNameType);
+    expect(table.tableId).toBe(enumerationNameType);
     expect(table.schema).toBe('edfi');
     expect(table.description).toBe(enumerationDocumentation);
   });
@@ -122,16 +121,16 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
 
   it('should have one primary key', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    expect(R.head(table.columns).name).toBe(`${enumerationNameType}Id`);
-    expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
-    expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
-    expect(R.head(table.columns).isNullable).toBe(false);
-    expect(R.last(table.columns).description).not.toBe('');
+    expect(table.columns[0].columnId).toBe(`${enumerationNameType}Id`);
+    expect(table.columns[0].isIdentityDatabaseType).toBe(true);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].isNullable).toBe(false);
+    expect(table.columns[table.columns.length - 1].description).not.toBe('');
   });
 
   it('should have code value column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
+    const column = table.columns.filter(x => x.columnId === 'CodeValue')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -141,7 +140,7 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
 
   it('should have description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'Description'));
+    const column = table.columns.filter(x => x.columnId === 'Description')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
     expect(column.isPartOfPrimaryKey).toBe(false);
@@ -151,7 +150,7 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
 
   it('should have short description column', (): void => {
     const table = tableEntities(metaEd, namespace).get(enumerationNameType) as any;
-    const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
+    const column = table.columns.filter(x => x.columnId === 'ShortDescription')[0];
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
     expect(column.isPartOfPrimaryKey).toBe(false);

@@ -8,7 +8,7 @@ import {
   studentCompetencyObjective,
   studentLearningObjective,
 } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
-import { renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { rewriteColumnId, rewriteForeignKeyId } from './DiminisherHelper';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Table } from '../model/database/Table';
 
@@ -33,8 +33,8 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(
   const table: Table | undefined = tablesForCoreNamespace.get(studentLearningObjective);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(
@@ -43,8 +43,8 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(
   const table: Table | undefined = tablesForCoreNamespace.get(studentCompetencyObjective);
   if (table == null) return;
 
-  renameColumn(table, gradingPeriodSchoolId, schoolId);
-  renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
+  rewriteColumnId(table, gradingPeriodSchoolId, schoolId);
+  rewriteForeignKeyId(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(
@@ -53,7 +53,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStuden
   const table: Table | undefined = tablesForCoreNamespace.get(studentCompetencyObjective + studentProgramAssociation);
   if (table == null) return;
 
-  renameForeignKeyColumn(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
+  rewriteForeignKeyId(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(
@@ -62,7 +62,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStuden
   const table: Table | undefined = tablesForCoreNamespace.get(studentCompetencyObjective + studentSectionAssociation);
   if (table == null) return;
 
-  renameForeignKeyColumn(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
+  rewriteForeignKeyId(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(
@@ -71,7 +71,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentP
   const table: Table | undefined = tablesForCoreNamespace.get(studentLearningObjective + studentProgramAssociation);
   if (table == null) return;
 
-  renameForeignKeyColumn(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
+  rewriteForeignKeyId(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(
@@ -80,7 +80,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentS
   const table: Table | undefined = tablesForCoreNamespace.get(studentLearningObjective + studentSectionAssociation);
   if (table == null) return;
 
-  renameForeignKeyColumn(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
+  rewriteForeignKeyId(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

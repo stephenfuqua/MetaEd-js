@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newSchoolYearEnumeration, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, initializeEdFiOdsRelationalEntityRepository, tableEntities } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/SchoolYearEnumerationAggregateEnhancer';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -28,19 +28,21 @@ describe('when enhancing schoolYearEnumerations', (): void => {
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const schoolYearEnumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},

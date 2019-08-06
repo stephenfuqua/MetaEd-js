@@ -1,9 +1,63 @@
 /* eslint-disable class-methods-use-this, no-use-before-define */
 import { EntityProperty } from 'metaed-core';
-import { defaultColumnNamer, roleNameIgnoringColumnNamer } from '../../model/database/ColumnNamer';
 import { ColumnTransformMakeNull } from '../../model/database/ColumnTransform';
-import { ColumnNamer } from '../../model/database/ColumnNamer';
 import { ColumnTransform } from '../../model/database/ColumnTransform';
+import { ColumnNameComponent, newColumnNameComponent, ColumnNaming } from '../../model/database/Column';
+
+function defaultColumnNamer(
+  parentContext: string,
+  parentContextProperties: EntityProperty[],
+  roleName: string,
+  roleNameColumnNameComponent: ColumnNameComponent,
+  baseName: string,
+  baseNameColumnNameComponent: ColumnNameComponent,
+): () => ColumnNaming {
+  return () => {
+    const nameComponents: ColumnNameComponent[] = [];
+    parentContextProperties.forEach(parentContextProperty => {
+      if (parentContextProperty.data.edfiOdsRelational.odsContextPrefix !== '') {
+        nameComponents.push({
+          ...newColumnNameComponent(),
+          name: parentContextProperty.data.edfiOdsRelational.odsContextPrefix,
+          isParentPropertyContext: true,
+        });
+      }
+    });
+    if (roleName !== '') nameComponents.push(roleNameColumnNameComponent);
+    if (baseName !== '') nameComponents.push(baseNameColumnNameComponent);
+
+    return {
+      columnId: parentContext + roleName + baseName,
+      nameComponents,
+    };
+  };
+}
+
+function roleNameIgnoringColumnNamer(
+  parentContext: string,
+  parentContextProperties: EntityProperty[],
+  baseName: string,
+  baseNameColumnNameComponent: ColumnNameComponent,
+): () => ColumnNaming {
+  return () => {
+    const nameComponents: ColumnNameComponent[] = [];
+    parentContextProperties.forEach(parentContextProperty => {
+      if (parentContextProperty.data.edfiOdsRelational.odsContextPrefix !== '') {
+        nameComponents.push({
+          ...newColumnNameComponent(),
+          name: parentContextProperty.data.edfiOdsRelational.odsContextPrefix,
+          isParentPropertyContext: true,
+        });
+      }
+    });
+    if (baseName !== '') nameComponents.push(baseNameColumnNameComponent);
+
+    return {
+      columnId: parentContext + baseName,
+      nameComponents,
+    };
+  };
+}
 
 export class BuildStrategy {
   myDecoratedStrategy: BuildStrategy | null;
@@ -16,14 +70,39 @@ export class BuildStrategy {
     return this.myDecoratedStrategy != null ? this.myDecoratedStrategy.parentContext() : '';
   }
 
+  parentContextProperties(): EntityProperty[] {
+    return this.myDecoratedStrategy != null ? this.myDecoratedStrategy.parentContextProperties() : [];
+  }
+
   leafColumns(strategy: ColumnTransform): ColumnTransform {
     return this.myDecoratedStrategy != null ? this.myDecoratedStrategy.leafColumns(strategy) : strategy;
   }
 
-  columnNamer(inlineContext: string, roleName: string, baseName: string): ColumnNamer {
+  columnNamer(
+    parentContext: string,
+    parentContextProperties: EntityProperty[],
+    roleName: string,
+    roleNameColumnNameComponent: ColumnNameComponent,
+    baseName: string,
+    baseNameColumnNameComponent: ColumnNameComponent,
+  ): () => ColumnNaming {
     return this.myDecoratedStrategy != null
-      ? this.myDecoratedStrategy.columnNamer(inlineContext, roleName, baseName)
-      : defaultColumnNamer(inlineContext, roleName, baseName);
+      ? this.myDecoratedStrategy.columnNamer(
+          parentContext,
+          parentContextProperties,
+          roleName,
+          roleNameColumnNameComponent,
+          baseName,
+          baseNameColumnNameComponent,
+        )
+      : defaultColumnNamer(
+          parentContext,
+          parentContextProperties,
+          roleName,
+          roleNameColumnNameComponent,
+          baseName,
+          baseNameColumnNameComponent,
+        );
   }
 
   buildColumns(property: EntityProperty): boolean {
@@ -35,16 +114,12 @@ export class BuildStrategy {
   }
 
   // #region strategy configuration methods
-  columnNamerIgnoresroleName(): BuildStrategy {
-    return new ColumnNamerIgnoresroleNameStrategy(this);
+  columnNamerIgnoresRoleName(): BuildStrategy {
+    return new ColumnNamerIgnoresRoleNameStrategy(this);
   }
 
-  appendParentContext(context: string): BuildStrategy {
-    return new AppendParentContextStrategy(this, context);
-  }
-
-  appendInlineContext(context: string): BuildStrategy {
-    return new AppendInlineContextStrategy(this, context);
+  appendParentContextProperty(property: EntityProperty): BuildStrategy {
+    return new AppendParentContextPropertyStrategy(this, property);
   }
 
   skipPath(eligiblePropertyPaths: string[][]): BuildStrategy {
@@ -97,35 +172,33 @@ export class BuildStrategy {
   }
 }
 
-class AppendParentContextStrategy extends BuildStrategy {
-  myParentContextAppend: string;
+class AppendParentContextPropertyStrategy extends BuildStrategy {
+  myParentContextProperty: EntityProperty;
 
-  constructor(decoratedStrategy: BuildStrategy | null, parentContextAppend: string) {
+  constructor(decoratedStrategy: BuildStrategy | null, parentContextProperty: EntityProperty) {
     super(decoratedStrategy);
-    this.myParentContextAppend = parentContextAppend;
+    this.myParentContextProperty = parentContextProperty;
   }
 
   parentContext(): string {
-    return super.parentContext() + this.myParentContextAppend;
+    return super.parentContext() + this.myParentContextProperty.data.edfiOdsRelational.odsContextPrefix;
+  }
+
+  parentContextProperties(): EntityProperty[] {
+    return super.parentContextProperties().concat(this.myParentContextProperty);
   }
 }
 
-class AppendInlineContextStrategy extends BuildStrategy {
-  inlineContextAppend: string;
-
-  constructor(decoratedStrategy: BuildStrategy | null, inlineContextAppend: string) {
-    super(decoratedStrategy);
-    this.inlineContextAppend = inlineContextAppend;
-  }
-
-  parentContext(): string {
-    return super.parentContext() + this.inlineContextAppend;
-  }
-}
-
-class ColumnNamerIgnoresroleNameStrategy extends BuildStrategy {
-  columnNamer(inlineContext: string, _roleName: string, baseName: string): ColumnNamer {
-    return roleNameIgnoringColumnNamer(inlineContext, baseName);
+class ColumnNamerIgnoresRoleNameStrategy extends BuildStrategy {
+  columnNamer(
+    parentContext: string,
+    parentContextProperties: EntityProperty[],
+    _roleName: string,
+    _roleNameColumnNameComponent: ColumnNameComponent,
+    baseName: string,
+    baseNameColumnNameComponent: ColumnNameComponent,
+  ): () => ColumnNaming {
+    return roleNameIgnoringColumnNamer(parentContext, parentContextProperties, baseName, baseNameColumnNameComponent);
   }
 }
 
@@ -160,19 +233,14 @@ class SkipPathStrategy extends BuildStrategy {
       : this.myDecoratedStrategy;
   }
 
-  columnNamerIgnoresroleName(): BuildStrategy {
+  columnNamerIgnoresRoleName(): BuildStrategy {
     const strategy = this.getDecoratedStrategy();
-    return new ColumnNamerIgnoresroleNameStrategy(strategy);
+    return new ColumnNamerIgnoresRoleNameStrategy(strategy);
   }
 
-  appendParentContext(context: string): BuildStrategy {
+  appendParentContextProperty(property: EntityProperty): BuildStrategy {
     const strategy = this.getDecoratedStrategy();
-    return new AppendParentContextStrategy(strategy, context);
-  }
-
-  appendInlineContext(context: string): BuildStrategy {
-    const strategy = this.getDecoratedStrategy();
-    return new AppendInlineContextStrategy(strategy, context);
+    return new AppendParentContextPropertyStrategy(strategy, property);
   }
 
   skipPath(eligiblePropertyPaths: string[][]): BuildStrategy {

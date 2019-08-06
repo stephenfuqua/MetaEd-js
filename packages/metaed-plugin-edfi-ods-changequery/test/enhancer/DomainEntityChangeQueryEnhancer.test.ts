@@ -1,6 +1,6 @@
 import { newDomainEntity } from 'metaed-core';
 import { MetaEdEnvironment, DomainEntity, Namespace } from 'metaed-core';
-import { newTable, newColumn } from 'metaed-plugin-edfi-ods';
+import { newTable, newColumn } from 'metaed-plugin-edfi-ods-relational';
 import { addEdFiOdsChangeQueryEntityRepositoryTo } from '../../src/model/EdFiOdsChangeQueryEntityRepository';
 import { enhance } from '../../src/enhancer/DomainEntityChangeQueryEnhancer';
 import { metaEdEnvironmentForApiVersion, newCoreNamespace, newExtensionNamespace } from './TestHelper';
@@ -22,13 +22,16 @@ describe('when enhancing core domainEntity targeting 2.3 ODS/API', (): void => {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
             nameComponents: [tableName],
+            data: { edfiOdsSqlServer: { tableName } },
             schema: namespaceName,
-            columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
+            columns: [
+              { ...newColumn(), data: { edfiOdsSqlServer: { columnName: pkColumnName } }, isPartOfPrimaryKey: true },
+            ],
           },
         },
       },
@@ -65,13 +68,16 @@ describe('when enhancing core domainEntity targeting 2.5 ODS/API', (): void => {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
             nameComponents: [tableName],
+            data: { edfiOdsSqlServer: { tableName } },
             schema: namespaceName,
-            columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
+            columns: [
+              { ...newColumn(), data: { edfiOdsSqlServer: { columnName: pkColumnName } }, isPartOfPrimaryKey: true },
+            ],
           },
         },
       },
@@ -108,13 +114,16 @@ describe('when enhancing extension domainEntity targeting 2.5 ODS/API', (): void
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
             nameComponents: [tableName],
+            data: { edfiOdsSqlServer: { tableName } },
             schema: namespaceName,
-            columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
+            columns: [
+              { ...newColumn(), data: { edfiOdsSqlServer: { columnName: pkColumnName } }, isPartOfPrimaryKey: true },
+            ],
           },
         },
       },
@@ -151,13 +160,16 @@ describe('when enhancing core domainEntity targeting 3.1 ODS/API', (): void => {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
             nameComponents: [tableName],
+            data: { edfiOdsSqlServer: { tableName } },
             schema: namespaceName,
-            columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
+            columns: [
+              { ...newColumn(), data: { edfiOdsSqlServer: { columnName: pkColumnName } }, isPartOfPrimaryKey: true },
+            ],
           },
         },
       },
@@ -173,12 +185,12 @@ describe('when enhancing core domainEntity targeting 3.1 ODS/API', (): void => {
     expect(deleteTrackingTables[0].schema).toBe('changes');
     expect(deleteTrackingTables[0].tableName).toBe(`${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
-    expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
-    expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].columns[0].data.edfiOdsSqlServer.columnName).toBe(pkColumnName);
+    expect(deleteTrackingTables[0].columns[1].data.edfiOdsSqlServer.columnName).toBe('Id');
+    expect(deleteTrackingTables[0].columns[2].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
-    expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].primaryKeyColumns[0].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
   });
 
   it('should create delete tracking trigger', (): void => {
@@ -213,13 +225,16 @@ describe('when enhancing extension domainEntity targeting 3.1 ODS/API', (): void
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsEntityTable: {
             ...newTable(),
             name: tableName,
             nameComponents: [tableName],
+            data: { edfiOdsSqlServer: { tableName } },
             schema: namespaceName,
-            columns: [{ ...newColumn(), name: pkColumnName, isPartOfPrimaryKey: true }],
+            columns: [
+              { ...newColumn(), data: { edfiOdsSqlServer: { columnName: pkColumnName } }, isPartOfPrimaryKey: true },
+            ],
           },
         },
       },
@@ -235,12 +250,12 @@ describe('when enhancing extension domainEntity targeting 3.1 ODS/API', (): void
     expect(deleteTrackingTables[0].schema).toBe('changes');
     expect(deleteTrackingTables[0].tableName).toBe(`${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
-    expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
-    expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].columns[0].data.edfiOdsSqlServer.columnName).toBe(pkColumnName);
+    expect(deleteTrackingTables[0].columns[1].data.edfiOdsSqlServer.columnName).toBe('Id');
+    expect(deleteTrackingTables[0].columns[2].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
-    expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe('ChangeVersion');
+    expect(deleteTrackingTables[0].primaryKeyColumns[0].data.edfiOdsSqlServer.columnName).toBe('ChangeVersion');
   });
 
   it('should create delete tracking trigger', (): void => {

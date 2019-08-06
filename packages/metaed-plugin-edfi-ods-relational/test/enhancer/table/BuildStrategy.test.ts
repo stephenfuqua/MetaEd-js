@@ -1,6 +1,7 @@
-import { newIntegerProperty } from 'metaed-core';
+import { newIntegerProperty, EntityProperty, newBooleanProperty } from 'metaed-core';
 import { ColumnTransformUnchanged, ColumnTransformMakeNull } from '../../../src/model/database/ColumnTransform';
 import { BuildStrategy, BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
+import { newColumnNameComponent } from '../../../src/model/database/Column';
 
 describe('when using default build strategy', (): void => {
   let strategy: BuildStrategy;
@@ -19,9 +20,32 @@ describe('when using default build strategy', (): void => {
 
   it('should use default column namer strategy', (): void => {
     const inlineContext = 'InlineContext';
+    const inlineContextProperty = {
+      ...newBooleanProperty(),
+      data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+    };
     const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, roleName, baseName)()).toBe(inlineContext + roleName + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + roleName + baseName);
   });
 
   it('should return true when calling build columns', (): void => {
@@ -36,12 +60,21 @@ describe('when using default build strategy', (): void => {
 describe('when composing default, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', (): void => {
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContext } },
+  };
+  const inlineContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+  };
+
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault.appendParentContext(parentContext)
-      .appendInlineContext(inlineContext)
-      .columnNamerIgnoresroleName()
+    strategy = BuildStrategyDefault.appendParentContextProperty(parentContextProperty)
+      .appendParentContextProperty(inlineContextProperty)
+      .columnNamerIgnoresRoleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -55,8 +88,28 @@ describe('when composing default, append parent context, append inline context, 
   });
 
   it('should use ignore role name column namer strategy', (): void => {
+    const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', (): void => {
@@ -85,9 +138,33 @@ describe('when using skip path build strategy with no eligible property paths', 
 
   it('should use default column namer strategy', (): void => {
     const inlineContext = 'InlineContext';
+    const inlineContextProperty = {
+      ...newBooleanProperty(),
+      data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+    };
     const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, roleName, baseName)()).toBe(inlineContext + roleName + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + roleName + baseName);
   });
 
   it('should return true when calling build columns', (): void => {
@@ -102,13 +179,21 @@ describe('when using skip path build strategy with no eligible property paths', 
 describe('when composing skip path with no eligible property paths, append parent context, append inline context, column namer ignores role name, make leaf columns nullable, suppress primary key creation from properties build strategies', (): void => {
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContext } },
+  };
+  const inlineContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+  };
   let strategy: BuildStrategy;
 
   beforeAll(() => {
     strategy = BuildStrategyDefault.skipPath([])
-      .appendParentContext(parentContext)
-      .appendInlineContext(inlineContext)
-      .columnNamerIgnoresroleName()
+      .appendParentContextProperty(parentContextProperty)
+      .appendParentContextProperty(inlineContextProperty)
+      .columnNamerIgnoresRoleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -122,8 +207,28 @@ describe('when composing skip path with no eligible property paths, append paren
   });
 
   it('should use ignore role name column namer strategy', (): void => {
+    const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', (): void => {
@@ -139,13 +244,21 @@ describe('when composing skip path with eligible property paths, append parent c
   const integerPropertyPathName = 'IntegerPropertyPathName';
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContext } },
+  };
+  const inlineContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+  };
   let strategy: BuildStrategy;
 
   beforeAll(() => {
     strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName]])
-      .appendParentContext(parentContext)
-      .appendInlineContext(inlineContext)
-      .columnNamerIgnoresroleName()
+      .appendParentContextProperty(parentContextProperty)
+      .appendParentContextProperty(inlineContextProperty)
+      .columnNamerIgnoresRoleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -159,8 +272,28 @@ describe('when composing skip path with eligible property paths, append parent c
   });
 
   it('should use ignore role name column namer strategy', (): void => {
+    const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', (): void => {
@@ -178,13 +311,21 @@ describe('when composing skip path with eligible property paths, append parent c
   const integerPropertyPathName = 'IntegerPropertyPathName';
   const parentContext = 'ParentContext';
   const inlineContext = 'InlineContext';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContext } },
+  };
+  const inlineContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: inlineContext } },
+  };
   let strategy: BuildStrategy;
 
   beforeAll(() => {
     strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName, 'PropertyName']])
-      .appendParentContext(parentContext)
-      .appendInlineContext(inlineContext)
-      .columnNamerIgnoresroleName()
+      .appendParentContextProperty(parentContextProperty)
+      .appendParentContextProperty(inlineContextProperty)
+      .columnNamerIgnoresRoleName()
       .makeLeafColumnsNullable()
       .suppressPrimaryKeyCreationFromPropertiesStrategy();
   });
@@ -198,8 +339,28 @@ describe('when composing skip path with eligible property paths, append parent c
   });
 
   it('should use ignore role name column namer strategy', (): void => {
+    const roleName = 'roleName';
+    const roleNameComponent = {
+      ...newColumnNameComponent(),
+      name: roleName,
+      isPropertyRole: true,
+    };
     const baseName = 'BaseName';
-    expect(strategy.columnNamer(inlineContext, 'roleName', baseName)()).toBe(inlineContext + baseName);
+    const baseNameComponent = {
+      ...newColumnNameComponent(),
+      name: baseName,
+      isPropertyRole: true,
+    };
+    expect(
+      strategy.columnNamer(
+        inlineContext,
+        [inlineContextProperty],
+        roleName,
+        roleNameComponent,
+        baseName,
+        baseNameComponent,
+      )().columnId,
+    ).toBe(inlineContext + baseName);
   });
 
   it('should return true when calling build columns', (): void => {

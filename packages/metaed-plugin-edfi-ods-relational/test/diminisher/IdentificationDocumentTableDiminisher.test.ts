@@ -2,7 +2,7 @@ import R from 'ramda';
 import { DomainEntity, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/IdentificationDocumentTableDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -17,27 +17,20 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
   let identificationDocumentTable: Table;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    identificationDocumentTable = Object.assign(newTable(), {
-      name: `${domainEntityName}Schema${identificationDocument}`,
-      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          parentTableName: `${domainEntityName}Schema${identificationDocument}`,
-        }),
-        Object.assign(newForeignKey(), {
-          parentTableName: `${domainEntityName}Schema${identificationDocument}`,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(identificationDocumentTable.name, identificationDocumentTable);
+    identificationDocumentTable = { ...newTable(), tableId: `${domainEntityName}Schema${identificationDocument}` };
+    identificationDocumentTable.foreignKeys = [
+      { ...newForeignKey(), parentTable: identificationDocumentTable },
+      { ...newForeignKey(), parentTable: identificationDocumentTable },
+    ];
+    tableEntities(metaEd, namespace).set(identificationDocumentTable.tableId, identificationDocumentTable);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [identificationDocumentTable],
         },
       },
@@ -59,14 +52,14 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
   });
 
   it('should rename table in the domain entity ods tables', (): void => {
-    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
+    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOdsRelational;
     expect(odsTables).toHaveLength(1);
     expect(R.head(odsTables)).toBe(identificationDocumentTable);
   });
 
   it('should update foreign key parent table name', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument) as Table;
-    expect(foreignKeys.every(fk => fk.parentTableName === domainEntityName + identificationDocument)).toBe(true);
+    expect(foreignKeys.every(fk => fk.parentTable.tableId === domainEntityName + identificationDocument)).toBe(true);
   });
 });
 
@@ -80,24 +73,18 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
   let identificationDocumentTable2: Table;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    identificationDocumentTable1 = Object.assign(newTable(), {
-      name: `${domainEntityName}Schema${identificationDocument}`,
-      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
-    });
-    tableEntities(metaEd, namespace).set(identificationDocumentTable1.name, identificationDocumentTable1);
-    identificationDocumentTable2 = Object.assign(newTable(), {
-      name: `${domainEntityName}OtherSchema${identificationDocument}`,
-      nameComponents: [`${domainEntityName}OtherSchema${identificationDocument}`],
-    });
-    tableEntities(metaEd, namespace).set(identificationDocumentTable2.name, identificationDocumentTable2);
+    identificationDocumentTable1 = { ...newTable(), tableId: `${domainEntityName}Schema${identificationDocument}` };
+    tableEntities(metaEd, namespace).set(identificationDocumentTable1.tableId, identificationDocumentTable1);
+    identificationDocumentTable2 = { ...newTable(), tableId: `${domainEntityName}OtherSchema${identificationDocument}` };
+    tableEntities(metaEd, namespace).set(identificationDocumentTable2.tableId, identificationDocumentTable2);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [identificationDocumentTable1, identificationDocumentTable2],
         },
       },
@@ -125,7 +112,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
   });
 
   it('should rename table in the domain entity ods tables', (): void => {
-    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
+    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOdsRelational;
     expect(odsTables).toHaveLength(1);
     expect(R.head(odsTables)).toBe(identificationDocumentTable1);
   });
@@ -141,24 +128,18 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
   let identificationDocumentTable2: Table;
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    identificationDocumentTable1 = Object.assign(newTable(), {
-      name: `${domainEntityName}Schema${identificationDocument}1`,
-      nameComponents: [`${domainEntityName}Schema${identificationDocument}`],
-    });
-    tableEntities(metaEd, namespace).set(identificationDocumentTable1.name, identificationDocumentTable1);
-    identificationDocumentTable2 = Object.assign(newTable(), {
-      name: `${domainEntityName}OtherSchema${identificationDocument}2`,
-      nameComponents: [`${domainEntityName}OtherSchema${identificationDocument}2`],
-    });
-    tableEntities(metaEd, namespace).set(identificationDocumentTable2.name, identificationDocumentTable2);
+    identificationDocumentTable1 = { ...newTable(), tableId: `${domainEntityName}Schema${identificationDocument}1` };
+    tableEntities(metaEd, namespace).set(identificationDocumentTable1.tableId, identificationDocumentTable1);
+    identificationDocumentTable2 = { ...newTable(), tableId: `${domainEntityName}OtherSchema${identificationDocument}2` };
+    tableEntities(metaEd, namespace).set(identificationDocumentTable2.tableId, identificationDocumentTable2);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsTables: [identificationDocumentTable1, identificationDocumentTable2],
         },
       },
@@ -187,7 +168,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
   });
 
   it('should not modify table in the domain entity ods tables', (): void => {
-    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOds;
+    const { odsTables } = (namespace.entity.domainEntity.get(domainEntityName) as DomainEntity).data.edfiOdsRelational;
     expect(odsTables).toHaveLength(2);
     expect(R.head(odsTables)).toBe(identificationDocumentTable1);
     expect(R.last(odsTables)).toBe(identificationDocumentTable2);

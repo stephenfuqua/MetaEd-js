@@ -13,11 +13,11 @@ describe('when ReferenceProperty enhances association property', (): void => {
   });
 
   it('should have false ods delete cascade primary key', (): void => {
-    expect(associationProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(false);
+    expect(associationProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(false);
   });
 
   it('should have false ods causes cyclic update cascade', (): void => {
-    expect(associationProperty.data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
+    expect(associationProperty.data.edfiOdsRelational.odsCausesCyclicUpdateCascade).toBe(false);
   });
 });
 
@@ -33,10 +33,10 @@ describe('when ReferenceProperty enhances domain entity property', (): void => {
   });
 
   it('should have false ods delete cascade primary key', (): void => {
-    expect(domainEntityProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(false);
+    expect(domainEntityProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(false);
   });
 
   it('should have false ods causes cyclic update cascade', (): void => {
-    expect(domainEntityProperty.data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
+    expect(domainEntityProperty.data.edfiOdsRelational.odsCausesCyclicUpdateCascade).toBe(false);
   });
 });

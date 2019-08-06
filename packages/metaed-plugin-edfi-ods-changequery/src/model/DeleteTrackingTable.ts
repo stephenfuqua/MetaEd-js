@@ -1,4 +1,4 @@
-import { Column } from 'metaed-plugin-edfi-ods';
+import { Column } from 'metaed-plugin-edfi-ods-relational';
 
 export interface DeleteTrackingTable {
   schema: string;

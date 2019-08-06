@@ -17,7 +17,7 @@ describe('when collecting primary key columns for identity property', (): void =
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -27,7 +27,7 @@ describe('when collecting primary key columns for identity property', (): void =
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -40,8 +40,7 @@ describe('when collecting primary key columns for identity property', (): void =
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName);
+    expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -63,7 +62,7 @@ describe('when collecting primary key columns for inline common property', (): v
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -73,7 +72,7 @@ describe('when collecting primary key columns for inline common property', (): v
 
     const inlineCommon: Common = Object.assign(newInlineCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -83,7 +82,7 @@ describe('when collecting primary key columns for inline common property', (): v
     const inlineCommonProperty: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       referencedEntity: inlineCommon,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -93,7 +92,7 @@ describe('when collecting primary key columns for inline common property', (): v
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [inlineCommonProperty],
           odsIdentityProperties: [],
         },
@@ -106,8 +105,7 @@ describe('when collecting primary key columns for inline common property', (): v
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName);
+    expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -131,7 +129,7 @@ describe('when collecting primary key columns for identity property and inline c
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -144,7 +142,7 @@ describe('when collecting primary key columns for identity property and inline c
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -154,7 +152,7 @@ describe('when collecting primary key columns for identity property and inline c
 
     const inlineCommon: Common = Object.assign(newInlineCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property2],
           odsIdentityProperties: [property2],
         },
@@ -164,7 +162,7 @@ describe('when collecting primary key columns for identity property and inline c
     const inlineCommonProperty: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       referencedEntity: inlineCommon,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -174,7 +172,7 @@ describe('when collecting primary key columns for identity property and inline c
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [inlineCommonProperty, property1],
           odsIdentityProperties: [property1],
         },
@@ -190,8 +188,7 @@ describe('when collecting primary key columns for identity property and inline c
 
   it('should return a primary key column for identity property', (): void => {
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName1);
+    expect(columns[0].columnId).toBe(propertyName1);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -202,8 +199,7 @@ describe('when collecting primary key columns for identity property and inline c
 
   it('should return a primary key column for inline common property', (): void => {
     expect(columns[1].type).toBe('integer');
-    expect(columns[1].dataType).toBe('[INT]');
-    expect(columns[1].name).toBe(propertyName2);
+    expect(columns[1].columnId).toBe(propertyName2);
     expect(columns[1].description).toBe(propertyDocumentation);
     expect(columns[1].isIdentityDatabaseType).toBe(false);
     expect(columns[1].isNullable).toBe(false);
@@ -226,7 +222,7 @@ describe('when collecting primary key columns for two inline common properties w
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -236,7 +232,7 @@ describe('when collecting primary key columns for two inline common properties w
 
     const inlineCommon: Common = Object.assign(newInlineCommon(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -246,7 +242,7 @@ describe('when collecting primary key columns for two inline common properties w
     const inlineCommonProperty1: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       referencedEntity: inlineCommon,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -257,7 +253,7 @@ describe('when collecting primary key columns for two inline common properties w
     const inlineCommonProperty2: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       referencedEntity: inlineCommon,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -267,7 +263,7 @@ describe('when collecting primary key columns for two inline common properties w
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [inlineCommonProperty1, inlineCommonProperty2],
           odsIdentityProperties: [],
         },
@@ -283,8 +279,8 @@ describe('when collecting primary key columns for two inline common properties w
 
   it('should return a primary key column', (): void => {
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName);
+
+    expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
     expect(columns[0].isNullable).toBe(false);
@@ -295,8 +291,7 @@ describe('when collecting primary key columns for two inline common properties w
 
   it('should return a primary key column role name', (): void => {
     expect(columns[1].type).toBe('integer');
-    expect(columns[1].dataType).toBe('[INT]');
-    expect(columns[1].name).toBe(contextName + propertyName);
+    expect(columns[1].columnId).toBe(contextName + propertyName);
     expect(columns[1].description).toBe(propertyDocumentation);
     expect(columns[1].isIdentityDatabaseType).toBe(false);
     expect(columns[1].isNullable).toBe(false);

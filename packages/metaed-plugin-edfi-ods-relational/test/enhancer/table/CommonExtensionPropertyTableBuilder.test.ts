@@ -36,7 +36,7 @@ describe('when building common property extension table', (): void => {
       metaEdName: commonName,
       namespace: coreNamespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -48,7 +48,7 @@ describe('when building common property extension table', (): void => {
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -56,8 +56,8 @@ describe('when building common property extension table', (): void => {
         },
       },
     });
-    common.data.edfiOds.odsProperties.push(commonPkProperty);
-    common.data.edfiOds.odsIdentityProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonName,
@@ -66,7 +66,7 @@ describe('when building common property extension table', (): void => {
       baseEntity: common,
       namespace: extensionNamespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -78,7 +78,7 @@ describe('when building common property extension table', (): void => {
       parentEntity: commonExtension,
       namespace: extensionNamespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -86,12 +86,12 @@ describe('when building common property extension table', (): void => {
         },
       },
     });
-    commonExtension.data.edfiOds.odsProperties.push(commonExtensionProperty);
+    commonExtension.data.edfiOdsRelational.odsProperties.push(commonExtensionProperty);
 
     const entity: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
       namespace: extensionNamespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
           odsProperties: [],
           odsIdentityProperties: [],
@@ -104,7 +104,7 @@ describe('when building common property extension table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -121,23 +121,19 @@ describe('when building common property extension table', (): void => {
       referencedEntity: common,
       isExtensionOverride: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: commonName,
         },
       },
     });
 
-    entity.data.edfiOds.odsProperties.push(entityPkProperty, commonProperty);
-    entity.data.edfiOds.odsIdentityProperties.push(entityPkProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty, commonProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
-    const mainTable: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
     tableBuilder.buildTables(
       commonProperty,
@@ -151,17 +147,17 @@ describe('when building common property extension table', (): void => {
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(`${tableName}${commonName}Extension`);
+    expect(tables[0].tableId).toBe(`${tableName}${commonName}Extension`);
     expect(tables[0].schema).toBe(extensionNamespaceName.toLowerCase());
   });
 
   it('should have three columns with two primary keys', (): void => {
     expect(tables[0].columns).toHaveLength(3);
-    expect(tables[0].columns[0].name).toBe(commonPkName);
+    expect(tables[0].columns[0].columnId).toBe(commonPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(entityPkName);
+    expect(tables[0].columns[1].columnId).toBe(entityPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[2].name).toBe(commonExtensionPropertyName);
+    expect(tables[0].columns[2].columnId).toBe(commonExtensionPropertyName);
     expect(tables[0].columns[2].isPartOfPrimaryKey).toBe(false);
   });
 
@@ -170,13 +166,13 @@ describe('when building common property extension table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(2);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(`${tableName + commonName}Extension`);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(commonPkName);
-    expect(tables[0].foreignKeys[0].columnNames[1].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(2);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(`${tableName + commonName}Extension`);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(commonPkName);
+    expect(tables[0].foreignKeys[0].columnPairs[1].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName + commonName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(commonPkName);
-    expect(tables[0].foreignKeys[0].columnNames[1].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName + commonName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(commonPkName);
+    expect(tables[0].foreignKeys[0].columnPairs[1].foreignTableColumnId).toBe(entityPkName);
   });
 });

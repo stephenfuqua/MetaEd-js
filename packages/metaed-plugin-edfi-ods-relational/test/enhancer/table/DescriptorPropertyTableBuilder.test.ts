@@ -18,15 +18,11 @@ describe('when building descriptor property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: 'TableSchema',
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    table = { ...newTable(), schema: 'TableSchema', tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -36,7 +32,7 @@ describe('when building descriptor property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -48,7 +44,7 @@ describe('when building descriptor property table', (): void => {
     const entityDescriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: descriptorPropertyName,
           odsIsCollection: false,
@@ -58,7 +54,7 @@ describe('when building descriptor property table', (): void => {
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorName: descriptorName,
           odsProperties: [],
         },
@@ -68,13 +64,13 @@ describe('when building descriptor property table', (): void => {
       metaEdName: 'DescriptorEntityPropertyName1',
       isPartOfIdentity: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    descriptor.data.edfiOds.odsProperties.push(descriptorEntityProperty1);
+    descriptor.data.edfiOdsRelational.odsProperties.push(descriptorEntityProperty1);
     entityDescriptorProperty.referencedEntity = descriptor;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -97,7 +93,7 @@ describe('when building descriptor property table', (): void => {
 
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
-    expect(table.columns[0].name).toBe(`${descriptorPropertyName}Id`);
+    expect(table.columns[0].columnId).toBe(`${descriptorPropertyName}Id`);
   });
 
   it('should create one foreign key', (): void => {
@@ -105,12 +101,12 @@ describe('when building descriptor property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(table.foreignKeys[0].columnNames).toHaveLength(1);
-    expect(table.foreignKeys[0].parentTableName).toBe(tableName);
-    expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(`${descriptorPropertyName}Id`);
+    expect(table.foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(table.foreignKeys[0].parentTable.tableId).toBe(tableName);
+    expect(table.foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(`${descriptorPropertyName}Id`);
 
-    expect(table.foreignKeys[0].foreignTableName).toBe(descriptorName);
-    expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(`${descriptorPropertyName}Id`);
+    expect(table.foreignKeys[0].foreignTableId).toBe(descriptorName);
+    expect(table.foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(`${descriptorPropertyName}Id`);
   });
 });
 
@@ -124,15 +120,11 @@ describe('when building collection descriptor property table', (): void => {
   let table: Table;
 
   beforeAll(() => {
-    table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -142,7 +134,7 @@ describe('when building collection descriptor property table', (): void => {
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -155,7 +147,7 @@ describe('when building collection descriptor property table', (): void => {
       metaEdName: descriptorName,
       parentEntity: entity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: descriptorName,
           odsIsCollection: true,
@@ -165,7 +157,7 @@ describe('when building collection descriptor property table', (): void => {
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsDescriptorName: descriptorName,
           odsProperties: [],
         },
@@ -175,13 +167,13 @@ describe('when building collection descriptor property table', (): void => {
       metaEdName: descriptorEntityPropertyName1,
       isPartOfIdentity: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsUniqueIndex: false,
         },
       },
     });
-    descriptor.data.edfiOds.odsProperties.push(descriptorEntityProperty1);
+    descriptor.data.edfiOdsRelational.odsProperties.push(descriptorEntityProperty1);
     entityDescriptorProperty.referencedEntity = descriptor;
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
@@ -200,15 +192,15 @@ describe('when building collection descriptor property table', (): void => {
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + descriptorName);
+    expect(tables[0].tableId).toBe(tableName + descriptorName);
     expect(tables[0].schema).toBe(tableSchema);
   });
 
   it('should create two primary key columns', (): void => {
     expect(tables[0].columns).toHaveLength(2);
-    expect(tables[0].columns[0].name).toBe(entityPkName);
+    expect(tables[0].columns[0].columnId).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
-    expect(tables[0].columns[1].name).toBe(`${descriptorName}Id`);
+    expect(tables[0].columns[1].columnId).toBe(`${descriptorName}Id`);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -217,18 +209,18 @@ describe('when building collection descriptor property table', (): void => {
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + descriptorName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + descriptorName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[1].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[1].parentTableName).toBe(tableName + descriptorName);
-    expect(tables[0].foreignKeys[1].columnNames[0].parentTableColumnName).toBe(`${descriptorName}Id`);
+    expect(tables[0].foreignKeys[1].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[1].parentTable.tableId).toBe(tableName + descriptorName);
+    expect(tables[0].foreignKeys[1].columnPairs[0].parentTableColumnId).toBe(`${descriptorName}Id`);
 
-    expect(tables[0].foreignKeys[1].foreignTableName).toBe(descriptorName);
-    expect(tables[0].foreignKeys[1].columnNames[0].foreignTableColumnName).toBe(`${descriptorName}Id`);
+    expect(tables[0].foreignKeys[1].foreignTableId).toBe(descriptorName);
+    expect(tables[0].foreignKeys[1].columnPairs[0].foreignTableColumnId).toBe(`${descriptorName}Id`);
   });
 });

@@ -19,15 +19,11 @@ describe('when building simple entity property table with collection property an
   const tables: Table[] = [];
 
   beforeAll(() => {
-    const table: Table = Object.assign(newTable(), {
-      schema: tableSchema,
-      name: tableName,
-      nameComponents: [tableName],
-    });
+    const table: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
         },
       },
@@ -39,7 +35,7 @@ describe('when building simple entity property table with collection property an
       parentEntity: entity,
       isPartOfIdentity: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -54,7 +50,7 @@ describe('when building simple entity property table with collection property an
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: '',
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -73,7 +69,7 @@ describe('when building simple entity property table with collection property an
 
   it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
-    expect(tables[0].name).toBe(tableName + entityPropertyName);
+    expect(tables[0].tableId).toBe(tableName + entityPropertyName);
     expect(tables[0].schema).toBe(tableSchema);
     expect(tables[0].description).toBe(entityPropertyDocumentation);
     expect(tables[0].isRequiredCollectionTable).toBe(false);
@@ -84,12 +80,12 @@ describe('when building simple entity property table with collection property an
   });
 
   it('should have primary key', (): void => {
-    expect(tables[0].columns[0].name).toBe(entityPkName);
+    expect(tables[0].columns[0].columnId).toBe(entityPkName);
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should convert collection to primary key', (): void => {
-    expect(tables[0].columns[1].name).toBe(entityPropertyName);
+    expect(tables[0].columns[1].columnId).toBe(entityPropertyName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
   });
 
@@ -98,11 +94,11 @@ describe('when building simple entity property table with collection property an
   });
 
   it('should have correct foreign key relationship', (): void => {
-    expect(tables[0].foreignKeys[0].columnNames).toHaveLength(1);
-    expect(tables[0].foreignKeys[0].parentTableName).toBe(tableName + entityPropertyName);
-    expect(tables[0].foreignKeys[0].columnNames[0].parentTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].columnPairs).toHaveLength(1);
+    expect(tables[0].foreignKeys[0].parentTable.tableId).toBe(tableName + entityPropertyName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].parentTableColumnId).toBe(entityPkName);
 
-    expect(tables[0].foreignKeys[0].foreignTableName).toBe(tableName);
-    expect(tables[0].foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(entityPkName);
+    expect(tables[0].foreignKeys[0].foreignTableId).toBe(tableName);
+    expect(tables[0].foreignKeys[0].columnPairs[0].foreignTableColumnId).toBe(entityPkName);
   });
 });

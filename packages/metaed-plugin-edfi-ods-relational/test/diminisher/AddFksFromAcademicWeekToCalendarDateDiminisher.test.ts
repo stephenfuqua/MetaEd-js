@@ -1,9 +1,8 @@
-import R from 'ramda';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddFksFromAcademicWeekToCalendarDateDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
-import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
+import { newColumnPair } from '../../src/model/database/ColumnPair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -21,13 +20,10 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   const schoolId = 'SchoolId';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: academicWeek,
-      nameComponents: [academicWeek],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: academicWeek };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -48,30 +44,30 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     const {
       foreignKeys: [foreignKey],
     } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
-    expect(foreignKey.columnNames).toHaveLength(2);
+    expect(foreignKey.columnPairs).toHaveLength(2);
 
-    expect(foreignKey.parentTableName).toBe(academicWeek);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
-    expect(R.last(foreignKey.columnNames).parentTableColumnName).toBe(beginDate);
+    expect(foreignKey.parentTable.tableId).toBe(academicWeek);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(schoolId);
+    expect(foreignKey.columnPairs[foreignKey.columnPairs.length - 1].parentTableColumnId).toBe(beginDate);
 
-    expect(foreignKey.foreignTableName).toBe(calendarDate);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
-    expect(R.last(foreignKey.columnNames).foreignTableColumnName).toBe(date);
+    expect(foreignKey.foreignTableId).toBe(calendarDate);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(schoolId);
+    expect(foreignKey.columnPairs[foreignKey.columnPairs.length - 1].foreignTableColumnId).toBe(date);
   });
 
   it('should have correct foreign key relationship for second foreign key', (): void => {
     const {
       foreignKeys: [, foreignKey],
     } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
-    expect(foreignKey.columnNames).toHaveLength(2);
+    expect(foreignKey.columnPairs).toHaveLength(2);
 
-    expect(foreignKey.parentTableName).toBe(academicWeek);
-    expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
-    expect(R.last(foreignKey.columnNames).parentTableColumnName).toBe(endDate);
+    expect(foreignKey.parentTable.tableId).toBe(academicWeek);
+    expect(foreignKey.columnPairs[0].parentTableColumnId).toBe(schoolId);
+    expect(foreignKey.columnPairs[foreignKey.columnPairs.length - 1].parentTableColumnId).toBe(endDate);
 
-    expect(foreignKey.foreignTableName).toBe(calendarDate);
-    expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
-    expect(R.last(foreignKey.columnNames).foreignTableColumnName).toBe(date);
+    expect(foreignKey.foreignTableId).toBe(calendarDate);
+    expect(foreignKey.columnPairs[0].foreignTableColumnId).toBe(schoolId);
+    expect(foreignKey.columnPairs[foreignKey.columnPairs.length - 1].foreignTableColumnId).toBe(date);
   });
 });
 
@@ -89,43 +85,32 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     const date = 'Date';
     const endDate = 'EndDate';
     const schoolId = 'SchoolId';
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: academicWeek,
-      nameComponents: [academicWeek],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableSchema: schemaName,
-          foreignTableName: calendarDate,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: schoolId,
-              foreignTableColumnName: schoolId,
-            }),
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: beginDate,
-              foreignTableColumnName: date,
-            }),
-          ],
-        }),
-        Object.assign(newForeignKey(), {
-          foreignTableSchema: schemaName,
-          foreignTableName: calendarDate,
-          columnNames: [
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: schoolId,
-              foreignTableColumnName: schoolId,
-            }),
-            Object.assign(newColumnNamePair(), {
-              parentTableColumnName: endDate,
-              foreignTableColumnName: date,
-            }),
-          ],
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = { ...newTable(), tableId: academicWeek };
+    table.foreignKeys = [
+      {
+        ...newForeignKey(),
+        parentTable: table,
+        foreignTableSchema: schemaName,
+        foreignTableId: calendarDate,
+        columnPairs: [
+          { ...newColumnPair(), parentTableColumnId: schoolId, foreignTableColumnId: schoolId },
+          { ...newColumnPair(), parentTableColumnId: beginDate, foreignTableColumnId: date },
+        ],
+      },
+      {
+        ...newForeignKey(),
+        parentTable: table,
+        foreignTableSchema: schemaName,
+        foreignTableId: calendarDate,
+        columnPairs: [
+          { ...newColumnPair(), parentTableColumnId: schoolId, foreignTableColumnId: schoolId },
+          { ...newColumnPair(), parentTableColumnId: endDate, foreignTableColumnId: date },
+        ],
+      },
+    ];
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -134,9 +119,9 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   it('should not modify existing foreign keys', (): void => {
     const { foreignKeys } = tableEntities(metaEd, namespace).get(academicWeek) as Table;
     expect(foreignKeys).toHaveLength(2);
-    expect(R.head(foreignKeys).name).toBe('');
-    expect(R.last(foreignKeys).name).toBe('');
-    expect(R.head(foreignKeys).parentTableName).toBe('');
-    expect(R.last(foreignKeys).parentTableName).toBe('');
+    expect(foreignKeys[0].name).toBe('');
+    expect(foreignKeys[foreignKeys.length - 1].name).toBe('');
+    expect(foreignKeys[0].parentTable.tableId).toBe(academicWeek);
+    expect(foreignKeys[foreignKeys.length - 1].parentTable.tableId).toBe(academicWeek);
   });
 });

@@ -6,7 +6,8 @@ import {
   DomainEntityBuilder,
   EnumerationBuilder,
 } from 'metaed-core';
-import { initialize as initializeOdsPlugin } from 'metaed-plugin-edfi-ods';
+import { initialize as initializeOdsRelationalPlugin } from 'metaed-plugin-edfi-ods-relational';
+import { initialize as initializeOdsSqlServerPlugin } from 'metaed-plugin-edfi-ods-sqlserver';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
 import { generate } from '../../src/generator/SqlDataDictionaryGenerator';
 import { readWorkbook } from '../../src/model/Workbook';
@@ -53,7 +54,8 @@ describe('when generating a simple sql data dictionary', (): void => {
       .sendToListener(domainEntityBuilder);
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
-    initializeOdsPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeOdsRelationalPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeOdsSqlServerPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
     generatorResults = await generate(metaEd);
     workbook = readWorkbook(generatorResults.generatedOutput[0].resultStream, 'buffer');

@@ -2,7 +2,7 @@ import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyCascadingDeletesDefinitionsDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
@@ -17,19 +17,14 @@ describe('when ModifyCascadingDeletesDefinitionsDiminisher diminishes matching t
   const descriptor = 'Descriptor';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: assessmentCategoryDescriptor,
-      nameComponents: [assessmentCategoryDescriptor],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName: descriptor,
-          withDeleteCascade: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: assessmentCategoryDescriptor,
+      foreignKeys: [{ ...newForeignKey(), foreignTableId: descriptor, withDeleteCascade: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -39,7 +34,7 @@ describe('when ModifyCascadingDeletesDefinitionsDiminisher diminishes matching t
     const foreignKey: ForeignKey = R.head(
       (tableEntities(metaEd, namespace).get(assessmentCategoryDescriptor) as Table).foreignKeys,
     );
-    expect(foreignKey.foreignTableName).toBe(descriptor);
+    expect(foreignKey.foreignTableId).toBe(descriptor);
     expect(foreignKey.withDeleteCascade).toBe(false);
   });
 });
@@ -49,22 +44,17 @@ describe('when ModifyCascadingDeletesDefinitionsDiminisher diminishes non matchi
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
-  const foreignTableName = 'ForeignTableName';
+  const foreignTableId = 'ForeignTableName';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
 
-    const table: Table = Object.assign(newTable(), {
-      name: tableName,
-      nameComponents: [tableName],
-      foreignKeys: [
-        Object.assign(newForeignKey(), {
-          foreignTableName,
-          withDeleteCascade: true,
-        }),
-      ],
-    });
-    tableEntities(metaEd, namespace).set(table.name, table);
+    const table: Table = {
+      ...newTable(),
+      tableId: tableName,
+      foreignKeys: [{ ...newForeignKey(), foreignTableId, withDeleteCascade: true }],
+    };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -72,7 +62,7 @@ describe('when ModifyCascadingDeletesDefinitionsDiminisher diminishes non matchi
 
   it('should not modify with delete cascade', (): void => {
     const foreignKey: ForeignKey = R.head((tableEntities(metaEd, namespace).get(tableName) as Table).foreignKeys);
-    expect(foreignKey.foreignTableName).toBe(foreignTableName);
+    expect(foreignKey.foreignTableId).toBe(foreignTableId);
     expect(foreignKey.withDeleteCascade).toBe(true);
   });
 });

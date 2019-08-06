@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
-import { Table } from 'metaed-plugin-edfi-ods';
-import { tableEntities } from 'metaed-plugin-edfi-ods';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
+import { tableEntities } from 'metaed-plugin-edfi-ods-relational';
 import { addColumnChangeVersionForTableEntities } from './EnhancerHelper';
 import { changeQueryIndicated } from './ChangeQueryIndicator';
 import { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
@@ -14,7 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         if (table.isAggregateRootTable) {
           const addColumnChangeVersionForTable: AddColumnChangeVersionForTable = {
             schema: table.schema,
-            tableName: table.name,
+            tableName: table.data.edfiOdsSqlServer.tableName,
           };
           addColumnChangeVersionForTableEntities(metaEd, namespace).push(addColumnChangeVersionForTable);
         }

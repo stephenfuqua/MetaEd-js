@@ -1,4 +1,4 @@
-import { newSchoolYearEnumerationProperty } from 'metaed-core';
+import { newSchoolYearEnumerationProperty, EntityProperty, newBooleanProperty } from 'metaed-core';
 import { SchoolYearEnumerationProperty } from 'metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
@@ -17,7 +17,7 @@ describe('when creating columns for school year enumeration property', (): void 
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -30,8 +30,7 @@ describe('when creating columns for school year enumeration property', (): void 
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -52,7 +51,7 @@ describe('when creating columns for school year enumeration property role name',
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: contextName,
         },
       },
@@ -65,8 +64,7 @@ describe('when creating columns for school year enumeration property role name',
   it('should return a column role name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe(`${contextName}SchoolYear`);
+    expect(columns[0].columnId).toBe(`${contextName}SchoolYear`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -78,6 +76,10 @@ describe('when creating columns for school year enumeration property role name a
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const parentContextName = 'ParentContextName';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContextName } },
+  };
   let property: SchoolYearEnumerationProperty;
   let columns: Column[];
 
@@ -88,21 +90,20 @@ describe('when creating columns for school year enumeration property role name a
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: contextName,
         },
       },
     });
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property);
-    columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContext(parentContextName));
+    columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContextProperty(parentContextProperty));
   });
 
   it('should return a column role name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe(`${parentContextName}${contextName}SchoolYear`);
+    expect(columns[0].columnId).toBe(`${parentContextName}${contextName}SchoolYear`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -122,7 +123,7 @@ describe('when creating columns for nullable school year enumeration property', 
       isPartOfIdentity: false,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -135,8 +136,7 @@ describe('when creating columns for nullable school year enumeration property', 
   it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(true);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -156,7 +156,7 @@ describe('when creating columns for primary key school year enumeration property
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -169,8 +169,7 @@ describe('when creating columns for primary key school year enumeration property
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -190,7 +189,7 @@ describe('when creating columns for identity rename school year enumeration prop
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -203,8 +202,7 @@ describe('when creating columns for identity rename school year enumeration prop
   it('should return a identity rename column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -224,7 +222,7 @@ describe('when creating columns for primary key school year enumeration property
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -237,8 +235,7 @@ describe('when creating columns for primary key school year enumeration property
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -258,7 +255,7 @@ describe('when creating columns for identity rename school year enumeration prop
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
         },
       },
@@ -271,8 +268,7 @@ describe('when creating columns for identity rename school year enumeration prop
   it('should return a identity rename column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe('SchoolYear');
+    expect(columns[0].columnId).toBe('SchoolYear');
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);

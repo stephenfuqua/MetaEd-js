@@ -1,11 +1,11 @@
 import { newIntegerProperty, versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { addColumn, getForeignKeys } from '../model/database/Table';
-import { renameColumn } from './DiminisherHelper';
-import { initializeColumn, newIntegerColumn } from '../model/database/Column';
+import { addColumn } from '../model/database/Table';
+import { rewriteColumnId } from './DiminisherHelper';
+import { initializeColumn, newColumn, newColumnNameComponent } from '../model/database/Column';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
-import { ColumnNamePair } from '../model/database/ColumnNamePair';
+import { ColumnPair } from '../model/database/ColumnPair';
 import { ForeignKey } from '../model/database/ForeignKey';
 import { Table } from '../model/database/Table';
 
@@ -24,63 +24,68 @@ const assessmentContentStandardAuthor = 'AssessmentContentStandardAuthor';
 function renameVersionColumnOnAssessmentContentStandardTable(tablesForCoreNamespace: Map<string, Table>): void {
   const table: Table | undefined = tablesForCoreNamespace.get(assessmentContentStandard);
   if (table == null) return;
-  if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
+  if (table.columns.find((column: Column) => column.columnId === assessmentVersion) != null) return;
 
-  const column: Column | undefined = table.columns.find((x: Column) => x.name === version);
+  const column: Column | undefined = table.columns.find((x: Column) => x.columnId === version);
   if (column == null) return;
 
-  const foreignKey: ForeignKey | undefined = getForeignKeys(table).find(
-    (x: ForeignKey) => x.foreignTableName === assessment,
-  );
+  const foreignKey: ForeignKey | undefined = table.foreignKeys.find((x: ForeignKey) => x.foreignTableId === assessment);
   if (foreignKey == null) return;
 
-  const columnNamePair: ColumnNamePair | undefined = foreignKey.columnNames.find(
-    (x: ColumnNamePair) => x.parentTableColumnName === version && x.foreignTableColumnName === version,
+  const columnPair: ColumnPair | undefined = foreignKey.columnPairs.find(
+    (x: ColumnPair) => x.parentTableColumnId === version && x.foreignTableColumnId === version,
   );
-  if (columnNamePair == null) return;
+  if (columnPair == null) return;
 
   addColumn(
     table,
     initializeColumn(
-      newIntegerColumn(),
-      Object.assign(newIntegerProperty(), {
+      {
+        ...newColumn(),
+        type: 'integer',
+      },
+      {
+        ...newIntegerProperty(),
         isPartOfIdentity: true,
         data: {
-          edfiOds: {
+          edfiOdsRelational: {
             odsIsIdentityDatabaseType: false,
             odsIsUniqueIndex: false,
           },
         },
+      },
+      () => ({
+        columnId: assessmentVersion,
+        nameComponents: [{ ...newColumnNameComponent(), name: assessmentVersion, isSynthetic: true }],
       }),
-      () => assessmentVersion,
       false,
     ),
   );
 
   column.isNullable = true;
   column.isPartOfPrimaryKey = false;
-  columnNamePair.parentTableColumnName = assessmentVersion;
+  columnPair.parentTableColumnId = assessmentVersion;
 }
 
 function renameVersionColumnOnAssessmentContentStandardAuthorTable(tablesForCoreNamespace: Map<string, Table>): void {
   const table: Table | undefined = tablesForCoreNamespace.get(assessmentContentStandardAuthor);
   if (table == null) return;
-  if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
+  if (table.columns.find((column: Column) => column.columnId === assessmentVersion) != null) return;
 
-  const foreignKey: ForeignKey | undefined = getForeignKeys(table).find(
-    (x: ForeignKey) => x.foreignTableName === assessmentContentStandard,
+  const foreignKey: ForeignKey | undefined = table.foreignKeys.find(
+    (x: ForeignKey) => x.foreignTableId === assessmentContentStandard,
   );
   if (foreignKey == null) return;
 
-  const columnNamePair: ColumnNamePair | undefined = foreignKey.columnNames.find(
-    (x: ColumnNamePair) => x.parentTableColumnName === version && x.foreignTableColumnName === version,
+  const columnPair: ColumnPair | undefined = foreignKey.columnPairs.find(
+    (x: ColumnPair) => x.parentTableColumnId === version && x.foreignTableColumnId === version,
   );
-  if (columnNamePair == null) return;
+  if (columnPair == null) return;
 
-  renameColumn(table, version, assessmentVersion);
+  rewriteColumnId(table, version, assessmentVersion);
 
-  columnNamePair.parentTableColumnName = assessmentVersion;
-  columnNamePair.foreignTableColumnName = assessmentVersion;
+  columnPair.parentTableColumnId = assessmentVersion;
+  columnPair.foreignTableColumnId = assessmentVersion;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, newNamespace, newPluginEnvironment } from 'metaed
 
 export function metaEdEnvironmentForApiVersion(targetTechnologyVersion: SemVer): MetaEdEnvironment {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiOds', { ...newPluginEnvironment(), targetTechnologyVersion });
+  metaEd.plugin.set('edfiOdsRelational', { ...newPluginEnvironment(), targetTechnologyVersion });
   return metaEd;
 }
 
@@ -13,7 +13,7 @@ export function newCoreNamespace(): Namespace {
     namespaceName: 'EdFi',
     isExtension: false,
     data: {
-      edfiOds: {
+      edfiOdsRelational: {
         deleteTrackingTable: [],
         deleteTrackingTrigger: [],
         enableChangeTracking: [],
@@ -28,7 +28,7 @@ export function newExtensionNamespace(namespaceName: string): Namespace {
     namespaceName,
     isExtension: true,
     data: {
-      edfiOds: {
+      edfiOdsRelational: {
         deleteTrackingTable: [],
         deleteTrackingTrigger: [],
         enableChangeTracking: [],

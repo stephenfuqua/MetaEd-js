@@ -1,46 +1,83 @@
 import { EntityProperty, DecimalProperty, StringProperty, SimpleProperty } from 'metaed-core';
 import {
   initializeColumn,
-  newBooleanColumn,
-  newCurrencyColumn,
-  newDateColumn,
-  newDatetimeColumn,
-  newDecimalColumn,
-  newDurationColumn,
-  newIntegerColumn,
-  newPercentColumn,
-  newShortColumn,
-  newStringColumn,
-  newTimeColumn,
-  newYearColumn,
+  newColumn,
+  StringColumn,
+  DecimalColumn,
+  ColumnNaming,
+  newColumnNameComponent,
 } from '../../model/database/Column';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
 import { ColumnCreator } from './ColumnCreator';
-import { ColumnNamer } from '../../model/database/ColumnNamer';
 
-const createDecimalColumn = (property: DecimalProperty): Column =>
-  newDecimalColumn(property.totalDigits, property.decimalPlaces);
-const createStringColumn = (property: StringProperty): Column => newStringColumn(property.maxLength as string);
+const createDecimalColumn = (property: DecimalProperty): DecimalColumn => ({
+  ...newColumn(),
+  type: 'decimal',
+  precision: property.totalDigits,
+  scale: property.decimalPlaces,
+});
+
+const createStringColumn = (property: StringProperty): StringColumn => ({
+  ...newColumn(),
+  type: 'string',
+  length: property.maxLength || '0',
+});
 
 export function createNewColumnFor(property: SimpleProperty): Column {
   const createNewColumn: { [propertyType: string]: () => Column } = {
-    boolean: () => newBooleanColumn(),
-    currency: () => newCurrencyColumn(),
-    date: () => newDateColumn(),
-    datetime: () => newDatetimeColumn(),
+    boolean: () => ({
+      ...newColumn(),
+      type: 'boolean',
+    }),
+    currency: () => ({
+      ...newColumn(),
+      type: 'currency',
+    }),
+    date: () => ({
+      ...newColumn(),
+      type: 'date',
+    }),
+    datetime: () => ({
+      ...newColumn(),
+      type: 'datetime',
+    }),
     decimal: () => createDecimalColumn(property as DecimalProperty),
-    duration: () => newDurationColumn(),
-    integer: () => newIntegerColumn(),
-    percent: () => newPercentColumn(),
+    duration: () => ({
+      ...newColumn(),
+      type: 'duration',
+    }),
+    integer: () => ({
+      ...newColumn(),
+      type: 'integer',
+    }),
+    percent: () => ({
+      ...newColumn(),
+      type: 'percent',
+    }),
     sharedDecimal: () => createDecimalColumn(property as DecimalProperty),
-    sharedInteger: () => newIntegerColumn(),
-    sharedShort: () => newShortColumn(),
+    sharedInteger: () => ({
+      ...newColumn(),
+      type: 'integer',
+    }),
+    sharedShort: () => ({
+      ...newColumn(),
+      type: 'short',
+    }),
     sharedString: () => createStringColumn(property as StringProperty),
-    short: () => newShortColumn(),
+    short: () => ({
+      ...newColumn(),
+      type: 'short',
+    }),
     string: () => createStringColumn(property as StringProperty),
-    time: () => newTimeColumn(),
-    year: () => newYearColumn(),
+    time: () => ({
+      ...newColumn(),
+      type: 'time',
+    }),
+    year: () => ({
+      ...newColumn(),
+      type: 'year',
+    }),
   };
 
   return createNewColumn[property.type]();
@@ -51,15 +88,28 @@ export function simplePropertyColumnCreator(): ColumnCreator {
     createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] => {
       if (!strategy.buildColumns(property)) return [];
 
-      const column: Column = createNewColumnFor(property as SimpleProperty);
-      Object.assign(column, {
-        referenceContext: property.data.edfiOds.odsName,
-        mergedReferenceContexts: [property.data.edfiOds.odsName],
-      });
-      const columnNamer: ColumnNamer = strategy.columnNamer(
+      const column: Column = {
+        ...createNewColumnFor(property as SimpleProperty),
+        referenceContext: property.data.edfiOdsRelational.odsName,
+        mergedReferenceContexts: [property.data.edfiOdsRelational.odsName],
+      };
+      const columnNamer: () => ColumnNaming = strategy.columnNamer(
         strategy.parentContext(),
-        property.data.edfiOds.odsContextPrefix,
+        strategy.parentContextProperties(),
+        property.data.edfiOdsRelational.odsContextPrefix,
+        {
+          ...newColumnNameComponent(),
+          name: property.data.edfiOdsRelational.odsContextPrefix,
+          isPropertyRoleName: true,
+          sourceProperty: property,
+        },
         property.metaEdName,
+        {
+          ...newColumnNameComponent(),
+          name: property.metaEdName,
+          isMetaEdName: true,
+          sourceProperty: property,
+        },
       );
       const suppressPrimaryKey: boolean = strategy.suppressPrimaryKeyCreation();
 

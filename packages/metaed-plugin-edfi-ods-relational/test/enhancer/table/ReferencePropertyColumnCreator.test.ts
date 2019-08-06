@@ -14,7 +14,7 @@ describe('when creating columns for identity collection reference property', ():
       documentation: 'PropertyDocumentation',
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
           odsIsUniqueIndex: false,
@@ -24,7 +24,7 @@ describe('when creating columns for identity collection reference property', ():
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -34,7 +34,7 @@ describe('when creating columns for identity collection reference property', ():
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       referencedEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsContextPrefix: '',
           odsIsCollection: true,
         },
@@ -63,7 +63,7 @@ describe('when creating columns for identity reference property', (): void => {
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -74,7 +74,7 @@ describe('when creating columns for identity reference property', (): void => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -84,7 +84,7 @@ describe('when creating columns for identity reference property', (): void => {
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       referencedEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: domainEntityPropertyName,
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -99,8 +99,7 @@ describe('when creating columns for identity reference property', (): void => {
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName);
+    expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -124,7 +123,7 @@ describe('when creating columns for identity reference properties with composite
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName1,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -138,7 +137,7 @@ describe('when creating columns for identity reference properties with composite
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName2,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -149,7 +148,7 @@ describe('when creating columns for identity reference properties with composite
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property1, property2],
           odsIdentityProperties: [property1, property2],
         },
@@ -159,7 +158,7 @@ describe('when creating columns for identity reference properties with composite
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       referencedEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: domainEntityPropertyName,
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -177,8 +176,7 @@ describe('when creating columns for identity reference properties with composite
 
   it('should return a primary key column for first property', (): void => {
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName1);
+    expect(columns[0].columnId).toBe(propertyName1);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -188,8 +186,7 @@ describe('when creating columns for identity reference properties with composite
 
   it('should return a primary key column for second property', (): void => {
     expect(columns[1].type).toBe('integer');
-    expect(columns[1].dataType).toBe('[INT]');
-    expect(columns[1].name).toBe(propertyName2);
+    expect(columns[1].columnId).toBe(propertyName2);
     expect(columns[1].description).toBe(propertyDocumentation);
     expect(columns[1].isNullable).toBe(false);
     expect(columns[1].isPartOfPrimaryKey).toBe(true);
@@ -212,7 +209,7 @@ describe('when creating columns for identity reference property that references 
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName1,
           odsContextPrefix: '',
           odsIsIdentityDatabaseType: false,
@@ -223,7 +220,7 @@ describe('when creating columns for identity reference property that references 
 
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [property],
           odsIdentityProperties: [property],
         },
@@ -233,7 +230,7 @@ describe('when creating columns for identity reference property that references 
     const domainEntityProperty1: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       referencedEntity: domainEntity1,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: domainEntityPropertyName1,
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -243,7 +240,7 @@ describe('when creating columns for identity reference property that references 
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [domainEntityProperty1],
           odsIdentityProperties: [domainEntityProperty1],
         },
@@ -253,7 +250,7 @@ describe('when creating columns for identity reference property that references 
     const domainEntityProperty2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       referencedEntity: domainEntity2,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: domainEntityPropertyName2,
           odsContextPrefix: '',
           odsIsCollection: false,
@@ -268,8 +265,7 @@ describe('when creating columns for identity reference property that references 
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(propertyName1);
+    expect(columns[0].columnId).toBe(propertyName1);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);

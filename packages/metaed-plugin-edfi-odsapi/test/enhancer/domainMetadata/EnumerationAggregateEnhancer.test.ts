@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newEnumeration, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Enumeration, Namespace } from 'metaed-core';
-import { newTable } from 'metaed-plugin-edfi-ods';
-import { Table } from 'metaed-plugin-edfi-ods';
+import { newTable, initializeEdFiOdsRelationalEntityRepository, tableEntities } from 'metaed-plugin-edfi-ods-relational';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
 import { enhance } from '../../../src/enhancer/domainMetadata/EnumerationAggregateEnhancer';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
@@ -28,19 +28,21 @@ describe('when enhancing enumerations', (): void => {
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const table: Table = {
       ...newTable(),
-      name: tableName,
-      nameComponents: [tableName],
+      tableId: tableName,
       schema,
+      data: { edfiOdsSqlServer: { tableName } },
     };
+    tableEntities(metaEd, namespace).set(table.tableId, table);
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: tableName,
+        edfiOdsRelational: {
+          odsTableId: tableName,
           odsTables: [table],
         },
         edfiOdsApi: {},

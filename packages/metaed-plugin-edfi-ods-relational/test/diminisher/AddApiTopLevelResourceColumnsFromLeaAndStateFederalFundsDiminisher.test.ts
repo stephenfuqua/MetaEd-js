@@ -1,7 +1,7 @@
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
@@ -10,24 +10,18 @@ describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminishe
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';
-  const stateEducationAgencyFederalFunds = 'StateEducationAgencyFederalFunds';
+  const localEducationAgencyFederalFunds = 'LocalEducationAgencyLocalEducationAgencyFederalFunds';
+  const stateEducationAgencyFederalFunds = 'StateEducationAgencyStateEducationAgencyFederalFunds';
 
   beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, namespace);
 
-    const localTable: Table = Object.assign(newTable(), {
-      name: localEducationAgencyFederalFunds,
-      nameComponents: [localEducationAgencyFederalFunds],
-    });
-    tablesForCoreNamespace.set(localTable.name, localTable);
+    const localTable: Table = { ...newTable(), tableId: localEducationAgencyFederalFunds };
+    tablesForCoreNamespace.set(localTable.tableId, localTable);
 
-    const stateTable: Table = Object.assign(newTable(), {
-      name: stateEducationAgencyFederalFunds,
-      nameComponents: [stateEducationAgencyFederalFunds],
-    });
-    tablesForCoreNamespace.set(stateTable.name, stateTable);
+    const stateTable: Table = { ...newTable(), tableId: stateEducationAgencyFederalFunds };
+    tablesForCoreNamespace.set(stateTable.tableId, stateTable);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);

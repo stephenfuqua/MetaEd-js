@@ -2,7 +2,7 @@ import { addEntityForNamespace, newEnumeration, newEnumerationItem, newMetaEdEnv
 import { Enumeration, EnumerationItem, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/EnumerationRowEnhancer';
-import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
+import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../src/model/EdFiOdsRelationalEntityRepository';
 
 describe('when EnumerationRowEnhancer enhances enumeration', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -19,8 +19,8 @@ describe('when EnumerationRowEnhancer enhances enumeration', (): void => {
       metaEdName: entityName,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: entityName,
+        edfiOdsRelational: {
+          odsTableId: entityName,
         },
       },
     });
@@ -35,7 +35,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', (): void => {
     entity.enumerationItems.push(item1);
     entity.enumerationItems.push(item2);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });
@@ -88,8 +88,8 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
       metaEdName: `${entityName}Type`,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: `${entityName}Type`,
+        edfiOdsRelational: {
+          odsTableId: `${entityName}Type`,
         },
       },
     });
@@ -104,7 +104,7 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
     entity.enumerationItems.push(item1);
     entity.enumerationItems.push(item2);
 
-    initializeEdFiOdsEntityRepository(metaEd);
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
     addEntityForNamespace(entity);
     enhance(metaEd);
   });

@@ -1,23 +1,148 @@
 import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, NoTopLevelEntity, NoNamespace } from 'metaed-core';
-import { TopLevelEntity, EntityProperty, Namespace } from 'metaed-core';
-import { columnConstraintMerge, cloneColumn } from './Column';
-import { addColumnNamePair, newForeignKey, foreignKeySourceReferenceFrom } from './ForeignKey';
-import { newColumnNamePair } from './ColumnNamePair';
-import { Column } from './Column';
+import {
+  orderByProp,
+  NoTopLevelEntity,
+  NoNamespace,
+  ModelBase,
+  TopLevelEntity,
+  EntityProperty,
+  Namespace,
+} from 'metaed-core';
+import { columnConstraintMerge, Column, NoColumn } from './Column';
 import { ColumnTransform } from './ColumnTransform';
-import { ForeignKey, ForeignKeySourceReference } from './ForeignKey';
-import { ForeignKeyStrategy } from './ForeignKeyStrategy';
+import { ForeignKey } from './ForeignKey';
+import { simpleTableNameGroupConcat } from './TableNameGroupHelper';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
-const maxSqlServerIdentifierLength = R.take(128);
+export type TableNameElement = TableNameComponent | TableNameGroup;
+
+/** A grouping of TableNameComponents derived from a property or entity */
+export interface TableNameGroup {
+  /** the name components in the correct naming order  */
+  nameElements: TableNameElement[];
+  /** the source property for the name group, if applicable */
+  sourceProperty?: EntityProperty;
+  /** the source entity for the name group, if applicable */
+  sourceEntity?: TopLevelEntity;
+  /** is the source of the name group hardcoded and/or made up from somewhere */
+  isSynthetic: boolean;
+  /** flag indicating this is a TableNameGroup object */
+  isGroup: boolean;
+}
+
+export function newTableNameGroup(): TableNameGroup {
+  return {
+    nameElements: [],
+    isSynthetic: false,
+    isGroup: true,
+  };
+}
+
+export const NoTableNameGroup: TableNameGroup = deepFreeze(newTableNameGroup());
+
+/** A single component of the name of the table used by dependent plugins to construct the actual name */
+export interface TableNameComponent {
+  /** the string name component string itself */
+  name: string;
+  /** is the source of the name component an entity MetaEdName */
+  isEntityMetaEdName: boolean;
+  /** is the source of the name component derived from an entity MetaEdName (e.g. MetaEdName plus 'Descriptor' suffix for a Descriptor entity) */
+  isDerivedFromEntityMetaEdName: boolean;
+  /** is the source of the name component a property 'shorten to' directive */
+  isShortenToRename: boolean;
+  /** is the source of the name component a property 'role name' directive */
+  isPropertyRoleName: boolean;
+  /** is the source of the name component a property ods name */
+  isPropertyOdsName: boolean;
+  /** is the source of the name component a property MetaEdName */
+  isPropertyMetaEdName: boolean;
+  /** is the source of the name component a property 'role name' or 'shorten to' directive from further up the chain */
+  isParentPropertyContext: boolean;
+  /** is the source of the name component the parent table name */
+  isParentTableName: boolean;
+  /** is the source of the name component an extension suffix */
+  isExtensionSuffix: boolean;
+  /** is the source of the name component hardcoded and/or made up from somewhere */
+  isSynthetic: boolean;
+  /** the source property for the name component, if applicable */
+  sourceProperty?: EntityProperty;
+  /** the source entity for the name component, if applicable */
+  sourceEntity?: TopLevelEntity;
+  /** the source table for the name component, if applicable */
+  sourceTable?: Table;
+  /** flag indicating this is a TableNameComponent object */
+  isComponent: boolean;
+}
+
+export function newTableNameComponent(): TableNameComponent {
+  return {
+    name: '',
+    isEntityMetaEdName: false,
+    isDerivedFromEntityMetaEdName: false,
+    isShortenToRename: false,
+    isPropertyRoleName: false,
+    isPropertyOdsName: false,
+    isPropertyMetaEdName: false,
+    isParentPropertyContext: false,
+    isParentTableName: false,
+    isExtensionSuffix: false,
+    isSynthetic: false,
+    isComponent: true,
+  };
+}
+
+export function isTableNameGroup(nameElement: TableNameElement): nameElement is TableNameGroup {
+  return (nameElement as TableNameGroup).isGroup;
+}
+
+export function isTableNameComponent(nameElement: TableNameElement): nameElement is TableNameComponent {
+  return (nameElement as TableNameComponent).isComponent;
+}
+
+/** The reason why this table exists */
+export interface TableExistenceReason {
+  /** is this a subtable implementing a collection */
+  isImplementingCollection: boolean;
+  /** is this a subtable implementing a common property */
+  isImplementingCommon: boolean;
+  /** the source collection or common property, if one exists */
+  sourceProperty?: EntityProperty;
+
+  /** is this a table implementing the root of a top level entity */
+  isEntityMainTable: boolean;
+  /** is this a table implementing an extension back to a parent entity */
+  isExtensionTable: boolean;
+  /** is this a table implementing a subclass back to a parent entity */
+  isSubclassTable: boolean;
+  /** the parent entity, if one exists */
+  parentEntity?: ModelBase;
+
+  /** is this table hardcoded and/or made up from somewhere */
+  isSynthetic: boolean;
+}
+
+export function newTableExistenceReason(): TableExistenceReason {
+  return {
+    isImplementingCollection: false,
+    isImplementingCommon: false,
+    isEntityMainTable: false,
+    isExtensionTable: false,
+    isSubclassTable: false,
+    isSynthetic: false,
+  };
+}
+
+export const NoTableExistenceReason: TableExistenceReason = deepFreeze(newTableExistenceReason());
 
 export interface Table {
-  name: string;
-  nameComponents: string[];
+  // new stuff here
+  nameGroup: TableNameGroup;
+  existenceReason: TableExistenceReason;
+  tableId: string;
+
   namespace: Namespace;
   schema: string;
   type: string;
@@ -43,12 +168,15 @@ export interface Table {
   hasDiscriminatorColumn: boolean;
   isDeprecated: boolean;
   deprecationReasons: string[];
+  data: any;
 }
 
 export function newTable(): Table {
   return {
-    name: '',
-    nameComponents: [],
+    nameGroup: NoTableNameGroup,
+    existenceReason: NoTableExistenceReason,
+    tableId: '',
+
     namespace: NoNamespace,
     schema: '',
     type: 'table',
@@ -73,33 +201,25 @@ export function newTable(): Table {
     hasDiscriminatorColumn: false,
     isDeprecated: false,
     deprecationReasons: [],
+    data: {},
   };
 }
 
-export const NoTable: Table = deepFreeze(
-  Object.assign(newTable(), {
-    name: 'NoTable',
-  }),
-);
+export const NoTable: Table = deepFreeze({ ...newTable(), tableId: 'NoTable' });
 
 export function getColumnWithStrongestConstraint(
   table: Table,
   column: Column,
   constraintStrategy: (existing: Column, received: Column) => Column,
 ): Column {
-  const existingColumn = table.columns.find(x => x.name === column.name);
+  const existingColumn = table.columns.find(x => x.columnId === column.columnId);
   if (existingColumn == null) return column;
 
-  winston.info(`  Duplicate column ${column.name} on table ${table.name}.`);
-  table.columns = R.reject(x => x.name === column.name)(table.columns);
+  winston.info(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+  table.columns = R.reject((c: Column) => c.columnId === column.columnId)(table.columns);
   return constraintStrategy(existingColumn, column);
 }
 
-export function hasAlternateKeys(table: Table): boolean {
-  return table.columns.some(x => x.isPartOfAlternateKey);
-}
-
-// AddColumnStrongestConstraint()
 export function addColumn(table: Table, column: Column): void {
   const clone: Column = getColumnWithStrongestConstraint(table, column, columnConstraintMerge);
   table.columns.push(clone);
@@ -109,128 +229,23 @@ export function addColumns(table: Table, columns: Column[], strategy: ColumnTran
   strategy.transform(columns).forEach(column => addColumn(table, column));
 }
 
-export function getAlternateKeys(table: Table): Column[] {
-  return orderByProp('name')(table.columns.filter(x => x.isPartOfAlternateKey));
-}
-
 export function getPrimaryKeys(table: Table): Column[] {
-  return orderByProp('name')(table.columns.filter(x => x.isPartOfPrimaryKey));
+  return orderByProp('columnId')(table.columns.filter(x => x.isPartOfPrimaryKey));
 }
 
 export function getNonPrimaryKeys(table: Table): Column[] {
   return table.columns.filter(x => !x.isPartOfPrimaryKey);
 }
 
-export function getUniqueIndexes(table: Table): Column[] {
-  return orderByProp('name')(table.columns.filter(x => x.isUniqueIndex));
-}
-
 export function getAllColumns(table: Table): Column[] {
   return [...getPrimaryKeys(table), ...getNonPrimaryKeys(table)];
 }
 
-export function getColumnView(table: Table): Column[] {
-  return getAllColumns(table).map(x => cloneColumn(x));
-}
-
-export function getForeignKeys(table: Table): ForeignKey[] {
-  return orderByProp('name')(table.foreignKeys);
-}
-
-export function isForeignKey(table: Table, column: Column): boolean {
-  return table.foreignKeys.some(fk => fk.columnNames.some(x => x.parentTableColumnName === column.name));
-}
-
-export function getForeignKeyName(foreignKey: ForeignKey): string {
-  return maxSqlServerIdentifierLength(
-    `FK_${foreignKey.parentTableName}_${foreignKey.foreignTableName}${foreignKey.foreignKeyNameSuffix}`,
-  );
-}
-
-function getForeignKeyNameSuffix(table: Table, foreignKey: ForeignKey): string {
-  if (table.foreignKeys.some((fk: ForeignKey) => getForeignKeyName(fk) === getForeignKeyName(foreignKey))) {
-    return R.compose(
-      R.toString,
-      R.inc,
-      R.when(R.isNil, () => 0),
-      R.head,
-      R.sort((a, b) => b - a),
-      R.map(x => x.foreignKeyNameSuffix),
-      R.filter(x => x.foreignTableName === foreignKey.foreignTableName),
-    )(table.foreignKeys);
-  }
-  return '';
-}
-
 export function addForeignKey(table: Table, foreignKey: ForeignKey): void {
   foreignKey.parentTable = table;
-  foreignKey.parentTableName = table.name;
-  foreignKey.parentTableSchema = table.schema;
-  foreignKey.foreignKeyNameSuffix = getForeignKeyNameSuffix(table, foreignKey);
   table.foreignKeys.push(foreignKey);
 }
 
-function createForeignKeyInternal(
-  sourceReference: ForeignKeySourceReference,
-  foreignKeyColumns: Column[],
-  foreignTableSchema: string,
-  foreignTableNamespace: Namespace,
-  foreignTableName: string,
-  strategy: ForeignKeyStrategy,
-): ForeignKey {
-  const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-    foreignTableSchema,
-    foreignTableName,
-    foreignTableNamespace,
-    withDeleteCascade: strategy.hasDeleteCascade(),
-    withUpdateCascade: strategy.hasUpdateCascade(),
-    sourceReference,
-  });
-  foreignKeyColumns.forEach(column =>
-    addColumnNamePair(
-      foreignKey,
-      Object.assign(newColumnNamePair(), {
-        parentTableColumnName: strategy.parentColumnName(column),
-        foreignTableColumnName: strategy.foreignColumnName(column),
-      }),
-    ),
-  );
-
-  return foreignKey;
-}
-
-export function createForeignKey(
-  sourceProperty: EntityProperty,
-  foreignKeyColumns: Column[],
-  foreignTableSchema: string,
-  foreignTableNamespace: Namespace,
-  foreignTableName: string,
-  strategy: ForeignKeyStrategy,
-): ForeignKey {
-  return createForeignKeyInternal(
-    foreignKeySourceReferenceFrom(sourceProperty),
-    foreignKeyColumns,
-    foreignTableSchema,
-    foreignTableNamespace,
-    foreignTableName,
-    strategy,
-  );
-}
-
-export function createForeignKeyUsingSourceReference(
-  sourceReference: ForeignKeySourceReference,
-  foreignKeyColumns: Column[],
-  foreignTableSchema: string,
-  foreignTableNamespace: Namespace,
-  foreignTableName: string,
-  strategy: ForeignKeyStrategy,
-): ForeignKey {
-  return createForeignKeyInternal(
-    sourceReference,
-    foreignKeyColumns,
-    foreignTableSchema,
-    foreignTableNamespace,
-    foreignTableName,
-    strategy,
-  );
+export function getColumn(table: Table, columnId: string): Column {
+  return table.columns.find((c: Column) => c.columnId === columnId) || NoColumn;
 }

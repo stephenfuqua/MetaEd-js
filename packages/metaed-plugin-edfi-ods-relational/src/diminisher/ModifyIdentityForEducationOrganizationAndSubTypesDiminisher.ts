@@ -27,31 +27,34 @@ function modifyIdentityForEducationOrganizationSubclasses(namespace: Namespace):
     const entitySubclass: DomainEntitySubclass = entity as DomainEntitySubclass;
     if (entitySubclass.baseEntityName !== educationOrganization) return;
 
-    const identifierProperty: EntityProperty | null = entitySubclass.data.edfiOds.odsIdentityProperties.find(
+    const identifierProperty: EntityProperty | null = entitySubclass.data.edfiOdsRelational.odsIdentityProperties.find(
       (x: EntityProperty) => x.metaEdName === educationOrganizationIdentifier,
     );
     if (identifierProperty != null) {
-      identifierProperty.data.edfiOds.odsIsUniqueIndex = true;
+      identifierProperty.data.edfiOdsRelational.odsIsUniqueIndex = true;
       identifierProperty.isPartOfIdentity = false;
-      entitySubclass.data.edfiOds.odsIdentityProperties = R.reject(
+      entitySubclass.data.edfiOdsRelational.odsIdentityProperties = R.reject(
         (x: EntityProperty) => x.metaEdName === identifierProperty.metaEdName,
-      )(entitySubclass.data.edfiOds.odsIdentityProperties);
-      entitySubclass.data.edfiOds.odsProperties = R.reject(
+      )(entitySubclass.data.edfiOdsRelational.odsIdentityProperties);
+      entitySubclass.data.edfiOdsRelational.odsProperties = R.reject(
         (x: EntityProperty) => x.metaEdName === identifierProperty.metaEdName,
-      )(entitySubclass.data.edfiOds.odsProperties);
+      )(entitySubclass.data.edfiOdsRelational.odsProperties);
     }
 
     // Remove any identity renames
     const removeIdentityRenames = R.without(
-      entitySubclass.data.edfiOds.odsProperties.filter((property: EntityProperty) => property.isIdentityRename),
+      entitySubclass.data.edfiOdsRelational.odsProperties.filter((property: EntityProperty) => property.isIdentityRename),
     );
 
-    entitySubclass.data.edfiOds.odsIdentityProperties = removeIdentityRenames(
-      entitySubclass.data.edfiOds.odsIdentityProperties,
+    entitySubclass.data.edfiOdsRelational.odsIdentityProperties = removeIdentityRenames(
+      entitySubclass.data.edfiOdsRelational.odsIdentityProperties,
     );
-    entitySubclass.data.edfiOds.odsProperties = removeIdentityRenames(entitySubclass.data.edfiOds.odsProperties);
+    entitySubclass.data.edfiOdsRelational.odsProperties = removeIdentityRenames(
+      entitySubclass.data.edfiOdsRelational.odsProperties,
+    );
 
-    const surrogateKeyProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+    const surrogateKeyProperty: IntegerProperty = {
+      ...newIntegerProperty(),
       metaEdName: sugar.format(surrogateKeyNameTemplate, entitySubclass.metaEdName),
       documentation: `The identifier assigned to a ${asTopLevelEntity(entitySubclass).typeHumanizedName}.`,
       isPartOfIdentity: true,
@@ -60,10 +63,10 @@ function modifyIdentityForEducationOrganizationSubclasses(namespace: Namespace):
       parentEntityName: entitySubclass.metaEdName,
       isIdentityRename: true,
       baseKeyName: educationOrganizationSurrogateKeyName,
-    });
+    };
     addEntityPropertyEdfiOdsTo(surrogateKeyProperty);
-    entitySubclass.data.edfiOds.odsIdentityProperties.push(surrogateKeyProperty);
-    entitySubclass.data.edfiOds.odsProperties.push(surrogateKeyProperty);
+    entitySubclass.data.edfiOdsRelational.odsIdentityProperties.push(surrogateKeyProperty);
+    entitySubclass.data.edfiOdsRelational.odsProperties.push(surrogateKeyProperty);
   });
 }
 
@@ -71,20 +74,21 @@ function modifyIdentityForEducationOrganization(namespace: Namespace): void {
   const entity: ModelBase | undefined = getEntitiesOfTypeForNamespaces([namespace], 'domainEntity').find(
     (x: ModelBase) => x.metaEdName === educationOrganization,
   );
-  if (entity == null || entity.data.edfiOds.odsIdentityProperties.length === 0) return;
+  if (entity == null || entity.data.edfiOdsRelational.odsIdentityProperties.length === 0) return;
 
-  const identifierProperty: EntityProperty | null = entity.data.edfiOds.odsIdentityProperties.find(
+  const identifierProperty: EntityProperty | null = entity.data.edfiOdsRelational.odsIdentityProperties.find(
     (x: EntityProperty) => x.metaEdName === educationOrganizationIdentifier,
   );
   if (identifierProperty == null) return;
 
-  identifierProperty.data.edfiOds.odsIsUniqueIndex = true;
+  identifierProperty.data.edfiOdsRelational.odsIsUniqueIndex = true;
   identifierProperty.isPartOfIdentity = false;
-  entity.data.edfiOds.odsIdentityProperties = R.reject(
+  entity.data.edfiOdsRelational.odsIdentityProperties = R.reject(
     (x: EntityProperty) => x.metaEdName === identifierProperty.metaEdName,
-  )(entity.data.edfiOds.odsIdentityProperties);
+  )(entity.data.edfiOdsRelational.odsIdentityProperties);
 
-  const surrogateKeyProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+  const surrogateKeyProperty: IntegerProperty = {
+    ...newIntegerProperty(),
     metaEdName: educationOrganizationSurrogateKeyName,
     documentation: identifierProperty.documentation,
     isPartOfIdentity: true,
@@ -92,14 +96,14 @@ function modifyIdentityForEducationOrganization(namespace: Namespace): void {
     parentEntity: identifierProperty.parentEntity,
     parentEntityName: identifierProperty.parentEntityName,
     data: {
-      edfiOds: {
+      edfiOdsRelational: {
         odsIsIdentityDatabaseType: true,
       },
     },
-  });
+  };
   addEntityPropertyEdfiOdsTo(surrogateKeyProperty);
-  entity.data.edfiOds.odsIdentityProperties.push(surrogateKeyProperty);
-  entity.data.edfiOds.odsProperties.push(surrogateKeyProperty);
+  entity.data.edfiOdsRelational.odsIdentityProperties.push(surrogateKeyProperty);
+  entity.data.edfiOdsRelational.odsProperties.push(surrogateKeyProperty);
 
   modifyIdentityForEducationOrganizationSubclasses(namespace);
 }

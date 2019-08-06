@@ -2,8 +2,7 @@ import R from 'ramda';
 import { getEntitiesOfTypeForNamespaces, versionSatisfies } from 'metaed-core';
 import { ModelBase, EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { tableEntities } from '../enhancer/EnhancerHelper';
-import { ForeignKey } from '../model/database/ForeignKey';
-import { Table } from '../model/database/Table';
+import { Table, newTableNameGroup, newTableNameComponent } from '../model/database/Table';
 
 // METAED-118
 // Adjusting name for any tables with an IdentificationDocument suffix
@@ -15,14 +14,14 @@ const identificationDocument = 'IdentificationDocument';
 
 function renameIdentificationDocumentTables(coreNamespace: Namespace, tablesForCoreNamespace: Map<string, Table>): void {
   getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
-    const identificationDocumentTableNames: string[] = entity.data.edfiOds.odsTables.reduce(
+    const identificationDocumentTableNames: string[] = entity.data.edfiOdsRelational.odsTables.reduce(
       (names: string[], table: Table) => {
         if (
-          table.name.startsWith(entity.metaEdName) &&
-          table.name.endsWith(identificationDocument) &&
-          table.name !== entity.metaEdName + identificationDocument
+          table.tableId.startsWith(entity.metaEdName) &&
+          table.tableId.endsWith(identificationDocument) &&
+          table.tableId !== entity.metaEdName + identificationDocument
         )
-          return names.concat(table.name);
+          return names.concat(table.tableId);
         return names;
       },
       [],
@@ -33,17 +32,25 @@ function renameIdentificationDocumentTables(coreNamespace: Namespace, tablesForC
     // note: this may not be stable as it relies on ordering when there are multiple identification document tables
     const table: Table | undefined = tablesForCoreNamespace.get(R.head(identificationDocumentTableNames));
     if (table == null) return;
-    table.name = entity.metaEdName + identificationDocument;
-    tablesForCoreNamespace.set(table.name, table);
-
-    table.foreignKeys.forEach((fk: ForeignKey) => {
-      fk.parentTableName = table.name;
-    });
+    const adjustedTableName = entity.metaEdName + identificationDocument;
+    table.tableId = adjustedTableName;
+    tablesForCoreNamespace.set(table.tableId, table);
+    table.nameGroup = {
+      ...newTableNameGroup(),
+      nameElements: [
+        {
+          ...newTableNameComponent(),
+          name: adjustedTableName,
+          isSynthetic: true,
+        },
+      ],
+      sourceEntity: table.parentEntity,
+    };
 
     // remove from domain entity table list and repository
     identificationDocumentTableNames.forEach((identificationDocumentTableName: string) => {
-      entity.data.edfiOds.odsTables = R.reject((x: Table) => x.name === identificationDocumentTableName)(
-        entity.data.edfiOds.odsTables,
+      entity.data.edfiOdsRelational.odsTables = R.reject((x: Table) => x.tableId === identificationDocumentTableName)(
+        entity.data.edfiOdsRelational.odsTables,
       );
 
       tablesForCoreNamespace.delete(identificationDocumentTableName);

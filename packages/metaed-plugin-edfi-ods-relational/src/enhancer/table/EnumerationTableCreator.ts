@@ -1,57 +1,100 @@
 import R from 'ramda';
-import { Namespace, MetaEdEnvironment } from 'metaed-core';
-import { normalizeEnumerationSuffix } from 'metaed-core';
-import { addColumns, newTable } from '../../model/database/Table';
+import { MetaEdEnvironment, Enumeration, Descriptor, normalizeEnumerationSuffix } from 'metaed-core';
+import {
+  addColumns,
+  newTable,
+  newTableNameComponent,
+  newTableExistenceReason,
+  newTableNameGroup,
+  Table,
+} from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
-import { newIntegerColumn, newStringColumn } from '../../model/database/Column';
-import { Table } from '../../model/database/Table';
+import { newColumn, newColumnNameComponent, StringColumn } from '../../model/database/Column';
+import { ColumnType } from '../../model/database/ColumnType';
 
 const removeTypeSuffix = R.when(R.endsWith('Type'), R.dropLast(4));
 
 export const enumerationTableCreator: {
-  build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table;
+  build(metaEd: MetaEdEnvironment, entity: Enumeration | Descriptor, documentation: string): Table;
 } = {
   // @ts-ignore "metaEd" unused here
-  build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table {
-    const normalizedName = normalizeEnumerationSuffix(name);
-    const table: Table = Object.assign(newTable(), {
-      name: normalizedName,
-      nameComponents: [normalizedName],
+  build(metaEd: MetaEdEnvironment, entity: Enumeration | Descriptor, documentation: string): Table {
+    const { metaEdName, namespace } = entity;
+    const normalizedName = normalizeEnumerationSuffix(metaEdName);
+    const table: Table = {
+      ...newTable(),
+      tableId: normalizedName,
+      nameGroup: {
+        ...newTableNameGroup(),
+        nameElements: [
+          {
+            ...newTableNameComponent(),
+            name: normalizedName,
+            isDerivedFromEntityMetaEdName: true,
+            sourceEntity: entity,
+          },
+        ],
+        sourceEntity: entity,
+      },
+
+      existenceReason: {
+        ...newTableExistenceReason(),
+        isEntityMainTable: true,
+        parentEntity: entity,
+      },
       namespace,
       schema: namespace.namespaceName.toLowerCase(),
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
       isAggregateRootTable: true,
-    });
+    };
     addColumns(
       table,
       [
-        Object.assign(newIntegerColumn(), {
-          name: `${table.name}Id`,
+        {
+          ...newColumn(),
+          type: 'integer' as ColumnType,
+          columnId: `${normalizedName}Id`,
+          nameComponents: [
+            { ...newColumnNameComponent(), name: normalizedName, isDerivedFromMetaEdName: true, sourceEntity: entity },
+            { ...newColumnNameComponent(), name: 'Id', isSynthetic: true },
+          ],
           isIdentityDatabaseType: true,
           isPartOfPrimaryKey: true,
           isNullable: false,
-          description: `Key for ${removeTypeSuffix(name)}`,
-        }),
-        Object.assign(newStringColumn('50'), {
-          name: 'CodeValue',
+          description: `Key for ${removeTypeSuffix(metaEdName)}`,
+        },
+        {
+          ...newColumn(),
+          type: 'string' as ColumnType,
+          length: '50',
+          columnId: 'CodeValue',
+          nameComponents: [{ ...newColumnNameComponent(), name: 'CodeValue', isSynthetic: true }],
           isPartOfPrimaryKey: false,
           isNullable: false,
           description: 'This column is deprecated.',
-        }),
-        Object.assign(newStringColumn('1024'), {
-          name: 'Description',
+        } as StringColumn,
+        {
+          ...newColumn(),
+          type: 'string' as ColumnType,
+          length: '1024',
+          columnId: 'Description',
+          nameComponents: [{ ...newColumnNameComponent(), name: 'Description', isSynthetic: true }],
           isPartOfPrimaryKey: false,
           isNullable: false,
-          description: `The description for the ${removeTypeSuffix(name)} type.`,
-        }),
-        Object.assign(newStringColumn('450'), {
-          name: 'ShortDescription',
+          description: `The description for the ${removeTypeSuffix(metaEdName)} type.`,
+        } as StringColumn,
+        {
+          ...newColumn(),
+          type: 'string' as ColumnType,
+          length: '450',
+          columnId: 'ShortDescription',
+          nameComponents: [{ ...newColumnNameComponent(), name: 'ShortDescription', isSynthetic: true }],
           isPartOfPrimaryKey: false,
           isNullable: false,
-          description: `The value for the ${removeTypeSuffix(name)} type.`,
-        }),
+          description: `The value for the ${removeTypeSuffix(metaEdName)} type.`,
+        } as StringColumn,
       ],
       ColumnTransformUnchanged,
     );

@@ -37,7 +37,7 @@ import {
 } from 'metaed-core';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { Column } from '../../../src/model/database/Column';
+import { Column, DecimalColumn, StringColumn } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when converting boolean property to column', (): void => {
@@ -55,7 +55,7 @@ describe('when converting boolean property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -71,8 +71,7 @@ describe('when converting boolean property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('boolean');
-    expect(columns[0].dataType).toBe('[BIT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -97,7 +96,7 @@ describe('when converting currency property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -113,8 +112,7 @@ describe('when converting currency property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('currency');
-    expect(columns[0].dataType).toBe('[MONEY]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -139,7 +137,7 @@ describe('when converting date property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -155,8 +153,7 @@ describe('when converting date property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('date');
-    expect(columns[0].dataType).toBe('[DATE]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -181,7 +178,7 @@ describe('when converting datetime property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -197,8 +194,7 @@ describe('when converting datetime property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('datetime');
-    expect(columns[0].dataType).toBe('[DATETIME2](7)');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -227,7 +223,7 @@ describe('when converting decimal property to column', (): void => {
       totalDigits: precision,
       decimalPlaces: scale,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -243,8 +239,9 @@ describe('when converting decimal property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('decimal');
-    expect(columns[0].dataType).toBe(`[DECIMAL](${precision}, ${scale})`);
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect((columns[0] as DecimalColumn).precision).toBe(precision);
+    expect((columns[0] as DecimalColumn).scale).toBe(scale);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -269,7 +266,7 @@ describe('when converting duration property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -285,8 +282,7 @@ describe('when converting duration property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('duration');
-    expect(columns[0].dataType).toBe('[NVARCHAR](30)');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -311,7 +307,7 @@ describe('when converting integer property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -327,8 +323,7 @@ describe('when converting integer property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -353,7 +348,7 @@ describe('when converting percent property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -369,8 +364,7 @@ describe('when converting percent property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('percent');
-    expect(columns[0].dataType).toBe('[DECIMAL](5, 4)');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -399,7 +393,7 @@ describe('when converting shared decimal property to column', (): void => {
       totalDigits: precision,
       decimalPlaces: scale,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -415,8 +409,9 @@ describe('when converting shared decimal property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('decimal');
-    expect(columns[0].dataType).toBe(`[DECIMAL](${precision}, ${scale})`);
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect((columns[0] as DecimalColumn).precision).toBe(precision);
+    expect((columns[0] as DecimalColumn).scale).toBe(scale);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -441,7 +436,7 @@ describe('when converting shared integer property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -457,8 +452,7 @@ describe('when converting shared integer property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -483,7 +477,7 @@ describe('when converting shared short property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -499,8 +493,7 @@ describe('when converting shared short property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -527,7 +520,7 @@ describe('when converting shared string property to column', (): void => {
       isOptional: true,
       maxLength: length,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -543,8 +536,8 @@ describe('when converting shared string property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
-    expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect((columns[0] as StringColumn).length).toBe(length);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -569,7 +562,7 @@ describe('when converting short property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -585,8 +578,7 @@ describe('when converting short property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('short');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -613,7 +605,7 @@ describe('when converting string property to column', (): void => {
       isOptional: true,
       maxLength: length,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -629,8 +621,8 @@ describe('when converting string property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('string');
-    expect(columns[0].dataType).toBe(`[NVARCHAR](${length})`);
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect((columns[0] as StringColumn).length).toBe(length);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -655,7 +647,7 @@ describe('when converting time property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -671,8 +663,7 @@ describe('when converting time property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('time');
-    expect(columns[0].dataType).toBe('[TIME](7)');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);
@@ -697,7 +688,7 @@ describe('when converting year property to column', (): void => {
       isPartOfIdentity: true,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsIsIdentityDatabaseType: true,
@@ -713,8 +704,7 @@ describe('when converting year property to column', (): void => {
   it('should return converted column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('year');
-    expect(columns[0].dataType).toBe('[SMALLINT]');
-    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].columnId).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);
     expect(columns[0].isNullable).toBe(true);

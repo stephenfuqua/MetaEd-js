@@ -1,4 +1,4 @@
-import { DescriptorProperty } from 'metaed-core';
+import { DescriptorProperty, EntityProperty, newBooleanProperty } from 'metaed-core';
 import { newDescriptorProperty } from 'metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
@@ -17,7 +17,7 @@ describe('when creating columns for descriptor property', (): void => {
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -33,8 +33,7 @@ describe('when creating columns for descriptor property', (): void => {
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -56,7 +55,7 @@ describe('when creating columns for primary key descriptor property', (): void =
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -72,8 +71,7 @@ describe('when creating columns for primary key descriptor property', (): void =
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -95,7 +93,7 @@ describe('when creating columns for nullable descriptor property', (): void => {
       isPartOfIdentity: false,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -111,8 +109,7 @@ describe('when creating columns for nullable descriptor property', (): void => {
   it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(true);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -135,7 +132,7 @@ describe('when creating columns for descriptor property role name', (): void => 
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -151,8 +148,7 @@ describe('when creating columns for descriptor property role name', (): void => 
   it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${contextName}${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${contextName}${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -167,6 +163,10 @@ describe('when creating columns for descriptor property role name and append par
   const propertyDocumentation = 'PropertyDocumentation';
   const contextName = 'ContextName';
   const parentContextName = 'ParentContextName';
+  const parentContextProperty: EntityProperty = {
+    ...newBooleanProperty(),
+    data: { edfiOdsRelational: { odsContextPrefix: parentContextName } },
+  };
   let property: DescriptorProperty;
   let columns: Column[];
 
@@ -176,7 +176,7 @@ describe('when creating columns for descriptor property role name and append par
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: contextName,
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -186,14 +186,13 @@ describe('when creating columns for descriptor property role name and append par
     });
 
     const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property);
-    columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContext(parentContextName));
+    columns = columnCreator.createColumns(property, BuildStrategyDefault.appendParentContextProperty(parentContextProperty));
   });
 
   it('should return a nullable column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${parentContextName}${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${parentContextName}${contextName}${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -215,7 +214,7 @@ describe('when creating columns for collection descriptor property', (): void =>
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -231,8 +230,7 @@ describe('when creating columns for collection descriptor property', (): void =>
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -254,7 +252,7 @@ describe('when creating columns for primary key descriptor property with suppres
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -270,8 +268,7 @@ describe('when creating columns for primary key descriptor property with suppres
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -293,7 +290,7 @@ describe('when creating columns for collection descriptor property with suppress
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsDescriptorifiedBaseName: `${propertyName}Descriptor`,
@@ -309,8 +306,7 @@ describe('when creating columns for collection descriptor property with suppress
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}DescriptorId`);
+    expect(columns[0].columnId).toBe(`${propertyName}DescriptorId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);

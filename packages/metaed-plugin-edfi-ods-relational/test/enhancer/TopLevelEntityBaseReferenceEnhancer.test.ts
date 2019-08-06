@@ -36,7 +36,7 @@ describe('when enhancing domain entity subclass base entity reference', (): void
       namespace,
       documentation: domainEntityDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -48,7 +48,7 @@ describe('when enhancing domain entity subclass base entity reference', (): void
       documentation: 'DomainEntitySubclassDocumentation',
       baseEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -61,18 +61,18 @@ describe('when enhancing domain entity subclass base entity reference', (): void
 
   it('should create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
 
-    const referentialProperty: any = domainEntity.data.edfiOds.odsIdentityProperties[0];
+    const referentialProperty: any = domainEntity.data.edfiOdsRelational.odsIdentityProperties[0];
     expect(referentialProperty).toBeDefined();
     expect(referentialProperty.metaEdName).toBe(domainEntityName);
     expect(referentialProperty.documentation).toBe(domainEntityDocumentation);
     expect(referentialProperty.isPartOfIdentity).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(domainEntity);
     expect(referentialProperty.referencedEntity).toBe(domainEntity.baseEntity);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToSuperclass).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToExtensionParent).toBe(false);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToSuperclass).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToExtensionParent).toBe(false);
   });
 });
 
@@ -96,7 +96,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
       namespace,
       documentation: domainEntityDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [integerProperty1],
           odsIdentityProperties: [integerProperty1],
         },
@@ -114,7 +114,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
       documentation: 'DomainEntitySubclassDocumentation',
       baseEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [integerProperty2],
           odsIdentityProperties: [integerProperty2],
         },
@@ -127,9 +127,9 @@ describe('when enhancing domain entity subclass base entity reference with ident
 
   it('should not create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
 
-    const referentialProperty: any = domainEntity.data.edfiOds.odsIdentityProperties[0];
+    const referentialProperty: any = domainEntity.data.edfiOdsRelational.odsIdentityProperties[0];
     expect(referentialProperty).toBeDefined();
     expect(referentialProperty.metaEdName).toBe(IntegerPropertyName2);
   });
@@ -149,7 +149,7 @@ describe('when enhancing domain entity extension base entity reference', (): voi
       namespace,
       documentation: domainEntityDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -161,7 +161,7 @@ describe('when enhancing domain entity extension base entity reference', (): voi
       documentation: 'DomainEntityExtensionDocumentation',
       baseEntity: domainEntity,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -174,18 +174,18 @@ describe('when enhancing domain entity extension base entity reference', (): voi
 
   it('should create base entity reference property', (): void => {
     const domainEntity: any = namespace.entity.domainEntityExtension.get(domainEntityExtensionName);
-    expect(domainEntity.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
 
-    const referentialProperty: any = domainEntity.data.edfiOds.odsIdentityProperties[0];
+    const referentialProperty: any = domainEntity.data.edfiOdsRelational.odsIdentityProperties[0];
     expect(referentialProperty).toBeDefined();
     expect(referentialProperty.metaEdName).toBe(domainEntityName);
     expect(referentialProperty.documentation).toBe(domainEntityDocumentation);
     expect(referentialProperty.isPartOfIdentity).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(domainEntity);
     expect(referentialProperty.referencedEntity).toBe(domainEntity.baseEntity);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToSuperclass).toBe(false);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToExtensionParent).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToSuperclass).toBe(false);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToExtensionParent).toBe(true);
   });
 });
 
@@ -203,7 +203,7 @@ describe('when enhancing association subclass base entity reference', (): void =
       namespace,
       documentation: associationDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -215,7 +215,7 @@ describe('when enhancing association subclass base entity reference', (): void =
       documentation: 'AssociationSubclassDocumentation',
       baseEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -228,18 +228,18 @@ describe('when enhancing association subclass base entity reference', (): void =
 
   it('should create base entity reference property', (): void => {
     const association: any = namespace.entity.associationSubclass.get(associationSubclassName);
-    expect(association.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(association.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
 
-    const referentialProperty: any = association.data.edfiOds.odsIdentityProperties[0];
+    const referentialProperty: any = association.data.edfiOdsRelational.odsIdentityProperties[0];
     expect(referentialProperty).toBeDefined();
     expect(referentialProperty.metaEdName).toBe(associationName);
     expect(referentialProperty.documentation).toBe(associationDocumentation);
     expect(referentialProperty.isPartOfIdentity).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(association);
     expect(referentialProperty.referencedEntity).toBe(association.baseEntity);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToSuperclass).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToExtensionParent).toBe(false);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToSuperclass).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToExtensionParent).toBe(false);
   });
 });
 
@@ -257,7 +257,7 @@ describe('when enhancing association extension base entity reference', (): void 
       namespace,
       documentation: associationDocumentation,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -269,7 +269,7 @@ describe('when enhancing association extension base entity reference', (): void 
       documentation: 'AssociationExtensionDocumentation',
       baseEntity: association,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
         },
@@ -282,17 +282,17 @@ describe('when enhancing association extension base entity reference', (): void 
 
   it('should create base entity reference property', (): void => {
     const association: any = namespace.entity.associationExtension.get(associationExtensionName);
-    expect(association.data.edfiOds.odsIdentityProperties).toHaveLength(1);
+    expect(association.data.edfiOdsRelational.odsIdentityProperties).toHaveLength(1);
 
-    const referentialProperty: any = association.data.edfiOds.odsIdentityProperties[0];
+    const referentialProperty: any = association.data.edfiOdsRelational.odsIdentityProperties[0];
     expect(referentialProperty).toBeDefined();
     expect(referentialProperty.metaEdName).toBe(associationName);
     expect(referentialProperty.documentation).toBe(associationDocumentation);
     expect(referentialProperty.isPartOfIdentity).toBe(true);
-    expect(referentialProperty.data.edfiOds.odsDeleteCascadePrimaryKey).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsDeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(association);
     expect(referentialProperty.referencedEntity).toBe(association.baseEntity);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToSuperclass).toBe(false);
-    expect(referentialProperty.data.edfiOds.odsIsReferenceToExtensionParent).toBe(true);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToSuperclass).toBe(false);
+    expect(referentialProperty.data.edfiOdsRelational.odsIsReferenceToExtensionParent).toBe(true);
   });
 });

@@ -19,7 +19,7 @@ describe('when creating columns for enumeration property', (): void => {
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -34,8 +34,7 @@ describe('when creating columns for enumeration property', (): void => {
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}TypeId`);
+    expect(columns[0].columnId).toBe(`${propertyName}TypeId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -58,7 +57,7 @@ describe('when creating columns for primary key enumeration property', (): void 
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -73,8 +72,7 @@ describe('when creating columns for primary key enumeration property', (): void 
   it('should return a primary key column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}TypeId`);
+    expect(columns[0].columnId).toBe(`${propertyName}TypeId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -99,7 +97,7 @@ describe('when creating columns for identity rename enumeration property', (): v
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -114,8 +112,7 @@ describe('when creating columns for identity rename enumeration property', (): v
   it('should return a primary key column with base key name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyBaseKeyName}Id`);
+    expect(columns[0].columnId).toBe(`${propertyBaseKeyName}Id`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
@@ -139,7 +136,7 @@ describe('when creating columns for nullable enumeration property', (): void => 
       isPartOfIdentity: false,
       isOptional: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -154,8 +151,7 @@ describe('when creating columns for nullable enumeration property', (): void => 
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}TypeId`);
+    expect(columns[0].columnId).toBe(`${propertyName}TypeId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(true);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -179,7 +175,7 @@ describe('when creating columns for primary key enumeration property with suppre
       isPartOfIdentity: true,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -194,8 +190,7 @@ describe('when creating columns for primary key enumeration property with suppre
   it('should return a column', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyName}TypeId`);
+    expect(columns[0].columnId).toBe(`${propertyName}TypeId`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
@@ -220,7 +215,7 @@ describe('when creating columns for identity rename enumeration property with su
       isPartOfIdentity: false,
       isOptional: false,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsName: propertyName,
           odsContextPrefix: '',
           odsTypeifiedBaseName: `${propertyName}Type`,
@@ -235,8 +230,7 @@ describe('when creating columns for identity rename enumeration property with su
   it('should return a column with base key name', (): void => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('integer');
-    expect(columns[0].dataType).toBe('[INT]');
-    expect(columns[0].name).toBe(`${propertyBaseKeyName}Id`);
+    expect(columns[0].columnId).toBe(`${propertyBaseKeyName}Id`);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);

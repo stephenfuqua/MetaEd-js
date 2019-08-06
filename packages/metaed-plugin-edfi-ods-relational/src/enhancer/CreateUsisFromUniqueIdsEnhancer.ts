@@ -11,20 +11,25 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
     const uniqueIdStrategy = x => x.metaEdName === 'UniqueId';
-    const uniqueIdProperty: EntityProperty | null = entity.data.edfiOds.odsIdentityProperties.find(uniqueIdStrategy);
+    const uniqueIdProperty: EntityProperty | null = entity.data.edfiOdsRelational.odsIdentityProperties.find(
+      uniqueIdStrategy,
+    );
     if (uniqueIdProperty == null) return;
 
     // UniqueId properties are unique indexes, but demoted from primary key
-    entity.data.edfiOds.odsProperties = R.reject(uniqueIdStrategy)(entity.data.edfiOds.odsProperties);
-    entity.data.edfiOds.odsIdentityProperties = R.reject(uniqueIdStrategy)(entity.data.edfiOds.odsIdentityProperties);
+    entity.data.edfiOdsRelational.odsProperties = R.reject(uniqueIdStrategy)(entity.data.edfiOdsRelational.odsProperties);
+    entity.data.edfiOdsRelational.odsIdentityProperties = R.reject(uniqueIdStrategy)(
+      entity.data.edfiOdsRelational.odsIdentityProperties,
+    );
 
     const odsUniqueIdProperty: EntityProperty = { ...uniqueIdProperty } as EntityProperty;
-    odsUniqueIdProperty.data.edfiOds.odsIsUniqueIndex = true;
+    odsUniqueIdProperty.data.edfiOdsRelational.odsIsUniqueIndex = true;
     odsUniqueIdProperty.isPartOfIdentity = false;
-    entity.data.edfiOds.odsProperties.push(odsUniqueIdProperty);
+    entity.data.edfiOdsRelational.odsProperties.push(odsUniqueIdProperty);
 
     // a UniqueId property gets a parallel USI identity column
-    const usiProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+    const usiProperty: IntegerProperty = {
+      ...newIntegerProperty(),
       metaEdName: 'USI',
       roleName: odsUniqueIdProperty.roleName,
       shortenTo: odsUniqueIdProperty.shortenTo,
@@ -32,11 +37,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       isPartOfIdentity: true,
       parentEntityName: uniqueIdProperty.parentEntityName,
       parentEntity: uniqueIdProperty.parentEntity,
-    });
+    };
     addEntityPropertyEdfiOdsTo(usiProperty);
-    usiProperty.data.edfiOds.odsIsIdentityDatabaseType = true;
-    entity.data.edfiOds.odsProperties.push(usiProperty);
-    entity.data.edfiOds.odsIdentityProperties.push(usiProperty);
+    usiProperty.data.edfiOdsRelational.odsIsIdentityDatabaseType = true;
+    entity.data.edfiOdsRelational.odsProperties.push(usiProperty);
+    entity.data.edfiOdsRelational.odsIdentityProperties.push(usiProperty);
   });
 
   return {

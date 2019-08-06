@@ -1,17 +1,17 @@
 import { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
-import { Table, Column, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
-import { getPrimaryKeys, newColumn } from 'metaed-plugin-edfi-ods';
+import { Table, Column, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods-relational';
+import { newColumn } from 'metaed-plugin-edfi-ods-relational';
 import { changeQueryIndicated } from './ChangeQueryIndicator';
-import { deleteTrackingTableEntities } from './EnhancerHelper';
+import { deleteTrackingTableEntities, getPrimaryKeys } from './EnhancerHelper';
 import { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 
 export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, namespace: Namespace, mainTable: Table) {
-  const tableName = `${mainTable.schema}_${mainTable.name}_TrackedDelete`;
-  const mainTablePrimaryKeys = getPrimaryKeys(mainTable);
+  const tableName = `${mainTable.schema}_${mainTable.data.edfiOdsSqlServer.tableName}_TrackedDelete`;
+
   const changeVersionColumn: Column = {
     ...newColumn(),
-    name: 'ChangeVersion',
-    dataType: 'bigint',
+    columnId: 'ChangeVersion',
+    data: { edfiOdsSqlServer: { columnName: 'ChangeVersion', dataType: 'bigint' } },
     isNullable: false,
   };
 
@@ -19,14 +19,14 @@ export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, na
     schema: 'changes',
     tableName,
     primaryKeyName: `PK_${tableName}`,
-    columns: [...mainTablePrimaryKeys],
+    columns: [...getPrimaryKeys(mainTable)],
     primaryKeyColumns: [changeVersionColumn],
   };
 
   deleteTrackingTable.columns.push({
     ...newColumn(),
-    name: 'Id',
-    dataType: 'uniqueidentifier',
+    columnId: 'Id',
+    data: { edfiOdsSqlServer: { columnName: 'Id', dataType: 'uniqueidentifier' } },
     isNullable: false,
   });
 
@@ -37,7 +37,7 @@ export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, na
 
 export function createDeleteTrackingTable(metaEd: MetaEdEnvironment, modelBase: ModelBase) {
   if (!changeQueryIndicated(metaEd)) return;
-  const mainTable: Table = (modelBase.data.edfiOds as TopLevelEntityEdfiOds).odsEntityTable;
+  const mainTable: Table = (modelBase.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsEntityTable;
   if (mainTable == null) return;
 
   createDeleteTrackingTableFromTable(metaEd, modelBase.namespace, mainTable);

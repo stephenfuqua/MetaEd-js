@@ -2,9 +2,9 @@
 CREATE TABLE [{{{schema}}}].[{{{tableName}}}]
 (
 {{#columns}}
-       {{{name}}} {{{dataType}}} NOT NULL,
+       {{{data.edfiOdsSqlServer.columnName}}} {{{data.edfiOdsSqlServer.dataType}}} NOT NULL,
 {{/columns}}
-       CONSTRAINT {{{primaryKeyName}}} PRIMARY KEY CLUSTERED ({{#primaryKeyColumns}}{{{name}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumns}})
+       CONSTRAINT {{{primaryKeyName}}} PRIMARY KEY CLUSTERED ({{#primaryKeyColumns}}{{{data.edfiOdsSqlServer.columnName}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumns}})
 )
 
 {{/tables}}

@@ -55,7 +55,8 @@ describe('when generating api model and comparing it to data standard 3.1 author
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );
@@ -123,7 +124,8 @@ describe('when generating api model targeting tech version 3.1.1 and comparing i
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );
@@ -191,7 +193,8 @@ describe('when generating api model and comparing it to data standard 3.0 author
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );
@@ -269,7 +272,8 @@ describe('when generating api model with simple extensions and comparing it to d
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );
@@ -365,7 +369,8 @@ describe('when generating api model with student transcript extensions and compa
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );
@@ -462,7 +467,8 @@ describe('when generating api model with simple type merge extensions and compar
     state.pluginManifest = state.pluginManifest.filter(
       manifest =>
         manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiOdsRelational' ||
+        manifest.shortName === 'edfiOdsSqlServer' ||
         manifest.shortName === 'edfiXsd' ||
         manifest.shortName === 'edfiOdsApi',
     );

@@ -1,6 +1,6 @@
 import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
-import { Table } from 'metaed-plugin-edfi-ods';
-import { tableEntities } from 'metaed-plugin-edfi-ods';
+import { Table } from 'metaed-plugin-edfi-ods-relational';
+import { tableEntities } from 'metaed-plugin-edfi-ods-relational';
 import { changeQueryIndicated } from './ChangeQueryIndicator';
 import { createDeleteTrackingTableFromTable } from './DeleteTrackingTableCreator';
 import { createDeleteTrackingTriggerFromTable } from './DeleteTrackingTriggerCreator';

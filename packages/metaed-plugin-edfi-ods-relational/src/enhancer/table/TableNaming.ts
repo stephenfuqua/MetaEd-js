@@ -1,70 +1,64 @@
 import { EntityProperty } from 'metaed-core';
+import { TableNameGroup, newTableNameComponent, newTableNameGroup, TableNameComponent } from '../../model/database/Table';
+import { TableStrategy } from '../../model/database/TableStrategy';
+import { BuildStrategy } from './BuildStrategy';
 
 export interface TableNaming {
-  name: string;
-  nameComponents: string[];
-}
-
-export function appendOverlapping(base: string, suffix: string): string {
-  const shortestLength = Math.min(base.length, suffix.length);
-  let indexOfOverlap = -1;
-
-  for (let i = shortestLength; i > 0; i -= 1) {
-    if (base.endsWith(suffix.substring(0, i))) {
-      indexOfOverlap = i;
-      break;
-    }
-  }
-
-  if (indexOfOverlap < 0) return base + suffix;
-  if (indexOfOverlap <= suffix.length) return base + suffix.substring(indexOfOverlap);
-  return base;
+  tableId: string;
+  nameGroup: TableNameGroup;
 }
 
 function getRoleName(property: EntityProperty): string {
   return property.roleName !== property.metaEdName ? property.roleName : '';
 }
 
-export function baseNameCollapsingJoinTableNamer(
-  property: EntityProperty,
-  parentTableName: string,
-  parentTableNameComponents: string[],
-  parentContextName: string,
-): TableNaming {
-  const contextName: string = getRoleName(property);
-
-  let nameComponents: string[] = [];
-  let secondPart = '';
-  if (property.metaEdName.startsWith(parentTableName)) {
-    const groupedContexts = appendOverlapping(parentContextName, contextName);
-    const propertyNameWithContexts = appendOverlapping(groupedContexts, property.metaEdName);
-    nameComponents = [...parentTableNameComponents, propertyNameWithContexts];
-    secondPart = propertyNameWithContexts;
-  } else {
-    const groupedContexts = appendOverlapping(parentContextName, contextName);
-    const propertyNameWithContexts = appendOverlapping(groupedContexts, property.metaEdName);
-    secondPart = appendOverlapping(parentTableName, propertyNameWithContexts);
-    nameComponents = [...parentTableNameComponents, propertyNameWithContexts];
-  }
-
-  const finalPart = secondPart.substring(0, secondPart.length - property.metaEdName.length);
-
-  return {
-    name: finalPart + property.metaEdName,
-    nameComponents,
-  };
-}
-
 export function joinTableNamer(
   property: EntityProperty,
-  parentTableName: string,
-  parentTableNameComponents: string[],
-  parentContextName: string,
+  parentTableStrategy: TableStrategy,
+  buildStrategyForParentContext: BuildStrategy,
 ): TableNaming {
+  const nameComponents: TableNameComponent[] = [];
+
+  nameComponents.push(
+    ...buildStrategyForParentContext
+      .parentContextProperties()
+      .filter(
+        parentContextProperty =>
+          parentContextProperty.data.edfiOdsRelational.odsContextPrefix != null &&
+          parentContextProperty.data.edfiOdsRelational.odsContextPrefix !== '',
+      )
+      .map(parentContextProperty => ({
+        ...newTableNameComponent(),
+        name: parentContextProperty.data.edfiOdsRelational.odsContextPrefix,
+        isParentPropertyContext: true,
+        sourceProperty: parentContextProperty,
+      })),
+  );
+
   const contextName: string = getRoleName(property);
-  const tableNameSuffix = parentContextName + contextName + property.metaEdName;
+
+  if (contextName !== '') {
+    nameComponents.push({
+      ...newTableNameComponent(),
+      name: contextName,
+      isPropertyRoleName: true,
+      sourceProperty: property,
+    });
+  }
+
+  nameComponents.push({
+    ...newTableNameComponent(),
+    name: property.metaEdName,
+    isPropertyMetaEdName: true,
+    sourceProperty: property,
+  });
+
   return {
-    name: parentTableName + tableNameSuffix,
-    nameComponents: [...parentTableNameComponents, tableNameSuffix],
+    tableId: parentTableStrategy.tableId + buildStrategyForParentContext.parentContext() + contextName + property.metaEdName,
+    nameGroup: {
+      ...newTableNameGroup(),
+      nameElements: [parentTableStrategy.nameGroup, ...nameComponents],
+      sourceProperty: property,
+    },
   };
 }

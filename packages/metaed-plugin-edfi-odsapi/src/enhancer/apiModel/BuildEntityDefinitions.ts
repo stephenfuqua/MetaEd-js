@@ -10,8 +10,8 @@ import {
   Namespace,
   EntityProperty,
 } from 'metaed-core';
-import { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
-import { tableEntities } from 'metaed-plugin-edfi-ods';
+import { Table, Column } from 'metaed-plugin-edfi-ods-relational';
+import { tableEntities } from 'metaed-plugin-edfi-ods-relational';
 import { buildApiProperty } from './BuildApiProperty';
 import { EntityDefinition } from '../../model/apiModel/EntityDefinition';
 import { EntityIdentifier } from '../../model/apiModel/EntityIdentifier';
@@ -34,16 +34,16 @@ export function identifiersFrom(
 ): EntityIdentifier[] {
   const result: EntityIdentifier[] = [];
   result.push({
-    identifierName: `${table.name}_PK`,
-    identifyingPropertyNames: table.primaryKeys.map((column: Column) => column.name),
+    identifierName: `${table.data.edfiOdsSqlServer.tableName}_PK`,
+    identifyingPropertyNames: table.primaryKeys.map((column: Column) => column.data.edfiOdsSqlServer.columnName),
     isPrimary: true,
     isUpdatable: isUpdatable(table),
   });
 
   if (includeAlternateKeys) {
     result.push({
-      identifierName: `${table.name}_AK`,
-      identifyingPropertyNames: table.alternateKeys.map((column: Column) => column.name),
+      identifierName: `${table.data.edfiOdsSqlServer.tableName}_AK`,
+      identifyingPropertyNames: table.alternateKeys.map((column: Column) => column.data.edfiOdsSqlServer.columnName),
       isPrimary: false,
       isUpdatable: false,
     });
@@ -51,8 +51,8 @@ export function identifiersFrom(
 
   table.uniqueIndexes.forEach((column: Column) => {
     result.push({
-      identifierName: `${table.name}_UX_${column.name}`,
-      identifyingPropertyNames: [column.name],
+      identifierName: `${table.data.edfiOdsSqlServer.tableName}_UX_${column.data.edfiOdsSqlServer.columnName}`,
+      identifyingPropertyNames: [column.data.edfiOdsSqlServer.columnName],
       isPrimary: false,
       isUpdatable: false,
     });
@@ -60,7 +60,7 @@ export function identifiersFrom(
 
   if (table.includeLastModifiedDateAndIdColumn) {
     result.push({
-      identifierName: `UX_${table.name}_Id`,
+      identifierName: `UX_${table.data.edfiOdsSqlServer.tableName}_Id`,
       identifyingPropertyNames: ['Id'],
       isPrimary: false,
       isUpdatable: isUpdatable(table),
@@ -82,9 +82,9 @@ export function identifiersFrom(
 // may actually be defined by simple properties as well and thus "locally defined",
 // for example when they are the target of a merge then a column can be there both because of the foreign key
 // and because of the local definition
-function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTable: string[]): boolean {
+function includeColumn(column: Column, table: Table, foreignKeyColumnIdsOnTable: string[]): boolean {
   // automatically include if not an FK column
-  if (!foreignKeyColumnNamesOnTable.includes(column.name)) return true;
+  if (!foreignKeyColumnIdsOnTable.includes(column.columnId)) return true;
 
   // otherwise, include the FK column if a source property of that column is on the same DE
   // as the table that this FK column is on -- shared simple properties only
@@ -92,18 +92,17 @@ function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTabl
     (property: EntityProperty) =>
       isSharedProperty(property) &&
       property.mergeTargetedBy.length > 0 &&
-      property.parentEntity.data.edfiOds.odsEntityTable === table,
+      property.parentEntity.data.edfiOdsRelational.odsEntityTable === table,
   );
 }
 
 function locallyDefinedPropertiesFrom(targetTechnologyVersion: SemVer, table: Table): ApiProperty[] {
-  const foreignKeyColumnNamesOnTable: string[] = R.chain(
-    (foreignKey: ForeignKey) => foreignKey.parentTableColumnNames,
-    table.foreignKeys,
+  const foreignKeyColumnIdsOnTable: string[] = table.foreignKeys.flatMap(fk =>
+    fk.columnPairs.map(cp => cp.parentTableColumnId),
   );
 
   const result: ApiProperty[] = table.columns
-    .filter((column: Column) => includeColumn(column, table, foreignKeyColumnNamesOnTable))
+    .filter((column: Column) => includeColumn(column, table, foreignKeyColumnIdsOnTable))
     .map((column: Column) => buildApiProperty(column));
 
   const datetime: DbType = versionSatisfies(targetTechnologyVersion, '>=3.1.1') ? 'DateTime2' : 'DateTime';
@@ -170,7 +169,7 @@ function buildSingleEntityDefinitionFrom(
 ): EntityDefinition {
   return {
     schema: table.schema,
-    name: table.name,
+    name: table.data.edfiOdsSqlServer.tableName,
     locallyDefinedProperties: locallyDefinedPropertiesFrom(targetTechnologyVersion, table),
     identifiers: identifiersFrom(table, options),
     isAbstract: options.isAbstract,
@@ -182,7 +181,7 @@ function buildSingleEntityDefinitionFrom(
 
 function isAbstract(table: Table): boolean {
   // true for the hardcoded Descriptor table
-  if (table.name === 'Descriptor' && table.schema === 'edfi') return true;
+  if (table.tableId === 'Descriptor' && table.schema === 'edfi') return true;
   // true for the main table of an Abstract Entity
   return (
     (table.parentEntity.type === 'domainEntity' &&
@@ -194,7 +193,7 @@ function isAbstract(table: Table): boolean {
 
 function shouldIncludeAlternateKeys(table: Table): boolean {
   // true for the hardcoded Descriptor table
-  return table.name === 'Descriptor' && table.schema === 'edfi';
+  return table.tableId === 'Descriptor' && table.schema === 'edfi';
 }
 
 // Entity definitions are the ODS table definitions for a namespaceName, including columns and primary keys
@@ -203,7 +202,7 @@ export function buildEntityDefinitions(
   namespace: Namespace,
   additionalEntityDefinitions: EntityDefinition[],
 ): EntityDefinition[] {
-  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOds') as PluginEnvironment;
+  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOdsRelational') as PluginEnvironment;
   const result: EntityDefinition[] = [];
   tableEntities(metaEd, namespace).forEach((table: Table) => {
     result.push(

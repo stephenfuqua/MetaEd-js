@@ -10,7 +10,7 @@ const enhancerName = 'DescriptorMapTypeRowEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'descriptor').forEach((entity: ModelBase) => {
-    if (!entity.data.edfiOds.odsIsMapType) return;
+    if (!entity.data.edfiOdsRelational.odsIsMapType) return;
 
     const rows: EnumerationRow[] = enumerationRowCreator.createRows(
       entity.namespace.namespaceName,

@@ -9,7 +9,7 @@
       "edfiUnified": {
         "targetTechnologyVersion": "2.0.0"
       },
-      "edfiOds": {
+      "edfiOdsRelational": {
         "targetTechnologyVersion": "2.0.0"
       },
       "edfiOdsApi": {

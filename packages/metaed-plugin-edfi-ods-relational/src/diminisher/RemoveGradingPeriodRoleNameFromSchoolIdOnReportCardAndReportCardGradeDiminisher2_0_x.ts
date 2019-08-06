@@ -8,7 +8,7 @@ import {
   studentCompetencyObjective,
   studentLearningObjective,
 } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
-import { removeColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { removeColumn, rewriteForeignKeyId } from './DiminisherHelper';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import { Column } from '../model/database/Column';
 import { Table } from '../model/database/Table';
@@ -19,8 +19,8 @@ import { Table } from '../model/database/Table';
 const enhancerName = 'RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_0_x';
 const targetVersions = '2.0.x || >=2.2.0 <3.0.0';
 
-function makeColumnNonNullablePrimaryKey(table: Table, columnName: string): void {
-  const column: Column | undefined = table.columns.find((x: Column) => x.name === columnName);
+function makeColumnNonNullablePrimaryKey(table: Table, columnId: string): void {
+  const column: Column | undefined = table.columns.find((x: Column) => x.columnId === columnId);
   if (column == null) return;
 
   column.isNullable = false;
@@ -33,7 +33,7 @@ function removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(tablesForC
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
-  renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
+  rewriteForeignKeyId(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
   makeColumnNonNullablePrimaryKey(table, schoolId);
 }
 
@@ -43,7 +43,7 @@ function removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(tablesForCor
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
-  renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
+  rewriteForeignKeyId(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
   makeColumnNonNullablePrimaryKey(table, schoolId);
 }
 

@@ -32,7 +32,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       metaEdName: domainEntityName1,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -45,11 +45,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity1.data.edfiOds.odsProperties.push(domainEntity1Property);
-    domainEntity1.data.edfiOds.odsIdentityProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity1Property);
     addEntityForNamespace(domainEntity1);
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
@@ -57,7 +57,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       namespace,
       allowPrimaryKeyUpdates: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -71,18 +71,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity2.data.edfiOds.odsProperties.push(domainEntity2Property);
-    domainEntity2.data.edfiOds.odsIdentityProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity2Property);
     addEntityForNamespace(domainEntity2);
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -96,11 +96,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property1);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property1);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property1);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property1);
     const domainEntity3Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,
       namespace,
@@ -108,11 +108,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property2);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property2);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property2);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property2);
     addEntityForNamespace(domainEntity3);
 
     enhance(metaEd);
@@ -120,17 +120,17 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 
   it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
   it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
@@ -148,7 +148,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       metaEdName: domainEntityName1,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -161,18 +161,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity1.data.edfiOds.odsProperties.push(domainEntity1Property);
-    domainEntity1.data.edfiOds.odsIdentityProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity1Property);
     addEntityForNamespace(domainEntity1);
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -186,11 +186,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity2.data.edfiOds.odsProperties.push(domainEntity2Property);
-    domainEntity2.data.edfiOds.odsIdentityProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity2Property);
     addEntityForNamespace(domainEntity2);
 
     const association: Association = Object.assign(newAssociation(), {
@@ -198,7 +198,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       namespace,
       allowPrimaryKeyUpdates: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -212,11 +212,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    association.data.edfiOds.odsProperties.push(associationProperty1);
-    association.data.edfiOds.odsIdentityProperties.push(associationProperty1);
+    association.data.edfiOdsRelational.odsProperties.push(associationProperty1);
+    association.data.edfiOdsRelational.odsIdentityProperties.push(associationProperty1);
     const associationProperty2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,
       namespace,
@@ -224,18 +224,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    association.data.edfiOds.odsProperties.push(associationProperty2);
-    association.data.edfiOds.odsIdentityProperties.push(associationProperty2);
+    association.data.edfiOdsRelational.odsProperties.push(associationProperty2);
+    association.data.edfiOdsRelational.odsIdentityProperties.push(associationProperty2);
     addEntityForNamespace(association);
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -249,33 +249,33 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property);
     addEntityForNamespace(domainEntity3);
     enhance(metaEd);
   });
 
   it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
   it('should not have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
   it('should have cascade primary key updates for association', (): void => {
     const association: any = namespace.entity.association.get(associationName);
-    expect(association.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(association.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for third domain entity', (): void => {
     const association: any = namespace.entity.association.get(associationName);
-    expect(association.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(association.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
@@ -294,7 +294,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       namespace,
       allowPrimaryKeyUpdates: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -307,18 +307,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity1.data.edfiOds.odsProperties.push(domainEntity1Property);
-    domainEntity1.data.edfiOds.odsIdentityProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity1Property);
     addEntityForNamespace(domainEntity1);
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -332,18 +332,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity2.data.edfiOds.odsProperties.push(domainEntity2Property);
-    domainEntity2.data.edfiOds.odsIdentityProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity2Property);
     addEntityForNamespace(domainEntity2);
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -357,18 +357,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property);
     addEntityForNamespace(domainEntity3);
 
     const domainEntity4: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName4,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -382,11 +382,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity3,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity4.data.edfiOds.odsProperties.push(domainEntity4Property);
-    domainEntity4.data.edfiOds.odsIdentityProperties.push(domainEntity4Property);
+    domainEntity4.data.edfiOdsRelational.odsProperties.push(domainEntity4Property);
+    domainEntity4.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity4Property);
     addEntityForNamespace(domainEntity4);
 
     enhance(metaEd);
@@ -394,22 +394,22 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 
   it('should have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 });
 
@@ -428,8 +428,8 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       namespace,
       allowPrimaryKeyUpdates: true,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName1,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName1,
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -442,19 +442,19 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity1.data.edfiOds.odsProperties.push(domainEntity1Property);
-    domainEntity1.data.edfiOds.odsIdentityProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity1Property);
     addEntityForNamespace(domainEntity1);
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName2,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName2,
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -468,19 +468,19 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity2.data.edfiOds.odsProperties.push(domainEntity2Property);
-    domainEntity2.data.edfiOds.odsIdentityProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity2Property);
     addEntityForNamespace(domainEntity2);
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName3,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName3,
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -494,19 +494,19 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property);
     addEntityForNamespace(domainEntity3);
 
     const domainEntity4: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName4,
       namespace,
       data: {
-        edfiOds: {
-          odsTableName: domainEntityName4,
+        edfiOdsRelational: {
+          odsTableId: domainEntityName4,
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -520,13 +520,13 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsCausesCyclicUpdateCascade: false,
         },
       },
     });
-    domainEntity4.data.edfiOds.odsProperties.push(domainEntity4Property1);
-    domainEntity4.data.edfiOds.odsIdentityProperties.push(domainEntity4Property1);
+    domainEntity4.data.edfiOdsRelational.odsProperties.push(domainEntity4Property1);
+    domainEntity4.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity4Property1);
     const domainEntity4Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName3,
       namespace,
@@ -534,11 +534,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity3,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity4.data.edfiOds.odsProperties.push(domainEntity4Property2);
-    domainEntity4.data.edfiOds.odsIdentityProperties.push(domainEntity4Property2);
+    domainEntity4.data.edfiOdsRelational.odsProperties.push(domainEntity4Property2);
+    domainEntity4.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity4Property2);
     addEntityForNamespace(domainEntity4);
 
     enhance(metaEd);
@@ -546,28 +546,32 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 
   it('should have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have only one cascading property on forth domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName4);
-    expect(domainEntity.data.edfiOds.odsProperties[0].data.edfiOds.odsCausesCyclicUpdateCascade).toBe(false);
-    expect(domainEntity.data.edfiOds.odsProperties[1].data.edfiOds.odsCausesCyclicUpdateCascade).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties[0].data.edfiOdsRelational.odsCausesCyclicUpdateCascade).toBe(
+      false,
+    );
+    expect(domainEntity.data.edfiOdsRelational.odsProperties[1].data.edfiOdsRelational.odsCausesCyclicUpdateCascade).toBe(
+      true,
+    );
   });
 });
 
@@ -585,7 +589,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       namespace,
       allowPrimaryKeyUpdates: true,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -598,18 +602,18 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity1.data.edfiOds.odsProperties.push(domainEntity1Property);
-    domainEntity1.data.edfiOds.odsIdentityProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsProperties.push(domainEntity1Property);
+    domainEntity1.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity1Property);
     addEntityForNamespace(domainEntity1);
 
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -622,17 +626,17 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity2,
       referencedEntity: domainEntity1,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity2.data.edfiOds.odsProperties.push(domainEntity2Property);
+    domainEntity2.data.edfiOdsRelational.odsProperties.push(domainEntity2Property);
     addEntityForNamespace(domainEntity2);
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
       namespace,
       data: {
-        edfiOds: {
+        edfiOdsRelational: {
           odsProperties: [],
           odsIdentityProperties: [],
           odsCascadePrimaryKeyUpdates: false,
@@ -646,11 +650,11 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {},
+        edfiOdsRelational: {},
       },
     });
-    domainEntity3.data.edfiOds.odsProperties.push(domainEntity3Property);
-    domainEntity3.data.edfiOds.odsIdentityProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsProperties.push(domainEntity3Property);
+    domainEntity3.data.edfiOdsRelational.odsIdentityProperties.push(domainEntity3Property);
     addEntityForNamespace(domainEntity3);
 
     enhance(metaEd);
@@ -658,16 +662,16 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 
   it('should not have cascade primary key updates for first domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName1);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(true);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(true);
   });
 
   it('should have cascade primary key updates for second domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName2);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 
   it('should have cascade primary key updates for third domain entity', (): void => {
     const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName3);
-    expect(domainEntity.data.edfiOds.odsCascadePrimaryKeyUpdates).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsCascadePrimaryKeyUpdates).toBe(false);
   });
 });

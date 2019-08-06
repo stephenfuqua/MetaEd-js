@@ -4,8 +4,8 @@ import { Column } from './Column';
 export class ForeignKeyStrategy {
   myDecoratedStrategy: ForeignKeyStrategy;
 
-  static foreignColumnRename(foreignColumnName: string): ForeignKeyStrategy {
-    return new RenameForeignColumn(ForeignKeyStrategyDefault, foreignColumnName);
+  static foreignColumnIdChange(foreignColumnId: string): ForeignKeyStrategy {
+    return new ChangeForeignColumnId(ForeignKeyStrategyDefault, foreignColumnId);
   }
 
   static foreignColumnCascade(deleteCascade: boolean, updateCascade: boolean): ForeignKeyStrategy {
@@ -23,12 +23,12 @@ export class ForeignKeyStrategy {
     return false;
   }
 
-  parentColumnName(column: Column) {
-    return column.name;
+  parentColumnId(column: Column) {
+    return column.columnId;
   }
 
-  foreignColumnName(column: Column) {
-    return column.name;
+  foreignColumnId(column: Column) {
+    return column.columnId;
   }
 }
 
@@ -46,12 +46,12 @@ class AddDeleteCascade extends ForeignKeyStrategy {
     return this.myDecoratedStrategy.hasUpdateCascade();
   }
 
-  parentColumnName(column: Column) {
-    return this.myDecoratedStrategy.parentColumnName(column);
+  parentColumnId(column: Column) {
+    return this.myDecoratedStrategy.parentColumnId(column);
   }
 
-  foreignColumnName(column: Column) {
-    return this.myDecoratedStrategy.foreignColumnName(column);
+  foreignColumnId(column: Column) {
+    return this.myDecoratedStrategy.foreignColumnId(column);
   }
 }
 
@@ -69,22 +69,22 @@ class AddUpdateCascade extends ForeignKeyStrategy {
     return true;
   }
 
-  parentColumnName(column: Column) {
-    return this.myDecoratedStrategy.parentColumnName(column);
+  parentColumnId(column: Column) {
+    return this.myDecoratedStrategy.parentColumnId(column);
   }
 
-  foreignColumnName(column: Column) {
-    return this.myDecoratedStrategy.foreignColumnName(column);
+  foreignColumnId(column: Column) {
+    return this.myDecoratedStrategy.foreignColumnId(column);
   }
 }
 
-class RenameForeignColumn extends ForeignKeyStrategy {
-  myForeignColumnName: string;
+class ChangeForeignColumnId extends ForeignKeyStrategy {
+  myForeignColumnId: string;
 
-  constructor(decoratedStrategy: ForeignKeyStrategy, foreignColumnName: string) {
+  constructor(decoratedStrategy: ForeignKeyStrategy, foreignColumnId: string) {
     super();
     this.myDecoratedStrategy = decoratedStrategy;
-    this.myForeignColumnName = foreignColumnName;
+    this.myForeignColumnId = foreignColumnId;
   }
 
   hasDeleteCascade() {
@@ -95,13 +95,13 @@ class RenameForeignColumn extends ForeignKeyStrategy {
     return this.myDecoratedStrategy.hasUpdateCascade();
   }
 
-  parentColumnName(column: Column) {
-    return this.myDecoratedStrategy.parentColumnName(column);
+  parentColumnId(column: Column) {
+    return this.myDecoratedStrategy.parentColumnId(column);
   }
 
   // @ts-ignore,
-  foreignColumnName(column: Column) {
-    return this.myForeignColumnName;
+  foreignColumnId(column: Column) {
+    return this.myForeignColumnId;
   }
 }
 
