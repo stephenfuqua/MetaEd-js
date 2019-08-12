@@ -1,0 +1,4 @@
+Shared Short FiscalYear
+    documentation "Local Fiscal Year"
+    min value 2020
+	  max value 2040

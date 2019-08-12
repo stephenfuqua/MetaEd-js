@@ -1,0 +1,15 @@
+Domain Entity FundDimension
+    documentation "NCES Fund Dimension"
+    shared string Code
+        documentation "The code representation of the account Fund dimension."
+        is part of identity
+    shared short FiscalYear
+        documentation "The fiscal year for which the account Fund dimension is valid."
+        is part of identity
+    shared string CodeName
+        documentation "A description of the account Fund dimension."
+        is optional
+      //Optional Collection
+      descriptor ReportingTag
+          documentation "Optional tag for accountability reporting (e.g. ESSA)."
+          is optional collection

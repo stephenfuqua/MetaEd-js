@@ -1,0 +1,15 @@
+Domain Entity ProjectDimension
+    documentation "NCES Project Dimension"
+    shared string Code
+        documentation "The code representation of the account Project dimension."
+        is part of identity
+    shared short FiscalYear
+        documentation "The fiscal year for which the account Project dimension is valid."
+        is part of identity
+    shared string CodeName
+        documentation "A description of the account Project dimension."
+        is optional
+    //Optional Collection
+    descriptor ReportingTag
+        documentation "Optional tag for accountability reporting (e.g. ESSA)."
+        is optional collection
