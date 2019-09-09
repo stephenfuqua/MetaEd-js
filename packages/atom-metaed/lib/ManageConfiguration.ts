@@ -26,6 +26,7 @@ const odsApiVersionSupport: Map<string, string[]> = new Map([
   ['3.1', ['3.1']],
   ['3.1.1', ['3.1']],
   ['3.2', ['3.1']],
+  ['3.3', ['3.2']],
 ]);
 
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
