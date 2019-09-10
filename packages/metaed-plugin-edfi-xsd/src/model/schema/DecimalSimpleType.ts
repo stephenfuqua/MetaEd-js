@@ -9,7 +9,8 @@ export interface DecimalSimpleType extends SimpleType {
 }
 
 export function newDecimalSimpleType(): DecimalSimpleType {
-  return Object.assign({}, newSimpleType(), {
+  return {
+    ...newSimpleType(),
     totalDigits: '',
     decimalPlaces: '',
     minValue: '',
@@ -17,5 +18,5 @@ export function newDecimalSimpleType(): DecimalSimpleType {
     hasRestrictions() {
       return !!this.totalDigits || !!this.decimalPlaces || !!this.minValue || !!this.maxValue;
     },
-  });
+  };
 }

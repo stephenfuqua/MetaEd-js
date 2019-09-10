@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { Namespace } from 'metaed-core';
 import { TableNameGroup, Table } from './Table';
 

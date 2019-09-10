@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this, no-use-before-define */
+/* eslint-disable class-methods-use-this, no-use-before-define, max-classes-per-file */
 import { Column } from './Column';
 
 export class ForeignKeyStrategy {

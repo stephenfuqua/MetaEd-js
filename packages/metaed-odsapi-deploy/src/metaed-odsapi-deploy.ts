@@ -25,7 +25,7 @@ export async function metaEdDeploy() {
       alias: 'c',
     })
     .group(['source', 'target'], 'Command line:')
-    .option('source', {
+    .option('source' as any, {
       alias: 's',
       describe: 'The artifact source directories to scan',
       type: 'string',

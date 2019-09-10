@@ -38,7 +38,7 @@ export function metaEdAboutView(): () => HTMLElement {
       </div>
     `;
 
-    // eslint-disable-next-line no-undef, document
+    // eslint-disable-next-line no-undef
     const element = document.createElement('div');
     element.innerHTML = template;
     return element;

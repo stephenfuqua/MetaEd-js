@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import antlr4 from 'antlr4';
 import { MetaEdGrammar } from './gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from './gen/MetaEdGrammarListener';

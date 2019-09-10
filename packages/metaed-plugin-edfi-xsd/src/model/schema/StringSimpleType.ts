@@ -8,13 +8,14 @@ export interface StringSimpleType extends SimpleType {
 }
 
 export function newStringSimpleType(): StringSimpleType {
-  return Object.assign({}, newSimpleType(), {
+  return {
+    ...newSimpleType(),
     minLength: '',
     maxLength: '',
     hasRestrictions() {
       return !!this.minLength || !!this.maxLength;
     },
-  });
+  };
 }
 
 export const NoStringSimpleType: StringSimpleType = deepFreeze(

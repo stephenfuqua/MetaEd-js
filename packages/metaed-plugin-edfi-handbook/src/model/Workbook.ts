@@ -1,4 +1,4 @@
-import xlsx from 'xlsx';
+import xlsx, { WorkSheet } from 'xlsx';
 import { Worksheet } from './Worksheet';
 import { newWorksheet } from './Worksheet';
 import { newRow } from './Row';
@@ -42,7 +42,7 @@ export function readWorkbook(input: any, type: string): Workbook {
   const workbook: Workbook = newWorkbook();
   Object.values(wb.Sheets).forEach((sheet, i) => {
     const worksheet: Worksheet = newWorksheet(wb.SheetNames[i]);
-    const parsedWorksheet: any = xlsx.utils.sheet_to_json(sheet, { header: 1 });
+    const parsedWorksheet: any = xlsx.utils.sheet_to_json(sheet as WorkSheet, { header: 1 });
     const headers: string[] = parsedWorksheet.shift();
     parsedWorksheet.forEach(row => {
       worksheet.rows.push(Object.assign(newRow(), { headers, values: row }));

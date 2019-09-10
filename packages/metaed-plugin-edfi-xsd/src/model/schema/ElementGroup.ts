@@ -7,8 +7,9 @@ export interface ElementGroup extends ComplexTypeItem {
 }
 
 export function newElementGroup(): ElementGroup {
-  return Object.assign({}, newComplexTypeItem(), {
+  return {
+    ...newComplexTypeItem(),
     isChoice: false,
     items: [],
-  });
+  };
 }

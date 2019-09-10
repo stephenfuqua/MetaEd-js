@@ -10,9 +10,10 @@ export interface Element extends ComplexTypeItem {
 }
 
 export function newElement(): Element {
-  return Object.assign({}, newComplexTypeItem(), {
+  return {
+    ...newComplexTypeItem(),
     name: '',
     type: '',
     annotation: newAnnotation(),
-  });
+  };
 }

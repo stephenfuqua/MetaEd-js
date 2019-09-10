@@ -8,12 +8,13 @@ export interface EnumerationSimpleType extends SimpleType {
 }
 
 export function newEnumerationSimpleType(): EnumerationSimpleType {
-  return Object.assign({}, newSimpleType(), {
+  return {
+    ...newSimpleType(),
     enumerationTokens: [],
     hasRestrictions() {
       return this.enumerationTokens.length > 0;
     },
-  });
+  };
 }
 
 export const NoEnumerationSimpleType: SimpleType = deepFreeze(

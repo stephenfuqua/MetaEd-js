@@ -67,6 +67,7 @@ function createXsdElementFromProperty(
   minOccursOverride: string = '',
   maxOccursIsUnboundedOverride: boolean | null = null,
 ): ComplexType {
+  // eslint-disable-next-line prefer-object-spread
   return Object.assign({}, newComplexType(), {
     name: property.data.edfiXsd.xsdName,
     type: property.data.edfiXsd.xsdType,

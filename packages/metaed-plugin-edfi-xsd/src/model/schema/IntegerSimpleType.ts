@@ -7,11 +7,12 @@ export interface IntegerSimpleType extends SimpleType {
 }
 
 export function newIntegerSimpleType(): IntegerSimpleType {
-  return Object.assign({}, newSimpleType(), {
+  return {
+    ...newSimpleType(),
     minValue: '',
     maxValue: '',
     hasRestrictions() {
       return !!this.minValue || !!this.maxValue;
     },
-  });
+  };
 }

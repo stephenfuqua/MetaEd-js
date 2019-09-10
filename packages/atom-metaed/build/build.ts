@@ -63,7 +63,7 @@ const displayVersions = async (): Promise<void> => {
 const installPackages = async (): Promise<void> => {
   winston.info(`Installing packages`);
   await execCommand(`${apmScript} clean`, { cwd: rootDirectory });
-  winston.info(await execCommand(`${apmScript} install`, { cwd: rootDirectory }));
+  winston.info((await execCommand(`${apmScript} install`, { cwd: rootDirectory })) as Object);
 };
 
 const installDependencies = async (): Promise<void> => {
@@ -73,14 +73,14 @@ const installDependencies = async (): Promise<void> => {
     // eslint-disable-next-line no-restricted-syntax
     for (const pkg of apmTestPackages) {
       // eslint-disable-next-line no-await-in-loop
-      winston.info(await execCommand(`${apmScript} install ${pkg}`, { cwd: rootDirectory }));
+      winston.info((await execCommand(`${apmScript} install ${pkg}`, { cwd: rootDirectory })) as Object);
     }
   }
 };
 
 const runTests = async (): Promise<void> => {
   winston.info(`Running tests`);
-  winston.info(await execCommand(`${atomExecutable} --test spec`, { cwd: packageDirectory }));
+  winston.info((await execCommand(`${atomExecutable} --test spec`, { cwd: packageDirectory })) as Object);
 };
 
 const build = async (): Promise<void> => {
