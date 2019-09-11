@@ -5,11 +5,12 @@ import { highlight } from 'cli-highlight';
 export const testDatabaseName = 'MetaEd_Ods_Integration_Tests';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
-if (process.env.TEAMCITY_VERSION != null) {
-  winston.level = 'debug';
-} else {
-  winston.level = 'info';
-}
+winston.level = 'info';
+// if (process.env.TEAMCITY_VERSION != null) {
+//   winston.level = 'debug';
+// } else {
+//   winston.level = 'info';
+// }
 const highlightSql = (sql: string) => highlight(sql, { language: 'sql', ignoreIllegals: true });
 
 export interface Pool {
