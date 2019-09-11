@@ -5,6 +5,8 @@ import { validate as sourcePropertyPathStringsMustExist } from './validator/Merg
 import { validate as targetPropertyPathStringsMustExist } from './validator/MergeDirective/TargetPropertyPathMustExist';
 import { validate as outPathsToSameEntityMustHaveMergeDirectiveOrRoleName } from './validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
 import { validate as deprecatedEntityWarning } from './validator/Deprecated/DeprecatedEntityWarning';
+import { validate as deprecatedEntityExtensionWarning } from './validator/Deprecated/DeprecatedEntityExtensionWarning';
+import { validate as deprecatedEntitySubclassWarning } from './validator/Deprecated/DeprecatedEntitySubclassWarning';
 import { validate as deprecatedPropertyWarning } from './validator/Deprecated/DeprecatedPropertyWarning';
 import { validate as deprecatedDomainItemReferenceWarning } from './validator/Deprecated/DeprecatedDomainItemReferenceWarning';
 import { validate as deprecatedInterchangeItemReferenceWarning } from './validator/Deprecated/DeprecatedInterchangeItemReferenceWarning';
@@ -18,6 +20,8 @@ export function initialize(): MetaEdPlugin {
       sourcePropertyAndTargetPropertyMustMatch,
       outPathsToSameEntityMustHaveMergeDirectiveOrRoleName,
       deprecatedEntityWarning,
+      deprecatedEntityExtensionWarning,
+      deprecatedEntitySubclassWarning,
       deprecatedPropertyWarning,
       deprecatedDomainItemReferenceWarning,
       deprecatedInterchangeItemReferenceWarning,

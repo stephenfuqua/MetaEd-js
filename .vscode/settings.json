@@ -11,7 +11,7 @@
   ],
 
   // Prettier
-  "prettier.eslintIntegration": true,
+  "prettier-eslint.eslintIntegration": true,
   "eslint.autoFixOnSave": true,
   "editor.rulers": [125],
 
