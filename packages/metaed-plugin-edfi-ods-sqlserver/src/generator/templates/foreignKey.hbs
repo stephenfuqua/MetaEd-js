@@ -1,5 +1,5 @@
 {{#foreignKeys}}
-ALTER TABLE [{{{parentTable.schema}}}].[{{{parentTable.data.edfiOdsSqlServer.tableName}}}] WITH CHECK ADD CONSTRAINT [{{{data.edfiOdsSqlServer.name}}}] FOREIGN KEY ([{{#each data.edfiOdsSqlServer.parentTableColumnNames}}{{this}}{{#unless @last}}], [{{/unless}}{{/each}}])
+ALTER TABLE [{{{parentTable.schema}}}].[{{{parentTable.data.edfiOdsSqlServer.tableName}}}] WITH CHECK ADD CONSTRAINT [{{{data.edfiOdsSqlServer.foreignKeyName}}}] FOREIGN KEY ([{{#each data.edfiOdsSqlServer.parentTableColumnNames}}{{this}}{{#unless @last}}], [{{/unless}}{{/each}}])
 REFERENCES [{{{foreignTableSchema}}}].[{{{foreignTable.data.edfiOdsSqlServer.tableName}}}] ([{{#each data.edfiOdsSqlServer.foreignTableColumnNames}}{{this}}{{#unless @last}}], [{{/unless}}{{/each}}])
 {{#if withDeleteCascade}}
 ON DELETE CASCADE
@@ -10,7 +10,7 @@ ON UPDATE CASCADE
 GO
 
 {{#if withReverseForeignKeyIndex}}
-CREATE NONCLUSTERED INDEX [{{{data.edfiOdsSqlServer.name}}}]
+CREATE NONCLUSTERED INDEX [{{{data.edfiOdsSqlServer.foreignKeyName}}}]
 ON [{{{parentTable.schema}}}].[{{{parentTable.data.edfiOdsSqlServer.tableName}}}] ([{{#each data.edfiOdsSqlServer.parentTableColumnNames}}{{this}}{{#unless @last}}] ASC, [{{/unless}}{{/each}}] ASC)
 GO
 

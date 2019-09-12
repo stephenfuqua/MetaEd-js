@@ -218,7 +218,7 @@ export function buildAssociationDefinitions(metaEd: MetaEdEnvironment, namespace
       result.push({
         fullName: {
           schema: table.schema,
-          name: foreignKey.data.edfiOdsSqlServer.name,
+          name: foreignKey.data.edfiOdsSqlServer.foreignKeyName,
         },
         cardinality,
         primaryEntityFullName: {

@@ -1,5 +1,7 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { tableEntities, Table, Column } from 'metaed-plugin-edfi-ods-relational';
+import { ColumnEdfiOdsSqlServer } from './Column';
+import { ForeignKeyEdfiOdsSqlServer } from './ForeignKey';
 
 export interface TableEdfiOdsSqlServer {
   tableName: string;
@@ -12,17 +14,21 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const tables: Map<string, Table> = tableEntities(metaEd, namespace);
 
     tables.forEach((table: Table) => {
-      if (table.data.edfiOdsSqlServer == null) table.data.edfiOdsSqlServer = { tableName: '' };
+      // initialize table
+      if (table.data.edfiOdsSqlServer == null) (table.data.edfiOdsSqlServer as TableEdfiOdsSqlServer) = { tableName: '' };
 
       table.columns.forEach((column: Column) => {
-        if (column.data.edfiOdsSqlServer == null) column.data.edfiOdsSqlServer = { columnName: '', dataType: 'unknown' };
+        // initialize column
+        if (column.data.edfiOdsSqlServer == null)
+          (column.data.edfiOdsSqlServer as ColumnEdfiOdsSqlServer) = { columnName: '', dataType: 'unknown' };
       });
 
       table.foreignKeys.forEach(foreignKey => {
+        // initialize foreign key
         if (foreignKey.data.edfiOdsSqlServer == null)
-          foreignKey.data.edfiOdsSqlServer = {
+          (foreignKey.data.edfiOdsSqlServer as ForeignKeyEdfiOdsSqlServer) = {
             nameSuffix: '',
-            name: '',
+            foreignKeyName: '',
             parentTableColumnNames: [],
             foreignTableColumnNames: [],
           };

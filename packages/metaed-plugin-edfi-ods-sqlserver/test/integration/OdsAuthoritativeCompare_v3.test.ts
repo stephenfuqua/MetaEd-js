@@ -117,7 +117,7 @@ describe('when generating ods and comparing it to data standard 3.0 authoritativ
     ]);
     tableOrder = tables.map(table => table.data.edfiOdsSqlServer.tableName);
     fkOrder = tables.reduce(
-      (acc: string[], table: Table) => acc.concat([...table.foreignKeys.map(fk => fk.data.edfiOdsSqlServer.name)]),
+      (acc: string[], table: Table) => acc.concat([...table.foreignKeys.map(fk => fk.data.edfiOdsSqlServer.foreignKeyName)]),
       [],
     );
 

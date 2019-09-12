@@ -48,7 +48,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       // add column names
       table.foreignKeys.forEach(foreignKey => {
-        foreignKey.data.edfiOdsSqlServer.name = nameFor(foreignKey);
+        foreignKey.data.edfiOdsSqlServer.foreignKeyName = nameFor(foreignKey);
 
         const foreignTable: Table | undefined = tableEntities(metaEd, foreignKey.foreignTableNamespace).get(
           foreignKey.foreignTableId,
@@ -62,7 +62,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       // sort foreign keys in order
-      table.foreignKeys = orderByPath(['data', 'edfiOdsSqlServer', 'name'])(table.foreignKeys);
+      table.foreignKeys = orderByPath(['data', 'edfiOdsSqlServer', 'foreignKeyName'])(table.foreignKeys);
     });
   });
 
