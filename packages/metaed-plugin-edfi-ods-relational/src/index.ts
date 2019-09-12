@@ -61,6 +61,8 @@ export {
 
 export { edfiOdsRepositoryForNamespace, tableEntities, tableEntity, rowEntities } from './enhancer/EnhancerHelper';
 
+export { prependRoleNameToMetaEdName, escapeSqlSingleQuote } from './shared/Utility';
+
 // Enhancer for testing
 export { enhance as baseDescriptorTableCreatingEnhancer } from './enhancer/table/BaseDescriptorTableEnhancer';
 

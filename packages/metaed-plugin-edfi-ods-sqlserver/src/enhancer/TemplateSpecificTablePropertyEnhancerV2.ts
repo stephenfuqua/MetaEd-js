@@ -1,6 +1,5 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace, versionSatisfies, V2Only } from 'metaed-core';
-import { tableEntities, Column, Table } from 'metaed-plugin-edfi-ods-relational';
-import { escapeSqlSingleQuote } from '../shared/Utility';
+import { tableEntities, Column, Table, escapeSqlSingleQuote } from 'metaed-plugin-edfi-ods-relational';
 import { hasAlternateKeys, getAlternateKeys, getUniqueIndexes, getPrimaryKeys } from './ColumnOrdering';
 
 // Sets sorted table properties for use by the generator template
