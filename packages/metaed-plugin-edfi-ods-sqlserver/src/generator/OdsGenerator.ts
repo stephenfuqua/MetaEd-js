@@ -40,7 +40,7 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
     });
 
     results.push({
-      name: 'ODS Foreign Keys',
+      name: 'ODS SQL Server Foreign Keys',
       namespace: namespace.namespaceName,
       folderName: structurePath,
       fileName: fileNameFor('0030', namespace, 'ForeignKeys'),
