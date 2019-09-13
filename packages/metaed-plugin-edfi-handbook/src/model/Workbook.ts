@@ -45,7 +45,11 @@ export function readWorkbook(input: any, type: string): Workbook {
     const parsedWorksheet: any = xlsx.utils.sheet_to_json(sheet as WorkSheet, { header: 1 });
     const headers: string[] = parsedWorksheet.shift();
     parsedWorksheet.forEach(row => {
-      worksheet.rows.push(Object.assign(newRow(), { headers, values: row }));
+      worksheet.rows.push({
+        ...newRow(),
+        headers,
+        values: row,
+      });
     });
     workbook.sheets.push(worksheet);
   });

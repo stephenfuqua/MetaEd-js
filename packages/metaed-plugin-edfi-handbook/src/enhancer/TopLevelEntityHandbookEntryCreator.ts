@@ -14,9 +14,10 @@ import {
   ModelBase,
 } from 'metaed-core';
 import { getAllEntitiesForNamespaces } from 'metaed-core';
-import { HandbookEntry, HandbookEntityReferenceProperty, HandbookMergeProperty } from '../model/HandbookEntry';
+import { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
+import { HandbookMergeProperty, HandbookEntityReferenceProperty } from '../model/HandbookEntryReferenceProperty';
 
 function generateUniqueId(entity: TopLevelEntity): string {
   return entity.metaEdName + entity.metaEdId;
@@ -189,7 +190,8 @@ export function createDefaultHandbookEntry(
 ): HandbookEntry {
   const allEntities: ModelBase[] = getAllEntitiesForNamespaces([...metaEd.namespace.values()]);
   const allReferentialProperties: ReferentialProperty[] = getAllReferentialProperties(metaEd);
-  return Object.assign(newHandbookEntry(), {
+  return {
+    ...newHandbookEntry(),
     definition: entity.documentation,
     edFiId: entity.metaEdId,
     // This is the way the UI searches for entities
@@ -203,5 +205,5 @@ export function createDefaultHandbookEntry(
     optionList: enumerationShortDescriptionsFor(entity),
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(entity),
-  });
+  };
 }

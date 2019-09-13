@@ -62,7 +62,8 @@ export function createDefaultHandbookEntry(
   entityTypeName: string,
   metaEd: MetaEdEnvironment,
 ): HandbookEntry {
-  return Object.assign(newHandbookEntry(), {
+  return {
+    ...newHandbookEntry(),
     definition: property.documentation,
     edFiId: property.metaEdId,
     // This is the way the UI seaches for entities
@@ -74,5 +75,5 @@ export function createDefaultHandbookEntry(
     optionList: [],
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(property),
-  });
+  };
 }

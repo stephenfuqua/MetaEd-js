@@ -36,7 +36,8 @@ export function createDefaultHandbookEntry(
   documentation: string,
   columnDefinition: string,
 ): HandbookEntry {
-  return Object.assign(newHandbookEntry(), {
+  return {
+    ...newHandbookEntry(),
     definition: documentation,
     edFiId: edfiId,
     // This is the way the UI seaches for entities
@@ -48,5 +49,5 @@ export function createDefaultHandbookEntry(
     optionList: [],
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(property),
-  });
+  };
 }

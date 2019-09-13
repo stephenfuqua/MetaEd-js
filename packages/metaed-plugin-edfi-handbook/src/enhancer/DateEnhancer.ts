@@ -1,16 +1,16 @@
 import { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
-import { createDefaultHandbookEntry } from './XsdBuiltinTypeMetaEdHandbookEnhancerBase';
+import { createDefaultHandbookEntry } from './XsdBuiltinTypeHandbookEntryCreator';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
-const enhancerName = 'TimeMetaEdHandbookEnhancer';
+const enhancerName = 'DateMetaEdHandbookEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.propertyIndex.time.forEach(property => {
+  metaEd.propertyIndex.date.forEach(property => {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, property.namespace);
     if (handbookRepository == null) return;
-    handbookRepository.handbookEntries.push(createDefaultHandbookEntry(property, 'Time Type', ColumnDataTypes.time));
+    handbookRepository.handbookEntries.push(createDefaultHandbookEntry(property, 'Date Type', ColumnDataTypes.date));
   });
 
   return {

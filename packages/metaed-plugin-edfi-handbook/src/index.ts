@@ -1,24 +1,25 @@
 import { MetaEdPlugin } from 'metaed-core';
 import { enhance as edfiHandbookRepositorySetup } from './model/EdfiHandbookRepository';
-import { enhance as AssociationEnhancer } from './enhancer/AssociationMetaEdHandbookEnhancer';
-import { enhance as AssociationSubclassEnhancer } from './enhancer/AssociationSubclassMetaEdHandbookEnhancer';
-import { enhance as BooleanEnhancer } from './enhancer/BooleanMetaEdHandbookEnhancer';
-import { enhance as ChoiceEnhancer } from './enhancer/ChoiceMetaEdHandbookEnhancer';
-import { enhance as CommonEnhancer } from './enhancer/CommonMetaEdHandbookEnhancer';
-import { enhance as CurrencyEnhancer } from './enhancer/CurrencyMetaEdHandbookEnhancer';
-import { enhance as DateEnhancer } from './enhancer/DateMetaEdHandbookEnhancer';
-import { enhance as DecimalEnhancer } from './enhancer/DecimalMetaEdHandbookEnhancer';
-import { enhance as DescriptorEnhancer } from './enhancer/DescriptorMetaEdHandbookEnhancer';
-import { enhance as DomainEntityEnhancer } from './enhancer/DomainEntityMetaEdHandbookEnhancer';
-import { enhance as DomainEntitySubclassEnhancer } from './enhancer/DomainEntitySubclassMetaEdHandbookEnhancer';
-import { enhance as EnumerationEnhancer } from './enhancer/EnumerationMetaEdHandbookEnhancer';
-import { enhance as InlineCommonEnhancer } from './enhancer/InlineCommonMetaEdHandbookEnhancer';
-import { enhance as IntegerEnhancer } from './enhancer/IntegerMetaEdHandbookEnhancer';
-import { enhance as PercentEnhancer } from './enhancer/PercentMetaEdHandbookEnhancer';
-import { enhance as StringEnhancer } from './enhancer/StringMetaEdHandbookEnhancer';
-import { enhance as TimeIntervalEnhancer } from './enhancer/TimeIntervalMetaEdHandbookEnhancer';
-import { enhance as TimeEnhancer } from './enhancer/TimeMetaEdHandbookEnhancer';
-import { enhance as YearEnhancer } from './enhancer/YearMetaEdHandbookEnhancer';
+import { enhance as associationEnhancer } from './enhancer/AssociationEnhancer';
+import { enhance as associationSubclassEnhancer } from './enhancer/AssociationSubclassEnhancer';
+import { enhance as booleanEnhancer } from './enhancer/BooleanEnhancer';
+import { enhance as choiceEnhancer } from './enhancer/ChoiceEnhancer';
+import { enhance as commonEnhancer } from './enhancer/CommonEnhancer';
+import { enhance as currencyEnhancer } from './enhancer/CurrencyEnhancer';
+import { enhance as dateEnhancer } from './enhancer/DateEnhancer';
+import { enhance as decimalEnhancer } from './enhancer/DecimalEnhancer';
+import { enhance as descriptorEnhancer } from './enhancer/DescriptorEnhancer';
+import { enhance as domainEntityEnhancer } from './enhancer/DomainEntityEnhancer';
+import { enhance as domainEntitySubclassEnhancer } from './enhancer/DomainEntitySubclassEnhancer';
+import { enhance as enumerationEnhancer } from './enhancer/EnumerationEnhancer';
+import { enhance as inlineCommonEnhancer } from './enhancer/InlineCommonEnhancer';
+import { enhance as integerEnhancer } from './enhancer/IntegerEnhancer';
+import { enhance as percentEnhancer } from './enhancer/PercentEnhancer';
+import { enhance as stringEnhancer } from './enhancer/StringEnhancer';
+import { enhance as timeIntervalEnhancer } from './enhancer/TimeIntervalEnhancer';
+import { enhance as timeEnhancer } from './enhancer/TimeEnhancer';
+import { enhance as yearEnhancer } from './enhancer/YearEnhancer';
+import { enhance as handbookEntryModelReferencesEnhancer } from './enhancer/HandbookEntryModelReferencesEnhancer';
 import { generate as htmlGenerator } from './generator/MetaEdHandbookAsHtmlIndexGenerator';
 import { generate as excelGenerator } from './generator/MetaEdHandbookAsExcelGenerator';
 
@@ -27,25 +28,26 @@ export function initialize(): MetaEdPlugin {
     validator: [],
     enhancer: [
       edfiHandbookRepositorySetup,
-      AssociationEnhancer,
-      AssociationSubclassEnhancer,
-      BooleanEnhancer,
-      ChoiceEnhancer,
-      CommonEnhancer,
-      CurrencyEnhancer,
-      DateEnhancer,
-      DecimalEnhancer,
-      DescriptorEnhancer,
-      DomainEntityEnhancer,
-      DomainEntitySubclassEnhancer,
-      EnumerationEnhancer,
-      InlineCommonEnhancer,
-      IntegerEnhancer,
-      PercentEnhancer,
-      StringEnhancer,
-      TimeIntervalEnhancer,
-      TimeEnhancer,
-      YearEnhancer,
+      associationEnhancer,
+      associationSubclassEnhancer,
+      booleanEnhancer,
+      choiceEnhancer,
+      commonEnhancer,
+      currencyEnhancer,
+      dateEnhancer,
+      decimalEnhancer,
+      descriptorEnhancer,
+      domainEntityEnhancer,
+      domainEntitySubclassEnhancer,
+      enumerationEnhancer,
+      inlineCommonEnhancer,
+      integerEnhancer,
+      percentEnhancer,
+      stringEnhancer,
+      timeIntervalEnhancer,
+      timeEnhancer,
+      yearEnhancer,
+      handbookEntryModelReferencesEnhancer,
     ],
     generator: [htmlGenerator, excelGenerator],
     configurationSchemas: new Map(),

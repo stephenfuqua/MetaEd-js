@@ -33,8 +33,6 @@ function getPropertyName(property: EntityProperty): string {
   return property.metaEdName;
 }
 
-// TODO: finish once ods is up and running.
-// eslint-disable-next-line
 function generatedTableSqlFor(property: EntityProperty, columnDatatype: string): Array<string> {
   return [`${property.metaEdName} ${columnDatatype}`];
 }
@@ -68,13 +66,14 @@ function createXsdElementFromProperty(
   maxOccursIsUnboundedOverride: boolean | null = null,
 ): ComplexType {
   // eslint-disable-next-line prefer-object-spread
-  return Object.assign({}, newComplexType(), {
+  return Object.assign(newComplexType(), {
     name: property.data.edfiXsd.xsdName,
     type: property.data.edfiXsd.xsdType,
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation: property.documentation,
       descriptorName: property.data.edfiXsd.Xsd_DescriptorNameWithExtension || '',
-    }),
+    },
     minOccurs: calculateMinOccurs(property, minOccursOverride),
     maxOccursIsUnbounded: calculateMaxOccursIsUnbounded(property, maxOccursIsUnboundedOverride),
   });
@@ -92,7 +91,8 @@ export function createDefaultHandbookEntry(
   entityTypeName: string,
   columnDatatype: string,
 ): HandbookEntry {
-  return Object.assign(newHandbookEntry(), {
+  return {
+    ...newHandbookEntry(),
     definition: property.documentation,
     edFiId: property.metaEdId,
     // This is the way the UI seaches for entities
@@ -104,5 +104,5 @@ export function createDefaultHandbookEntry(
     optionList: [],
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(property),
-  });
+  };
 }

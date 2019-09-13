@@ -1,14 +1,14 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
-import { createTimeIntervalSimpleType } from 'metaed-plugin-edfi-xsd';
-import { createDefaultHandbookEntry } from './BaseSimpleTypeMetaEdHandbookEnhancer';
+import { createCurrencySimpleType } from 'metaed-plugin-edfi-xsd';
+import { createDefaultHandbookEntry } from './BaseSimpleTypeHandbookEntryCreator';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
-const enhancerName = 'TimeIntervalMetaEdHandbookEnhancer';
-const timeIntervalName = 'TimeInterval';
-const timeIntervalDocumentation = 'A period of time with fixed, well-defined limits.';
-const timeIntervalEdfiId = '110';
+const enhancerName = 'CurrencyMetaEdHandbookEnhancer';
+const currencyName = 'Currency';
+const currencyDocumentation = 'U.S. currency in dollars and cents.';
+const currencyEdfiId = '36';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
@@ -18,11 +18,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   handbookRepository.handbookEntries.push(
     createDefaultHandbookEntry(
-      createTimeIntervalSimpleType(),
-      timeIntervalEdfiId,
-      timeIntervalName,
-      timeIntervalDocumentation,
-      ColumnDataTypes.duration,
+      createCurrencySimpleType(),
+      currencyEdfiId,
+      currencyName,
+      currencyDocumentation,
+      ColumnDataTypes.currency,
     ),
   );
 
