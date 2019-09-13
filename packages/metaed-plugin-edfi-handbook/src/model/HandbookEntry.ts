@@ -15,7 +15,7 @@ export interface HandbookEntry {
   typeCharacteristics: string[];
   xsdFragment: string;
   repositoryId: string;
-  namespace: string;
+  projectName: string;
   metaEdType: string;
 }
 
@@ -35,7 +35,7 @@ export function newHandbookEntry(): HandbookEntry {
     typeCharacteristics: [],
     xsdFragment: '',
     repositoryId: '',
-    namespace: '',
+    projectName: '',
     metaEdType: '',
   };
 }
