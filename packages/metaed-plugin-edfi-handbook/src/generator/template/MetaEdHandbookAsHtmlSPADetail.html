@@ -1,5 +1,5 @@
 ﻿<div class="col-lg-10 col-md-12 no-float">
-    <h1 class="page-header">{{ctrl.selected.name}} ({{ctrl.selected.projectName}})</h1>
+    <h1 class="page-header">{{ctrl.selected.name}}{{ctrl.selected.deprecationText}}</h1>
     <h3 class="inline-header">Entity Type: {{ctrl.selected.entityType}}</h3>
     <p ng-if="ctrl.selected.edFiId">Ed-Fi ID: {{ctrl.selected.edFiId}}</p>
     <h3>Definition</h3>
@@ -37,7 +37,7 @@
                 <tr ng-repeat="r in ctrl.selected.modelReferencesContainsProperties">
                     <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.edFiId}} - {{r.name}}">{{r.name}}</td>
                     <td ng-if="ctrl.entityExists(r.referenceUniqueIdentifier)">
-                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.edFiId}} - {{r.name}}">{{r.name}}</a>
+                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.edFiId}} - {{r.name}}">{{r.name}}</a>{{r.deprecationText}}
                     </td>
 
                     <td>{{r.dataType}}</td>

@@ -71,6 +71,7 @@ export function createDefaultHandbookEntry(
     entityType: entityTypeName,
     modelReferencesUsedBy: referringProperties(metaEd, property),
     name: property.metaEdName,
+    projectName: property.namespace.projectName,
     odsFragment: generatedTableSqlFor(property),
     optionList: [],
     typeCharacteristics: [],

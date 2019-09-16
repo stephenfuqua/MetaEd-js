@@ -2,6 +2,7 @@ import { HandbookEntityReferenceProperty } from './HandbookEntryReferencePropert
 
 export interface HandbookEntry {
   definition: string;
+  deprecationText: string;
   edFiId: string;
   uniqueIdentifier: string;
   entityType: string;
@@ -22,6 +23,7 @@ export interface HandbookEntry {
 export function newHandbookEntry(): HandbookEntry {
   return {
     definition: '',
+    deprecationText: '',
     edFiId: '',
     uniqueIdentifier: '',
     entityType: '',

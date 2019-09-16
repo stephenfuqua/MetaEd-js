@@ -45,6 +45,7 @@ export function createDefaultHandbookEntry(
     entityType: `${name} Base Type`,
     modelReferencesUsedBy: [],
     name,
+    projectName: 'EdFi',
     odsFragment: generatedTableSqlFor(name, columnDefinition),
     optionList: [],
     typeCharacteristics: [],

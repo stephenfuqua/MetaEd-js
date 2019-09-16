@@ -25,6 +25,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           targetPropertyId: '',
           referenceUniqueIdentifier: y.uniqueIdentifier,
           name: y.name,
+          deprecationText: y.deprecationText,
           dataType: '',
           isIdentity: false,
           cardinality: y.modelReferencesContainsProperties.filter(

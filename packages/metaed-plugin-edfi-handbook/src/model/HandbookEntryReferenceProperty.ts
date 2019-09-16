@@ -8,6 +8,7 @@ export interface HandbookEntityReferenceProperty {
   targetPropertyId: string;
   referenceUniqueIdentifier: string;
   name: string;
+  deprecationText: string;
   dataType: string;
   isIdentity: boolean;
   cardinality: string;

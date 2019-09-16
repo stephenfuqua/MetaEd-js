@@ -100,6 +100,7 @@ export function createDefaultHandbookEntry(
     entityType: entityTypeName,
     modelReferencesUsedBy: [parentNameAndPropertyCardinality(property)],
     name: getPropertyName(property),
+    projectName: property.namespace.projectName,
     odsFragment: generatedTableSqlFor(property, columnDatatype),
     optionList: [],
     typeCharacteristics: [],
