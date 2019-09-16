@@ -13,7 +13,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     (getEntitiesOfTypeForNamespaces([namespace], 'associationSubclass') as AssociationSubclass[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
         ...createDefaultHandbookEntry(entity, '', metaEd),
-        entityType: `${entity.metaEdName} extending ${entity.baseEntityName}`,
+        entityType: entity.metaEdName,
+        baseEntityType: entity.baseEntityName,
+        baseEntityUniqueIdentifier: entity.baseEntity ? entity.baseEntityName + entity.baseEntity.metaEdId : '',
       });
     });
   });

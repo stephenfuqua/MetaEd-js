@@ -1,6 +1,10 @@
 ﻿<div class="col-lg-10 col-md-12 no-float">
     <h1 class="page-header">{{ctrl.selected.name}}{{ctrl.selected.deprecationText}}</h1>
-    <h3 class="inline-header">Entity Type: {{ctrl.selected.entityType}}</h3>
+    <h3 class="inline-header">Entity Type: {{ctrl.selected.entityType}}
+        <span ng-if="ctrl.selected.baseEntityType">extends
+             <a href="#/{{ctrl.selected.baseEntityUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{ctrl.selected.baseEntityType}}">{{ctrl.selected.baseEntityType}}</a>
+        </span>
+    </h3>
     <p ng-if="ctrl.selected.edFiId">Ed-Fi ID: {{ctrl.selected.edFiId}}</p>
     <h3>Definition</h3>
     <p ng-bind-html="ctrl.selected.definition | highlight:$parent.ctrl.search"></p>

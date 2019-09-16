@@ -6,6 +6,8 @@ export interface HandbookEntry {
   edFiId: string;
   uniqueIdentifier: string;
   entityType: string;
+  baseEntityType: string;
+  baseEntityUniqueIdentifier: string;
   modelReferencesContains: string[];
   modelReferencesContainsProperties: HandbookEntityReferenceProperty[];
   modelReferencesUsedBy: string[];
@@ -27,6 +29,8 @@ export function newHandbookEntry(): HandbookEntry {
     edFiId: '',
     uniqueIdentifier: '',
     entityType: '',
+    baseEntityType: '',
+    baseEntityUniqueIdentifier: '',
     modelReferencesContains: [],
     modelReferencesContainsProperties: [],
     modelReferencesUsedBy: [],
