@@ -1,4 +1,7 @@
+BEGIN;
+
 {{#schoolYearEnumerationRows}}
-INSERT INTO [{{{schemaName}}}].[{{{tableName}}}] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('{{{schoolYear}}}', '{{{schoolYearDescription}}}', 'false')
-GO
+INSERT INTO "{{{schemaName}}}"."{{{tableName}}}" ("SchoolYear", "SchoolYearDescription", "CurrentSchoolYear") VALUES ('{{{schoolYear}}}', '{{{schoolYearDescription}}}', 'false') ON CONFLICT ("SchoolYear") DO NOTHING;
 {{/schoolYearEnumerationRows}}
+
+COMMIT;

@@ -1,22 +1,17 @@
 {{#foreignKeys}}
-ALTER TABLE [{{{parentTable.schema}}}].[{{{parentTable.data.edfiOdsPostgresql.tableName}}}] WITH CHECK ADD CONSTRAINT
-[{{{data.edfiOdsPostgresql.name}}}] FOREIGN KEY
-([{{#each data.edfiOdsPostgresql.parentTableColumnNames}}{{this}}{{#unless @last}}], [{{/unless}}{{/each}}])
-REFERENCES [{{{foreignTableSchema}}}].[{{{foreignTable.data.edfiOdsPostgresql.tableName}}}]
-([{{#each data.edfiOdsPostgresql.foreignTableColumnNames}}{{this}}{{#unless @last}}], [{{/unless}}{{/each}}])
+ALTER TABLE "{{{parentTable.schema}}}"."{{{parentTable.data.edfiOdsPostgresql.tableName}}}" ADD CONSTRAINT "{{{data.edfiOdsPostgresql.foreignKeyName}}}" FOREIGN KEY ("{{#each data.edfiOdsPostgresql.parentTableColumnNames}}{{this}}{{#unless @last}}", "{{/unless}}{{/each}}")
+REFERENCES "{{{foreignTableSchema}}}"."{{{foreignTable.data.edfiOdsPostgresql.tableName}}}" ("{{#each data.edfiOdsPostgresql.foreignTableColumnNames}}{{this}}{{#unless @last}}", "{{/unless}}{{/each}}")
 {{#if withDeleteCascade}}
 ON DELETE CASCADE
 {{/if}}
 {{#if withUpdateCascade}}
 ON UPDATE CASCADE
 {{/if}}
-GO
+;
 
 {{#if withReverseForeignKeyIndex}}
-CREATE NONCLUSTERED INDEX [{{{data.edfiOdsPostgresql.name}}}]
-ON [{{{parentTable.schema}}}].[{{{parentTable.data.edfiOdsPostgresql.tableName}}}]
-([{{#each data.edfiOdsPostgresql.parentTableColumnNames}}{{this}}{{#unless @last}}] ASC, [{{/unless}}{{/each}}] ASC)
-GO
+CREATE INDEX "{{{data.edfiOdsPostgresql.foreignKeyName}}}"
+ON "{{{parentTable.schema}}}"."{{{parentTable.data.edfiOdsPostgresql.tableName}}}" ("{{#each data.edfiOdsPostgresql.parentTableColumnNames}}{{this}}{{#unless @last}}" ASC, "{{/unless}}{{/each}}" ASC);
 
 {{/if}}
 {{/foreignKeys}}

@@ -32,10 +32,13 @@ docs/
 Simple-0004-Extension-extension-Tables.sql
 Transcript-0004-Extension-extension-Tables.sql
 
-0020-Tables.diff
+0020-SchoolYears.sql
 0020-Tables.sql
+0020-Tables.diff
 0020-Tables.html
 0030-ForeignKeys.sql
+0040-IdColumnUniqueIndexes.sql
+0050-ExtendedProperties.sql
 
 Simple-0020-Extension-extension-Tables.sql
 SimpleType-0020-Extension-extension-Tables.sql

@@ -21,10 +21,15 @@ describe('when generating schemas for core namespace', (): void => {
     expect(result.generatorName).toEqual('edfiOdsPostgresql.SchemaGenerator');
     expect(result.generatedOutput[0].fileName).toBe('0010-Schemas.sql');
     expect(result.generatedOutput[0].namespace).toBe('EdFi');
-    expect(result.generatedOutput[0].folderName).toBe('/Database/SQLServer/ODS/Structure/');
-    expect(result.generatedOutput[0].name).toBe('ODS SQL Server Schema');
+    expect(result.generatedOutput[0].folderName).toBe('/Database/PostgreSQL/ODS/Structure/');
+    expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Schema');
     expect(result.generatedOutput[0].resultStream).toBeNull();
-    expect(result.generatedOutput[0].resultString).toMatchSnapshot();
+    expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
+      "CREATE SCHEMA auth AUTHORIZATION postgres;
+      CREATE SCHEMA edfi AUTHORIZATION postgres;
+      CREATE SCHEMA util AUTHORIZATION postgres;
+      "
+    `);
   });
 });
 
@@ -48,9 +53,12 @@ describe('when generating schemas for extension namespace', (): void => {
     expect(result.generatorName).toEqual('edfiOdsPostgresql.SchemaGenerator');
     expect(result.generatedOutput[0].fileName).toBe('0010-EXTENSION-Extension-Schemas.sql');
     expect(result.generatedOutput[0].namespace).toBe('Extension');
-    expect(result.generatedOutput[0].folderName).toBe('/Database/SQLServer/ODS/Structure/');
-    expect(result.generatedOutput[0].name).toBe('ODS SQL Server Schema');
+    expect(result.generatedOutput[0].folderName).toBe('/Database/PostgreSQL/ODS/Structure/');
+    expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Schema');
     expect(result.generatedOutput[0].resultStream).toBeNull();
-    expect(result.generatedOutput[0].resultString).toMatchSnapshot();
+    expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
+      "CREATE SCHEMA extension AUTHORIZATION postgres;
+      "
+    `);
   });
 });

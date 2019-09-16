@@ -1,9 +1,9 @@
-import { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
+import { GeneratedOutput, GeneratorResult, MetaEdEnvironment, versionSatisfies } from 'metaed-core';
 import { fileNameFor, structurePath, template } from './OdsGeneratorBase';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
-  const prefix: string = '0010';
+  const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0001' : '0010';
 
   metaEd.namespace.forEach(namespace => {
     const schemaName: string = namespace.namespaceName.toLowerCase();
@@ -12,7 +12,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       : template().coreSchema({ schemaName });
 
     results.push({
-      name: 'ODS SQL Server Schema',
+      name: 'ODS PostgreSQL Schema',
       namespace: namespace.namespaceName,
       folderName: structurePath,
       fileName: fileNameFor(prefix, namespace, 'Schemas'),

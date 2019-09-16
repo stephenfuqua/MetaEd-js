@@ -4,7 +4,7 @@ import path from 'path';
 import R from 'ramda';
 import { Namespace } from 'metaed-core';
 
-export const odsPath = '/Database/SQLServer/ODS/';
+export const odsPath = '/Database/PostgreSQL/ODS/';
 export const dataPath = `${odsPath}Data/`;
 export const structurePath = `${odsPath}Structure/`;
 

@@ -1,4 +1,3 @@
-import R from 'ramda';
 import { EnhancerResult, MetaEdEnvironment, Namespace, orderByPath } from 'metaed-core';
 import {
   tableEntities,
@@ -10,16 +9,6 @@ import {
 } from 'metaed-plugin-edfi-ods-relational';
 
 const enhancerName = 'PostgresqlForeignKeyNamingEnhancer';
-
-const maxPostgresqlIdentifierLength = R.take(128);
-
-function nameFor(foreignKey: ForeignKey): string {
-  return maxPostgresqlIdentifierLength(
-    `FK_${foreignKey.parentTable.data.edfiOdsPostgresql.tableName}_${
-      foreignKey.foreignTable.data.edfiOdsPostgresql.tableName
-    }${foreignKey.data.edfiOdsPostgresql.nameSuffix}`,
-  );
-}
 
 function suffixDuplicates(foreignKeysWithDuplicateForeignTables: ForeignKey[]) {
   foreignKeysWithDuplicateForeignTables.forEach((foreignKey, index) => {
@@ -48,7 +37,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       // add column names
       table.foreignKeys.forEach(foreignKey => {
-        foreignKey.data.edfiOdsPostgresql.name = nameFor(foreignKey);
+        foreignKey.data.edfiOdsPostgresql.foreignKeyName = `FK_${
+          foreignKey.parentTable.data.edfiOdsPostgresql.tableNameHashTruncated
+        }_${foreignKey.foreignTable.data.edfiOdsPostgresql.tableName}${foreignKey.data.edfiOdsPostgresql.nameSuffix}`;
 
         const foreignTable: Table | undefined = tableEntities(metaEd, foreignKey.foreignTableNamespace).get(
           foreignKey.foreignTableId,
@@ -62,7 +53,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       // sort foreign keys in order
-      table.foreignKeys = orderByPath(['data', 'edfiOdsPostgresql', 'name'])(table.foreignKeys);
+      table.foreignKeys = orderByPath(['data', 'edfiOdsPostgresql', 'foreignKeyName'])(table.foreignKeys);
     });
   });
 

@@ -3,6 +3,9 @@ import { tableEntities, Table, Column } from 'metaed-plugin-edfi-ods-relational'
 
 export interface TableEdfiOdsPostgresql {
   tableName: string;
+  primaryKeyName: string;
+  tableNameHashTruncated: string;
+  collapsedNameForOrderingOnly: string;
 }
 
 const enhancerName = 'PostgresqlTableSetupEnhancer';
@@ -12,7 +15,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const tables: Map<string, Table> = tableEntities(metaEd, namespace);
 
     tables.forEach((table: Table) => {
-      if (table.data.edfiOdsPostgresql == null) table.data.edfiOdsPostgresql = { tableName: '' };
+      if (table.data.edfiOdsPostgresql == null)
+        table.data.edfiOdsPostgresql = {
+          tableName: '',
+          primaryKeyName: '',
+          tableNameHash: '',
+          collapsedNameForOrderingOnly: '',
+        };
 
       table.columns.forEach((column: Column) => {
         if (column.data.edfiOdsPostgresql == null) column.data.edfiOdsPostgresql = { columnName: '', dataType: 'unknown' };

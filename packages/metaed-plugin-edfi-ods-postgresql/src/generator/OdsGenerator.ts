@@ -16,7 +16,7 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
     });
 
     results.push({
-      name: 'ODS SQL Server Tables',
+      name: 'ODS PostgreSQL Tables',
       namespace: namespace.namespaceName,
       folderName: structurePath,
       fileName: fileNameFor('0020', namespace, 'Tables'),
@@ -40,7 +40,7 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
     });
 
     results.push({
-      name: 'ODS Foreign Keys',
+      name: 'ODS PostgreSQL Foreign Keys',
       namespace: namespace.namespaceName,
       folderName: structurePath,
       fileName: fileNameFor('0030', namespace, 'ForeignKeys'),
@@ -64,7 +64,7 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
     });
 
     results.push({
-      name: 'ODS SQL Server Extended Properties',
+      name: 'ODS PostgreSQL Extended Properties',
       namespace: namespace.namespaceName,
       folderName: structurePath,
       fileName: fileNameFor('0050', namespace, 'ExtendedProperties'),
@@ -88,7 +88,7 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
     });
 
     results.push({
-      name: 'ODS SQL Server Enumerations',
+      name: 'ODS PostgreSQL Enumerations',
       namespace: namespace.namespaceName,
       folderName: dataPath,
       fileName: fileNameFor('0010', namespace, 'Enumerations'),
@@ -112,7 +112,7 @@ export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<Ge
     });
 
     results.push({
-      name: 'ODS SQL Server School Years',
+      name: 'ODS PostgreSQL School Years',
       namespace: namespace.namespaceName,
       folderName: dataPath,
       fileName: fileNameFor('0020', namespace, 'SchoolYears'),
@@ -145,7 +145,27 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     schoolYearsResult,
   ];
 
-  generatorResults.forEach((result: GeneratorResult) => results.push(...result.generatedOutput));
+  if (versionSatisfies(metaEd.dataStandardVersion, '2.x')) {
+    metaEd.namespace.forEach(namespace => {
+      let resultString = '';
+      generatorResults.forEach((result: GeneratorResult) => {
+        resultString += result.generatedOutput
+          .filter((output: GeneratedOutput) => namespace.namespaceName === output.namespace)
+          .reduce((string: string, output: GeneratedOutput) => string + output.resultString, '');
+      });
+
+      results.push({
+        name: 'ODS PostgreSQL Tables',
+        namespace: namespace.namespaceName,
+        folderName: structurePath,
+        fileName: fileNameFor('0004', namespace, 'Tables'),
+        resultString,
+        resultStream: null,
+      });
+    });
+  } else {
+    generatorResults.forEach((result: GeneratorResult) => results.push(...result.generatedOutput));
+  }
 
   return {
     generatorName: 'edfiOdsPostgresql.OdsGenerator',

@@ -1,4 +1,7 @@
+BEGIN;
+
 {{#enumerationRows}}
-INSERT INTO [{{{schemaName}}}].[{{{tableName}}}] ([CodeValue], [Description], [ShortDescription]) VALUES ('{{{codeValue}}}', '{{{description}}}', '{{{shortDescription}}}')
-GO
+INSERT INTO "{{{schemaName}}}"."{{{tableName}}}"] ("CodeValue", "Description", "ShortDescription") VALUES ('{{{codeValue}}}', '{{{description}}}', '{{{shortDescription}}}') ON CONFLICT ("{{{shortDescription}}}") DO NOTHING;
 {{/enumerationRows}}
+
+COMMIT;

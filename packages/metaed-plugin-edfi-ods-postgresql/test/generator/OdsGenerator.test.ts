@@ -34,8 +34,8 @@ describe('when generating output for namespace', (): void => {
     expect(result.generatorName).toEqual('edfiOdsPostgresql.OdsGenerator');
     expect(result.generatedOutput[0].fileName).toBe(`0020-${namespaceName}-Tables.sql`);
     expect(result.generatedOutput[0].namespace).toBe(namespaceName);
-    expect(result.generatedOutput[0].folderName).toBe('/Database/SQLServer/ODS/Structure/');
-    expect(result.generatedOutput[0].name).toBe('ODS SQL Server Tables');
+    expect(result.generatedOutput[0].folderName).toBe('/Database/PostgreSQL/ODS/Structure/');
+    expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Tables');
     expect(result.generatedOutput[0].resultStream).toBeNull();
     expect(result.generatedOutput[0].resultString).toBe('');
   });

@@ -1,7 +1,7 @@
 import { MetaEdPlugin } from 'metaed-core';
-// import { generate as OdsGenerator } from './generator/OdsGenerator';
-// import { generate as SchemaGenerator } from './generator/SchemaGenerator';
-// import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
+import { generate as OdsGenerator } from './generator/OdsGenerator';
+import { generate as SchemaGenerator } from './generator/SchemaGenerator';
+import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
 
 import { enhance as templateSpecificTablePropertyEnhancer } from './enhancer/TemplateSpecificTablePropertyEnhancer';
 import { enhance as sqlServerTableNamingEnhancer } from './enhancer/PostgresqlTableNamingEnhancer';
@@ -25,8 +25,7 @@ export function initialize(): MetaEdPlugin {
       sqlServerForeignKeyNamingEnhancer,
       addSchemaContainerEnhancer,
     ],
-    generator: [],
-    // generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator],
+    generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator],
     configurationSchemas: new Map(),
   };
 }
