@@ -216,6 +216,7 @@
     "metaed-plugin-edfi-ods-changequery": "2.0.1-dev.6",
     "metaed-plugin-edfi-ods-relational": "2.0.1-dev.6",
     "metaed-plugin-edfi-ods-sqlserver": "2.0.1-dev.6",
+    "metaed-plugin-edfi-ods-postgresql": "2.0.1-dev.6",
     "metaed-plugin-edfi-odsapi": "2.0.1-dev.6",
     "metaed-plugin-edfi-sql-dictionary": "2.0.1-dev.6",
     "metaed-plugin-edfi-udm": "2.0.1-dev.6",
