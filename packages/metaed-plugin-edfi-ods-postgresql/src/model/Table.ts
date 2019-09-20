@@ -5,7 +5,6 @@ export interface TableEdfiOdsPostgresql {
   tableName: string;
   primaryKeyName: string;
   tableNameHashTruncated: string;
-  collapsedNameForOrderingOnly: string;
 }
 
 const enhancerName = 'PostgresqlTableSetupEnhancer';
@@ -20,7 +19,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           tableName: '',
           primaryKeyName: '',
           tableNameHash: '',
-          collapsedNameForOrderingOnly: '',
         };
 
       table.columns.forEach((column: Column) => {

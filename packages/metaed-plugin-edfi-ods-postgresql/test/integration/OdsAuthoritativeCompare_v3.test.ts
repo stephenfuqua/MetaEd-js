@@ -20,6 +20,7 @@ import {
   validateConfiguration,
   walkBuilders,
   GeneratedOutput,
+  GeneratorResult,
 } from 'metaed-core';
 import { Table, tableEntities, rowEntities } from 'metaed-plugin-edfi-ods-relational';
 import { orderRows } from '../../src/enhancer/AddSchemaContainerEnhancer';
@@ -233,8 +234,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
   });
 });
 
-/*
-describe('when generating ods with simple extensions and comparing it to data standard 3.0 authoritative artifacts', (): void => {
+describe('when generating ods with simple extensions and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v3/');
   const sampleExtensionPath: string = path.resolve(__dirname, './simple-extension-project');
 
@@ -250,20 +250,20 @@ describe('when generating ods with simple extensions and comparing it to data st
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      defaultPluginTechVersion: '3.1.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
+      defaultPluginTechVersion: '3.2.0',
+      projectPaths: ['./node_modules/ed-fi-model-3.1/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',
           namespaceName: 'EdFi',
           projectExtension: '',
-          projectVersion: '3.0.0',
+          projectVersion: '3.1.0',
         },
         {
           projectName: 'Extension',
           namespaceName: 'Extension',
           projectExtension: 'Extension',
-          projectVersion: '3.0.0',
+          projectVersion: '3.1.0',
         },
       ],
     };
@@ -272,7 +272,7 @@ describe('when generating ods with simple extensions and comparing it to data st
       ...newState(),
       metaEdConfiguration,
     };
-    state.metaEd.dataStandardVersion = '3.0.0';
+    state.metaEd.dataStandardVersion = '3.1.0';
 
     validateConfiguration(state);
     loadPlugins(state);
@@ -280,7 +280,7 @@ describe('when generating ods with simple extensions and comparing it to data st
       manifest =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
-        manifest.shortName === 'edfiOdsSqlServer',
+        manifest.shortName === 'edfiOdsPostgresql',
     );
     loadFiles(state);
     loadFileIndex(state);
@@ -293,9 +293,9 @@ describe('when generating ods with simple extensions and comparing it to data st
       await runGenerators(pluginManifest, state);
     }
 
-    const generatorResult: GeneratorResult = R.head(
-      state.generatorResults.filter(x => x.generatorName === 'edfiOdsSqlServer.OdsGenerator'),
-    );
+    const generatorResult: GeneratorResult = state.generatorResults.filter(
+      x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
+    )[0];
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
     const coreFileBaseName: string = path.basename(generatedCoreOutput.fileName, '.sql');
@@ -347,20 +347,20 @@ describe('when generating ods with student transcript extensions and comparing i
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      defaultPluginTechVersion: '3.1.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
+      defaultPluginTechVersion: '3.2.0',
+      projectPaths: ['./node_modules/ed-fi-model-3.1/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',
           namespaceName: 'EdFi',
           projectExtension: '',
-          projectVersion: '3.0.0',
+          projectVersion: '3.1.0',
         },
         {
           projectName: 'Extension',
           namespaceName: 'Extension',
           projectExtension: 'Extension',
-          projectVersion: '3.0.0',
+          projectVersion: '3.1.0',
         },
       ],
     };
@@ -369,7 +369,7 @@ describe('when generating ods with student transcript extensions and comparing i
       ...newState(),
       metaEdConfiguration,
     };
-    state.metaEd.dataStandardVersion = '3.0.0';
+    state.metaEd.dataStandardVersion = '3.1.0';
 
     validateConfiguration(state);
     loadPlugins(state);
@@ -377,7 +377,7 @@ describe('when generating ods with student transcript extensions and comparing i
       manifest =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
-        manifest.shortName === 'edfiOdsSqlServer',
+        manifest.shortName === 'edfiOdsPostgresql',
     );
     loadFiles(state);
     loadFileIndex(state);
@@ -390,9 +390,9 @@ describe('when generating ods with student transcript extensions and comparing i
       await runGenerators(pluginManifest, state);
     }
 
-    const generatorResult: GeneratorResult = R.head(
-      state.generatorResults.filter(x => x.generatorName === 'edfiOdsSqlServer.OdsGenerator'),
-    );
+    const generatorResult: GeneratorResult = state.generatorResults.filter(
+      x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
+    )[0];
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
     const coreFileBaseName: string = path.basename(generatedCoreOutput.fileName, '.sql');
@@ -427,4 +427,3 @@ describe('when generating ods with student transcript extensions and comparing i
     expect(expectOneOf).toContain(result);
   });
 });
-*/

@@ -1,15 +1,6 @@
 import hash from 'hash.js';
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import {
-  tableEntities,
-  flattenNameComponentsFromGroup,
-  Table,
-  TableNameGroup,
-  isTableNameGroup,
-  isTableNameComponent,
-  TableNameComponent,
-  appendOverlapCollapsing,
-} from 'metaed-plugin-edfi-ods-relational';
+import { tableEntities, Table, TableNameGroup, flattenNameComponentsFromGroup } from 'metaed-plugin-edfi-ods-relational';
 import { TableEdfiOdsPostgresql } from '../model/Table';
 
 const enhancerName = 'PostgresqlTableNamingEnhancer';
@@ -24,34 +15,6 @@ type TableNaming = {
   primaryKeyName: string;
   tableNameHashTruncated: string;
 };
-
-function simpleTableNameGroupCollapse(nameGroup: TableNameGroup): string {
-  return flattenNameComponentsFromGroup(nameGroup)
-    .map(nameComponent => nameComponent.name)
-    .reduce(appendOverlapCollapsing, '');
-}
-
-export function constructCollapsedNameFrom(nameGroup: TableNameGroup): string {
-  let name = '';
-  if (nameGroup.sourceProperty != null) {
-    // name groups from association and domain entity properties don't get table names collapsed
-    if (nameGroup.sourceProperty.type === 'association' || nameGroup.sourceProperty.type === 'domainEntity') {
-      nameGroup.nameElements.forEach(element => {
-        if (isTableNameGroup(element)) name += constructCollapsedNameFrom(element as TableNameGroup);
-        if (isTableNameComponent(element)) name += (element as TableNameComponent).name;
-      });
-    } else {
-      // all other name groups from properties get table names collasped
-      name += simpleTableNameGroupCollapse(nameGroup);
-    }
-  } else if (nameGroup.sourceEntity != null) {
-    // all name groups from entities get table names collasped
-    name += simpleTableNameGroupCollapse(nameGroup);
-  } /* assume synthetic - get table names collapsed */ else {
-    name += simpleTableNameGroupCollapse(nameGroup);
-  }
-  return name;
-}
 
 function populateTruncatedLengths(availableLength: number, components: ComponentInfo[]) {
   // ignore if already allocated
@@ -132,6 +95,9 @@ export function postgresqlTableNames(tableNameComponents: string[]): TableNaming
   return { tableName: `${tableNameBeforeHash}_${tableNameHash.substring(0, 6)}`, primaryKeyName, tableNameHashTruncated };
 }
 
+/**
+ * Do not collapse any table names.  To collapse like SQL Server, remove and replace with import of constructCollapsedNameFrom()
+ */
 function constructNameFrom(nameGroup: TableNameGroup): TableNaming {
   const tableNameStrings: string[] = flattenNameComponentsFromGroup(nameGroup).map(nameComponent => nameComponent.name);
   return postgresqlTableNames(tableNameStrings);
@@ -144,9 +110,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     tables.forEach((table: Table) => {
       if (table.data.edfiOdsPostgresql == null) table.data.edfiOdsPostgresql = {};
       Object.assign(table.data.edfiOdsPostgresql as TableEdfiOdsPostgresql, constructNameFrom(table.nameGroup));
-      (table.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).collapsedNameForOrderingOnly = constructCollapsedNameFrom(
-        table.nameGroup,
-      );
     });
   });
 

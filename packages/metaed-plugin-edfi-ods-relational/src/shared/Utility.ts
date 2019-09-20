@@ -1,3 +1,6 @@
+import { TableNameGroup, isTableNameGroup, isTableNameComponent, TableNameComponent } from '../model/database/Table';
+import { flattenNameComponentsFromGroup } from '../model/database/TableNameGroupHelper';
+
 export function prependRoleNameToMetaEdName(metaEdName: string, roleName: string) {
   return roleName + metaEdName;
 }
@@ -23,4 +26,31 @@ export function appendOverlapCollapsing(accumulated: string, current: string): s
   if (indexOfOverlap < 0) return accumulated + current;
   if (indexOfOverlap <= current.length) return accumulated + current.substring(indexOfOverlap);
   return accumulated;
+}
+
+export function simpleTableNameGroupCollapse(nameGroup: TableNameGroup): string {
+  return flattenNameComponentsFromGroup(nameGroup)
+    .map(nameComponent => nameComponent.name)
+    .reduce(appendOverlapCollapsing, '');
+}
+
+/**
+ * Implement standard Ed-Fi ODS table name collapsing
+ */
+export function constructCollapsedNameFrom(nameGroup: TableNameGroup): string {
+  let name = '';
+  // name groups from association and domain entity properties don't get table names collapsed
+  if (
+    nameGroup.sourceProperty != null &&
+    (nameGroup.sourceProperty.type === 'association' || nameGroup.sourceProperty.type === 'domainEntity')
+  ) {
+    nameGroup.nameElements.forEach(element => {
+      if (isTableNameGroup(element)) name += constructCollapsedNameFrom(element as TableNameGroup);
+      if (isTableNameComponent(element)) name += (element as TableNameComponent).name;
+    });
+  } else {
+    // in all other scenarios name groups get table names collasped
+    name += simpleTableNameGroupCollapse(nameGroup);
+  }
+  return name;
 }

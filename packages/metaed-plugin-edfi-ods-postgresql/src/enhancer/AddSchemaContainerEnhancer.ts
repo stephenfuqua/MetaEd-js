@@ -18,7 +18,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const rows: EnumerationRowBase[] = Array.from(rowEntities(metaEd, namespace).values()).filter(
       (row: EnumerationRowBase) => row.namespace === namespace.namespaceName,
     );
-    const tables: Table[] = orderByPath(['data', 'edfiOdsPostgresql', 'collapsedNameForOrderingOnly'])(
+    const tables: Table[] = orderByPath(['data', 'edfiOdsPostgresql', 'tableName'])(
       Array.from(tableEntities(metaEd, namespace).values()).filter(
         (table: Table) => table.schema === namespace.namespaceName.toLowerCase(),
       ),

@@ -200,6 +200,57 @@ CREATE TABLE edfi.AssessmentAssessedGradeLevel (
 ); 
 ALTER TABLE edfi.AssessmentAssessedGradeLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
+-- Table edfi.AssessmentAssessmentIdentificationCode --
+CREATE TABLE edfi.AssessmentAssessmentIdentificationCode (
+    AssessmentIdentificationSystemDescriptorId INT NOT NULL,
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    AssigningOrganizationIdentificationCode VARCHAR(60) NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT AssessmentAssessmentIdentificationCode_PK PRIMARY KEY (AssessmentIdentificationSystemDescriptorId, AssessmentIdentifier, Namespace)
+); 
+ALTER TABLE edfi.AssessmentAssessmentIdentificationCode ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.AssessmentAssessmentPerformanceLevel --
+CREATE TABLE edfi.AssessmentAssessmentPerformanceLevel (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    AssessmentReportingMethodDescriptorId INT NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    PerformanceLevelDescriptorId INT NOT NULL,
+    MinimumScore VARCHAR(35) NULL,
+    MaximumScore VARCHAR(35) NULL,
+    ResultDatatypeTypeDescriptorId INT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT AssessmentAssessmentPerformanceLevel_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, Namespace, PerformanceLevelDescriptorId)
+); 
+ALTER TABLE edfi.AssessmentAssessmentPerformanceLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.AssessmentAssessmentPeriod --
+CREATE TABLE edfi.AssessmentAssessmentPeriod (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    AssessmentPeriodDescriptorId INT NOT NULL,
+    BeginDate DATE NULL,
+    EndDate DATE NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT AssessmentAssessmentPeriod_PK PRIMARY KEY (AssessmentIdentifier, Namespace)
+); 
+ALTER TABLE edfi.AssessmentAssessmentPeriod ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.AssessmentAssessmentScore --
+CREATE TABLE edfi.AssessmentAssessmentScore (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    AssessmentReportingMethodDescriptorId INT NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    MinimumScore VARCHAR(35) NULL,
+    MaximumScore VARCHAR(35) NULL,
+    ResultDatatypeTypeDescriptorId INT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT AssessmentAssessmentScore_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, Namespace)
+); 
+ALTER TABLE edfi.AssessmentAssessmentScore ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
 -- Table edfi.AssessmentCategoryDescriptor --
 CREATE TABLE edfi.AssessmentCategoryDescriptor (
     AssessmentCategoryDescriptorId INT NOT NULL,
@@ -233,18 +284,6 @@ CREATE TABLE edfi.AssessmentContentStandardAuthor (
     CONSTRAINT AssessmentContentStandardAuthor_PK PRIMARY KEY (AssessmentIdentifier, Author, Namespace)
 ); 
 ALTER TABLE edfi.AssessmentContentStandardAuthor ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.AssessmentAssessmentIdentificationCode --
-CREATE TABLE edfi.AssessmentAssessmentIdentificationCode (
-    AssessmentIdentificationSystemDescriptorId INT NOT NULL,
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    AssigningOrganizationIdentificationCode VARCHAR(60) NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT AssessmentAssessmentIdentificationCode_PK PRIMARY KEY (AssessmentIdentificationSystemDescriptorId, AssessmentIdentifier, Namespace)
-); 
-ALTER TABLE edfi.AssessmentAssessmentIdentificationCode ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.AssessmentIdentificationSystemDescriptor --
 CREATE TABLE edfi.AssessmentIdentificationSystemDescriptor (
@@ -306,32 +345,6 @@ CREATE TABLE edfi.AssessmentLanguage (
 ); 
 ALTER TABLE edfi.AssessmentLanguage ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.AssessmentAssessmentPerformanceLevel --
-CREATE TABLE edfi.AssessmentAssessmentPerformanceLevel (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    AssessmentReportingMethodDescriptorId INT NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    PerformanceLevelDescriptorId INT NOT NULL,
-    MinimumScore VARCHAR(35) NULL,
-    MaximumScore VARCHAR(35) NULL,
-    ResultDatatypeTypeDescriptorId INT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT AssessmentAssessmentPerformanceLevel_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, Namespace, PerformanceLevelDescriptorId)
-); 
-ALTER TABLE edfi.AssessmentAssessmentPerformanceLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.AssessmentAssessmentPeriod --
-CREATE TABLE edfi.AssessmentAssessmentPeriod (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    AssessmentPeriodDescriptorId INT NOT NULL,
-    BeginDate DATE NULL,
-    EndDate DATE NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT AssessmentAssessmentPeriod_PK PRIMARY KEY (AssessmentIdentifier, Namespace)
-); 
-ALTER TABLE edfi.AssessmentAssessmentPeriod ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.AssessmentPeriodDescriptor --
 CREATE TABLE edfi.AssessmentPeriodDescriptor (
     AssessmentPeriodDescriptorId INT NOT NULL,
@@ -355,19 +368,6 @@ CREATE TABLE edfi.AssessmentReportingMethodDescriptor (
     AssessmentReportingMethodDescriptorId INT NOT NULL,
     CONSTRAINT AssessmentReportingMethodDescriptor_PK PRIMARY KEY (AssessmentReportingMethodDescriptorId)
 ); 
-
--- Table edfi.AssessmentAssessmentScore --
-CREATE TABLE edfi.AssessmentAssessmentScore (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    AssessmentReportingMethodDescriptorId INT NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    MinimumScore VARCHAR(35) NULL,
-    MaximumScore VARCHAR(35) NULL,
-    ResultDatatypeTypeDescriptorId INT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT AssessmentAssessmentScore_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, Namespace)
-); 
-ALTER TABLE edfi.AssessmentAssessmentScore ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.AssessmentSection --
 CREATE TABLE edfi.AssessmentSection (
@@ -794,18 +794,6 @@ CREATE TABLE edfi.CourseCompetencyLevel (
 ); 
 ALTER TABLE edfi.CourseCompetencyLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.CourseDefinedByDescriptor --
-CREATE TABLE edfi.CourseDefinedByDescriptor (
-    CourseDefinedByDescriptorId INT NOT NULL,
-    CONSTRAINT CourseDefinedByDescriptor_PK PRIMARY KEY (CourseDefinedByDescriptorId)
-); 
-
--- Table edfi.CourseGPAApplicabilityDescriptor --
-CREATE TABLE edfi.CourseGPAApplicabilityDescriptor (
-    CourseGPAApplicabilityDescriptorId INT NOT NULL,
-    CONSTRAINT CourseGPAApplicabilityDescriptor_PK PRIMARY KEY (CourseGPAApplicabilityDescriptorId)
-); 
-
 -- Table edfi.CourseCourseIdentificationCode --
 CREATE TABLE edfi.CourseCourseIdentificationCode (
     CourseCode VARCHAR(60) NOT NULL,
@@ -817,6 +805,28 @@ CREATE TABLE edfi.CourseCourseIdentificationCode (
     CONSTRAINT CourseCourseIdentificationCode_PK PRIMARY KEY (CourseCode, CourseIdentificationSystemDescriptorId, EducationOrganizationId)
 ); 
 ALTER TABLE edfi.CourseCourseIdentificationCode ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.CourseCourseLevelCharacteristic --
+CREATE TABLE edfi.CourseCourseLevelCharacteristic (
+    CourseCode VARCHAR(60) NOT NULL,
+    CourseLevelCharacteristicDescriptorId INT NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT CourseCourseLevelCharacteristic_PK PRIMARY KEY (CourseCode, CourseLevelCharacteristicDescriptorId, EducationOrganizationId)
+); 
+ALTER TABLE edfi.CourseCourseLevelCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.CourseDefinedByDescriptor --
+CREATE TABLE edfi.CourseDefinedByDescriptor (
+    CourseDefinedByDescriptorId INT NOT NULL,
+    CONSTRAINT CourseDefinedByDescriptor_PK PRIMARY KEY (CourseDefinedByDescriptorId)
+); 
+
+-- Table edfi.CourseGPAApplicabilityDescriptor --
+CREATE TABLE edfi.CourseGPAApplicabilityDescriptor (
+    CourseGPAApplicabilityDescriptorId INT NOT NULL,
+    CONSTRAINT CourseGPAApplicabilityDescriptor_PK PRIMARY KEY (CourseGPAApplicabilityDescriptorId)
+); 
 
 -- Table edfi.CourseIdentificationSystemDescriptor --
 CREATE TABLE edfi.CourseIdentificationSystemDescriptor (
@@ -844,16 +854,6 @@ CREATE TABLE edfi.CourseLearningStandard (
     CONSTRAINT CourseLearningStandard_PK PRIMARY KEY (CourseCode, EducationOrganizationId, LearningStandardId)
 ); 
 ALTER TABLE edfi.CourseLearningStandard ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.CourseCourseLevelCharacteristic --
-CREATE TABLE edfi.CourseCourseLevelCharacteristic (
-    CourseCode VARCHAR(60) NOT NULL,
-    CourseLevelCharacteristicDescriptorId INT NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT CourseCourseLevelCharacteristic_PK PRIMARY KEY (CourseCode, CourseLevelCharacteristicDescriptorId, EducationOrganizationId)
-); 
-ALTER TABLE edfi.CourseCourseLevelCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.CourseLevelCharacteristicDescriptor --
 CREATE TABLE edfi.CourseLevelCharacteristicDescriptor (
@@ -1383,6 +1383,12 @@ CREATE TABLE edfi.EducationOrganizationAddressPeriod (
 ); 
 ALTER TABLE edfi.EducationOrganizationAddressPeriod ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
+-- Table edfi.EducationOrganizationCategoryDescriptor --
+CREATE TABLE edfi.EducationOrganizationCategoryDescriptor (
+    EducationOrganizationCategoryDescriptorId INT NOT NULL,
+    CONSTRAINT EducationOrganizationCategoryDescriptor_PK PRIMARY KEY (EducationOrganizationCategoryDescriptorId)
+); 
+
 -- Table edfi.EducationOrganizationEducationOrganizationCategory --
 CREATE TABLE edfi.EducationOrganizationEducationOrganizationCategory (
     EducationOrganizationCategoryDescriptorId INT NOT NULL,
@@ -1391,12 +1397,6 @@ CREATE TABLE edfi.EducationOrganizationEducationOrganizationCategory (
     CONSTRAINT EducationOrganizationEducationOrganizationCategory_PK PRIMARY KEY (EducationOrganizationCategoryDescriptorId, EducationOrganizationId)
 ); 
 ALTER TABLE edfi.EducationOrganizationEducationOrganizationCategory ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.EducationOrganizationCategoryDescriptor --
-CREATE TABLE edfi.EducationOrganizationCategoryDescriptor (
-    EducationOrganizationCategoryDescriptorId INT NOT NULL,
-    CONSTRAINT EducationOrganizationCategoryDescriptor_PK PRIMARY KEY (EducationOrganizationCategoryDescriptorId)
-); 
 
 -- Table edfi.EducationOrganizationEducationOrganizationIdentificationCode --
 CREATE TABLE edfi.EducationOrganizationEducationOrganizationIdentificationCode (
@@ -2268,16 +2268,6 @@ CREATE TABLE edfi.LearningObjectiveContentStandardAuthor (
 ); 
 ALTER TABLE edfi.LearningObjectiveContentStandardAuthor ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.LearningObjectiveObjectiveGradeLevel --
-CREATE TABLE edfi.LearningObjectiveObjectiveGradeLevel (
-    GradeLevelDescriptorId INT NOT NULL,
-    LearningObjectiveId VARCHAR(60) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT LearningObjectiveObjectiveGradeLevel_PK PRIMARY KEY (GradeLevelDescriptorId, LearningObjectiveId, Namespace)
-); 
-ALTER TABLE edfi.LearningObjectiveObjectiveGradeLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.LearningObjectiveLearningStandard --
 CREATE TABLE edfi.LearningObjectiveLearningStandard (
     LearningObjectiveId VARCHAR(60) NOT NULL,
@@ -2287,6 +2277,16 @@ CREATE TABLE edfi.LearningObjectiveLearningStandard (
     CONSTRAINT LearningObjectiveLearningStandard_PK PRIMARY KEY (LearningObjectiveId, LearningStandardId, Namespace)
 ); 
 ALTER TABLE edfi.LearningObjectiveLearningStandard ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.LearningObjectiveObjectiveGradeLevel --
+CREATE TABLE edfi.LearningObjectiveObjectiveGradeLevel (
+    GradeLevelDescriptorId INT NOT NULL,
+    LearningObjectiveId VARCHAR(60) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT LearningObjectiveObjectiveGradeLevel_PK PRIMARY KEY (GradeLevelDescriptorId, LearningObjectiveId, Namespace)
+); 
+ALTER TABLE edfi.LearningObjectiveObjectiveGradeLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.LearningStandard --
 CREATE TABLE edfi.LearningStandard (
@@ -2419,6 +2419,12 @@ CREATE TABLE edfi.LocalEducationAgency (
     CONSTRAINT LocalEducationAgency_PK PRIMARY KEY (LocalEducationAgencyId)
 ); 
 
+-- Table edfi.LocalEducationAgencyCategoryDescriptor --
+CREATE TABLE edfi.LocalEducationAgencyCategoryDescriptor (
+    LocalEducationAgencyCategoryDescriptorId INT NOT NULL,
+    CONSTRAINT LocalEducationAgencyCategoryDescriptor_PK PRIMARY KEY (LocalEducationAgencyCategoryDescriptorId)
+); 
+
 -- Table edfi.LocalEducationAgencyLocalEducationAgencyAccountability --
 CREATE TABLE edfi.LocalEducationAgencyLocalEducationAgencyAccountability (
     LocalEducationAgencyId INT NOT NULL,
@@ -2429,12 +2435,6 @@ CREATE TABLE edfi.LocalEducationAgencyLocalEducationAgencyAccountability (
     CONSTRAINT LocalEducationAgencyLocalEducationAgencyAccountability_PK PRIMARY KEY (LocalEducationAgencyId, SchoolYear)
 ); 
 ALTER TABLE edfi.LocalEducationAgencyLocalEducationAgencyAccountability ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.LocalEducationAgencyCategoryDescriptor --
-CREATE TABLE edfi.LocalEducationAgencyCategoryDescriptor (
-    LocalEducationAgencyCategoryDescriptorId INT NOT NULL,
-    CONSTRAINT LocalEducationAgencyCategoryDescriptor_PK PRIMARY KEY (LocalEducationAgencyCategoryDescriptorId)
-); 
 
 -- Table edfi.LocalEducationAgencyLocalEducationAgencyFederalFunds --
 CREATE TABLE edfi.LocalEducationAgencyLocalEducationAgencyFederalFunds (
@@ -2548,29 +2548,6 @@ CREATE TABLE edfi.ObjectiveAssessmentAssessmentItem (
 ); 
 ALTER TABLE edfi.ObjectiveAssessmentAssessmentItem ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.ObjectiveAssessmentLearningObjective --
-CREATE TABLE edfi.ObjectiveAssessmentLearningObjective (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    LearningObjectiveId VARCHAR(60) NOT NULL,
-    LearningObjectiveNamespace VARCHAR(255) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT ObjectiveAssessmentLearningObjective_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, LearningObjectiveId, LearningObjectiveNamespace, Namespace)
-); 
-ALTER TABLE edfi.ObjectiveAssessmentLearningObjective ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.ObjectiveAssessmentLearningStandard --
-CREATE TABLE edfi.ObjectiveAssessmentLearningStandard (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    LearningStandardId VARCHAR(60) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT ObjectiveAssessmentLearningStandard_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, LearningStandardId, Namespace)
-); 
-ALTER TABLE edfi.ObjectiveAssessmentLearningStandard ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.ObjectiveAssessmentAssessmentPerformanceLevel --
 CREATE TABLE edfi.ObjectiveAssessmentAssessmentPerformanceLevel (
     AssessmentIdentifier VARCHAR(60) NOT NULL,
@@ -2599,6 +2576,29 @@ CREATE TABLE edfi.ObjectiveAssessmentAssessmentScore (
     CONSTRAINT ObjectiveAssessmentAssessmentScore_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, IdentificationCode, Namespace)
 ); 
 ALTER TABLE edfi.ObjectiveAssessmentAssessmentScore ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.ObjectiveAssessmentLearningObjective --
+CREATE TABLE edfi.ObjectiveAssessmentLearningObjective (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    LearningObjectiveId VARCHAR(60) NOT NULL,
+    LearningObjectiveNamespace VARCHAR(255) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT ObjectiveAssessmentLearningObjective_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, LearningObjectiveId, LearningObjectiveNamespace, Namespace)
+); 
+ALTER TABLE edfi.ObjectiveAssessmentLearningObjective ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.ObjectiveAssessmentLearningStandard --
+CREATE TABLE edfi.ObjectiveAssessmentLearningStandard (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    LearningStandardId VARCHAR(60) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT ObjectiveAssessmentLearningStandard_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, LearningStandardId, Namespace)
+); 
+ALTER TABLE edfi.ObjectiveAssessmentLearningStandard ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.OldEthnicityDescriptor --
 CREATE TABLE edfi.OldEthnicityDescriptor (
@@ -2933,17 +2933,6 @@ CREATE TABLE edfi.ProgramAssignmentDescriptor (
     CONSTRAINT ProgramAssignmentDescriptor_PK PRIMARY KEY (ProgramAssignmentDescriptorId)
 ); 
 
--- Table edfi.ProgramProgramCharacteristic --
-CREATE TABLE edfi.ProgramProgramCharacteristic (
-    EducationOrganizationId INT NOT NULL,
-    ProgramCharacteristicDescriptorId INT NOT NULL,
-    ProgramName VARCHAR(60) NOT NULL,
-    ProgramTypeDescriptorId INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT ProgramProgramCharacteristic_PK PRIMARY KEY (EducationOrganizationId, ProgramCharacteristicDescriptorId, ProgramName, ProgramTypeDescriptorId)
-); 
-ALTER TABLE edfi.ProgramProgramCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.ProgramCharacteristicDescriptor --
 CREATE TABLE edfi.ProgramCharacteristicDescriptor (
     ProgramCharacteristicDescriptorId INT NOT NULL,
@@ -2973,16 +2962,16 @@ CREATE TABLE edfi.ProgramLearningStandard (
 ); 
 ALTER TABLE edfi.ProgramLearningStandard ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.ProgramService --
-CREATE TABLE edfi.ProgramService (
+-- Table edfi.ProgramProgramCharacteristic --
+CREATE TABLE edfi.ProgramProgramCharacteristic (
     EducationOrganizationId INT NOT NULL,
+    ProgramCharacteristicDescriptorId INT NOT NULL,
     ProgramName VARCHAR(60) NOT NULL,
     ProgramTypeDescriptorId INT NOT NULL,
-    ServiceDescriptorId INT NOT NULL,
     CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT ProgramService_PK PRIMARY KEY (EducationOrganizationId, ProgramName, ProgramTypeDescriptorId, ServiceDescriptorId)
+    CONSTRAINT ProgramProgramCharacteristic_PK PRIMARY KEY (EducationOrganizationId, ProgramCharacteristicDescriptorId, ProgramName, ProgramTypeDescriptorId)
 ); 
-ALTER TABLE edfi.ProgramService ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+ALTER TABLE edfi.ProgramProgramCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.ProgramProgramSponsor --
 CREATE TABLE edfi.ProgramProgramSponsor (
@@ -2994,6 +2983,17 @@ CREATE TABLE edfi.ProgramProgramSponsor (
     CONSTRAINT ProgramProgramSponsor_PK PRIMARY KEY (EducationOrganizationId, ProgramName, ProgramSponsorDescriptorId, ProgramTypeDescriptorId)
 ); 
 ALTER TABLE edfi.ProgramProgramSponsor ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.ProgramService --
+CREATE TABLE edfi.ProgramService (
+    EducationOrganizationId INT NOT NULL,
+    ProgramName VARCHAR(60) NOT NULL,
+    ProgramTypeDescriptorId INT NOT NULL,
+    ServiceDescriptorId INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT ProgramService_PK PRIMARY KEY (EducationOrganizationId, ProgramName, ProgramTypeDescriptorId, ServiceDescriptorId)
+); 
+ALTER TABLE edfi.ProgramService ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.ProgramSponsorDescriptor --
 CREATE TABLE edfi.ProgramSponsorDescriptor (
@@ -3207,6 +3207,12 @@ CREATE TABLE edfi.RestraintEventProgram (
 ); 
 ALTER TABLE edfi.RestraintEventProgram ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
+-- Table edfi.RestraintEventReasonDescriptor --
+CREATE TABLE edfi.RestraintEventReasonDescriptor (
+    RestraintEventReasonDescriptorId INT NOT NULL,
+    CONSTRAINT RestraintEventReasonDescriptor_PK PRIMARY KEY (RestraintEventReasonDescriptorId)
+); 
+
 -- Table edfi.RestraintEventRestraintEventReason --
 CREATE TABLE edfi.RestraintEventRestraintEventReason (
     RestraintEventIdentifier VARCHAR(20) NOT NULL,
@@ -3217,12 +3223,6 @@ CREATE TABLE edfi.RestraintEventRestraintEventReason (
     CONSTRAINT RestraintEventRestraintEventReason_PK PRIMARY KEY (RestraintEventIdentifier, RestraintEventReasonDescriptorId, SchoolId, StudentUSI)
 ); 
 ALTER TABLE edfi.RestraintEventRestraintEventReason ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.RestraintEventReasonDescriptor --
-CREATE TABLE edfi.RestraintEventReasonDescriptor (
-    RestraintEventReasonDescriptorId INT NOT NULL,
-    CONSTRAINT RestraintEventReasonDescriptor_PK PRIMARY KEY (RestraintEventReasonDescriptorId)
-); 
 
 -- Table edfi.ResultDatatypeTypeDescriptor --
 CREATE TABLE edfi.ResultDatatypeTypeDescriptor (
@@ -3251,15 +3251,6 @@ CREATE TABLE edfi.School (
     CONSTRAINT School_PK PRIMARY KEY (SchoolId)
 ); 
 
--- Table edfi.SchoolSchoolCategory --
-CREATE TABLE edfi.SchoolSchoolCategory (
-    SchoolCategoryDescriptorId INT NOT NULL,
-    SchoolId INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT SchoolSchoolCategory_PK PRIMARY KEY (SchoolCategoryDescriptorId, SchoolId)
-); 
-ALTER TABLE edfi.SchoolSchoolCategory ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.SchoolCategoryDescriptor --
 CREATE TABLE edfi.SchoolCategoryDescriptor (
     SchoolCategoryDescriptorId INT NOT NULL,
@@ -3286,6 +3277,15 @@ CREATE TABLE edfi.SchoolGradeLevel (
     CONSTRAINT SchoolGradeLevel_PK PRIMARY KEY (GradeLevelDescriptorId, SchoolId)
 ); 
 ALTER TABLE edfi.SchoolGradeLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.SchoolSchoolCategory --
+CREATE TABLE edfi.SchoolSchoolCategory (
+    SchoolCategoryDescriptorId INT NOT NULL,
+    SchoolId INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT SchoolSchoolCategory_PK PRIMARY KEY (SchoolCategoryDescriptorId, SchoolId)
+); 
+ALTER TABLE edfi.SchoolSchoolCategory ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.SchoolTypeDescriptor --
 CREATE TABLE edfi.SchoolTypeDescriptor (
@@ -3355,19 +3355,6 @@ ALTER TABLE edfi.SectionAttendanceTakenEvent ALTER COLUMN CreateDate SET DEFAULT
 ALTER TABLE edfi.SectionAttendanceTakenEvent ALTER COLUMN Id SET DEFAULT gen_random_uuid();
 ALTER TABLE edfi.SectionAttendanceTakenEvent ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
 
--- Table edfi.SectionSectionCharacteristic --
-CREATE TABLE edfi.SectionSectionCharacteristic (
-    LocalCourseCode VARCHAR(60) NOT NULL,
-    SchoolId INT NOT NULL,
-    SchoolYear SMALLINT NOT NULL,
-    SectionCharacteristicDescriptorId INT NOT NULL,
-    SectionIdentifier VARCHAR(255) NOT NULL,
-    SessionName VARCHAR(60) NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT SectionSectionCharacteristic_PK PRIMARY KEY (LocalCourseCode, SchoolId, SchoolYear, SectionCharacteristicDescriptorId, SectionIdentifier, SessionName)
-); 
-ALTER TABLE edfi.SectionSectionCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.SectionCharacteristicDescriptor --
 CREATE TABLE edfi.SectionCharacteristicDescriptor (
     SectionCharacteristicDescriptorId INT NOT NULL,
@@ -3427,6 +3414,19 @@ CREATE TABLE edfi.SectionProgram (
     CONSTRAINT SectionProgram_PK PRIMARY KEY (EducationOrganizationId, LocalCourseCode, ProgramName, ProgramTypeDescriptorId, SchoolId, SchoolYear, SectionIdentifier, SessionName)
 ); 
 ALTER TABLE edfi.SectionProgram ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.SectionSectionCharacteristic --
+CREATE TABLE edfi.SectionSectionCharacteristic (
+    LocalCourseCode VARCHAR(60) NOT NULL,
+    SchoolId INT NOT NULL,
+    SchoolYear SMALLINT NOT NULL,
+    SectionCharacteristicDescriptorId INT NOT NULL,
+    SectionIdentifier VARCHAR(255) NOT NULL,
+    SessionName VARCHAR(60) NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT SectionSectionCharacteristic_PK PRIMARY KEY (LocalCourseCode, SchoolId, SchoolYear, SectionCharacteristicDescriptorId, SectionIdentifier, SessionName)
+); 
+ALTER TABLE edfi.SectionSectionCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.SeparationDescriptor --
 CREATE TABLE edfi.SeparationDescriptor (
@@ -3750,17 +3750,6 @@ CREATE TABLE edfi.StaffElectronicMail (
 ); 
 ALTER TABLE edfi.StaffElectronicMail ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.StaffStaffIdentificationCode --
-CREATE TABLE edfi.StaffStaffIdentificationCode (
-    StaffIdentificationSystemDescriptorId INT NOT NULL,
-    StaffUSI INT NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    AssigningOrganizationIdentificationCode VARCHAR(60) NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StaffStaffIdentificationCode_PK PRIMARY KEY (StaffIdentificationSystemDescriptorId, StaffUSI)
-); 
-ALTER TABLE edfi.StaffStaffIdentificationCode ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.StaffIdentificationDocument --
 CREATE TABLE edfi.StaffIdentificationDocument (
     IdentificationDocumentUseDescriptorId INT NOT NULL,
@@ -3983,6 +3972,17 @@ CREATE TABLE edfi.StaffSectionAssociation (
 ALTER TABLE edfi.StaffSectionAssociation ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 ALTER TABLE edfi.StaffSectionAssociation ALTER COLUMN Id SET DEFAULT gen_random_uuid();
 ALTER TABLE edfi.StaffSectionAssociation ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StaffStaffIdentificationCode --
+CREATE TABLE edfi.StaffStaffIdentificationCode (
+    StaffIdentificationSystemDescriptorId INT NOT NULL,
+    StaffUSI INT NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    AssigningOrganizationIdentificationCode VARCHAR(60) NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StaffStaffIdentificationCode_PK PRIMARY KEY (StaffIdentificationSystemDescriptorId, StaffUSI)
+); 
+ALTER TABLE edfi.StaffStaffIdentificationCode ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.StaffTelephone --
 CREATE TABLE edfi.StaffTelephone (
@@ -4254,24 +4254,6 @@ CREATE TABLE edfi.StudentAssessmentAccommodation (
 ); 
 ALTER TABLE edfi.StudentAssessmentAccommodation ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.StudentAssessmentStudentAssessmentItem --
-CREATE TABLE edfi.StudentAssessmentStudentAssessmentItem (
-    AssessmentIdentifier VARCHAR(60) NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    Namespace VARCHAR(255) NOT NULL,
-    StudentAssessmentIdentifier VARCHAR(60) NOT NULL,
-    StudentUSI INT NOT NULL,
-    AssessmentResponse VARCHAR(60) NULL,
-    DescriptiveFeedback VARCHAR(1024) NULL,
-    ResponseIndicatorDescriptorId INT NULL,
-    AssessmentItemResultDescriptorId INT NOT NULL,
-    RawScoreResult INT NULL,
-    TimeAssessed VARCHAR(30) NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentAssessmentStudentAssessmentItem_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, Namespace, StudentAssessmentIdentifier, StudentUSI)
-); 
-ALTER TABLE edfi.StudentAssessmentStudentAssessmentItem ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.StudentAssessmentPerformanceLevel --
 CREATE TABLE edfi.StudentAssessmentPerformanceLevel (
     AssessmentIdentifier VARCHAR(60) NOT NULL,
@@ -4299,6 +4281,24 @@ CREATE TABLE edfi.StudentAssessmentScoreResult (
     CONSTRAINT StudentAssessmentScoreResult_PK PRIMARY KEY (AssessmentIdentifier, AssessmentReportingMethodDescriptorId, Namespace, StudentAssessmentIdentifier, StudentUSI)
 ); 
 ALTER TABLE edfi.StudentAssessmentScoreResult ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentAssessmentStudentAssessmentItem --
+CREATE TABLE edfi.StudentAssessmentStudentAssessmentItem (
+    AssessmentIdentifier VARCHAR(60) NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    Namespace VARCHAR(255) NOT NULL,
+    StudentAssessmentIdentifier VARCHAR(60) NOT NULL,
+    StudentUSI INT NOT NULL,
+    AssessmentResponse VARCHAR(60) NULL,
+    DescriptiveFeedback VARCHAR(1024) NULL,
+    ResponseIndicatorDescriptorId INT NULL,
+    AssessmentItemResultDescriptorId INT NOT NULL,
+    RawScoreResult INT NULL,
+    TimeAssessed VARCHAR(30) NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentAssessmentStudentAssessmentItem_PK PRIMARY KEY (AssessmentIdentifier, IdentificationCode, Namespace, StudentAssessmentIdentifier, StudentUSI)
+); 
+ALTER TABLE edfi.StudentAssessmentStudentAssessmentItem ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.StudentAssessmentStudentObjectiveAssessment --
 CREATE TABLE edfi.StudentAssessmentStudentObjectiveAssessment (
@@ -4599,17 +4599,6 @@ CREATE TABLE edfi.StudentEducationOrganizationAssociationDisability (
 ); 
 ALTER TABLE edfi.StudentEducationOrganizationAssociationDisability ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd --
-CREATE TABLE edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd (
-    DisabilityDescriptorId INT NOT NULL,
-    DisabilityDesignationDescriptorId INT NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentEducationOrgDisabilityDisabilityDesignati_5ee8fd_PK PRIMARY KEY (DisabilityDescriptorId, DisabilityDesignationDescriptorId, EducationOrganizationId, StudentUSI)
-); 
-ALTER TABLE edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.StudentEducationOrganizationAssociationElectronicMail --
 CREATE TABLE edfi.StudentEducationOrganizationAssociationElectronicMail (
     EducationOrganizationId INT NOT NULL,
@@ -4676,17 +4665,6 @@ CREATE TABLE edfi.StudentEducationOrganizationAssociationProgramParticipation (
 ); 
 ALTER TABLE edfi.StudentEducationOrganizationAssociationProgramParticipation ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 --
-CREATE TABLE edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 (
-    EducationOrganizationId INT NOT NULL,
-    ProgramCharacteristicDescriptorId INT NOT NULL,
-    ProgramTypeDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentEducationProgramParticipaProgramCharacter_810575_PK PRIMARY KEY (EducationOrganizationId, ProgramCharacteristicDescriptorId, ProgramTypeDescriptorId, StudentUSI)
-); 
-ALTER TABLE edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
 -- Table edfi.StudentEducationOrganizationAssociationRace --
 CREATE TABLE edfi.StudentEducationOrganizationAssociationRace (
     EducationOrganizationId INT NOT NULL,
@@ -4707,30 +4685,6 @@ CREATE TABLE edfi.StudentEducationOrganizationAssociationStudentCharacteristic (
     CONSTRAINT StudentEducationOrganizationAssociationStudentCharacteristic_PK PRIMARY KEY (EducationOrganizationId, StudentCharacteristicDescriptorId, StudentUSI)
 ); 
 ALTER TABLE edfi.StudentEducationOrganizationAssociationStudentCharacteristic ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf --
-CREATE TABLE edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf (
-    BeginDate DATE NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    StudentCharacteristicDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    EndDate DATE NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentEducationOrganStudentCharacteristicPeriod_a18fcf_PK PRIMARY KEY (BeginDate, EducationOrganizationId, StudentCharacteristicDescriptorId, StudentUSI)
-); 
-ALTER TABLE edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 --
-CREATE TABLE edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 (
-    AssigningOrganizationIdentificationCode VARCHAR(60) NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    StudentIdentificationSystemDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    IdentificationCode VARCHAR(60) NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentEducationOrganizatStudentIdentificationCode_c15030_PK PRIMARY KEY (AssigningOrganizationIdentificationCode, EducationOrganizationId, StudentIdentificationSystemDescriptorId, StudentUSI)
-); 
-ALTER TABLE edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.StudentEducationOrganizationAssociationStudentIndicator --
 CREATE TABLE edfi.StudentEducationOrganizationAssociationStudentIndicator (
@@ -4781,6 +4735,18 @@ CREATE TABLE edfi.StudentEducationOrganizationAssociationTribalAffiliation (
 ); 
 ALTER TABLE edfi.StudentEducationOrganizationAssociationTribalAffiliation ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
+-- Table edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 --
+CREATE TABLE edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 (
+    AssigningOrganizationIdentificationCode VARCHAR(60) NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    StudentIdentificationSystemDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    IdentificationCode VARCHAR(60) NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentEducationOrganizatStudentIdentificationCode_c15030_PK PRIMARY KEY (AssigningOrganizationIdentificationCode, EducationOrganizationId, StudentIdentificationSystemDescriptorId, StudentUSI)
+); 
+ALTER TABLE edfi.StudentEducationOrganizationAssStudentIdentificationCode_c15030 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
 -- Table edfi.StudentEducationOrganizationResponsibilityAssociation --
 CREATE TABLE edfi.StudentEducationOrganizationResponsibilityAssociation (
     BeginDate DATE NOT NULL,
@@ -4797,6 +4763,40 @@ CREATE TABLE edfi.StudentEducationOrganizationResponsibilityAssociation (
 ALTER TABLE edfi.StudentEducationOrganizationResponsibilityAssociation ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 ALTER TABLE edfi.StudentEducationOrganizationResponsibilityAssociation ALTER COLUMN Id SET DEFAULT gen_random_uuid();
 ALTER TABLE edfi.StudentEducationOrganizationResponsibilityAssociation ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf --
+CREATE TABLE edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf (
+    BeginDate DATE NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    StudentCharacteristicDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    EndDate DATE NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentEducationOrganStudentCharacteristicPeriod_a18fcf_PK PRIMARY KEY (BeginDate, EducationOrganizationId, StudentCharacteristicDescriptorId, StudentUSI)
+); 
+ALTER TABLE edfi.StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd --
+CREATE TABLE edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd (
+    DisabilityDescriptorId INT NOT NULL,
+    DisabilityDesignationDescriptorId INT NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentEducationOrgDisabilityDisabilityDesignati_5ee8fd_PK PRIMARY KEY (DisabilityDescriptorId, DisabilityDesignationDescriptorId, EducationOrganizationId, StudentUSI)
+); 
+ALTER TABLE edfi.StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 --
+CREATE TABLE edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 (
+    EducationOrganizationId INT NOT NULL,
+    ProgramCharacteristicDescriptorId INT NOT NULL,
+    ProgramTypeDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentEducationProgramParticipaProgramCharacter_810575_PK PRIMARY KEY (EducationOrganizationId, ProgramCharacteristicDescriptorId, ProgramTypeDescriptorId, StudentUSI)
+); 
+ALTER TABLE edfi.StudentEducationOrProgramParticipatiProgramCharacteris_810575 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.StudentGradebookEntry --
 CREATE TABLE edfi.StudentGradebookEntry (
@@ -4931,18 +4931,6 @@ ALTER TABLE edfi.StudentInterventionAttendanceEvent ALTER COLUMN CreateDate SET 
 ALTER TABLE edfi.StudentInterventionAttendanceEvent ALTER COLUMN Id SET DEFAULT gen_random_uuid();
 ALTER TABLE edfi.StudentInterventionAttendanceEvent ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
 
--- Table edfi.StudentLanguageInstructionProgramAssociation --
-CREATE TABLE edfi.StudentLanguageInstructionProgramAssociation (
-    BeginDate DATE NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    ProgramEducationOrganizationId INT NOT NULL,
-    ProgramName VARCHAR(60) NOT NULL,
-    ProgramTypeDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    EnglishLearnerParticipation BOOLEAN NULL,
-    CONSTRAINT StudentLanguageInstructionProgramAssociation_PK PRIMARY KEY (BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
-); 
-
 -- Table edfi.StudentLanguageInstructionPrEnglishLanguageProficiencyAs_1ac620 --
 CREATE TABLE edfi.StudentLanguageInstructionPrEnglishLanguageProficiencyAs_1ac620 (
     BeginDate DATE NOT NULL,
@@ -4977,6 +4965,18 @@ CREATE TABLE edfi.StudentLanguageInstructionPrLanguageInstructionProgramSe_268e0
     CONSTRAINT StudentLanguageInstructioLanguageInstructionProgra_268e07_PK PRIMARY KEY (BeginDate, EducationOrganizationId, LanguageInstructionProgramServiceDescriptorId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
 ); 
 ALTER TABLE edfi.StudentLanguageInstructionPrLanguageInstructionProgramSe_268e07 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentLanguageInstructionProgramAssociation --
+CREATE TABLE edfi.StudentLanguageInstructionProgramAssociation (
+    BeginDate DATE NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    ProgramEducationOrganizationId INT NOT NULL,
+    ProgramName VARCHAR(60) NOT NULL,
+    ProgramTypeDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    EnglishLearnerParticipation BOOLEAN NULL,
+    CONSTRAINT StudentLanguageInstructionProgramAssociation_PK PRIMARY KEY (BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
+); 
 
 -- Table edfi.StudentLearningObjective --
 CREATE TABLE edfi.StudentLearningObjective (
@@ -5075,20 +5075,6 @@ CREATE TABLE edfi.StudentMigrantEducationProgrMigrantEducationProgramServi_d9dcd
 ); 
 ALTER TABLE edfi.StudentMigrantEducationProgrMigrantEducationProgramServi_d9dcd7 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table edfi.StudentNeglectedOrDelinquentProgramAssociation --
-CREATE TABLE edfi.StudentNeglectedOrDelinquentProgramAssociation (
-    BeginDate DATE NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    ProgramEducationOrganizationId INT NOT NULL,
-    ProgramName VARCHAR(60) NOT NULL,
-    ProgramTypeDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    NeglectedOrDelinquentProgramDescriptorId INT NULL,
-    ELAProgressLevelDescriptorId INT NULL,
-    MathematicsProgressLevelDescriptorId INT NULL,
-    CONSTRAINT StudentNeglectedOrDelinquentProgramAssociation_PK PRIMARY KEY (BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
-); 
-
 -- Table edfi.StudentNeglectedOrDelinquentNeglectedOrDelinquentProgram_520251 --
 CREATE TABLE edfi.StudentNeglectedOrDelinquentNeglectedOrDelinquentProgram_520251 (
     BeginDate DATE NOT NULL,
@@ -5105,6 +5091,20 @@ CREATE TABLE edfi.StudentNeglectedOrDelinquentNeglectedOrDelinquentProgram_52025
     CONSTRAINT StudentNeglectedOrDelinquNeglectedOrDelinquentProg_520251_PK PRIMARY KEY (BeginDate, EducationOrganizationId, NeglectedOrDelinquentProgramServiceDescriptorId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
 ); 
 ALTER TABLE edfi.StudentNeglectedOrDelinquentNeglectedOrDelinquentProgram_520251 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
+-- Table edfi.StudentNeglectedOrDelinquentProgramAssociation --
+CREATE TABLE edfi.StudentNeglectedOrDelinquentProgramAssociation (
+    BeginDate DATE NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    ProgramEducationOrganizationId INT NOT NULL,
+    ProgramName VARCHAR(60) NOT NULL,
+    ProgramTypeDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    NeglectedOrDelinquentProgramDescriptorId INT NULL,
+    ELAProgressLevelDescriptorId INT NULL,
+    MathematicsProgressLevelDescriptorId INT NULL,
+    CONSTRAINT StudentNeglectedOrDelinquentProgramAssociation_PK PRIMARY KEY (BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
+); 
 
 -- Table edfi.StudentOtherName --
 CREATE TABLE edfi.StudentOtherName (
@@ -5350,6 +5350,21 @@ ALTER TABLE edfi.StudentSectionAttendanceEvent ALTER COLUMN CreateDate SET DEFAU
 ALTER TABLE edfi.StudentSectionAttendanceEvent ALTER COLUMN Id SET DEFAULT gen_random_uuid();
 ALTER TABLE edfi.StudentSectionAttendanceEvent ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
 
+-- Table edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 --
+CREATE TABLE edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 (
+    BeginDate DATE NOT NULL,
+    DisabilityDescriptorId INT NOT NULL,
+    DisabilityDesignationDescriptorId INT NOT NULL,
+    EducationOrganizationId INT NOT NULL,
+    ProgramEducationOrganizationId INT NOT NULL,
+    ProgramName VARCHAR(60) NOT NULL,
+    ProgramTypeDescriptorId INT NOT NULL,
+    StudentUSI INT NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
+    CONSTRAINT StudentSpecialEducaDisabilityDisabilityDesignati_a2fd20_PK PRIMARY KEY (BeginDate, DisabilityDescriptorId, DisabilityDesignationDescriptorId, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
+); 
+ALTER TABLE edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+
 -- Table edfi.StudentSpecialEducationProgramAssociation --
 CREATE TABLE edfi.StudentSpecialEducationProgramAssociation (
     BeginDate DATE NOT NULL,
@@ -5387,21 +5402,6 @@ CREATE TABLE edfi.StudentSpecialEducationProgramAssociationDisability (
     CONSTRAINT StudentSpecialEducationProgramAssociationDisability_PK PRIMARY KEY (BeginDate, DisabilityDescriptorId, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
 ); 
 ALTER TABLE edfi.StudentSpecialEducationProgramAssociationDisability ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
-
--- Table edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 --
-CREATE TABLE edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 (
-    BeginDate DATE NOT NULL,
-    DisabilityDescriptorId INT NOT NULL,
-    DisabilityDesignationDescriptorId INT NOT NULL,
-    EducationOrganizationId INT NOT NULL,
-    ProgramEducationOrganizationId INT NOT NULL,
-    ProgramName VARCHAR(60) NOT NULL,
-    ProgramTypeDescriptorId INT NOT NULL,
-    StudentUSI INT NOT NULL,
-    CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StudentSpecialEducaDisabilityDisabilityDesignati_a2fd20_PK PRIMARY KEY (BeginDate, DisabilityDescriptorId, DisabilityDesignationDescriptorId, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI)
-); 
-ALTER TABLE edfi.StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20 ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
 -- Table edfi.StudentSpecialEducationProgramAssociationServiceProvider --
 CREATE TABLE edfi.StudentSpecialEducationProgramAssociationServiceProvider (
