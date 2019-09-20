@@ -1,6 +1,7 @@
 import R from 'ramda';
 import { orderByPath, orderByProp, MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { tableEntities, rowEntities, EnumerationRowBase, ForeignKey, Table } from 'metaed-plugin-edfi-ods-relational';
+import { NamespaceEdfiOdsPostgresql } from '../model/Namespace';
 
 const enhancerName = 'AddSchemaContainerEnhancer';
 
@@ -30,7 +31,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       rows.filter((row: EnumerationRowBase) => row.type === 'schoolYearEnumerationRow'),
     );
 
-    Object.assign(namespace.data.edfiOdsPostgresql.odsSchema, {
+    Object.assign((namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema, {
       tables,
       foreignKeys,
       enumerationRows,

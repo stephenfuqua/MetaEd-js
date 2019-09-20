@@ -1,4 +1,4 @@
-import { appendOverlapCollapsing } from '../../src/enhancer/AppendOverlapCollapsing';
+import { appendOverlapCollapsing } from '../../src/shared/Utility';
 
 describe('when appending overlapping strings', (): void => {
   it('should append normally if no overlap :: AaaBbb, CccDdd => AaaBbbCccDdd', () =>

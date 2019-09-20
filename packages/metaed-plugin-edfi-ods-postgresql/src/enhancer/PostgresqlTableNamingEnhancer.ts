@@ -8,8 +8,9 @@ import {
   isTableNameGroup,
   isTableNameComponent,
   TableNameComponent,
+  appendOverlapCollapsing,
 } from 'metaed-plugin-edfi-ods-relational';
-import { appendOverlapCollapsing } from './AppendOverlapCollapsing';
+import { TableEdfiOdsPostgresql } from '../model/Table';
 
 const enhancerName = 'PostgresqlTableNamingEnhancer';
 
@@ -142,8 +143,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     tables.forEach((table: Table) => {
       if (table.data.edfiOdsPostgresql == null) table.data.edfiOdsPostgresql = {};
-      Object.assign(table.data.edfiOdsPostgresql, constructNameFrom(table.nameGroup));
-      table.data.edfiOdsPostgresql.collapsedNameForOrderingOnly = constructCollapsedNameFrom(table.nameGroup);
+      Object.assign(table.data.edfiOdsPostgresql as TableEdfiOdsPostgresql, constructNameFrom(table.nameGroup));
+      (table.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).collapsedNameForOrderingOnly = constructCollapsedNameFrom(
+        table.nameGroup,
+      );
     });
   });
 

@@ -133,7 +133,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
       x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
     );
 
-    [tablesResult, foreignKeysResult, extendedPropertiesResult, , schoolYearsResult] = state.generatorResults.filter(
+    [tablesResult, foreignKeysResult, extendedPropertiesResult, schoolYearsResult] = state.generatorResults.filter(
       x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
     )[0].generatedOutput;
 

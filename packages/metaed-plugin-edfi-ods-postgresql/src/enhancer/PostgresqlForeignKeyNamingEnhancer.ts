@@ -7,13 +7,15 @@ import {
   getForeignTableColumns,
   Column,
 } from 'metaed-plugin-edfi-ods-relational';
+import { ForeignKeyEdfiOdsPostgresql } from '../model/ForeignKey';
+import { TableEdfiOdsPostgresql } from '../model/Table';
 
 const enhancerName = 'PostgresqlForeignKeyNamingEnhancer';
 
 function suffixDuplicates(foreignKeysWithDuplicateForeignTables: ForeignKey[]) {
   foreignKeysWithDuplicateForeignTables.forEach((foreignKey, index) => {
     if (index > 0) {
-      foreignKey.data.edfiOdsPostgresql.nameSuffix = `${index}`;
+      (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).nameSuffix = `${index}`;
     }
   });
 }
@@ -21,7 +23,9 @@ function suffixDuplicates(foreignKeysWithDuplicateForeignTables: ForeignKey[]) {
 function generateSuffixes(foreignKeys: ForeignKey[]) {
   foreignKeys.forEach(foreignKey => {
     const foreignKeysWithDuplicateForeignTables: ForeignKey[] = foreignKeys.filter(
-      fk => fk.foreignTableId === foreignKey.foreignTableId && foreignKey.data.edfiOdsPostgresql.nameSuffix === '',
+      fk =>
+        fk.foreignTableId === foreignKey.foreignTableId &&
+        (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).nameSuffix === '',
     );
     if (foreignKeysWithDuplicateForeignTables.length > 1) suffixDuplicates(foreignKeysWithDuplicateForeignTables);
   });
@@ -37,19 +41,23 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       // add column names
       table.foreignKeys.forEach(foreignKey => {
-        foreignKey.data.edfiOdsPostgresql.foreignKeyName = `FK_${
-          foreignKey.parentTable.data.edfiOdsPostgresql.tableNameHashTruncated
-        }_${foreignKey.foreignTable.data.edfiOdsPostgresql.tableName}${foreignKey.data.edfiOdsPostgresql.nameSuffix}`;
+        (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).foreignKeyName = `FK_${
+          (foreignKey.parentTable.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).tableNameHashTruncated
+        }_${(foreignKey.foreignTable.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).tableName}${
+          (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).nameSuffix
+        }`;
 
         const foreignTable: Table | undefined = tableEntities(metaEd, foreignKey.foreignTableNamespace).get(
           foreignKey.foreignTableId,
         );
-        foreignKey.data.edfiOdsPostgresql.parentTableColumnNames = getParentTableColumns(foreignKey, foreignTable).map(
-          (c: Column) => c.data.edfiOdsPostgresql.columnName,
-        );
-        foreignKey.data.edfiOdsPostgresql.foreignTableColumnNames = getForeignTableColumns(foreignKey, foreignTable).map(
-          (c: Column) => c.data.edfiOdsPostgresql.columnName,
-        );
+        (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).parentTableColumnNames = getParentTableColumns(
+          foreignKey,
+          foreignTable,
+        ).map((c: Column) => c.data.edfiOdsPostgresql.columnName);
+        (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).foreignTableColumnNames = getForeignTableColumns(
+          foreignKey,
+          foreignTable,
+        ).map((c: Column) => c.data.edfiOdsPostgresql.columnName);
       });
 
       // sort foreign keys in order

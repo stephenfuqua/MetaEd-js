@@ -11,7 +11,7 @@ const enhancerName = 'NamespaceSetupEnhancer';
 export function addNamespaceEdfiOdsPostgresqlTo(namespace: Namespace) {
   if (namespace.data.edfiOdsPostgresql == null) namespace.data.edfiOdsPostgresql = {};
 
-  Object.assign(namespace.data.edfiOdsPostgresql, {
+  Object.assign(namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql, {
     odsSchema: newSchemaContainer(),
   });
 }

@@ -1,6 +1,7 @@
 import winston from 'winston';
 import { versionSatisfies, GeneratedOutput, GeneratorResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
 import { dataPath, fileNameFor, registerPartials, structurePath, template } from './OdsGeneratorBase';
+import { NamespaceEdfiOdsPostgresql } from '../model/Namespace';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
@@ -11,7 +12,7 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().table({
-      tables: namespace.data.edfiOdsPostgresql.odsSchema.tables,
+      tables: (namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.tables,
       useDatetime2: versionSatisfies(targetTechnologyVersion, '>=3.1.1'),
     });
 
@@ -36,7 +37,7 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().foreignKey({
-      foreignKeys: namespace.data.edfiOdsPostgresql.odsSchema.foreignKeys,
+      foreignKeys: (namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.foreignKeys,
     });
 
     results.push({
@@ -60,7 +61,7 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().extendedProperties({
-      tables: namespace.data.edfiOdsPostgresql.odsSchema.tables,
+      tables: (namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.tables,
     });
 
     results.push({
@@ -83,8 +84,9 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
   const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
+    if ((namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.enumerationRows.length === 0) return;
     const generatedResult: string = template().enumerationRow({
-      enumerationRows: namespace.data.edfiOdsPostgresql.odsSchema.enumerationRows,
+      enumerationRows: (namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.enumerationRows,
     });
 
     results.push({
@@ -107,8 +109,11 @@ export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<Ge
   const results: GeneratedOutput[] = [];
 
   metaEd.namespace.forEach(namespace => {
+    if ((namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema.schoolYearEnumerationRows.length === 0)
+      return;
     const generatedResult: string = template().schoolYearEnumerationRow({
-      schoolYearEnumerationRows: namespace.data.edfiOdsPostgresql.odsSchema.schoolYearEnumerationRows,
+      schoolYearEnumerationRows: (namespace.data.edfiOdsPostgresql as NamespaceEdfiOdsPostgresql).odsSchema
+        .schoolYearEnumerationRows,
     });
 
     results.push({

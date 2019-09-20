@@ -1,5 +1,6 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import {
+  appendOverlapCollapsing,
   tableEntities,
   Table,
   Column,
@@ -7,8 +8,8 @@ import {
   DecimalColumn,
   StringColumn,
 } from 'metaed-plugin-edfi-ods-relational';
-import { appendOverlapCollapsing } from './AppendOverlapCollapsing';
 import { ColumnDataTypes } from '../model/ColumnDataTypes';
+import { ColumnEdfiOdsPostgresql } from '../model/Column';
 
 const enhancerName = 'PostgresqlTableNamingEnhancer';
 
@@ -37,8 +38,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     tables.forEach((table: Table) => {
       table.columns.forEach((column: Column) => {
-        column.data.edfiOdsPostgresql.columnName = constructNameFrom(column.nameComponents);
-        column.data.edfiOdsPostgresql.dataType = resolveDataType(column);
+        (column.data.edfiOdsPostgresql as ColumnEdfiOdsPostgresql).columnName = constructNameFrom(column.nameComponents);
+        (column.data.edfiOdsPostgresql as ColumnEdfiOdsPostgresql).dataType = resolveDataType(column);
       });
     });
   });

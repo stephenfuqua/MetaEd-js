@@ -1,5 +1,6 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import {
+  appendOverlapCollapsing,
   tableEntities,
   Table,
   TableNameGroup,
@@ -8,7 +9,6 @@ import {
   TableNameComponent,
   flattenNameComponentsFromGroup,
 } from 'metaed-plugin-edfi-ods-relational';
-import { appendOverlapCollapsing } from './AppendOverlapCollapsing';
 
 const enhancerName = 'SqlServerTableNamingEnhancer';
 
