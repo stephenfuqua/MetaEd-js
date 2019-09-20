@@ -1,4 +1,4 @@
 {{#tables}}
-CREATE UNIQUE INDEX IF NOT EXISTS UX_{{{data.edfiOdsPostgresql.tableNameHashTruncated}}}_Id ON "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}"("Id");
+CREATE UNIQUE INDEX IF NOT EXISTS UX_{{{data.edfiOdsPostgresql.tableNameHashTruncated}}}_Id ON {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}}(Id);
 
 {{/tables}}

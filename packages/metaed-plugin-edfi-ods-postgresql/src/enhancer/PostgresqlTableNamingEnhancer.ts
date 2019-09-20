@@ -103,7 +103,7 @@ export function postgresqlPrimaryKeyName(tableNameComponents: string[], tableNam
     (acc, current) => acc + current.nameComponent.substring(0, current.truncatedLength),
     '',
   );
-  return `${pkNameBeforeHash.substr(0, pkNameBeforeHash.length)}-${tableNameHashTruncated}_PK`;
+  return `${pkNameBeforeHash.substr(0, pkNameBeforeHash.length)}_${tableNameHashTruncated}_PK`;
 }
 
 export function postgresqlTableNames(tableNameComponents: string[]): TableNaming {
@@ -128,7 +128,7 @@ export function postgresqlTableNames(tableNameComponents: string[]): TableNaming
     '',
   );
 
-  return { tableName: `${tableNameBeforeHash}-${tableNameHash.substring(0, 6)}`, primaryKeyName, tableNameHashTruncated };
+  return { tableName: `${tableNameBeforeHash}_${tableNameHash.substring(0, 6)}`, primaryKeyName, tableNameHashTruncated };
 }
 
 function constructNameFrom(nameGroup: TableNameGroup): TableNaming {

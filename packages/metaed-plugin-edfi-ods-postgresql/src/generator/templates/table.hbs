@@ -1,33 +1,33 @@
 {{#tables}}
--- Table "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" --
-CREATE TABLE "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" (
+-- Table {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} --
+CREATE TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} (
 {{#columns}}
     {{> column}}
 {{/columns}}
 {{#if hasDiscriminatorColumn}}
-    "Discriminator" VARCHAR(128) NULL,
+    Discriminator VARCHAR(128) NULL,
 {{/if}}
 {{#if includeCreateDateColumn}}
-    "CreateDate" TIMESTAMP NOT NULL,
+    CreateDate TIMESTAMP NOT NULL,
 {{/if}}
 {{#if includeLastModifiedDateAndIdColumn}}
-    "LastModifiedDate" TIMESTAMP NOT NULL,
-    "Id" UUID NOT NULL,
+    LastModifiedDate TIMESTAMP NOT NULL,
+    Id UUID NOT NULL,
 {{/if}}
-    CONSTRAINT "{{{data.edfiOdsPostgresql.primaryKeyName}}}" PRIMARY KEY ({{#primaryKeys}}"{{{data.edfiOdsPostgresql.columnName}}}"{{#unless @last}}, {{/unless}}{{/primaryKeys}}){{#if hasAlternateKeys}},{{/if}}
+    CONSTRAINT {{{data.edfiOdsPostgresql.primaryKeyName}}} PRIMARY KEY ({{#primaryKeys}}{{{data.edfiOdsPostgresql.columnName}}}{{#unless @last}}, {{/unless}}{{/primaryKeys}}){{#if hasAlternateKeys}},{{/if}}
 {{#if hasAlternateKeys}}
-    CONSTRAINT "{{data.edfiOdsPostgresql.tableName}}_AK" UNIQUE ({{#alternateKeys}}"{{{data.edfiOdsPostgresql.columnName}}}"{{#unless @last}}, {{/unless}}{{/alternateKeys}})
+    CONSTRAINT {{data.edfiOdsPostgresql.tableName}}_AK UNIQUE ({{#alternateKeys}}{{{data.edfiOdsPostgresql.columnName}}}{{#unless @last}}, {{/unless}}{{/alternateKeys}})
 {{/if}}
 ); 
 {{#uniqueIndexes}}
-CREATE UNIQUE INDEX "{{{../data.edfiOdsPostgresql.tableName}}}_UI_{{{data.edfiOdsPostgresql.columnName}}}" ON "{{{../schema}}}"."{{{../data.edfiOdsPostgresql.tableName}}}" ("{{{data.edfiOdsPostgresql.columnName}}}");
+CREATE UNIQUE INDEX {{{../data.edfiOdsPostgresql.tableName}}}_UI_{{{data.edfiOdsPostgresql.columnName}}} ON {{{../schema}}}.{{{../data.edfiOdsPostgresql.tableName}}} ({{{data.edfiOdsPostgresql.columnName}}});
 {{/uniqueIndexes}}
 {{#if includeCreateDateColumn}}
-ALTER TABLE "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" ALTER COLUMN "CreateDate" SET DEFAULT current_timestamp;
+ALTER TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 {{/if}}
 {{#if includeLastModifiedDateAndIdColumn}}
-ALTER TABLE "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" ALTER COLUMN "Id" SET DEFAULT gen_random_uuid();
-ALTER TABLE "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" ALTER COLUMN "LastModifiedDate" SET DEFAULT current_timestamp;
+ALTER TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} ALTER COLUMN Id SET DEFAULT gen_random_uuid();
+ALTER TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} ALTER COLUMN LastModifiedDate SET DEFAULT current_timestamp;
 {{/if}}
 
 {{/tables}}

@@ -1,8 +1,8 @@
 {{#tables}}
 -- Extended Properties [{{{schema}}}].[{{{data.edfiOdsPostgresql.tableName}}}] --
-COMMENT ON TABLE "{{{schema}}}"."{{{data.edfiOdsPostgresql.tableName}}}" IS '{{{sqlEscapedDescription}}}';
+COMMENT ON TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} IS '{{{sqlEscapedDescription}}}';
 {{#columns}}
-COMMENT ON COLUMN "{{{../schema}}}"."{{{../data.edfiOdsPostgresql.tableName}}}"."{{{data.edfiOdsPostgresql.columnName}}}" IS '{{{sqlEscapedDescription}}}';
+COMMENT ON COLUMN {{{../schema}}}.{{{../data.edfiOdsPostgresql.tableName}}}.{{{data.edfiOdsPostgresql.columnName}}} IS '{{{sqlEscapedDescription}}}';
 {{/columns}}
 
 {{/tables}}

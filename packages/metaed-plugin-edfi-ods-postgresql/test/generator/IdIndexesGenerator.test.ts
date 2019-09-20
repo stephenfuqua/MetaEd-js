@@ -64,7 +64,7 @@ describe('when generating id indexes for core namespace table with no type', ():
     expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Id Indexes');
     expect(result.generatedOutput[0].resultStream).toBeNull();
     expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
-      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON \\"edfi\\".\\"TableName\\"(\\"Id\\");
+      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON edfi.TableName(Id);
 
       "
     `);
@@ -101,7 +101,7 @@ describe('when generating id indexes for core namespace table with type', (): vo
     expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Id Indexes');
     expect(result.generatedOutput[0].resultStream).toBeNull();
     expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
-      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON \\"edfi\\".\\"TableNameType\\"(\\"Id\\");
+      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON edfi.TableNameType(Id);
 
       "
     `);
@@ -143,7 +143,7 @@ describe('when generating id indexes for extension namespace table with no type'
     expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Id Indexes');
     expect(result.generatedOutput[0].resultStream).toBeNull();
     expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
-      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON \\"extension\\".\\"TableName\\"(\\"Id\\");
+      "CREATE UNIQUE INDEX IF NOT EXISTS UX_abcdefabcdef_Id ON extension.TableName(Id);
 
       "
     `);
