@@ -8,9 +8,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
     failures.push({
       validatorName: 'CommonPropertyMustNotContainIdentity',
       category: 'error',
-      message: `Common property ${common.metaEdName} is invalid to be used for the identity of ${
-        common.parentEntity.typeHumanizedName
-      } ${common.parentEntityName}.`,
+      message: `Common property ${common.metaEdName} is invalid to be used for the identity of ${common.parentEntity.typeHumanizedName} ${common.parentEntityName}.`,
       sourceMap: common.sourceMap.isPartOfIdentity,
       fileMap: null,
     });

@@ -110,9 +110,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
-          message: `${this.currentTopLevelEntity.typeHumanizedName} named ${
-            this.currentTopLevelEntity.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `${this.currentTopLevelEntity.typeHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentTopLevelEntity.sourceMap.metaEdName,
           fileMap: null,
         });
@@ -123,9 +121,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
           this.validationFailures.push({
             validatorName: 'TopLevelEntityBuilder',
             category: 'error',
-            message: `${duplicateEntity.typeHumanizedName} named ${
-              duplicateEntity.metaEdName
-            } is a duplicate declaration of that name.`,
+            message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
             sourceMap: duplicateEntity.sourceMap.metaEdName,
             fileMap: null,
           });
@@ -432,9 +428,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.validationFailures.push({
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
-      message: `Property named ${
-        this.currentProperty.metaEdName
-      } is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions.`,
+      message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name. Use 'role name' keyword to avoid naming collisions.`,
       sourceMap: this.currentProperty.sourceMap.metaEdName,
       fileMap: null,
     });
@@ -445,9 +439,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.validationFailures.push({
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
-      message: `Property named ${
-        duplicateProperty.metaEdName
-      } is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions.`,
+      message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.  Use 'role name' keyword to avoid naming collisions.`,
       sourceMap: duplicateProperty.sourceMap.metaEdName,
       fileMap: null,
     });
@@ -473,7 +465,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       while (this.whenExitingPropertyCommand.length > 0) {
-        const command: (() => void) = this.whenExitingPropertyCommand.pop() as () => void;
+        const command: () => void = this.whenExitingPropertyCommand.pop() as () => void;
         command();
       }
 

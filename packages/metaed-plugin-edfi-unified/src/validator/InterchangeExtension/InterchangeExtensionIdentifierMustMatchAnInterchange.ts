@@ -17,9 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'InterchangeExtensionIdentifierMustMatchAnInterchange',
           category: 'error',
-          message: `Interchange additions ${
-            interchangeExtension.metaEdName
-          } does not match any declared Interchange in namespace ${interchangeExtension.baseEntityNamespaceName}.`,
+          message: `Interchange additions ${interchangeExtension.metaEdName} does not match any declared Interchange in namespace ${interchangeExtension.baseEntityNamespaceName}.`,
           sourceMap: interchangeExtension.sourceMap.metaEdName,
           fileMap: null,
         });

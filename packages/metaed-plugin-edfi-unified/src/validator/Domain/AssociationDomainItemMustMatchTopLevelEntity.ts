@@ -30,11 +30,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
             getFailure(
               domainItem,
               'AssociationDomainItemMustMatchTopLevelEntity',
-              `Association Domain Item property '${
-                domainItem.metaEdName
-              }' does not match any declared Association or Association Subclass in namespace ${
-                domainItem.referencedNamespaceName
-              }.`,
+              `Association Domain Item property '${domainItem.metaEdName}' does not match any declared Association or Association Subclass in namespace ${domainItem.referencedNamespaceName}.`,
             ),
           );
         }

@@ -26,11 +26,7 @@ function failureCollector(
   failures.push({
     validatorName: 'V3LimitedDuplicateNamesInDependencyNamespaces',
     category: 'warning',
-    message: `${entityWithDuplicateName.typeHumanizedName} named ${
-      entityWithDuplicateName.metaEdName
-    } already exists in project ${
-      dependencyNamespace.projectName
-    }. The XSD specification for this is currently undefined. MetaEd XSD generation and ODS/API bulk data loading will be disabled.`,
+    message: `${entityWithDuplicateName.typeHumanizedName} named ${entityWithDuplicateName.metaEdName} already exists in project ${dependencyNamespace.projectName}. The XSD specification for this is currently undefined. MetaEd XSD generation and ODS/API bulk data loading will be disabled.`,
     sourceMap: entityWithDuplicateName.sourceMap.metaEdName,
     fileMap: null,
   });

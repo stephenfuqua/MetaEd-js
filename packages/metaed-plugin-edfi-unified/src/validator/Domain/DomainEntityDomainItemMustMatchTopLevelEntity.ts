@@ -31,11 +31,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
             getFailure(
               domainItem,
               'DomainEntityDomainItemMustMatchTopLevelEntity',
-              `Domain Entity Domain Item property '${
-                domainItem.metaEdName
-              }' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${
-                domainItem.referencedNamespaceName
-              }.`,
+              `Domain Entity Domain Item property '${domainItem.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${domainItem.referencedNamespaceName}.`,
             ),
           );
         }

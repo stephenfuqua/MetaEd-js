@@ -9,9 +9,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'CommonExtensionExistsOnlyInExtensionNamespace',
           category: 'error',
-          message: `Common additions '${entity.metaEdName}' is not valid in core namespace '${
-            entity.namespace.namespaceName
-          }`,
+          message: `Common additions '${entity.metaEdName}' is not valid in core namespace '${entity.namespace.namespaceName}`,
           sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });

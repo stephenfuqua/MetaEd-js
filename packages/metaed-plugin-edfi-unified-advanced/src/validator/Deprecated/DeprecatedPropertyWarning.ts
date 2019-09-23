@@ -27,9 +27,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'DeprecatedPropertyWarning',
         category: 'warning',
-        message: `${property.parentEntity.typeHumanizedName} ${
-          property.parentEntity.metaEdName
-        } references deprecated entity ${property.metaEdName}.`,
+        message: `${property.parentEntity.typeHumanizedName} ${property.parentEntity.metaEdName} references deprecated entity ${property.metaEdName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

@@ -141,9 +141,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'OutPathsToSameEntityMustHaveMergeDirectiveOrroleName',
           category: 'error',
-          message: `Ambiguous merge paths exist from ${outPath[0].parentEntityName}.${outPath[0].metaEdName} to ${
-            entityAtEndpoint.metaEdName
-          }. Paths are${problemPathsAsString}.  Either add a merge directive, use 'role name', or change the model.`,
+          message: `Ambiguous merge paths exist from ${outPath[0].parentEntityName}.${outPath[0].metaEdName} to ${entityAtEndpoint.metaEdName}. Paths are${problemPathsAsString}.  Either add a merge directive, use 'role name', or change the model.`,
           sourceMap: outPath[0].sourceMap.metaEdName,
           fileMap: null,
         });

@@ -7,9 +7,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'DescriptorPropertyNameCannotEndInDescriptor',
         category: 'error',
-        message: `Descriptor property ${
-          descriptorProperty.metaEdName
-        } name is invalid.  Descriptor names cannot be suffixed with 'Descriptor'.`,
+        message: `Descriptor property ${descriptorProperty.metaEdName} name is invalid.  Descriptor names cannot be suffixed with 'Descriptor'.`,
         sourceMap: descriptorProperty.sourceMap.metaEdName,
         fileMap: null,
       });

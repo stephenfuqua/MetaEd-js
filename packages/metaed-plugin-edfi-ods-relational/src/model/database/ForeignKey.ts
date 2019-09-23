@@ -130,9 +130,7 @@ export function addColumnPair(foreignKey: ForeignKey, columnPair: ColumnPair): v
     foreignKey.columnPairs.push(columnPair);
   } else {
     winston.info(
-      `  Attempt to add duplicate column pair: [${columnPair.parentTableColumnId}, ${
-        columnPair.foreignTableColumnId
-      }] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableId} failed.`,
+      `  Attempt to add duplicate column pair: [${columnPair.parentTableColumnId}, ${columnPair.foreignTableColumnId}] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableId} failed.`,
     );
   }
 }

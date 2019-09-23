@@ -27,9 +27,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName,
         category: 'error',
-        message: `${baseEntity.typeHumanizedName} ${
-          baseEntity.metaEdName
-        } additions is not valid.  Abstract entities cannot be extended.`,
+        message: `${baseEntity.typeHumanizedName} ${baseEntity.metaEdName} additions is not valid.  Abstract entities cannot be extended.`,
         sourceMap: extensionEntity.sourceMap.metaEdName,
         fileMap: null,
       });

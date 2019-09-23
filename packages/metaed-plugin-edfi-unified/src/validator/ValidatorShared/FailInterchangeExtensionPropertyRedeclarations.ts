@@ -13,9 +13,7 @@ export function failInterchangeExtensionPropertyRedeclarations(
       failures.push({
         validatorName,
         category: 'error',
-        message: `Interchange additions ${extensionEntity.metaEdName} redeclares property ${
-          extensionItem.metaEdName
-        } of base Interchange.`,
+        message: `Interchange additions ${extensionEntity.metaEdName} redeclares property ${extensionItem.metaEdName} of base Interchange.`,
         sourceMap: extensionItem.sourceMap.metaEdName,
         fileMap: null,
       });

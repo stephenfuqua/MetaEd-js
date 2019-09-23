@@ -126,13 +126,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName,
           category: 'warning',
-          message: `[ODS-1732] ${entity.typeHumanizedName} ${
-            entity.metaEdName
-          } has a property path that conflicts with property ${duplicate.property.metaEdName} on core ${
-            entity.baseEntity.typeHumanizedName
-          } ${
-            entity.baseEntity.metaEdName
-          }. Merging properties of an extension entity with a core property of the same name is currently unsupported by the ODS/API.`,
+          message: `[ODS-1732] ${entity.typeHumanizedName} ${entity.metaEdName} has a property path that conflicts with property ${duplicate.property.metaEdName} on core ${entity.baseEntity.typeHumanizedName} ${entity.baseEntity.metaEdName}. Merging properties of an extension entity with a core property of the same name is currently unsupported by the ODS/API.`,
           sourceMap: duplicate.property.sourceMap.type,
           fileMap: null,
         });

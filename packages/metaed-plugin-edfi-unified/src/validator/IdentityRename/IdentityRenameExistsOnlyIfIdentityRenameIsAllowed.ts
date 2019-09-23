@@ -26,9 +26,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
           failures.push({
             validatorName: 'IdentityRenameExistsOnlyIfIdentityRenameIsAllowed',
             category: 'error',
-            message: `'renames identity property' is invalid for property ${property.metaEdName} on ${
-              entity.typeHumanizedName
-            } ${entity.metaEdName}. 'renames identity property' is only valid for properties on ${validTypeNames}.`,
+            message: `'renames identity property' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${entity.metaEdName}. 'renames identity property' is only valid for properties on ${validTypeNames}.`,
             sourceMap: property.sourceMap.isPartOfIdentity,
             fileMap: null,
           });

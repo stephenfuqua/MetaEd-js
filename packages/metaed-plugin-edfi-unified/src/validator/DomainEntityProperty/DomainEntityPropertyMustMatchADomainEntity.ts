@@ -17,11 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'DomainEntityPropertyMustMatchADomainEntity',
         category: 'error',
-        message: `Domain entity property '${
-          property.metaEdName
-        }' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Domain entity property '${property.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

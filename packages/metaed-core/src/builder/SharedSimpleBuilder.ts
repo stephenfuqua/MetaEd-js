@@ -50,9 +50,7 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'SharedSimpleBuilder',
           category: 'error',
-          message: `${this.currentSharedSimple.typeHumanizedName} named ${
-            this.currentSharedSimple.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `${this.currentSharedSimple.typeHumanizedName} named ${this.currentSharedSimple.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentSharedSimple.sourceMap.metaEdName,
           fileMap: null,
         });
@@ -63,9 +61,7 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
           this.validationFailures.push({
             validatorName: 'SharedSimpleBuilder',
             category: 'error',
-            message: `${duplicateEntity.typeHumanizedName} named ${
-              duplicateEntity.metaEdName
-            } is a duplicate declaration of that name.`,
+            message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
             sourceMap: duplicateEntity.sourceMap.metaEdName,
             fileMap: null,
           });

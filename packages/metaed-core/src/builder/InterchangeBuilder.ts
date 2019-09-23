@@ -116,9 +116,7 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange ${extensionMessageString}named ${
-            this.currentInterchange.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentInterchange.sourceMap.metaEdName,
           fileMap: null,
         });
@@ -129,9 +127,7 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange ${extensionMessageString}named ${
-            duplicateEntity.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.metaEdName,
           fileMap: null,
         });

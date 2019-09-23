@@ -15,9 +15,7 @@ export function failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
     failures.push({
       validatorName,
       category: 'error',
-      message: `${subclassEntity.typeHumanizedName} ${subclassEntity.metaEdName} based on ${
-        subclassEntity.baseEntityName
-      } tries to rename ${baseKeyNames} which is not part of the identity.`,
+      message: `${subclassEntity.typeHumanizedName} ${subclassEntity.metaEdName} based on ${subclassEntity.baseEntityName} tries to rename ${baseKeyNames} which is not part of the identity.`,
       sourceMap: renamedProperty.sourceMap.baseKeyName,
       fileMap: null,
     });

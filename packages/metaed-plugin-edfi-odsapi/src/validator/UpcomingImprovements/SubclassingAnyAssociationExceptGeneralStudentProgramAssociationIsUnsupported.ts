@@ -17,9 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName,
           category: 'error',
-          message: `${associationSubclass.typeHumanizedName} ${
-            associationSubclass.metaEdName
-          } is not a GeneralStudentProgramAssociation subclass.  GeneralStudentProgramAssociation subclasses are the only Association subclasses currently supported by the ODS/API.`,
+          message: `${associationSubclass.typeHumanizedName} ${associationSubclass.metaEdName} is not a GeneralStudentProgramAssociation subclass.  GeneralStudentProgramAssociation subclasses are the only Association subclasses currently supported by the ODS/API.`,
           sourceMap: associationSubclass.sourceMap.metaEdName,
           fileMap: null,
         });

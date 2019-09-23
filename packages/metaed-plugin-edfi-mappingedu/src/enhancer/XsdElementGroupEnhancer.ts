@@ -39,7 +39,7 @@ const typeGroupRepositoryFor = (
     [typeGroupString in string]: () =>
       | Map<string, ComplexType>
       | Map<string, SimpleType>
-      | Map<string, EnumerationSimpleType>
+      | Map<string, EnumerationSimpleType>;
   } = {
     [typeGroupAssociation]: () => pluginAssociationsForNamespace(metaEd, namespace),
     [typeGroupBase]: () => pluginBasesForNamespace(metaEd, namespace),

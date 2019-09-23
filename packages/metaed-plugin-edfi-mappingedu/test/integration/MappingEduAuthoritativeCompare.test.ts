@@ -107,9 +107,7 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
     it('should have authoritative csv', (): void => {
       const authoritativeWorkbook = xlsx.readFile(authoritativeCoreMappingEdu);
       objectValues(authoritativeWorkbook.Sheets).forEach((sheet, i) => {
-        const fileName = `${artifactPath}/${baseName}-${
-          authoritativeWorkbook.SheetNames[i]
-        }-${authoritativeSuffix}.${csvSuffix}`;
+        const fileName = `${artifactPath}/${baseName}-${authoritativeWorkbook.SheetNames[i]}-${authoritativeSuffix}.${csvSuffix}`;
 
         ffs.writeFileSync(fileName, xlsx.utils.sheet_to_csv(sheet), 'utf-8');
         expect(ffs.existsSync(fileName)).toBe(true);

@@ -57,11 +57,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         validatorName:
           'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
         category: 'error',
-        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${
-          commonProperty.parentEntity.typeHumanizedName
-        } ${
-          commonProperty.parentEntity.metaEdName
-        }. 'common extension' is only valid for referencing common properties with the same declaration as in the base entity.`,
+        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${commonProperty.parentEntity.typeHumanizedName} ${commonProperty.parentEntity.metaEdName}. 'common extension' is only valid for referencing common properties with the same declaration as in the base entity.`,
         sourceMap: (commonProperty.sourceMap as CommonPropertySourceMap).isExtensionOverride,
         fileMap: null,
       });
@@ -70,11 +66,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         validatorName:
           'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
         category: 'error',
-        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${
-          commonProperty.parentEntity.typeHumanizedName
-        } ${
-          commonProperty.parentEntity.metaEdName
-        }. 'common extension' must maintain the same cardinality as in the base entity.`,
+        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${commonProperty.parentEntity.typeHumanizedName} ${commonProperty.parentEntity.metaEdName}. 'common extension' must maintain the same cardinality as in the base entity.`,
         sourceMap: (commonProperty.sourceMap as CommonPropertySourceMap).isExtensionOverride,
         fileMap: null,
       });

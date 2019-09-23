@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'ChoicePropertyMustMatchAChoice',
         category: 'error',
-        message: `Choice property '${property.metaEdName}' does not match any declared Choice in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Choice property '${property.metaEdName}' does not match any declared Choice in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

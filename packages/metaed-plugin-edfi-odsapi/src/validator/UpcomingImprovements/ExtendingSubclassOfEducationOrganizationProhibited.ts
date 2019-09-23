@@ -37,9 +37,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName,
           category: 'warning',
-          message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${
-            domainEntityExtension.metaEdName
-          } is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
+          message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${domainEntityExtension.metaEdName} is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
           sourceMap: domainEntityExtension.sourceMap.metaEdName,
           fileMap: null,
         });

@@ -82,9 +82,7 @@ export function scanDirectories(directories: string | string[]): PluginManifest[
           });
         } catch (err) {
           winston.error(
-            `PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${
-              manifest.description
-            }' failed due to dependency issue: ${err.message}`,
+            `PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${manifest.description}' failed due to dependency issue: ${err.message}`,
           );
         }
       }
@@ -98,9 +96,7 @@ export function materializePlugin(pluginManifest: PluginManifest) {
   try {
     if (!pluginManifest.mainModule) {
       winston.error(
-        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
-          pluginManifest.mainModule
-        }' failed.  Module entry point not found.`,
+        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  Module entry point not found.`,
       );
       return;
     }
@@ -115,16 +111,12 @@ export function materializePlugin(pluginManifest: PluginManifest) {
       pluginManifest.metaEdPlugin = pluginFactory();
     } else {
       winston.error(
-        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
-          pluginManifest.mainModule
-        }' failed. initialize() not found.`,
+        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed. initialize() not found.`,
       );
     }
   } catch (err) {
     winston.error(
-      `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
-        pluginManifest.mainModule
-      }' failed.`,
+      `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.`,
     );
     winston.error(`PluginLoader: Error Message: ${err.message}`);
   }

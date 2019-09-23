@@ -11,9 +11,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'CommonExtensionIdentifierMustMatchACommon',
           category: 'error',
-          message: `Common additions '${entity.metaEdName}' does not match any declared Common in namespace ${
-            entity.baseEntityNamespaceName
-          }.`,
+          message: `Common additions '${entity.metaEdName}' does not match any declared Common in namespace ${entity.baseEntityNamespaceName}.`,
           sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });

@@ -18,11 +18,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity',
         category: 'error',
-        message: `${domainEntitySubclass.typeHumanizedName} ${domainEntitySubclass.metaEdName} based on ${
-          domainEntitySubclass.baseEntityName
-        } is invalid for identity rename because parent entity ${
-          domainEntitySubclass.baseEntityName
-        } has more than one identity property.`,
+        message: `${domainEntitySubclass.typeHumanizedName} ${domainEntitySubclass.metaEdName} based on ${domainEntitySubclass.baseEntityName} is invalid for identity rename because parent entity ${domainEntitySubclass.baseEntityName} has more than one identity property.`,
         sourceMap: domainEntitySubclass.sourceMap.metaEdName,
         fileMap: null,
       });

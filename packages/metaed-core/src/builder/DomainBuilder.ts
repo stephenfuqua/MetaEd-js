@@ -99,9 +99,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'DomainBuilder',
           category: 'error',
-          message: `${this.currentDomain.typeHumanizedName} named ${
-            this.currentDomain.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `${this.currentDomain.typeHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentDomain.sourceMap.metaEdName,
           fileMap: null,
         });
@@ -109,9 +107,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'DomainBuilder',
           category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${
-            duplicateEntity.metaEdName
-          } is a duplicate declaration of that name.`,
+          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.metaEdName,
           fileMap: null,
         });

@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'DescriptorPropertyMustMatchADescriptor',
         category: 'error',
-        message: `Descriptor property ${property.metaEdName} does not match any declared descriptor in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Descriptor property ${property.metaEdName} does not match any declared descriptor in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

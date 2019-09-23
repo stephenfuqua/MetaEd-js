@@ -21,9 +21,7 @@ export function failExtensionPropertyRedeclarations(
         failures.push({
           validatorName,
           category: 'error',
-          message: `${extensionEntity.typeHumanizedName} ${extensionEntity.metaEdName} redeclares property ${
-            extensionProperty.metaEdName
-          } of base ${baseEntity.typeHumanizedName}.`,
+          message: `${extensionEntity.typeHumanizedName} ${extensionEntity.metaEdName} redeclares property ${extensionProperty.metaEdName} of base ${baseEntity.typeHumanizedName}.`,
           sourceMap: extensionProperty.sourceMap.metaEdName,
           fileMap: null,
         });

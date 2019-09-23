@@ -16,9 +16,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'EnumerationPropertyMustMatchAEnumeration',
         category: 'error',
-        message: `Enumeration property '${property.metaEdName}' does not match any declared Enumeration in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Enumeration property '${property.metaEdName}' does not match any declared Enumeration in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

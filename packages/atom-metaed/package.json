@@ -233,7 +233,7 @@
     "winston": "3.0.0"
   },
   "devDependencies": {
-    "@types/atom": "^1.31.0",
+    "@types/atom": "1.36.1",
     "mock-fs": "^4.3.0",
     "proxyquire": "^1.8.0"
   },

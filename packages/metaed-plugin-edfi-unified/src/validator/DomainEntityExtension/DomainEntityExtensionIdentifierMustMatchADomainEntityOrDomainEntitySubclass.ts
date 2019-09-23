@@ -17,11 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass',
           category: 'error',
-          message: `Domain Entity additions '${
-            entity.metaEdName
-          }' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${
-            entity.baseEntityNamespaceName
-          }.`,
+          message: `Domain Entity additions '${entity.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${entity.baseEntityNamespaceName}.`,
           sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });

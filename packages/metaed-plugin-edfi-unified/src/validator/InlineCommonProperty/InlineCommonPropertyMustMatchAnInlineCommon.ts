@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'InlineCommonPropertyMustMatchAnInlineCommon',
         category: 'error',
-        message: `Inline Common property '${property.metaEdName}' does not match any declared Inline Common in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Inline Common property '${property.metaEdName}' does not match any declared Inline Common in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

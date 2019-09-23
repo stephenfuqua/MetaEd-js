@@ -140,11 +140,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               : getMergePropertyColumn(parentTable, foreignTablePk, parentTablePairs.property);
           if (parentTableColumn == null) {
             throw new Error(
-              `Could not find matching foreign key columns for parent property ${parentTable.schema}.${
-                parentTable.tableId
-              }.${parentTablePairs.property.metaEdName} and referenced field ${foreignTable.schema}.${
-                foreignTable.tableId
-              }.${foreignTablePk.columnId}`,
+              `Could not find matching foreign key columns for parent property ${parentTable.schema}.${parentTable.tableId}.${parentTablePairs.property.metaEdName} and referenced field ${foreignTable.schema}.${foreignTable.tableId}.${foreignTablePk.columnId}`,
             );
           }
 

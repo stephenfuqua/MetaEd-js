@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'SharedIntegerPropertyMustMatchASharedInteger',
         category: 'error',
-        message: `Shared integer property '${property.metaEdName}' does not match any declared Shared Integer in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Shared integer property '${property.metaEdName}' does not match any declared Shared Integer in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

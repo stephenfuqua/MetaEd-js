@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'SharedShortPropertyMustMatchASharedShort',
         category: 'error',
-        message: `Shared short property '${property.metaEdName}' does not match any declared Shared Short in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Shared short property '${property.metaEdName}' does not match any declared Shared Short in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

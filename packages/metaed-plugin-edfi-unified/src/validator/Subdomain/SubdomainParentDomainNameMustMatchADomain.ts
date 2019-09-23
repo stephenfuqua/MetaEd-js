@@ -12,9 +12,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'SubdomainParentDomainNameMustMatchADomain',
           category: 'error',
-          message: `Subdomain parent domain name '${
-            subdomain.parentMetaEdName
-          }' does not match any declared Domain in namespace ${subdomain.namespace.namespaceName}.`,
+          message: `Subdomain parent domain name '${subdomain.parentMetaEdName}' does not match any declared Domain in namespace ${subdomain.namespace.namespaceName}.`,
           sourceMap: (subdomain.sourceMap as SubdomainSourceMap).parentMetaEdName,
           fileMap: null,
         });

@@ -17,9 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'AssociationSubclassIdentifierMustMatchAnAssociation',
           category: 'error',
-          message: `Association ${entity.metaEdName} based on ${
-            entity.baseEntityName
-          } does not match any declared Association in namespace ${entity.baseEntityNamespaceName}.`,
+          message: `Association ${entity.metaEdName} based on ${entity.baseEntityName} does not match any declared Association in namespace ${entity.baseEntityNamespaceName}.`,
           sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });

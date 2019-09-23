@@ -15,9 +15,7 @@ const maxSqlServerIdentifierLength = R.take(128);
 
 function nameFor(foreignKey: ForeignKey): string {
   return maxSqlServerIdentifierLength(
-    `FK_${foreignKey.parentTable.data.edfiOdsSqlServer.tableName}_${
-      foreignKey.foreignTable.data.edfiOdsSqlServer.tableName
-    }${foreignKey.data.edfiOdsSqlServer.nameSuffix}`,
+    `FK_${foreignKey.parentTable.data.edfiOdsSqlServer.tableName}_${foreignKey.foreignTable.data.edfiOdsSqlServer.tableName}${foreignKey.data.edfiOdsSqlServer.nameSuffix}`,
   );
 }
 

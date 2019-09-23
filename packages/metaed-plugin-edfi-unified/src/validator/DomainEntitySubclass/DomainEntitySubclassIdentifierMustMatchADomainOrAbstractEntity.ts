@@ -17,9 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName: 'DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity',
           category: 'error',
-          message: `${entity.typeHumanizedName} ${entity.metaEdName} based on ${
-            entity.baseEntityName
-          } does not match any declared Domain or Abstract Entity.`,
+          message: `${entity.typeHumanizedName} ${entity.metaEdName} based on ${entity.baseEntityName} does not match any declared Domain or Abstract Entity.`,
           sourceMap: entity.sourceMap.baseEntityName,
           fileMap: null,
         });

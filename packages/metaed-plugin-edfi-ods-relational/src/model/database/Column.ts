@@ -221,9 +221,7 @@ export function addSourceEntityProperty(column: Column, property: EntityProperty
     column.sourceEntityProperties.push(property);
   } else {
     winston.warn(
-      `  Attempt to add duplicate source entity property: ${property.metaEdName} (${
-        property.typeHumanizedName
-      })  to column ${column.columnId} failed.`,
+      `  Attempt to add duplicate source entity property: ${property.metaEdName} (${property.typeHumanizedName})  to column ${column.columnId} failed.`,
     );
   }
 }

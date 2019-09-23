@@ -22,11 +22,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
           failures.push({
             validatorName: 'IncludingRequiredPropertiesInExtendedAssociationsProhibited',
             category: 'warning',
-            message: `${associationExtension.typeHumanizedName} ${
-              associationExtension.metaEdName
-            } is an extension with required property ${
-              property.metaEdName
-            }.  The ODS/API does not currently support this pattern.`,
+            message: `${associationExtension.typeHumanizedName} ${associationExtension.metaEdName} is an extension with required property ${property.metaEdName}.  The ODS/API does not currently support this pattern.`,
             sourceMap: property.sourceMap.metaEdName,
             fileMap: null,
           });

@@ -25,9 +25,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
           failures.push({
             validatorName: 'IdentityExistsOnlyIfIdentityIsAllowed',
             category: 'error',
-            message: `'is part of identity' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${
-              entity.metaEdName
-            }. 'is part of identity' is only valid for properties on ${validTypeNames}.`,
+            message: `'is part of identity' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${entity.metaEdName}. 'is part of identity' is only valid for properties on ${validTypeNames}.`,
             sourceMap: property.sourceMap.isPartOfIdentity,
             fileMap: null,
           });

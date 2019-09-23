@@ -26,9 +26,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
             getFailure(
               domainItem,
               'DescriptorDomainItemMustMatchTopLevelEntity',
-              `Descriptor Domain Item property '${
-                domainItem.metaEdName
-              }' does not match any declared Descriptor in namespace ${domainItem.referencedNamespaceName}.`,
+              `Descriptor Domain Item property '${domainItem.metaEdName}' does not match any declared Descriptor in namespace ${domainItem.referencedNamespaceName}.`,
             ),
           );
         }

@@ -37,9 +37,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
         failures.push({
           validatorName,
           category: 'warning',
-          message: `[ODS-827] ${associationExtension.typeHumanizedName} ${
-            associationExtension.metaEdName
-          } is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
+          message: `[ODS-827] ${associationExtension.typeHumanizedName} ${associationExtension.metaEdName} is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
           sourceMap: associationExtension.sourceMap.metaEdName,
           fileMap: null,
         });

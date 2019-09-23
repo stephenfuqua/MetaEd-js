@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'CommonPropertyMustMatchACommon',
         category: 'error',
-        message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

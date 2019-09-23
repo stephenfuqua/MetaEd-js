@@ -29,9 +29,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
             getFailure(
               domainItem,
               'InlineCommonDomainItemMustMatchTopLevelEntity',
-              `Inline Common Domain Item property '${
-                domainItem.metaEdName
-              }' does not match any declared Inline Common in namespace ${domainItem.referencedNamespaceName}.`,
+              `Inline Common Domain Item property '${domainItem.metaEdName}' does not match any declared Inline Common in namespace ${domainItem.referencedNamespaceName}.`,
             ),
           );
         }

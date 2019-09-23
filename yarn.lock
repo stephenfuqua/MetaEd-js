@@ -934,10 +934,10 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
-"@types/atom@^1.31.0":
-  version "1.31.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/@types/atom/-/@types/atom-1.31.0.tgz#eb7c0f5505617ded4ea376b0abaa1795891e13dc"
-  integrity sha1-63wPVQVhfe1Oo3awq6oXlYkeE9w=
+"@types/atom@1.36.1":
+  version "1.36.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/@types/atom/-/@types/atom-1.36.1.tgz#01bbe4cbdf07446645e20a64fc5105850f6a789f"
+  integrity sha1-Abvky98HRGZF4gpk/FEFhQ9qeJ8=
   dependencies:
     "@types/node" "*"
 
@@ -1004,10 +1004,10 @@
   resolved "https://www.myget.org/F/ed-fi/npm/@types/jest-diff/-/@types/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha1-NcwVucTzChjvIYUuJV/bAvbVm4k=
 
-"@types/jest@24.0.13":
-  version "24.0.13"
-  resolved "https://www.myget.org/F/ed-fi/npm/@types/jest/-/@types/jest-24.0.13.tgz#10f50b64cb05fb02411fbba49e9042a3a11da3f9"
-  integrity sha1-EPULZMsF+wJBH7uknpBCo6Edo/k=
+"@types/jest@24.0.18":
+  version "24.0.18"
+  resolved "https://www.myget.org/F/ed-fi/npm/@types/jest/-/@types/jest-24.0.18.tgz#9c7858d450c59e2164a8a9df0905fc5091944498"
+  integrity sha1-nHhY1FDFniFkqKnfCQX8UJGURJg=
   dependencies:
     "@types/jest-diff" "*"
 
@@ -1021,10 +1021,10 @@
   resolved "https://www.myget.org/F/ed-fi/npm/@types/node/-/@types/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
 
-"@types/node@12.0.2":
-  version "12.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/@types/node/-/@types/node-12.0.2.tgz#3452a24edf9fea138b48fad4a0a028a683da1e40"
-  integrity sha1-NFKiTt+f6hOLSPrUoKAopoPaHkA=
+"@types/node@12.7.5":
+  version "12.7.5"
+  resolved "https://www.myget.org/F/ed-fi/npm/@types/node/-/@types/node-12.7.5.tgz#e19436e7f8e9b4601005d73673b6dc4784ffcc2f"
+  integrity sha1-4ZQ25/jptGAQBdc2c7bcR4T/zC8=
 
 "@types/node@^8.0.47":
   version "8.10.48"
@@ -1058,40 +1058,40 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@2.2.0":
-  version "2.2.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/eslint-plugin/-/@typescript-eslint/eslint-plugin-2.2.0.tgz#cba8caa6ad8df544c46bca674125a31af8c9ac2f"
-  integrity sha1-y6jKpq2N9UTEa8pnQSWjGvjJrC8=
+"@typescript-eslint/eslint-plugin@2.3.0":
+  version "2.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/eslint-plugin/-/@typescript-eslint/eslint-plugin-2.3.0.tgz#6ead12c6b15a9b930430931e396e01a1fe181fcc"
+  integrity sha1-bq0SxrFam5MEMJMeOW4Bof4YH8w=
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.2.0"
+    "@typescript-eslint/experimental-utils" "2.3.0"
     eslint-utils "^1.4.2"
     functional-red-black-tree "^1.0.1"
     regexpp "^2.0.1"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.2.0":
-  version "2.2.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/experimental-utils/-/@typescript-eslint/experimental-utils-2.2.0.tgz#31d855fbc425168ecf56960c777aacfcca391cff"
-  integrity sha1-MdhV+8QlFo7PVpYMd3qs/Mo5HP8=
+"@typescript-eslint/experimental-utils@2.3.0":
+  version "2.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/experimental-utils/-/@typescript-eslint/experimental-utils-2.3.0.tgz#19a8e1b8fcee7d7469f3b44691d91830568de140"
+  integrity sha1-GajhuPzufXRp87RGkdkYMFaN4UA=
   dependencies:
     "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.2.0"
+    "@typescript-eslint/typescript-estree" "2.3.0"
     eslint-scope "^5.0.0"
 
-"@typescript-eslint/parser@2.2.0":
-  version "2.2.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/parser/-/@typescript-eslint/parser-2.2.0.tgz#3cd758ed85ae9be06667beb61bbdf8060f274fb7"
-  integrity sha1-PNdY7YWum+BmZ762G734Bg8nT7c=
+"@typescript-eslint/parser@2.3.0":
+  version "2.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/parser/-/@typescript-eslint/parser-2.3.0.tgz#d2df1d4bb8827e36125fb7c6274df1b4d4e614f0"
+  integrity sha1-0t8dS7iCfjYSX7fGJ03xtNTmFPA=
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.2.0"
-    "@typescript-eslint/typescript-estree" "2.2.0"
+    "@typescript-eslint/experimental-utils" "2.3.0"
+    "@typescript-eslint/typescript-estree" "2.3.0"
     eslint-visitor-keys "^1.1.0"
 
-"@typescript-eslint/typescript-estree@2.2.0":
-  version "2.2.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/typescript-estree/-/@typescript-eslint/typescript-estree-2.2.0.tgz#1e2aad5ed573f9f7a8e3261eb79404264c4fc57f"
-  integrity sha1-HiqtXtVz+feo4yYet5QEJkxPxX8=
+"@typescript-eslint/typescript-estree@2.3.0":
+  version "2.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/@typescript-eslint/typescript-estree/-/@typescript-eslint/typescript-estree-2.3.0.tgz#fd8faff7e4c73795c65e5817c52f9038e33ef29d"
+  integrity sha1-/Y+v9+THN5XGXlgXxS+QOOM+8p0=
   dependencies:
     glob "^7.1.4"
     is-glob "^4.0.1"
@@ -4058,10 +4058,10 @@ eslint-plugin-json@1.4.0:
   dependencies:
     vscode-json-languageservice "^3.2.1"
 
-eslint-plugin-prettier@3.1.0:
-  version "3.1.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.0.tgz#8695188f95daa93b0dc54b249347ca3b79c4686d"
-  integrity sha1-hpUYj5XaqTsNxUskk0fKO3nEaG0=
+eslint-plugin-prettier@3.1.1:
+  version "3.1.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.1.tgz#507b8562410d02a03f0ddc949c616f877852f2ba"
+  integrity sha1-UHuFYkENAqA/DdyUnGFvh3hS8ro=
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -4090,10 +4090,10 @@ eslint-visitor-keys@^1.1.0:
   resolved "https://www.myget.org/F/ed-fi/npm/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha1-4qgs6oT/JGrW+1f5veW0ZiFFnsI=
 
-eslint@6.3.0:
-  version "6.3.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/eslint/-/eslint-6.3.0.tgz#1f1a902f67bfd4c354e7288b81e40654d927eb6a"
-  integrity sha1-HxqQL2e/1MNU5yiLgeQGVNkn62o=
+eslint@6.4.0:
+  version "6.4.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/eslint/-/eslint-6.4.0.tgz#5aa9227c3fbe921982b2eda94ba0d7fae858611a"
+  integrity sha1-WqkifD++khmCsu2pS6DX+uhYYRo=
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -6807,6 +6807,11 @@ lodash.get@^4.4.2:
   resolved "https://www.myget.org/F/ed-fi/npm/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
+lodash.memoize@4.x:
+  version "4.1.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
+  integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
+
 lodash.merge@^4.6.1:
   version "4.6.1"
   resolved "https://www.myget.org/F/ed-fi/npm/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
@@ -8394,10 +8399,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.14.2:
-  version "1.15.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
-  integrity sha1-H+qsW90YEje1Tb5l2HTgKhRyeGo=
+prettier@1.18.2:
+  version "1.18.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
+  integrity sha1-aCPnxZAAF7S9Os9G/prEtNe9qeo=
 
 pretty-bytes@^4.0.2:
   version "4.0.2"
@@ -10291,25 +10296,26 @@ trough@^1.0.0:
   resolved "https://www.myget.org/F/ed-fi/npm/trough/-/trough-1.0.3.tgz#e29bd1614c6458d44869fc28b255ab7857ef7c24"
   integrity sha1-4pvRYUxkWNRIafwoslWreFfvfCQ=
 
-ts-jest@24.0.2:
-  version "24.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/ts-jest/-/ts-jest-24.0.2.tgz#8dde6cece97c31c03e80e474c749753ffd27194d"
-  integrity sha1-jd5s7Ol8McA+gOR0x0l1P/0nGU0=
+ts-jest@24.1.0:
+  version "24.1.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ts-jest/-/ts-jest-24.1.0.tgz#2eaa813271a2987b7e6c3fefbda196301c131734"
+  integrity sha1-LqqBMnGimHt+bD/vvaGWMBwTFzQ=
   dependencies:
     bs-logger "0.x"
     buffer-from "1.x"
     fast-json-stable-stringify "2.x"
     json5 "2.x"
+    lodash.memoize "4.x"
     make-error "1.x"
     mkdirp "0.x"
     resolve "1.x"
     semver "^5.5"
     yargs-parser "10.x"
 
-ts-node@8.3.0:
-  version "8.3.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/ts-node/-/ts-node-8.3.0.tgz#e4059618411371924a1fb5f3b125915f324efb57"
-  integrity sha1-5AWWGEETcZJKH7XzsSWRXzJO+1c=
+ts-node@8.4.1:
+  version "8.4.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/ts-node/-/ts-node-8.4.1.tgz#270b0dba16e8723c9fa4f9b4775d3810fd994b4f"
+  integrity sha1-JwsNuhbocjyfpPm0d104EP2ZS08=
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
@@ -10363,10 +10369,10 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   resolved "https://www.myget.org/F/ed-fi/npm/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.6.2:
-  version "3.6.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
-  integrity sha1-EFsPGTQRnd5UOsjrca86kQCe/lQ=
+typescript@3.6.3:
+  version "3.6.3"
+  resolved "https://www.myget.org/F/ed-fi/npm/typescript/-/typescript-3.6.3.tgz#fea942fabb20f7e1ca7164ff626f1a9f3f70b4da"
+  integrity sha1-/qlC+rsg9+HKcWT/Ym8anz9wtNo=
 
 typical@^2.6.0:
   version "2.6.1"

@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'SharedStringPropertyMustMatchASharedString',
         category: 'error',
-        message: `Shared string property '${property.metaEdName}' does not match any declared Shared String in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Shared string property '${property.metaEdName}' does not match any declared Shared String in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

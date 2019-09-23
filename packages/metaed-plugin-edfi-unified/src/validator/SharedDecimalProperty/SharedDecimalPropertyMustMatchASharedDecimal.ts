@@ -15,9 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       failures.push({
         validatorName: 'SharedDecimalPropertyMustMatchASharedDecimal',
         category: 'error',
-        message: `Shared decimal property '${property.metaEdName}' does not match any declared Shared Decimal in namespace ${
-          property.referencedNamespaceName
-        }.`,
+        message: `Shared decimal property '${property.metaEdName}' does not match any declared Shared Decimal in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

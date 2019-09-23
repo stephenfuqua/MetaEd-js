@@ -27,11 +27,7 @@ function failureCollector(
   failures.push({
     validatorName: 'V2CannotDuplicateNamesInDependencyNamespaces',
     category: 'error',
-    message: `${entityWithDuplicateName.typeHumanizedName} named ${
-      entityWithDuplicateName.metaEdName
-    } is a duplicate declaration of that name. Name already exists in project ${
-      dependencyNamespace.projectName
-    }. ODS/API 2.x does not support duplicate names.`,
+    message: `${entityWithDuplicateName.typeHumanizedName} named ${entityWithDuplicateName.metaEdName} is a duplicate declaration of that name. Name already exists in project ${dependencyNamespace.projectName}. ODS/API 2.x does not support duplicate names.`,
     sourceMap: entityWithDuplicateName.sourceMap.metaEdName,
     fileMap: null,
   });
