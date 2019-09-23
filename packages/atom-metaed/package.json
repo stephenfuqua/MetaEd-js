@@ -200,7 +200,6 @@
     "atom-package-deps": "^4.6.0",
     "atom-space-pen-views": "2.2.0",
     "axios": "0.18.0",
-    "babel-polyfill": "^6.26.0",
     "ed-fi-model-2.0": "2.0.1",
     "ed-fi-model-2.2": "2.0.1",
     "ed-fi-model-3.0": "2.0.2",

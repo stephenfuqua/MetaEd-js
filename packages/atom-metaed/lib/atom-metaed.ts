@@ -1,5 +1,4 @@
 // Get regeneratorRuntime async/await polyfill
-import 'babel-polyfill';
 import { install as packageDepsInstall } from 'atom-package-deps';
 
 // eslint-disable-next-line import/no-unresolved

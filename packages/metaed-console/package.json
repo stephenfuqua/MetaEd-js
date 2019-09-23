@@ -14,7 +14,6 @@
     "/package.json"
   ],
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "chalk": "^2.3.0",
     "metaed-core": "2.0.1-dev.7",
     "semver": "^5.4.1",

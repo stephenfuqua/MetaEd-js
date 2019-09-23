@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import { exec } from 'child_process';
 import AdmZip from 'adm-zip';
 import axios from 'axios';
