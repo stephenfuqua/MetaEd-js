@@ -43,9 +43,7 @@
     "ed-fi-model-3.0": "2.0.2",
     "ed-fi-model-3.1": "2.0.2",
     "ed-fi-model-3.2": "2.0.3",
-    "final-fs": "^1.6.1",
-    "msnodesqlv8": "0.7.1",
-    "mssql": "5.1.0"
+    "final-fs": "^1.6.1"
   },
   "scripts": {
     "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",

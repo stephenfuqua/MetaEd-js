@@ -7355,12 +7355,10 @@ ms@^2.1.1:
   resolved "https://www.myget.org/F/ed-fi/npm/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=
 
-msnodesqlv8@0.7.1:
-  version "0.7.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/msnodesqlv8/-/msnodesqlv8-0.7.1.tgz#96329c7da2224deb0edfa861b3c9c076e5591c5b"
-  integrity sha1-ljKcfaIiTesO36hhs8nAduVZHFs=
-  dependencies:
-    node-gyp "^3.8.0"
+msnodesqlv8@0.8.3:
+  version "0.8.3"
+  resolved "https://www.myget.org/F/ed-fi/npm/msnodesqlv8/-/msnodesqlv8-0.8.3.tgz#b32fad65ab4448a5792e420d252e536619675fca"
+  integrity sha1-sy+tZatESKV5LkINJS5TZhlnX8o=
 
 mssql@5.1.0:
   version "5.1.0"
