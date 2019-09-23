@@ -3557,16 +3557,6 @@ diff-sequences@^24.9.0:
   resolved "https://www.myget.org/F/ed-fi/npm/diff-sequences/-/diff-sequences-24.9.0.tgz#5715d6244e2aa65f48bba0bc972db0b0b11e95b5"
   integrity sha1-VxXWJE4qpl9Iu6C8ly2wsLEelbU=
 
-diff2html@^2.3.1, diff2html@^2.3.2:
-  version "2.7.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/diff2html/-/diff2html-2.7.0.tgz#e45c58056a36235ec871225ce7a1ec61966dcc66"
-  integrity sha1-5FxYBWo2I17IcSJc56HsYZZtzGY=
-  dependencies:
-    diff "^3.5.0"
-    hogan.js "^3.0.2"
-    lodash.merge "^4.6.1"
-    whatwg-fetch "^3.0.0"
-
 diff@^1.3.2:
   version "1.4.0"
   resolved "https://www.myget.org/F/ed-fi/npm/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
@@ -3745,30 +3735,30 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-ed-fi-model-2.0@2.0.1:
-  version "2.0.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-2.0.1.tgz#de9ee24e42289d4da5d2dca0c81dfac1ede67dda"
-  integrity sha1-3p7iTkIonU2l0tygyB36we3mfdo=
-
-ed-fi-model-2.2@2.0.1:
-  version "2.0.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.2/-/ed-fi-model-2.2-2.0.1.tgz#528f79f6acc50f1abf022b81dcceddfc3f7bf876"
-  integrity sha1-Uo959qzFDxq/AiuB3M7d/D97+HY=
-
-ed-fi-model-3.0@2.0.2:
+ed-fi-model-2.0@2.0.2:
   version "2.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-2.0.2.tgz#3610dd6d5bb4bb785cfa6a781ee8b3e3706125d5"
-  integrity sha1-NhDdbVu0u3hc+mp4Huiz43BhJdU=
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-2.0.2.tgz#c527f739bf833460194776d9ae545605f277b0a9"
+  integrity sha1-xSf3Ob+DNGAZR3bZrlRWBfJ3sKk=
 
-ed-fi-model-3.1@2.0.2:
+ed-fi-model-2.2@2.0.2:
   version "2.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.1/-/ed-fi-model-3.1-2.0.2.tgz#fad83a5c5d3596f9fb9178a4a6357ec0c91e238d"
-  integrity sha1-+tg6XF01lvn7kXikpjV+wMkeI40=
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.2/-/ed-fi-model-2.2-2.0.2.tgz#3a7a5ebf3b30afbd434fe15e0c2d9a31a6964179"
+  integrity sha1-Onpevzswr71DT+FeDC2aMaaWQXk=
 
-ed-fi-model-3.2@2.0.3:
+ed-fi-model-3.0@2.0.3:
   version "2.0.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.2/-/ed-fi-model-3.2-2.0.3.tgz#0e92a89c8c8fc52df1e5a7c950de47e81924009c"
-  integrity sha1-DpKonIyPxS3x5afJUN5H6BkkAJw=
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-2.0.3.tgz#9202a4caba61daa63a8fa55a3812f6acdd0781fd"
+  integrity sha1-kgKkyrph2qY6j6VaOBL2rN0Hgf0=
+
+ed-fi-model-3.1@2.0.3:
+  version "2.0.3"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.1/-/ed-fi-model-3.1-2.0.3.tgz#2cbcec987fb8f4cd470b684e90b2b76e0221ed2b"
+  integrity sha1-LLzsmH+49M1HC2hOkLK3bgIh7Ss=
+
+ed-fi-model-3.2@2.0.4:
+  version "2.0.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.2/-/ed-fi-model-3.2-2.0.4.tgz#ef6a597f15e5b6162c5855ac0f1fcbdc50a58fa4"
+  integrity sha1-72pZfxXlthYsWFWsDx/L3FClj6Q=
 
 editions@^2.0.2, editions@^2.1.2:
   version "2.1.3"
@@ -5173,14 +5163,6 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://www.myget.org/F/ed-fi/npm/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
   integrity sha1-ljRQKqEsRF3Vp8VzS1cruHOKrLs=
-
-hogan.js@^3.0.2:
-  version "3.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/hogan.js/-/hogan.js-3.0.2.tgz#4cd9e1abd4294146e7679e41d7898732b02c7bfd"
-  integrity sha1-TNnhq9QpQUbnZ55B14mHMrAse/0=
-  dependencies:
-    mkdirp "0.3.0"
-    nopt "1.0.10"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -6812,11 +6794,6 @@ lodash.memoize@4.x:
   resolved "https://www.myget.org/F/ed-fi/npm/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
-lodash.merge@^4.6.1:
-  version "4.6.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
-  integrity sha1-rcJdnLmbk5HFliTzefu6YNcRHVQ=
-
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://www.myget.org/F/ed-fi/npm/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -7286,11 +7263,6 @@ mixto@1.x:
   resolved "https://www.myget.org/F/ed-fi/npm/mixto/-/mixto-1.0.0.tgz#c320ef61b52f2898f522e17d8bbc6d506d8425b6"
   integrity sha1-wyDvYbUvKJj1IuF9i7xtUG2EJbY=
 
-mkdirp@0.3.0:
-  version "0.3.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/mkdirp/-/mkdirp-0.3.0.tgz#1bbf5ab1ba827af23575143490426455f481fe1e"
-  integrity sha1-G79asbqCevI1dRQ0kEJkVfSB/h4=
-
 mkdirp@0.5.1, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   version "0.5.1"
   resolved "https://www.myget.org/F/ed-fi/npm/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
@@ -7588,13 +7560,6 @@ noms@0.0.0:
     inherits "^2.0.1"
     readable-stream "~1.0.31"
 
-nopt@1.0.10, nopt@~1.0.10:
-  version "1.0.10"
-  resolved "https://www.myget.org/F/ed-fi/npm/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
-  integrity sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=
-  dependencies:
-    abbrev "1"
-
 "nopt@2 || 3":
   version "3.0.6"
   resolved "https://www.myget.org/F/ed-fi/npm/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
@@ -7609,6 +7574,13 @@ nopt@^4.0.1, nopt@~4.0.1:
   dependencies:
     abbrev "1"
     osenv "^0.1.4"
+
+nopt@~1.0.10:
+  version "1.0.10"
+  resolved "https://www.myget.org/F/ed-fi/npm/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+  integrity sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=
+  dependencies:
+    abbrev "1"
 
 normalize-package-data@^2.0.0, normalize-package-data@^2.3.0, normalize-package-data@^2.3.4, normalize-package-data@^2.3.5, normalize-package-data@^2.4.0:
   version "2.4.0"
@@ -10830,11 +10802,6 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   integrity sha1-WrrPd3wyFmpR0IXWtPPn0nET3bA=
   dependencies:
     iconv-lite "0.4.24"
-
-whatwg-fetch@^3.0.0:
-  version "3.0.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
-  integrity sha1-/IBORYzEYACbGiuWa8iBfSV4rvs=
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0:
   version "2.3.0"

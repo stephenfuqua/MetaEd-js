@@ -2,7 +2,6 @@ import R from 'ramda';
 import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
-import diff2html from 'diff2html';
 import {
   GeneratedOutput,
   State,
@@ -26,8 +25,6 @@ jest.setTimeout(40000);
 
 describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
-  const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath = `${projectRootPath}/node_modules`;
   const outputDirectory = `${artifactPath}`;
   const complexTypeNames: string[] = [];
   const simpleTypeNames: string[] = [];
@@ -121,24 +118,6 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     expect(result).toMatchSnapshot();
   });
 
-  it('should create diff files', async () => {
-    expect(generatedCoreXsd).toBeDefined();
-    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd} > ${diffFile}`;
-
-    await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
-      .then(() => ffs.readFile(diffFile))
-      .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
-      .then(result =>
-        ffs.readFile(cssFile).then(css => {
-          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
-          return ffs.writeFile(htmlFile, html, 'utf-8');
-        }),
-      );
-  });
-
   it('should have complex types in the correct order', (): void => {
     expect(generatedCoreXsd).toBeDefined();
     expect(complexTypeNames).toMatchSnapshot();
@@ -152,8 +131,6 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
 describe('when generating xsd and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v3/');
-  const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath = `${projectRootPath}/node_modules`;
   const outputDirectory = `${artifactPath}`;
   const complexTypeNames: string[] = [];
   const simpleTypeNames: string[] = [];
@@ -269,24 +246,6 @@ describe('when generating xsd and comparing it to data standard 3.1 authoritativ
     expect(result).toMatchSnapshot();
   });
 
-  it('should create diff files', async () => {
-    expect(generatedCoreXsd).toBeDefined();
-    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd} > ${diffFile}`;
-
-    await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
-      .then(() => ffs.readFile(diffFile))
-      .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
-      .then(result =>
-        ffs.readFile(cssFile).then(css => {
-          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
-          return ffs.writeFile(htmlFile, html, 'utf-8');
-        }),
-      );
-  });
-
   it('should have complex types in the correct order', (): void => {
     expect(generatedCoreXsd).toBeDefined();
     expect(complexTypeNames).toMatchSnapshot();
@@ -300,8 +259,6 @@ describe('when generating xsd and comparing it to data standard 3.1 authoritativ
 
 describe('when generating xsd with extension and comparing it to data standard 3.1 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v3/');
-  const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath = `${projectRootPath}/node_modules`;
   const outputDirectory = `${artifactPath}`;
   const complexTypeNames: string[] = [];
   const simpleTypeNames: string[] = [];
@@ -421,24 +378,6 @@ describe('when generating xsd with extension and comparing it to data standard 3
     // @ts-ignore "error" not used
     const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     expect(result).toMatchSnapshot();
-  });
-
-  it('should create diff files', async () => {
-    expect(generatedCoreXsd).toBeDefined();
-    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd} > ${diffFile}`;
-
-    await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
-      .then(() => ffs.readFile(diffFile))
-      .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
-      .then(result =>
-        ffs.readFile(cssFile).then(css => {
-          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
-          return ffs.writeFile(htmlFile, html, 'utf-8');
-        }),
-      );
   });
 
   it('should have complex types in the correct order', (): void => {

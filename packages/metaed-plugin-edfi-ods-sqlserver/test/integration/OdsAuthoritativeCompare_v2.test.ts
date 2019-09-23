@@ -2,7 +2,6 @@ import R from 'ramda';
 import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
-import diff2html from 'diff2html';
 import {
   GeneratedOutput,
   State,
@@ -31,8 +30,6 @@ jest.setTimeout(40000);
 
 describe('when generating ods and comparing it to data standard 2.0 authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
-  const projectRootPath: string = path.resolve(__dirname, '../../../../');
-  const nodeModulesPath = `${projectRootPath}/node_modules`;
   const outputDirectory = `${artifactPath}`;
   let coreResult: GeneratedOutput;
   let coreFileBaseName: string;
@@ -134,24 +131,6 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
-  });
-
-  it('should create diff files', async () => {
-    expect(coreResult).toBeDefined();
-    const cssFile = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
-    const htmlFile = `${outputDirectory}/${coreFileBaseName}.html`;
-    const diffFile = `${outputDirectory}/${coreFileBaseName}.diff`;
-    const gitDiffToFile = `git diff --no-index -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename} > ${diffFile}`;
-
-    await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
-      .then(() => ffs.readFile(diffFile))
-      .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
-      .then(result =>
-        ffs.readFile(cssFile).then(css => {
-          const html = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
-          return ffs.writeFile(htmlFile, html, 'utf-8');
-        }),
-      );
   });
 });
 
