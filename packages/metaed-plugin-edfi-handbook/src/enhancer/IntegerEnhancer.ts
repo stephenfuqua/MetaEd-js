@@ -20,8 +20,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'integerType') as IntegerType[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
-        ...createDefaultHandbookEntry(entity, '', metaEd),
-        entityType: entity.isShort ? 'ShortType' : 'IntegerType',
+        ...createDefaultHandbookEntry(entity, entity.isShort ? 'Short' : 'Integer', 'Number', metaEd),
         typeCharacteristics: getTypeCharacteristicsFor(entity),
       });
     });

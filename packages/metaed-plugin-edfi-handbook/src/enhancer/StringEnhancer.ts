@@ -19,7 +19,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'stringType') as StringType[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
-        ...createDefaultHandbookEntry(entity, 'String Type', metaEd),
+        ...createDefaultHandbookEntry(entity, 'String', 'String', metaEd),
         typeCharacteristics: getTypeCharacteristicsFor(entity),
       });
     });

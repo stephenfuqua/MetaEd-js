@@ -1,9 +1,4 @@
 import sort from 'sort-array';
-import { html as beautify } from 'js-beautify';
-import fs from 'fs';
-import path from 'path';
-import ramda from 'ramda';
-import handlebars from 'handlebars';
 import {
   TopLevelEntity,
   EntityProperty,
@@ -12,12 +7,13 @@ import {
   Descriptor,
   MetaEdEnvironment,
   ModelBase,
+  getAllEntitiesForNamespaces,
 } from 'metaed-core';
-import { getAllEntitiesForNamespaces } from 'metaed-core';
 import { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
 import { HandbookMergeProperty, HandbookEntityReferenceProperty } from '../model/HandbookEntryReferenceProperty';
+import { umlDatatypeMatrix, jsonDatatypeMatrix, getSqlDatatype, getMetaEdDatatype } from './DatatypeLookup';
 
 function generateUniqueId(entity: TopLevelEntity): string {
   return entity.metaEdName + entity.metaEdId;
@@ -56,51 +52,6 @@ function enumerationShortDescriptionsFor(entity: TopLevelEntity): string[] {
   return [];
 }
 
-function getTemplateString(templateName: string): string {
-  return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
-}
-
-const registerPartials: () => void = ramda.once(() => {
-  handlebars.registerPartial({
-    complexTypeItem: getTemplateString('complexTypeItem'),
-    annotation: getTemplateString('annotation'),
-    attribute: getTemplateString('attribute'),
-  });
-});
-
-const getHandbookTableTemplate: () => (x: any) => string = ramda.once(() =>
-  handlebars.compile(getTemplateString('handbookTable')),
-);
-
-function generatedTableSqlFor(entity: TopLevelEntity): string[] {
-  if (entity.data.edfiOdsRelational == null || entity.data.edfiOdsRelational.odsTables == null) return [];
-
-  const tables = entity.data.edfiOdsRelational.odsTables;
-  const results: string[] = [];
-
-  tables.forEach(x => {
-    const handbookTableTemplate: (x: any) => string = getHandbookTableTemplate();
-    results.push(handbookTableTemplate({ table: x }));
-  });
-
-  return results.sort();
-}
-
-const getComplexTypeTemplate: () => (x: any) => string = ramda.once(() =>
-  handlebars.compile(getTemplateString('complexType')),
-);
-
-function generatedXsdFor(entity: TopLevelEntity): string {
-  registerPartials();
-  const results: string[] = [];
-  if (!entity.data.edfiXsd.xsdComplexTypes) return '';
-  entity.data.edfiXsd.xsdComplexTypes.forEach(complexType => {
-    const complexTypeTemplate: (x: any) => string = getComplexTypeTemplate();
-    results.push(complexTypeTemplate(complexType));
-  });
-  return beautify(results.join('\n'), { indent_size: 2 });
-}
-
 function findEntityByMetaEdName(allEntities: ModelBase[], metaEdName: string): boolean {
   return allEntities.some(x => x.metaEdName === metaEdName);
 }
@@ -137,11 +88,6 @@ function getReferenceUniqueIdentifier(allEntities: ModelBase[], property: Entity
   return uniqueIdCandidate;
 }
 
-function getDataTypeName(property: EntityProperty): string {
-  const titleName: string = property.type[0].toUpperCase() + property.type.substring(1);
-  return `${titleName}Property`;
-}
-
 function getMergedProperties(property: ReferentialProperty): HandbookMergeProperty[] {
   if (!property.mergeDirectives) return [];
 
@@ -157,15 +103,20 @@ function entityPropertyToHandbookEntityReferenceProperty(
 ): HandbookEntityReferenceProperty {
   const referentialProperty: ReferentialProperty = property as ReferentialProperty;
   return {
-    edFiId: property.metaEdId,
+    metaEdId: property.metaEdId,
     targetPropertyId: referentialProperty.referencedEntity ? referentialProperty.referencedEntity.metaEdId : '',
     referenceUniqueIdentifier: getReferenceUniqueIdentifier(allEntities, property),
     name: `${property.roleName}${property.metaEdName}`,
     deprecationText: property.isDeprecated ? ' - DEPRECATED' : '',
-    dataType: getDataTypeName(property),
-    definition: property.documentation,
+    umlDatatype: umlDatatypeMatrix[property.type],
+    jsonDatatype: jsonDatatypeMatrix[property.type],
+    xsdDatatype: property.data.edfiXsd ? property.data.edfiXsd.xsdType : '',
+    metaEdDatatype: getMetaEdDatatype(property),
+    sqlDatatype: getSqlDatatype(property),
     isIdentity: property.isPartOfIdentity || property.isIdentityRename,
+    isOdsApiIdentity: property.isPartOfIdentity || property.isIdentityRename,
     cardinality: getCardinalityStringFor(property, true),
+    definition: property.documentation,
     mergeDirectives: getMergedProperties(referentialProperty),
   };
 }
@@ -186,7 +137,8 @@ function referringProperties(allReferentialProperties: ReferentialProperty[], en
 
 export function createDefaultHandbookEntry(
   entity: TopLevelEntity,
-  entityTypeName: string,
+  metaEdType: string,
+  umlType: string,
   metaEd: MetaEdEnvironment,
 ): HandbookEntry {
   const allEntities: ModelBase[] = getAllEntitiesForNamespaces([...metaEd.namespace.values()]);
@@ -194,20 +146,21 @@ export function createDefaultHandbookEntry(
   return {
     ...newHandbookEntry(),
     definition: entity.documentation,
-    edFiId: entity.metaEdId,
+    metaEdId: entity.metaEdId,
     // This is the way the UI searches for entities
     uniqueIdentifier: generateUniqueId(entity),
-    entityType: entityTypeName,
+    metaEdType,
+    umlType,
     modelReferencesContains: getPropertyNames(entity),
     modelReferencesContainsProperties: propertyMetadataFor(allEntities, entity),
     modelReferencesUsedBy: referringProperties(allReferentialProperties, entity),
     name:
-      entity.namespace.projectName === 'EdFi' ? entity.metaEdName : `${entity.metaEdName} (${entity.namespace.projectName})`,
+      entity.namespace.projectName === 'Ed-Fi'
+        ? entity.metaEdName
+        : `${entity.metaEdName} (${entity.namespace.projectName})`,
     projectName: entity.namespace.projectName,
     deprecationText: entity.isDeprecated ? ' - DEPRECATED' : '',
-    odsFragment: generatedTableSqlFor(entity),
     optionList: enumerationShortDescriptionsFor(entity),
     typeCharacteristics: [],
-    xsdFragment: generatedXsdFor(entity),
   };
 }

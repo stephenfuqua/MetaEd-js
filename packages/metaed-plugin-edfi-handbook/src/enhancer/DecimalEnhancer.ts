@@ -23,7 +23,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'decimalType') as DecimalType[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
-        ...createDefaultHandbookEntry(entity, 'Decimal Type', metaEd),
+        ...createDefaultHandbookEntry(entity, 'Decimal', 'Number', metaEd),
         typeCharacteristics: getTypeCharacteristicsFor(entity),
       });
     });

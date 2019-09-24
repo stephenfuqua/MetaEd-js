@@ -1,6 +1,4 @@
 import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
-import { createTimeIntervalSimpleType } from 'metaed-plugin-edfi-xsd';
 import { createDefaultHandbookEntry } from './BaseSimpleTypeHandbookEntryCreator';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
@@ -17,13 +15,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (handbookRepository == null) return { enhancerName, success: false };
 
   handbookRepository.handbookEntries.push(
-    createDefaultHandbookEntry(
-      createTimeIntervalSimpleType(),
-      timeIntervalEdfiId,
-      timeIntervalName,
-      timeIntervalDocumentation,
-      ColumnDataTypes.duration,
-    ),
+    createDefaultHandbookEntry(timeIntervalEdfiId, timeIntervalName, timeIntervalDocumentation),
   );
 
   return {

@@ -11,7 +11,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'domainEntity') as DomainEntity[]).forEach(entity => {
-      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Domain Entity', metaEd));
+      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Domain Entity', 'Class', metaEd));
     });
   });
 

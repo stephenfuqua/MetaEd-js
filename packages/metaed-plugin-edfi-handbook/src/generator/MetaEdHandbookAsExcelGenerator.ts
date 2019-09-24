@@ -51,9 +51,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     handbookEntries.push(...handbookEntriesForNamespace(metaEd, namespace));
   });
 
-  const orderedHandbookEntries: HandbookEntry[] = R.sortWith([orderByProp('entityType'), orderByProp('name')])(
-    handbookEntries,
-  );
+  const orderedHandbookEntries: HandbookEntry[] = R.sortWith([orderByProp('umlType'), orderByProp('name')])(handbookEntries);
 
   const workbook: Workbook = newWorkbook();
   const handbookSheet: Worksheet = newWorksheet('Ed-Fi Handbook');
@@ -61,15 +59,13 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   orderedHandbookEntries.forEach((handbookEntry: HandbookEntry) => {
     const handbookRow: Row = newRow();
-    setRow(handbookRow, 'Ed-Fi ID', handbookEntry.edFiId);
-    setRow(handbookRow, 'Name', handbookEntry.name);
+    setRow(handbookRow, 'Ed-Fi ID', handbookEntry.metaEdId);
+    setRow(handbookRow, 'Name', handbookEntry.name + handbookEntry.deprecationText);
     setRow(handbookRow, 'Definition', handbookEntry.definition);
-    setRow(handbookRow, 'Entity Type', handbookEntry.entityType);
+    setRow(handbookRow, 'UML Type', handbookEntry.umlType);
     setRow(handbookRow, 'Type Characteristics', asNewLineSeparatedList(handbookEntry.typeCharacteristics));
     setRow(handbookRow, 'Option List', asNewLineSeparatedList(handbookEntry.optionList));
     setRow(handbookRow, 'References', getModelReferencesListFor(handbookEntry));
-    setRow(handbookRow, 'XSD', handbookEntry.xsdFragment);
-    setRow(handbookRow, 'ODS', asNewLineSeparatedList(handbookEntry.odsFragment));
 
     handbookSheet.rows.push(createRow(handbookRow));
     handbookSheet['!cols'] = [
@@ -80,8 +76,6 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       { wpx: 300 },
       { wpx: 300 },
       { wpx: 300 },
-      { wpx: 500 },
-      { wpx: 500 },
     ];
   });
 

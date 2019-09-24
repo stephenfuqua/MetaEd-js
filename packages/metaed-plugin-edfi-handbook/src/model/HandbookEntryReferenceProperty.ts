@@ -4,13 +4,18 @@ export interface HandbookMergeProperty {
 }
 
 export interface HandbookEntityReferenceProperty {
-  edFiId: string;
+  metaEdId: string;
   targetPropertyId: string;
   referenceUniqueIdentifier: string;
   name: string;
   deprecationText: string;
-  dataType: string;
+  umlDatatype: string;
+  jsonDatatype: string;
+  xsdDatatype: string;
+  metaEdDatatype: string;
+  sqlDatatype: string;
   isIdentity: boolean;
+  isOdsApiIdentity: boolean;
   cardinality: string;
   definition: string;
   mergeDirectives?: HandbookMergeProperty[];

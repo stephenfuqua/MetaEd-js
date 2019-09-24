@@ -5,8 +5,8 @@ import {
   PluginEnvironment,
   Namespace,
   PropertyType,
+  getAllProperties,
 } from 'metaed-core';
-import { getAllProperties } from 'metaed-core';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 
 const referenceProperty: PropertyType[] = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];

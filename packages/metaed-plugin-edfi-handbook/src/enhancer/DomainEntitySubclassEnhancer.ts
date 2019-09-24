@@ -12,9 +12,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'domainEntitySubclass') as DomainEntitySubclass[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
-        ...createDefaultHandbookEntry(entity, '', metaEd),
-        entityType: entity.metaEdName,
-        baseEntityType: entity.baseEntityName,
+        ...createDefaultHandbookEntry(entity, 'Domain Entity Subclass', 'Subclass', metaEd),
+        baseMetaEdType: entity.baseEntityName,
         baseEntityUniqueIdentifier: entity.baseEntity ? entity.baseEntityName + entity.baseEntity.metaEdId : '',
       });
     });

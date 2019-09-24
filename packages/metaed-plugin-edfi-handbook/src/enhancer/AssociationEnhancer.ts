@@ -11,7 +11,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'association') as Association[]).forEach(entity => {
-      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Association', metaEd));
+      handbookRepository.handbookEntries.push(
+        createDefaultHandbookEntry(entity, 'Association', 'Association Class', metaEd),
+      );
     });
   });
 

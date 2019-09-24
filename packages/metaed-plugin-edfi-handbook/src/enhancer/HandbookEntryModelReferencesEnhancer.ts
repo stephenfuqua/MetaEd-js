@@ -21,13 +21,18 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               .length,
         )
         .map(y => ({
-          edFiId: y.edFiId,
+          metaEdId: y.metaEdId,
           targetPropertyId: '',
           referenceUniqueIdentifier: y.uniqueIdentifier,
           name: y.name,
           deprecationText: y.deprecationText,
-          dataType: '',
+          umlDatatype: '',
+          jsonDatatype: '',
+          xsdDatatype: '',
+          metaEdDatatype: '',
+          sqlDatatype: '',
           isIdentity: false,
+          isOdsApiIdentity: false,
           cardinality: y.modelReferencesContainsProperties.filter(
             z => handbookEntry.uniqueIdentifier === z.referenceUniqueIdentifier,
           )[0].cardinality,

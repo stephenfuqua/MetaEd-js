@@ -246,9 +246,9 @@
 
                     angular.forEach(entries,
                         function (value, key) {
-                            if (value.edFiId) {
+                            if (value.metaEdId) {
                                 if (value.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
-                                    value.edFiId.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
+                                    value.metaEdId.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
                                     (includeDefinition && value.definition.toLowerCase().indexOf(filter.toLowerCase()) !== -1))
                                     out.push(value);
                             } else {
@@ -297,7 +297,7 @@
                 var out = [];
 
                 angular.forEach(items, function (value, key) {
-                    if (filter.indexOf(value.entityType) > -1) {
+                    if (filter.indexOf(value.umlType) > -1) {
                         out.push(value);
                     }
                 });
@@ -339,10 +339,11 @@
             ctrl.selected = ctrl.entries[0];
 
             angular.forEach(ctrl.entries, function (entry) {
-                if (ctrl.entityFilterTypes.indexOf(entry.entityType) == -1) {
-                    ctrl.entityFilterTypes.push(entry.entityType);
+                if (ctrl.entityFilterTypes.indexOf(entry.umlType) == -1) {
+                    ctrl.entityFilterTypes.push(entry.umlType);
                 }
             });
+            ctrl.entityFilterTypes.sort();
 
             ctrl.selecteEntity = function (entity) {
                 ctrl.selected = entity;
@@ -381,9 +382,9 @@
                 }, 100);
             }
 
-            ctrl.entityTypeDisplay = function (entityType) {
-                if (entityType.length > 35) return entityType.substring(0, 35) + '...';
-                else return entityType;
+            ctrl.entityTypeDisplay = function (umlType) {
+                if (umlType.length > 35) return umlType.substring(0, 35) + '...';
+                else return umlType;
             }
 
             ctrl.displaySideDefinition = function (definition) {
@@ -475,7 +476,7 @@
                 <div class="form-group search">
                     <ui-select multiple ng-change="ctrl.adjustSideBar()" ng-model="ctrl.selectedEntityTypes" theme="bootstrap" close-on-select="true"
                         title="Choose an entity type">
-                        <ui-select-match placeholder="Filter by Entity Type">{{ctrl.entityTypeDisplay($item)}}</ui-select-match>
+                        <ui-select-match placeholder="Filter by UML Type">{{ctrl.entityTypeDisplay($item)}}</ui-select-match>
                         <ui-select-choices repeat="et in ctrl.entityFilterTypes | filter:$select.search">
                             {{et}}
                         </ui-select-choices>
@@ -488,7 +489,7 @@
                     <ul class="nav nav-sidebar">
                         <li ng-repeat="entry in ctrl.entries | orderBy: 'name' | customSearch:ctrl.search:ctrl.includeDefinition | byEntityType:ctrl.selectedEntityTypes as filteredResults">
                             <a id="entity{{entry.uniqueIdentifier}}" ng-click="ctrl.selecteEntity(entry)" href="#/{{entry.uniqueIdentifier}}" class="menu"
-                                ng-class="{active: (ctrl.selected.uniqueIdentifier) == (entry.uniqueIdentifier)}" title="{{entry.edFiId}} - {{entry.name}}"
+                                ng-class="{active: (ctrl.selected.uniqueIdentifier) == (entry.uniqueIdentifier)}" title="{{entry.metaEdId}} - {{entry.name}}"
                                 style="text-decoration: none">
                                 <span ng-bind-html="entry.name | bold:ctrl.search" class="entity"></span>
                                 <br/>
@@ -500,7 +501,7 @@
                 </div>
             </div>
         </div>
-        <div style="height: 100%; width: calc(100% - 276px); display: inline-block; float: right; overflow-y: auto">
+        <div style="height: 100%; width: calc(100% - 276px); display: block; float: right; overflow-y: auto">
             <ng-view />
         </div>
     </div>

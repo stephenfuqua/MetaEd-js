@@ -1,11 +1,13 @@
 ﻿<div class="col-lg-10 col-md-12 no-float">
     <h1 class="page-header">{{ctrl.selected.name}}{{ctrl.selected.deprecationText}}</h1>
-    <h3 class="inline-header">Entity Type: {{ctrl.selected.entityType}}
-        <span ng-if="ctrl.selected.baseEntityType">extends
-             <a href="#/{{ctrl.selected.baseEntityUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{ctrl.selected.baseEntityType}}">{{ctrl.selected.baseEntityType}}</a>
+    <h3 class="inline-header">UML Type: {{ctrl.selected.umlType}}
+        <span ng-if="ctrl.selected.baseMetaEdType">extending
+             <a href="#/{{ctrl.selected.baseEntityUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{ctrl.selected.baseMetaEdType}}">{{ctrl.selected.baseMetaEdType}}</a>
         </span>
     </h3>
-    <p ng-if="ctrl.selected.edFiId">Ed-Fi ID: {{ctrl.selected.edFiId}}</p>
+    <h3>MetaEd Metadata</h3>
+    <p>MetaEd Entity Type: {{ctrl.selected.metaEdType}}</p>
+    <p ng-if="ctrl.selected.metaEdId">MetaEd ID: {{ctrl.selected.metaEdId}}</p>
     <h3>Definition</h3>
     <p ng-bind-html="ctrl.selected.definition | highlight:$parent.ctrl.search"></p>
     <div ng-if="ctrl.selected.typeCharacteristics.length">
@@ -30,8 +32,11 @@
             <thead>
                 <tr>
                     <th>Property</th>
-                    <th>Datatype</th>
-                    <th>Identity</th>
+                    <th>UML Datatype</th>
+                    <th>JSON Datatype</th>
+                    <th>XSD Datatype</th>
+                    <th>Other</th>
+                    <th ng-if="ctrl.selected.showIdentityColumn">Identity</th>
                     <th>Cardinality</th>
                     <th>Definition</th>
                     <th ng-if="ctrl.showMerge">Merge</th>
@@ -39,24 +44,27 @@
             </thead>
             <tbody>
                 <tr ng-repeat="r in ctrl.selected.modelReferencesContainsProperties">
-                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.edFiId}} - {{r.name}}">{{r.name}}</td>
+                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</td>
                     <td ng-if="ctrl.entityExists(r.referenceUniqueIdentifier)">
-                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.edFiId}} - {{r.name}}">{{r.name}}</a>{{r.deprecationText}}
+                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a>{{r.deprecationText}}
                     </td>
 
-                    <td>{{r.dataType}}</td>
-                    <td>{{r.isIdentity | trueFalseToYesNo}}</td>
+                    <td>{{r.umlDatatype}}</td>
+                    <td>{{r.jsonDatatype}}</td>
+                    <td>{{r.xsdDatatype}}</td>
+                    <td>
+                        <p>MetaEd DSL Datatype: {{r.metaEdDatatype}}</p>
+                        <p ng-if="r.sqlDatatype">SQL Recommended Datatype: {{r.sqlDatatype}}</p>
+                        <p>Ed-Fi ODS/API Identity: {{r.isOdsApiIdentity | trueFalseToYesNo}}</p>
+                    </td>
+                    <td ng-if="ctrl.selected.showIdentityColumn">{{r.isIdentity | trueFalseToYesNo}}</td>
                     <td>{{r.cardinality}}</td>
                     <td>{{r.definition}}</td>
                     <td ng-if="ctrl.showMerge">
                         <div ng-repeat="merge in r.mergeDirectives" ng-style="ctrl.getMergeStyle(merge, $last)">
-                            <span ng-repeat="path in merge.propertyPath">{{path}}
-                                <span ng-if="!$last">.</span>
-                            </span>
+                            <span ng-repeat="path in merge.propertyPath">{{path}}<span ng-if="!$last">.</span></span>
                             with
-                            <span ng-repeat="path in merge.targetPath">{{path}}
-                                <span ng-if="!$last">.</span>
-                            </span>
+                            <span ng-repeat="path in merge.targetPath">{{path}}<span ng-if="!$last">.</span></span>
                         </div>
                     </td>
                 </tr>
@@ -67,7 +75,7 @@
         <h4>Used By</h4>
         <ul>
             <li ng-repeat="rub in ctrl.selected.modelReferencesUsedByProperties">
-                <a href="#/{{rub.referenceUniqueIdentifier}}" title="{{rub.edFiId}} - {{rub.name}}">{{rub.name}}</a>.{{ctrl.selected.name}} (as {{rub.cardinality}})
+                <a href="#/{{rub.referenceUniqueIdentifier}}" title="{{rub.metaEdId}} - {{rub.name}}">{{rub.name}}</a>.{{ctrl.selected.name}} (as {{rub.cardinality}})
             </li>
         </ul>
     </div>

@@ -15,7 +15,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
     if (handbookRepository == null) return;
     (getEntitiesOfTypeForNamespaces([namespace], 'common') as Common[]).filter(isInlineCommon).forEach(entity => {
-      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Inline Common', metaEd));
+      const handbookEntry = createDefaultHandbookEntry(entity, 'Inline Common', 'Composite Part', metaEd);
+      handbookEntry.showIdentityColumn = false;
+      handbookRepository.handbookEntries.push(handbookEntry);
     });
   });
 

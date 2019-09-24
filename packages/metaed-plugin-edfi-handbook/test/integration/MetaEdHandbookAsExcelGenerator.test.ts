@@ -20,7 +20,7 @@ function rowToString(obj, value, i) {
   return value;
 }
 
-describe('when generating a simple sql data dictionary', (): void => {
+describe('when generating excel version of handbook', (): void => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
 
@@ -75,172 +75,43 @@ describe('when generating a simple sql data dictionary', (): void => {
   });
 
   it('should have a Tables sheet with the correct headers', (): void => {
-    expect(workbook.sheets[0].rows[0].headers).toHaveLength(9);
-
-    expect(workbook.sheets[0].rows[0].headers[0]).toBe('Ed-Fi ID');
-    expect(workbook.sheets[0].rows[0].headers[1]).toBe('Name');
-    expect(workbook.sheets[0].rows[0].headers[2]).toBe('Definition');
-    expect(workbook.sheets[0].rows[0].headers[3]).toBe('Entity Type');
-    expect(workbook.sheets[0].rows[0].headers[4]).toBe('Type Characteristics');
-    expect(workbook.sheets[0].rows[0].headers[5]).toBe('Option List');
-    expect(workbook.sheets[0].rows[0].headers[6]).toBe('References');
-    expect(workbook.sheets[0].rows[0].headers[7]).toBe('XSD');
-    expect(workbook.sheets[0].rows[0].headers[8]).toBe('ODS');
+    expect(workbook.sheets[0].rows[0].headers).toMatchInlineSnapshot(`
+      Array [
+        "Ed-Fi ID",
+        "Name",
+        "Definition",
+        "UML Type",
+        "Type Characteristics",
+        "Option List",
+        "References",
+      ]
+    `);
   });
 
   it('should have a Tables sheet with the correct rows', (): void => {
     expect(workbook.sheets[0].rows).toHaveLength(7);
-    expect(workbook.sheets[0].rows[0].values.reduce(rowToString)).toBe(
-      `36, Currency, U.S. currency in dollars and cents., Currency Base Type, , , , <xs:simpleType name="Currency">
-  <xs:annotation>
-    <xs:documentation>U.S. currency in dollars and cents.</xs:documentation>
-    <xs:appinfo>
-      <ann:TypeGroup>Simple</ann:TypeGroup>
-    </xs:appinfo>
-  </xs:annotation>
-  <xs:restriction base="xs:decimal"/>
-</xs:simpleType>
-, Currency [MONEY]`,
+    expect(workbook.sheets[0].rows[0].values.reduce(rowToString)).toMatchInlineSnapshot(
+      `"36, Currency, U.S. currency in dollars and cents., Currency, , , "`,
     );
-    expect(workbook.sheets[0].rows[1].values.reduce(rowToString)).toBe(
-      `, Entity1DateCollection, Entity1DateCollection doc, Date Type, , , Used By:
-Entity1.Entity1DateCollection (as optional collection), <xs:complexType name="Entity1DateCollection">
-  <xs:annotation>
-    <xs:documentation>Entity1DateCollection doc</xs:documentation>
-  </xs:annotation>
-</xs:complexType>
-, Entity1DateCollection [DATE]`,
-    );
-    expect(workbook.sheets[0].rows[2].values.reduce(rowToString)).toBe(
-      `, Entity2DateCollection, Entity2DateCollection doc, Date Type, , , Used By:
-Entity2.Entity2DateCollection (as optional collection), <xs:complexType name="Entity2DateCollection">
-  <xs:annotation>
-    <xs:documentation>Entity2DateCollection doc</xs:documentation>
-  </xs:annotation>
-</xs:complexType>
-, Entity2DateCollection [DATE]`,
-    );
-    expect(workbook.sheets[0].rows[3].values.reduce(rowToString)).toBe(
-      `, Entity1, Entity1 doc, Domain Entity, , , Contains:
-Entity1DateCollection (optional collection)
-Entity1Integer (identity)
-Entity1String (required), <xs:complexType name="Entity1">
-  <xs:annotation>
-    <xs:documentation>Entity1 doc</xs:documentation>
-    <xs:appinfo>
-      <ann:TypeGroup>Domain Entity</ann:TypeGroup>
-    </xs:appinfo>
-  </xs:annotation>
-  <xs:complexContent>
-    <xs:extension base="ComplexObjectType">
-      <xs:sequence>
-        <xs:element name="Entity1Integer" type="xs:int">
-          <xs:annotation>
-            <xs:documentation>Entity1Integer doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-        <xs:element name="Entity1String" type="Entity1String">
-          <xs:annotation>
-            <xs:documentation>Entity1String doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-        <xs:element name="Entity1DateCollection" type="xs:date" minOccurs="0" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:documentation>Entity1DateCollection doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-      </xs:sequence>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>, edfi.Entity1
-
-Entity1Integer [INT] NOT NULL
-Entity1String [NVARCHAR](0) NOT NULL
-CreateDate [DATETIME] NOT NULL
-LastModifiedDate [DATETIME] NOT NULL
-Id [UNIQUEIDENTIFIER] NOT NULL
-
-Primary Keys:
-Entity1Integer
-
-
-
-edfi.Entity1DateCollection
-
-Entity1DateCollection [DATE] NOT NULL
-Entity1Integer [INT] NOT NULL
-CreateDate [DATETIME] NOT NULL
-
-Primary Keys:
-Entity1DateCollection
-Entity1Integer
-
-
-`,
-    );
-    expect(workbook.sheets[0].rows[4].values.reduce(rowToString)).toBe(
-      `, Entity2, Entity2 doc, Domain Entity, , , Contains:
-Entity2DateCollection (optional collection)
-Entity2Integer (identity)
-Entity2String (required), <xs:complexType name="Entity2">
-  <xs:annotation>
-    <xs:documentation>Entity2 doc</xs:documentation>
-    <xs:appinfo>
-      <ann:TypeGroup>Domain Entity</ann:TypeGroup>
-    </xs:appinfo>
-  </xs:annotation>
-  <xs:complexContent>
-    <xs:extension base="ComplexObjectType">
-      <xs:sequence>
-        <xs:element name="Entity2Integer" type="xs:int">
-          <xs:annotation>
-            <xs:documentation>Entity2Integer doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-        <xs:element name="Entity2String" type="Entity2String">
-          <xs:annotation>
-            <xs:documentation>Entity2String doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-        <xs:element name="Entity2DateCollection" type="xs:date" minOccurs="0" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:documentation>Entity2DateCollection doc</xs:documentation>
-          </xs:annotation>
-
-        </xs:element>
-      </xs:sequence>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>, edfi.Entity2
-
-Entity2Integer [INT] NOT NULL
-Entity2String [NVARCHAR](0) NOT NULL
-CreateDate [DATETIME] NOT NULL
-LastModifiedDate [DATETIME] NOT NULL
-Id [UNIQUEIDENTIFIER] NOT NULL
-
-Primary Keys:
-Entity2Integer
-
-
-
-edfi.Entity2DateCollection
-
-Entity2DateCollection [DATE] NOT NULL
-Entity2Integer [INT] NOT NULL
-CreateDate [DATETIME] NOT NULL
-
-Primary Keys:
-Entity2DateCollection
-Entity2Integer
-
-
-`,
-    );
+    expect(workbook.sheets[0].rows[1].values.reduce(rowToString)).toMatchInlineSnapshot(`
+      ", Entity1DateCollection, Entity1DateCollection doc, Date, , , Used By:
+      Entity1.Entity1DateCollection (as optional collection)"
+    `);
+    expect(workbook.sheets[0].rows[2].values.reduce(rowToString)).toMatchInlineSnapshot(`
+      ", Entity2DateCollection, Entity2DateCollection doc, Date, , , Used By:
+      Entity2.Entity2DateCollection (as optional collection)"
+    `);
+    expect(workbook.sheets[0].rows[3].values.reduce(rowToString)).toMatchInlineSnapshot(`
+      ", Entity1 (EdFi), Entity1 doc, Class, , , Contains:
+      Entity1DateCollection (optional collection)
+      Entity1Integer (identity)
+      Entity1String (required)"
+    `);
+    expect(workbook.sheets[0].rows[4].values.reduce(rowToString)).toMatchInlineSnapshot(`
+      ", Entity2 (EdFi), Entity2 doc, Class, , , Contains:
+      Entity2DateCollection (optional collection)
+      Entity2Integer (identity)
+      Entity2String (required)"
+    `);
   });
 });

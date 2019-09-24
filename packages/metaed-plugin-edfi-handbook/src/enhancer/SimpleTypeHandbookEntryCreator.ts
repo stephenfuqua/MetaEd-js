@@ -1,44 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import ramda from 'ramda';
-import handlebars from 'handlebars';
-import { ColumnDataTypes } from 'metaed-plugin-edfi-ods-sqlserver';
 import { ModelBase, MetaEdEnvironment, EntityProperty } from 'metaed-core';
 import { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
-
-function getColumnString(property: any): string {
-  switch (property.type) {
-    case 'stringType':
-      return ColumnDataTypes.string(property.maxLength);
-    case 'decimalType':
-      return ColumnDataTypes.decimal(property.totalDigits, property.decimalPlaces);
-    case 'integerType':
-      return property.isShort ? ColumnDataTypes.short : ColumnDataTypes.integer;
-    default:
-      return '';
-  }
-}
-
-// eslint-disable-next-line
-function generatedTableSqlFor(property: any): Array<string> {
-  return [`${property.metaEdName} ${getColumnString(property)}`];
-}
-
-function getTemplateString(templateName: string): string {
-  return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
-}
-
-const getSimpleTypeTemplate: () => (x: any) => string = ramda.memoize(() =>
-  handlebars.compile(getTemplateString('simpleType')),
-);
-
-function generatedXsdFor(entity: ModelBase): string {
-  if (!entity.data.edfiXsd.xsdSimpleType) return '';
-  const template: (x: any) => string = getSimpleTypeTemplate();
-  return template(entity.data.edfiXsd.xsdSimpleType);
-}
 
 function getCardinalityStringFor(property: EntityProperty, isHandbookEntityReferenceProperty: boolean = false): string {
   if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename))
@@ -58,23 +21,23 @@ function referringProperties(metaEd: MetaEdEnvironment, entity: ModelBase): stri
 }
 
 export function createDefaultHandbookEntry(
-  property: ModelBase,
-  entityTypeName: string,
+  entity: ModelBase,
+  metaEdType: string,
+  umlType: string,
   metaEd: MetaEdEnvironment,
 ): HandbookEntry {
   return {
     ...newHandbookEntry(),
-    definition: property.documentation,
-    edFiId: property.metaEdId,
+    definition: entity.documentation,
+    metaEdId: entity.metaEdId,
     // This is the way the UI seaches for entities
-    uniqueIdentifier: property.metaEdName + property.metaEdId,
-    entityType: entityTypeName,
-    modelReferencesUsedBy: referringProperties(metaEd, property),
-    name: property.metaEdName,
-    projectName: property.namespace.projectName,
-    odsFragment: generatedTableSqlFor(property),
+    uniqueIdentifier: entity.metaEdName + entity.metaEdId,
+    metaEdType,
+    umlType,
+    modelReferencesUsedBy: referringProperties(metaEd, entity),
+    name: entity.metaEdName,
+    projectName: entity.namespace.projectName,
     optionList: [],
     typeCharacteristics: [],
-    xsdFragment: generatedXsdFor(property),
   };
 }

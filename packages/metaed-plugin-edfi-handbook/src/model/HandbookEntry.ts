@@ -3,45 +3,47 @@ import { HandbookEntityReferenceProperty } from './HandbookEntryReferencePropert
 export interface HandbookEntry {
   definition: string;
   deprecationText: string;
-  edFiId: string;
+  metaEdId: string;
   uniqueIdentifier: string;
-  entityType: string;
-  baseEntityType: string;
+
+  umlType: string;
+  metaEdType: string;
+  baseMetaEdType: string;
+  showIdentityColumn: boolean;
+
   baseEntityUniqueIdentifier: string;
   modelReferencesContains: string[];
   modelReferencesContainsProperties: HandbookEntityReferenceProperty[];
   modelReferencesUsedBy: string[];
   modelReferencesUsedByProperties: HandbookEntityReferenceProperty[];
   name: string;
-  odsFragment: string[];
   optionList: string[];
   typeCharacteristics: string[];
-  xsdFragment: string;
   repositoryId: string;
   projectName: string;
-  metaEdType: string;
 }
 
 export function newHandbookEntry(): HandbookEntry {
   return {
     definition: '',
     deprecationText: '',
-    edFiId: '',
+    metaEdId: '',
     uniqueIdentifier: '',
-    entityType: '',
-    baseEntityType: '',
+
+    umlType: '',
+    metaEdType: '',
+    baseMetaEdType: '',
+    showIdentityColumn: true,
+
     baseEntityUniqueIdentifier: '',
     modelReferencesContains: [],
     modelReferencesContainsProperties: [],
     modelReferencesUsedBy: [],
     modelReferencesUsedByProperties: [],
     name: '',
-    odsFragment: [],
     optionList: [],
     typeCharacteristics: [],
-    xsdFragment: '',
     repositoryId: '',
     projectName: '',
-    metaEdType: '',
   };
 }
