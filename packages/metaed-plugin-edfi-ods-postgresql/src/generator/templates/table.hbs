@@ -7,6 +7,9 @@ CREATE TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} (
 {{#if hasDiscriminatorColumn}}
     Discriminator VARCHAR(128) NULL,
 {{/if}}
+{{#if hasOwnershipTokenColumn}}
+    CreatedByOwnershipTokenId SMALLINT NULL,
+{{/if}}
 {{#if includeCreateDateColumn}}
     CreateDate TIMESTAMP NOT NULL,
 {{/if}}
