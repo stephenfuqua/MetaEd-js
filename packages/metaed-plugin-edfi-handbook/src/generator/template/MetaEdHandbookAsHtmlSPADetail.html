@@ -55,7 +55,7 @@
                     <td>
                         <p>MetaEd DSL Datatype: {{r.metaEdDatatype}}</p>
                         <p ng-if="r.sqlDatatype">SQL Recommended Datatype: {{r.sqlDatatype}}</p>
-                        <p>Ed-Fi ODS/API Identity: {{r.isOdsApiIdentity | trueFalseToYesNo}}</p>
+                        <p ng-if="!ctrl.selected.showIdentityColumn">Ed-Fi ODS/API Identity: {{r.isOdsApiIdentity | trueFalseToYesNo}}</p>
                     </td>
                     <td ng-if="ctrl.selected.showIdentityColumn">{{r.isIdentity | trueFalseToYesNo}}</td>
                     <td>{{r.cardinality}}</td>
