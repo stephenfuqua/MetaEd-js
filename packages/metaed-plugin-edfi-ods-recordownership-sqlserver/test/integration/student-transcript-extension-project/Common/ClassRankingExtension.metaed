@@ -1,0 +1,4 @@
+Common EdFi.ClassRanking additions
+    descriptor SpecialEducationGraduationStatus
+        documentation "The graduation status for special education."
+        is required

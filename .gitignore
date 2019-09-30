@@ -59,6 +59,8 @@ sample-DeleteTrackingTrigger-v3.1.sql
 TriggerUpdateChangeVersion-v3.1.sql
 sample-TriggerUpdateChangeVersion-v3.1.sql
 
+CreatedByOwnership-v3.3.sql
+
 MetaEdOutput-Experimental/
 MetaEdOutput/
 

@@ -1,0 +1,46 @@
+{
+  "name": "metaed-plugin-edfi-ods-recordownership-sqlserver",
+  "main": "dist/index.js",
+  "version": "2.0.1-dev.8",
+  "description": "Ed-Fi Alliance ODS/API Change Event plugin for MetaEd",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
+  "metaed-plugin": {
+    "pluginType": "artifact-specific",
+    "shortName": "edfiOdsRecordOwnershipSqlServer",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "2.x",
+    "technologyVersion": ">=3.3.0",
+    "dependencies": [
+      "metaed-plugin-edfi-unified-advanced",
+      "metaed-plugin-edfi-ods-relational",
+      "metaed-plugin-edfi-ods-recordownership",
+      "metaed-plugin-edfi-ods-sqlserver"
+    ]
+  },
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "metaed-core": "2.0.1-dev.8",
+    "metaed-plugin-edfi-ods-relational": "2.0.1-dev.8",
+    "metaed-plugin-edfi-ods-sqlserver": "2.0.1-dev.8",
+    "metaed-plugin-edfi-ods-recordownership": "2.0.1-dev.8",
+    "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.8"
+  },
+  "devDependencies": {
+    "final-fs": "^1.6.1"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",
+    "build:clean": "rimraf dist",
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
+  }
+}
