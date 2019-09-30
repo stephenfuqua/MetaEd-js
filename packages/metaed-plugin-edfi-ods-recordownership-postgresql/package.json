@@ -1,8 +1,8 @@
 {
-  "name": "metaed-plugin-edfi-ods-recordownership-sqlserver",
+  "name": "metaed-plugin-edfi-ods-recordownership-postgresql",
   "main": "dist/index.js",
   "version": "2.0.1-dev.8",
-  "description": "Ed-Fi Alliance ODS/API Record Ownership for SQL Server plugin",
+  "description": "Ed-Fi Alliance ODS/API Record Ownership for PostgreSQL plugin",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
@@ -15,7 +15,7 @@
   ],
   "metaed-plugin": {
     "pluginType": "artifact-specific",
-    "shortName": "edfiOdsRecordOwnershipSqlServer",
+    "shortName": "edfiOdsRecordOwnershipPostgresql",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "2.x",
     "technologyVersion": ">=3.3.0",
@@ -23,7 +23,7 @@
       "metaed-plugin-edfi-unified-advanced",
       "metaed-plugin-edfi-ods-relational",
       "metaed-plugin-edfi-ods-recordownership",
-      "metaed-plugin-edfi-ods-sqlserver"
+      "metaed-plugin-edfi-ods-postgresql"
     ]
   },
   "dependencies": {
