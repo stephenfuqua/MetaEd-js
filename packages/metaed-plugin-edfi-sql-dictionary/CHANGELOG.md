@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1-dev.9](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.0.1-dev.8...v2.0.1-dev.9) (2019-09-30)
+
+**Note:** Version bump only for package metaed-plugin-edfi-sql-dictionary
+
+
+
+
+
 ## [2.0.1-dev.8](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.0.1-dev.7...v2.0.1-dev.8) (2019-09-23)
 
 **Note:** Version bump only for package metaed-plugin-edfi-sql-dictionary
