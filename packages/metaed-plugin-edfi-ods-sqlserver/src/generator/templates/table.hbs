@@ -7,9 +7,6 @@ CREATE TABLE [{{{schema}}}].[{{{data.edfiOdsSqlServer.tableName}}}] (
 {{#if hasDiscriminatorColumn}}
     [Discriminator] [NVARCHAR](128) NULL,
 {{/if}}
-{{#if hasOwnershipTokenColumn}}
-    [CreatedByOwnershipTokenId] [SMALLINT] NULL,
-{{/if}}
 {{#if includeCreateDateColumn}}
     [CreateDate] {{#if ../useDatetime2}}[DATETIME2]{{else}}[DATETIME]{{/if}} NOT NULL,
 {{/if}}

@@ -164,8 +164,6 @@ export interface Table {
   parentEntity: TopLevelEntity;
   isEntityMainTable: boolean;
   isAggregateRootTable: boolean;
-  /** Should have an ownership token column for ODS/API 3.3+ record level ownership support */
-  hasOwnershipTokenColumn: boolean;
   hideFromApiMetadata: boolean;
   hasDiscriminatorColumn: boolean;
   isDeprecated: boolean;
@@ -199,7 +197,6 @@ export function newTable(): Table {
     parentEntity: NoTopLevelEntity,
     isEntityMainTable: false,
     isAggregateRootTable: false,
-    hasOwnershipTokenColumn: false,
     hideFromApiMetadata: false,
     hasDiscriminatorColumn: false,
     isDeprecated: false,
