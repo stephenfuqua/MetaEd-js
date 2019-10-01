@@ -44,9 +44,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="r in ctrl.selected.modelReferencesContainsProperties">
-                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</td>
+                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}<span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span>{{r.deprecationText}}</td>
                     <td ng-if="ctrl.entityExists(r.referenceUniqueIdentifier)">
-                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a>{{r.deprecationText}}
+                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a><span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span>{{r.deprecationText}}
                     </td>
 
                     <td>{{r.umlDatatype}}</td>

@@ -9,6 +9,8 @@ export interface HandbookEntityReferenceProperty {
   referenceUniqueIdentifier: string;
   name: string;
   deprecationText: string;
+  extensionParentName: string;
+  extensionParentNamespaceName: string;
   umlDatatype: string;
   jsonDatatype: string;
   xsdDatatype: string;

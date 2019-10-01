@@ -102,12 +102,17 @@ function entityPropertyToHandbookEntityReferenceProperty(
   property: EntityProperty,
 ): HandbookEntityReferenceProperty {
   const referentialProperty: ReferentialProperty = property as ReferentialProperty;
+  const isPropertyOnExtensionEntity: boolean = ['associationExtension', 'domainEntityExtension', 'commonExtension'].includes(
+    property.parentEntity.type,
+  );
   return {
     metaEdId: property.metaEdId,
     targetPropertyId: referentialProperty.referencedEntity ? referentialProperty.referencedEntity.metaEdId : '',
     referenceUniqueIdentifier: getReferenceUniqueIdentifier(allEntities, property),
     name: `${property.roleName}${property.metaEdName}`,
     deprecationText: property.isDeprecated ? ' - DEPRECATED' : '',
+    extensionParentName: isPropertyOnExtensionEntity ? property.parentEntity.metaEdName : '',
+    extensionParentNamespaceName: isPropertyOnExtensionEntity ? property.parentEntity.namespace.namespaceName : '',
     umlDatatype: umlDatatypeMatrix[property.type],
     jsonDatatype: jsonDatatypeMatrix[property.type],
     xsdDatatype: property.data.edfiXsd ? property.data.edfiXsd.xsdType : '',
@@ -126,6 +131,12 @@ function propertyMetadataFor(allEntities: ModelBase[], entity: TopLevelEntity): 
     entityPropertyToHandbookEntityReferenceProperty(allEntities, x),
   );
   results = sort(results, ['isIdentity', 'name'], { isIdentity: [true, false] });
+  return results;
+}
+
+function extensionPropertyMetadataFor(allEntities: ModelBase[], entity: TopLevelEntity): HandbookEntityReferenceProperty[] {
+  const results: HandbookEntityReferenceProperty[] = [];
+  entity.extendedBy.forEach(extensionEntity => results.push(...propertyMetadataFor(allEntities, extensionEntity)));
   return results;
 }
 
@@ -152,7 +163,10 @@ export function createDefaultHandbookEntry(
     metaEdType,
     umlType,
     modelReferencesContains: getPropertyNames(entity),
-    modelReferencesContainsProperties: propertyMetadataFor(allEntities, entity),
+    modelReferencesContainsProperties: [
+      ...propertyMetadataFor(allEntities, entity),
+      ...extensionPropertyMetadataFor(allEntities, entity),
+    ],
     modelReferencesUsedBy: referringProperties(allReferentialProperties, entity),
     name:
       entity.namespace.projectName === 'Ed-Fi'
