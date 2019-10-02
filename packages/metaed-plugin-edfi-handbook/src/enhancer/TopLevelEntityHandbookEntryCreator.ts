@@ -61,7 +61,11 @@ function findEntityByUniqueId(allEntities: ModelBase[], uniqueId: string): boole
 }
 
 function getReferenceUniqueIdentifier(allEntities: ModelBase[], property: EntityProperty): string {
-  const uniqueIdCandidate: string = property.metaEdName + property.metaEdId;
+  // Search to see if we find one in top level entities.
+  if ((property as ReferentialProperty).referencedEntity != null) {
+    const { referencedEntity } = property as ReferentialProperty;
+    return referencedEntity.metaEdName + referencedEntity.metaEdId;
+  }
 
   // If we have a metaEdId then this can be one of 3 scenarios:
   // 1) A reference entity with a child id that matches ids
@@ -70,16 +74,10 @@ function getReferenceUniqueIdentifier(allEntities: ModelBase[], property: Entity
   // I.E.: AcademicHonor has 700-AcademicHonorCategory but the real entity is 120-AcademicHonorCategory
   // 3) A reference entity that has and Id but does not match
 
-  // 1) First deal with reference enties that are matching.
-  if (findEntityByUniqueId(allEntities, uniqueIdCandidate)) return uniqueIdCandidate;
+  const uniqueIdCandidate: string = property.metaEdName + property.metaEdId;
 
-  // Search to see if we find one in top level entities.
-  const referentialProperty: ReferentialProperty = property as ReferentialProperty;
-  if (referentialProperty.referencedEntity) {
-    const { referencedEntity } = referentialProperty;
-    const uniqueIdReferenced: string = referencedEntity.metaEdName + referencedEntity.metaEdId;
-    if (findEntityByUniqueId(allEntities, uniqueIdReferenced)) return uniqueIdReferenced;
-  }
+  // First deal with reference enties that are matching.
+  if (findEntityByUniqueId(allEntities, uniqueIdCandidate)) return uniqueIdCandidate;
 
   // If we dont then we try to find one by just the name
   if (findEntityByMetaEdName(allEntities, property.metaEdName)) return property.metaEdName;
