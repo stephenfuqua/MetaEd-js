@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MetaEd Handbook</title>
+    <title>Ed-Fi Data Handbook</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
@@ -103,18 +103,6 @@
             height: 48px;
             border-bottom: 1px solid #cacaca;
             overflow: hidden;
-        }
-
-        .ed-fi-logo {
-            display: inline-block;
-            background-image: url('http://www.ed-fi.org/assets/2013/03/ed-fi-alliance-logo-white-bg-400x400-for-social.png');
-            background-size: 100px 100px;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: 68px -27px;
-            width: 96px;
-            height: 50px;
-            margin: 0;
         }
 
         .row {
@@ -357,21 +345,6 @@
             sharedContext.selectEntityCallback = ctrl.selecteEntity;
             sharedContext.resetSearchCallback = ctrl.resetSearch;
 
-            ctrl.toggleSidebar = function () {
-                var sidebar = angular.element(document.querySelector('#sidebar'));
-                var menuButtonIcon = angular.element(document.querySelector('#menuToggleIcon'));
-                if (sidebar.hasClass('hidden')) {
-                    sidebar.removeClass('hidden');
-                    menuButtonIcon.removeClass('glyphicon-chevron-right');
-                    menuButtonIcon.addClass('glyphicon-chevron-left');
-                }
-                else {
-                    sidebar.addClass('hidden');
-                    menuButtonIcon.removeClass('glyphicon-chevron-left');
-                    menuButtonIcon.addClass('glyphicon-chevron-right');
-                }
-            }
-
             ctrl.adjustSideBar = function () {
                 $timeout(function () {
                     var sideNav = angular.element(document.querySelector('#sidebar-nav'));
@@ -446,16 +419,8 @@
 <body ng-app="app" ng-controller="indexController as ctrl" style="overflow-y: hidden">
     <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px">
         <div class="navbar-header">
-            <form class="navbar-form navbar-left">
-                <button class="btn btn-default" ng-click="ctrl.toggleSidebar()" title="Menu collapse toggle">
-                    <span id="menuToggleIcon" class="glyphicon glyphicon-chevron-left"></span>
-                </button>
-            </form>
-            <span class="navbar-text ed-fi-logo"></span>
-            <span class="navbar-text">Ed-Fi Data Handbook</span>
-
+            <span class="navbar-text" style="font-weight: bold; font-size: 22px">Ed-Fi Data Handbook</span>
         </div>
-        <!-- /.navbar-collapse -->
     </nav>
 
     <div style="height: calc(100% - 51px); position: relative; ">

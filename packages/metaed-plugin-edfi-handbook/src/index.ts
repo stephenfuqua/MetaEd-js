@@ -20,8 +20,8 @@ import { enhance as timeIntervalEnhancer } from './enhancer/TimeIntervalEnhancer
 import { enhance as timeEnhancer } from './enhancer/TimeEnhancer';
 import { enhance as yearEnhancer } from './enhancer/YearEnhancer';
 import { enhance as handbookEntryModelReferencesEnhancer } from './enhancer/HandbookEntryModelReferencesEnhancer';
-import { generate as htmlGenerator } from './generator/MetaEdHandbookAsHtmlIndexGenerator';
-import { generate as excelGenerator } from './generator/MetaEdHandbookAsExcelGenerator';
+import { generate as htmlGenerator } from './generator/EdFiDataHandbookAsHtmlIndexGenerator';
+import { generate as excelGenerator } from './generator/EdFiDataHandbookAsExcelGenerator';
 
 export function initialize(): MetaEdPlugin {
   return {

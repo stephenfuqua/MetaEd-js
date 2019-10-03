@@ -11,7 +11,7 @@ import { initialize as initializeOdsRelationalPlugin } from 'metaed-plugin-edfi-
 import { initialize as initializeOdsSqlServerPlugin } from 'metaed-plugin-edfi-ods-sqlserver';
 import { initialize as initializeXsdPlugin } from 'metaed-plugin-edfi-xsd';
 import { initialize as initializeHandbookPlugin } from '../../src/index';
-import { generate } from '../../src/generator/MetaEdHandbookAsExcelGenerator';
+import { generate } from '../../src/generator/EdFiDataHandbookAsExcelGenerator';
 import { readWorkbook } from '../../src/model/Workbook';
 import { Workbook } from '../../src/model/Workbook';
 
