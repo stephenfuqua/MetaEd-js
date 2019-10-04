@@ -26,6 +26,9 @@ export interface MetaEdEnvironment {
 
   // the data standard version to target
   dataStandardVersion: SemVer;
+
+  // whether we are running in Alliance mode - which means assuming this is an Ed-Fi Alliance user
+  allianceMode: boolean;
 }
 
 /**
@@ -37,4 +40,5 @@ export const newMetaEdEnvironment: () => MetaEdEnvironment = () => ({
   plugin: new Map(),
   metaEdVersion: '0.0.0',
   dataStandardVersion: '0.0.0',
+  allianceMode: false,
 });

@@ -276,7 +276,7 @@ export async function build(outputWindow: OutputWindow): Promise<boolean> {
     const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata(true);
     if (!validProjectMetadata(metaEdProjectMetadata, outputWindow)) return false;
 
-    const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver());
+    const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver(), allianceMode());
     // last project is where output goes
     const lastProject: MetaEdProjectMetadata = R.last(metaEdProjectMetadata);
     const artifactDirectory: string = path.join(lastProject.projectPath, 'MetaEdOutput');
@@ -387,7 +387,7 @@ export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boole
     const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata(true);
     if (!validProjectMetadata(metaEdProjectMetadata, outputWindow)) return false;
 
-    const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver());
+    const initialConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver(), allianceMode());
     // last project is where output goes
     const lastProject: MetaEdProjectMetadata = R.last(metaEdProjectMetadata);
     const artifactDirectory: string = path.join(lastProject.projectPath, 'MetaEdOutput');

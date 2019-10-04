@@ -24,6 +24,7 @@ export interface MetaEdConfiguration {
 
   // pluginConfigDirectories is an override for the directories to look for plugin configuration files
   pluginConfigDirectories: string[];
+  allianceMode: boolean;
 }
 
 /**
@@ -44,4 +45,5 @@ export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   projectPaths: [],
   pluginConfigDirectories: [],
   defaultPluginTechVersion: '2.0.0',
+  allianceMode: false,
 });

@@ -19,6 +19,9 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
   (getAllEntitiesOfType(metaEd, 'interchange', 'interchangeExtension') as (Interchange | InterchangeExtension)[]).forEach(
     interchange => {
+      // ignore data standard interchange item deprecations unless in alliance mode
+      if (!interchange.namespace.isExtension && !metaEd.allianceMode) return;
+
       interchange.elements.forEach((item: InterchangeItem) => {
         if (item.referencedEntityDeprecated) addFailure(interchange, item, failures);
       });

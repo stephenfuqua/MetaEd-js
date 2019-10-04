@@ -15,6 +15,9 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
 
   getAllProperties(metaEd.propertyIndex).forEach(property => {
+    // ignore data standard property deprecations unless in alliance mode
+    if (!property.parentEntity.namespace.isExtension && !metaEd.allianceMode) return;
+
     if (property.isDeprecated) {
       failures.push({
         validatorName: 'DeprecatedPropertyWarning',

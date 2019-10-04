@@ -6,6 +6,8 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   getAllEntitiesOfType(metaEd, 'associationSubclass', 'domainEntitySubclass').forEach((entity: ModelBase) => {
     const { baseEntity } = entity as TopLevelEntity;
     if (baseEntity !== null && baseEntity.isDeprecated) {
+      // ignore data standard subclass reference deprecations unless in alliance mode
+      if (!entity.namespace.isExtension && !metaEd.allianceMode) return;
       failures.push({
         validatorName: 'DeprecatedEntitySubclassWarning',
         category: 'warning',

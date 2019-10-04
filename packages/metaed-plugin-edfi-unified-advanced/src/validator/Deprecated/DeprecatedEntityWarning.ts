@@ -10,6 +10,8 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
 
   getAllEntitiesForNamespaces(Array.from(metaEd.namespace.values())).forEach((entity: ModelBase) => {
     if (entity.isDeprecated) {
+      // ignore data standard entity deprecations unless in alliance mode
+      if (!entity.namespace.isExtension && !metaEd.allianceMode) return;
       failures.push({
         validatorName: 'DeprecatedEntityWarning',
         category: 'warning',

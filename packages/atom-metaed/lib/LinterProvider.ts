@@ -15,6 +15,7 @@ import {
   validateOnTheFly,
   getTargetOdsApiVersionSemver,
   getTargetDsVersionSemver,
+  allianceMode,
 } from './PackageSettings';
 
 let mostRecentState: State = newState();
@@ -35,7 +36,7 @@ async function lint(_textEditor: TextEditor): Promise<any[] | null> {
   // may want to do a notification equivalent...
   // if (!validProjectMetadata(metaEdProjectMetadata, outputWindow)) return false;
 
-  const metaEdConfiguration: MetaEdConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver());
+  const metaEdConfiguration: MetaEdConfiguration = metaEdConfigurationFor(getTargetOdsApiVersionSemver(), allianceMode());
 
   metaEdProjectMetadata.forEach(pm => {
     metaEdConfiguration.projects.push({

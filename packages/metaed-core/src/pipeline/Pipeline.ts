@@ -1,5 +1,6 @@
 import winston from 'winston';
 import { loadFiles } from '../file/FileSystemFilenameLoader';
+import { initializeMetaEdEnvironment } from './InitializeMetaEdEnvironment';
 import { validateSyntax } from '../grammar/ValidateSyntax';
 import { buildTopLevelEntity, buildMetaEd } from '../grammar/ParseTreeBuilder';
 import { loadFileIndex } from '../file/LoadFileIndex';
@@ -26,6 +27,10 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
   // await nextMacroTask();
 
   let failure = false;
+
+  winston.info('Initialize MetaEdEnvironment...');
+  initializeMetaEdEnvironment(state);
+  await nextMacroTask();
 
   winston.info('Loading plugins...');
   loadPlugins(state);

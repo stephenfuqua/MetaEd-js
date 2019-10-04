@@ -34,8 +34,11 @@ describe('when property is not deprecated', (): void => {
   });
 });
 
-describe('when property is deprecated', (): void => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+describe('when properties are deprecated in alliance mode', (): void => {
+  const metaEd: MetaEdEnvironment = {
+    ...newMetaEdEnvironment(),
+    allianceMode: true,
+  };
   const coreDeprecationReason = 'is deprecated in core';
   const extensionDeprecationReason = 'is deprecated in extension';
 
@@ -80,6 +83,51 @@ describe('when property is deprecated', (): void => {
     expect(failures[1].category).toBe('warning');
     expect(failures[1].message).toMatchInlineSnapshot(`"ExtensionProperty is deprecated."`);
     expect(failures[1].sourceMap).toMatchInlineSnapshot(`
+                        Object {
+                          "column": 9,
+                          "line": 15,
+                          "tokenText": "ExtensionProperty",
+                        }
+                `);
+  });
+});
+
+describe('when properties are deprecated not in alliance mode', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const coreDeprecationReason = 'is deprecated in core';
+  const extensionDeprecationReason = 'is deprecated in extension';
+
+  let failures: ValidationFailure[];
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('EntityName')
+      .withDocumentation('doc')
+      .withBooleanProperty('CoreProperty', 'doc', true, false, null, null, coreDeprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntity('ExtensionEntity')
+      .withDocumentation('doc')
+      .withBooleanProperty('ExtensionProperty', 'doc', true, false, null, null, extensionDeprecationReason)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have validation failure', (): void => {
+    expect(failures).toHaveLength(1);
+
+    expect(failures[0].validatorName).toBe('DeprecatedPropertyWarning');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchInlineSnapshot(`"ExtensionProperty is deprecated."`);
+    expect(failures[0].sourceMap).toMatchInlineSnapshot(`
                         Object {
                           "column": 9,
                           "line": 15,
