@@ -1,16 +1,16 @@
-import { MetaEdEnvironment, EnhancerResult, AssociationSubclass, TopLevelEntity } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult, CommonSubclass, TopLevelEntity } from 'metaed-core';
 import { getAllEntitiesOfType, getEntityFromNamespaceChain } from 'metaed-core';
 
-const enhancerName = 'AssociationSubclassBaseClassEnhancer';
+const enhancerName = 'CommonSubclassBaseClassEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'associationSubclass') as AssociationSubclass[]).forEach(childEntity => {
+  (getAllEntitiesOfType(metaEd, 'commonSubclass') as CommonSubclass[]).forEach(childEntity => {
     const referencedEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
       childEntity.baseEntityName,
       childEntity.baseEntityNamespaceName,
       childEntity.namespace,
-      'association',
-      'associationSubclass',
+      'common',
+      'commonSubclass',
     ) as TopLevelEntity | null;
 
     if (referencedEntity) {

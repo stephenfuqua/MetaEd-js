@@ -5,6 +5,7 @@ const invalidTypes: ModelType[] = [
   'associationSubclass',
   'choice',
   'commonExtension',
+  'commonSubclass',
   'descriptor',
   'domainEntityExtension',
   'domainEntitySubclass',

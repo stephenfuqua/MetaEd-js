@@ -12,6 +12,7 @@ function entitiesNeedingDuplicateChecking(...namespaces: Namespace[]): ModelBase
     result.push(...entityRepository.associationSubclass.values());
     result.push(...entityRepository.choice.values());
     result.push(...entityRepository.common.values());
+    result.push(...entityRepository.commonSubclass.values());
     result.push(...entityRepository.domainEntity.values());
     result.push(...entityRepository.domainEntitySubclass.values());
     result.push(...entityRepository.sharedDecimal.values());

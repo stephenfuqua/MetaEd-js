@@ -24,6 +24,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     'associationSubclass',
     'choice',
     'common',
+    'commonSubclass',
     'decimalType',
     'domain',
     'domainEntity',

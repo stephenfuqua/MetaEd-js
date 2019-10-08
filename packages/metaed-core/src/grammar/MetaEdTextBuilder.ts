@@ -507,6 +507,20 @@ export class MetaEdTextBuilder {
   /**
    *
    */
+  withStartCommonSubclass(commonName: string, baseCommonName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevelSubclass('Common', commonName, baseCommonName, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndCommonSubclass(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
   withStartDomainEntitySubclass(
     entityName: string,
     baseEntityName: string,

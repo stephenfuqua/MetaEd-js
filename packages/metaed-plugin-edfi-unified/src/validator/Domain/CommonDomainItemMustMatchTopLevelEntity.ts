@@ -18,7 +18,13 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       domain.domainItems.forEach(domainItem => {
         if (domainItem.referencedType !== 'common') return;
         if (
-          getEntityFromNamespaceChain(domainItem.metaEdName, domainItem.referencedNamespaceName, namespace, 'common') == null
+          getEntityFromNamespaceChain(
+            domainItem.metaEdName,
+            domainItem.referencedNamespaceName,
+            namespace,
+            'common',
+            'commonSubclass',
+          ) == null
         ) {
           failures.push(
             getFailure(

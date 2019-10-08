@@ -5,6 +5,7 @@ import { enhance as associationSubclassEnhancer } from './enhancer/AssociationSu
 import { enhance as booleanEnhancer } from './enhancer/BooleanEnhancer';
 import { enhance as choiceEnhancer } from './enhancer/ChoiceEnhancer';
 import { enhance as commonEnhancer } from './enhancer/CommonEnhancer';
+import { enhance as commonSubclassEnhancer } from './enhancer/CommonSubclassEnhancer';
 import { enhance as currencyEnhancer } from './enhancer/CurrencyEnhancer';
 import { enhance as dateEnhancer } from './enhancer/DateEnhancer';
 import { enhance as decimalEnhancer } from './enhancer/DecimalEnhancer';
@@ -33,6 +34,7 @@ export function initialize(): MetaEdPlugin {
       booleanEnhancer,
       choiceEnhancer,
       commonEnhancer,
+      commonSubclassEnhancer,
       currencyEnhancer,
       dateEnhancer,
       decimalEnhancer,

@@ -9,13 +9,14 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
       property.referencedNamespaceName,
       property.namespace,
       'common',
+      'commonSubclass',
     );
 
     if (referencedEntity == null || (referencedEntity as Common).inlineInOds) {
       failures.push({
         validatorName: 'CommonPropertyMustMatchACommon',
         category: 'error',
-        message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${property.referencedNamespaceName}.`,
+        message: `Common property '${property.metaEdName}' does not match any declared Common or Common Subclass in namespace ${property.referencedNamespaceName}.`,
         sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });

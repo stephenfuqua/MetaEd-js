@@ -10,6 +10,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.referencedNamespaceName,
       property.namespace,
       'common',
+      'commonSubclass',
     ) as Common | null;
 
     if (referencedEntity && !referencedEntity.inlineInOds) {

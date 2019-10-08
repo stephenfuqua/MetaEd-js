@@ -23,6 +23,7 @@ import { Domain } from '../src/model/Domain';
 import { Subdomain } from '../src/model/Subdomain';
 import { ModelType } from '../src/model/ModelType';
 import { EntityRepository } from '../src/model/EntityRepository';
+import { CommonSubclass } from '../src/model/CommonSubclass';
 
 function getEntity(repository: EntityRepository, entityName: string, modelType: ModelType): any {
   return repository[modelType].get(entityName);
@@ -54,6 +55,10 @@ export function getCommon(repository: EntityRepository, metaEdId: string): Commo
 
 export function getCommonExtension(repository: EntityRepository, metaEdId: string): CommonExtension {
   return getEntity(repository, metaEdId, 'commonExtension') as CommonExtension;
+}
+
+export function getCommonSubclass(repository: EntityRepository, metaEdId: string): CommonSubclass {
+  return getEntity(repository, metaEdId, 'commonSubclass') as AssociationSubclass;
 }
 
 export function getDecimalType(repository: EntityRepository, metaEdId: string): DecimalType {

@@ -27,6 +27,7 @@ topLevelEntity
     | sharedString
     | common
     | commonExtension
+    | commonSubclass
     | descriptor
     | domainEntity
     | domainEntityExtension
@@ -191,6 +192,15 @@ commonExtension
       deprecated?
       property+
     ;
+
+// CommonSubclass
+
+commonSubclass
+    : COMMON commonName BASED_ON baseName metaEdId?
+      deprecated?
+      documentation
+      property+
+   ;
 
 // Descriptor
 

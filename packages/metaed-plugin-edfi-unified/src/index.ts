@@ -21,6 +21,8 @@ import { validate as choicePropertyMustMatchAChoice } from './validator/ChoicePr
 import { validate as commonExtensionExistsOnlyInExtensionNamespace } from './validator/CommonExtension/CommonExtensionExistsOnlyInExtensionNamespace';
 import { validate as commonExtensionIdentifierMustMatchACommon } from './validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
 import { validate as commonExtensionMustNotRedeclareProperties } from './validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
+import { validate as commonSubclassIdentifierMustMatchACommon } from './validator/CommonSubclass/CommonSubclassIdentifierMustMatchACommon';
+import { validate as commonSubclassMustNotRedeclareProperties } from './validator/CommonSubclass/CommonSubclassMustNotRedeclareProperties';
 
 import { validate as commonPropertyMustMatchACommon } from './validator/CommonProperty/CommonPropertyMustMatchACommon';
 import { validate as commonPropertyMustNotContainIdentity } from './validator/CommonProperty/CommonPropertyMustNotContainIdentity';
@@ -139,6 +141,7 @@ import { enhance as domainSubdomainEnhancer } from './enhancer/DomainSubdomainEn
 import { enhance as associationExtensionBaseClassEnhancer } from './enhancer/AssociationExtensionBaseClassEnhancer';
 import { enhance as associationSubclassBaseClassEnhancer } from './enhancer/AssociationSubclassBaseClassEnhancer';
 import { enhance as commonExtensionBaseClassEnhancer } from './enhancer/CommonExtensionBaseClassEnhancer';
+import { enhance as commonSubclassBaseClassEnhancer } from './enhancer/CommonSubclassBaseClassEnhancer';
 import { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/DomainEntityExtensionBaseClassEnhancer';
 import { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
 import { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
@@ -193,6 +196,7 @@ export { enhance as sharedStringPropertyEnhancer } from './enhancer/SharedString
 export { enhance as associationExtensionBaseClassEnhancer } from './enhancer/AssociationExtensionBaseClassEnhancer';
 export { enhance as associationSubclassBaseClassEnhancer } from './enhancer/AssociationSubclassBaseClassEnhancer';
 export { enhance as commonExtensionBaseClassEnhancer } from './enhancer/CommonExtensionBaseClassEnhancer';
+export { enhance as commonSubclassBaseClassEnhancer } from './enhancer/CommonSubclassBaseClassEnhancer';
 export { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/DomainEntityExtensionBaseClassEnhancer';
 export { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
 export { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
@@ -219,6 +223,9 @@ function validatorList(): Validator[] {
     commonExtensionExistsOnlyInExtensionNamespace,
     commonExtensionIdentifierMustMatchACommon,
     commonExtensionMustNotRedeclareProperties,
+
+    commonSubclassIdentifierMustMatchACommon,
+    commonSubclassMustNotRedeclareProperties,
 
     commonPropertyMustMatchACommon,
     commonPropertyMustNotContainIdentity,
@@ -348,6 +355,7 @@ function enhancerList(): Enhancer[] {
     associationExtensionBaseClassEnhancer,
     associationSubclassBaseClassEnhancer,
     commonExtensionBaseClassEnhancer,
+    commonSubclassBaseClassEnhancer,
     domainEntityExtensionBaseClassEnhancer,
     domainEntitySubclassBaseClassEnhancer,
     interchangeExtensionBaseClassEnhancer,

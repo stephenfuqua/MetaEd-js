@@ -7,6 +7,7 @@ import { enhance as entityPropertySetupEnhancer } from '../model/property/Entity
 
 import { enhance as associationExtensionSetupEnhancer } from '../model/AssociationExtension';
 import { enhance as commonExtensionSetupEnhancer } from '../model/CommonExtension';
+import { enhance as commonSubclassSetupEnhancer } from '../model/CommonSubclass';
 import { enhance as descriptorSetupEnhancer } from '../model/Descriptor';
 import { enhance as domainEntitySetupEnhancer } from '../model/DomainEntity';
 import { enhance as domainEntityExtensionSetupEnhancer } from '../model/DomainEntityExtension';
@@ -36,6 +37,7 @@ import { enhance as addAssociationComplexTypesEnhancer } from './schema/AddAssoc
 import { enhance as addAssociationExtensionComplexTypesEnhancer } from './schema/AddAssociationExtensionComplexTypesEnhancer';
 import { enhance as addAssociationSubclassComplexTypesEnhancer } from './schema/AddAssociationSubclassComplexTypesEnhancer';
 import { enhance as addCommonComplexTypesEnhancer } from './schema/AddCommonComplexTypesEnhancer';
+import { enhance as addCommonSubclassComplexTypesEnhancer } from './schema/AddCommonSubclassComplexTypesEnhancer';
 import { enhance as addCommonExtensionComplexTypesEnhancer } from './schema/AddCommonExtensionComplexTypesEnhancer';
 import { enhance as addDecimalSimpleTypesEnhancer } from './schema/AddDecimalSimpleTypesEnhancer';
 import { enhance as addDescriptorComplexTypesEnhancer } from './schema/AddDescriptorComplexTypesEnhancer';
@@ -77,6 +79,7 @@ export function enhancerList(): Enhancer[] {
     // Model setup enhancers
     associationExtensionSetupEnhancer,
     commonExtensionSetupEnhancer,
+    commonSubclassSetupEnhancer,
     descriptorSetupEnhancer,
     domainEntityExtensionSetupEnhancer,
     enumerationBaseSetupEnhancer,
@@ -124,6 +127,7 @@ export function enhancerList(): Enhancer[] {
     addAssociationSubclassComplexTypesEnhancer,
     addCommonComplexTypesEnhancer,
     addCommonExtensionComplexTypesEnhancer,
+    addCommonSubclassComplexTypesEnhancer,
     addDescriptorComplexTypesEnhancer,
     AddDescriptorComplexTypesEnhancerV2,
     AddDescriptorExtendedReferenceTypesEnhancer,

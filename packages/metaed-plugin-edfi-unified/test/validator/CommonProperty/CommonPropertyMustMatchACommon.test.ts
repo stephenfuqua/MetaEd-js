@@ -1,4 +1,11 @@
-import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, DomainEntityBuilder, NamespaceBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  CommonBuilder,
+  DomainEntityBuilder,
+  NamespaceBuilder,
+  CommonSubclassBuilder,
+} from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonProperty/CommonPropertyMustMatchACommon';
 
@@ -25,6 +32,38 @@ describe('when common property has identifier of common', (): void => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures()', (): void => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when common property has identifier of common subclass', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainEntityName = 'DomainEntityName';
+  const entityName = 'EntityName';
+  let failures: ValidationFailure[];
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartCommonSubclass(entityName, 'BaseCommonName')
+      .withDocumentation('doc')
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
+      .withEndCommonSubclass()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('doc')
+      .withCommonProperty(entityName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonSubclassBuilder(metaEd, []));
 
     failures = validate(metaEd);
   });

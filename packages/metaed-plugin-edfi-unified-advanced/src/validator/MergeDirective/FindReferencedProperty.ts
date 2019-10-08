@@ -1,7 +1,7 @@
 import { EntityProperty, ModelBase, ModelType, PropertyType, Namespace, TopLevelEntity } from 'metaed-core';
 import { asModelType, getEntityFromNamespaceChain, allEntityModelTypes } from 'metaed-core';
 
-export const referenceTypes: ModelType[] = [
+const referenceTypes: ModelType[] = [
   'association',
   'associationExtension',
   'associationSubclass',
@@ -10,10 +10,11 @@ export const referenceTypes: ModelType[] = [
   'domainEntitySubclass',
   'choice',
   'common',
+  'commonSubclass',
   'inlineCommon',
 ];
 
-export const commonTypes: PropertyType[] = ['choice', 'common', 'inlineCommon'];
+const commonTypes: PropertyType[] = ['choice', 'common', 'inlineCommon'];
 
 const subclassSuffix = 'Subclass';
 const extensionSuffix = 'Extension';

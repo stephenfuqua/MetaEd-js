@@ -1,4 +1,11 @@
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, CommonBuilder, NamespaceBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainBuilder,
+  CommonBuilder,
+  NamespaceBuilder,
+  CommonSubclassBuilder,
+} from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/CommonDomainItemMustMatchTopLevelEntity';
 
@@ -33,7 +40,47 @@ describe('when validating common domain item matches top level entity', (): void
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', (): void => {
+  it('should build one domain', (): void => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should have no validation failures()', (): void => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating common domain item matches subclass', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainName = 'DomainName';
+  const commonName = 'CommonName';
+
+  let failures: ValidationFailure[];
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('doc')
+      .withCommonDomainItem(commonName)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+
+      .withStartCommonSubclass(commonName, 'BaseName')
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndCommonSubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new CommonSubclassBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain', (): void => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 

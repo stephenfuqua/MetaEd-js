@@ -21,7 +21,7 @@ import {
   isMapReferenceType,
   isSimpleType,
   referenceFor,
-} from './ReferenceDefintionHelper';
+} from './ReferenceDefinitionHelper';
 
 const enhancerName = 'ElementDefinitionEnhancer';
 

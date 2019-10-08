@@ -52,6 +52,7 @@ export { AssociationExtensionBuilder } from './builder/AssociationExtensionBuild
 export { AssociationSubclassBuilder } from './builder/AssociationSubclassBuilder';
 export { ChoiceBuilder } from './builder/ChoiceBuilder';
 export { CommonBuilder } from './builder/CommonBuilder';
+export { CommonSubclassBuilder } from './builder/CommonSubclassBuilder';
 export { CommonExtensionBuilder } from './builder/CommonExtensionBuilder';
 export { DecimalTypeBuilder } from './builder/DecimalTypeBuilder';
 export { DescriptorBuilder } from './builder/DescriptorBuilder';
@@ -68,7 +69,7 @@ export { SharedIntegerBuilder } from './builder/SharedIntegerBuilder';
 export { SharedStringBuilder } from './builder/SharedStringBuilder';
 export { StringTypeBuilder } from './builder/StringTypeBuilder';
 
-// Flow types
+// Pipeline Types
 export { State } from './State';
 export { InputDirectory } from './file/InputDirectory';
 export { FileSet, MetaEdFile } from './file/MetaEdFile';
@@ -132,6 +133,7 @@ export { AssociationExtension, AssociationExtensionSourceMap } from './model/Ass
 export { AssociationSubclass, AssociationSubclassSourceMap } from './model/AssociationSubclass';
 export { Choice, ChoiceSourceMap } from './model/Choice';
 export { Common, CommonSourceMap } from './model/Common';
+export { CommonSubclass, CommonSubclassSourceMap } from './model/CommonSubclass';
 export { CommonExtension, CommonExtensionSourceMap } from './model/CommonExtension';
 export { DecimalType, DecimalTypeSourceMap } from './model/DecimalType';
 export { Descriptor, DescriptorSourceMap } from './model/Descriptor';
@@ -211,6 +213,7 @@ export { asAssociationExtension, newAssociationExtension } from './model/Associa
 export { asAssociationSubclass, newAssociationSubclass } from './model/AssociationSubclass';
 export { asChoice, newChoice } from './model/Choice';
 export { asCommon, newCommon, asInlineCommon, newInlineCommon } from './model/Common';
+export { newCommonSubclass } from './model/CommonSubclass';
 export { asCommonExtension, newCommonExtension } from './model/CommonExtension';
 export { asDecimalType, newDecimalType } from './model/DecimalType';
 export { asDescriptor, newDescriptor } from './model/Descriptor';

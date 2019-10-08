@@ -6,6 +6,7 @@ const invalidTypes: ModelType[] = [
   'choice',
   'common',
   'commonExtension',
+  'commonSubclass',
   'descriptor',
   'domainEntity',
   'domainEntityExtension',

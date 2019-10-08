@@ -227,6 +227,15 @@ MetaEdGrammarListener.prototype.exitCommonExtension = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#commonSubclass.
+MetaEdGrammarListener.prototype.enterCommonSubclass = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#commonSubclass.
+MetaEdGrammarListener.prototype.exitCommonSubclass = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#descriptor.
 MetaEdGrammarListener.prototype.enterDescriptor = function(ctx) {
 };

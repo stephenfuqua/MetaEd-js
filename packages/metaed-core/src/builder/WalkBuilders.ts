@@ -8,6 +8,7 @@ import { AssociationSubclassBuilder } from './AssociationSubclassBuilder';
 import { ChoiceBuilder } from './ChoiceBuilder';
 import { CommonBuilder } from './CommonBuilder';
 import { CommonExtensionBuilder } from './CommonExtensionBuilder';
+import { CommonSubclassBuilder } from './CommonSubclassBuilder';
 import { DecimalTypeBuilder } from './DecimalTypeBuilder';
 import { DescriptorBuilder } from './DescriptorBuilder';
 import { DomainBuilder } from './DomainBuilder';
@@ -24,31 +25,31 @@ import { SharedStringBuilder } from './SharedStringBuilder';
 import { StringTypeBuilder } from './StringTypeBuilder';
 
 export async function execute(state: State): Promise<void> {
-  const builders: MetaEdGrammarListener[] = [];
+  const builders: MetaEdGrammarListener[] = [
+    // NamespaceBuilder goes first, all others have a dependency on it
+    new NamespaceBuilder(state.metaEd, state.validationFailure),
 
-  // NamespaceBuilder goes first, all others have a dependency on it
-  builders.push(new NamespaceBuilder(state.metaEd, state.validationFailure));
-
-  builders.push(new AssociationBuilder(state.metaEd, state.validationFailure));
-  builders.push(new AssociationExtensionBuilder(state.metaEd, state.validationFailure));
-  builders.push(new AssociationSubclassBuilder(state.metaEd, state.validationFailure));
-  builders.push(new ChoiceBuilder(state.metaEd, state.validationFailure));
-  builders.push(new CommonBuilder(state.metaEd, state.validationFailure));
-  builders.push(new CommonExtensionBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DecimalTypeBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DescriptorBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DomainBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DomainEntityBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DomainEntityExtensionBuilder(state.metaEd, state.validationFailure));
-  builders.push(new DomainEntitySubclassBuilder(state.metaEd, state.validationFailure));
-  builders.push(new EnumerationBuilder(state.metaEd, state.validationFailure));
-  builders.push(new IntegerTypeBuilder(state.metaEd, state.validationFailure));
-  builders.push(new InterchangeBuilder(state.metaEd, state.validationFailure));
-  builders.push(new SharedDecimalBuilder(state.metaEd, state.validationFailure));
-  builders.push(new SharedIntegerBuilder(state.metaEd, state.validationFailure));
-  builders.push(new SharedStringBuilder(state.metaEd, state.validationFailure));
-  builders.push(new StringTypeBuilder(state.metaEd, state.validationFailure));
-
+    new AssociationBuilder(state.metaEd, state.validationFailure),
+    new AssociationExtensionBuilder(state.metaEd, state.validationFailure),
+    new AssociationSubclassBuilder(state.metaEd, state.validationFailure),
+    new ChoiceBuilder(state.metaEd, state.validationFailure),
+    new CommonBuilder(state.metaEd, state.validationFailure),
+    new CommonExtensionBuilder(state.metaEd, state.validationFailure),
+    new CommonSubclassBuilder(state.metaEd, state.validationFailure),
+    new DecimalTypeBuilder(state.metaEd, state.validationFailure),
+    new DescriptorBuilder(state.metaEd, state.validationFailure),
+    new DomainBuilder(state.metaEd, state.validationFailure),
+    new DomainEntityBuilder(state.metaEd, state.validationFailure),
+    new DomainEntityExtensionBuilder(state.metaEd, state.validationFailure),
+    new DomainEntitySubclassBuilder(state.metaEd, state.validationFailure),
+    new EnumerationBuilder(state.metaEd, state.validationFailure),
+    new IntegerTypeBuilder(state.metaEd, state.validationFailure),
+    new InterchangeBuilder(state.metaEd, state.validationFailure),
+    new SharedDecimalBuilder(state.metaEd, state.validationFailure),
+    new SharedIntegerBuilder(state.metaEd, state.validationFailure),
+    new SharedStringBuilder(state.metaEd, state.validationFailure),
+    new StringTypeBuilder(state.metaEd, state.validationFailure),
+  ];
   const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
 
   // eslint-disable-next-line no-restricted-syntax

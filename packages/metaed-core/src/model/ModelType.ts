@@ -9,6 +9,7 @@ export type ModelType =
   | 'choice'
   | 'common'
   | 'commonExtension'
+  | 'commonSubclass'
   | 'decimalType'
   | 'descriptor'
   | 'domain'
@@ -42,6 +43,7 @@ export const allEntityModelTypes: ModelType[] = [
   'choice',
   'common',
   'commonExtension',
+  'commonSubclass',
   'decimalType',
   'descriptor',
   'domain',
@@ -72,6 +74,7 @@ export const allEntityModelTypesNoSimpleTypes: ModelType[] = [
   'choice',
   'common',
   'commonExtension',
+  'commonSubclass',
   'descriptor',
   'domain',
   'domainEntity',
@@ -99,6 +102,7 @@ export const allTopLevelEntityModelTypes: ModelType[] = [
   'choice',
   'common',
   'commonExtension',
+  'commonSubclass',
   'descriptor',
   'domainEntity',
   'domainEntityExtension',
@@ -115,6 +119,7 @@ export const topLevelCoreEntityModelTypes: ModelType[] = [
   'associationSubclass',
   'choice',
   'common',
+  'commonSubclass',
   'descriptor',
   'domainEntity',
   'domainEntitySubclass',
