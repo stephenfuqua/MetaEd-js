@@ -1,7 +1,7 @@
 {
   "name": "metaed-plugin-edfi-unified-advanced",
   "main": "dist/index.js",
-  "version": "2.0.1-dev.9",
+  "version": "2.0.1-dev.10",
   "description": "Ed-Fi Alliance advanced unified plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -24,8 +24,8 @@
     ]
   },
   "dependencies": {
-    "metaed-core": "2.0.1-dev.9",
-    "metaed-plugin-edfi-unified": "2.0.1-dev.9",
+    "metaed-core": "2.0.1-dev.10",
+    "metaed-plugin-edfi-unified": "2.0.1-dev.10",
     "ramda": "^0.26.1"
   },
   "scripts": {
