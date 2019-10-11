@@ -3,7 +3,7 @@ import { executePipeline, newMetaEdConfiguration, newPipelineOptions, newState, 
 import { State } from 'metaed-core';
 
 jest.unmock('final-fs');
-jest.setTimeout(30000);
+jest.setTimeout(50000);
 
 const metaEdConfiguration = {
   ...newMetaEdConfiguration(),
