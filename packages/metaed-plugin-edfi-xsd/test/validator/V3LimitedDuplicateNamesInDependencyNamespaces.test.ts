@@ -39,12 +39,7 @@ describe('when DEs have different names across dependency-linked namespaces', ()
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     failures = validate(metaEd);
   });
 
@@ -90,12 +85,7 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     failures = validate(metaEd);
   });
 
@@ -164,12 +154,7 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     extensionNamespacea.dependencies.push(coreNamespace);
     extensionNamespaceb.dependencies.push(coreNamespace);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     failures = validate(metaEd);
   });
 
@@ -220,12 +205,7 @@ describe('when DE has same name as DE extension across dependency-linked namespa
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     failures = validate(metaEd);
   });
 
@@ -273,12 +253,7 @@ describe('when DE has same name as Common across dependency-linked namespaces', 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
 
     failures = validate(metaEd);
   });

@@ -21,25 +21,20 @@ describe('when enhancing enumeration', (): void => {
   let createdSimpleType: EnumerationSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newEnumeration(), {
+    enhancedItem = {
+      ...newEnumeration(),
       metaEdName: simpleTypeName,
       documentation,
       enumerationItems: [
-        Object.assign(newEnumerationItem(), {
-          documentation: item1Documentation,
-          shortDescription: item1ShortDescription,
-        }),
-        Object.assign(newEnumerationItem(), {
-          documentation: item2Documentation,
-          shortDescription: item2ShortDescription,
-        }),
+        { ...newEnumerationItem(), documentation: item1Documentation, shortDescription: item1ShortDescription },
+        { ...newEnumerationItem(), documentation: item2Documentation, shortDescription: item2ShortDescription },
       ],
       data: {
         edfiXsd: {
           xsdEnumerationNameWithExtension: simpleTypeNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.enumeration.set(enhancedItem.metaEdName, enhancedItem);
 

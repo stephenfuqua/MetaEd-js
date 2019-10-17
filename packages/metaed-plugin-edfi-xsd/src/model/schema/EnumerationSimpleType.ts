@@ -17,8 +17,4 @@ export function newEnumerationSimpleType(): EnumerationSimpleType {
   };
 }
 
-export const NoEnumerationSimpleType: SimpleType = deepFreeze(
-  Object.assign(newSimpleType(), {
-    name: 'NoEnumerationSimpleType',
-  }),
-);
+export const NoEnumerationSimpleType: SimpleType = deepFreeze({ ...newSimpleType(), name: 'NoEnumerationSimpleType' });

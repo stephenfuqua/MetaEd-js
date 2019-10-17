@@ -12,22 +12,17 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'enumeration', 'mapTypeEnumeration', 'schoolYearEnumeration').forEach(enumeration => {
     const enumerationBase = enumeration as EnumerationBase;
     const enumerationBaseEdfiXsd = enumerationBase.data.edfiXsd as EnumerationBaseEdfiXsd;
-    enumerationBaseEdfiXsd.xsdEnumerationSimpleType = Object.assign(newEnumerationSimpleType(), {
+    enumerationBaseEdfiXsd.xsdEnumerationSimpleType = {
+      ...newEnumerationSimpleType(),
       name: enumerationBaseEdfiXsd.xsdEnumerationNameWithExtension,
-      annotation: Object.assign(newAnnotation(), {
-        documentation: enumerationBase.documentation,
-        typeGroup: typeGroupEnumeration,
-      }),
+      annotation: { ...newAnnotation(), documentation: enumerationBase.documentation, typeGroup: typeGroupEnumeration },
       baseType: 'xs:token',
-      enumerationTokens: enumerationBase.enumerationItems.map(item =>
-        Object.assign(newEnumerationToken(), {
-          annotation: Object.assign(newAnnotation(), {
-            documentation: item.documentation,
-          }),
-          value: item.shortDescription,
-        }),
-      ),
-    });
+      enumerationTokens: enumerationBase.enumerationItems.map(item => ({
+        ...newEnumerationToken(),
+        annotation: { ...newAnnotation(), documentation: item.documentation },
+        value: item.shortDescription,
+      })),
+    };
   });
 
   return {

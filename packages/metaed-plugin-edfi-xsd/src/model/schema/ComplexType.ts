@@ -30,8 +30,4 @@ export function newComplexType(): ComplexType {
   };
 }
 
-export const NoComplexType: ComplexType = deepFreeze(
-  Object.assign(newComplexType(), {
-    name: 'NoComplexType',
-  }),
-);
+export const NoComplexType: ComplexType = deepFreeze({ ...newComplexType(), name: 'NoComplexType' });

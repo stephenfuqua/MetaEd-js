@@ -20,17 +20,19 @@ describe('when enhancing association subclass', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const baseEntity = Object.assign(newAssociation(), {
+    const baseEntity = {
+      ...newAssociation(),
       namespace,
       metaEdName: baseTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseEntity);
     namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
-    enhancedItem = Object.assign(newAssociationSubclass(), {
+    enhancedItem = {
+      ...newAssociationSubclass(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
@@ -38,7 +40,7 @@ describe('when enhancing association subclass', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.associationSubclass.set(enhancedItem.metaEdName, enhancedItem);
 

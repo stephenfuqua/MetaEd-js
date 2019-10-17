@@ -15,16 +15,14 @@ function createSchemaSimpleType(integerType: IntegerType): SimpleType {
     return NoSimpleType;
   }
 
-  return Object.assign(newIntegerSimpleType(), {
+  return {
+    ...newIntegerSimpleType(),
     name: (integerType.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
-    annotation: Object.assign(newAnnotation(), {
-      documentation: integerType.documentation,
-      typeGroup: typeGroupSimple,
-    }),
+    annotation: { ...newAnnotation(), documentation: integerType.documentation, typeGroup: typeGroupSimple },
     baseType: integerType.isShort ? 'xs:short' : 'xs:int',
     minValue: integerType.minValue,
     maxValue: integerType.maxValue,
-  });
+  } as SimpleType;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

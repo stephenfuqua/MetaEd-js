@@ -6,6 +6,7 @@ import { newComplexType, NoComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
 import { createSchemaComplexTypeItems } from './XsdElementFromPropertyCreator';
+import { ComplexTypeItem } from '../../model/schema/ComplexTypeItem';
 
 export const descriptorReferenceTypeSuffix = 'DescriptorReferenceType';
 export const identityTypeSuffix = 'IdentityType';
@@ -65,15 +66,13 @@ export function createDefaultComplexType(
   baseType: string = '',
   isAbstract: boolean = false,
 ): ComplexType[] {
-  const complexType: ComplexType = Object.assign(newComplexType(), {
-    annotation: Object.assign(newAnnotation(), {
-      documentation: topLevelEntity.documentation,
-      typeGroup,
-    }),
+  const complexType: ComplexType = {
+    ...newComplexType(),
+    annotation: { ...newAnnotation(), documentation: topLevelEntity.documentation, typeGroup },
     isAbstract,
     baseType,
     name: topLevelEntity.data.edfiXsd.xsdMetaEdNameWithExtension(),
-  });
+  };
 
   complexType.items.push(...createSchemaComplexTypeItems(topLevelEntity.data.edfiXsd.xsdProperties()));
   return [complexType];
@@ -83,16 +82,18 @@ export function createCoreRestrictionForExtensionParent(topLevelEntity: TopLevel
   const parentEntity = topLevelEntity.baseEntity;
   if (parentEntity == null) return NoComplexType;
   const baseType = parentEntity.data.edfiXsd.xsdMetaEdNameWithExtension();
-  const restrictionComplexType = Object.assign(newComplexType(), {
+  const restrictionComplexType = {
+    ...newComplexType(),
     baseType,
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation: `Restriction to ${sugar.titleize(
         parentEntity.metaEdName,
       )} for replacement of common type with common type extension`,
-    }),
+    },
     isRestriction: true,
     name: restrictionName(topLevelEntity),
-  });
+  };
 
   if (['associationSubclass', 'domainEntitySubclass'].includes(parentEntity.type) && parentEntity.baseEntity != null) {
     restrictionComplexType.items.push(...createSchemaComplexTypeItems(parentEntity.baseEntity.data.edfiXsd.xsdProperties()));
@@ -114,41 +115,41 @@ export function createIdentityType(topLevelEntity: TopLevelEntity): ComplexType 
         )}.`
       : `Identity of ${prependIndefiniteArticle(topLevelEntity.metaEdName)}.`;
 
-  const identityType: ComplexType = Object.assign(newComplexType(), {
-    annotation: Object.assign(newAnnotation(), {
-      documentation,
-      typeGroup: typeGroupIdentity,
-    }),
+  const identityType: ComplexType = {
+    ...newComplexType(),
+    annotation: { ...newAnnotation(), documentation, typeGroup: typeGroupIdentity },
     name: `${topLevelEntity.data.edfiXsd.xsdMetaEdNameWithExtension()}${identityTypeSuffix}`,
-  });
+  };
 
   identityType.items.push(...createSchemaComplexTypeItems(topLevelEntity.data.edfiXsd.xsdIdentityProperties, ''));
   return identityType;
 }
 
 export function createReferenceType(topLevelEntity: TopLevelEntity): ComplexType {
-  const referenceType: ComplexType = Object.assign(newComplexType(), {
-    annotation: Object.assign(newAnnotation(), {
+  const referenceType: ComplexType = {
+    ...newComplexType(),
+    annotation: {
+      ...newAnnotation(),
       documentation: `Provides alternative references for ${prependIndefiniteArticle(
         topLevelEntity.metaEdName,
       )}. Use XML IDREF to reference a record that is included in the interchange. Use the identity type to look up a record that was loaded previously.`,
       typeGroup: typeGroupExtendedReference,
-    }),
+    },
     baseType: baseTypeReference,
     name: `${topLevelEntity.data.edfiXsd.xsdMetaEdNameWithExtension()}${referenceTypeSuffix}`,
-  });
+  };
 
   if (topLevelEntity.data.edfiXsd.xsdIdentityType !== '') {
-    referenceType.items.push(
-      Object.assign(newElement(), {
-        name: `${topLevelEntity.metaEdName}Identity`,
-        type: topLevelEntity.data.edfiXsd.xsdIdentityType.name,
-        annotation: Object.assign(newAnnotation(), {
-          documentation: topLevelEntity.data.edfiXsd.xsdIdentityType.annotation.documentation,
-        }),
-        minOccurs: '0',
-      }),
-    );
+    referenceType.items.push({
+      ...newElement(),
+      name: `${topLevelEntity.metaEdName}Identity`,
+      type: topLevelEntity.data.edfiXsd.xsdIdentityType.name,
+      annotation: {
+        ...newAnnotation(),
+        documentation: topLevelEntity.data.edfiXsd.xsdIdentityType.annotation.documentation,
+      },
+      minOccurs: '0',
+    } as ComplexTypeItem);
   }
   return referenceType;
 }

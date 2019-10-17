@@ -9,14 +9,16 @@ const enhancerName = 'AddDescriptorExtendedReferenceTypesEnhancer';
 const targetVersions: SemVer = V3OrGreater;
 
 function createExtendedReferenceType(descriptor: Descriptor): StringSimpleType {
-  const extendedReferenceType = Object.assign(newStringSimpleType(), {
-    annotation: Object.assign(newAnnotation(), {
+  const extendedReferenceType = {
+    ...newStringSimpleType(),
+    annotation: {
+      ...newAnnotation(),
       documentation: descriptor.documentation,
       typeGroup: typeGroupDescriptorExtendedReference,
-    }),
+    },
     baseType: baseTypeDescriptorReference,
     name: `${descriptor.data.edfiXsd.xsdDescriptorNameWithExtension}ReferenceType`,
-  });
+  };
 
   return extendedReferenceType;
 }

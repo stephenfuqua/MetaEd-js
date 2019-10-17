@@ -51,7 +51,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           extensionInterchanges,
         );
         if (!extensionInterchange) {
-          extensionInterchange = Object.assign(newMergedInterchange(), {
+          extensionInterchange = {
+            ...newMergedInterchange(),
             metaEdName: interchangeToExtend.metaEdName,
             repositoryId: `${extensionNamespace.projectExtension}-${interchangeToExtend.metaEdName}`,
             interchangeName: interchangeToExtend.metaEdName,
@@ -59,15 +60,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
             extendedDocumentation: interchangeToExtend.extendedDocumentation,
             useCaseDocumentation: interchangeToExtend.useCaseDocumentation,
             namespace: extensionNamespace,
-          });
+          };
 
           interchangeToExtend.elements.forEach(element => {
-            const interchangeItem = Object.assign(newInterchangeItem(), {
+            const interchangeItem = {
+              ...newInterchangeItem(),
               metaEdName: element.metaEdName,
               namespace: element.namespace,
               referencedEntity: element.referencedEntity,
               documentation: element.documentation,
-            });
+            };
             addInterchangeItemEdfiXsdTo(interchangeItem);
             extensionInterchange.elements.push(interchangeItem);
           });
@@ -84,12 +86,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         extensionInterchange.elements = extensionInterchange.elements.map(e => {
           const elementToExtend = elementsToExtend.find(i => i.element.metaEdName === e.metaEdName);
           if (elementToExtend) {
-            const interchangeItem = Object.assign(newInterchangeItem(), {
+            const interchangeItem = {
+              ...newInterchangeItem(),
               metaEdName: elementToExtend.element.metaEdName,
               namespace: extensionNamespace,
               referencedEntity: elementToExtend.extensionElement,
               documentation: elementToExtend.element.documentation,
-            });
+            };
             addInterchangeItemEdfiXsdTo(interchangeItem);
             return interchangeItem;
           }

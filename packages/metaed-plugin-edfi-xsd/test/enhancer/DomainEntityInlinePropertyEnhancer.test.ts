@@ -5,6 +5,7 @@ import {
   newInlineCommonProperty,
   newStringProperty,
   newNamespace,
+  EntityProperty,
 } from 'metaed-core';
 import { MetaEdEnvironment, Common, DomainEntity, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
@@ -12,7 +13,7 @@ import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
 describe('when enhancing domainEntity with inline string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const inlineName = 'InlineName';
   const entityName = 'EntityName';
@@ -21,19 +22,12 @@ describe('when enhancing domainEntity with inline string property', (): void => 
 
   beforeAll(() => {
     const properties = [
-      Object.assign(newStringProperty(), {
-        metaEdName: propertyName1,
-        namespace,
-        isPartOfIdentity: false,
-      }),
-      Object.assign(newStringProperty(), {
-        metaEdName: propertyName2,
-        namespace,
-        isPartOfIdentity: true,
-      }),
+      { ...newStringProperty(), metaEdName: propertyName1, namespace, isPartOfIdentity: false },
+      { ...newStringProperty(), metaEdName: propertyName2, namespace, isPartOfIdentity: true },
     ];
 
-    const inlineCommon: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon: Common = {
+      ...newInlineCommon(),
       metaEdName: inlineName,
       namespace,
       inlineInOds: true,
@@ -41,24 +35,26 @@ describe('when enhancing domainEntity with inline string property', (): void => 
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.common.set(inlineCommon.metaEdName, inlineCommon);
 
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: entityName,
       namespace,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inlineName,
           referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon,
-        }),
+        } as EntityProperty,
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     initializeTopLevelEntities(metaEd);
@@ -75,7 +71,7 @@ describe('when enhancing domainEntity with inline string property', (): void => 
 
 describe('when enhancing domainEntity with inline nested string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const inline1Name = 'Inline1Name';
   const inline2Name = 'Inline2Name';
@@ -84,61 +80,56 @@ describe('when enhancing domainEntity with inline nested string property', (): v
   const property2Name = 'Property2Name';
 
   beforeAll(() => {
-    const inlineCommon2: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon2: Common = {
+      ...newInlineCommon(),
       metaEdName: inline2Name,
       namespace,
       inlineInOds: true,
-      properties: [
-        Object.assign(newStringProperty(), {
-          metaEdName: property1Name,
-          namespace,
-          isPartOfIdentity: true,
-        }),
-      ],
+      properties: [{ ...newStringProperty(), metaEdName: property1Name, namespace, isPartOfIdentity: true }],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
 
-    const inlineCommon1: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon1: Common = {
+      ...newInlineCommon(),
       metaEdName: inline1Name,
       namespace,
       inlineInOds: true,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inline2Name,
           referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon2,
-        }),
-        Object.assign(newStringProperty(), {
-          metaEdName: property2Name,
-          namespace,
-          isPartOfIdentity: true,
-        }),
+        } as EntityProperty,
+        { ...newStringProperty(), metaEdName: property2Name, namespace, isPartOfIdentity: true },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
 
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: entityName,
       namespace,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inline1Name,
           referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon1,
-        }),
+        } as EntityProperty,
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     initializeTopLevelEntities(metaEd);

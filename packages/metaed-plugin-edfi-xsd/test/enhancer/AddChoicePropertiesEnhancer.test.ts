@@ -21,36 +21,21 @@ describe('when enhancing association with choice', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const association: Association = Object.assign(newAssociation(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const association: Association = { ...newAssociation(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.association.set(association.metaEdName, association);
 
-    association.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice: Choice = Object.assign(newChoice(), {
+    association.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice: Choice = { ...newChoice(), metaEdName: choiceName, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -74,52 +59,32 @@ describe('when enhancing association with choices nested', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const association: Association = Object.assign(newAssociation(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const association: Association = { ...newAssociation(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.association.set(association.metaEdName, association);
 
-    association.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName1,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice1: Choice = Object.assign(newChoice(), {
+    association.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName1,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice1: Choice = { ...newChoice(), metaEdName: choiceName1, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName2,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice2: Choice = Object.assign(newChoice(), {
+    choice1.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName2,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice2: Choice = { ...newChoice(), metaEdName: choiceName2, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice2.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -148,36 +113,21 @@ describe('when enhancing common with choice', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const common: Common = Object.assign(newCommon(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const common: Common = { ...newCommon(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.common.set(common.metaEdName, common);
 
-    common.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice: Choice = Object.assign(newChoice(), {
+    common.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice: Choice = { ...newChoice(), metaEdName: choiceName, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -201,51 +151,32 @@ describe('when enhancing common with choices nested', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const common: Common = Object.assign(newCommon(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const common: Common = { ...newCommon(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.common.set(common.metaEdName, common);
 
-    common.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName1,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice1: Choice = Object.assign(newChoice(), {
+    common.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName1,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice1: Choice = { ...newChoice(), metaEdName: choiceName1, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName2,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice2: Choice = Object.assign(newChoice(), {
+    choice1.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName2,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice2: Choice = { ...newChoice(), metaEdName: choiceName2, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice2.properties.push({ ...newCommonProperty(), metaEdName: propertyName, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -274,36 +205,21 @@ describe('when enhancing descriptor with choice', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const descriptor: Descriptor = Object.assign(newDescriptor(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const descriptor: Descriptor = { ...newDescriptor(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
-    descriptor.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice: Choice = Object.assign(newChoice(), {
+    descriptor.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice: Choice = { ...newChoice(), metaEdName: choiceName, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -327,52 +243,32 @@ describe('when enhancing descriptor with choices nested', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const descriptor: Descriptor = Object.assign(newDescriptor(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const descriptor: Descriptor = { ...newDescriptor(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
-    descriptor.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName1,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice1: Choice = Object.assign(newChoice(), {
+    descriptor.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName1,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice1: Choice = { ...newChoice(), metaEdName: choiceName1, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName2,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice2: Choice = Object.assign(newChoice(), {
+    choice1.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName2,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice2: Choice = { ...newChoice(), metaEdName: choiceName2, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice2.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -401,36 +297,21 @@ describe('when enhancing domainEntity with choice', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const domainEntity: DomainEntity = { ...newDomainEntity(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    domainEntity.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice: Choice = Object.assign(newChoice(), {
+    domainEntity.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice: Choice = { ...newChoice(), metaEdName: choiceName, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -456,36 +337,26 @@ describe('when enhancing domainEntity with choice across namespaces', (): void =
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: entityName,
       namespace: extensionNamespace,
       data: { edfiXsd: {} },
-    });
+    };
     extensionNamespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    domainEntity.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace: extensionNamespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice: Choice = Object.assign(newChoice(), {
+    domainEntity.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName,
-      namespace,
+      referencedNamespaceName: namespace.namespaceName,
+      namespace: extensionNamespace,
       data: { edfiXsd: {} },
     });
+
+    const choice: Choice = { ...newChoice(), metaEdName: choiceName, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 
@@ -509,53 +380,37 @@ describe('when enhancing domainEntity with choices nested', (): void => {
   const propertyName = 'PropertyName';
 
   beforeAll(() => {
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      metaEdName: entityName,
-      namespace,
-      data: { edfiXsd: {} },
-    });
+    const domainEntity: DomainEntity = { ...newDomainEntity(), metaEdName: entityName, namespace, data: { edfiXsd: {} } };
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    domainEntity.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName1,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice1: Choice = Object.assign(newChoice(), {
+    domainEntity.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName1,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice1: Choice = { ...newChoice(), metaEdName: choiceName1, namespace, data: { edfiXsd: {} } };
     namespace.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(
-      Object.assign(newChoiceProperty(), {
-        metaEdName: choiceName2,
-        referencedNamespaceName: namespace.namespaceName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
-
-    const choice2: Choice = Object.assign(newChoice(), {
+    choice1.properties.push({
+      ...newChoiceProperty(),
       metaEdName: choiceName2,
       referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });
+
+    const choice2: Choice = {
+      ...newChoice(),
+      metaEdName: choiceName2,
+      namespace,
+      data: { edfiXsd: {} },
+    };
     namespace.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(
-      Object.assign(newCommonProperty(), {
-        metaEdName: propertyName,
-        namespace,
-        data: { edfiXsd: {} },
-      }),
-    );
+    choice2.properties.push({ ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} } });
     enhance(metaEd);
   });
 

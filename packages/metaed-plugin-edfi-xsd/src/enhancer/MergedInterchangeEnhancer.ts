@@ -10,7 +10,8 @@ const enhancerName = 'MergedInterchangeEnhancer';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // Build merged interchanges for all the interchanges, in any namespace
   (getAllEntitiesOfType(metaEd, 'interchange') as Interchange[]).forEach((interchange: Interchange) => {
-    const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange: MergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchange.metaEdName,
       repositoryId: interchange.metaEdName,
       documentation: interchange.documentation,
@@ -19,7 +20,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       namespace: interchange.namespace,
       elements: interchange.elements,
       identityTemplates: interchange.identityTemplates,
-    });
+    };
 
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
   });
@@ -29,14 +30,15 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     (interchangeExtension: InterchangeExtension) => {
       const interchange = interchangeExtension.baseEntity;
       if (!interchange) return;
-      const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+      const mergedInterchange: MergedInterchange = {
+        ...newMergedInterchange(),
         metaEdName: interchange.metaEdName,
         repositoryId: (interchangeExtension.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
         documentation: interchange.documentation,
         extendedDocumentation: interchange.extendedDocumentation,
         useCaseDocumentation: interchange.useCaseDocumentation,
         namespace: interchangeExtension.namespace,
-      });
+      };
       Object.assign(mergedInterchange, {
         elements: R.union(
           interchange.elements.filter(e => mergedInterchange.elements.every(mie => mie.metaEdName !== e.metaEdName)),

@@ -44,150 +44,153 @@ const removeNoEnumerationSimpleType = R.filter(x => x !== NoEnumerationSimpleTyp
 const inNamespace = namespace => R.filter(x => x.namespace.namespaceName === namespace.namespaceName);
 
 function baseSchemaSection() {
-  const schemaSection: SchemaSection = Object.assign(newSchemaSection(), {
-    sectionAnnotation: Object.assign(newAnnotation(), {
-      documentation: '===== Base Types (borrowed from NEIM standards) =====',
-    }),
-  });
+  const schemaSection: SchemaSection = {
+    ...newSchemaSection(),
+    sectionAnnotation: { ...newAnnotation(), documentation: '===== Base Types (borrowed from NEIM standards) =====' },
+  };
 
-  const complexObjectType = Object.assign(newComplexType(), {
+  const complexObjectType = {
+    ...newComplexType(),
     name: 'ComplexObjectType',
     isAbstract: true,
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation: 'This is the base type from which all entity elements are extended.',
       typeGroup: typeGroupBase,
-    }),
+    },
     attributes: [
-      Object.assign(newAttribute(), {
+      {
+        ...newAttribute(),
         name: 'id',
         type: 'xs:ID',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'The XML ID associated with the complex object.',
-        }),
-      }),
+        annotation: { ...newAnnotation(), documentation: 'The XML ID associated with the complex object.' },
+      },
     ],
-  });
+  };
   schemaSection.complexTypes.push(complexObjectType);
 
-  const descriptorReferenceType = Object.assign(newComplexType(), {
+  const descriptorReferenceType = {
+    ...newComplexType(),
     name: 'DescriptorReferenceType',
     baseType: 'ReferenceType',
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation:
         'Provides references for descriptors during interchange. Use XML IDREF to reference a descriptor record that is included in the interchange. To lookup when already loaded, specify the full URI or the final segment of the URI.',
       typeGroup: typeGroupBase,
-    }),
+    },
     items: [
-      Object.assign(newElement(), {
+      {
+        ...newElement(),
         name: 'CodeValue',
         type: 'CodeValue',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'A globally unique identifier within this descriptor type.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        annotation: { ...newAnnotation(), documentation: 'A globally unique identifier within this descriptor type.' },
+      },
+      {
+        ...newElement(),
         name: 'Namespace',
         type: 'URI',
         minOccurs: '0',
-        annotation: Object.assign(newAnnotation(), {
+        annotation: {
+          ...newAnnotation(),
           documentation:
             'An optional globally unique namespace that identifies this descriptor set. If supplied, the author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary. Actual usage of this element for matching descriptors will be system-specific.',
-        }),
-      }),
+        },
+      },
     ],
-  });
+  };
   schemaSection.complexTypes.push(descriptorReferenceType);
 
-  const descriptorType = Object.assign(newComplexType(), {
+  const descriptorType = {
+    ...newComplexType(),
     name: 'DescriptorType',
     baseType: 'ComplexObjectType',
     isAbstract: true,
-    annotation: Object.assign(newAnnotation(), {
-      documentation: 'This is the base for the Descriptor type.',
-      typeGroup: typeGroupBase,
-    }),
+    annotation: { ...newAnnotation(), documentation: 'This is the base for the Descriptor type.', typeGroup: typeGroupBase },
     items: [
-      Object.assign(newElement(), {
+      {
+        ...newElement(),
         name: 'CodeValue',
         type: 'CodeValue',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'A code or abbreviation that is used to refer to the descriptor.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        annotation: { ...newAnnotation(), documentation: 'A code or abbreviation that is used to refer to the descriptor.' },
+      },
+      {
+        ...newElement(),
         name: 'ShortDescription',
         type: 'ShortDescription',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'A shortened description for the descriptor.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        annotation: { ...newAnnotation(), documentation: 'A shortened description for the descriptor.' },
+      },
+      {
+        ...newElement(),
         name: 'Description',
         type: 'Description',
         minOccurs: '0',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'The description of the descriptor.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        annotation: { ...newAnnotation(), documentation: 'The description of the descriptor.' },
+      },
+      {
+        ...newElement(),
         name: 'EffectiveBeginDate',
         type: 'xs:date',
         minOccurs: '0',
-        annotation: Object.assign(newAnnotation(), {
+        annotation: {
+          ...newAnnotation(),
           documentation:
             'The beginning date of the period when the descriptor is in effect. If omitted, the default is immediate effectiveness.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        },
+      },
+      {
+        ...newElement(),
         name: 'EffectiveEndDate',
         type: 'xs:date',
         minOccurs: '0',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'The end date of the period when the descriptor is in effect.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        annotation: { ...newAnnotation(), documentation: 'The end date of the period when the descriptor is in effect.' },
+      },
+      {
+        ...newElement(),
         name: 'PriorDescriptor',
         type: 'DescriptorReferenceType',
         minOccurs: '0',
-        annotation: Object.assign(newAnnotation(), {
+        annotation: {
+          ...newAnnotation(),
           documentation: 'Immediately prior to the date in Effective Date, the reference to the equivalent descriptor.',
-        }),
-      }),
-      Object.assign(newElement(), {
+        },
+      },
+      {
+        ...newElement(),
         name: 'Namespace',
         type: 'URI',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'A globally unique identifier for this descriptor.',
-        }),
-      }),
+        annotation: { ...newAnnotation(), documentation: 'A globally unique identifier for this descriptor.' },
+      },
     ],
-  });
+  };
   schemaSection.complexTypes.push(descriptorType);
 
-  const referenceType = Object.assign(newComplexType(), {
+  const referenceType = {
+    ...newComplexType(),
     name: 'ReferenceType',
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation: 'This is the base type for association references.',
       typeGroup: typeGroupBase,
-    }),
+    },
     attributes: [
-      Object.assign(newAttribute(), {
+      {
+        ...newAttribute(),
         name: 'id',
         type: 'xs:ID',
-        annotation: Object.assign(newAnnotation(), {
-          documentation: 'The XML ID associated with this complex object.',
-        }),
-      }),
-      Object.assign(newAttribute(), {
+        annotation: { ...newAnnotation(), documentation: 'The XML ID associated with this complex object.' },
+      },
+      {
+        ...newAttribute(),
         name: 'ref',
         type: 'xs:IDREF',
-        annotation: Object.assign(newAnnotation(), {
+        annotation: {
+          ...newAnnotation(),
           documentation: 'The XML IDREF that references the object associated with this object.',
-        }),
-      }),
+        },
+      },
     ],
-  });
+  };
   schemaSection.complexTypes.push(referenceType);
 
   return schemaSection;
@@ -198,14 +201,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   metaEd.namespace.forEach(namespace => {
     const versionString = metaEd.dataStandardVersion;
-    const schemaContainer: SchemaContainer = Object.assign(newSchemaContainer(), {
+    const schemaContainer: SchemaContainer = {
+      ...newSchemaContainer(),
       isExtension: namespace.isExtension,
-      schemaAnnotation: Object.assign(newAnnotation(), {
+      schemaAnnotation: {
+        ...newAnnotation(),
         documentation: namespace.isExtension
           ? `===== Ed-Fi ${versionString} Extensions =====`
           : `===== Ed-Fi-Core Version ${versionString} ====`,
-      }),
-    });
+      },
+    };
 
     const complexTypesForEntitiesOfType = R.pipe(
       getAllEntitiesOfType,
@@ -216,30 +221,27 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     );
 
     // Domain Entities
-    const domainEntitiesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Domain Entities =====',
-      }),
+    const domainEntitiesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Domain Entities =====' },
       complexTypes: complexTypesForEntitiesOfType(metaEd, 'domainEntity', 'domainEntityExtension', 'domainEntitySubclass'),
-    });
+    };
     schemaContainer.sections.push(domainEntitiesSection);
 
     // Descriptors
-    const descriptorsSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Descriptors =====',
-      }),
+    const descriptorsSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Descriptors =====' },
       complexTypes: complexTypesForEntitiesOfType(metaEd, 'descriptor'),
-    });
+    };
     schemaContainer.sections.push(descriptorsSection);
 
     // Associations
-    const associationsSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Associations =====',
-      }),
+    const associationsSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Associations =====' },
       complexTypes: complexTypesForEntitiesOfType(metaEd, 'association', 'associationExtension', 'associationSubclass'),
-    });
+    };
     schemaContainer.sections.push(associationsSection);
 
     // Base Types
@@ -254,10 +256,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       orderByProp('name'),
     );
 
-    const extendedReferencesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Extended Reference Types =====',
-      }),
+    const extendedReferencesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Extended Reference Types =====' },
       complexTypes: manyReferenceTypesForEntitiesOfType(
         metaEd,
         'association',
@@ -267,7 +268,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         'domainEntityExtension',
         'domainEntitySubclass',
       ),
-    });
+    };
     schemaContainer.sections.push(extendedReferencesSection);
 
     // Extended Descriptor Reference Types
@@ -279,21 +280,19 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       orderByProp('name'),
     );
 
-    const descriptorExtendedReferencesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Extended Descriptor Reference Types =====',
-      }),
+    const descriptorExtendedReferencesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Extended Descriptor Reference Types =====' },
       complexTypes: referenceTypesForEntitiesOfType(metaEd, 'descriptor'),
-    });
+    };
     schemaContainer.sections.push(descriptorExtendedReferencesSection);
 
     // Common Types
-    const commonTypesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Common Types =====',
-      }),
+    const commonTypesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Common Types =====' },
       complexTypes: complexTypesForEntitiesOfType(metaEd, 'common', 'commonSubclass', 'commonExtension'),
-    });
+    };
     schemaContainer.sections.push(commonTypesSection);
 
     // Enumerations and Enumerated Collections
@@ -305,17 +304,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       orderByProp('name'),
     );
 
-    const enumerationsSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Enumerations and Enumerated Collections =====',
-      }),
+    const enumerationsSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Enumerations and Enumerated Collections =====' },
       simpleTypes: enumerationSimpleTypesForEntitiesOfType(
         metaEd,
         'enumeration',
         'mapTypeEnumeration',
         'schoolYearEnumeration',
       ),
-    });
+    };
     schemaContainer.sections.push(enumerationsSection);
 
     // String Simple Types
@@ -331,12 +329,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       stringSimpleTypes.push(createCodeValueSimpleType(), createTimeIntervalSimpleType());
     }
 
-    const stringSimpleTypesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== String Simple Types =====',
-      }),
+    const stringSimpleTypesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== String Simple Types =====' },
       simpleTypes: orderByProp('name')(stringSimpleTypes),
-    });
+    };
 
     schemaContainer.sections.push(stringSimpleTypesSection);
 
@@ -346,12 +343,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       numericSimpleTypes.push(createCurrencySimpleType(), createPercentSimpleType());
     }
 
-    const numericSimpleTypesSection: SchemaSection = Object.assign(newSchemaSection(), {
-      sectionAnnotation: Object.assign(newAnnotation(), {
-        documentation: '===== Numeric Simple Types =====',
-      }),
+    const numericSimpleTypesSection: SchemaSection = {
+      ...newSchemaSection(),
+      sectionAnnotation: { ...newAnnotation(), documentation: '===== Numeric Simple Types =====' },
       simpleTypes: orderByProp('name')(numericSimpleTypes),
-    });
+    };
 
     schemaContainer.sections.push(numericSimpleTypesSection);
 

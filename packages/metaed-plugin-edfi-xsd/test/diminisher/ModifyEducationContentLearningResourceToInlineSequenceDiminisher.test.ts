@@ -7,53 +7,56 @@ import { enhance } from '../../src/diminisher/ModifyEducationContentLearningReso
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newElementGroup } from '../../src/model/schema/ElementGroup';
+import { ComplexTypeItem } from '../../src/model/schema/ComplexTypeItem';
 
 describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher diminishes education content', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentName = 'EducationContent';
   const learningResourceName = 'LearningResource';
   let elementGroup: ComplexType[];
 
   beforeAll(() => {
-    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity1: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: educationContentName,
       namespace,
       data: {
         edfiXsd: {
           xsdComplexTypes: [
-            Object.assign(newComplexType(), {
+            {
+              ...newComplexType(),
               name: educationContentName,
               items: [
-                Object.assign(newElementGroup(), {
+                {
+                  ...newElementGroup(),
                   isChoice: true,
                   items: [
-                    Object.assign(newElement(), { name: 'LearningResourceMetadataURI' }),
-                    Object.assign(newElement(), { name: learningResourceName }),
+                    { ...newElement(), name: 'LearningResourceMetadataURI' },
+                    { ...newElement(), name: learningResourceName },
                   ],
-                }),
+                },
               ],
-            }),
+            },
           ],
         },
       },
-    });
+    };
     namespace.entity.domainEntity.set(educationContentName, domainEntity1);
 
     elementGroup = [
-      Object.assign(newComplexType(), {
+      {
+        ...newComplexType(),
         name: educationContentName,
         items: [
-          Object.assign(newElement(), { name: 'Item1' }),
-          Object.assign(newElementGroup(), {
-            isChoice: true,
-            items: [Object.assign(newElement(), { name: 'Item2' })],
-          }),
+          { ...newElement(), name: 'Item1' } as ComplexTypeItem,
+          { ...newElementGroup(), isChoice: true, items: [{ ...newElement(), name: 'Item2' }] } as ComplexTypeItem,
         ],
-      }),
+      },
     ];
-    const inlineCommon1: Common = Object.assign(newCommon(), {
+    const inlineCommon1: Common = {
+      ...newCommon(),
       metaEdName: learningResourceName,
       namespace,
       data: {
@@ -61,7 +64,7 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
           xsdComplexTypes: elementGroup,
         },
       },
-    });
+    };
 
     namespace.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
     metaEd.dataStandardVersion = '2.0.0';

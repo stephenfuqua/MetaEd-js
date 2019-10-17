@@ -15,20 +15,11 @@ export const xs = 'http://www.w3.org/2001/XMLSchema';
 export const ann = 'http://ed-fi.org/annotation';
 
 export function createAnnotation(documentation: string, typeGroup: string = '', descriptorName: string = ''): Annotation {
-  return Object.assign(newAnnotation(), {
-    documentation,
-    typeGroup,
-    descriptorName,
-  });
+  return { ...newAnnotation(), documentation, typeGroup, descriptorName };
 }
 
 export function createAttribute(name: string, type: string, documentation: string, isRequired: boolean = false): Attribute {
-  return Object.assign(newAttribute(), {
-    name,
-    type,
-    annotation: createAnnotation(documentation),
-    isRequired,
-  });
+  return { ...newAttribute(), name, type, annotation: createAnnotation(documentation), isRequired };
 }
 
 export function createIntegerSimpleType(
@@ -38,13 +29,7 @@ export function createIntegerSimpleType(
   minValue: string = '',
   maxValue: string = '',
 ): IntegerSimpleType {
-  return Object.assign(newIntegerSimpleType(), {
-    name,
-    baseType,
-    annotation: createAnnotation(documentation),
-    maxValue,
-    minValue,
-  });
+  return { ...newIntegerSimpleType(), name, baseType, annotation: createAnnotation(documentation), maxValue, minValue };
 }
 
 export function createDecimalSimpleType(
@@ -56,7 +41,8 @@ export function createDecimalSimpleType(
   totalDigits: string = '',
   decimalPlaces: string = '',
 ): DecimalSimpleType {
-  return Object.assign(newDecimalSimpleType(), {
+  return {
+    ...newDecimalSimpleType(),
     name,
     baseType,
     annotation: createAnnotation(documentation),
@@ -64,7 +50,7 @@ export function createDecimalSimpleType(
     minValue,
     totalDigits,
     decimalPlaces,
-  });
+  };
 }
 
 export function createStringSimpleType(
@@ -74,28 +60,15 @@ export function createStringSimpleType(
   minLength: string = '',
   maxLength: string = '',
 ): StringSimpleType {
-  return Object.assign(newStringSimpleType(), {
-    name,
-    baseType,
-    annotation: createAnnotation(documentation),
-    maxLength,
-    minLength,
-  });
+  return { ...newStringSimpleType(), name, baseType, annotation: createAnnotation(documentation), maxLength, minLength };
 }
 
 export function createEnumerationSimpleType(name: string, baseType: string, documentation: string): EnumerationSimpleType {
-  return Object.assign(newEnumerationSimpleType(), {
-    name,
-    baseType,
-    annotation: createAnnotation(documentation),
-  });
+  return { ...newEnumerationSimpleType(), name, baseType, annotation: createAnnotation(documentation) };
 }
 
 export function createEnumerationToken(value: string, documentation: string): EnumerationToken {
-  return Object.assign(newEnumerationToken(), {
-    value,
-    annotation: createAnnotation(documentation),
-  });
+  return { ...newEnumerationToken(), value, annotation: createAnnotation(documentation) };
 }
 
 export function createElementComplexTypeItem(
@@ -106,14 +79,15 @@ export function createElementComplexTypeItem(
   maxOccurs: string = '',
   maxOccursIsUnbounded: boolean = false,
 ): Element {
-  return Object.assign(newElement(), {
+  return {
+    ...newElement(),
     name,
     type,
     annotation: createAnnotation(documentation),
     minOccurs,
     maxOccurs,
     maxOccursIsUnbounded,
-  });
+  };
 }
 
 export function createElementGroupComplexTypeItem(
@@ -122,12 +96,7 @@ export function createElementGroupComplexTypeItem(
   maxOccurs: string = '',
   maxOccursIsUnbounded: boolean = false,
 ): ElementGroup {
-  return Object.assign(newElementGroup(), {
-    isChoice,
-    minOccurs,
-    maxOccurs,
-    maxOccursIsUnbounded,
-  });
+  return { ...newElementGroup(), isChoice, minOccurs, maxOccurs, maxOccursIsUnbounded };
 }
 
 export function createComplexType(
@@ -136,24 +105,13 @@ export function createComplexType(
   baseType: string = '',
   isAbstract: boolean = false,
 ): ComplexType {
-  return Object.assign(newComplexType(), {
-    name,
-    baseType,
-    annotation: createAnnotation(documentation),
-    isAbstract,
-  });
+  return { ...newComplexType(), name, baseType, annotation: createAnnotation(documentation), isAbstract };
 }
 
 export function createSchemaSection(documentation: string): SchemaSection {
-  return Object.assign(newSchemaSection(), {
-    sectionAnnotation: createAnnotation(documentation),
-  });
+  return { ...newSchemaSection(), sectionAnnotation: createAnnotation(documentation) };
 }
 
 export function createSchema(schemaVersion: string, documentation: string, isExtension: boolean = false): SchemaContainer {
-  return Object.assign(newSchemaContainer(), {
-    schemaVersion,
-    schemaAnnotation: createAnnotation(documentation),
-    isExtension,
-  });
+  return { ...newSchemaContainer(), schemaVersion, schemaAnnotation: createAnnotation(documentation), isExtension };
 }

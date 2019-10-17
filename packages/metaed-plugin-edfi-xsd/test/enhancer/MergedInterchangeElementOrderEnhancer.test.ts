@@ -8,13 +8,14 @@ import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepos
 
 describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsdName', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
@@ -28,12 +29,14 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
   let extensionMergedInterchange;
 
   beforeAll(() => {
-    coreMergedInterchange = Object.assign(newMergedInterchange(), {
+    coreMergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       namespace,
       repositoryId: interchangeName,
       elements: [
-        Object.assign(newInterchangeItem(), {
+        {
+          ...newInterchangeItem(),
           metaEdName: extendedInterchangeItemName,
           data: {
             edfiXsd: {
@@ -41,8 +44,9 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
               xsdType,
             },
           },
-        }),
-        Object.assign(newInterchangeItem(), {
+        },
+        {
+          ...newInterchangeItem(),
           metaEdName: coreOnlyInterchangeItemName,
           data: {
             edfiXsd: {
@@ -50,16 +54,18 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
               xsdType,
             },
           },
-        }),
+        },
       ],
-    });
+    };
 
-    extensionMergedInterchange = Object.assign(newMergedInterchange(), {
+    extensionMergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       namespace: extensionNamespace,
       elements: [
-        Object.assign(newInterchangeItem(), {
+        {
+          ...newInterchangeItem(),
           metaEdName: extensionOnlyInterchangeItemName,
           data: {
             edfiXsd: {
@@ -67,8 +73,9 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
               xsdType,
             },
           },
-        }),
-        Object.assign(newInterchangeItem(), {
+        },
+        {
+          ...newInterchangeItem(),
           metaEdName: extendedInterchangeItemName,
           data: {
             edfiXsd: {
@@ -76,9 +83,9 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
               xsdType,
             },
           },
-        }),
+        },
       ],
-    });
+    };
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
     addMergedInterchangeToRepository(metaEd, extensionMergedInterchange);
 

@@ -17,7 +17,7 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when InterchangeItemEnhancer enhances element', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -25,41 +25,45 @@ describe('when InterchangeItemEnhancer enhances element', (): void => {
   const elementBaseName = 'InterchangeElement';
   const referenceElementName = 'ReferencedElement';
 
-  const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedEntity.metaEdName, referencedEntity);
 
-  const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const element: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: elementBaseName,
     namespace,
     referencedEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
   beforeAll(() => {
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       elements: [element],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const mergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       namespace,
       repositoryId: interchangeName,
       elements: [element],
-    });
+    };
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -80,46 +84,50 @@ describe('when InterchangeItemEnhancer enhances element', (): void => {
 
 describe('when InterchangeItemEnhancer enhances identity template', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName = 'InterchangeName';
   const identityTemplateName = 'InterchangeElement';
   const referenceElementName = 'ReferencedElement';
 
-  const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedEntity.metaEdName, referencedEntity);
 
-  const identityTemplate: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const identityTemplate: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: identityTemplateName,
     referencedEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
   beforeAll(() => {
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       identityTemplates: [identityTemplate],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const mergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       identityTemplates: [identityTemplate],
-    });
+    };
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -140,7 +148,7 @@ describe('when InterchangeItemEnhancer enhances identity template', (): void => 
 
 describe('when InterchangeItemEnhancer enhances element on extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName = 'InterchangeName';
@@ -149,66 +157,73 @@ describe('when InterchangeItemEnhancer enhances element on extension', (): void 
   const referenceElementName = 'ReferencedElement';
   const referenceExtensionElementName = 'ReferencedExtensionElement';
 
-  const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedEntity.metaEdName, referencedEntity);
 
-  const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const element: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: elementBaseName,
     referencedEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
-  const referencedExtensionEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedExtensionEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceExtensionElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedExtensionEntity.metaEdName, referencedExtensionEntity);
 
-  const extensionElement: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const extensionElement: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: extensionElementBaseName,
     referencedEntity: referencedExtensionEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
   beforeAll(() => {
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       elements: [element],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const interchangeExtension: InterchangeExtension = Object.assign(newInterchangeExtension(), {
+    const interchangeExtension: InterchangeExtension = {
+      ...newInterchangeExtension(),
       metaEdName: interchangeName,
       namespace,
       elements: [extensionElement],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
-    const mergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       elements: [element, extensionElement],
-    });
+    };
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -229,7 +244,7 @@ describe('when InterchangeItemEnhancer enhances element on extension', (): void 
 
 describe('when InterchangeItemEnhancer enhances identity template on extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName = 'InterchangeName';
@@ -238,66 +253,73 @@ describe('when InterchangeItemEnhancer enhances identity template on extension',
   const referenceElementName = 'ReferencedElement';
   const referenceExtensionElementName = 'ReferencedExtensionElement';
 
-  const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedEntity.metaEdName, referencedEntity);
 
-  const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const element: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: elementBaseName,
     referencedEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
-  const referencedExtensionEntity: DomainEntity = Object.assign(newDomainEntity(), {
+  const referencedExtensionEntity: DomainEntity = {
+    ...newDomainEntity(),
     metaEdName: referenceExtensionElementName,
     namespace,
     data: {
       edfiXsd: {},
     },
-  });
+  };
   namespace.entity.domainEntity.set(referencedExtensionEntity.metaEdName, referencedExtensionEntity);
 
-  const extensionElement: InterchangeItem = Object.assign(newInterchangeItem(), {
+  const extensionElement: InterchangeItem = {
+    ...newInterchangeItem(),
     metaEdName: extensionElementBaseName,
     referencedEntity: referencedExtensionEntity,
     data: {
       edfiXsd: {},
     },
-  });
+  };
 
   beforeAll(() => {
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       identityTemplates: [element],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const interchangeExtension: InterchangeExtension = Object.assign(newInterchangeExtension(), {
+    const interchangeExtension: InterchangeExtension = {
+      ...newInterchangeExtension(),
       metaEdName: interchangeName,
       namespace,
       identityTemplates: [extensionElement],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
-    const mergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       identityTemplates: [element, extensionElement],
-    });
+    };
     const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);

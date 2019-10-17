@@ -16,8 +16,4 @@ export function newSimpleType(): SimpleType {
   };
 }
 
-export const NoSimpleType: SimpleType = deepFreeze(
-  Object.assign(newSimpleType(), {
-    name: 'NoSimpleType',
-  }),
-);
+export const NoSimpleType: SimpleType = deepFreeze({ ...newSimpleType(), name: 'NoSimpleType' });

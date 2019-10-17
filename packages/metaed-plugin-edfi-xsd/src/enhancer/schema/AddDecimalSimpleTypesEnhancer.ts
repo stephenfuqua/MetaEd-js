@@ -21,18 +21,16 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
     return NoSimpleType;
   }
 
-  return Object.assign(newDecimalSimpleType(), {
+  return {
+    ...newDecimalSimpleType(),
     name: (decimalType.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
-    annotation: Object.assign(newAnnotation(), {
-      documentation: decimalType.documentation,
-      typeGroup: typeGroupSimple,
-    }),
+    annotation: { ...newAnnotation(), documentation: decimalType.documentation, typeGroup: typeGroupSimple },
     baseType: 'xs:decimal',
     minValue: decimalType.minValue,
     maxValue: decimalType.maxValue,
     decimalPlaces: decimalType.decimalPlaces,
     totalDigits: decimalType.totalDigits,
-  });
+  } as SimpleType;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

@@ -6,31 +6,24 @@ import { enhance } from '../../src/enhancer/CopyPropertiesEnhancer';
 describe('when enhancing domainEntity with string properties', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
-  const identityProperty = Object.assign(newStringProperty(), {
-    metaEdName: 'IdentityPropertyName',
-    isPartOfIdentity: true,
-  });
-  const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'EdFi',
-  });
+  const identityProperty = { ...newStringProperty(), metaEdName: 'IdentityPropertyName', isPartOfIdentity: true };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: entityName,
       namespace,
       properties: [
         identityProperty,
-        Object.assign(newStringProperty(), {
-          metaEdName: 'NotIdentityPropertyName',
-          isPartOfIdentity: false,
-        }),
+        { ...newStringProperty(), metaEdName: 'NotIdentityPropertyName', isPartOfIdentity: false },
       ],
       identityProperties: [identityProperty],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     initializeTopLevelEntities(metaEd);

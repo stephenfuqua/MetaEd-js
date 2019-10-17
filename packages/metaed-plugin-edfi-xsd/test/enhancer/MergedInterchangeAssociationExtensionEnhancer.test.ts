@@ -16,13 +16,14 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when enhances MergedInterchange with association extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
@@ -39,26 +40,29 @@ describe('when enhances MergedInterchange with association extension', (): void 
   let associationExtension;
 
   beforeAll(() => {
-    const association: Association = Object.assign(newAssociation(), {
+    const association: Association = {
+      ...newAssociation(),
       metaEdName: association1Name,
       documentation: association1Documentation,
       namespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.association.set(association.metaEdName, association);
 
-    associationExtension = Object.assign(newAssociationExtension(), {
+    associationExtension = {
+      ...newAssociationExtension(),
       metaEdName: association1Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     extensionNamespace.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
 
-    const coreMergedInterchange = Object.assign(newMergedInterchange(), {
+    const coreMergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       documentation: interchangeDocumentation,
@@ -66,15 +70,16 @@ describe('when enhances MergedInterchange with association extension', (): void 
       useCaseDocumentation: interchangeUseCaseDocumentation,
       namespace,
       elements: [
-        Object.assign(newInterchangeItem(), {
+        {
+          ...newInterchangeItem(),
           metaEdName: association1Name,
           documentation: interchangeItemAssociation1Documentation,
           data: {
             edfiXsd: {},
           },
-        }),
+        },
       ],
-    });
+    };
 
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
 

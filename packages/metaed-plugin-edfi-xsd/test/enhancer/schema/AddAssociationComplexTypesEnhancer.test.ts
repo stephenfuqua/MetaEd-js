@@ -20,14 +20,15 @@ describe('when enhancing association', (): void => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newAssociation(), {
+    enhancedItem = {
+      ...newAssociation(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.association.set(enhancedItem.metaEdName, enhancedItem);
 

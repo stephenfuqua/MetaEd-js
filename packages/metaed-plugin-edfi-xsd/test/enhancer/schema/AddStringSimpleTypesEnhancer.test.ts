@@ -18,7 +18,8 @@ describe('when enhancing string type', (): void => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newStringType(), {
+    enhancedItem = {
+      ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
@@ -27,7 +28,7 @@ describe('when enhancing string type', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -78,7 +79,8 @@ describe('when enhancing generated string type with min length only', (): void =
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newStringType(), {
+    enhancedItem = {
+      ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -86,7 +88,7 @@ describe('when enhancing generated string type with min length only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -120,7 +122,8 @@ describe('when enhancing generated string type with max length only', (): void =
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newStringType(), {
+    enhancedItem = {
+      ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -128,7 +131,7 @@ describe('when enhancing generated string type with max length only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -161,14 +164,15 @@ describe('when enhancing non-generated string type with no restrictions', (): vo
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newStringType(), {
+    enhancedItem = {
+      ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -201,14 +205,15 @@ describe('when enhancing generated string type with no restrictions', (): void =
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newStringType(), {
+    enhancedItem = {
+      ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 

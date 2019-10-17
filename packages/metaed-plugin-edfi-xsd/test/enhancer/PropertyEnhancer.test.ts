@@ -19,29 +19,23 @@ import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 function createRepositoryEntityWithProperty(metaEd: MetaEdEnvironment, namespace: Namespace, property: EntityProperty) {
   const metaEdName = 'DomainEntityName';
 
-  namespace.entity.domainEntity.set(
+  namespace.entity.domainEntity.set(metaEdName, {
+    ...newDomainEntity(),
     metaEdName,
-    Object.assign(newDomainEntity(), {
-      metaEdName,
-      documentation: 'doc',
-      namespace,
-      properties: [property],
-      data: { edfiXsd: {} },
-    }),
-  );
+    documentation: 'doc',
+    namespace,
+    properties: [property],
+    data: { edfiXsd: {} },
+  });
   addProperty(metaEd.propertyIndex, property);
 }
 
 describe('when enhancing core string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newStringProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newStringProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -58,16 +52,11 @@ describe('when enhancing core string property', (): void => {
 
 describe('when enhancing core string property with a "role name"', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
   const roleName = 'Context';
-  const property = Object.assign(newStringProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    roleName,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newStringProperty(), metaEdName: propertyName, namespace, roleName, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -84,15 +73,16 @@ describe('when enhancing core string property with a "role name"', (): void => {
 
 describe('when enhancing core string property with a "role name" with same name as metaed name', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newStringProperty(), {
+  const property = {
+    ...newStringProperty(),
     metaEdName: propertyName,
     namespace,
     roleName: propertyName,
-    data: { edfiXsd: {} },
-  });
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -109,21 +99,23 @@ describe('when enhancing core string property with a "role name" with same name 
 
 describe('when enhancing extension string property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newStringProperty(), {
+  const property = {
+    ...newStringProperty(),
     metaEdName: propertyName,
     namespace: extensionNamespace,
-    data: { edfiXsd: {} },
-  });
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, extensionNamespace, property);
@@ -140,14 +132,10 @@ describe('when enhancing extension string property', (): void => {
 
 describe('when enhancing core association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newAssociationProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newAssociationProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -164,21 +152,23 @@ describe('when enhancing core association property', (): void => {
 
 describe('when enhancing extension association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newAssociationProperty(), {
+  const property = {
+    ...newAssociationProperty(),
     metaEdName: propertyName,
     namespace: extensionNamespace,
-    data: { edfiXsd: {} },
-  });
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, extensionNamespace, property);
@@ -195,30 +185,33 @@ describe('when enhancing extension association property', (): void => {
 
 describe('when enhancing extension association property referring to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newAssociationProperty(), {
+  const property = {
+    ...newAssociationProperty(),
     metaEdName: propertyName,
     parentEntityName: propertyName,
     namespace: extensionNamespace,
-    referencedEntity: Object.assign(newAssociation(), {
+    referencedEntity: {
+      ...newAssociation(),
       metaEdName: propertyName,
       documentation: 'doc',
       namespace,
       data: {
         edfiXsd: {},
       },
-    }),
-    data: { edfiXsd: {} },
-  });
+    },
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, extensionNamespace, property);
@@ -235,14 +228,10 @@ describe('when enhancing extension association property referring to core entity
 
 describe('when enhancing core descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newDescriptorProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newDescriptorProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -259,21 +248,23 @@ describe('when enhancing core descriptor property', (): void => {
 
 describe('when enhancing extension descriptor property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newDescriptorProperty(), {
+  const property = {
+    ...newDescriptorProperty(),
     metaEdName: propertyName,
     namespace: extensionNamespace,
-    data: { edfiXsd: {} },
-  });
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, extensionNamespace, property);
@@ -290,30 +281,33 @@ describe('when enhancing extension descriptor property', (): void => {
 
 describe('when enhancing extension descriptor property referring to core entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newDescriptorProperty(), {
+  const property = {
+    ...newDescriptorProperty(),
     metaEdName: propertyName,
     parentEntityName: propertyName,
     namespace: extensionNamespace,
-    referencedEntity: Object.assign(newDescriptor(), {
+    referencedEntity: {
+      ...newDescriptor(),
       metaEdName: propertyName,
       documentation: 'doc',
       namespace,
       data: {
         edfiXsd: {},
       },
-    }),
-    data: { edfiXsd: {} },
-  });
+    },
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, extensionNamespace, property);
@@ -330,14 +324,10 @@ describe('when enhancing extension descriptor property referring to core entity'
 
 describe('when enhancing enumeration property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newEnumerationProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newEnumerationProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -354,14 +344,10 @@ describe('when enhancing enumeration property', (): void => {
 
 describe('when enhancing enumeration property with name ending in "Type"', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyNameType';
-  const property = Object.assign(newEnumerationProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newEnumerationProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -378,14 +364,10 @@ describe('when enhancing enumeration property with name ending in "Type"', (): v
 
 describe('when enhancing common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newCommonProperty(), {
-    metaEdName: propertyName,
-    namespace,
-    data: { edfiXsd: {} },
-  });
+  const property = { ...newCommonProperty(), metaEdName: propertyName, namespace, data: { edfiXsd: {} as any } };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);
@@ -402,15 +384,16 @@ describe('when enhancing common property', (): void => {
 
 describe('when enhancing extension override common property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const propertyName = 'PropertyName';
-  const property = Object.assign(newCommonProperty(), {
+  const property = {
+    ...newCommonProperty(),
     metaEdName: propertyName,
     namespace,
     isExtensionOverride: true,
-    data: { edfiXsd: {} },
-  });
+    data: { edfiXsd: {} as any },
+  };
 
   beforeAll(() => {
     createRepositoryEntityWithProperty(metaEd, namespace, property);

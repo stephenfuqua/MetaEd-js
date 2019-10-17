@@ -51,9 +51,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         const elementIndex: number = entityElementGroup.items.indexOf(
           (learningResourceElement as unknown) as ComplexTypeItem,
         );
-        entityElementGroup.items[elementIndex] = (Object.assign(newElementGroup(), {
+        entityElementGroup.items[elementIndex] = {
+          ...newElementGroup(),
           items: [...propertyComplexTypeItems],
-        }) as unknown) as ComplexTypeItem;
+        } as ComplexTypeItem;
       }
     }
   }

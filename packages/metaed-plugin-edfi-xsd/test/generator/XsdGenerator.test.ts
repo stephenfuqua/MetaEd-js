@@ -11,9 +11,10 @@ import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepos
 import { generate } from '../../src/generator/XsdGenerator';
 
 describe('when generating schema', (): void => {
-  const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
+  const metaEd: MetaEdEnvironment = {
+    ...newMetaEdEnvironment(),
     // dataStandardVersion: '2.1.0',
-  });
+  };
   const complexTypeItemName = 'Element ComplexTypeItem';
   const complexTypeItemDocumentation = 'Element ComplexTypeItem Documentation';
   const complexTypeItemType = 'xs:string';
@@ -38,7 +39,8 @@ describe('when generating schema', (): void => {
     schemaSection.complexTypes.push(complexType);
     const schema = createSchema(schemaVersion, schemaDocumentation);
     schema.sections.push(schemaSection);
-    const namespace = Object.assign(newNamespace(), {
+    const namespace = {
+      ...newNamespace(),
       namespaceName: 'EdFi',
       projectExtension: 'EXTENSION',
       data: {
@@ -46,7 +48,7 @@ describe('when generating schema', (): void => {
           xsdSchema: schema,
         },
       },
-    });
+    };
 
     metaEd.namespace.set(namespace.namespaceName, namespace);
     addEdFiXsdEntityRepositoryTo(metaEd);

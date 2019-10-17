@@ -19,7 +19,8 @@ describe('when enhancing decimal type', (): void => {
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
@@ -30,7 +31,7 @@ describe('when enhancing decimal type', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -88,7 +89,8 @@ describe('when enhancing generated decimal type with min value only', (): void =
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -96,7 +98,7 @@ describe('when enhancing generated decimal type with min value only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -137,7 +139,8 @@ describe('when enhancing generated decimal type with max value only', (): void =
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -145,7 +148,7 @@ describe('when enhancing generated decimal type with max value only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -186,7 +189,8 @@ describe('when enhancing generated decimal type with decimal places only', (): v
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -194,7 +198,7 @@ describe('when enhancing generated decimal type with decimal places only', (): v
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -235,7 +239,8 @@ describe('when enhancing generated decimal type with total digits only', (): voi
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -243,7 +248,7 @@ describe('when enhancing generated decimal type with total digits only', (): voi
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -283,14 +288,15 @@ describe('when enhancing non-generated decimal type with no restrictions', (): v
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -330,14 +336,15 @@ describe('when enhancing generated decimal type with no restrictions', (): void 
   let createdSimpleType: DecimalSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDecimalType(), {
+    enhancedItem = {
+      ...newDecimalType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 

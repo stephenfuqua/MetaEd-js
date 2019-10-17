@@ -8,7 +8,7 @@ import { enhance } from '../../src/diminisher/AddLookupTypesDiminisher';
 
 describe('when AddLookupTypesDiminisher diminishes entity included in lookupTypeNames list', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'Assessment';
   const booleanPropertyName1 = 'BooleanPropertyName1';
@@ -18,18 +18,18 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
   let entity: DomainEntity;
 
   beforeAll(() => {
-    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity1: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName1,
       namespace,
       data: {
         edfiXsd: {
-          xsdReferenceType: Object.assign(newComplexType(), {
-            name: `${domainEntityName1}Reference`,
-          }),
+          xsdReferenceType: { ...newComplexType(), name: `${domainEntityName1}Reference` },
         },
       },
       queryableFields: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           documentation: booleanPropertyDocumentation,
           isRequiredCollection: true,
           data: {
@@ -38,9 +38,9 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
               xsdType: booleanPropertyType,
             },
           },
-        }),
+        },
       ],
-    });
+    };
     namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
 
     initializeTopLevelEntities(metaEd);
@@ -149,31 +149,32 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
 
 describe('when AddLookupTypesDiminisher diminishes entity not included in lookupTypeNames list', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const domainEntityName1 = 'DomainEntityName1';
   let entity: DomainEntity;
 
   beforeAll(() => {
-    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity1: DomainEntity = {
+      ...newDomainEntity(),
       namespace: extensionNamespace,
       metaEdName: domainEntityName1,
       data: {
         edfiXsd: {
-          xsdReferenceType: Object.assign(newComplexType(), {
-            name: `${domainEntityName1}Reference`,
-          }),
+          xsdReferenceType: { ...newComplexType(), name: `${domainEntityName1}Reference` },
         },
       },
       queryableFields: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           documentation: 'BooleanPropertyDocumentation',
           isRequiredCollection: true,
           data: {
@@ -182,9 +183,9 @@ describe('when AddLookupTypesDiminisher diminishes entity not included in lookup
               xsdType: 'BooleanPropertyType',
             },
           },
-        }),
+        },
       ],
-    });
+    };
     extensionNamespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);

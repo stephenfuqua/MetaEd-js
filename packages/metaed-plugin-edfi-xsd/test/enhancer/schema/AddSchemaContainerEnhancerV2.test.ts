@@ -34,10 +34,7 @@ describe('when enhancing namespace info for core', (): void => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName,
-      data: { edfiXsd: {} },
-    });
+    const coreNamespace: Namespace = { ...newNamespace(), namespaceName, data: { edfiXsd: {} } };
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     enhance(metaEd);
@@ -77,16 +74,14 @@ describe('when enhancing namespace info for extension', (): void => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName,
-      data: { edfiXsd: {} },
-    });
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    const coreNamespace: Namespace = { ...newNamespace(), namespaceName, data: { edfiXsd: {} } };
+    const extensionNamespace: Namespace = {
+      ...newNamespace(),
       namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
       data: { edfiXsd: {} },
-    });
+    };
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
@@ -250,383 +245,403 @@ describe('when enhancing namespace info for core with children', (): void => {
   let extensionSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName,
-      data: { edfiXsd: {} },
-    });
+    const coreNamespace: Namespace = { ...newNamespace(), namespaceName, data: { edfiXsd: {} } };
 
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    const extensionNamespace: Namespace = {
+      ...newNamespace(),
       namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
       data: { edfiXsd: {} },
-    });
+    };
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
     extensionNamespace.dependencies.push(coreNamespace);
 
-    const domainEntity1 = Object.assign(newDomainEntity(), {
+    const domainEntity1 = {
+      ...newDomainEntity(),
       metaEdName: domainEntity1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: domainEntity1ComplexTypeName }), NoComplexType],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntity1ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntity1LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntity1IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: domainEntity1ComplexTypeName }, NoComplexType],
+          xsdReferenceType: { ...newComplexType(), name: domainEntity1ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntity1LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntity1IdentityTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
 
-    const domainEntityExtension1 = Object.assign(newDomainEntityExtension(), {
+    const domainEntityExtension1 = {
+      ...newDomainEntityExtension(),
       metaEdName: domainEntityExtension1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [NoComplexType, Object.assign(newComplexType(), { name: domainEntityExtension1ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntityExtension1ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntityExtension1LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntityExtension1IdentityTypeName }),
+          xsdComplexTypes: [NoComplexType, { ...newComplexType(), name: domainEntityExtension1ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: domainEntityExtension1ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntityExtension1LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntityExtension1IdentityTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.domainEntityExtension.set(domainEntityExtension1.metaEdName, domainEntityExtension1);
 
-    const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
+    const domainEntitySubclass1 = {
+      ...newDomainEntitySubclass(),
       metaEdName: domainEntitySubclass1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass1ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntitySubclass1ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntitySubclass1LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntitySubclass1IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: domainEntitySubclass1ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: domainEntitySubclass1ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntitySubclass1LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntitySubclass1IdentityTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.domainEntitySubclass.set(domainEntitySubclass1.metaEdName, domainEntitySubclass1);
 
-    const descriptor1 = Object.assign(newDescriptor(), {
+    const descriptor1 = {
+      ...newDescriptor(),
       metaEdName: descriptor1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: descriptor1ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: descriptor1ReferenceTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: descriptor1ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: descriptor1ReferenceTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.descriptor.set(descriptor1.metaEdName, descriptor1);
 
-    const association1 = Object.assign(newAssociation(), {
+    const association1 = {
+      ...newAssociation(),
       metaEdName: association1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: association1ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: association1ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: association1LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: association1IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: association1ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: association1ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: association1LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: association1IdentityTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.association.set(association1.metaEdName, association1);
 
-    const associationSubclass1 = Object.assign(newAssociationSubclass(), {
+    const associationSubclass1 = {
+      ...newAssociationSubclass(),
       metaEdName: associationSubclass1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass1ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: associationSubclass1ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: associationSubclass1LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: associationSubclass1IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: associationSubclass1ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: associationSubclass1ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: associationSubclass1LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: associationSubclass1IdentityTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.associationSubclass.set(associationSubclass1.metaEdName, associationSubclass1);
 
-    const common1 = Object.assign(newCommon(), {
+    const common1 = {
+      ...newCommon(),
       metaEdName: common1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: common1ComplexTypeName })],
+          xsdComplexTypes: [{ ...newComplexType(), name: common1ComplexTypeName }],
         },
       },
-    });
+    };
     coreNamespace.entity.common.set(common1.metaEdName, common1);
 
-    const inlineCommon1 = Object.assign(newCommon(), {
+    const inlineCommon1 = {
+      ...newCommon(),
       metaEdName: inlineCommon1Name,
       namespace: coreNamespace,
       inlineInOds: true,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: inlineCommon1ComplexTypeName })],
+          xsdComplexTypes: [{ ...newComplexType(), name: inlineCommon1ComplexTypeName }],
         },
       },
-    });
+    };
     coreNamespace.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
 
-    const enumeration1 = Object.assign(newEnumeration(), {
+    const enumeration1 = {
+      ...newEnumeration(),
       metaEdName: enumeration1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: enumeration1SimpleTypeName }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: enumeration1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.enumeration.set(enumeration1.metaEdName, enumeration1);
 
-    const schoolYearEnumeration1 = Object.assign(newSchoolYearEnumeration(), {
+    const schoolYearEnumeration1 = {
+      ...newSchoolYearEnumeration(),
       metaEdName: schoolYearEnumeration1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
-            name: schoolYearEnumeration1SimpleTypeName,
-          }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: schoolYearEnumeration1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.schoolYearEnumeration.set(schoolYearEnumeration1.metaEdName, schoolYearEnumeration1);
 
-    const xsdMapTypeEnumeration1 = Object.assign(newMapTypeEnumeration(), {
+    const xsdMapTypeEnumeration1 = {
+      ...newMapTypeEnumeration(),
       metaEdName: xsdMapTypeEnumeration1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
-            name: xsdMapTypeEnumeration1SimpleTypeName,
-          }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: xsdMapTypeEnumeration1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration1.metaEdName, xsdMapTypeEnumeration1);
 
-    const stringType1 = Object.assign(newStringType(), {
+    const stringType1 = {
+      ...newStringType(),
       metaEdName: stringType1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newStringSimpleType(), { name: stringType1SimpleTypeName }),
+          xsdSimpleType: { ...newStringSimpleType(), name: stringType1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.stringType.set(stringType1.metaEdName, stringType1);
 
-    const integerType1 = Object.assign(newIntegerType(), {
+    const integerType1 = {
+      ...newIntegerType(),
       metaEdName: integerType1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newIntegerSimpleType(), { name: integerType1SimpleTypeName }),
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerType1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.integerType.set(integerType1.metaEdName, integerType1);
 
-    const decimalType1 = Object.assign(newDecimalType(), {
+    const decimalType1 = {
+      ...newDecimalType(),
       metaEdName: decimalType1Name,
       namespace: coreNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newDecimalSimpleType(), { name: decimalType1SimpleTypeName }),
+          xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType1SimpleTypeName },
         },
       },
-    });
+    };
     coreNamespace.entity.decimalType.set(decimalType1.metaEdName, decimalType1);
 
-    const domainEntity2 = Object.assign(newDomainEntity(), {
+    const domainEntity2 = {
+      ...newDomainEntity(),
       metaEdName: domainEntity2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: domainEntity2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntity2ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntity2LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntity2IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: domainEntity2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: domainEntity2ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntity2LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntity2IdentityTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
 
-    const domainEntityExtension2 = Object.assign(newDomainEntityExtension(), {
+    const domainEntityExtension2 = {
+      ...newDomainEntityExtension(),
       metaEdName: domainEntityExtension2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: domainEntityExtension2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntityExtension2ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntityExtension2LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntityExtension2IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: domainEntityExtension2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: domainEntityExtension2ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntityExtension2LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntityExtension2IdentityTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.domainEntityExtension.set(domainEntityExtension2.metaEdName, domainEntityExtension2);
 
-    const domainEntitySubclass2 = Object.assign(newDomainEntitySubclass(), {
+    const domainEntitySubclass2 = {
+      ...newDomainEntitySubclass(),
       metaEdName: domainEntitySubclass2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: domainEntitySubclass2ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: domainEntitySubclass2LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: domainEntitySubclass2IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: domainEntitySubclass2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: domainEntitySubclass2ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: domainEntitySubclass2LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: domainEntitySubclass2IdentityTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.domainEntitySubclass.set(domainEntitySubclass2.metaEdName, domainEntitySubclass2);
 
-    const descriptor2 = Object.assign(newDescriptor(), {
+    const descriptor2 = {
+      ...newDescriptor(),
       metaEdName: descriptor2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: descriptor2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: descriptor2ReferenceTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: descriptor2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: descriptor2ReferenceTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.descriptor.set(descriptor2.metaEdName, descriptor2);
 
-    const association2 = Object.assign(newAssociation(), {
+    const association2 = {
+      ...newAssociation(),
       metaEdName: association2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: association2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: association2ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: association2LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: association2IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: association2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: association2ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: association2LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: association2IdentityTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.association.set(association2.metaEdName, association2);
 
-    const associationSubclass2 = Object.assign(newAssociationSubclass(), {
+    const associationSubclass2 = {
+      ...newAssociationSubclass(),
       metaEdName: associationSubclass2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass2ComplexTypeName })],
-          xsdReferenceType: Object.assign(newComplexType(), { name: associationSubclass2ReferenceTypeName }),
-          xsdLookupType: Object.assign(newComplexType(), { name: associationSubclass2LookupTypeName }),
-          xsdIdentityType: Object.assign(newComplexType(), { name: associationSubclass2IdentityTypeName }),
+          xsdComplexTypes: [{ ...newComplexType(), name: associationSubclass2ComplexTypeName }],
+          xsdReferenceType: { ...newComplexType(), name: associationSubclass2ReferenceTypeName },
+          xsdLookupType: { ...newComplexType(), name: associationSubclass2LookupTypeName },
+          xsdIdentityType: { ...newComplexType(), name: associationSubclass2IdentityTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.associationSubclass.set(associationSubclass2.metaEdName, associationSubclass2);
 
-    const common2 = Object.assign(newCommon(), {
+    const common2 = {
+      ...newCommon(),
       metaEdName: common2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: common2ComplexTypeName })],
+          xsdComplexTypes: [{ ...newComplexType(), name: common2ComplexTypeName }],
         },
       },
-    });
+    };
     extensionNamespace.entity.common.set(common2.metaEdName, common2);
 
-    const commonExtension1 = Object.assign(newCommon(), {
+    const commonExtension1 = {
+      ...newCommon(),
       metaEdName: commonExtension1Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: commonExtension1ComplexTypeName })],
+          xsdComplexTypes: [{ ...newComplexType(), name: commonExtension1ComplexTypeName }],
         },
       },
-    });
+    };
     extensionNamespace.entity.common.set(commonExtension1.metaEdName, commonExtension1);
 
-    const inlineCommon2 = Object.assign(newCommon(), {
+    const inlineCommon2 = {
+      ...newCommon(),
       metaEdName: inlineCommon2Name,
       namespace: extensionNamespace,
       inlineInOds: true,
       data: {
         edfiXsd: {
-          xsdComplexTypes: [Object.assign(newComplexType(), { name: inlineCommon2ComplexTypeName })],
+          xsdComplexTypes: [{ ...newComplexType(), name: inlineCommon2ComplexTypeName }],
         },
       },
-    });
+    };
     extensionNamespace.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
 
-    const enumeration2 = Object.assign(newEnumeration(), {
+    const enumeration2 = {
+      ...newEnumeration(),
       metaEdName: enumeration2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: enumeration2SimpleTypeName }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: enumeration2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.enumeration.set(enumeration2.metaEdName, enumeration2);
 
-    const schoolYearEnumeration2 = Object.assign(newSchoolYearEnumeration(), {
+    const schoolYearEnumeration2 = {
+      ...newSchoolYearEnumeration(),
       metaEdName: schoolYearEnumeration2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
-            name: schoolYearEnumeration2SimpleTypeName,
-          }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: schoolYearEnumeration2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.schoolYearEnumeration.set(schoolYearEnumeration2.metaEdName, schoolYearEnumeration2);
 
-    const xsdMapTypeEnumeration2 = Object.assign(newMapTypeEnumeration(), {
+    const xsdMapTypeEnumeration2 = {
+      ...newMapTypeEnumeration(),
       metaEdName: xsdMapTypeEnumeration2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdEnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
-            name: xsdMapTypeEnumeration2SimpleTypeName,
-          }),
+          xsdEnumerationSimpleType: { ...newEnumerationSimpleType(), name: xsdMapTypeEnumeration2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration2.metaEdName, xsdMapTypeEnumeration2);
 
-    const stringType2 = Object.assign(newStringType(), {
+    const stringType2 = {
+      ...newStringType(),
       metaEdName: stringType2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newStringSimpleType(), { name: stringType2SimpleTypeName }),
+          xsdSimpleType: { ...newStringSimpleType(), name: stringType2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.stringType.set(stringType2.metaEdName, stringType2);
 
-    const integerType2 = Object.assign(newIntegerType(), {
+    const integerType2 = {
+      ...newIntegerType(),
       metaEdName: integerType2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newIntegerSimpleType(), { name: integerType2SimpleTypeName }),
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerType2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.integerType.set(integerType2.metaEdName, integerType2);
 
-    const decimalType2 = Object.assign(newDecimalType(), {
+    const decimalType2 = {
+      ...newDecimalType(),
       metaEdName: decimalType2Name,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newDecimalSimpleType(), { name: decimalType2SimpleTypeName }),
+          xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType2SimpleTypeName },
         },
       },
-    });
+    };
     extensionNamespace.entity.decimalType.set(decimalType2.metaEdName, decimalType2);
 
-    const domainEntityWithNoComplexTypes = Object.assign(newDomainEntity(), {
+    const domainEntityWithNoComplexTypes = {
+      ...newDomainEntity(),
       metaEdName: 'DomainEntityWithNoComplexTypes',
       namespace: extensionNamespace,
       data: {
@@ -637,10 +652,11 @@ describe('when enhancing namespace info for core with children', (): void => {
           xsdIdentityType: NoComplexType,
         },
       },
-    });
+    };
     extensionNamespace.entity.domainEntity.set(domainEntityWithNoComplexTypes.metaEdName, domainEntityWithNoComplexTypes);
 
-    const enumerationWithNoEnumerationSimpleType = Object.assign(newEnumeration(), {
+    const enumerationWithNoEnumerationSimpleType = {
+      ...newEnumeration(),
       metaEdName: 'EnumerationWithNoEnumerationSimpleType',
       namespace: extensionNamespace,
       data: {
@@ -648,13 +664,14 @@ describe('when enhancing namespace info for core with children', (): void => {
           xsdEnumerationSimpleType: NoEnumerationSimpleType,
         },
       },
-    });
+    };
     extensionNamespace.entity.enumeration.set(
       enumerationWithNoEnumerationSimpleType.metaEdName,
       enumerationWithNoEnumerationSimpleType,
     );
 
-    const stringTypeWithNoSimpleType = Object.assign(newStringType(), {
+    const stringTypeWithNoSimpleType = {
+      ...newStringType(),
       metaEdName: 'StringTypeWithNoSimpleType',
       namespace: extensionNamespace,
       data: {
@@ -662,7 +679,7 @@ describe('when enhancing namespace info for core with children', (): void => {
           xsdSimpleType: NoSimpleType,
         },
       },
-    });
+    };
     extensionNamespace.entity.stringType.set(stringTypeWithNoSimpleType.metaEdName, stringTypeWithNoSimpleType);
 
     enhance(metaEd);

@@ -15,16 +15,14 @@ function createSchemaSimpleType(stringType: StringType): SimpleType {
     return NoSimpleType;
   }
 
-  return Object.assign(newStringSimpleType(), {
+  return {
+    ...newStringSimpleType(),
     name: (stringType.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
-    annotation: Object.assign(newAnnotation(), {
-      documentation: stringType.documentation,
-      typeGroup: typeGroupSimple,
-    }),
+    annotation: { ...newAnnotation(), documentation: stringType.documentation, typeGroup: typeGroupSimple },
     baseType: 'xs:string',
     minLength: stringType.minLength,
     maxLength: stringType.maxLength,
-  });
+  } as SimpleType;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

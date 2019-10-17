@@ -19,14 +19,15 @@ describe('when enhancing common', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newCommon(), {
+    enhancedItem = {
+      ...newCommon(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.common.set(enhancedItem.metaEdName, enhancedItem);
 

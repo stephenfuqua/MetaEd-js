@@ -6,32 +6,28 @@ import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
 import { createSchemaComplexTypeItems } from './XsdElementFromPropertyCreator';
 import { typeGroupDescriptor, baseTypeDescriptor } from './AddComplexTypesBaseEnhancer';
+import { ComplexTypeItem } from '../../model/schema/ComplexTypeItem';
 
 const enhancerName = 'AddDescriptorComplexTypesEnhancer';
 const targetVersions: SemVer = V3OrGreater;
 
 function createComplexType(descriptor: Descriptor): ComplexType[] {
-  const complexType = Object.assign(newComplexType(), {
-    annotation: Object.assign(newAnnotation(), {
-      documentation: descriptor.documentation,
-      typeGroup: typeGroupDescriptor,
-    }),
+  const complexType = {
+    ...newComplexType(),
+    annotation: { ...newAnnotation(), documentation: descriptor.documentation, typeGroup: typeGroupDescriptor },
     baseType: baseTypeDescriptor,
     name: descriptor.data.edfiXsd.xsdDescriptorNameWithExtension,
-  });
+  };
 
   complexType.items.push(...createSchemaComplexTypeItems(descriptor.data.edfiXsd.xsdProperties()));
   if (descriptor.mapTypeEnumeration !== NoMapTypeEnumeration) {
-    complexType.items.push(
-      Object.assign(newElement(), {
-        name: descriptor.mapTypeEnumeration.metaEdName,
-        type: descriptor.mapTypeEnumeration.data.edfiXsd.xsdEnumerationNameWithExtension,
-        annotation: Object.assign(newAnnotation(), {
-          documentation: `The mapping to a known ${descriptor.metaEdName} enumeration type.`,
-        }),
-        minOccurs: descriptor.isMapTypeOptional ? '0' : '',
-      }),
-    );
+    complexType.items.push({
+      ...newElement(),
+      name: descriptor.mapTypeEnumeration.metaEdName,
+      type: descriptor.mapTypeEnumeration.data.edfiXsd.xsdEnumerationNameWithExtension,
+      annotation: { ...newAnnotation(), documentation: `The mapping to a known ${descriptor.metaEdName} enumeration type.` },
+      minOccurs: descriptor.isMapTypeOptional ? '0' : '',
+    } as ComplexTypeItem);
   }
   return [complexType];
 }

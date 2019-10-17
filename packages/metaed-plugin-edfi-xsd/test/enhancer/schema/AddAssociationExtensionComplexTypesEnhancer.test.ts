@@ -31,18 +31,20 @@ describe('when enhancing association extension', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const baseEntity = Object.assign(newAssociation(), {
+    const baseEntity = {
+      ...newAssociation(),
       namespace,
       metaEdName: baseTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseEntity);
     namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
-    enhancedItem = Object.assign(newAssociationExtension(), {
+    enhancedItem = {
+      ...newAssociationExtension(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
@@ -50,7 +52,7 @@ describe('when enhancing association extension', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.associationExtension.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -121,17 +123,19 @@ describe('when enhancing association extension with common type override', (): v
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const baseCommon = Object.assign(newCommon(), {
+    const baseCommon = {
+      ...newCommon(),
       namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseCommon);
     extensionNamespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
-    const commonExtension = Object.assign(newCommonExtension(), {
+    const commonExtension = {
+      ...newCommonExtension(),
       metaEdName: commonTypeExtensionName,
       baseEntityName: baseCommonTypeName,
       baseEntity: baseCommon,
@@ -139,15 +143,17 @@ describe('when enhancing association extension with common type override', (): v
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(commonExtension);
     extensionNamespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
-    const baseAssociation = Object.assign(newAssociation(), {
+    const baseAssociation = {
+      ...newAssociation(),
       namespace,
       metaEdName: baseAssociationName,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: false,
           data: {
@@ -155,30 +161,33 @@ describe('when enhancing association extension with common type override', (): v
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnAssociationName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnAssociationName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseAssociation);
     extensionNamespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
 
-    const associationExtension = Object.assign(newAssociationExtension(), {
+    const associationExtension = {
+      ...newAssociationExtension(),
       metaEdName: associationExtensionName,
       documentation,
       baseEntity: baseAssociation,
       namespace: extensionNamespace,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: true,
           data: {
@@ -186,20 +195,21 @@ describe('when enhancing association extension with common type override', (): v
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnExtensionName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnExtensionName,
             },
           },
-        }),
+        },
       ],
       data: {
-        edfiXsd: {},
+        edfiXsd: {} as any,
       },
-    });
+    };
     addModelBaseEdfiXsdTo(associationExtension);
     extensionNamespace.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
 
@@ -275,24 +285,22 @@ describe('when enhancing association extension of a association subclass with co
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'Extension',
-      projectExtension,
-      isExtension: true,
-    });
+    const extensionNamespace = { ...newNamespace(), namespaceName: 'Extension', projectExtension, isExtension: true };
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
-    const baseCommon = Object.assign(newCommon(), {
+    const baseCommon = {
+      ...newCommon(),
       namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseCommon);
     namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
-    const commonExtension = Object.assign(newCommonExtension(), {
+    const commonExtension = {
+      ...newCommonExtension(),
       metaEdName: commonTypeExtensionName,
       baseEntityName: baseCommonTypeName,
       baseEntity: baseCommon,
@@ -300,36 +308,40 @@ describe('when enhancing association extension of a association subclass with co
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(commonExtension);
     namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
-    const baseAssociation = Object.assign(newAssociation(), {
+    const baseAssociation = {
+      ...newAssociation(),
       namespace,
       metaEdName: baseAssociationName,
       properties: [
-        Object.assign(newStringProperty(), {
+        {
+          ...newStringProperty(),
           metaEdName: basePropertyOnAssociationName,
           data: {
             edfiXsd: {
               xsdName: basePropertyOnAssociationName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseAssociation);
     namespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
 
-    const associationSubclass = Object.assign(newAssociationSubclass(), {
+    const associationSubclass = {
+      ...newAssociationSubclass(),
       namespace,
       metaEdName: associationSubclassName,
       baseEntity: baseAssociation,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: false,
           data: {
@@ -337,30 +349,33 @@ describe('when enhancing association extension of a association subclass with co
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnAssociationName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnAssociationName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(associationSubclass);
     namespace.entity.associationSubclass.set(associationSubclass.metaEdName, associationSubclass);
 
-    const associationExtension = Object.assign(newAssociationExtension(), {
+    const associationExtension = {
+      ...newAssociationExtension(),
       metaEdName: associationExtensionName,
       documentation,
       baseEntity: associationSubclass,
       namespace: extensionNamespace,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: true,
           data: {
@@ -368,20 +383,21 @@ describe('when enhancing association extension of a association subclass with co
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnExtensionName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnExtensionName,
             },
           },
-        }),
+        },
       ],
       data: {
-        edfiXsd: {},
+        edfiXsd: {} as any,
       },
-    });
+    };
     addModelBaseEdfiXsdTo(associationExtension);
     namespace.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
 

@@ -32,13 +32,14 @@ import { generate } from '../../src/generator/InterchangeGenerator';
 
 describe('when generating single interchange', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
@@ -53,7 +54,8 @@ describe('when generating single interchange', (): void => {
   let result;
 
   beforeAll(async () => {
-    const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const element: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: elementBaseName,
       data: {
         edfiXsd: {
@@ -61,9 +63,10 @@ describe('when generating single interchange', (): void => {
           xsdType: elementTypeName,
         },
       },
-    });
+    };
 
-    const identityTemplate: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const identityTemplate: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: identityTemplateBaseName,
       data: {
         edfiXsd: {
@@ -71,18 +74,20 @@ describe('when generating single interchange', (): void => {
           xsdType: identityTemplateTypeName,
         },
       },
-    });
+    };
 
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       documentation: interchangeDocumentation,
       elements: [element],
       identityTemplates: [identityTemplate],
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange: MergedInterchange = {
+      ...newMergedInterchange(),
       metaEdName: interchangeName,
       namespace,
       interchangeName,
@@ -91,7 +96,7 @@ describe('when generating single interchange', (): void => {
       elements: [element],
       identityTemplates: [identityTemplate],
       orderedElements: [identityTemplate, element],
-    });
+    };
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
@@ -208,13 +213,14 @@ describe('when generating single interchange', (): void => {
 
 describe('when generating single interchange with extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
@@ -231,7 +237,8 @@ describe('when generating single interchange with extension', (): void => {
   let result: GeneratedOutput[];
 
   beforeAll(() => {
-    const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const element: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: elementBaseName,
       data: {
         edfiXsd: {
@@ -239,9 +246,10 @@ describe('when generating single interchange with extension', (): void => {
           xsdType: elementTypeName,
         },
       },
-    });
+    };
 
-    const identityTemplate: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const identityTemplate: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: identityTemplateBaseName,
       data: {
         edfiXsd: {
@@ -249,9 +257,10 @@ describe('when generating single interchange with extension', (): void => {
           xsdType: identityTemplateTypeName,
         },
       },
-    });
+    };
 
-    const extensionElement: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const extensionElement: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: elementBaseName,
       data: {
         edfiXsd: {
@@ -259,27 +268,30 @@ describe('when generating single interchange with extension', (): void => {
           xsdType: extensionElementTypeName,
         },
       },
-    });
+    };
 
-    const interchange: Interchange = Object.assign(newInterchange(), {
+    const interchange: Interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       documentation: interchangeDocumentation,
       elements: [element],
       identityTemplates: [identityTemplate],
-    });
+    };
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
-    const interchangeExtension: InterchangeExtension = Object.assign(newInterchangeExtension(), {
+    const interchangeExtension: InterchangeExtension = {
+      ...newInterchangeExtension(),
       metaEdName: interchangeName,
       namespace: extensionNamespace,
       documentation: interchangeExtensionDocumentation,
       elements: [extensionElement],
       identityTemplates: [],
-    });
+    };
     extensionNamespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
-    const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+    const mergedInterchange: MergedInterchange = {
+      ...newMergedInterchange(),
       namespace,
       interchangeName,
       documentation: interchangeDocumentation,
@@ -287,7 +299,7 @@ describe('when generating single interchange with extension', (): void => {
       elements: [element, extensionElement],
       identityTemplates: [identityTemplate],
       orderedElements: [identityTemplate, element],
-    });
+    };
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
   });
 

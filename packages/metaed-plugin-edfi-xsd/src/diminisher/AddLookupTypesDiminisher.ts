@@ -33,25 +33,24 @@ const lookupTypeNames: string[] = [
   'Student',
 ];
 
-const createLookupType = (entity: TopLevelEntity): ComplexType =>
-  Object.assign(newComplexType(), {
-    name: `${entity.data.edfiXsd.xsdMetaEdNameWithExtension()}${typeGroup}Type`,
-    items: createSchemaComplexTypeItems(entity.queryableFields, '0', false),
-    annotation: Object.assign(newAnnotation(), {
-      documentation: documentation.replace('{entity.metaEdName}', prependIndefiniteArticle(entity.metaEdName)),
-      typeGroup,
-    }),
-  });
+const createLookupType = (entity: TopLevelEntity): ComplexType => ({
+  ...newComplexType(),
+  name: `${entity.data.edfiXsd.xsdMetaEdNameWithExtension()}${typeGroup}Type`,
+  items: createSchemaComplexTypeItems(entity.queryableFields, '0', false),
+  annotation: {
+    ...newAnnotation(),
+    documentation: documentation.replace('{entity.metaEdName}', prependIndefiniteArticle(entity.metaEdName)),
+    typeGroup,
+  },
+});
 
-const createReferenceTypeItem = (entity: TopLevelEntity, lookupType: ComplexType): Element =>
-  Object.assign(newElement(), {
-    name: `${entity.metaEdName}${typeGroup}`,
-    type: lookupType.name,
-    minOccurs: '0',
-    annotation: Object.assign(newAnnotation(), {
-      documentation: lookupType.annotation.documentation,
-    }),
-  });
+const createReferenceTypeItem = (entity: TopLevelEntity, lookupType: ComplexType): Element => ({
+  ...newElement(),
+  name: `${entity.metaEdName}${typeGroup}`,
+  type: lookupType.name,
+  minOccurs: '0',
+  annotation: { ...newAnnotation(), documentation: lookupType.annotation.documentation },
+});
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
@@ -66,7 +65,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       const referenceType: Element = createReferenceTypeItem(entity, lookupType);
       if (entity.data.edfiXsd.xsdReferenceType === NoComplexType) {
-        entity.data.edfiXsd.xsdReferenceType = Object.assign(newComplexType(), { items: [referenceType] });
+        entity.data.edfiXsd.xsdReferenceType = { ...newComplexType(), items: [referenceType] };
       } else {
         entity.data.edfiXsd.xsdReferenceType.items.push(referenceType);
       }

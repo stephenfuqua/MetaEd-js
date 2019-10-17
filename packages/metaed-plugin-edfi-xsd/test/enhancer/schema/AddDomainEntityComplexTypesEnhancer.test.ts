@@ -19,14 +19,15 @@ describe('when enhancing domainEntity', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDomainEntity(), {
+    enhancedItem = {
+      ...newDomainEntity(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.domainEntity.set(enhancedItem.metaEdName, enhancedItem);
 

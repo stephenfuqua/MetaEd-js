@@ -11,32 +11,29 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
   const positiveIntegerType = 'xs:positiveInteger';
   let commonEntity: Common;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
     const commonEntityName = 'Telephone';
     const elementNameType = 'OrderOfPriority';
 
-    commonEntity = Object.assign(newCommon(), {
+    commonEntity = {
+      ...newCommon(),
       metaEdName: commonEntityName,
       namespace,
       data: {
         edfiXsd: {
           xsdComplexTypes: [
-            Object.assign(newComplexType(), {
+            {
+              ...newComplexType(),
               name: commonEntityName,
-              items: [
-                Object.assign(newElement(), {
-                  name: elementNameType,
-                  type: elementNameType,
-                }),
-              ],
-            }),
+              items: [{ ...newElement(), name: elementNameType, type: elementNameType }],
+            },
           ],
         },
       },
-    });
+    };
     addEntityForNamespace(commonEntity);
 
     metaEd.dataStandardVersion = '2.0.0';
@@ -51,21 +48,22 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes order of priority simple type', (): void => {
   let integerType: IntegerType;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
     const integerTypeName = 'OrderOfPriority';
 
-    integerType = Object.assign(newIntegerType(), {
+    integerType = {
+      ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
         },
       },
-    });
+    };
     addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
@@ -79,43 +77,41 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
 
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes with no order of priority', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
     const commonEntityName = 'CommonEntityName';
     const integerTypeName = 'IntegerTypeName';
 
-    const commonEntity: Common = Object.assign(newCommon(), {
+    const commonEntity: Common = {
+      ...newCommon(),
       metaEdName: 'commonEntityName',
       namespace,
       data: {
         edfiXsd: {
           xsdComplexTypes: [
-            Object.assign(newComplexType(), {
+            {
+              ...newComplexType(),
               name: commonEntityName,
-              items: [
-                Object.assign(newElement(), {
-                  name: 'ElementName',
-                  type: 'ElementType',
-                }),
-              ],
-            }),
+              items: [{ ...newElement(), name: 'ElementName', type: 'ElementType' }],
+            },
           ],
         },
       },
-    });
+    };
     addEntityForNamespace(commonEntity);
 
-    const integerType: IntegerType = Object.assign(newIntegerType(), {
+    const integerType: IntegerType = {
+      ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
         },
       },
-    });
+    };
     addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';

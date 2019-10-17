@@ -40,13 +40,11 @@ describe('when building a simple core and two simple extension projects', (): vo
 
   beforeAll(
     async (): Promise<void> => {
-      state = Object.assign(newState(), {
+      state = {
+        ...newState(),
         metaEdConfiguration,
-        pipelineOptions: Object.assign(newPipelineOptions(), {
-          runValidators: true,
-          runEnhancers: true,
-        }),
-      });
+        pipelineOptions: { ...newPipelineOptions(), runValidators: true, runEnhancers: true },
+      };
 
       state.metaEd.dataStandardVersion = '3.0.0';
       state.pluginScanDirectory = path.resolve(__dirname, '../../..');

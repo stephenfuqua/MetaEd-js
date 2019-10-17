@@ -6,11 +6,10 @@ import { createSchema } from './GeneratorTestBase';
 import { generate } from '../../src/generator/SchemaAnnotationGenerator';
 
 describe('when generating schema annotation for a single descriptor', (): void => {
-  const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
-    dataStandardVersion: '2.1.0',
-  });
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '2.1.0' };
   const schema = createSchema('200', 'Schema Documentation');
-  const namespace = Object.assign(newNamespace(), {
+  const namespace = {
+    ...newNamespace(),
     namespaceName: 'EdFi',
     projectExtension: 'EXTENSION',
     data: {
@@ -18,7 +17,7 @@ describe('when generating schema annotation for a single descriptor', (): void =
         xsdSchema: schema,
       },
     },
-  });
+  };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -26,7 +25,8 @@ describe('when generating schema annotation for a single descriptor', (): void =
   let descriptorElement;
 
   beforeAll(async () => {
-    const descriptor: Descriptor = Object.assign(newDescriptor(), {
+    const descriptor: Descriptor = {
+      ...newDescriptor(),
       metaEdName: 'DescriptorName',
       namespace,
       documentation: 'DescriptorDocumentation',
@@ -39,14 +39,15 @@ describe('when generating schema annotation for a single descriptor', (): void =
         },
       },
       properties: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           namespace,
           metaEdName: 'BooleanPropertyName',
           documentation: 'PropertyDocumentation',
           isRequired: false,
-        }),
+        },
       ],
-    });
+    };
     addEntityForNamespace(descriptor);
 
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;

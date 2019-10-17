@@ -6,6 +6,7 @@ import {
   newInlineCommonProperty,
   newStringProperty,
   newNamespace,
+  EntityProperty,
 } from 'metaed-core';
 import { MetaEdEnvironment, Common, Association, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
@@ -20,23 +21,16 @@ describe('when enhancing association with inline string property', (): void => {
   let association: Association;
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'EdFi',
-    });
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     const properties = [
-      Object.assign(newStringProperty(), {
-        metaEdName: propertyName1,
-        isPartOfIdentity: false,
-      }),
-      Object.assign(newStringProperty(), {
-        metaEdName: propertyName2,
-        isPartOfIdentity: true,
-      }),
+      { ...newStringProperty(), metaEdName: propertyName1, isPartOfIdentity: false },
+      { ...newStringProperty(), metaEdName: propertyName2, isPartOfIdentity: true },
     ];
 
-    const inlineCommon: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon: Common = {
+      ...newInlineCommon(),
       namespace,
       metaEdName: inlineName,
       inlineInOds: true,
@@ -44,23 +38,25 @@ describe('when enhancing association with inline string property', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addEntityForNamespace(inlineCommon);
 
-    association = Object.assign(newAssociation(), {
+    association = {
+      ...newAssociation(),
       namespace,
       metaEdName: entityName,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inlineName,
           referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon,
-        }),
+        } as EntityProperty,
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addEntityForNamespace(association);
 
     initializeTopLevelEntities(metaEd);
@@ -83,58 +79,56 @@ describe('when enhancing association with inline nested string property', (): vo
   let association: Association;
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'EdFi',
-    });
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    const inlineCommon2: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon2: Common = {
+      ...newInlineCommon(),
       namespace,
       metaEdName: inline2Name,
       inlineInOds: true,
-      properties: [
-        Object.assign(newStringProperty(), {
-          metaEdName: propertyName,
-          isPartOfIdentity: true,
-        }),
-      ],
+      properties: [{ ...newStringProperty(), metaEdName: propertyName, isPartOfIdentity: true }],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addEntityForNamespace(inlineCommon2);
 
-    const inlineCommon1: Common = Object.assign(newInlineCommon(), {
+    const inlineCommon1: Common = {
+      ...newInlineCommon(),
       namespace,
       metaEdName: inline1Name,
       inlineInOds: true,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inline2Name,
           referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon2,
-        }),
+        } as EntityProperty,
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addEntityForNamespace(inlineCommon1);
 
-    association = Object.assign(newAssociation(), {
+    association = {
+      ...newAssociation(),
       namespace,
       metaEdName: entityName,
       properties: [
-        Object.assign(newInlineCommonProperty(), {
+        {
+          ...newInlineCommonProperty(),
           metaEdName: inline1Name,
           referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon1,
-        }),
+        } as EntityProperty,
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addEntityForNamespace(association);
 
     initializeTopLevelEntities(metaEd);

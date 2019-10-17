@@ -32,18 +32,20 @@ describe('when enhancing domainEntity extension', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const baseEntity = Object.assign(newDomainEntity(), {
+    const baseEntity = {
+      ...newDomainEntity(),
       namespace,
       metaEdName: baseTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseEntity);
     namespace.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
 
-    enhancedItem = Object.assign(newDomainEntityExtension(), {
+    enhancedItem = {
+      ...newDomainEntityExtension(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
@@ -51,7 +53,7 @@ describe('when enhancing domainEntity extension', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.domainEntityExtension.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -115,24 +117,22 @@ describe('when enhancing domainEntity extension with common type override', (): 
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'Extension',
-      projectExtension,
-      isExtension: true,
-    });
+    const extensionNamespace = { ...newNamespace(), namespaceName: 'Extension', projectExtension, isExtension: true };
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
-    const baseCommon = Object.assign(newCommon(), {
+    const baseCommon = {
+      ...newCommon(),
       namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseCommon);
     namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
-    const commonExtension = Object.assign(newCommonExtension(), {
+    const commonExtension = {
+      ...newCommonExtension(),
       metaEdName: commonTypeExtensionName,
       baseEntityName: baseCommonTypeName,
       baseEntity: baseCommon,
@@ -140,15 +140,17 @@ describe('when enhancing domainEntity extension with common type override', (): 
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(commonExtension);
     namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
-    const baseDomainEntity = Object.assign(newDomainEntity(), {
+    const baseDomainEntity = {
+      ...newDomainEntity(),
       namespace,
       metaEdName: baseDomainEntityName,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: false,
           data: {
@@ -156,30 +158,33 @@ describe('when enhancing domainEntity extension with common type override', (): 
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnDomainEntityName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnDomainEntityName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseDomainEntity);
     namespace.entity.domainEntity.set(baseDomainEntity.metaEdName, baseDomainEntity);
 
-    const domainEntityExtension = Object.assign(newDomainEntityExtension(), {
+    const domainEntityExtension = {
+      ...newDomainEntityExtension(),
       metaEdName: domainEntityExtensionName,
       documentation,
       baseEntity: baseDomainEntity,
       namespace: extensionNamespace,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: true,
           data: {
@@ -187,20 +192,21 @@ describe('when enhancing domainEntity extension with common type override', (): 
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnExtensionName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnExtensionName,
             },
           },
-        }),
+        },
       ],
       data: {
-        edfiXsd: {},
+        edfiXsd: {} as any,
       },
-    });
+    };
     addModelBaseEdfiXsdTo(domainEntityExtension);
     namespace.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
 
@@ -276,24 +282,22 @@ describe('when enhancing domainEntity extension of a domain entity subclass with
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'Extension',
-      projectExtension,
-      isExtension: true,
-    });
+    const extensionNamespace = { ...newNamespace(), namespaceName: 'Extension', projectExtension, isExtension: true };
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
-    const baseCommon = Object.assign(newCommon(), {
+    const baseCommon = {
+      ...newCommon(),
       namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseCommon);
     namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
-    const commonExtension = Object.assign(newCommonExtension(), {
+    const commonExtension = {
+      ...newCommonExtension(),
       metaEdName: commonTypeExtensionName,
       baseEntityName: baseCommonTypeName,
       baseEntity: baseCommon,
@@ -301,36 +305,40 @@ describe('when enhancing domainEntity extension of a domain entity subclass with
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(commonExtension);
     namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
-    const baseDomainEntity = Object.assign(newDomainEntity(), {
+    const baseDomainEntity = {
+      ...newDomainEntity(),
       namespace,
       metaEdName: baseDomainEntityName,
       properties: [
-        Object.assign(newStringProperty(), {
+        {
+          ...newStringProperty(),
           metaEdName: basePropertyOnDomainEntityName,
           data: {
             edfiXsd: {
               xsdName: basePropertyOnDomainEntityName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseDomainEntity);
     namespace.entity.domainEntity.set(baseDomainEntity.metaEdName, baseDomainEntity);
 
-    const domainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    const domainEntitySubclass = {
+      ...newDomainEntitySubclass(),
       namespace,
       metaEdName: domainEntitySubclassName,
       baseEntity: baseDomainEntity,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: false,
           data: {
@@ -338,30 +346,33 @@ describe('when enhancing domainEntity extension of a domain entity subclass with
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnDomainEntityName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnDomainEntityName,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(domainEntitySubclass);
     namespace.entity.domainEntitySubclass.set(domainEntitySubclass.metaEdName, domainEntitySubclass);
 
-    const domainEntityExtension = Object.assign(newDomainEntityExtension(), {
+    const domainEntityExtension = {
+      ...newDomainEntityExtension(),
       metaEdName: domainEntityExtensionName,
       documentation,
       baseEntity: domainEntitySubclass,
       namespace: extensionNamespace,
       properties: [
-        Object.assign(newCommonProperty(), {
+        {
+          ...newCommonProperty(),
           metaEdName: baseCommonTypeName,
           isExtensionOverride: true,
           data: {
@@ -369,20 +380,21 @@ describe('when enhancing domainEntity extension of a domain entity subclass with
               xsdName: baseCommonTypeName,
             },
           },
-        }),
-        Object.assign(newStringProperty(), {
+        },
+        {
+          ...newStringProperty(),
           metaEdName: otherPropertyOnExtensionName,
           data: {
             edfiXsd: {
               xsdName: otherPropertyOnExtensionName,
             },
           },
-        }),
+        },
       ],
       data: {
-        edfiXsd: {},
+        edfiXsd: {} as any,
       },
-    });
+    };
     addModelBaseEdfiXsdTo(domainEntityExtension);
     namespace.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
 

@@ -18,8 +18,4 @@ export function newStringSimpleType(): StringSimpleType {
   };
 }
 
-export const NoStringSimpleType: StringSimpleType = deepFreeze(
-  Object.assign(newStringSimpleType(), {
-    name: 'NoStringSimpleType',
-  }),
-);
+export const NoStringSimpleType: StringSimpleType = deepFreeze({ ...newStringSimpleType(), name: 'NoStringSimpleType' });

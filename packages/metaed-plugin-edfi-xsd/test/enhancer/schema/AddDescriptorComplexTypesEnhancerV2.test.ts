@@ -33,7 +33,8 @@ describe('when enhancing descriptor', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       data: {
@@ -42,7 +43,7 @@ describe('when enhancing descriptor', (): void => {
           xsdDescriptorNameWithExtension: complexTypeDescriptorNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -136,7 +137,8 @@ describe('when enhancing descriptor with required map type', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const mapTypeEnumeration: MapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
+    const mapTypeEnumeration: MapTypeEnumeration = {
+      ...newMapTypeEnumeration(),
       metaEdName: mapTypeName,
       documentation,
       data: {
@@ -145,11 +147,12 @@ describe('when enhancing descriptor with required map type', (): void => {
           xsdEnumerationNameWithExtension: enumerationNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
     namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       isMapTypeRequired: true,
@@ -161,7 +164,7 @@ describe('when enhancing descriptor with required map type', (): void => {
           xsdDescriptorNameWithExtension: complexTypeDescriptorNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -242,7 +245,8 @@ describe('when enhancing descriptor with optional map type', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const mapTypeEnumeration: MapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
+    const mapTypeEnumeration: MapTypeEnumeration = {
+      ...newMapTypeEnumeration(),
       metaEdName: mapTypeName,
       documentation,
       data: {
@@ -251,11 +255,12 @@ describe('when enhancing descriptor with optional map type', (): void => {
           xsdEnumerationNameWithExtension: enumerationNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
     namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       isMapTypeRequired: false,
@@ -267,7 +272,7 @@ describe('when enhancing descriptor with optional map type', (): void => {
           xsdDescriptorNameWithExtension: complexTypeDescriptorNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -344,11 +349,13 @@ describe('when enhancing descriptor with property', (): void => {
   let createdComplexType: ComplexType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       properties: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           metaEdName: propertyName,
           documentation: propertyDocumentation,
           data: {
@@ -357,7 +364,7 @@ describe('when enhancing descriptor with property', (): void => {
               xsdType: propertyType,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {
@@ -365,7 +372,7 @@ describe('when enhancing descriptor with property', (): void => {
           xsdDescriptorNameWithExtension: complexTypeNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -411,7 +418,8 @@ describe('when enhancing descriptor with property and map type', (): void => {
   let createdComplexType: ComplexType;
 
   beforeAll(() => {
-    const mapTypeEnumeration: MapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
+    const mapTypeEnumeration: MapTypeEnumeration = {
+      ...newMapTypeEnumeration(),
       metaEdName: mapTypeName,
       documentation,
       data: {
@@ -420,16 +428,18 @@ describe('when enhancing descriptor with property and map type', (): void => {
           xsdEnumerationNameWithExtension: enumerationNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
     namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       mapTypeEnumeration,
       properties: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           metaEdName: propertyName,
           documentation: propertyDocumentation,
           data: {
@@ -438,7 +448,7 @@ describe('when enhancing descriptor with property and map type', (): void => {
               xsdType: propertyType,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {
@@ -446,7 +456,7 @@ describe('when enhancing descriptor with property and map type', (): void => {
           xsdDescriptorNameWithExtension: complexTypeNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -500,7 +510,8 @@ describe('when enhancing descriptor with descriptor property', (): void => {
   let createdComplexType: ComplexType;
 
   beforeAll(() => {
-    const referencedDescriptor = Object.assign(newDescriptor(), {
+    const referencedDescriptor = {
+      ...newDescriptor(),
       metaEdName: descriptorName,
       data: {
         edfiXsd: {
@@ -508,11 +519,12 @@ describe('when enhancing descriptor with descriptor property', (): void => {
           xsdDescriptorNameWithExtension: descriptorNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(referencedDescriptor);
     namespace.entity.descriptor.set(referencedDescriptor.metaEdName, referencedDescriptor);
 
-    const descriptorProperty = Object.assign(newDescriptorProperty(), {
+    const descriptorProperty = {
+      ...newDescriptorProperty(),
       metaEdName: descriptorName,
       documentation: propertyDocumentation,
       referencedEntity: referencedDescriptor,
@@ -522,10 +534,11 @@ describe('when enhancing descriptor with descriptor property', (): void => {
           xsdType: propertyType,
         },
       },
-    });
+    };
     addDescriptorPropertyEdfiXsdTo(descriptorProperty);
 
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       properties: [descriptorProperty],
@@ -535,7 +548,7 @@ describe('when enhancing descriptor with descriptor property', (): void => {
           xsdDescriptorNameWithExtension: complexTypeNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -582,7 +595,8 @@ describe('when enhancing descriptor with both queryable and identity property', 
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const identityProperty = Object.assign(newBooleanProperty(), {
+    const identityProperty = {
+      ...newBooleanProperty(),
       metaEdName: property1Name,
       documentation: property1Documentation,
       isRequiredCollection: true,
@@ -592,15 +606,17 @@ describe('when enhancing descriptor with both queryable and identity property', 
           xsdType: property1Type,
         },
       },
-    });
+    };
 
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       properties: [identityProperty],
       identityProperties: [identityProperty],
       queryableFields: [
-        Object.assign(newBooleanProperty(), {
+        {
+          ...newBooleanProperty(),
           metaEdName: property2Name,
           documentation: property2Documentation,
           isRequiredCollection: true,
@@ -610,7 +626,7 @@ describe('when enhancing descriptor with both queryable and identity property', 
               xsdType: property2Type,
             },
           },
-        }),
+        },
       ],
       data: {
         edfiXsd: {
@@ -619,7 +635,7 @@ describe('when enhancing descriptor with both queryable and identity property', 
           xsdIdentityProperties: [identityProperty],
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 

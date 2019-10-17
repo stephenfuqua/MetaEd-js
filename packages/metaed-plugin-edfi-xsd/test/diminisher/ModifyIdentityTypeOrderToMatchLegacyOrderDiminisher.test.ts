@@ -16,16 +16,17 @@ const testBase = (
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    complexType = Object.assign(newComplexType(), {
+    complexType = {
+      ...newComplexType(),
       name: `${testEntityName}IdentityType`,
       items: originalElementOrder.reduce(
-        (arr: ComplexTypeItem[], x: string) => arr.concat([Object.assign(newElement(), { name: x })]),
+        (arr: ComplexTypeItem[], x: string) => arr.concat([{ ...newElement(), name: x } as ComplexTypeItem]),
         [],
       ),
-    });
+    };
 
     const topLevelEntity1: TopLevelEntity = Object.assign(isAssociation ? newAssociation() : newDomainEntity(), {
       metaEdName: testEntityName,

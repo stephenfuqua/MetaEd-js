@@ -10,14 +10,13 @@ describe('when running with one descriptor', (): void => {
   const namespaceName = 'EdFi';
   const descriptorBaseName = 'DescriptorBaseName';
   const descriptorName = 'DescriptorName';
-  const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName,
-  });
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
-    const descriptor: Descriptor = Object.assign(newDescriptor(), {
+    const descriptor: Descriptor = {
+      ...newDescriptor(),
       metaEdName: descriptorName,
       namespace,
       data: {
@@ -29,7 +28,7 @@ describe('when running with one descriptor', (): void => {
           xsdHasPropertiesOrMapType: true,
         },
       },
-    });
+    };
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
     enhance(metaEd);
@@ -58,21 +57,21 @@ describe('when running with one extension descriptor', (): void => {
   const extensionDescriptorName = 'ExtensionDescriptorName';
   const extensionNamespaceName = 'namespace';
   const projectExtension = 'EXTENSION';
-  const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName,
-  });
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: extensionNamespaceName,
     projectExtension,
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
-    const descriptor: Descriptor = Object.assign(newDescriptor(), {
+    const descriptor: Descriptor = {
+      ...newDescriptor(),
       metaEdName: descriptorBaseName,
       namespace,
       data: {
@@ -84,10 +83,11 @@ describe('when running with one extension descriptor', (): void => {
           xsdHasPropertiesOrMapType: false,
         },
       },
-    });
+    };
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
-    const extensionDescriptor: Descriptor = Object.assign(newDescriptor(), {
+    const extensionDescriptor: Descriptor = {
+      ...newDescriptor(),
       metaEdName: extensionDescriptorBaseName,
       namespace: extensionNamespace,
       data: {
@@ -99,7 +99,7 @@ describe('when running with one extension descriptor', (): void => {
           xsdHasPropertiesOrMapType: false,
         },
       },
-    });
+    };
     extensionNamespace.entity.descriptor.set(extensionDescriptor.metaEdName, extensionDescriptor);
 
     enhance(metaEd);
@@ -138,9 +138,7 @@ describe('when running with one extension descriptor', (): void => {
 describe('when running with no descriptors', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName,
-  });
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 

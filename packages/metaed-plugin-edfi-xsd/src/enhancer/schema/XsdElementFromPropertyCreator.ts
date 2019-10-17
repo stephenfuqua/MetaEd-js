@@ -24,19 +24,21 @@ export function createXsdElementFromProperty(
   minOccursOverride: string | undefined,
   maxOccursIsUnboundedOverride: boolean | null | undefined,
 ): Element {
-  return Object.assign(newElement(), {
+  return {
+    ...newElement(),
     name: property.data.edfiXsd.xsdName,
     type: property.data.edfiXsd.xsdType,
-    annotation: Object.assign(newAnnotation(), {
+    annotation: {
+      ...newAnnotation(),
       documentation: property.documentation,
       descriptorName:
         property.type === 'descriptor'
           ? (property.data.edfiXsd as DescriptorPropertyEdfiXsd).xsdDescriptorNameWithExtension()
           : '',
-    }),
+    },
     minOccurs: calculateMinOccurs(property, minOccursOverride),
     maxOccursIsUnbounded: calculateMaxOccursIsUnbounded(property, maxOccursIsUnboundedOverride),
-  });
+  };
 }
 
 export function createSchemaComplexTypeItems(
@@ -47,11 +49,12 @@ export function createSchemaComplexTypeItems(
   const complexTypeItems: ComplexTypeItem[] = [];
   complexTypeItemProperties.forEach(complexTypeItemProperty => {
     if (complexTypeItemProperty.type === 'choice') {
-      const choiceElement: ElementGroup = Object.assign(newElementGroup(), {
+      const choiceElement: ElementGroup = {
+        ...newElementGroup(),
         minOccurs: calculateMinOccurs(complexTypeItemProperty, minOccursOverride),
         maxOccursIsUnbounded: calculateMaxOccursIsUnbounded(complexTypeItemProperty, maxOccursIsUnboundedOverride),
         isChoice: true,
-      });
+      };
       choiceElement.items.push(
         ...createSchemaComplexTypeItems(
           complexTypeItemProperty.data.edfiXsd.xsdProperties,

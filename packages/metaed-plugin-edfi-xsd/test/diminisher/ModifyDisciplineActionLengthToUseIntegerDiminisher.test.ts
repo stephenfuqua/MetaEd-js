@@ -9,7 +9,7 @@ import { enhance } from '../../src/diminisher/ModifyDisciplineActionLengthToUseI
 
 describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DisciplineAction';
   const integerType = 'xs:integer';
@@ -19,31 +19,25 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     const elementNameType1 = 'DisciplineActionLength';
     const elementName2 = 'ActualDisciplineActionLength';
 
-    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity1: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName1,
       namespace,
       data: {
         edfiXsd: {
           xsdComplexTypes: [
-            Object.assign(newComplexType(), {
+            {
+              ...newComplexType(),
               name: domainEntityName1,
               items: [
-                Object.assign(newElement(), {
-                  name: elementNameType1,
-                  type: elementNameType1,
-                  maxOccursIsUnbounded: true,
-                }),
-                Object.assign(newElement(), {
-                  name: elementName2,
-                  type: elementNameType1,
-                  maxOccursIsUnbounded: true,
-                }),
+                { ...newElement(), name: elementNameType1, type: elementNameType1, maxOccursIsUnbounded: true },
+                { ...newElement(), name: elementName2, type: elementNameType1, maxOccursIsUnbounded: true },
               ],
-            }),
+            },
           ],
         },
       },
-    });
+    };
     namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
     metaEd.dataStandardVersion = '2.0.0';
 
@@ -61,25 +55,23 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
 
 describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action simple type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   let entity: IntegerType;
 
   beforeAll(() => {
     const integerTypeName1 = 'DisciplineActionLength';
 
-    const integerType1: IntegerType = Object.assign(newIntegerType(), {
+    const integerType1: IntegerType = {
+      ...newIntegerType(),
       metaEdName: integerTypeName1,
       namespace,
       data: {
         edfiXsd: {
-          xsdSimpleType: Object.assign(newIntegerSimpleType(), {
-            name: integerTypeName1,
-            minValue: '1',
-          }),
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName1, minValue: '1' },
         },
       },
-    });
+    };
     namespace.entity.integerType.set(integerTypeName1, integerType1);
     metaEd.dataStandardVersion = '2.0.0';
 
@@ -96,7 +88,7 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
 
 describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes with no discipline action', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   let result: EnhancerResult;
 
@@ -106,29 +98,26 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     const elementType1 = 'ElementType1';
     const integerTypeName1 = 'IntegerTypeName';
 
-    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity1: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName1,
       namespace,
       data: {
         edfiXsd: {
           xsdComplexTypes: [
-            Object.assign(newComplexType(), {
+            {
+              ...newComplexType(),
               name: domainEntityName1,
-              items: [
-                Object.assign(newElement(), {
-                  name: elementName1,
-                  type: elementType1,
-                  maxOccursIsUnbounded: true,
-                }),
-              ],
-            }),
+              items: [{ ...newElement(), name: elementName1, type: elementType1, maxOccursIsUnbounded: true }],
+            },
           ],
         },
       },
-    });
+    };
     namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
 
-    const integerType1: IntegerType = Object.assign(newIntegerType(), {
+    const integerType1: IntegerType = {
+      ...newIntegerType(),
       metaEdName: integerTypeName1,
       data: {
         edfiXsd: {
@@ -136,7 +125,7 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
           minValue: '1',
         },
       },
-    });
+    };
     namespace.entity.integerType.set(integerTypeName1, integerType1);
     metaEd.dataStandardVersion = '2.0.0';
 

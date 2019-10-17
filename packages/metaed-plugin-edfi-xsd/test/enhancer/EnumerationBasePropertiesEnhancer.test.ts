@@ -11,19 +11,20 @@ import { enhance } from '../../src/enhancer/EnumerationBasePropertiesEnhancer';
 
 describe('when EnumerationBasePropertiesEnhancer enhances enumeration', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const enumerationBaseName = 'EnumerationName';
   const enumerationName = 'EnumerationNameType';
 
   beforeAll(() => {
-    const enumeration: Enumeration = Object.assign(newEnumeration(), {
+    const enumeration: Enumeration = {
+      ...newEnumeration(),
       metaEdName: enumerationBaseName,
       namespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.enumeration.set(enumeration.metaEdName, enumeration);
 
     initializeTopLevelEntities(metaEd);
@@ -44,9 +45,9 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration', (): void
 describe('when EnumerationBasePropertiesEnhancer enhances enumeration with extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const projectExtension = 'EXTENSION';
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'Extension', projectExtension });
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', projectExtension };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
 
@@ -54,13 +55,14 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration with exten
   const enumerationName = 'EnumerationNameType';
 
   beforeAll(() => {
-    const enumeration: Enumeration = Object.assign(newEnumeration(), {
+    const enumeration: Enumeration = {
+      ...newEnumeration(),
       metaEdName: enumerationBaseName,
       namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     extensionNamespace.entity.enumeration.set(enumeration.metaEdName, enumeration);
 
     initializeTopLevelEntities(metaEd);
@@ -80,19 +82,20 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration with exten
 
 describe('when EnumerationBasePropertiesEnhancer enhances enumeration that ends in Type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const enumerationBaseName = 'EnumerationNameType';
   const enumerationName = 'EnumerationNameType';
 
   beforeAll(() => {
-    const enumeration: Enumeration = Object.assign(newEnumeration(), {
+    const enumeration: Enumeration = {
+      ...newEnumeration(),
       metaEdName: enumerationBaseName,
       namespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.enumeration.set(enumeration.metaEdName, enumeration);
 
     initializeTopLevelEntities(metaEd);
@@ -114,17 +117,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', (
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const enumerationBaseName = 'EnumerationName';
   const enumerationName = 'EnumerationNameType';
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const enumeration: MapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
+    const enumeration: MapTypeEnumeration = {
+      ...newMapTypeEnumeration(),
       metaEdName: enumerationBaseName,
       namespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.mapTypeEnumeration.set(enumeration.metaEdName, enumeration);
 
     initializeTopLevelEntities(metaEd);
@@ -146,17 +150,18 @@ describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration'
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const enumerationBaseName = 'EnumerationName';
   const enumerationName = 'EnumerationNameType';
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const enumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
+    const enumeration: SchoolYearEnumeration = {
+      ...newSchoolYearEnumeration(),
       metaEdName: enumerationBaseName,
       namespace,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     namespace.entity.schoolYearEnumeration.set(enumeration.metaEdName, enumeration);
 
     initializeTopLevelEntities(metaEd);

@@ -18,7 +18,8 @@ describe('when enhancing integer type', (): void => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
@@ -27,7 +28,7 @@ describe('when enhancing integer type', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -78,7 +79,8 @@ describe('when enhancing integer type is short', (): void => {
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
@@ -88,7 +90,7 @@ describe('when enhancing integer type is short', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -138,7 +140,8 @@ describe('when enhancing generated integer type with min value only', (): void =
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -146,7 +149,7 @@ describe('when enhancing generated integer type with min value only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -179,7 +182,8 @@ describe('when enhancing generated integer type with max value only', (): void =
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
@@ -187,7 +191,7 @@ describe('when enhancing generated integer type with max value only', (): void =
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -219,14 +223,15 @@ describe('when enhancing non-generated integer type with no restrictions', (): v
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
@@ -258,14 +263,15 @@ describe('when enhancing generated integer type with no restrictions', (): void 
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newIntegerType(), {
+    enhancedItem = {
+      ...newIntegerType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 

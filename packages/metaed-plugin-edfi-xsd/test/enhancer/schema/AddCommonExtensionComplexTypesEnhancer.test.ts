@@ -20,18 +20,20 @@ describe('when enhancing common extension', (): void => {
   let createdLookupType: ComplexType;
 
   beforeAll(() => {
-    const baseEntity = Object.assign(newCommon(), {
+    const baseEntity = {
+      ...newCommon(),
       namespace,
       metaEdName: baseTypeName,
       documentation,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseEntity);
     namespace.entity.common.set(baseEntity.metaEdName, baseEntity);
 
-    enhancedItem = Object.assign(newCommonExtension(), {
+    enhancedItem = {
+      ...newCommonExtension(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
@@ -39,7 +41,7 @@ describe('when enhancing common extension', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.commonExtension.set(enhancedItem.metaEdName, enhancedItem);
 

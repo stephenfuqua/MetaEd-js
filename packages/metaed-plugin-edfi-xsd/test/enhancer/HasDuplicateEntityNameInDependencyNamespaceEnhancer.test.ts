@@ -40,12 +40,7 @@ describe('when DEs have different names across dependency-linked namespaces', ()
     extensionNamespace.dependencies.push(coreNamespace);
     addEdFiXsdEntityRepositoryTo(metaEd);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     enhance(metaEd);
   });
 
@@ -92,12 +87,7 @@ describe('when DEs have same names across dependency-linked namespaces', (): voi
     extensionNamespace.dependencies.push(coreNamespace);
     addEdFiXsdEntityRepositoryTo(metaEd);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     enhance(metaEd);
   });
 
@@ -154,12 +144,7 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     extensionNamespaceb.dependencies.push(coreNamespace);
     addEdFiXsdEntityRepositoryTo(metaEd);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     enhance(metaEd);
   });
 
@@ -214,12 +199,7 @@ describe('when DE has same name as DE extension across dependency-linked namespa
     extensionNamespace.dependencies.push(coreNamespace);
     addEdFiXsdEntityRepositoryTo(metaEd);
 
-    metaEd.plugin.set(
-      'edfiOdsApi',
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion: '3.0.0',
-      }),
-    );
+    metaEd.plugin.set('edfiOdsApi', { ...newPluginEnvironment(), targetTechnologyVersion: '3.0.0' });
     enhance(metaEd);
   });
 

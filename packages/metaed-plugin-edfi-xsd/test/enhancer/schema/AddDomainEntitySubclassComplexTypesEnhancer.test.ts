@@ -26,17 +26,19 @@ describe('when enhancing domainEntity subclass', (): void => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const baseEntity = Object.assign(newDomainEntity(), {
+    const baseEntity = {
+      ...newDomainEntity(),
       namespace,
       metaEdName: baseTypeName,
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(baseEntity);
     namespace.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
 
-    enhancedItem = Object.assign(newDomainEntitySubclass(), {
+    enhancedItem = {
+      ...newDomainEntitySubclass(),
       namespace,
       metaEdName: complexTypeName,
       documentation,
@@ -44,7 +46,7 @@ describe('when enhancing domainEntity subclass', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.domainEntitySubclass.set(enhancedItem.metaEdName, enhancedItem);
 

@@ -32,11 +32,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     allDescriptors
       .filter(ad => !ad.namespace.isExtension || ad.namespace.namespaceName === namespace.namespaceName)
       .forEach((descriptor: Descriptor) => {
-        const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+        const element: InterchangeItem = {
+          ...newInterchangeItem(),
           metaEdName: descriptor.data.edfiXsd.xsdDescriptorName,
           namespace,
           referencedEntity: descriptor,
-        });
+        };
         addInterchangeItemEdfiXsdTo(element);
         descriptorInterchange.elements.push(element);
       });

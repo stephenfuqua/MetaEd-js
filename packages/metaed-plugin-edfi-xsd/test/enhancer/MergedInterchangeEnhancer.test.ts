@@ -15,7 +15,7 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when running with no interchange extensions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -27,16 +27,18 @@ describe('when running with no interchange extensions', (): void => {
   const elementBaseType = 'InterchangeElementType';
 
   beforeAll(() => {
-    const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const element: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: elementBaseName,
       data: {
         edfiXsd: {
           xsdType: elementBaseType,
         },
       },
-    });
+    };
 
-    const interchange = Object.assign(newInterchange(), {
+    const interchange = {
+      ...newInterchange(),
       metaEdName: interchangeName,
       namespace,
       documentation: interchangeDocumentation,
@@ -46,7 +48,7 @@ describe('when running with no interchange extensions', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
 
     namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
@@ -71,13 +73,14 @@ describe('when running with no interchange extensions', (): void => {
 
 describe('when running with interchange extensions', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
     namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
-  });
+  };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
@@ -91,34 +94,38 @@ describe('when running with interchange extensions', (): void => {
   const extensionElementBaseType = 'InterchangeExtensionElementType';
 
   beforeAll(() => {
-    const elementNoExtension: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const elementNoExtension: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: elementNoExtensionBaseName,
       data: {
         edfiXsd: {
           xsdType: elementNoExtensionBaseType,
         },
       },
-    });
+    };
 
-    const element: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const element: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: extensionElementBaseName,
       data: {
         edfiXsd: {
           xsdType: elementBaseType,
         },
       },
-    });
+    };
 
-    const extensionElement: InterchangeItem = Object.assign(newInterchangeItem(), {
+    const extensionElement: InterchangeItem = {
+      ...newInterchangeItem(),
       metaEdName: extensionElementBaseName,
       data: {
         edfiXsd: {
           xsdType: extensionElementBaseType,
         },
       },
-    });
+    };
 
-    const interchangeToBeExtended = Object.assign(newInterchange(), {
+    const interchangeToBeExtended = {
+      ...newInterchange(),
       metaEdName: interchangeToBeExtendedName,
       namespace,
       documentation: interchangeDocumentation,
@@ -126,11 +133,12 @@ describe('when running with interchange extensions', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
 
     namespace.entity.interchange.set(interchangeToBeExtended.metaEdName, interchangeToBeExtended);
 
-    const interchangeExtension = Object.assign(newInterchangeExtension(), {
+    const interchangeExtension = {
+      ...newInterchangeExtension(),
       metaEdName: interchangeToBeExtendedName,
       namespace: extensionNamespace,
       baseEntity: interchangeToBeExtended,
@@ -139,7 +147,7 @@ describe('when running with interchange extensions', (): void => {
       data: {
         edfiXsd: {},
       },
-    });
+    };
 
     extensionNamespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 

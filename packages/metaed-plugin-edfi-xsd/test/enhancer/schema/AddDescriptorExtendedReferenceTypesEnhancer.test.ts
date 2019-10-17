@@ -18,7 +18,8 @@ describe('when enhancing descriptor', (): void => {
   let createdExtendedReferenceType: StringSimpleType;
 
   beforeAll(() => {
-    enhancedItem = Object.assign(newDescriptor(), {
+    enhancedItem = {
+      ...newDescriptor(),
       metaEdName: complexTypeName,
       documentation,
       data: {
@@ -27,7 +28,7 @@ describe('when enhancing descriptor', (): void => {
           xsdDescriptorNameWithExtension: complexTypeDescriptorNameWithExtension,
         },
       },
-    });
+    };
     addModelBaseEdfiXsdTo(enhancedItem);
     namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
