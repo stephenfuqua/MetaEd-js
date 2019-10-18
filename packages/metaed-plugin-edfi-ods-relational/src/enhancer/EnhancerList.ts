@@ -31,6 +31,7 @@ import { enhance as foreignKeyReverseIndexEnhancer } from './ForeignKeyReverseIn
 import { enhance as odsTableIdEnhancer } from './OdsTableIdEnhancer';
 import { enhance as schoolYearEnumerationRowEnhancer } from './SchoolYearEnumerationRowEnhancer';
 import { enhance as topLevelEntityBaseReferenceEnhancer } from './TopLevelEntityBaseReferenceEnhancer';
+import { enhance as commonSubclassBaseReferenceEnhancer } from './CommonSubclassBaseReferenceEnhancer';
 import { enhance as updateCascadeTopLevelEntityEnhancer } from './UpdateCascadeTopLevelEntityEnhancer';
 import { enhance as foreignKeyForeignTableReferenceEnhancer } from './ForeignKeyForeignTableReferenceEnhancer';
 
@@ -69,6 +70,7 @@ export function enhancerList(): Enhancer[] {
 
     // Builder Post Processing Phase
     topLevelEntityBaseReferenceEnhancer,
+    commonSubclassBaseReferenceEnhancer,
     descriptor,
 
     // Builder Post Processing Phase 2

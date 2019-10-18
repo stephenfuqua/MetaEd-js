@@ -5,13 +5,19 @@ const invalidTypes: ModelType[] = [
   'associationSubclass',
   'choice',
   'commonExtension',
-  'commonSubclass',
   'descriptor',
   'domainEntityExtension',
   'domainEntitySubclass',
 ];
 
-const validTypeNames: string = ['Abstract Entity', 'Association', 'Common', 'Domain Entity', 'Inline Common'].join(', ');
+const validTypeNames: string = [
+  'Abstract Entity',
+  'Association',
+  'Common',
+  'Common Subclass',
+  'Domain Entity',
+  'Inline Common',
+].join(', ');
 
 export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
