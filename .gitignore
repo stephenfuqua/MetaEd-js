@@ -22,7 +22,7 @@ dist/
 docs/
 
 ## Test artifacts
-/packages/metaed-plugin-edfi-xsd/test/integration/artifact/
+/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*
 !/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*-Authoritative.xsd
 
 0004-Tables.diff
@@ -45,7 +45,7 @@ SimpleType-0020-Extension-extension-Tables.sql
 Transcript-0020-Extension-extension-Tables.sql
 SimpleType-0030-Extension-extension-ForeignKeys.sql
 
-/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/
+/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json
 
 /packages/metaed-plugin-edfi-mappingedu/test/integration/artifact/*-generated.xlsx

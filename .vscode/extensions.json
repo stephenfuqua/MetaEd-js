@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "EditorConfig.editorconfig",
-    "mike-lischke.vscode-antlr4"
+    "mike-lischke.vscode-antlr4",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

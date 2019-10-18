@@ -1,12 +1,10 @@
 import R from 'ramda';
 import { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
-import { buildEntityDefinitions } from './BuildEntityDefinitions';
-import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import { deriveLogicalNameFromProjectName, NoSchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
-import { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
+import { DomainModelDefinition, newDomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
 import { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
@@ -101,18 +99,15 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Aggreg
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const additionalEntityDefinitions = [];
-
     const odsApiVersion: string =
       (metaEd.plugin.get('edfiOdsRelational') as PluginEnvironment).targetTechnologyVersion || '3.0.0';
 
     const domainModelDefinition: DomainModelDefinition = {
+      ...newDomainModelDefinition(),
       odsApiVersion,
       schemaDefinition: NoSchemaDefinition,
       aggregateDefinitions: buildAggregateDefinitions(namespace),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),
-      entityDefinitions: buildEntityDefinitions(metaEd, namespace, additionalEntityDefinitions),
-      associationDefinitions: buildAssociationDefinitions(metaEd, namespace),
     };
 
     (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).domainModelDefinition = domainModelDefinition;

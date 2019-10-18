@@ -22,6 +22,25 @@ import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity'
 import { enhance as createDomainModelDefinitionEnhancer } from './apiModel/CreateDomainModelDefinitionEnhancer';
 import { enhance as buildSchemaDefinitionEnhancerV3 } from './apiModel/BuildSchemaDefinitionEnhancerV3';
 import { enhance as buildSchemaDefinitionEnhancer } from './apiModel/BuildSchemaDefinitionEnhancer';
+import { enhance as associationDefinitionEnhancer } from './apiModel/AssociationDefinitionEnhancer';
+import { enhance as associationDefinitionEnhancerV3 } from './apiModel/AssociationDefinitionEnhancerV3dot2';
+import { enhance as associationDefinitionIsIdentifyingEnhancer } from './apiModel/AssociationDefinitionIsIdentifyingEnhancer';
+import { enhance as associationDefinitionCardinalityEnhancer } from './apiModel/AssociationDefinitionCardinalityEnhancer';
+import { enhance as associationDefinitionIsRequiredEnhancer } from './apiModel/AssociationDefinitionIsRequiredEnhancer';
+import { enhance as associationDefinitionPrimaryEntityPropertyEnhancer } from './apiModel/AssociationDefinitionPrimaryEntityPropertyEnhancer';
+import { enhance as associationDefinitionPrimaryEntityPropertyEnhancerV3 } from './apiModel/AssociationDefinitionPrimaryEntityPropertyEnhancerV3dot2';
+import { enhance as associationDefinitionSecondaryEntityPropertyEnhancer } from './apiModel/AssociationDefinitionSecondaryEntityPropertyEnhancer';
+import { enhance as associationDefinitionSecondaryEntityPropertyEnhancerV3 } from './apiModel/AssociationDefinitionSecondaryEntityPropertyEnhancerV3dot2';
+import { enhance as entityDefinitionEnhancer } from './apiModel/EntityDefinitionEnhancer';
+import { enhance as entityDefinitionEnhancerV3 } from './apiModel/EntityDefinitionEnhancerV3';
+import { enhance as entityDefinitionIsAbstractEnhancer } from './apiModel/EntityDefinitionIsAbstractEnhancer';
+import { enhance as entityDefinitionLocallyDefinedPropertyEnhancer } from './apiModel/EntityDefinitionLocallyDefinedPropertyEnhancer';
+import { enhance as entityDefinitionLocallyDefinedPropertyEnhancerV3 } from './apiModel/EntityDefinitionLocallyDefinedPropertyEnhancerV3dot2';
+import { enhance as entityDefinitionPredefinedPropertyEnhancer } from './apiModel/EntityDefinitionPredefinedPropertyEnhancer';
+import { enhance as entityDefinitionPredefinedPropertyEnhancerV3 } from './apiModel/EntityDefinitionPredefinedPropertyEnhancerV3dot2';
+import { enhance as entityDefinitionIdentifierEnhancer } from './apiModel/EntityDefinitionIdentifierEnhancer';
+import { enhance as entityDefinitionIdentifierEnhancerV3 } from './apiModel/EntityDefinitionIdentifierEnhancerV3dot2';
+import { enhance as entityDefinitionPropertyOrderEnhancer } from './apiModel/EntityDefinitionPropertyOrderEnhancer';
 
 import { enhance as moveFederalFundsDiminisher } from '../diminisher/domainMetadata/MoveFederalFundsDiminisher';
 
@@ -51,10 +70,30 @@ export function enhancerList(): Enhancer[] {
     schoolYearEnumerationAggregateEnhancer,
 
     educationOrganizationReferenceEnhancer,
+
     // API Model
     createDomainModelDefinitionEnhancer,
     buildSchemaDefinitionEnhancerV3,
     buildSchemaDefinitionEnhancer,
+    associationDefinitionEnhancer,
+    associationDefinitionEnhancerV3,
+    associationDefinitionIsIdentifyingEnhancer,
+    associationDefinitionCardinalityEnhancer,
+    associationDefinitionIsRequiredEnhancer,
+    associationDefinitionPrimaryEntityPropertyEnhancer,
+    associationDefinitionPrimaryEntityPropertyEnhancerV3,
+    associationDefinitionSecondaryEntityPropertyEnhancer,
+    associationDefinitionSecondaryEntityPropertyEnhancerV3,
+    entityDefinitionEnhancer,
+    entityDefinitionEnhancerV3,
+    entityDefinitionIsAbstractEnhancer,
+    entityDefinitionLocallyDefinedPropertyEnhancer,
+    entityDefinitionLocallyDefinedPropertyEnhancerV3,
+    entityDefinitionPredefinedPropertyEnhancer,
+    entityDefinitionPredefinedPropertyEnhancerV3,
+    entityDefinitionIdentifierEnhancer,
+    entityDefinitionIdentifierEnhancerV3,
+    entityDefinitionPropertyOrderEnhancer,
 
     // **************************
     // API Metadata Diminish Phase

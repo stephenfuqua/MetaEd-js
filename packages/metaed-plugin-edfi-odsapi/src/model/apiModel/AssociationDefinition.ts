@@ -1,5 +1,6 @@
-import { ApiFullName } from './ApiFullName';
+import { ApiFullName, NoApiFullName } from './ApiFullName';
 import { ApiProperty } from './ApiProperty';
+import { PhysicalNames } from './PhysicalNames';
 
 export type AssociationDefinitionCardinality =
   | 'OneToOne'
@@ -11,6 +12,7 @@ export type AssociationDefinitionCardinality =
 
 export interface AssociationDefinition {
   fullName: ApiFullName;
+  constraintNames?: PhysicalNames;
   cardinality: AssociationDefinitionCardinality;
   primaryEntityFullName: ApiFullName;
   primaryEntityProperties: ApiProperty[];
@@ -18,4 +20,17 @@ export interface AssociationDefinition {
   secondaryEntityProperties: ApiProperty[];
   isIdentifying: boolean;
   isRequired: boolean;
+}
+
+export function newAssociationDefinition(): AssociationDefinition {
+  return {
+    fullName: NoApiFullName,
+    cardinality: 'Unknown',
+    primaryEntityFullName: NoApiFullName,
+    primaryEntityProperties: [],
+    secondaryEntityFullName: NoApiFullName,
+    secondaryEntityProperties: [],
+    isIdentifying: false,
+    isRequired: false,
+  };
 }
