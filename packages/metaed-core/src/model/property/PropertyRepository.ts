@@ -84,7 +84,8 @@ export class PropertyIndex {
  *
  */
 export function newPropertyIndex(): PropertyIndex {
-  return Object.assign(new PropertyIndex(), {
+  return {
+    ...new PropertyIndex(),
     association: [],
     boolean: [],
     choice: [],
@@ -109,7 +110,7 @@ export function newPropertyIndex(): PropertyIndex {
     string: [],
     time: [],
     year: [],
-  });
+  };
 }
 
 /**

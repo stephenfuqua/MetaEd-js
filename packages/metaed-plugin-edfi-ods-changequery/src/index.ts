@@ -24,7 +24,8 @@ import { enhance as addColumnChangeVersionForTableEnhancer } from './enhancer/Ad
 import { enhance as createTriggerUpdateChangeVersionEnhancer } from './enhancer/CreateTriggerUpdateChangeVersionEnhancer';
 
 export function initialize(): MetaEdPlugin {
-  return Object.assign(newMetaEdPlugin(), {
+  return {
+    ...newMetaEdPlugin(),
     validator: [NamespaceMustNotBeNamedChanges],
     enhancer: [
       edFiOdsChangeQueryEntityRepository,
@@ -47,5 +48,5 @@ export function initialize(): MetaEdPlugin {
       AddColumnChangeVersionForTableGenerator,
       AddIndexChangeVersionForTableGenerator,
     ],
-  });
+  };
 }

@@ -5,6 +5,7 @@ import { newAssociation } from '../model/Association';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
+import { EntityProperty } from '../model/property/EntityProperty';
 
 /**
  * An ANTLR4 listener that creates Association entities.
@@ -45,7 +46,7 @@ export class AssociationBuilder extends TopLevelEntityBuilder {
   enterDefiningDomainEntity(context: MetaEdGrammar.DefiningDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception) return;
-    this.currentProperty = Object.assign(newDomainEntityProperty(), { definesAssociation: true });
+    this.currentProperty = { ...newDomainEntityProperty(), definesAssociation: true } as EntityProperty;
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
     this.enteringIdentity(context);
   }

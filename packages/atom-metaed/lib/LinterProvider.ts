@@ -48,7 +48,8 @@ async function lint(_textEditor: TextEditor): Promise<any[] | null> {
     metaEdConfiguration.projectPaths.push(pm.projectPath);
   });
 
-  mostRecentState = Object.assign(newState(), {
+  mostRecentState = {
+    ...newState(),
     pipelineOptions: {
       runValidators: true,
       runEnhancers: true,
@@ -56,7 +57,7 @@ async function lint(_textEditor: TextEditor): Promise<any[] | null> {
       stopOnValidationFailure: false,
     },
     metaEdConfiguration,
-  });
+  };
 
   mostRecentState.metaEd.dataStandardVersion = getTargetDsVersionSemver();
   if (validateOnTheFly()) loadFromModifiedEditors(mostRecentState, metaEdProjectMetadata);

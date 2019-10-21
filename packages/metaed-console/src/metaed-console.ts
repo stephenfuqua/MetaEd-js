@@ -26,7 +26,8 @@ export async function metaEdConsole() {
 
   const startTime = Date.now();
 
-  const state: State = Object.assign(newState(), {
+  const state: State = {
+    ...newState(),
     metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
       ...argv.metaEdConfiguration,
     }),
@@ -36,7 +37,7 @@ export async function metaEdConsole() {
       runGenerators: true,
       stopOnValidationFailure: true,
     },
-  });
+  };
 
   if (argv.defaultPluginTechVersion != null)
     state.metaEdConfiguration.defaultPluginTechVersion = argv.defaultPluginTechVersion;

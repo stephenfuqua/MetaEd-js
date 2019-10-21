@@ -400,8 +400,5 @@ function enhancerList(): Enhancer[] {
 }
 
 export function initialize(): MetaEdPlugin {
-  return Object.assign(newMetaEdPlugin(), {
-    validator: validatorList(),
-    enhancer: enhancerList(),
-  });
+  return { ...newMetaEdPlugin(), validator: validatorList(), enhancer: enhancerList() };
 }

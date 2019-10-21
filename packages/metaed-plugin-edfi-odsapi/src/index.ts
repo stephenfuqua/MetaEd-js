@@ -8,7 +8,8 @@ import { generate as EducationOrganizationReferenceMetadataGenerator } from './g
 import { generate as InterchangeOrderMetadataGenerator } from './generator/interchangeOrderMetadata/InterchangeOrderMetadataGenerator';
 
 export function initialize(): MetaEdPlugin {
-  return Object.assign(newMetaEdPlugin(), {
+  return {
+    ...newMetaEdPlugin(),
     validator: validatorList(),
     enhancer: enhancerList(),
     generator: [
@@ -17,5 +18,5 @@ export function initialize(): MetaEdPlugin {
       EducationOrganizationReferenceMetadataGenerator,
       InterchangeOrderMetadataGenerator,
     ],
-  });
+  };
 }

@@ -9,9 +9,10 @@ import { enhance as domainEntityExampleNameEnhancer } from './enhancer/DomainEnt
 import { generate as domainEntityNameGenerator } from './generator/DomainEntityNameGenerator';
 
 export function initialize(): MetaEdPlugin {
-  return Object.assign(newMetaEdPlugin(), {
+  return {
+    ...newMetaEdPlugin(),
     validator: [noDomainEntityNamesThatStartWithExample],
     enhancer: [topLevelEntitySetupEnhancer, domainEntityExampleNameEnhancer],
     generator: [domainEntityNameGenerator],
-  });
+  };
 }
