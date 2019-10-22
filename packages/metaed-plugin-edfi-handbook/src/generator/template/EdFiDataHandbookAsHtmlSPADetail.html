@@ -10,6 +10,8 @@
     <p ng-if="ctrl.selected.metaEdId">MetaEd ID: {{ctrl.selected.metaEdId}}</p>
     <h3>Definition</h3>
     <p ng-bind-html="ctrl.selected.definition | highlight:$parent.ctrl.search"></p>
+    <h3 ng-if="ctrl.selected.deprecationReason">Deprecation Reason</h3>
+    <p ng-if="ctrl.selected.deprecationReason">{{ctrl.selected.deprecationReason}}</p>
     <div ng-if="ctrl.selected.typeCharacteristics.length">
         <h3>Type Characteristics:</h3>
         <div>
@@ -32,6 +34,7 @@
             <thead>
                 <tr>
                     <th>Property</th>
+                    <th ng-if="ctrl.selected.hasDeprecatedProperty">Deprecation Reason</th>
                     <th>UML Datatype</th>
                     <th>JSON Datatype</th>
                     <th>XSD Datatype</th>
@@ -48,7 +51,7 @@
                     <td ng-if="ctrl.entityExists(r.referenceUniqueIdentifier)">
                         <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a><span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span>{{r.deprecationText}}
                     </td>
-
+                    <td ng-if="ctrl.selected.hasDeprecatedProperty">{{r.deprecationReason}}</td>
                     <td>{{r.umlDatatype}}</td>
                     <td>{{r.jsonDatatype}}</td>
                     <td>{{r.xsdDatatype}}</td>
@@ -72,7 +75,7 @@
         </table>
     </div>
     <div ng-if="ctrl.selected.modelReferencesUsedByProperties.length">
-        <h4>Used By</h4>
+        <h3>Used By</h3>
         <ul>
             <li ng-repeat="rub in ctrl.selected.modelReferencesUsedByProperties">
                 <a href="#/{{rub.referenceUniqueIdentifier}}" title="{{rub.metaEdId}} - {{rub.name}}">{{rub.name}}</a>.{{ctrl.selected.name}} (as {{rub.cardinality}})

@@ -338,8 +338,8 @@ async function executeDeploy(
     // @ts-ignore: TODO: addNotification() is old and should be replaced by addXXX functions
     setImmediate(() => atom.notifications.addNotification(startNotification));
 
-    const taskParams = ['/s', '/c', `node --inspect-brk "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
-    // const taskParams = ['/s', '/c', `node "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
+    // const taskParams = ['/s', '/c', `node --inspect-brk "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
+    const taskParams = ['/s', '/c', `node "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
     if (shouldDeployCore) taskParams.push('--core');
     if (suppressDeleteOnDeploy()) taskParams.push('--suppressDelete');

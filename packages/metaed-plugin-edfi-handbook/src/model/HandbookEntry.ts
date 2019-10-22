@@ -3,6 +3,7 @@ import { HandbookEntityReferenceProperty } from './HandbookEntryReferencePropert
 export interface HandbookEntry {
   definition: string;
   deprecationText: string;
+  deprecationReason: string;
   metaEdId: string;
   uniqueIdentifier: string;
 
@@ -16,6 +17,7 @@ export interface HandbookEntry {
   modelReferencesContainsProperties: HandbookEntityReferenceProperty[];
   modelReferencesUsedBy: string[];
   modelReferencesUsedByProperties: HandbookEntityReferenceProperty[];
+  hasDeprecatedProperty: boolean;
   name: string;
   optionList: string[];
   typeCharacteristics: string[];
@@ -27,6 +29,7 @@ export function newHandbookEntry(): HandbookEntry {
   return {
     definition: '',
     deprecationText: '',
+    deprecationReason: '',
     metaEdId: '',
     uniqueIdentifier: '',
 
@@ -40,6 +43,7 @@ export function newHandbookEntry(): HandbookEntry {
     modelReferencesContainsProperties: [],
     modelReferencesUsedBy: [],
     modelReferencesUsedByProperties: [],
+    hasDeprecatedProperty: false,
     name: '',
     optionList: [],
     typeCharacteristics: [],

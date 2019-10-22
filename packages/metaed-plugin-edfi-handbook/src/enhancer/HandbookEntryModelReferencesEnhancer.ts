@@ -26,6 +26,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           referenceUniqueIdentifier: y.uniqueIdentifier,
           name: y.name,
           deprecationText: y.deprecationText,
+          deprecationReason: y.deprecationReason,
           extensionParentName: '',
           extensionParentNamespaceName: '',
           umlDatatype: '',

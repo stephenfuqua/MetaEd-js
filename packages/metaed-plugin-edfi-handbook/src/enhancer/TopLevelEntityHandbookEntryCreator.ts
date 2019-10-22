@@ -109,6 +109,7 @@ function entityPropertyToHandbookEntityReferenceProperty(
     referenceUniqueIdentifier: getReferenceUniqueIdentifier(allEntities, property),
     name: `${property.roleName}${property.metaEdName}`,
     deprecationText: property.isDeprecated ? ' - DEPRECATED' : '',
+    deprecationReason: property.deprecationReason,
     extensionParentName: isPropertyOnExtensionEntity ? property.parentEntity.metaEdName : '',
     extensionParentNamespaceName: isPropertyOnExtensionEntity ? property.parentEntity.namespace.namespaceName : '',
     umlDatatype: umlDatatypeMatrix[property.type],
@@ -172,6 +173,8 @@ export function createDefaultHandbookEntry(
         : `${entity.metaEdName} (${entity.namespace.projectName})`,
     projectName: entity.namespace.projectName,
     deprecationText: entity.isDeprecated ? ' - DEPRECATED' : '',
+    deprecationReason: entity.deprecationReason,
+    hasDeprecatedProperty: entity.properties.some(p => p.isDeprecated),
     optionList: enumerationShortDescriptionsFor(entity),
     typeCharacteristics: [],
   };
