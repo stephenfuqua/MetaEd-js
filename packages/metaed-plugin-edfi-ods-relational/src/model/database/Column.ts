@@ -154,6 +154,17 @@ export function newColumn(): Column {
   };
 }
 
+export function cloneColumn(column: Column): Column {
+  return {
+    ...column,
+    nameComponents: [...column.nameComponents],
+    deprecationReasons: [...column.deprecationReasons],
+    sourceEntityProperties: [...column.sourceEntityProperties],
+    mergedReferenceContexts: [...column.mergedReferenceContexts],
+    data: { ...column.data },
+  };
+}
+
 export const NoColumn: Column = deepFreeze({
   ...newColumn(),
   columnId: 'NoColumn',
@@ -178,10 +189,6 @@ export function initializeColumn(
   });
   column.sourceEntityProperties.push(property);
   return column;
-}
-
-export function cloneColumn(column: Column): Column {
-  return { ...column, data: { ...column.data } };
 }
 
 export function columnConstraintMerge(existing: Column, received: Column): Column {
