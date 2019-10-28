@@ -202,7 +202,11 @@
           },
           "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "isDeprecated": true,
+          "deprecationReasons": [
+            "This is no longer used"
+          ]
         },
         {
           "propertyName": "Id",
@@ -777,7 +781,11 @@
           },
           "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "isDeprecated": true,
+          "deprecationReasons": [
+            "This is no longer used"
+          ]
         },
         {
           "propertyName": "SchoolYear",
@@ -822,7 +830,11 @@
           },
           "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "isDeprecated": true,
+          "deprecationReasons": [
+            "This is no longer used"
+          ]
         },
         {
           "propertyName": "SchoolYear",

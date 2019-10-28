@@ -1,6 +1,7 @@
 Domain Entity StaffEvaluationComponent
     documentation "The components of the evaluation."
     string EvaluationComponent
+        deprecated "This is no longer used"
         documentation "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.)."
         is part of identity
         min length 1
