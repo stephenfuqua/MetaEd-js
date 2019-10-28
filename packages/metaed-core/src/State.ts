@@ -3,6 +3,7 @@ import { newMetaEdEnvironment } from './MetaEdEnvironment';
 import { newPipelineOptions } from './pipeline/PipelineOptions';
 import { MetaEdConfiguration } from './MetaEdConfiguration';
 import { ValidationFailure } from './validator/ValidationFailure';
+import { PipelineFailure } from './validator/PipelineFailure';
 import { EnhancerResult } from './enhancer/EnhancerResult';
 import { GeneratorResult } from './generator/GeneratorResult';
 import { InputDirectory } from './file/InputDirectory';
@@ -20,6 +21,9 @@ export interface State {
   // the project level configuration loaded from the metaed.json file either located at the root level of a project
   // or referenced by the console's --config argument
   metaEdConfiguration: MetaEdConfiguration;
+
+  // the collection of error messages due to an error somewhere in the pipeline e.g. plugin loading
+  pipelineFailure: PipelineFailure[];
 
   // the collection of error messages from syntax and semantic validation, and other processes
   validationFailure: ValidationFailure[];
