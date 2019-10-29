@@ -3,7 +3,7 @@ import { newMetaEdEnvironment } from './MetaEdEnvironment';
 import { newPipelineOptions } from './pipeline/PipelineOptions';
 import { MetaEdConfiguration } from './MetaEdConfiguration';
 import { ValidationFailure } from './validator/ValidationFailure';
-import { PipelineFailure } from './validator/PipelineFailure';
+import { PipelineFailure } from './pipeline/PipelineFailure';
 import { EnhancerResult } from './enhancer/EnhancerResult';
 import { GeneratorResult } from './generator/GeneratorResult';
 import { InputDirectory } from './file/InputDirectory';
@@ -70,6 +70,7 @@ export interface State {
  */
 export const newState: () => State = () => ({
   metaEdConfiguration: newMetaEdConfiguration(),
+  pipelineFailure: [],
   validationFailure: [],
   enhancerResults: [],
   generatorResults: [],

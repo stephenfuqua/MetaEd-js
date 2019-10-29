@@ -22,7 +22,7 @@ function logValidationFailures(state: State): void {
   });
 }
 
-export function fileMapForFailure(state: State): void {
+export function fileMapForValidationFailure(state: State): void {
   if (state.validationFailure.length === 0) return;
 
   state.validationFailure.forEach(failure => {

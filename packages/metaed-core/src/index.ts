@@ -15,7 +15,7 @@ export { execute as walkBuilders } from './builder/WalkBuilders';
 export { execute as runValidators } from './validator/RunValidators';
 export { execute as runEnhancers } from './enhancer/RunEnhancers';
 export { execute as runGenerators } from './generator/RunGenerators';
-export { fileMapForFailure } from './pipeline/FileMapForFailure';
+export { fileMapForValidationFailure } from './pipeline/FileMapForValidationFailure';
 export {
   getAllEntities,
   getAllTopLevelEntities,

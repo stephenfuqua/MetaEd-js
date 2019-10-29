@@ -8,7 +8,7 @@ import {
   orderByPath,
   buildMetaEd,
   buildParseTree,
-  fileMapForFailure,
+  fileMapForValidationFailure,
   loadFileIndex,
   loadFiles,
   loadPlugins,
@@ -115,7 +115,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
       await runGenerators(pluginManifest, state);
     }
 
-    fileMapForFailure(state);
+    fileMapForValidationFailure(state);
 
     const coreNamespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();

@@ -7,7 +7,7 @@ import {
   State,
   buildMetaEd,
   buildParseTree,
-  fileMapForFailure,
+  fileMapForValidationFailure,
   loadFileIndex,
   loadFiles,
   loadPlugins,
@@ -74,7 +74,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
       await runGenerators(pluginManifest, state);
     }
 
-    fileMapForFailure(state);
+    fileMapForValidationFailure(state);
 
     state.metaEd.namespace.forEach(namespace =>
       namespace.data.edfiXsd.xsdSchema.sections.forEach(section => {
@@ -202,7 +202,7 @@ describe('when generating xsd and comparing it to data standard 3.1 authoritativ
       await runGenerators(pluginManifest, state);
     }
 
-    fileMapForFailure(state);
+    fileMapForValidationFailure(state);
 
     state.metaEd.namespace.forEach(namespace =>
       namespace.data.edfiXsd.xsdSchema.sections.forEach(section => {
@@ -336,7 +336,7 @@ describe('when generating xsd with extension and comparing it to data standard 3
       await runGenerators(pluginManifest, state);
     }
 
-    fileMapForFailure(state);
+    fileMapForValidationFailure(state);
 
     state.metaEd.namespace.forEach(namespace =>
       namespace.data.edfiXsd.xsdSchema.sections.forEach(section => {

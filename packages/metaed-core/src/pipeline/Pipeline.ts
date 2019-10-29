@@ -7,7 +7,7 @@ import { loadFileIndex } from '../file/LoadFileIndex';
 import { buildParseTree } from '../grammar/BuildParseTree';
 import { execute as walkBuilders } from '../builder/WalkBuilders';
 import { loadPluginConfiguration } from '../plugin/LoadPluginConfiguration';
-import { fileMapForFailure } from './FileMapForFailure';
+import { fileMapForValidationFailure } from './FileMapForValidationFailure';
 import { nextMacroTask, versionSatisfies } from '../Utility';
 // import { validateConfiguration } from './ValidateConfiguration';
 import { execute as runValidators } from '../validator/RunValidators';
@@ -112,7 +112,7 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
     await nextMacroTask();
   }
 
-  fileMapForFailure(state);
+  fileMapForValidationFailure(state);
   await nextMacroTask();
 
   return { state, failure };

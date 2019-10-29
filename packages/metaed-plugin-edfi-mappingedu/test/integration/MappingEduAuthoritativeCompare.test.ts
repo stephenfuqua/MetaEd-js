@@ -3,7 +3,7 @@ import ffs from 'final-fs';
 import {
   buildMetaEd,
   buildParseTree,
-  fileMapForFailure,
+  fileMapForValidationFailure,
   initializeNamespaces,
   loadFileIndex,
   loadFiles,
@@ -85,7 +85,7 @@ describe.each([['2.0.0', 'ed-fi-model-2.0'], ['2.2.0', 'ed-fi-model-2.2'], ['3.0
         await runGenerators(pluginManifest, state);
       }
 
-      fileMapForFailure(state);
+      fileMapForValidationFailure(state);
 
       const coreResult = state.generatorResults.filter(x => x.generatorName === 'edfiMappingedu.MappingEduGenerator')[0]
         .generatedOutput[0];
