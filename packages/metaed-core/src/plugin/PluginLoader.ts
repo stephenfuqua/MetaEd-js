@@ -1,10 +1,12 @@
 import fs from 'final-fs';
 import path from 'path';
 import Topo from 'topo';
+import semver from 'semver';
 import winston from 'winston';
 import { NoMetaEdPlugin } from './MetaEdPlugin';
 import { PluginManifest } from './PluginManifest';
 import { MetaEdPlugin } from './MetaEdPlugin';
+import { SemVerRange } from '../MetaEdEnvironment';
 
 // Resolve roughly like Typescript does with "node" strategy  (https://www.typescriptlang.org/docs/handbook/module-resolution.html)
 function mainModuleResolver(directory: string, packageJson: any): string {
@@ -38,8 +40,8 @@ function loadPluginManifest(directory: string): PluginManifest | null {
     mainModule: mainModuleResolver(directory, packageJson),
     shortName: packageMetadata.shortName || 'none',
     authorName: packageMetadata.authorName || 'none',
-    metaEdVersion: packageMetadata.metaEdVersion || 'none',
-    technologyVersion: packageMetadata.technologyVersion || 'none',
+    metaEdVersion: (semver.validRange(packageMetadata.metaEdVersion) || '0.0.0') as SemVerRange,
+    technologyVersion: (semver.validRange(packageMetadata.technologyVersion) || '0.0.0') as SemVerRange,
     dependencies: packageMetadata.dependencies || [],
     metaEdPlugin: NoMetaEdPlugin,
     // eslint-disable-next-line no-unneeded-ternary
@@ -47,7 +49,9 @@ function loadPluginManifest(directory: string): PluginManifest | null {
   };
 }
 
-// Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
+/**
+ * Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
+ */
 export function scanDirectories(directories: string | string[]): PluginManifest[] {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
@@ -101,9 +105,7 @@ export function materializePlugin(pluginManifest: PluginManifest) {
       return;
     }
 
-    /* eslint-disable */
-    const pluginFactoryCandidate = require(pluginManifest.mainModule);
-    /* eslint-enable */
+    const pluginFactoryCandidate = require(pluginManifest.mainModule); // eslint-disable-line
 
     // Plugins must have an "initialize" method
     const pluginFactory: () => MetaEdPlugin = pluginFactoryCandidate.initialize;

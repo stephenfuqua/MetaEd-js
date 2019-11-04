@@ -1,4 +1,5 @@
 import { MetaEdPlugin } from './MetaEdPlugin';
+import { SemVerRange } from '../MetaEdEnvironment';
 
 export interface PluginManifest {
   npmName: string;
@@ -7,8 +8,8 @@ export interface PluginManifest {
   mainModule: string;
   shortName: string;
   authorName: string;
-  metaEdVersion: string;
-  technologyVersion: string;
+  metaEdVersion: SemVerRange;
+  technologyVersion: SemVerRange;
   dependencies: string[];
   metaEdPlugin: MetaEdPlugin;
   enabled: boolean;

@@ -9,6 +9,11 @@ import { PropertyIndex } from './model/property/PropertyRepository';
 export type SemVer = string;
 
 /**
+ *
+ */
+export type SemVerRange = string;
+
+/**
  * Provided to validators and enhancers
  */
 export interface MetaEdEnvironment {

@@ -1,5 +1,6 @@
 import path from 'path';
 import winston from 'winston';
+import semver from 'semver';
 import { scanDirectories, materializePlugin } from './PluginLoader';
 import { State } from '../State';
 import { PluginManifest } from './PluginManifest';
@@ -25,6 +26,24 @@ export function scanForPlugins(state: State): PluginManifest[] {
     if (pluginManifest.metaEdPlugin === NoMetaEdPlugin) {
       winston.info(`  Could not load plugin ${pluginManifest.shortName}`);
       return;
+    }
+    if (semver.satisfies(state.metaEd.metaEdVersion, pluginManifest.metaEdVersion)) {
+      winston.info(
+        `  Plugin ${pluginManifest.shortName} is not compatible with MetaEd version ${state.metaEd.metaEdVersion}. Version range supported is '${pluginManifest.metaEdVersion}'. Plugin not loaded.`,
+      );
+      return;
+    }
+
+    // TODO: technology version compatibility check goes here
+
+    // pluginManifest comes in load order, so a plugin's dependencies should already be in the foundPlugins
+    for (const dependencyName of pluginManifest.dependencies) {  // eslint-disable-line
+      if (foundPlugins.find(plugin => plugin.npmName === dependencyName) == null) {
+        winston.info(
+          `  Plugin ${pluginManifest.shortName} requires a plugin named ${dependencyName} which was not found. Plugin not loaded.`,
+        );
+        return;
+      }
     }
 
     foundPlugins.push(pluginManifest);

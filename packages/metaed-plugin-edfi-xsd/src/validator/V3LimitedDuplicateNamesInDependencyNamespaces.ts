@@ -13,7 +13,7 @@ const targetTechnologyVersion: SemVer = '3.x';
 
 function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   return versionSatisfies(
-    (metaEd.plugin.get('edfiOdsApi') as PluginEnvironment).targetTechnologyVersion,
+    (metaEd.plugin.get('edfiXsd') as PluginEnvironment).targetTechnologyVersion,
     targetTechnologyVersion,
   );
 }
