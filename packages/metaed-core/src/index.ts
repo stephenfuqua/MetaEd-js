@@ -90,6 +90,7 @@ export { MetaEdConfiguration } from './MetaEdConfiguration';
 export { PluginManifest } from './plugin/PluginManifest';
 export { MetaEdPlugin } from './plugin/MetaEdPlugin';
 export { MetaEdProject, MetaEdProjectPathPairs } from './project/ProjectTypes';
+export { PipelineFailure } from './pipeline/PipelineFailure';
 
 // Properties
 export { AssociationProperty, AssociationPropertySourceMap } from './model/property/AssociationProperty';

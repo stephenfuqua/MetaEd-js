@@ -3,8 +3,7 @@ import { TextEditor } from 'atom';
 import R from 'ramda';
 import path from 'path';
 import fs from 'fs-extra';
-import { State, ValidationFailure, MetaEdConfiguration } from 'metaed-core';
-import { executePipeline, newState } from 'metaed-core';
+import { State, ValidationFailure, MetaEdConfiguration, PipelineFailure, executePipeline, newState } from 'metaed-core';
 import { MetaEdProjectMetadata } from './Projects';
 import { findMetaEdProjectMetadata } from './Projects';
 import { metaEdConfigurationFor } from './MetaEdConfigurationFactory';
@@ -21,6 +20,16 @@ import {
 let mostRecentState: State = newState();
 
 const limitThirty = R.take(30);
+
+function notifyPipelineFailures(pipelineFailures: PipelineFailure[]) {
+  const message: string = pipelineFailures.map(pipelineFailure => pipelineFailure.message).join('<br/><br/>');
+  atom.notifications.addError(message, {
+    dismissable: true,
+    icon: 'shield',
+  });
+}
+
+const notifyPipelineFailuresOnce = R.once(notifyPipelineFailures);
 
 async function lint(_textEditor: TextEditor): Promise<any[] | null> {
   if (!(await fs.exists(path.resolve(getCoreMetaEdSourceDirectory())))) {
@@ -65,6 +74,7 @@ async function lint(_textEditor: TextEditor): Promise<any[] | null> {
   const linterMessages: Promise<any[] | null> = executePipeline(mostRecentState)
     .then((stateAndFailure: { state: State; failure: boolean }) => {
       mostRecentState = stateAndFailure.state;
+      notifyPipelineFailuresOnce(mostRecentState.pipelineFailure);
       return limitThirty(mostRecentState.validationFailure).map((errorMessage: ValidationFailure) => {
         const tokenLength: number =
           errorMessage.sourceMap && errorMessage.sourceMap.tokenText ? errorMessage.sourceMap.tokenText.length : 0;
