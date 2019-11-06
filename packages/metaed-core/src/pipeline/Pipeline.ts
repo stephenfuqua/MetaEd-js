@@ -99,7 +99,9 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
           await nextMacroTask();
         }
       } catch (err) {
-        winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}'`);
+        const message = `Plugin ${pluginManifest.shortName} threw exception '${err.message}'`;
+        winston.error(`  ${message}`);
+        state.pipelineFailure.push({ category: 'error', message });
         winston.error(err.stack);
         failure = true;
       }

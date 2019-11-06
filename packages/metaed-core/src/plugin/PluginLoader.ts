@@ -7,6 +7,7 @@ import { NoMetaEdPlugin } from './MetaEdPlugin';
 import { PluginManifest } from './PluginManifest';
 import { MetaEdPlugin } from './MetaEdPlugin';
 import { SemVerRange } from '../MetaEdEnvironment';
+import { PipelineFailure } from '../pipeline/PipelineFailure';
 
 // Resolve roughly like Typescript does with "node" strategy  (https://www.typescriptlang.org/docs/handbook/module-resolution.html)
 function mainModuleResolver(directory: string, packageJson: any): string {
@@ -52,7 +53,11 @@ function loadPluginManifest(directory: string): PluginManifest | null {
 /**
  * Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
  */
-export function scanDirectories(directories: string | string[]): PluginManifest[] {
+export function scanDirectories(
+  directories: string | string[],
+): { manifests: PluginManifest[]; pipelineFailures: PipelineFailure[] } {
+  const pipelineFailures: PipelineFailure[] = [];
+
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
@@ -85,24 +90,26 @@ export function scanDirectories(directories: string | string[]): PluginManifest[
             after: manifest.dependencies,
           });
         } catch (err) {
-          winston.error(
-            `PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${manifest.description}' failed due to dependency issue: ${err.message}`,
-          );
+          const message = `Attempted load of npm package ${manifest.npmName} plugin '${manifest.description}' failed due to dependency issue.`;
+          winston.error(`${message}`);
+          pipelineFailures.push({ category: 'error', message });
         }
       }
     });
   });
 
-  return pluginOrdering.nodes;
+  return { manifests: pluginOrdering.nodes, pipelineFailures };
 }
 
-export function materializePlugin(pluginManifest: PluginManifest) {
+export function materializePlugin(pluginManifest: PluginManifest): PipelineFailure[] {
+  const pipelineFailures: PipelineFailure[] = [];
+
   try {
     if (!pluginManifest.mainModule) {
-      winston.error(
-        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  Module entry point not found.`,
-      );
-      return;
+      const message = `Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  Module entry point not found.`;
+      winston.error(`${message}`);
+      pipelineFailures.push({ category: 'error', message });
+      return pipelineFailures;
     }
 
     const pluginFactoryCandidate = require(pluginManifest.mainModule); // eslint-disable-line
@@ -112,14 +119,15 @@ export function materializePlugin(pluginManifest: PluginManifest) {
     if (pluginFactory) {
       pluginManifest.metaEdPlugin = pluginFactory();
     } else {
-      winston.error(
-        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed. initialize() not found.`,
-      );
+      const message = `Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed. initialize() not found.`;
+      winston.error(`${message}`);
+      pipelineFailures.push({ category: 'error', message });
     }
   } catch (err) {
-    winston.error(
-      `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.`,
-    );
-    winston.error(`PluginLoader: Error Message: ${err.message}`);
+    const message = `Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed. Error message: ${err.message}`;
+    winston.error(`${message}`);
+    pipelineFailures.push({ category: 'error', message });
   }
+
+  return pipelineFailures;
 }
