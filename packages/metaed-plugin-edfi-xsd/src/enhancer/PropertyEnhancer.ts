@@ -26,7 +26,6 @@ import { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName = 'PropertyEnhancer';
 
-// Ramda flatmap was too slow
 const queryableFieldsFrom = (topLevelEntities: TopLevelEntity[]): EntityProperty[] => {
   const result: EntityProperty[] = [];
   topLevelEntities.forEach((topLevelEntity: TopLevelEntity) => result.push(...topLevelEntity.queryableFields));
