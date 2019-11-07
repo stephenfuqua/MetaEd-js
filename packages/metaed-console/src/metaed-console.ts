@@ -3,7 +3,13 @@ import chalk from 'chalk';
 import path from 'path';
 import winston from 'winston';
 import Yargs from 'yargs';
-import { executePipeline, newState, newMetaEdConfiguration, findDataStandardVersions } from 'metaed-core';
+import {
+  executePipeline,
+  newState,
+  newMetaEdConfiguration,
+  MetaEdConfiguration,
+  findDataStandardVersions,
+} from 'metaed-core';
 import { State, SemVer } from 'metaed-core';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
@@ -29,7 +35,7 @@ export async function metaEdConsole() {
   const state: State = {
     ...newState(),
     metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
-      ...argv.metaEdConfiguration,
+      ...(argv.metaEdConfiguration as MetaEdConfiguration),
     }),
     pipelineOptions: {
       runValidators: true,

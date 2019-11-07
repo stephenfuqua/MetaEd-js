@@ -1,3 +1,4 @@
+import R from 'ramda';
 import { EnhancerResult, EntityProperty, MetaEdEnvironment, Namespace, PluginEnvironment, SemVer } from 'metaed-core';
 import { isSharedProperty, versionSatisfies } from 'metaed-core';
 import { Column, Table } from 'metaed-plugin-edfi-ods-relational';
@@ -31,8 +32,9 @@ function includeColumn(column: Column, table: Table, foreignKeyColumnIdsOnTable:
 }
 
 function locallyDefinedPropertiesFrom(table: Table): ApiProperty[] {
-  const foreignKeyColumnIdsOnTable: string[] = table.foreignKeys.flatMap(fk =>
-    fk.columnPairs.map(cp => cp.parentTableColumnId),
+  const foreignKeyColumnIdsOnTable: string[] = R.chain(
+    fk => fk.columnPairs.map(cp => cp.parentTableColumnId),
+    table.foreignKeys,
   );
 
   const result: ApiProperty[] = table.columns
