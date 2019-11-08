@@ -21,7 +21,7 @@ describe('when generating id indexes for core namespace table with no id', (): v
       tableId: 'TableName',
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: false,
-      data: { edfiOdsPostgresql: { tableName: 'TableName', tableNameHashTruncated: 'abcdefabcdef' } },
+      data: { edfiOdsPostgresql: { tableName: 'TableName', truncatedTableNameHash: 'abcdefabcdef' } },
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
@@ -49,7 +49,7 @@ describe('when generating id indexes for core namespace table with no type', ():
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,
-      data: { edfiOdsPostgresql: { tableName: 'TableName', tableNameHashTruncated: 'abcdefabcdef' } },
+      data: { edfiOdsPostgresql: { tableName: 'TableName', truncatedTableNameHash: 'abcdefabcdef' } },
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
@@ -86,7 +86,7 @@ describe('when generating id indexes for core namespace table with type', (): vo
       schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: true,
-      data: { edfiOdsPostgresql: { tableName: 'TableNameType', tableNameHashTruncated: 'abcdefabcdef' } },
+      data: { edfiOdsPostgresql: { tableName: 'TableNameType', truncatedTableNameHash: 'abcdefabcdef' } },
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
@@ -128,7 +128,7 @@ describe('when generating id indexes for extension namespace table with no type'
       schema: 'extension',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,
-      data: { edfiOdsPostgresql: { tableName: 'TableName', tableNameHashTruncated: 'abcdefabcdef' } },
+      data: { edfiOdsPostgresql: { tableName: 'TableName', truncatedTableNameHash: 'abcdefabcdef' } },
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 

@@ -42,7 +42,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       // add column names
       table.foreignKeys.forEach(foreignKey => {
         (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).foreignKeyName = `FK_${
-          (foreignKey.parentTable.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).tableNameHashTruncated
+          (foreignKey.parentTable.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).truncatedTableNameHash
         }_${(foreignKey.foreignTable.data.edfiOdsPostgresql as TableEdfiOdsPostgresql).tableName}${
           (foreignKey.data.edfiOdsPostgresql as ForeignKeyEdfiOdsPostgresql).nameSuffix
         }`;

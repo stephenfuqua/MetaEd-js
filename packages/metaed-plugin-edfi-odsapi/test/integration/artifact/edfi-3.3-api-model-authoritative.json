@@ -5823,7 +5823,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "AssessmentIdentificationCode_PK",
-            "postgreSql": "AssessmentAssessmentIdentificationCode_PK"
+            "postgreSql": "AssessmentIdentificationCode_PK"
           }
         }
       ],
@@ -5831,7 +5831,7 @@
       "description": "A unique number or alphanumeric code assigned to an assessment by a school, school system, a state, or other agency or entity.",
       "tableNames": {
         "sqlServer": "AssessmentIdentificationCode",
-        "postgreSql": "AssessmentAssessmentIdentificationCode"
+        "postgreSql": "AssessmentIdentificationCode"
       }
     },
     {
@@ -6380,7 +6380,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "AssessmentPerformanceLevel_PK",
-            "postgreSql": "AssessmentAssessmentPerformanceLevel_PK"
+            "postgreSql": "AssessmentPerformanceLevel_PK"
           }
         }
       ],
@@ -6388,7 +6388,7 @@
       "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:\r\n        1. Specification of performance level by minimum and maximum score\r\n        2. Specification of performance level by cut score, using only minimum score\r\n        3. Specification of performance level without any mapping to scores.",
       "tableNames": {
         "sqlServer": "AssessmentPerformanceLevel",
-        "postgreSql": "AssessmentAssessmentPerformanceLevel"
+        "postgreSql": "AssessmentPerformanceLevel"
       }
     },
     {
@@ -6458,7 +6458,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "AssessmentPeriod_PK",
-            "postgreSql": "AssessmentAssessmentPeriod_PK"
+            "postgreSql": "AssessmentPeriod_PK"
           }
         }
       ],
@@ -6466,7 +6466,7 @@
       "description": "The period or window in which an assessment is supposed to be administered.",
       "tableNames": {
         "sqlServer": "AssessmentPeriod",
-        "postgreSql": "AssessmentAssessmentPeriod"
+        "postgreSql": "AssessmentPeriod"
       }
     },
     {
@@ -6679,7 +6679,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "AssessmentScore_PK",
-            "postgreSql": "AssessmentAssessmentScore_PK"
+            "postgreSql": "AssessmentScore_PK"
           }
         }
       ],
@@ -6687,7 +6687,7 @@
       "description": "Definition of the scores to be expected from this assessment.",
       "tableNames": {
         "sqlServer": "AssessmentScore",
-        "postgreSql": "AssessmentAssessmentScore"
+        "postgreSql": "AssessmentScore"
       }
     },
     {
@@ -9432,7 +9432,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "CourseIdentificationCode_PK",
-            "postgreSql": "CourseCourseIdentificationCode_PK"
+            "postgreSql": "CourseIdentificationCode_PK"
           }
         }
       ],
@@ -9440,7 +9440,7 @@
       "description": "The code that identifies the organization of subject matter and related learning experiences provided for the instruction of students.",
       "tableNames": {
         "sqlServer": "CourseIdentificationCode",
-        "postgreSql": "CourseCourseIdentificationCode"
+        "postgreSql": "CourseIdentificationCode"
       }
     },
     {
@@ -9593,7 +9593,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "CourseLevelCharacteristic_PK",
-            "postgreSql": "CourseCourseLevelCharacteristic_PK"
+            "postgreSql": "CourseLevelCharacteristic_PK"
           }
         }
       ],
@@ -9601,7 +9601,7 @@
       "description": "The type of specific program or designation with which the course is associated (e.g., AP, IB, Dual Credit, CTE).",
       "tableNames": {
         "sqlServer": "CourseLevelCharacteristic",
-        "postgreSql": "CourseCourseLevelCharacteristic"
+        "postgreSql": "CourseLevelCharacteristic"
       }
     },
     {
@@ -10569,7 +10569,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "CredentialEndorsement_PK",
-            "postgreSql": "CredentialCredentialEndorsement_PK"
+            "postgreSql": "CredentialEndorsement_PK"
           }
         }
       ],
@@ -10577,7 +10577,7 @@
       "description": "Endorsements are attachments to teaching certificates and indicate areas of specialization.",
       "tableNames": {
         "sqlServer": "CredentialEndorsement",
-        "postgreSql": "CredentialCredentialEndorsement"
+        "postgreSql": "CredentialEndorsement"
       }
     },
     {
@@ -11924,7 +11924,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "DisciplineIncidentExternalParticipant_PK",
-            "postgreSql": "DisciplineIncidentDisciplineIncidentExternalParticipant_PK"
+            "postgreSql": "DisciplineIncidentExternalParticipant_PK"
           }
         }
       ],
@@ -11932,7 +11932,7 @@
       "description": "Information on an individual involved in the Discipline Incident.",
       "tableNames": {
         "sqlServer": "DisciplineIncidentExternalParticipant",
-        "postgreSql": "DisciplineIncidentDisciplineIncidentExternalParticipant"
+        "postgreSql": "DisciplineIncidentExternalParticipant"
       }
     },
     {
@@ -13207,7 +13207,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "EducationOrganizationCategory_PK",
-            "postgreSql": "EducationOrganizationEducationOrganizationCategory_PK"
+            "postgreSql": "EducationOrganizationCategory_PK"
           }
         }
       ],
@@ -13215,7 +13215,7 @@
       "description": "The classification of the education agency within the geographic boundaries of a state according to the level of administrative and operational control granted by the state.",
       "tableNames": {
         "sqlServer": "EducationOrganizationCategory",
-        "postgreSql": "EducationOrganizationEducationOrganizationCategory"
+        "postgreSql": "EducationOrganizationCategory"
       }
     },
     {
@@ -13293,7 +13293,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "EducationOrganizationIdentificationCode_PK",
-            "postgreSql": "EducationOrganizationEducationOrganizationIdentificationCode_PK"
+            "postgreSql": "EducationOrganizationIdentificationCode_PK"
           }
         }
       ],
@@ -13301,7 +13301,7 @@
       "description": "A unique number or alphanumeric code assigned to an education organization by a school, school system, a state, or other agency or entity.",
       "tableNames": {
         "sqlServer": "EducationOrganizationIdentificationCode",
-        "postgreSql": "EducationOrganizationEducationOrganizationIdentificationCode"
+        "postgreSql": "EducationOrganizationIdentificationCode"
       }
     },
     {
@@ -15808,7 +15808,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "GraduationPlanRequiredAssessmentPerformanceLevel_PK",
-            "postgreSql": "GraduationPlanRequiredAssessmenRequiredAssessmen_876ba3_PK"
+            "postgreSql": "GraduationPlanRequiredAssessmentPerformanceLevel_PK"
           }
         }
       ],
@@ -15816,7 +15816,7 @@
       "description": "Performance level required to be met or exceeded.",
       "tableNames": {
         "sqlServer": "GraduationPlanRequiredAssessmentPerformanceLevel",
-        "postgreSql": "GraduationPlanRequiredAssessmentRequiredAssessmentPerf_876ba3"
+        "postgreSql": "GraduationPlanRequiredAssessmentPerformanceLevel"
       }
     },
     {
@@ -15890,7 +15890,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "GraduationPlanRequiredAssessmentScore_PK",
-            "postgreSql": "GraduationPlanRequiredAssessmentRequiredAssessmentScore_PK"
+            "postgreSql": "GraduationPlanRequiredAssessmentScore_PK"
           }
         }
       ],
@@ -15898,7 +15898,7 @@
       "description": "Score required to be met or exceeded.",
       "tableNames": {
         "sqlServer": "GraduationPlanRequiredAssessmentScore",
-        "postgreSql": "GraduationPlanRequiredAssessmentRequiredAssessmentScore"
+        "postgreSql": "GraduationPlanRequiredAssessmentScore"
       }
     },
     {
@@ -18481,7 +18481,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "LearningObjectiveGradeLevel_PK",
-            "postgreSql": "LearningObjectiveObjectiveGradeLevel_PK"
+            "postgreSql": "LearningObjectiveGradeLevel_PK"
           }
         }
       ],
@@ -18489,7 +18489,7 @@
       "description": "The grade level for which the LearningObjective is targeted. The semantics of null is assumed to mean that the learning objective is not associated with any grade level.",
       "tableNames": {
         "sqlServer": "LearningObjectiveGradeLevel",
-        "postgreSql": "LearningObjectiveObjectiveGradeLevel"
+        "postgreSql": "LearningObjectiveGradeLevel"
       },
       "isDeprecated": true,
       "deprecationReasons": [
@@ -19324,7 +19324,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "LearningStandardIdentificationCode_PK",
-            "postgreSql": "LearningStandardLearningStandardIdentificationCode_PK"
+            "postgreSql": "LearningStandardIdentificationCode_PK"
           }
         }
       ],
@@ -19332,7 +19332,7 @@
       "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a learning standard.",
       "tableNames": {
         "sqlServer": "LearningStandardIdentificationCode",
-        "postgreSql": "LearningStandardLearningStandardIdentificationCode"
+        "postgreSql": "LearningStandardIdentificationCode"
       }
     },
     {
@@ -19587,7 +19587,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "LocalEducationAgencyAccountability_PK",
-            "postgreSql": "LocalEducationAgencyLocalEducationAgencyAccountability_PK"
+            "postgreSql": "LocalEducationAgencyAccountability_PK"
           }
         }
       ],
@@ -19595,7 +19595,7 @@
       "description": "This entity maintains information about federal reporting and accountability for local education agencies.",
       "tableNames": {
         "sqlServer": "LocalEducationAgencyAccountability",
-        "postgreSql": "LocalEducationAgencyLocalEducationAgencyAccountability"
+        "postgreSql": "LocalEducationAgencyAccountability"
       }
     },
     {
@@ -19809,7 +19809,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "LocalEducationAgencyFederalFunds_PK",
-            "postgreSql": "LocalEducationAgencyLocalEducationAgencyFederalFunds_PK"
+            "postgreSql": "LocalEducationAgencyFederalFunds_PK"
           }
         }
       ],
@@ -19817,7 +19817,7 @@
       "description": "Contains the information about the reception and use of federal funds for reporting purposes.",
       "tableNames": {
         "sqlServer": "LocalEducationAgencyFederalFunds",
-        "postgreSql": "LocalEducationAgencyLocalEducationAgencyFederalFunds"
+        "postgreSql": "LocalEducationAgencyFederalFunds"
       }
     },
     {
@@ -20546,7 +20546,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "ObjectiveAssessmentPerformanceLevel_PK",
-            "postgreSql": "ObjectiveAssessmentAssessmentPerformanceLevel_PK"
+            "postgreSql": "ObjectiveAssessmentPerformanceLevel_PK"
           }
         }
       ],
@@ -20554,7 +20554,7 @@
       "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:\r\n        1. Specification of performance level by minimum and maximum score\r\n        2. Specification of performance level by cut score, using only minimum score\r\n        3. Specification of performance level without any mapping to scores",
       "tableNames": {
         "sqlServer": "ObjectiveAssessmentPerformanceLevel",
-        "postgreSql": "ObjectiveAssessmentAssessmentPerformanceLevel"
+        "postgreSql": "ObjectiveAssessmentPerformanceLevel"
       }
     },
     {
@@ -20626,7 +20626,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "ObjectiveAssessmentScore_PK",
-            "postgreSql": "ObjectiveAssessmentAssessmentScore_PK"
+            "postgreSql": "ObjectiveAssessmentScore_PK"
           }
         }
       ],
@@ -20634,7 +20634,7 @@
       "description": "Definition of the scores to be expected from this objective assessment.",
       "tableNames": {
         "sqlServer": "ObjectiveAssessmentScore",
-        "postgreSql": "ObjectiveAssessmentAssessmentScore"
+        "postgreSql": "ObjectiveAssessmentScore"
       }
     },
     {
@@ -21886,7 +21886,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "ParentLanguageUse_PK",
-            "postgreSql": "ParentLanguageLanguageUse_PK"
+            "postgreSql": "ParentLanguageUse_PK"
           }
         }
       ],
@@ -21894,7 +21894,7 @@
       "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language).",
       "tableNames": {
         "sqlServer": "ParentLanguageUse",
-        "postgreSql": "ParentLanguageLanguageUse"
+        "postgreSql": "ParentLanguageUse"
       }
     },
     {
@@ -23016,7 +23016,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "ProgramCharacteristic_PK",
-            "postgreSql": "ProgramProgramCharacteristic_PK"
+            "postgreSql": "ProgramCharacteristic_PK"
           }
         }
       ],
@@ -23024,7 +23024,7 @@
       "description": "Reflects important characteristics of the Program, such as categories or particular indications.",
       "tableNames": {
         "sqlServer": "ProgramCharacteristic",
-        "postgreSql": "ProgramProgramCharacteristic"
+        "postgreSql": "ProgramCharacteristic"
       }
     },
     {
@@ -23226,7 +23226,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "ProgramSponsor_PK",
-            "postgreSql": "ProgramProgramSponsor_PK"
+            "postgreSql": "ProgramSponsor_PK"
           }
         }
       ],
@@ -23234,7 +23234,7 @@
       "description": "Ultimate and intermediate providers of funds for a particular educational or service program or activity, or for an individual's participation in the program or activity (e.g., Federal, State, ESC, District, School, Private Organization).",
       "tableNames": {
         "sqlServer": "ProgramSponsor",
-        "postgreSql": "ProgramProgramSponsor"
+        "postgreSql": "ProgramSponsor"
       }
     },
     {
@@ -24322,7 +24322,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "RestraintEventReason_PK",
-            "postgreSql": "RestraintEventRestraintEventReason_PK"
+            "postgreSql": "RestraintEventReason_PK"
           }
         }
       ],
@@ -24330,7 +24330,7 @@
       "description": "A categorization of the circumstances or reason for the RestraintEvent.",
       "tableNames": {
         "sqlServer": "RestraintEventReason",
-        "postgreSql": "RestraintEventRestraintEventReason"
+        "postgreSql": "RestraintEventReason"
       }
     },
     {
@@ -24466,7 +24466,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "SchoolCategory_PK",
-            "postgreSql": "SchoolSchoolCategory_PK"
+            "postgreSql": "SchoolCategory_PK"
           }
         }
       ],
@@ -24474,7 +24474,7 @@
       "description": "The one or more categories of school. For example: High School, Middle School, and/or Elementary School.",
       "tableNames": {
         "sqlServer": "SchoolCategory",
-        "postgreSql": "SchoolSchoolCategory"
+        "postgreSql": "SchoolCategory"
       }
     },
     {
@@ -25088,7 +25088,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "SectionCharacteristic_PK",
-            "postgreSql": "SectionSectionCharacteristic_PK"
+            "postgreSql": "SectionCharacteristic_PK"
           }
         }
       ],
@@ -25096,7 +25096,7 @@
       "description": "Reflects important characteristics of the Section, such as whether or not attendance is taken and the Section is graded.",
       "tableNames": {
         "sqlServer": "SectionCharacteristic",
-        "postgreSql": "SectionSectionCharacteristic"
+        "postgreSql": "SectionCharacteristic"
       }
     },
     {
@@ -26858,7 +26858,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StaffDisciplineIncidentAssociationDisciplineIncidentParticipationCode_PK",
-            "postgreSql": "StaffDisciplineIncidentAsDisciplineIncidentPartici_7fa4be_PK"
+            "postgreSql": "StaffDisciplineIncidentAssociationDisciplineIncide_7fa4be_PK"
           }
         }
       ],
@@ -26866,7 +26866,7 @@
       "description": "The role or type of participation of a student in a discipline incident (e.g., Victim, Perpetrator, Witness, Reporter).",
       "tableNames": {
         "sqlServer": "StaffDisciplineIncidentAssociationDisciplineIncidentParticipationCode",
-        "postgreSql": "StaffDisciplineIncidentAssocDisciplineIncidentParticipat_7fa4be"
+        "postgreSql": "StaffDisciplineIncidentAssociationDisciplineIncidentPart_7fa4be"
       }
     },
     {
@@ -27938,7 +27938,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StaffIdentificationCode_PK",
-            "postgreSql": "StaffStaffIdentificationCode_PK"
+            "postgreSql": "StaffIdentificationCode_PK"
           }
         }
       ],
@@ -27946,7 +27946,7 @@
       "description": "A unique number or alphanumeric code assigned to a staff member by a school, school system, a state, or other agency or entity.",
       "tableNames": {
         "sqlServer": "StaffIdentificationCode",
-        "postgreSql": "StaffStaffIdentificationCode"
+        "postgreSql": "StaffIdentificationCode"
       }
     },
     {
@@ -28345,7 +28345,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StaffLanguageUse_PK",
-            "postgreSql": "StaffLanguageLanguageUse_PK"
+            "postgreSql": "StaffLanguageUse_PK"
           }
         }
       ],
@@ -28353,7 +28353,7 @@
       "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language).",
       "tableNames": {
         "sqlServer": "StaffLanguageUse",
-        "postgreSql": "StaffLanguageLanguageUse"
+        "postgreSql": "StaffLanguageUse"
       }
     },
     {
@@ -29864,7 +29864,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StateEducationAgencyAccountability_PK",
-            "postgreSql": "StateEducationAgencyStateEducationAgencyAccountability_PK"
+            "postgreSql": "StateEducationAgencyAccountability_PK"
           }
         }
       ],
@@ -29872,7 +29872,7 @@
       "description": "This entity maintains information about federal reporting and accountability for state education agencies.",
       "tableNames": {
         "sqlServer": "StateEducationAgencyAccountability",
-        "postgreSql": "StateEducationAgencyStateEducationAgencyAccountability"
+        "postgreSql": "StateEducationAgencyAccountability"
       }
     },
     {
@@ -29942,7 +29942,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StateEducationAgencyFederalFunds_PK",
-            "postgreSql": "StateEducationAgencyStateEducationAgencyFederalFunds_PK"
+            "postgreSql": "StateEducationAgencyFederalFunds_PK"
           }
         }
       ],
@@ -29950,7 +29950,7 @@
       "description": "Contains the information about the reception and use of federal funds for reporting purposes.",
       "tableNames": {
         "sqlServer": "StateEducationAgencyFederalFunds",
-        "postgreSql": "StateEducationAgencyStateEducationAgencyFederalFunds"
+        "postgreSql": "StateEducationAgencyFederalFunds"
       }
     },
     {
@@ -31916,7 +31916,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentAssessmentItem_PK",
-            "postgreSql": "StudentAssessmentStudentAssessmentItem_PK"
+            "postgreSql": "StudentAssessmentItem_PK"
           }
         }
       ],
@@ -31924,7 +31924,7 @@
       "description": "The student's response to an assessment item and the item-level scores such as correct, incorrect, or met standard.",
       "tableNames": {
         "sqlServer": "StudentAssessmentItem",
-        "postgreSql": "StudentAssessmentStudentAssessmentItem"
+        "postgreSql": "StudentAssessmentItem"
       }
     },
     {
@@ -33825,7 +33825,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationDisabilityDesignation_PK",
-            "postgreSql": "StudentEducationOrgDisabilityDisabilityDesignati_5ee8fd_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationDisabilityDesignation_PK"
           }
         }
       ],
@@ -33833,7 +33833,7 @@
       "description": "Whether the disability is IDEA, Section 504, or other disability designation.",
       "tableNames": {
         "sqlServer": "StudentEducationOrganizationAssociationDisabilityDesignation",
-        "postgreSql": "StudentEducationOrganizDisabilityDisabilityDesignation_5ee8fd"
+        "postgreSql": "StudentEducationOrganizationAssociationDisabilityDesignation"
       }
     },
     {
@@ -34194,7 +34194,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationLanguageUse_PK",
-            "postgreSql": "StudentEducationOrganizationAssociationLanguageLanguageUse_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationLanguageUse_PK"
           }
         }
       ],
@@ -34202,7 +34202,7 @@
       "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language).",
       "tableNames": {
         "sqlServer": "StudentEducationOrganizationAssociationLanguageUse",
-        "postgreSql": "StudentEducationOrganizationAssociationLanguageLanguageUse"
+        "postgreSql": "StudentEducationOrganizationAssociationLanguageUse"
       }
     },
     {
@@ -34336,7 +34336,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationProgramParticipationProgramCharacteristic_PK",
-            "postgreSql": "StudentEducationProgramParticipaProgramCharacter_810575_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationProgramPart_810575_PK"
           }
         }
       ],
@@ -34344,7 +34344,7 @@
       "description": "Reflects important characteristics of the Program, such as categories or particular indications.",
       "tableNames": {
         "sqlServer": "StudentEducationOrganizationAssociationProgramParticipationProgramCharacteristic",
-        "postgreSql": "StudentEducationOrProgramParticipatiProgramCharacteris_810575"
+        "postgreSql": "StudentEducationOrganizationAssociationProgramParticipat_810575"
       }
     },
     {
@@ -34523,7 +34523,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationStudentCharacteristicPeriod_PK",
-            "postgreSql": "StudentEducationOrganStudentCharacteristicPeriod_a18fcf_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationStudentChar_a18fcf_PK"
           }
         }
       ],
@@ -34531,7 +34531,7 @@
       "description": "The time periods for which characteristic was effective.",
       "tableNames": {
         "sqlServer": "StudentEducationOrganizationAssociationStudentCharacteristicPeriod",
-        "postgreSql": "StudentEducationOrganizatioStudentCharacteristicPeriod_a18fcf"
+        "postgreSql": "StudentEducationOrganizationAssociationStudentCharacteri_a18fcf"
       }
     },
     {
@@ -34603,7 +34603,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationStudentIdentificationCode_PK",
-            "postgreSql": "StudentEducationOrganizatStudentIdentificationCode_c15030_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationStudentIden_c15030_PK"
           }
         }
       ],
@@ -34611,7 +34611,7 @@
       "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student.",
       "tableNames": {
         "sqlServer": "StudentEducationOrganizationAssociationStudentIdentificationCode",
-        "postgreSql": "StudentEducationOrganizationAssStudentIdentificationCode_c15030"
+        "postgreSql": "StudentEducationOrganizationAssociationStudentIdentifica_c15030"
       }
     },
     {
@@ -34796,7 +34796,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentEducationOrganizationAssociationStudentIndicatorPeriod_PK",
-            "postgreSql": "StudentEducationOrganizatiStudentIndicatorPeriod_a61b72_PK"
+            "postgreSql": "StudentEducationOrganizationAssociationStudentIndi_a61b72_PK"
           }
         }
       ],
@@ -36014,7 +36014,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentLanguageInstructionProgramAssociationEnglishLanguageProficiencyAssessment_PK",
-            "postgreSql": "StudentLanguageInstructioEnglishLanguageProficienc_1ac620_PK"
+            "postgreSql": "StudentLanguageInstructionProgramAssociationEnglis_1ac620_PK"
           }
         }
       ],
@@ -36022,7 +36022,7 @@
       "description": "Results of yearly English language assessment.",
       "tableNames": {
         "sqlServer": "StudentLanguageInstructionProgramAssociationEnglishLanguageProficiencyAssessment",
-        "postgreSql": "StudentLanguageInstructionPrEnglishLanguageProficiencyAs_1ac620"
+        "postgreSql": "StudentLanguageInstructionProgramAssociationEnglishLangu_1ac620"
       }
     },
     {
@@ -36114,7 +36114,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentLanguageInstructionProgramAssociationLanguageInstructionProgramService_PK",
-            "postgreSql": "StudentLanguageInstructioLanguageInstructionProgra_268e07_PK"
+            "postgreSql": "StudentLanguageInstructionProgramAssociationLangua_268e07_PK"
           }
         }
       ],
@@ -36122,7 +36122,7 @@
       "description": "Indicates the service(s) being provided to the Student by the Language Instruction Program.",
       "tableNames": {
         "sqlServer": "StudentLanguageInstructionProgramAssociationLanguageInstructionProgramService",
-        "postgreSql": "StudentLanguageInstructionPrLanguageInstructionProgramSe_268e07"
+        "postgreSql": "StudentLanguageInstructionProgramAssociationLanguageInst_268e07"
       }
     },
     {
@@ -36606,7 +36606,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentMigrantEducationProgramAssociationMigrantEducationProgramService_PK",
-            "postgreSql": "StudentMigrantEducationPrMigrantEducationProgramSe_d9dcd7_PK"
+            "postgreSql": "StudentMigrantEducationProgramAssociationMigrantEd_d9dcd7_PK"
           }
         }
       ],
@@ -36614,7 +36614,7 @@
       "description": "Indicates the Service(s) being provided to the Student by the Migrant Education Program.",
       "tableNames": {
         "sqlServer": "StudentMigrantEducationProgramAssociationMigrantEducationProgramService",
-        "postgreSql": "StudentMigrantEducationProgrMigrantEducationProgramServi_d9dcd7"
+        "postgreSql": "StudentMigrantEducationProgramAssociationMigrantEducatio_d9dcd7"
       }
     },
     {
@@ -36736,7 +36736,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentNeglectedOrDelinquentProgramAssociationNeglectedOrDelinquentProgramService_PK",
-            "postgreSql": "StudentNeglectedOrDelinquNeglectedOrDelinquentProg_520251_PK"
+            "postgreSql": "StudentNeglectedOrDelinquentProgramAssociationNegl_520251_PK"
           }
         }
       ],
@@ -36744,7 +36744,7 @@
       "description": "Indicates the service(s) being provided to the Student by the Neglected or Delinquent Program.",
       "tableNames": {
         "sqlServer": "StudentNeglectedOrDelinquentProgramAssociationNeglectedOrDelinquentProgramService",
-        "postgreSql": "StudentNeglectedOrDelinquentNeglectedOrDelinquentProgram_520251"
+        "postgreSql": "StudentNeglectedOrDelinquentProgramAssociationNeglectedO_520251"
       }
     },
     {
@@ -38136,7 +38136,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentSchoolFoodServiceProgramAssociationSchoolFoodServiceProgramService_PK",
-            "postgreSql": "StudentSchoolFoodServicePSchoolFoodServiceProgramS_85a0eb_PK"
+            "postgreSql": "StudentSchoolFoodServiceProgramAssociationSchoolFo_85a0eb_PK"
           }
         }
       ],
@@ -38144,7 +38144,7 @@
       "description": "Indicates the service(s) being provided to the Student by the School Food Service Program.",
       "tableNames": {
         "sqlServer": "StudentSchoolFoodServiceProgramAssociationSchoolFoodServiceProgramService",
-        "postgreSql": "StudentSchoolFoodServiceProgSchoolFoodServiceProgramServ_85a0eb"
+        "postgreSql": "StudentSchoolFoodServiceProgramAssociationSchoolFoodServ_85a0eb"
       }
     },
     {
@@ -38814,7 +38814,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentSpecialEducationProgramAssociationDisabilityDesignation_PK",
-            "postgreSql": "StudentSpecialEducaDisabilityDisabilityDesignati_a2fd20_PK"
+            "postgreSql": "StudentSpecialEducationProgramAssociationDisabilit_a2fd20_PK"
           }
         }
       ],
@@ -38822,7 +38822,7 @@
       "description": "Whether the disability is IDEA, Section 504, or other disability designation.",
       "tableNames": {
         "sqlServer": "StudentSpecialEducationProgramAssociationDisabilityDesignation",
-        "postgreSql": "StudentSpecialEducationDisabilityDisabilityDesignation_a2fd20"
+        "postgreSql": "StudentSpecialEducationProgramAssociationDisabilityDesignation"
       }
     },
     {
@@ -38980,7 +38980,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentSpecialEducationProgramAssociationSpecialEducationProgramService_PK",
-            "postgreSql": "StudentSpecialEducationPrSpecialEducationProgramSe_a51ff9_PK"
+            "postgreSql": "StudentSpecialEducationProgramAssociationSpecialEd_a51ff9_PK"
           }
         }
       ],
@@ -38988,7 +38988,7 @@
       "description": "Indicates the Service(s) being provided to the Student by the Special Education Program.",
       "tableNames": {
         "sqlServer": "StudentSpecialEducationProgramAssociationSpecialEducationProgramService",
-        "postgreSql": "StudentSpecialEducationProgrSpecialEducationProgramServi_a51ff9"
+        "postgreSql": "StudentSpecialEducationProgramAssociationSpecialEducatio_a51ff9"
       }
     },
     {
@@ -39047,7 +39047,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentSpecialEducationProgramAssociationSpecialEducationProgramServiceProvider_PK",
-            "postgreSql": "StudentSpecialEdSpecialEducationServiceProvider_bcba5c_PK"
+            "postgreSql": "StudentSpecialEducationProgramAssociationSpecialEd_bcba5c_PK"
           }
         }
       ],
@@ -39055,7 +39055,7 @@
       "description": "The Staff providing the service to the Student.",
       "tableNames": {
         "sqlServer": "StudentSpecialEducationProgramAssociationSpecialEducationProgramServiceProvider",
-        "postgreSql": "StudentSpecialEducaSpecialEducationProServiceProvider_bcba5c"
+        "postgreSql": "StudentSpecialEducationProgramAssociationSpecialEducatio_bcba5c"
       }
     },
     {
@@ -39277,7 +39277,7 @@
           "isUpdatable": false,
           "constraintNames": {
             "sqlServer": "StudentTitleIPartAProgramAssociationTitleIPartAProgramService_PK",
-            "postgreSql": "StudentTitleIPartAProgramTitleIPartAProgramService_8adb29_PK"
+            "postgreSql": "StudentTitleIPartAProgramAssociationTitleIPartAPro_8adb29_PK"
           }
         }
       ],
@@ -118259,7 +118259,7 @@
       "isRequired": true,
       "constraintNames": {
         "sqlServer": "FK_StudentSpecialEducationProgramAssociationSpecialEducationProgramServiceProvider_StudentSpecialEducationProgramAssociationSpec",
-        "postgreSql": "FK_bcba5c_StudentSpecialEducationProgrSpecialEducationProgramServi_a51ff9"
+        "postgreSql": "FK_bcba5c_StudentSpecialEducationProgramAssociationSpecialEducatio_a51ff9"
       }
     },
     {

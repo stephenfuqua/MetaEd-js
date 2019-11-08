@@ -4,7 +4,7 @@ import { tableEntities, Table, Column } from 'metaed-plugin-edfi-ods-relational'
 export interface TableEdfiOdsPostgresql {
   tableName: string;
   primaryKeyName: string;
-  tableNameHashTruncated: string;
+  truncatedTableNameHash: string;
 }
 
 const enhancerName = 'PostgresqlTableSetupEnhancer';

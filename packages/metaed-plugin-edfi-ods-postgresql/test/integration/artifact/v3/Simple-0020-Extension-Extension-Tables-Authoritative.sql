@@ -82,14 +82,14 @@ CREATE TABLE extension.StaffMyCollection (
 ); 
 ALTER TABLE extension.StaffMyCollection ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 
--- Table extension.StaffStaffRatingLevel --
-CREATE TABLE extension.StaffStaffRatingLevel (
+-- Table extension.StaffRatingLevel --
+CREATE TABLE extension.StaffRatingLevel (
     StaffUSI INT NOT NULL,
     StaffEvaluationLevel VARCHAR(50) NOT NULL,
     MaxLevel DECIMAL(6, 3) NOT NULL,
     MinLevel DECIMAL(6, 3) NULL,
     CreateDate TIMESTAMP NOT NULL,
-    CONSTRAINT StaffStaffRatingLevel_PK PRIMARY KEY (StaffUSI)
+    CONSTRAINT StaffRatingLevel_PK PRIMARY KEY (StaffUSI)
 ); 
-ALTER TABLE extension.StaffStaffRatingLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
+ALTER TABLE extension.StaffRatingLevel ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 

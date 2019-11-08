@@ -69,8 +69,8 @@ export function identifiersFrom(table: Table): EntityIdentifier[] {
       isUpdatable: isUpdatable(table),
       constraintNames: {
         sqlServer: `UX_${table.data.edfiOdsSqlServer.tableName}_Id`,
-        // tableNameHashTruncated is a 6 character hash
-        postgreSql: `UX_${table.data.edfiOdsPostgresql.tableNameHashTruncated}_Id`,
+        // truncatedTableNameHash is a 6 character hash
+        postgreSql: `UX_${table.data.edfiOdsPostgresql.truncatedTableNameHash}_Id`,
       },
     });
   }
