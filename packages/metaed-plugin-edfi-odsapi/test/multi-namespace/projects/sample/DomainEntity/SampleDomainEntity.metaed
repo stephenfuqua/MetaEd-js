@@ -10,3 +10,6 @@ Domain Entity SampleDomainEntity
     domain entity EdFi.EdfiDomainEntity
         documentation "doc"
         is required
+    common SampleCommonSubclass
+        documentation "doc"
+        is optional

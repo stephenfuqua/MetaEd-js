@@ -91,6 +91,22 @@ GO
 ALTER TABLE [extension].[StaffEvaluationRating] ADD CONSTRAINT [StaffEvaluationRating_DF_LastModifiedDate] DEFAULT (getdate()) FOR [LastModifiedDate]
 GO
 
+-- Table [extension].[StaffEvaluationSampleCommonSubclass] --
+CREATE TABLE [extension].[StaffEvaluationSampleCommonSubclass] (
+    [SchoolYear] [SMALLINT] NOT NULL,
+    [StaffEvaluationTitle] [NVARCHAR](50) NOT NULL,
+    [StatusTwo] [BIT] NOT NULL,
+    [StatusOne] [BIT] NOT NULL,
+    [CreateDate] [DATETIME] NOT NULL,
+    CONSTRAINT [StaffEvaluationSampleCommonSubclass_PK] PRIMARY KEY CLUSTERED (
+        [SchoolYear] ASC,
+        [StaffEvaluationTitle] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [extension].[StaffEvaluationSampleCommonSubclass] ADD CONSTRAINT [StaffEvaluationSampleCommonSubclass_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
+GO
+
 -- Table [extension].[StaffEvaluationStaffRatingLevel] --
 CREATE TABLE [extension].[StaffEvaluationStaffRatingLevel] (
     [SchoolYear] [SMALLINT] NOT NULL,

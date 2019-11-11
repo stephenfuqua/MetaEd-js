@@ -1,0 +1,5 @@
+Common SampleCommon
+    documentation "Sample common documentation"
+    bool StatusOne
+        documentation "The status for one."
+        is required

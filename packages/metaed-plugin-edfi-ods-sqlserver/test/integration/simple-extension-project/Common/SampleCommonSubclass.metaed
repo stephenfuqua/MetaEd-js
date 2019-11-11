@@ -1,0 +1,5 @@
+Common SampleCommonSubclass based on SampleCommon
+    documentation "Sample common subclass documentation"
+    bool StatusTwo
+        documentation "The status for two."
+        is required

@@ -88,6 +88,22 @@ GO
 ALTER TABLE [extension].[StaffEvaluationRating] ADD CONSTRAINT [StaffEvaluationRating_DF_LastModifiedDate] DEFAULT (getdate()) FOR [LastModifiedDate]
 GO
 
+-- Table [extension].[StaffEvaluationSampleCommonSubclass] --
+CREATE TABLE [extension].[StaffEvaluationSampleCommonSubclass] (
+    [SchoolYear] [SMALLINT] NOT NULL,
+    [StaffEvaluationTitle] [NVARCHAR](50) NOT NULL,
+    [StatusTwo] [BIT] NOT NULL,
+    [StatusOne] [BIT] NOT NULL,
+    [CreateDate] [DATETIME] NOT NULL,
+    CONSTRAINT [StaffEvaluationSampleCommonSubclass_PK] PRIMARY KEY CLUSTERED (
+        [SchoolYear] ASC,
+        [StaffEvaluationTitle] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [extension].[StaffEvaluationSampleCommonSubclass] ADD CONSTRAINT [StaffEvaluationSampleCommonSubclass_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
+GO
+
 -- Table [extension].[StaffEvaluationStaffRatingLevel] --
 CREATE TABLE [extension].[StaffEvaluationStaffRatingLevel] (
     [SchoolYear] [SMALLINT] NOT NULL,
@@ -181,6 +197,11 @@ CREATE NONCLUSTERED INDEX [FK_StaffEvaluationRating_StaffEvaluation]
 ON [extension].[StaffEvaluationRating] ([SchoolYear] ASC, [StaffEvaluationTitle] ASC)
 GO
 
+ALTER TABLE [extension].[StaffEvaluationSampleCommonSubclass] WITH CHECK ADD CONSTRAINT [FK_StaffEvaluationSampleCommonSubclass_StaffEvaluation] FOREIGN KEY ([SchoolYear], [StaffEvaluationTitle])
+REFERENCES [extension].[StaffEvaluation] ([SchoolYear], [StaffEvaluationTitle])
+ON DELETE CASCADE
+GO
+
 ALTER TABLE [extension].[StaffEvaluationStaffRatingLevel] WITH CHECK ADD CONSTRAINT [FK_StaffEvaluationStaffRatingLevel_StaffEvaluation] FOREIGN KEY ([SchoolYear], [StaffEvaluationTitle])
 REFERENCES [extension].[StaffEvaluation] ([SchoolYear], [StaffEvaluationTitle])
 ON DELETE CASCADE
@@ -263,6 +284,18 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'A unique alphanumeric code assigned to a staff.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationRating', @level2type=N'COLUMN', @level2name=N'StaffUSI'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The numerical summary rating or score for the evaluation.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationRating', @level2type=N'COLUMN', @level2name=N'Rating'
+GO
+
+-- Extended Properties [extension].[StaffEvaluationSampleCommonSubclass] --
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'doc', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationSampleCommonSubclass'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The school year the Staff evaluation is applied.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationSampleCommonSubclass', @level2type=N'COLUMN', @level2name=N'SchoolYear'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The name or title of the staff evaluation.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationSampleCommonSubclass', @level2type=N'COLUMN', @level2name=N'StaffEvaluationTitle'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The status for two.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationSampleCommonSubclass', @level2type=N'COLUMN', @level2name=N'StatusTwo'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The status for one.', @level0type=N'SCHEMA', @level0name=N'extension', @level1type=N'TABLE', @level1name=N'StaffEvaluationSampleCommonSubclass', @level2type=N'COLUMN', @level2name=N'StatusOne'
 GO
 
 -- Extended Properties [extension].[StaffEvaluationStaffRatingLevel] --
