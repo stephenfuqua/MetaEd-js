@@ -22,11 +22,13 @@ let mostRecentState: State = newState();
 const limitThirty = R.take(30);
 
 function notifyPipelineFailures(pipelineFailures: PipelineFailure[]) {
-  const message: string = pipelineFailures.map(pipelineFailure => pipelineFailure.message).join('<br/><br/>');
-  atom.notifications.addError(message, {
-    dismissable: true,
-    icon: 'shield',
-  });
+  if (pipelineFailures.find(pipelineFailure => pipelineFailure.message)) {
+    const message: string = pipelineFailures.map(pipelineFailure => pipelineFailure.message).join('<br/><br/>');
+    atom.notifications.addError(message, {
+      dismissable: true,
+      icon: 'shield',
+    });
+  }
 }
 
 const notifyPipelineFailuresOnce = R.once(notifyPipelineFailures);
