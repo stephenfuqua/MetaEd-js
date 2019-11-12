@@ -48,6 +48,8 @@ SimpleType-0030-Extension-extension-ForeignKeys.sql
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json
 
+/packages/metaed-odsapi-deploy/test/integration/output/*
+
 /packages/metaed-plugin-edfi-mappingedu/test/integration/artifact/*-generated.xlsx
 
 TrackedDeleteTables-v3.1.sql

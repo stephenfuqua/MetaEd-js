@@ -9,11 +9,48 @@ import {
   executePipeline,
   newPipelineOptions,
   newMetaEdEnvironment,
+  findDataStandardVersions,
 } from 'metaed-core';
-import { SemVer, MetaEdConfiguration, State, PipelineOptions, MetaEdEnvironment, MetaEdProjectPathPairs } from 'metaed-core';
-import { executeDeploy, dataStandardVersionFor } from './deploy';
+import {
+  SemVer,
+  MetaEdConfiguration,
+  State,
+  PipelineOptions,
+  MetaEdEnvironment,
+  MetaEdProjectPathPairs,
+  MetaEdProject,
+} from 'metaed-core';
+import { execute as DeployCore } from './task/DeployCore';
+import { execute as DeployCoreV2 } from './task/DeployCoreV2';
+import { execute as DeployCoreV3 } from './task/DeployCoreV3';
+import { execute as DeployExtension } from './task/DeployExtension';
+import { execute as DeployExtensionV2 } from './task/DeployExtensionV2';
+import { execute as DeployExtensionV3 } from './task/DeployExtensionV3';
+import { execute as ExtensionProjectsExists } from './task/ExtensionProjectsExists';
+import { execute as LegacyDirectoryExists } from './task/LegacyDirectoryExists';
+import { execute as RefreshProject } from './task/RefreshProject';
+import { execute as RemoveExtensionArtifacts } from './task/RemoveExtensionArtifacts';
+import { execute as RemoveExtensionArtifactsV2andV3 } from './task/RemoveExtensionArtifactsV2andV3';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
+
+export function dataStandardVersionFor(projects: MetaEdProject[]): SemVer {
+  const dataStandardVersions: SemVer[] = findDataStandardVersions(projects);
+  const errorMessage: string[] = [];
+
+  if (dataStandardVersions.length === 0) {
+    errorMessage.push('No data standard project found.  Aborting.');
+  } else if (dataStandardVersions.length > 1) {
+    errorMessage.push('Multiple data standard projects found.  Aborting.');
+  } else {
+    return dataStandardVersions[0];
+  }
+  if (errorMessage.length > 0) {
+    errorMessage.forEach(err => winston.error(err));
+    process.exit(1);
+  }
+  return '0.0.0';
+}
 
 export async function metaEdDeploy() {
   const startTime = Date.now();
@@ -109,8 +146,32 @@ export async function metaEdDeploy() {
   }
 
   try {
-    const success: boolean = await executeDeploy(metaEdConfiguration, yargs.argv.core, yargs.argv.suppressDelete);
-    if (!success) process.exitCode = 1;
+    const tasks = [
+      ExtensionProjectsExists,
+
+      RemoveExtensionArtifactsV2andV3,
+      RemoveExtensionArtifacts,
+
+      DeployCoreV2,
+      DeployCoreV3,
+      DeployCore,
+
+      DeployExtensionV2,
+      DeployExtensionV3,
+      DeployExtension,
+
+      RefreshProject,
+
+      LegacyDirectoryExists,
+    ];
+
+    let success = false;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const task of tasks) {
+      success = await task(metaEdConfiguration, yargs.argv.core, yargs.argv.suppressDelete);
+
+      if (!success) process.exitCode = 1;
+    }
   } catch (error) {
     winston.error(error);
     process.exitCode = 1;
