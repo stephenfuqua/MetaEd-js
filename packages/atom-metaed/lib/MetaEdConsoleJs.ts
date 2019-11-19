@@ -225,10 +225,10 @@ function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[], ou
     (pm: MetaEdProjectMetadata) => !pm.isExtensionProject,
   );
 
-  if (coreProjectMetadata.length > 1) {
-    outputWindow.addMessage('MetaEd does not support multiple core MetaEd projects.');
-    return false;
-  }
+  // if (coreProjectMetadata.length > 1) {
+  //   outputWindow.addMessage('MetaEd does not support multiple core MetaEd projects.');
+  //   return false;
+  // }
 
   // Note - we are intentionally not validating that there are multiple extension projects with the same namespace
 

@@ -24,6 +24,8 @@ import { SharedIntegerBuilder } from './SharedIntegerBuilder';
 import { SharedStringBuilder } from './SharedStringBuilder';
 import { StringTypeBuilder } from './StringTypeBuilder';
 
+import { SyntaxValidatingBuilder } from './SyntaxValidatingBuilder';
+
 export async function execute(state: State): Promise<void> {
   const builders: MetaEdGrammarListener[] = [
     // NamespaceBuilder goes first, all others have a dependency on it
@@ -49,6 +51,8 @@ export async function execute(state: State): Promise<void> {
     new SharedIntegerBuilder(state.metaEd, state.validationFailure),
     new SharedStringBuilder(state.metaEd, state.validationFailure),
     new StringTypeBuilder(state.metaEd, state.validationFailure),
+
+    new SyntaxValidatingBuilder(state.metaEd, state.validationFailure),
   ];
   const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
 
