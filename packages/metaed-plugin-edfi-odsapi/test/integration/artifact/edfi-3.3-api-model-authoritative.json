@@ -5317,7 +5317,7 @@
           "propertyType": {
             "dbType": "Decimal",
             "maxLength": 0,
-            "precision": 10,
+            "precision": 15,
             "scale": 5,
             "isNullable": true
           },
@@ -6008,7 +6008,7 @@
           "propertyType": {
             "dbType": "Decimal",
             "maxLength": 0,
-            "precision": 10,
+            "precision": 15,
             "scale": 5,
             "isNullable": true
           },
@@ -20255,7 +20255,7 @@
           "propertyType": {
             "dbType": "Decimal",
             "maxLength": 0,
-            "precision": 10,
+            "precision": 15,
             "scale": 5,
             "isNullable": true
           },
@@ -31872,7 +31872,7 @@
           "propertyType": {
             "dbType": "Decimal",
             "maxLength": 0,
-            "precision": 10,
+            "precision": 15,
             "scale": 5,
             "isNullable": true
           },
