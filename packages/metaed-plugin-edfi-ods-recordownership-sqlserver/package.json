@@ -1,7 +1,7 @@
 {
   "name": "metaed-plugin-edfi-ods-recordownership-sqlserver",
   "main": "dist/index.js",
-  "version": "2.0.1-dev.13",
+  "version": "2.0.1-dev.14",
   "description": "Ed-Fi Alliance ODS/API Record Ownership for SQL Server plugin",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -28,11 +28,11 @@
   },
   "dependencies": {
     "handlebars": "^4.0.11",
-    "metaed-core": "2.0.1-dev.13",
-    "metaed-plugin-edfi-ods-recordownership": "2.0.1-dev.13",
-    "metaed-plugin-edfi-ods-relational": "2.0.1-dev.13",
-    "metaed-plugin-edfi-ods-sqlserver": "2.0.1-dev.13",
-    "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.13"
+    "metaed-core": "2.0.1-dev.14",
+    "metaed-plugin-edfi-ods-recordownership": "2.0.1-dev.14",
+    "metaed-plugin-edfi-ods-relational": "2.0.1-dev.14",
+    "metaed-plugin-edfi-ods-sqlserver": "2.0.1-dev.14",
+    "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.14"
   },
   "devDependencies": {
     "final-fs": "^1.6.1"
