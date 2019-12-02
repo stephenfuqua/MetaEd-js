@@ -5,7 +5,7 @@ import path from 'path';
 import winston from 'winston';
 import { CopyOptions } from '../CopyOptions';
 
-const corePath: string = 'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts';
+const corePath: string = 'Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts';
 const artifacts: CopyOptions[] = [
   { src: 'ApiMetadata/', dest: `${corePath}/Metadata/` },
   { src: 'Database/SQLServer/ODS/Data/', dest: `${corePath}/MsSql/Data/Ods` },

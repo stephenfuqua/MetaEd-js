@@ -35,14 +35,14 @@ describe('when deploying 3.3 core artifacts', (): void => {
   it('should have correct directory paths', (): void => {
     expect(result).toMatchInlineSnapshot(`
       Array [
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/Metadata/ApiModel.json",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/Metadata/InterchangeOrderMetadata.xml",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/MsSql/Data/Ods/0020-SchoolYears.sql",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/MsSql/Structure/Ods/0010-Schemas.sql",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/PgSql/Data/Ods/0020-Pg-SchoolYears.sql",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/PgSql/Structure/Ods/0010-Pg-Schemas.sql",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/Schemas/Ed-Fi-Core.xsd",
-        "Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard/Artifacts/Schemas/Interchange-AssessmentMetadata.xsd",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/Metadata/ApiModel.json",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/Metadata/InterchangeOrderMetadata.xml",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/MsSql/Data/Ods/0020-SchoolYears.sql",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/MsSql/Structure/Ods/0010-Schemas.sql",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/PgSql/Data/Ods/0020-Pg-SchoolYears.sql",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/PgSql/Structure/Ods/0010-Pg-Schemas.sql",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/Schemas/Ed-Fi-Core.xsd",
+        "Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts/Schemas/Interchange-AssessmentMetadata.xsd",
       ]
     `);
   });
