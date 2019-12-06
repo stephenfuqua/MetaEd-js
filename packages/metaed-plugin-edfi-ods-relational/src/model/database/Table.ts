@@ -215,7 +215,7 @@ export function getColumnWithStrongestConstraint(
   const existingColumn = table.columns.find(x => x.columnId === column.columnId);
   if (existingColumn == null) return column;
 
-  winston.info(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+  winston.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
   table.columns = R.reject((c: Column) => c.columnId === column.columnId)(table.columns);
   return constraintStrategy(existingColumn, column);
 }

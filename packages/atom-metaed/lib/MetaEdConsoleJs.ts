@@ -113,7 +113,7 @@ async function verifyBuildPaths(outputWindow: OutputWindow): Promise<BuildPaths 
       `Unable to find package.json file in metaed-console at configured path "${metaEdConsoleDirectory}".`,
     );
     outputWindow.addMessage(
-      'Please configure MetaEd JS Console Source Directory under the atom-metaed package to target the metaed-console root directory.',
+      'Please configure MetaEd Console Source Directory under the atom-metaed package to target the metaed-console root directory.',
     );
     return null;
   }
@@ -176,7 +176,7 @@ async function executeBuild(
     // const taskParams = ['/s', '/c', `node  --inspect-brk "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
     const taskParams = ['/s', '/c', `node "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
-    console.log(`[MetaEdConsoleJS] Executing Build '${cmdExePath}' with parameters:`, taskParams);
+    console.log(`Executing Build '${cmdExePath}' with parameters:`, taskParams);
 
     const childProcess = spawn(cmdExePath, taskParams, {
       cwd: metaEdConsoleDirectory,
@@ -197,7 +197,7 @@ async function executeBuild(
     childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
-        outputWindow.addMessage(`MetaEd JS build complete.`);
+        outputWindow.addMessage(`MetaEd build complete.`);
       } else {
         outputWindow.addMessage(`Error on MetaEd build.`);
         resultNotification = failNotification;
@@ -268,7 +268,7 @@ function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[], ou
 export async function build(outputWindow: OutputWindow): Promise<boolean> {
   try {
     outputWindow.clear();
-    outputWindow.addMessage(`Beginning MetaEd JS build...`);
+    outputWindow.addMessage(`Beginning MetaEd build.`);
 
     const buildPaths: BuildPaths | null = await verifyBuildPaths(outputWindow);
     if (!buildPaths) return false;
@@ -296,7 +296,7 @@ export async function build(outputWindow: OutputWindow): Promise<boolean> {
       metaEdConfiguration.projectPaths.push(pm.projectPath);
     });
 
-    console.log('[MetaEdConsoleJS] build() using config: ', metaEdConfiguration);
+    console.log('build() using config: ', metaEdConfiguration);
 
     if (!(await cleanUpMetaEdArtifacts(artifactDirectory, outputWindow))) return false;
 
@@ -344,7 +344,7 @@ async function executeDeploy(
     if (shouldDeployCore) taskParams.push('--core');
     if (suppressDeleteOnDeploy()) taskParams.push('--suppressDelete');
 
-    console.log(`[MetaEdConsoleJS] Executing Deploy '${cmdExePath}' with parameters:`, taskParams);
+    console.log(`Executing Deploy '${cmdExePath}' with parameters:`, taskParams);
 
     const childProcess = spawn(cmdExePath, taskParams, {
       cwd: metaEdConsoleDirectory,
@@ -365,9 +365,9 @@ async function executeDeploy(
     childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
-        outputWindow.addMessage(`MetaEd JS Deploy complete.`);
+        outputWindow.addMessage(`MetaEd Deploy complete.`);
       } else {
-        outputWindow.addMessage(`Error on MetaEd JS Deploy.`);
+        outputWindow.addMessage(`Error on MetaEd Deploy.`);
         resultNotification = failNotification;
       }
       // @ts-ignore: TODO: addNotification() is old and should be replaced by addXXX functions
@@ -379,7 +379,7 @@ async function executeDeploy(
 
 export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boolean = false): Promise<boolean> {
   try {
-    outputWindow.addMessage(`Beginning MetaEd JS Deploy...`);
+    outputWindow.addMessage(`Beginning MetaEd Deploy.`);
 
     const buildPaths: BuildPaths | null = await verifyBuildPaths(outputWindow);
     if (!buildPaths) return false;
@@ -409,7 +409,7 @@ export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boole
 
     metaEdConfiguration.deployDirectory = getEdfiOdsApiSourceDirectory();
 
-    console.log('[MetaEdConsoleJS] deploy() using config: ', metaEdConfiguration);
+    console.log('deploy() using config: ', metaEdConfiguration);
 
     tmp.setGracefulCleanup();
     const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });

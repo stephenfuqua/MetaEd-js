@@ -2,7 +2,7 @@
   "name": "metaed-plugin-edfi-ods-sqlserver",
   "main": "dist/index.js",
   "version": "2.0.1-dev.14",
-  "description": "Ed-Fi Alliance SQL Server ODS plugin for MetaEd",
+  "description": "Ed-Fi SQL Server ODS plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"

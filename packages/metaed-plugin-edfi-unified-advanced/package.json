@@ -2,7 +2,7 @@
   "name": "metaed-plugin-edfi-unified-advanced",
   "main": "dist/index.js",
   "version": "2.0.1-dev.14",
-  "description": "Ed-Fi Alliance advanced unified plugin for MetaEd",
+  "description": "Ed-Fi Advanced Unified plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"

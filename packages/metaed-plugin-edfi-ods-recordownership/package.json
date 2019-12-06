@@ -2,7 +2,7 @@
   "name": "metaed-plugin-edfi-ods-recordownership",
   "main": "dist/index.js",
   "version": "2.0.1-dev.14",
-  "description": "Ed-Fi Alliance ODS/API Record Level Ownership plugin for MetaEd",
+  "description": "Ed-Fi ODS/API Record Ownership plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"

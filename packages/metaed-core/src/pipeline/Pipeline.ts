@@ -28,39 +28,40 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
 
   let failure = false;
 
-  winston.info('Initialize MetaEdEnvironment...');
+  winston.debug('Initialize MetaEdEnvironment');
   initializeMetaEdEnvironment(state);
   await nextMacroTask();
 
-  winston.info('Loading plugins...');
+  winston.info('Loading plugins');
   loadPlugins(state);
   await nextMacroTask();
 
-  winston.info('Loading source files...');
+  winston.info('Loading .metaed files');
   if (!loadFiles(state)) return { state, failure: true };
   await nextMacroTask();
 
-  winston.info('Validating syntax...');
+  winston.debug('Validating syntax');
   validateSyntax(buildTopLevelEntity, state);
   await nextMacroTask();
 
-  winston.info('Loading file indexes...');
+  winston.debug('Loading file indexes');
   loadFileIndex(state);
   await nextMacroTask();
 
-  winston.info('Building parse tree...');
+  winston.debug('Building parse tree');
   buildParseTree(buildMetaEd, state);
   await nextMacroTask();
 
-  winston.info('Walking builders...');
+  winston.debug('Walking builders');
   await walkBuilders(state);
 
   initializeNamespaces(state);
   await nextMacroTask();
 
-  winston.info('Loading plugin configuration files...');
+  winston.debug('Loading plugin configuration files');
   await loadPluginConfiguration(state);
 
+  winston.info('Running plugins');
   // eslint-disable-next-line no-restricted-syntax
   for (const pluginManifest of state.pluginManifest) {
     const pluginEnvironment: PluginEnvironment | undefined = state.metaEd.plugin.get(pluginManifest.shortName);
@@ -70,10 +71,10 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
       versionSatisfies(pluginEnvironment.targetTechnologyVersion, pluginManifest.technologyVersion)
     ) {
       try {
-        winston.info(`${pluginManifest.shortName} plugin:`);
+        winston.info(`- ${pluginManifest.description}`);
         if (state.pipelineOptions.runValidators) {
           if (pluginManifest.metaEdPlugin.validator.length > 0) {
-            winston.info(`  Running ${pluginManifest.metaEdPlugin.validator.length} validators...`);
+            winston.debug(`- Running ${pluginManifest.metaEdPlugin.validator.length} validators...`);
           }
           runValidators(pluginManifest, state);
           await nextMacroTask();
@@ -85,7 +86,7 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
 
         if (state.pipelineOptions.runEnhancers) {
           if (pluginManifest.metaEdPlugin.enhancer.length > 0) {
-            winston.info(`  Running ${pluginManifest.metaEdPlugin.enhancer.length} enhancers...`);
+            winston.debug(`- Running ${pluginManifest.metaEdPlugin.enhancer.length} enhancers...`);
           }
           await runEnhancers(pluginManifest, state);
           await nextMacroTask();
@@ -93,7 +94,7 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
 
         if (state.pipelineOptions.runGenerators) {
           if (pluginManifest.metaEdPlugin.generator.length > 0) {
-            winston.info(`  Running ${pluginManifest.metaEdPlugin.generator.length} generators...`);
+            winston.debug(`- Running ${pluginManifest.metaEdPlugin.generator.length} generators...`);
           }
           await runGenerators(pluginManifest, state);
           await nextMacroTask();
@@ -109,7 +110,7 @@ export async function executePipeline(state: State): Promise<{ state: State; fai
   }
 
   if (state.pipelineOptions.runGenerators && !failure) {
-    winston.info('Writing output:');
+    winston.info('Writing output');
     if (!writeOutput(state)) return { state, failure: true };
     await nextMacroTask();
   }

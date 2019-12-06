@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import ffs from 'final-fs';
 import klawSync from 'klaw-sync';
 import path from 'path';
@@ -18,7 +17,7 @@ function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {
       ffs.writeFileSync(`${outputDirectory}/${folderName}/${output.fileName}`, output.resultString, 'utf-8');
     else if (output.resultStream)
       ffs.writeFileSync(`${outputDirectory}/${folderName}/${output.fileName}`, output.resultStream);
-    else winston.info(`No output stream or string for ${result.generatorName}`);
+    else winston.debug(`No output stream or string for ${result.generatorName}`);
   });
 }
 
@@ -34,7 +33,7 @@ export function execute(state: State): boolean {
     outputDirectory = path.resolve(defaultRootDirectory.path, METAED_OUTPUT);
   }
 
-  winston.info(chalk.green('  Artifact Directory: ') + outputDirectory);
+  winston.info(`- Artifact Directory: ${outputDirectory}`);
 
   try {
     if (ffs.existsSync(outputDirectory)) {
@@ -61,7 +60,7 @@ export function execute(state: State): boolean {
     state.generatorResults.forEach(result => {
       // if (result is a Promise)
       if ((result as any).then) {
-        winston.info('Resolving Promise:');
+        winston.debug('Resolving Promise:');
         (result as any).then(resolvedResult => {
           writeOutputFiles(resolvedResult, outputDirectory);
         });

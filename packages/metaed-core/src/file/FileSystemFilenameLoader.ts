@@ -61,7 +61,7 @@ export function loadFiles(state: State): boolean {
       });
 
       winston.info(
-        `  ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
+        `- ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
       );
 
       fileSets.push(fileSet);

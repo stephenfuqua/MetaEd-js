@@ -42,7 +42,9 @@ export function scanForPlugins(state: State): PluginManifest[] {
     // TODO: technology version compatibility check goes here
 
     // pluginManifest comes in load order, so a plugin's dependencies should already be in the foundPlugins
-    for (const dependencyName of pluginManifest.dependencies) { // eslint-disable-line
+    // eslint-disable-next-line no-restricted-syntax
+    for (const dependencyName of pluginManifest.dependencies) {
+      // eslint-disable-line
       if (foundPlugins.find(plugin => plugin.npmName === dependencyName) == null) {
         const message = `Plugin ${pluginManifest.shortName} requires a plugin named ${dependencyName} which was not found. Plugin not loaded.`;
         winston.info(`  ${message}`);
@@ -74,9 +76,7 @@ export function loadPlugins(state: State): void {
       ? state.metaEdConfiguration.pluginTechVersion[pluginManifest.shortName].targetTechnologyVersion
       : state.metaEdConfiguration.defaultPluginTechVersion;
 
-    winston.info(
-      `  ${pluginManifest.shortName} version ${pluginManifest.version} targeting tech version ${targetTechnologyVersion}`,
-    );
+    winston.info(`- ${pluginManifest.shortName} version ${pluginManifest.version}, tech version ${targetTechnologyVersion}`);
 
     state.metaEd.plugin.set(pluginManifest.shortName, {
       ...newPluginEnvironment(),
