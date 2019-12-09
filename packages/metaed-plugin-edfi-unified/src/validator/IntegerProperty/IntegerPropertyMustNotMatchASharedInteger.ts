@@ -5,11 +5,7 @@ export function validate(metaEd: MetaEdEnvironment): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
 
   metaEd.propertyIndex.integer.forEach(property => {
-    const referencedEntity: ModelBase | null = findFirstEntity(
-      property.metaEdName,
-      [property.namespace, ...property.namespace.dependencies],
-      'sharedInteger',
-    );
+    const referencedEntity: ModelBase | null = findFirstEntity(property.metaEdName, [property.namespace], 'sharedInteger');
 
     if (referencedEntity != null) {
       failures.push({
