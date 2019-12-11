@@ -50,7 +50,11 @@ export const V3OrGreater: SemVer = '>=3.x';
 /**
  * https://github.com/npm/node-semver
  */
-export const versionSatisfies = (version: SemVer, range: SemVer): boolean => semver.satisfies(version, range);
+export const versionSatisfies = (version: SemVer, range: SemVer): boolean => {
+  const semverWithPrereleaseStripped = semver.coerce(version);
+  if (semverWithPrereleaseStripped == null) return false;
+  return semver.satisfies(semverWithPrereleaseStripped, range);
+};
 
 /**
  *

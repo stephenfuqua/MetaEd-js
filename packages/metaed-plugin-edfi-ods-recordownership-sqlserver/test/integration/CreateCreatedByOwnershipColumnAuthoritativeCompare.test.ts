@@ -63,13 +63,13 @@ describe('when generating CreatedByOwnership columns and comparing to ODS/API 3.
           targetTechnologyVersion: '3.3.0',
         },
       },
-      projectPaths: ['./node_modules/ed-fi-model-3.2/'],
+      projectPaths: ['./node_modules/ed-fi-model-3.2a/'],
       projects: [
         {
           projectName: 'Ed-Fi',
           namespaceName: 'EdFi',
           projectExtension: '',
-          projectVersion: '3.2.0',
+          projectVersion: '3.2.0-a',
         },
       ],
     };
@@ -78,7 +78,7 @@ describe('when generating CreatedByOwnership columns and comparing to ODS/API 3.
       ...newState(),
       metaEdConfiguration,
     };
-    state.metaEd.dataStandardVersion = '3.2.0';
+    state.metaEd.dataStandardVersion = '3.2.0-a';
 
     validateConfiguration(state);
     loadPlugins(state);

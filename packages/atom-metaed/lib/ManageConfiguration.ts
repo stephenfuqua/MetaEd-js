@@ -15,29 +15,29 @@ import { devEnvironmentCorrectedPath, nextMacroTask } from './Utility';
 
 // keys are ODS/API versions, values are arrays of DS versions supported
 const odsApiVersionSupport: Map<string, string[]> = new Map([
-  ['2.0', ['2.0.1']],
-  ['2.1', ['2.0.1']],
-  ['2.2', ['2.0.1']],
-  ['2.3', ['2.0.1']],
+  ['2.0.0', ['2.0.1']],
+  ['2.1.0', ['2.0.1']],
+  ['2.2.0', ['2.0.1']],
+  ['2.3.0', ['2.0.1']],
   ['2.3.1', ['2.0.1']],
-  ['2.4', ['2.0.1']],
-  ['2.5', ['2.2']],
-  ['2.6', ['2.2']],
-  ['3.0', ['3.0']],
-  ['3.1', ['3.1']],
-  ['3.1.1', ['3.1']],
-  ['3.2', ['3.1']],
-  ['3.3', ['3.2']],
+  ['2.4.0', ['2.0.1']],
+  ['2.5.0', ['2.2.0']],
+  ['2.6.0', ['2.2.0']],
+  ['3.0.0', ['3.0.0']],
+  ['3.1.0', ['3.1.0']],
+  ['3.1.1', ['3.1.0']],
+  ['3.2.0', ['3.1.0']],
+  ['3.3.0', ['3.2.0-a']],
 ]);
 
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
   disposableTracker.add(
     atom.config.onDidChange('atom-metaed.targetDsVersion', ({ newValue }: { oldValue: string; newValue: string }) => {
       if (newValue === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
-      if (newValue === '2.2') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.2'));
-      if (newValue === '3.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
-      if (newValue === '3.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.1'));
-      if (newValue === '3.2') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2'));
+      if (newValue === '2.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.2'));
+      if (newValue === '3.0.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
+      if (newValue === '3.1.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.1'));
+      if (newValue === '3.2.0-a') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2a'));
     }),
   );
 }
@@ -51,8 +51,8 @@ async function setCoreToTwoDotX() {
 
 async function setCoreToThreeDotX() {
   setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
-  setTargetDsVersion('3.0');
-  setTargetOdsApiVersion('3.0');
+  setTargetDsVersion('3.0.0');
+  setTargetOdsApiVersion('3.0.0');
   await nextMacroTask();
 }
 

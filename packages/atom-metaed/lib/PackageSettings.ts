@@ -34,7 +34,7 @@ export function getTargetDsVersion(): string {
 }
 
 export function getTargetDsVersionSemver(): string {
-  return (semver.coerce(getTargetDsVersion()) || '').toString();
+  return getTargetDsVersion() || '3.0.0';
 }
 
 export function setTargetDsVersion(targetDsVersion: string) {

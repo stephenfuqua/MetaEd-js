@@ -520,7 +520,7 @@ describe('when generating api model with simple type merge extensions and compar
   });
 });
 
-describe('when generating api model targeting tech version 3.3 and comparing it to data standard 3.2 authoritative artifacts', (): void => {
+describe('when generating api model targeting tech version 3.3 and comparing it to data standard 3.2a authoritative artifacts', (): void => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
   const authoritativeFilename = 'edfi-3.3-api-model-authoritative.json';
   const generatedFilename = 'edfi-3.3-api-model-generated.json';
@@ -532,13 +532,13 @@ describe('when generating api model targeting tech version 3.3 and comparing it 
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
       defaultPluginTechVersion: '3.3.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.2/'],
+      projectPaths: ['./node_modules/ed-fi-model-3.2a/'],
       projects: [
         {
           projectName: 'Ed-Fi',
           namespaceName: 'EdFi',
           projectExtension: '',
-          projectVersion: '3.2.0',
+          projectVersion: '3.2.0-a',
         },
       ],
     };
@@ -547,7 +547,7 @@ describe('when generating api model targeting tech version 3.3 and comparing it 
       ...newState(),
       metaEdConfiguration,
     };
-    state.metaEd.dataStandardVersion = '3.2.0';
+    state.metaEd.dataStandardVersion = '3.2.0-a';
 
     validateConfiguration(state);
     loadPlugins(state);
