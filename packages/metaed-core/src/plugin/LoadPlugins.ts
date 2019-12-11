@@ -1,6 +1,6 @@
 import path from 'path';
 import winston from 'winston';
-import semver from 'semver';
+// import semver from 'semver';
 import { scanDirectories, materializePlugin } from './PluginLoader';
 import { State } from '../State';
 import { PluginManifest } from './PluginManifest';
@@ -32,12 +32,12 @@ export function scanForPlugins(state: State): PluginManifest[] {
       state.pipelineFailure.push({ category: 'error', message });
       return;
     }
-    if (semver.satisfies(state.metaEd.metaEdVersion, pluginManifest.metaEdVersion)) {
-      const message = `Plugin ${pluginManifest.shortName} is not compatible with MetaEd version ${state.metaEd.metaEdVersion}. Version range supported is '${pluginManifest.metaEdVersion}'. Plugin not loaded.`;
-      winston.info(`  ${message}`);
-      state.pipelineFailure.push({ category: 'error', message });
-      return;
-    }
+    // if (semver.satisfies(state.metaEd.metaEdVersion, pluginManifest.metaEdVersion)) {
+    //   const message = `Plugin ${pluginManifest.shortName} is not compatible with MetaEd version ${state.metaEd.metaEdVersion}. Version range supported is '${pluginManifest.metaEdVersion}'. Plugin not loaded.`;
+    //   winston.info(`  ${message}`);
+    //   state.pipelineFailure.push({ category: 'error', message });
+    //   return;
+    // }
 
     // TODO: technology version compatibility check goes here
 
