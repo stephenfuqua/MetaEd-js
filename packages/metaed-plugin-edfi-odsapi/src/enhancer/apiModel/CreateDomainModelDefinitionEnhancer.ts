@@ -1,25 +1,15 @@
 import R from 'ramda';
 import { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
-import { deriveLogicalNameFromProjectName, NoSchemaDefinition } from '../../model/apiModel/SchemaDefinition';
+import { NoSchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
 import { DomainModelDefinition, newDomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
-import { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { EntityTable } from '../../model/domainMetadata/EntityTable';
 import { ApiFullName } from '../../model/apiModel/ApiFullName';
 
 const enhancerName = 'CreateDomainModelDefinitionEnhancer';
-
-// Schema definition is the database schema and project name for a namespace
-export function buildSchemaDefinition(namespace: Namespace): SchemaDefinition {
-  return {
-    logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
-    physicalName: namespace.namespaceName.toLowerCase(),
-    version: namespace.projectVersion,
-  };
-}
 
 export function buildAggregateDefinitions(namespace: Namespace): AggregateDefinition[] {
   const result: AggregateDefinition[] = [];

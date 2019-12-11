@@ -38,6 +38,7 @@
     "metaed-plugin-edfi-unified-advanced": "2.0.1-dev.15",
     "metaed-plugin-edfi-xsd": "2.0.1-dev.15",
     "ramda": "^0.25.0",
+    "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "winston": "3.0.0"
   },
