@@ -91,7 +91,7 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
         const result: number = atom.confirm({
           message: 'Are you sure you want to deploy MetaEd artifacts?',
           detailedMessage:
-            'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
+            'This will overwrite extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
           buttons: ['OK', 'Cancel'],
         });
         if (result !== 0) return;
