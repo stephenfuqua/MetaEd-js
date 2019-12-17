@@ -60,7 +60,11 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   orderedHandbookEntries.forEach((handbookEntry: HandbookEntry) => {
     const handbookRow: Row = newRow();
     setRow(handbookRow, 'Ed-Fi ID', handbookEntry.metaEdId);
-    setRow(handbookRow, 'Name', handbookEntry.name + handbookEntry.deprecationText);
+    setRow(
+      handbookRow,
+      'Name',
+      handbookEntry.name + (handbookEntry.deprecationText ? ` - ${handbookEntry.deprecationText}` : ''),
+    );
     setRow(handbookRow, 'Definition', handbookEntry.definition);
     setRow(handbookRow, 'UML Type', handbookEntry.umlType);
     setRow(handbookRow, 'Type Characteristics', asNewLineSeparatedList(handbookEntry.typeCharacteristics));

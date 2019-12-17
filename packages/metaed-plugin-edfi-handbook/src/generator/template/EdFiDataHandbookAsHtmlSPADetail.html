@@ -1,5 +1,5 @@
 ﻿<div class="col-lg-10 col-md-12 no-float">
-    <h1 class="page-header">{{ctrl.selected.name}}{{ctrl.selected.deprecationText}}</h1>
+    <h1 class="page-header">{{ctrl.selected.name}}<span ng-if="ctrl.selected.deprecationText" style="color:red;">{{ctrl.selected.deprecationText}}</span></h1>
     <h3 class="inline-header">UML Type: {{ctrl.selected.umlType}}
         <span ng-if="ctrl.selected.baseMetaEdType">extending
              <a href="#/{{ctrl.selected.baseEntityUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{ctrl.selected.baseMetaEdType}}">{{ctrl.selected.baseMetaEdType}}</a>
@@ -47,9 +47,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="r in ctrl.selected.modelReferencesContainsProperties">
-                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}<span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span>{{r.deprecationText}}</td>
+                    <td ng-if="!ctrl.entityExists(r.referenceUniqueIdentifier)" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}<span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span><span ng-if="r.deprecationText" style="color:red;"> - {{r.deprecationText}}</span></td>
                     <td ng-if="ctrl.entityExists(r.referenceUniqueIdentifier)">
-                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a><span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span>{{r.deprecationText}}
+                        <a href="#/{{r.referenceUniqueIdentifier}}" ng-click="ctrl.resetSearch()" title="{{r.metaEdId}} - {{r.name}}">{{r.name}}</a><span ng-if="r.extensionParentNamespaceName"> (from {{r.extensionParentNamespaceName}})</span><span ng-if="r.deprecationText" style="color:red;"> - {{r.deprecationText}}</span>
                     </td>
                     <td ng-if="ctrl.selected.hasDeprecatedProperty">{{r.deprecationReason}}</td>
                     <td>{{r.umlDatatype}}</td>
