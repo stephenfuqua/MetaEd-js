@@ -77,6 +77,7 @@ import { validate as schoolYearEnumerationPropertyMustMatchAnEnumeration } from 
 import { validate as identityExistsOnlyIfIdentityIsAllowed } from './validator/Identity/IdentityExistsOnlyIfIdentityIsAllowed';
 
 import { validate as identityRenameExistsOnlyIfIdentityRenameIsAllowed } from './validator/IdentityRename/IdentityRenameExistsOnlyIfIdentityRenameIsAllowed';
+import { validate as identityRenameTypeMustMatchBaseProperty } from './validator/IdentityRename/IdentityRenameTypeMustMatchBaseProperty';
 
 import { validate as inlineCommonExistsOnlyInCoreNamespace } from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
 import { validate as inlineCommonPropertyMustMatchAnInlineCommon } from './validator/InlineCommonProperty/InlineCommonPropertyMustMatchAnInlineCommon';
@@ -282,6 +283,7 @@ function validatorList(): Validator[] {
     identityExistsOnlyIfIdentityIsAllowed,
 
     identityRenameExistsOnlyIfIdentityRenameIsAllowed,
+    identityRenameTypeMustMatchBaseProperty,
 
     inlineCommonExistsOnlyInCoreNamespace,
     inlineCommonPropertyMustMatchAnInlineCommon,
