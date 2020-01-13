@@ -9,20 +9,17 @@ import { ChoiceBuilder } from './ChoiceBuilder';
 import { CommonBuilder } from './CommonBuilder';
 import { CommonExtensionBuilder } from './CommonExtensionBuilder';
 import { CommonSubclassBuilder } from './CommonSubclassBuilder';
-import { DecimalTypeBuilder } from './DecimalTypeBuilder';
 import { DescriptorBuilder } from './DescriptorBuilder';
 import { DomainBuilder } from './DomainBuilder';
 import { DomainEntityBuilder } from './DomainEntityBuilder';
 import { DomainEntityExtensionBuilder } from './DomainEntityExtensionBuilder';
 import { DomainEntitySubclassBuilder } from './DomainEntitySubclassBuilder';
 import { EnumerationBuilder } from './EnumerationBuilder';
-import { IntegerTypeBuilder } from './IntegerTypeBuilder';
 import { InterchangeBuilder } from './InterchangeBuilder';
 import { NamespaceBuilder } from './NamespaceBuilder';
 import { SharedDecimalBuilder } from './SharedDecimalBuilder';
 import { SharedIntegerBuilder } from './SharedIntegerBuilder';
 import { SharedStringBuilder } from './SharedStringBuilder';
-import { StringTypeBuilder } from './StringTypeBuilder';
 
 import { SyntaxValidatingBuilder } from './SyntaxValidatingBuilder';
 
@@ -38,19 +35,16 @@ export async function execute(state: State): Promise<void> {
     new CommonBuilder(state.metaEd, state.validationFailure),
     new CommonExtensionBuilder(state.metaEd, state.validationFailure),
     new CommonSubclassBuilder(state.metaEd, state.validationFailure),
-    new DecimalTypeBuilder(state.metaEd, state.validationFailure),
     new DescriptorBuilder(state.metaEd, state.validationFailure),
     new DomainBuilder(state.metaEd, state.validationFailure),
     new DomainEntityBuilder(state.metaEd, state.validationFailure),
     new DomainEntityExtensionBuilder(state.metaEd, state.validationFailure),
     new DomainEntitySubclassBuilder(state.metaEd, state.validationFailure),
     new EnumerationBuilder(state.metaEd, state.validationFailure),
-    new IntegerTypeBuilder(state.metaEd, state.validationFailure),
     new InterchangeBuilder(state.metaEd, state.validationFailure),
     new SharedDecimalBuilder(state.metaEd, state.validationFailure),
     new SharedIntegerBuilder(state.metaEd, state.validationFailure),
     new SharedStringBuilder(state.metaEd, state.validationFailure),
-    new StringTypeBuilder(state.metaEd, state.validationFailure),
 
     new SyntaxValidatingBuilder(state.metaEd, state.validationFailure),
   ];

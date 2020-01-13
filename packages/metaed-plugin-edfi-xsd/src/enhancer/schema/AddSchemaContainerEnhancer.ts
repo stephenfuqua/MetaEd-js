@@ -4,7 +4,6 @@ import { getAllEntitiesOfType, orderByProp, V3OrGreater, versionSatisfies } from
 import { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import { NamespaceEdfiXsd } from '../../model/Namespace';
 import { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
-import { SimpleTypeBase, SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
 import { DescriptorEdfiXsd } from '../../model/Descriptor';
 import { SchemaContainer } from '../../model/schema/SchemaContainer';
 import { newSchemaContainer } from '../../model/schema/SchemaContainer';
@@ -14,7 +13,6 @@ import { newAnnotation } from '../../model/schema/Annotation';
 import { newAttribute } from '../../model/schema/Attribute';
 import { newElement } from '../../model/schema/Element';
 import { NoComplexType, newComplexType } from '../../model/schema/ComplexType';
-import { NoSimpleType } from '../../model/schema/SimpleType';
 import { NoEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';
 import { NoStringSimpleType } from '../../model/schema/StringSimpleType';
 import {
@@ -25,6 +23,9 @@ import {
   createDescriptorReferenceSimpleType,
 } from './BaseSimpleTypeCreator';
 import { baseTypeDescriptorReference, typeGroupBase } from './AddComplexTypesBaseEnhancer';
+import { EdFiXsdEntityRepository } from '../../model/EdFiXsdEntityRepository';
+import { edfiXsdRepositoryForNamespace } from '../EnhancerHelper';
+import { SimpleType, NoSimpleType } from '../../model/schema/SimpleType';
 
 const enhancerName = 'AddSchemaContainerEnhancer';
 const targetVersions: SemVer = V3OrGreater;
@@ -33,7 +34,6 @@ const complexTypesFrom = R.chain((x: TopLevelEntity) => (x.data.edfiXsd as TopLe
 const extendedReferenceTypesFrom = R.map(
   (x: TopLevelEntity) => (x.data.edfiXsd as DescriptorEdfiXsd).xsdDescriptorExtendedReferenceType,
 );
-const simpleTypesFrom = R.map((x: SimpleTypeBase) => (x.data.edfiXsd as SimpleTypeBaseEdfiXsd).xsdSimpleType);
 const enumerationSimpleTypesFrom = R.map(
   (x: EnumerationBase) => (x.data.edfiXsd as EnumerationBaseEdfiXsd).xsdEnumerationSimpleType,
 );
@@ -43,7 +43,6 @@ const manyReferenceTypesFrom = R.chain((x: TopLevelEntity) => {
 });
 
 const removeNoComplexType = R.filter(x => x !== NoComplexType);
-const removeNoSimpleType = R.filter(x => x !== NoSimpleType);
 const removeNoEnumerationSimpleType = R.filter(x => x !== NoEnumerationSimpleType);
 const removeNoStringSimpleType = R.filter(x => x !== NoStringSimpleType);
 
@@ -291,14 +290,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     schemaContainer.sections.push(enumerationsSection);
 
     // String Simple Types
-    const simpleTypesForEntitiesOfType = R.pipe(
-      getAllEntitiesOfType,
-      inNamespace(namespace),
-      simpleTypesFrom,
-      removeNoSimpleType,
-    );
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
 
-    const stringSimpleTypes = simpleTypesForEntitiesOfType(metaEd, 'stringType');
+    const stringSimpleTypes: SimpleType[] = edFiXsdEntityRepository.stringType
+      .filter(x => x.namespace.namespaceName === namespace.namespaceName)
+      .map(x => x.xsdSimpleType)
+      .filter(x => x !== NoSimpleType);
+
     if (!namespace.isExtension) {
       stringSimpleTypes.push(
         createCodeValueSimpleType(),
@@ -316,7 +315,17 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     schemaContainer.sections.push(stringSimpleTypesSection);
 
     // Numeric Simple Types
-    const numericSimpleTypes = simpleTypesForEntitiesOfType(metaEd, 'decimalType', 'integerType');
+    const decimalSimpleTypes: SimpleType[] = edFiXsdEntityRepository.decimalType
+      .filter(x => x.namespace.namespaceName === namespace.namespaceName)
+      .map(x => x.xsdSimpleType)
+      .filter(x => x !== NoSimpleType);
+
+    const integerSimpleTypes: SimpleType[] = edFiXsdEntityRepository.integerType
+      .filter(x => x.namespace.namespaceName === namespace.namespaceName)
+      .map(x => x.xsdSimpleType)
+      .filter(x => x !== NoSimpleType);
+
+    const numericSimpleTypes = [...decimalSimpleTypes, ...integerSimpleTypes];
     if (!namespace.isExtension) {
       numericSimpleTypes.push(createCurrencySimpleType(), createPercentSimpleType());
     }

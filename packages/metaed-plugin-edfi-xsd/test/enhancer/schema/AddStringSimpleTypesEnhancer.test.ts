@@ -1,9 +1,10 @@
-import { newMetaEdEnvironment, newStringType, newNamespace } from 'metaed-core';
-import { MetaEdEnvironment, StringType, Namespace } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { StringSimpleType } from '../../../src/model/schema/StringSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
-import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddStringSimpleTypesEnhancer';
+import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../../src/model/EdFiXsdEntityRepository';
+import { StringType, newStringType } from '../../../src/model/StringType';
+import { edfiXsdRepositoryForNamespace } from '../../../src/enhancer/EnhancerHelper';
 
 describe('when enhancing string type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -17,24 +18,24 @@ describe('when enhancing string type', (): void => {
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newStringType(),
+      xsdMetaEdNameWithExtension: simpleTypeName,
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       minLength,
       maxLength,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.stringType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as StringSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -78,6 +79,7 @@ describe('when enhancing generated string type with min length only', (): void =
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newStringType(),
@@ -85,16 +87,14 @@ describe('when enhancing generated string type with min length only', (): void =
       documentation,
       generatedSimpleType: true,
       minLength,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.stringType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as StringSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -121,6 +121,7 @@ describe('when enhancing generated string type with max length only', (): void =
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newStringType(),
@@ -128,16 +129,14 @@ describe('when enhancing generated string type with max length only', (): void =
       documentation,
       generatedSimpleType: true,
       maxLength,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.stringType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as StringSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -163,22 +162,21 @@ describe('when enhancing non-generated string type with no restrictions', (): vo
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.stringType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as StringSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -204,22 +202,21 @@ describe('when enhancing generated string type with no restrictions', (): void =
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newStringType(),
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.stringType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as StringSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as StringSimpleType;
   });
 
   it('should create simple type', (): void => {

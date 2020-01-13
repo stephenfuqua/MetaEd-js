@@ -1,14 +1,13 @@
 import {
   MetaEdEnvironment,
-  DecimalTypeBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
-  IntegerTypeBuilder,
   MetaEdTextBuilder,
   NamespaceBuilder,
   newMetaEdEnvironment,
   SharedStringBuilder,
-  StringTypeBuilder,
+  SharedDecimalBuilder,
+  SharedIntegerBuilder,
 } from 'metaed-core';
 import { enhanceAndGenerate, xpathSelect, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
@@ -28,7 +27,6 @@ describe('when generating xsd for domain entity in extension namespace with a si
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -47,7 +45,6 @@ describe('when generating xsd for domain entity in extension namespace with a si
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(stringTypeBuilder)
       .sendToListener(domainEntityBuilder);
 
     initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
@@ -78,7 +75,7 @@ describe('when generating xsd for domain entity in extension namespace with a si
   });
 });
 
-describe('when generating xsd for common string', (): void => {
+describe('when generating xsd for shared string', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -87,8 +84,7 @@ describe('when generating xsd for common string', (): void => {
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
-    const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
+    const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -102,8 +98,7 @@ describe('when generating xsd for common string', (): void => {
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(stringTypeBuilder)
-      .sendToListener(domainEntityBuilder);
+      .sendToListener(sharedStringBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -154,7 +149,7 @@ describe('when generating xsd for common string', (): void => {
   });
 });
 
-describe('when generating xsd for common decimal', (): void => {
+describe('when generating xsd for shared decimal', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -163,8 +158,7 @@ describe('when generating xsd for common decimal', (): void => {
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
-    const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const decimalTypeBuilder = new DecimalTypeBuilder(metaEd, []);
+    const sharedDecimalBuilder = new SharedDecimalBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -180,8 +174,7 @@ describe('when generating xsd for common decimal', (): void => {
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(decimalTypeBuilder)
-      .sendToListener(domainEntityBuilder);
+      .sendToListener(sharedDecimalBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -248,7 +241,7 @@ describe('when generating xsd for common decimal', (): void => {
   });
 });
 
-describe('when generating xsd for common integer', (): void => {
+describe('when generating xsd for shared integer', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -257,8 +250,7 @@ describe('when generating xsd for common integer', (): void => {
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
-    const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
+    const sharedIntegerBuilder = new SharedIntegerBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -272,8 +264,7 @@ describe('when generating xsd for common integer', (): void => {
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(integerTypeBuilder)
-      .sendToListener(domainEntityBuilder);
+      .sendToListener(sharedIntegerBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -324,7 +315,7 @@ describe('when generating xsd for common integer', (): void => {
   });
 });
 
-describe('when generating xsd for common short', (): void => {
+describe('when generating xsd for shared short', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const simpleTypeEntity = 'SimpleTypeEntity';
@@ -333,8 +324,7 @@ describe('when generating xsd for common short', (): void => {
 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
-    const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
+    const sharedIntegerBuilder = new SharedIntegerBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -348,8 +338,7 @@ describe('when generating xsd for common short', (): void => {
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(integerTypeBuilder)
-      .sendToListener(domainEntityBuilder);
+      .sendToListener(sharedIntegerBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -413,7 +402,6 @@ describe('when generating xsd for shared simpel property in extension namespace 
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
 
     MetaEdTextBuilder.build()
@@ -437,7 +425,6 @@ describe('when generating xsd for shared simpel property in extension namespace 
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(stringTypeBuilder)
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
@@ -478,7 +465,6 @@ describe('when generating xsd for renamed shared simple property in extension na
   beforeAll(async () => {
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
 
     MetaEdTextBuilder.build()
@@ -502,7 +488,6 @@ describe('when generating xsd for renamed shared simple property in extension na
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(stringTypeBuilder)
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
@@ -543,7 +528,6 @@ describe('when generating xsd for shared simple property in extension namespace 
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
 
     MetaEdTextBuilder.build()
@@ -573,7 +557,6 @@ describe('when generating xsd for shared simple property in extension namespace 
       .withEndNamespace()
 
       .sendToListener(namespaceBuilder)
-      .sendToListener(stringTypeBuilder)
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);

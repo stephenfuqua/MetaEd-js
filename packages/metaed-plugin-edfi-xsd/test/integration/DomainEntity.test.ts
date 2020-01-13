@@ -6,7 +6,6 @@ import {
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   SharedStringBuilder,
-  StringTypeBuilder,
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
@@ -347,7 +346,6 @@ describe('when generating xsd for domain entity with queryable field', (): void 
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
-    const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('EdFi')
@@ -368,7 +366,6 @@ describe('when generating xsd for domain entity with queryable field', (): void 
 
       .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
-      .sendToListener(stringTypeBuilder)
       .sendToListener(sharedStringBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));

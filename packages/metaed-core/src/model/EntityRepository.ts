@@ -6,13 +6,11 @@ import { Choice } from './Choice';
 import { Common } from './Common';
 import { CommonExtension } from './CommonExtension';
 import { CommonSubclass } from './CommonSubclass';
-import { DecimalType } from './DecimalType';
 import { Descriptor } from './Descriptor';
 import { DomainEntity } from './DomainEntity';
 import { DomainEntityExtension } from './DomainEntityExtension';
 import { DomainEntitySubclass } from './DomainEntitySubclass';
 import { Enumeration } from './Enumeration';
-import { IntegerType } from './IntegerType';
 import { Interchange } from './Interchange';
 import { InterchangeExtension } from './InterchangeExtension';
 import { MapTypeEnumeration } from './MapTypeEnumeration';
@@ -21,7 +19,6 @@ import { SchoolYearEnumeration } from './SchoolYearEnumeration';
 import { SharedDecimal } from './SharedDecimal';
 import { SharedInteger } from './SharedInteger';
 import { SharedString } from './SharedString';
-import { StringType } from './StringType';
 import { Domain } from './Domain';
 import { Subdomain } from './Subdomain';
 import { ModelType } from './ModelType';
@@ -41,14 +38,12 @@ export interface EntityRepository {
   common: Map<string, Common>;
   commonExtension: Map<string, CommonExtension>;
   commonSubclass: Map<string, CommonSubclass>;
-  decimalType: Map<string, DecimalType>;
   descriptor: Map<string, Descriptor>;
   domain: Map<string, Domain>;
   domainEntity: Map<string, DomainEntity>;
   domainEntityExtension: Map<string, DomainEntityExtension>;
   domainEntitySubclass: Map<string, DomainEntitySubclass>;
   enumeration: Map<string, Enumeration>;
-  integerType: Map<string, IntegerType>;
   interchange: Map<string, Interchange>;
   interchangeExtension: Map<string, InterchangeExtension>;
   mapTypeEnumeration: Map<string, MapTypeEnumeration>;
@@ -56,7 +51,6 @@ export interface EntityRepository {
   sharedDecimal: Map<string, SharedDecimal>;
   sharedInteger: Map<string, SharedInteger>;
   sharedString: Map<string, SharedString>;
-  stringType: Map<string, StringType>;
   subdomain: Map<string, Subdomain>;
 }
 
@@ -73,14 +67,12 @@ export function newEntityRepository(): EntityRepository {
     common: new Map(),
     commonExtension: new Map(),
     commonSubclass: new Map(),
-    decimalType: new Map(),
     descriptor: new Map(),
     domain: new Map(),
     domainEntity: new Map(),
     domainEntityExtension: new Map(),
     domainEntitySubclass: new Map(),
     enumeration: new Map(),
-    integerType: new Map(),
     interchange: new Map(),
     interchangeExtension: new Map(),
     mapTypeEnumeration: new Map(),
@@ -88,7 +80,6 @@ export function newEntityRepository(): EntityRepository {
     sharedDecimal: new Map(),
     sharedInteger: new Map(),
     sharedString: new Map(),
-    stringType: new Map(),
     subdomain: new Map(),
   };
 }

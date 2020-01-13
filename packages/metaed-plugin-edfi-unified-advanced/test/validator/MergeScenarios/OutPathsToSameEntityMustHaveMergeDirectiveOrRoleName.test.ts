@@ -14,7 +14,6 @@ import {
   domainEntityReferenceEnhancer,
   domainEntityExtensionBaseClassEnhancer,
   domainEntitySubclassBaseClassEnhancer,
-  sharedStringPropertyEnhancer,
   stringReferenceEnhancer,
 } from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeScenarios/OutPathsToSameEntityMustHaveMergeDirectiveOrRoleName';
@@ -680,7 +679,6 @@ describe('when domain entity has reference to entity with identity of shared str
 
     coreNamespace = metaEd.namespace.get('EdFi');
     domainEntityReferenceEnhancer(metaEd);
-    sharedStringPropertyEnhancer(metaEd);
     outReferencePathEnhancer(metaEd);
     failures = validate(metaEd);
   });
@@ -736,7 +734,6 @@ describe('when domain entity has reference to entity with identity of shared str
     coreNamespace = metaEd.namespace.get('EdFi');
     domainEntityReferenceEnhancer(metaEd);
     stringReferenceEnhancer(metaEd);
-    sharedStringPropertyEnhancer(metaEd);
     outReferencePathEnhancer(metaEd);
     failures = validate(metaEd);
   });

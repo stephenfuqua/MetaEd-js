@@ -11,9 +11,6 @@ import {
   newEnumeration,
   newSchoolYearEnumeration,
   newMapTypeEnumeration,
-  newDecimalType,
-  newIntegerType,
-  newStringType,
 } from 'metaed-core';
 import { MetaEdEnvironment, SemVer, Namespace } from 'metaed-core';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
@@ -26,6 +23,11 @@ import { SchemaSection } from '../../../src/model/schema/SchemaSection';
 import { SchemaContainer } from '../../../src/model/schema/SchemaContainer';
 import { NamespaceEdfiXsd } from '../../../src/model/Namespace';
 import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancerV2';
+import { newStringType } from '../../../src/model/StringType';
+import { newIntegerType } from '../../../src/model/IntegerType';
+import { newDecimalType } from '../../../src/model/DecimalType';
+import { EdFiXsdEntityRepository, addEdFiXsdEntityRepositoryTo } from '../../../src/model/EdFiXsdEntityRepository';
+import { edfiXsdRepositoryForNamespace } from '../../../src/enhancer/EnhancerHelper';
 
 describe('when enhancing namespace info for core', (): void => {
   const dataStandardVersion: SemVer = '2.0.0';
@@ -36,6 +38,7 @@ describe('when enhancing namespace info for core', (): void => {
   beforeAll(() => {
     const coreNamespace: Namespace = { ...newNamespace(), namespaceName, data: { edfiXsd: {} } };
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhance(metaEd);
     createdSchema = (coreNamespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
@@ -84,6 +87,7 @@ describe('when enhancing namespace info for extension', (): void => {
     };
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhance(metaEd);
     createdSchema = (extensionNamespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
@@ -257,6 +261,7 @@ describe('when enhancing namespace info for core with children', (): void => {
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
     metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
     extensionNamespace.dependencies.push(coreNamespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const domainEntity1 = {
       ...newDomainEntity(),
@@ -407,41 +412,32 @@ describe('when enhancing namespace info for core with children', (): void => {
     };
     coreNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration1.metaEdName, xsdMapTypeEnumeration1);
 
+    const coreEdFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
+    if (coreEdFiXsdEntityRepository == null) return;
+
     const stringType1 = {
       ...newStringType(),
       metaEdName: stringType1Name,
       namespace: coreNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newStringSimpleType(), name: stringType1SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newStringSimpleType(), name: stringType1SimpleTypeName },
     };
-    coreNamespace.entity.stringType.set(stringType1.metaEdName, stringType1);
+    coreEdFiXsdEntityRepository.stringType.push(stringType1);
 
     const integerType1 = {
       ...newIntegerType(),
       metaEdName: integerType1Name,
       namespace: coreNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newIntegerSimpleType(), name: integerType1SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newIntegerSimpleType(), name: integerType1SimpleTypeName },
     };
-    coreNamespace.entity.integerType.set(integerType1.metaEdName, integerType1);
+    coreEdFiXsdEntityRepository.integerType.push(integerType1);
 
     const decimalType1 = {
       ...newDecimalType(),
       metaEdName: decimalType1Name,
       namespace: coreNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType1SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType1SimpleTypeName },
     };
-    coreNamespace.entity.decimalType.set(decimalType1.metaEdName, decimalType1);
+    coreEdFiXsdEntityRepository.decimalType.push(decimalType1);
 
     const domainEntity2 = {
       ...newDomainEntity(),
@@ -604,41 +600,35 @@ describe('when enhancing namespace info for core with children', (): void => {
     };
     extensionNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration2.metaEdName, xsdMapTypeEnumeration2);
 
+    const extensionEdFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(
+      metaEd,
+      extensionNamespace,
+    );
+    if (extensionEdFiXsdEntityRepository == null) return;
+
     const stringType2 = {
       ...newStringType(),
       metaEdName: stringType2Name,
       namespace: extensionNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newStringSimpleType(), name: stringType2SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newStringSimpleType(), name: stringType2SimpleTypeName },
     };
-    extensionNamespace.entity.stringType.set(stringType2.metaEdName, stringType2);
+    extensionEdFiXsdEntityRepository.stringType.push(stringType2);
 
     const integerType2 = {
       ...newIntegerType(),
       metaEdName: integerType2Name,
       namespace: extensionNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newIntegerSimpleType(), name: integerType2SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newIntegerSimpleType(), name: integerType2SimpleTypeName },
     };
-    extensionNamespace.entity.integerType.set(integerType2.metaEdName, integerType2);
+    extensionEdFiXsdEntityRepository.integerType.push(integerType2);
 
     const decimalType2 = {
       ...newDecimalType(),
       metaEdName: decimalType2Name,
       namespace: extensionNamespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType2SimpleTypeName },
-        },
-      },
+      xsdSimpleType: { ...newDecimalSimpleType(), name: decimalType2SimpleTypeName },
     };
-    extensionNamespace.entity.decimalType.set(decimalType2.metaEdName, decimalType2);
+    extensionEdFiXsdEntityRepository.decimalType.push(decimalType2);
 
     const domainEntityWithNoComplexTypes = {
       ...newDomainEntity(),
@@ -680,7 +670,7 @@ describe('when enhancing namespace info for core with children', (): void => {
         },
       },
     };
-    extensionNamespace.entity.stringType.set(stringTypeWithNoSimpleType.metaEdName, stringTypeWithNoSimpleType);
+    extensionEdFiXsdEntityRepository.stringType.push(stringTypeWithNoSimpleType);
 
     enhance(metaEd);
 

@@ -1,11 +1,20 @@
 import R from 'ramda';
-import { Common, MetaEdEnvironment, IntegerType, Namespace } from 'metaed-core';
-import { addEntityForNamespace, newCommon, newMetaEdEnvironment, newIntegerType, newNamespace } from 'metaed-core';
+import {
+  Common,
+  MetaEdEnvironment,
+  Namespace,
+  addEntityForNamespace,
+  newCommon,
+  newMetaEdEnvironment,
+  newNamespace,
+} from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
-import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../src/model/schema/SimpleType';
 import { enhance } from '../../src/diminisher/ModifyOrderOfPriorityToUsePositiveIntegerDiminisher';
+import { IntegerType, newIntegerType } from '../../src/model/IntegerType';
+import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes telephone common type', (): void => {
   const positiveIntegerType = 'xs:positiveInteger';
@@ -50,6 +59,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     const integerTypeName = 'OrderOfPriority';
@@ -58,20 +68,18 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
       ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
-        },
-      },
+      minValue: '1',
     };
-    addEntityForNamespace(integerType);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should have no integer simple type for order of priority integer type', (): void => {
-    expect(integerType.data.edfiXsd.xsdSimpleType).toBe(NoSimpleType);
+    expect(integerType.xsdSimpleType).toBe(NoSimpleType);
   });
 });
 
@@ -79,6 +87,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes wi
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     const commonEntityName = 'CommonEntityName';
@@ -106,13 +115,11 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes wi
       ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
-        },
-      },
+      minValue: '1',
     };
-    addEntityForNamespace(integerType);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });

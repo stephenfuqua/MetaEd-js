@@ -10,7 +10,6 @@ export type ModelType =
   | 'common'
   | 'commonExtension'
   | 'commonSubclass'
-  | 'decimalType'
   | 'descriptor'
   | 'domain'
   | 'domainItem'
@@ -19,7 +18,6 @@ export type ModelType =
   | 'domainEntitySubclass'
   | 'enumeration'
   | 'enumerationItem'
-  | 'integerType'
   | 'interchange'
   | 'interchangeExtension'
   | 'interchangeItem'
@@ -29,7 +27,6 @@ export type ModelType =
   | 'sharedDecimal'
   | 'sharedInteger'
   | 'sharedString'
-  | 'stringType'
   | 'subdomain';
 
 /**
@@ -44,14 +41,12 @@ export const allEntityModelTypes: ModelType[] = [
   'common',
   'commonExtension',
   'commonSubclass',
-  'decimalType',
   'descriptor',
   'domain',
   'domainEntity',
   'domainEntityExtension',
   'domainEntitySubclass',
   'enumeration',
-  'integerType',
   'interchange',
   'interchangeExtension',
   'mapTypeEnumeration',
@@ -59,7 +54,6 @@ export const allEntityModelTypes: ModelType[] = [
   'sharedDecimal',
   'sharedInteger',
   'sharedString',
-  'stringType',
   'subdomain',
 ];
 

@@ -1,12 +1,12 @@
-import { MetaEdEnvironment, EnhancerResult, DecimalType } from 'metaed-core';
-import { getAllEntitiesOfType } from 'metaed-core';
-import { SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
-import { ModelBaseEdfiXsd } from '../../model/ModelBase';
+import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { NoSimpleType } from '../../model/schema/SimpleType';
 import { SimpleType } from '../../model/schema/SimpleType';
 import { newDecimalSimpleType } from '../../model/schema/DecimalSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { typeGroupSimple } from './AddComplexTypesBaseEnhancer';
+import { DecimalType } from '../../model/DecimalType';
+import { edfiXsdRepositoryForNamespace } from '../EnhancerHelper';
+import { EdFiXsdEntityRepository } from '../../model/EdFiXsdEntityRepository';
 
 const enhancerName = 'AddDecimalSimpleTypesEnhancer';
 
@@ -23,7 +23,7 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
 
   return {
     ...newDecimalSimpleType(),
-    name: (decimalType.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
+    name: decimalType.xsdMetaEdNameWithExtension,
     annotation: { ...newAnnotation(), documentation: decimalType.documentation, typeGroup: typeGroupSimple },
     baseType: 'xs:decimal',
     minValue: decimalType.minValue,
@@ -34,10 +34,14 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  (getAllEntitiesOfType(metaEd, 'decimalType') as DecimalType[]).forEach((decimalType: DecimalType) => {
-    (decimalType.data.edfiXsd as SimpleTypeBaseEdfiXsd).xsdSimpleType = createSchemaSimpleType(decimalType);
-  });
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
 
+    edFiXsdEntityRepository.decimalType.forEach((decimalType: DecimalType) => {
+      decimalType.xsdSimpleType = createSchemaSimpleType(decimalType);
+    });
+  });
   return {
     enhancerName,
     success: true,

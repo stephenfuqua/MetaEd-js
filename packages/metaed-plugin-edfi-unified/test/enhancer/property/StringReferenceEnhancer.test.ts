@@ -2,13 +2,12 @@ import {
   newMetaEdEnvironment,
   newStringProperty,
   newSharedStringProperty,
-  newStringType,
   newSharedString,
   newNamespace,
   NoSharedSimple,
 } from 'metaed-core';
 
-import { MetaEdEnvironment, SharedString, SharedStringProperty, StringProperty, StringType, Namespace } from 'metaed-core';
+import { MetaEdEnvironment, SharedString, SharedStringProperty, StringProperty, Namespace } from 'metaed-core';
 
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
 
@@ -19,7 +18,6 @@ describe('when enhancing string property', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: StringProperty;
-  let referencedEntity: StringType;
 
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
@@ -30,21 +28,11 @@ describe('when enhancing string property', (): void => {
     });
     metaEd.propertyIndex.string.push(property);
 
-    referencedEntity = Object.assign(newStringType(), {
-      metaEdName: referencedEntityName,
-      namespace,
-    });
-    namespace.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
-
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
-  });
-
-  it('should have string type with no referring properties', (): void => {
-    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -56,7 +44,6 @@ describe('when enhancing shared string property', (): void => {
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedStringProperty;
   let referencedEntity: SharedString;
-  let stringType: StringType;
 
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
@@ -74,12 +61,6 @@ describe('when enhancing shared string property', (): void => {
     });
     namespace.entity.sharedString.set(referencedEntity.metaEdName, referencedEntity);
 
-    stringType = Object.assign(newStringType(), {
-      metaEdName: referencedEntityName,
-      namespace,
-    });
-    namespace.entity.stringType.set(referencedEntity.metaEdName, stringType);
-
     enhance(metaEd);
   });
 
@@ -87,10 +68,6 @@ describe('when enhancing shared string property', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
-  });
-
-  it('should have string type with correct referring properties', (): void => {
-    expect(stringType.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -102,7 +79,6 @@ describe('when enhancing property referring to deprecated shared string', (): vo
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedStringProperty;
   let referencedEntity: SharedString;
-  let stringType: StringType;
 
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
@@ -120,12 +96,6 @@ describe('when enhancing property referring to deprecated shared string', (): vo
       isDeprecated: true,
     });
     namespace.entity.sharedString.set(referencedEntity.metaEdName, referencedEntity);
-
-    stringType = Object.assign(newStringType(), {
-      metaEdName: referencedEntityName,
-      namespace,
-    });
-    namespace.entity.stringType.set(referencedEntity.metaEdName, stringType);
 
     enhance(metaEd);
   });
@@ -145,7 +115,6 @@ describe('when enhancing string property across namespaces', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: StringProperty;
-  let referencedEntity: StringType;
 
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
@@ -156,21 +125,11 @@ describe('when enhancing string property across namespaces', (): void => {
     });
     metaEd.propertyIndex.string.push(property);
 
-    referencedEntity = Object.assign(newStringType(), {
-      metaEdName: referencedEntityName,
-      namespace,
-    });
-    namespace.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
-
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
-  });
-
-  it('should have string type with no referring properties', (): void => {
-    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -184,7 +143,6 @@ describe('when enhancing shared string property across namespaces', (): void => 
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedStringProperty;
   let referencedEntity: SharedString;
-  let stringType: StringType;
 
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
@@ -202,12 +160,6 @@ describe('when enhancing shared string property across namespaces', (): void => 
     });
     namespace.entity.sharedString.set(referencedEntity.metaEdName, referencedEntity);
 
-    stringType = Object.assign(newStringType(), {
-      metaEdName: referencedEntityName,
-      namespace,
-    });
-    namespace.entity.stringType.set(referencedEntity.metaEdName, stringType);
-
     enhance(metaEd);
   });
 
@@ -215,9 +167,5 @@ describe('when enhancing shared string property across namespaces', (): void => 
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
-  });
-
-  it('should have string type with correct referring properties', (): void => {
-    expect(stringType.referringSimpleProperties).toContain(property);
   });
 });

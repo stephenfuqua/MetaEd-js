@@ -1,9 +1,11 @@
-import { newMetaEdEnvironment, newIntegerType, newNamespace } from 'metaed-core';
-import { MetaEdEnvironment, IntegerType, Namespace } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { IntegerSimpleType } from '../../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
-import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddIntegerSimpleTypesEnhancer';
+import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../../src/model/EdFiXsdEntityRepository';
+import { IntegerType, newIntegerType } from '../../../src/model/IntegerType';
+import { edfiXsdRepositoryForNamespace } from '../../../src/enhancer/EnhancerHelper';
 
 describe('when enhancing integer type', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -17,24 +19,24 @@ describe('when enhancing integer type', (): void => {
   beforeAll(() => {
     const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     enhancedItem = {
       ...newIntegerType(),
+      xsdMetaEdNameWithExtension: simpleTypeName,
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       minValue,
       maxValue,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -71,6 +73,8 @@ describe('when enhancing integer type is short', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const minValue = '1';
@@ -81,22 +85,21 @@ describe('when enhancing integer type is short', (): void => {
   beforeAll(() => {
     enhancedItem = {
       ...newIntegerType(),
+      xsdMetaEdNameWithExtension: simpleTypeName,
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
       isShort: true,
       minValue,
       maxValue,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -133,6 +136,8 @@ describe('when enhancing generated integer type with min value only', (): void =
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const minValue = '1';
@@ -146,16 +151,14 @@ describe('when enhancing generated integer type with min value only', (): void =
       documentation,
       generatedSimpleType: true,
       minValue,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -175,6 +178,8 @@ describe('when enhancing generated integer type with max value only', (): void =
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const maxValue = '100';
@@ -188,16 +193,14 @@ describe('when enhancing generated integer type with max value only', (): void =
       documentation,
       generatedSimpleType: true,
       maxValue,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -217,6 +220,8 @@ describe('when enhancing non-generated integer type with no restrictions', (): v
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   let enhancedItem: IntegerType;
@@ -228,16 +233,14 @@ describe('when enhancing non-generated integer type with no restrictions', (): v
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -257,6 +260,8 @@ describe('when enhancing generated integer type with no restrictions', (): void 
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   let enhancedItem: IntegerType;
@@ -268,16 +273,14 @@ describe('when enhancing generated integer type with no restrictions', (): void 
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
-      data: {
-        edfiXsd: {},
-      },
     };
-    addModelBaseEdfiXsdTo(enhancedItem);
-    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as IntegerSimpleType;
+    createdSimpleType = enhancedItem.xsdSimpleType as IntegerSimpleType;
   });
 
   it('should create simple type', (): void => {

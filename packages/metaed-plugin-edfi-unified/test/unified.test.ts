@@ -7,20 +7,17 @@ import {
   ChoiceBuilder,
   CommonBuilder,
   CommonExtensionBuilder,
-  DecimalTypeBuilder,
   DescriptorBuilder,
   DomainBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   DomainEntitySubclassBuilder,
   EnumerationBuilder,
-  IntegerTypeBuilder,
   InterchangeBuilder,
   NamespaceBuilder,
   SharedDecimalBuilder,
   SharedIntegerBuilder,
   SharedStringBuilder,
-  StringTypeBuilder,
   MetaEdTextBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
@@ -1063,8 +1060,7 @@ describe('when building and enhancing shared decimal property', (): void => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
-      .sendToListener(new SharedDecimalBuilder(metaEd, []))
-      .sendToListener(new DecimalTypeBuilder(metaEd, []));
+      .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
     namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
@@ -1076,10 +1072,6 @@ describe('when building and enhancing shared decimal property', (): void => {
 
   it('should build one shared decimal', (): void => {
     expect(namespace.entity.sharedDecimal.size).toBe(1);
-  });
-
-  it('should build one shared decimal type', (): void => {
-    expect(namespace.entity.decimalType.size).toBe(1);
   });
 
   it('should enhance property path name role name', (): void => {
@@ -1094,14 +1086,6 @@ describe('when building and enhancing shared decimal property', (): void => {
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
-  });
-
-  it('should enhance referenced entity with referring simple property', (): void => {
-    const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(x => x.metaEdName === sharedDecimalPropertyName1));
-    const referencedEntity = namespace.entity.decimalType.get(sharedDecimalName1);
-    expect(property).toBeDefined();
-    expect(referencedEntity).toBeDefined();
-    expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
   it('should enhance inherited documentation', (): void => {
@@ -1163,8 +1147,7 @@ describe('when building and enhancing shared integer property', (): void => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
-      .sendToListener(new SharedIntegerBuilder(metaEd, []))
-      .sendToListener(new IntegerTypeBuilder(metaEd, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
     namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
@@ -1176,10 +1159,6 @@ describe('when building and enhancing shared integer property', (): void => {
 
   it('should build one shared integer', (): void => {
     expect(namespace.entity.sharedInteger.size).toBe(1);
-  });
-
-  it('should build one shared integer type', (): void => {
-    expect(namespace.entity.integerType.size).toBe(1);
   });
 
   it('should enhance property path name role name', (): void => {
@@ -1194,14 +1173,6 @@ describe('when building and enhancing shared integer property', (): void => {
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
-  });
-
-  it('should enhance referenced entity with referring simple property', (): void => {
-    const property = R.head(metaEd.propertyIndex.sharedInteger.filter(x => x.metaEdName === sharedIntegerPropertyName1));
-    const referencedEntity = namespace.entity.integerType.get(sharedIntegerName1);
-    expect(property).toBeDefined();
-    expect(referencedEntity).toBeDefined();
-    expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
   it('should enhance inherited documentation', (): void => {
@@ -1251,8 +1222,7 @@ describe('when building and enhancing shared short property', (): void => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
-      .sendToListener(new SharedIntegerBuilder(metaEd, []))
-      .sendToListener(new IntegerTypeBuilder(metaEd, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
     namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
@@ -1264,10 +1234,6 @@ describe('when building and enhancing shared short property', (): void => {
 
   it('should build one shared integer', (): void => {
     expect(namespace.entity.sharedInteger.size).toBe(1);
-  });
-
-  it('should build one shared integer type', (): void => {
-    expect(namespace.entity.integerType.size).toBe(1);
   });
 
   it('should enhance property path name role name', (): void => {
@@ -1282,14 +1248,6 @@ describe('when building and enhancing shared short property', (): void => {
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
-  });
-
-  it('should enhance referenced entity with referring simple property', (): void => {
-    const property = R.head(metaEd.propertyIndex.sharedShort.filter(x => x.metaEdName === sharedShortPropertyName1));
-    const referencedEntity = namespace.entity.integerType.get(sharedShortName1);
-    expect(property).toBeDefined();
-    expect(referencedEntity).toBeDefined();
-    expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
   it('should enhance inherited documentation', (): void => {
@@ -1339,8 +1297,7 @@ describe('when building and enhancing shared string property', (): void => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
-      .sendToListener(new SharedStringBuilder(metaEd, []))
-      .sendToListener(new StringTypeBuilder(metaEd, []));
+      .sendToListener(new SharedStringBuilder(metaEd, []));
 
     namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
@@ -1352,10 +1309,6 @@ describe('when building and enhancing shared string property', (): void => {
 
   it('should build one shared string', (): void => {
     expect(namespace.entity.sharedString.size).toBe(1);
-  });
-
-  it('should build one shared string type', (): void => {
-    expect(namespace.entity.stringType.size).toBe(1);
   });
 
   it('should enhance property path name role name', (): void => {
@@ -1370,14 +1323,6 @@ describe('when building and enhancing shared string property', (): void => {
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
-  });
-
-  it('should enhance referenced entity with referring simple property', (): void => {
-    const property = R.head(metaEd.propertyIndex.sharedString.filter(x => x.metaEdName === sharedStringPropertyName1));
-    const referencedEntity = namespace.entity.stringType.get(sharedStringName1);
-    expect(property).toBeDefined();
-    expect(referencedEntity).toBeDefined();
-    expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
   it('should enhance inherited documentation', (): void => {

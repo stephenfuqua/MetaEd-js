@@ -1,10 +1,19 @@
 import R from 'ramda';
-import { Common, IntegerType, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { addEntityForNamespace, newCommon, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import {
+  Common,
+  MetaEdEnvironment,
+  Namespace,
+  addEntityForNamespace,
+  newCommon,
+  newMetaEdEnvironment,
+  newNamespace,
+} from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
-import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { enhance } from '../../src/diminisher/ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher';
+import { IntegerType, newIntegerType } from '../../src/model/IntegerType';
+import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 
 describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes credential common type', (): void => {
   const expectedElementName = 'StateOfIssueStateAbbreviationType';
@@ -49,6 +58,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     const commonEntityName = 'CommonEntityName';
@@ -76,13 +86,11 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
       ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
-      data: {
-        edfiXsd: {
-          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
-        },
-      },
+      minValue: '1',
     };
-    addEntityForNamespace(integerType);
+    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    edFiXsdEntityRepository.integerType.push(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });
