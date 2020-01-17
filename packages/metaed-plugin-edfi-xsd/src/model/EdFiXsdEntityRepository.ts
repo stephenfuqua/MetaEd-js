@@ -1,16 +1,10 @@
 import { newPluginEnvironment } from 'metaed-core';
 import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { MergedInterchange } from './MergedInterchange';
-import { DecimalType } from './DecimalType';
-import { IntegerType } from './IntegerType';
-import { StringType } from './StringType';
 
 export interface EdFiXsdEntityRepository {
   mergedInterchange: Map<string, MergedInterchange>;
   hasDuplicateEntityNameInDependencyNamespace: boolean;
-  decimalType: DecimalType[];
-  integerType: IntegerType[];
-  stringType: StringType[];
 }
 
 const enhancerName = 'EdFiXsdEntityRepositorySetupEnhancer';
@@ -19,9 +13,6 @@ export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
   return {
     mergedInterchange: new Map(),
     hasDuplicateEntityNameInDependencyNamespace: false,
-    decimalType: [],
-    integerType: [],
-    stringType: [],
   };
 }
 

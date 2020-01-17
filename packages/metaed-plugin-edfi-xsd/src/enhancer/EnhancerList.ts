@@ -5,10 +5,6 @@ import { enhance as choicePropertySetupEnhancer } from '../model/property/Choice
 import { enhance as descriptorPropertySetupEnhancer } from '../model/property/DescriptorProperty';
 import { enhance as entityPropertySetupEnhancer } from '../model/property/EntityProperty';
 
-import { enhance as decimalTypeEnhancer } from './DecimalTypeEnhancer';
-import { enhance as integerTypeEnhancer } from './IntegerTypeEnhancer';
-import { enhance as stringTypeEnhancer } from './StringTypeEnhancer';
-
 import { enhance as associationExtensionSetupEnhancer } from '../model/AssociationExtension';
 import { enhance as commonExtensionSetupEnhancer } from '../model/CommonExtension';
 import { enhance as commonSubclassSetupEnhancer } from '../model/CommonSubclass';
@@ -19,6 +15,7 @@ import { enhance as enumerationBaseSetupEnhancer } from '../model/EnumerationBas
 import { enhance as interchangeItemSetupEnhancer } from '../model/InterchangeItem';
 import { enhance as modelBaseSetupEnhancer } from '../model/ModelBase';
 import { enhance as namespaceSetupEnhancer } from '../model/Namespace';
+import { enhance as simpleTypeBaseSetupEnhancer } from '../model/SimpleTypeBase';
 import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity';
 
 import { enhance as addChoicePropertiesEnhancer } from './AddChoicePropertiesEnhancer';
@@ -89,14 +86,9 @@ export function enhancerList(): Enhancer[] {
     interchangeItemSetupEnhancer,
     modelBaseSetupEnhancer,
     namespaceSetupEnhancer,
+    simpleTypeBaseSetupEnhancer,
     topLevelEntitySetupEnhancer,
     domainEntitySetupEnhancer,
-
-    // ***************
-    // Type enhancers replacing builders
-    decimalTypeEnhancer,
-    integerTypeEnhancer,
-    stringTypeEnhancer,
 
     // ***************
     // Original XSD enhancers

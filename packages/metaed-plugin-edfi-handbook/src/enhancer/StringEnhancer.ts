@@ -1,4 +1,4 @@
-import { EnhancerResult, MetaEdEnvironment, SharedString, Namespace } from 'metaed-core';
+import { EnhancerResult, MetaEdEnvironment, StringType, Namespace } from 'metaed-core';
 import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { createDefaultHandbookEntry } from './SimpleTypeHandbookEntryCreator';
 import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
@@ -6,7 +6,7 @@ import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
 const enhancerName = 'StringMetaEdHandbookEnhancer';
 
-function getTypeCharacteristicsFor(entity: SharedString): string[] {
+function getTypeCharacteristicsFor(entity: StringType): string[] {
   const results: string[] = [];
   if (entity.minLength) results.push(`min length: ${entity.minLength}`);
   if (entity.maxLength) results.push(`max length: ${entity.maxLength}`);
@@ -17,7 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
     const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
     if (handbookRepository == null) return;
-    (getEntitiesOfTypeForNamespaces([namespace], 'sharedString') as SharedString[]).forEach(entity => {
+    (getEntitiesOfTypeForNamespaces([namespace], 'stringType') as StringType[]).forEach(entity => {
       handbookRepository.handbookEntries.push({
         ...createDefaultHandbookEntry(entity, 'String', 'String', metaEd),
         typeCharacteristics: getTypeCharacteristicsFor(entity),

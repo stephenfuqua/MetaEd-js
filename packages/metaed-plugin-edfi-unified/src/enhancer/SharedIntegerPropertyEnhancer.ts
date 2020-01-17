@@ -1,10 +1,10 @@
-import { MetaEdEnvironment, EnhancerResult, SharedInteger } from 'metaed-core';
-import { NoSharedSimple } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { asIntegerType, NoSharedSimple } from 'metaed-core';
 
 const enhancerName = 'SharedIntegerPropertyEnhancer';
 
 function copyRestrictions(property) {
-  const referencedEntity = property.referencedEntity as SharedInteger;
+  const referencedEntity = asIntegerType(property.referencedEntity);
   property.minValue = referencedEntity.minValue;
   property.maxValue = referencedEntity.maxValue;
 }

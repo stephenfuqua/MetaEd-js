@@ -24,10 +24,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     'choice',
     'common',
     'commonSubclass',
+    'decimalType',
     'domain',
     'domainEntity',
     'domainEntitySubclass',
     'enumeration',
+    'integerType',
     'interchange',
     'interchangeExtension',
     'mapTypeEnumeration',
@@ -35,6 +37,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     'sharedDecimal',
     'sharedInteger',
     'sharedString',
+    'stringType',
   ).forEach(entity => {
     addModelBaseEdfiXsdTo(entity);
   });

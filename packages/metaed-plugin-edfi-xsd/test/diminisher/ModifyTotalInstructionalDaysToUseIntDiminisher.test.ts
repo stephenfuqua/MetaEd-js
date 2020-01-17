@@ -1,19 +1,10 @@
 import R from 'ramda';
-import {
-  DomainEntity,
-  MetaEdEnvironment,
-  Namespace,
-  addEntityForNamespace,
-  newDomainEntity,
-  newMetaEdEnvironment,
-  newNamespace,
-} from 'metaed-core';
+import { DomainEntity, IntegerType, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { addEntityForNamespace, newDomainEntity, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
+import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
 import { enhance } from '../../src/diminisher/ModifyTotalInstructionalDaysToUseIntDiminisher';
-import { IntegerType, newIntegerType } from '../../src/model/IntegerType';
-import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
-import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 
 describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academic week domain entity', (): void => {
   const intType = 'xs:int';
@@ -95,7 +86,6 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
 
   beforeAll(() => {
     const domainEntityName = 'DomainEntityName';
@@ -123,11 +113,13 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no
       ...newIntegerType(),
       metaEdName: integerTypeName,
       namespace,
-      minValue: '1',
+      data: {
+        edfiXsd: {
+          xsdSimpleType: { ...newIntegerSimpleType(), name: integerTypeName, minValue: '1' },
+        },
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.integerType.push(integerType);
+    addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });

@@ -1,7 +1,27 @@
-import { EnhancerResult, MetaEdEnvironment, SharedStringProperty, SharedString } from 'metaed-core';
+import { EnhancerResult, MetaEdEnvironment, SharedStringProperty, StringType, SharedString } from 'metaed-core';
 import { getEntityFromNamespaceChain } from 'metaed-core';
 
 const enhancerName = 'StringReferenceEnhancer';
+
+// NOTE:
+// referringSimpleProperties is only used by MetaEdHandbook
+// stringType is only used by XSD
+// this functionality should be moved to MetaEdHandbook
+// referringSimpleProperties should be moved to SharedSimple instead of StringType
+function addReferringSimplePropertiesToStringType(metaEd: MetaEdEnvironment): void {
+  metaEd.propertyIndex.sharedString.forEach((property: SharedStringProperty) => {
+    const referencedEntity: StringType | null = getEntityFromNamespaceChain(
+      property.referencedType,
+      property.referencedNamespaceName,
+      property.namespace,
+      'stringType',
+    ) as StringType | null;
+
+    if (referencedEntity) {
+      referencedEntity.referringSimpleProperties.push(property);
+    }
+  });
+}
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.sharedString.forEach((property: SharedStringProperty) => {
@@ -19,6 +39,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.parentEntity.outReferences.push(property);
     }
   });
+
+  addReferringSimplePropertiesToStringType(metaEd);
 
   return {
     enhancerName,

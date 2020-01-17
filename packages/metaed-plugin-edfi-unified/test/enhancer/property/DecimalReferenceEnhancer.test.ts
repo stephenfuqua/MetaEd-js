@@ -2,12 +2,20 @@ import {
   newMetaEdEnvironment,
   newDecimalProperty,
   newSharedDecimalProperty,
+  newDecimalType,
   newSharedDecimal,
   newNamespace,
   NoSharedSimple,
 } from 'metaed-core';
 
-import { DecimalProperty, MetaEdEnvironment, SharedDecimal, SharedDecimalProperty, Namespace } from 'metaed-core';
+import {
+  DecimalProperty,
+  DecimalType,
+  MetaEdEnvironment,
+  SharedDecimal,
+  SharedDecimalProperty,
+  Namespace,
+} from 'metaed-core';
 
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
@@ -18,6 +26,7 @@ describe('when enhancing decimal property', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: DecimalProperty;
+  let referencedEntity: DecimalType;
 
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
@@ -28,11 +37,21 @@ describe('when enhancing decimal property', (): void => {
     });
     metaEd.propertyIndex.decimal.push(property);
 
+    referencedEntity = Object.assign(newDecimalType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.decimalType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have decimal type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -44,6 +63,7 @@ describe('when enhancing shared decimal property', (): void => {
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedDecimalProperty;
   let referencedEntity: SharedDecimal;
+  let decimalType: DecimalType;
 
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
@@ -61,6 +81,12 @@ describe('when enhancing shared decimal property', (): void => {
     });
     namespace.entity.sharedDecimal.set(referencedEntity.metaEdName, referencedEntity);
 
+    decimalType = Object.assign(newDecimalType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.decimalType.set(referencedEntity.metaEdName, decimalType);
+
     enhance(metaEd);
   });
 
@@ -68,6 +94,10 @@ describe('when enhancing shared decimal property', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have decimal type with correct referring properties', (): void => {
+    expect(decimalType.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -79,6 +109,7 @@ describe('when enhancing shared decimal property referring to deprecated shared 
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedDecimalProperty;
   let referencedEntity: SharedDecimal;
+  let decimalType: DecimalType;
 
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
@@ -96,6 +127,12 @@ describe('when enhancing shared decimal property referring to deprecated shared 
       isDeprecated: true,
     });
     namespace.entity.sharedDecimal.set(referencedEntity.metaEdName, referencedEntity);
+
+    decimalType = Object.assign(newDecimalType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.decimalType.set(referencedEntity.metaEdName, decimalType);
 
     enhance(metaEd);
   });
@@ -115,6 +152,7 @@ describe('when enhancing decimal property across namespaces', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: DecimalProperty;
+  let referencedEntity: DecimalType;
 
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
@@ -125,11 +163,21 @@ describe('when enhancing decimal property across namespaces', (): void => {
     });
     metaEd.propertyIndex.decimal.push(property);
 
+    referencedEntity = Object.assign(newDecimalType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.decimalType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have decimal type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -143,6 +191,7 @@ describe('when enhancing shared decimal property across namespaces', (): void =>
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedDecimalProperty;
   let referencedEntity: SharedDecimal;
+  let decimalType: DecimalType;
 
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
@@ -160,6 +209,12 @@ describe('when enhancing shared decimal property across namespaces', (): void =>
     });
     namespace.entity.sharedDecimal.set(referencedEntity.metaEdName, referencedEntity);
 
+    decimalType = Object.assign(newDecimalType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.decimalType.set(referencedEntity.metaEdName, decimalType);
+
     enhance(metaEd);
   });
 
@@ -167,5 +222,9 @@ describe('when enhancing shared decimal property across namespaces', (): void =>
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have decimal type with correct referring properties', (): void => {
+    expect(decimalType.referringSimpleProperties).toContain(property);
   });
 });

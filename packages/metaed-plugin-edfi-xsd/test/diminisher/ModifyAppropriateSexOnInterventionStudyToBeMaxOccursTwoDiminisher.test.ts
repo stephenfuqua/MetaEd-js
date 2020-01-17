@@ -1,19 +1,9 @@
 import R from 'ramda';
-import {
-  MetaEdEnvironment,
-  DomainEntity,
-  EnhancerResult,
-  Namespace,
-  newDomainEntity,
-  newMetaEdEnvironment,
-  newNamespace,
-} from 'metaed-core';
+import { MetaEdEnvironment, DomainEntity, EnhancerResult, IntegerType, Namespace } from 'metaed-core';
+import { newDomainEntity, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { enhance } from '../../src/diminisher/ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher';
-import { IntegerType, newIntegerType } from '../../src/model/IntegerType';
-import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
-import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 
 describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes intervention study domain entity', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -58,8 +48,6 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   let result: EnhancerResult;
 
   beforeAll(() => {
@@ -86,11 +74,14 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     const integerType1: IntegerType = {
       ...newIntegerType(),
       metaEdName: integerTypeName1,
-      minValue: '1',
+      data: {
+        edfiXsd: {
+          xsdSimpleType: 'SimpleTypeName1',
+          minValue: '1',
+        },
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.integerType.push(integerType1);
+    namespace.entity.integerType.set(integerTypeName1, integerType1);
     metaEd.dataStandardVersion = '2.0.0';
 
     result = enhance(metaEd);

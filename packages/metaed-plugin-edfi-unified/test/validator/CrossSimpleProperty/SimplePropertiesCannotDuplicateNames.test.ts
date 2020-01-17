@@ -2,6 +2,9 @@ import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
   DomainEntityBuilder,
+  IntegerTypeBuilder,
+  StringTypeBuilder,
+  DecimalTypeBuilder,
   NamespaceBuilder,
   SharedDecimalBuilder,
   SharedIntegerBuilder,
@@ -30,7 +33,8 @@ describe('when two integer properties in different DEs have the same name', (): 
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -80,7 +84,8 @@ describe('when two integer properties in different DEs in different namespaces h
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
@@ -119,7 +124,9 @@ describe('when an integer property and a decimal property in different DEs have 
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DecimalTypeBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -157,7 +164,9 @@ describe('when a integer property and a string property in different DEs have th
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -194,7 +203,8 @@ describe('when an string property and a string property in different DEs have th
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -230,7 +240,9 @@ describe('when an string property and a decimal property in different DEs have t
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DecimalTypeBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -268,7 +280,8 @@ describe('when an decimal property and a decimal property in different DEs have 
       .withEndDomainEntity()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DecimalTypeBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
 
@@ -306,6 +319,7 @@ describe('when a decimal property and a shared decimal property in different DEs
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
@@ -345,6 +359,7 @@ describe('when a string property and a shared string property in different DEs h
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
@@ -388,6 +403,7 @@ describe('when a string property and a shared string property in different DEs i
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
@@ -429,6 +445,7 @@ describe('when an integer property and a shared integer property in different DE
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
@@ -467,6 +484,7 @@ describe('when a short property and a shared short property in different DEs hav
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
@@ -506,6 +524,7 @@ describe('when a string property and a shared decimal property in different DEs 
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');

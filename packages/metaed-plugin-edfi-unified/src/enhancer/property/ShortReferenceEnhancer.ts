@@ -1,7 +1,27 @@
-import { EnhancerResult, MetaEdEnvironment, SharedShortProperty, SharedInteger } from 'metaed-core';
+import { EnhancerResult, MetaEdEnvironment, SharedShortProperty, IntegerType, SharedInteger } from 'metaed-core';
 import { getEntityFromNamespaceChain } from 'metaed-core';
 
 const enhancerName = 'ShortReferenceEnhancer';
+
+// NOTE:
+// referringSimpleProperties is only used by MetaEdHandbook
+// integerType is only used by XSD
+// this functionality should be moved to MetaEdHandbook
+// referringSimpleProperties should be moved to SharedSimple instead of IntegerType
+function addReferringSimplePropertiesToShortType(metaEd: MetaEdEnvironment): void {
+  metaEd.propertyIndex.sharedShort.forEach((property: SharedShortProperty) => {
+    const referencedEntity: IntegerType | null = getEntityFromNamespaceChain(
+      property.referencedType,
+      property.referencedNamespaceName,
+      property.namespace,
+      'integerType',
+    ) as IntegerType | null;
+
+    if (referencedEntity) {
+      referencedEntity.referringSimpleProperties.push(property);
+    }
+  });
+}
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.sharedShort.forEach((property: SharedShortProperty) => {
@@ -19,6 +39,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.parentEntity.outReferences.push(property);
     }
   });
+
+  addReferringSimplePropertiesToShortType(metaEd);
 
   return {
     enhancerName,

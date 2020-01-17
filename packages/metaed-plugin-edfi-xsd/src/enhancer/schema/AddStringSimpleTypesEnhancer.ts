@@ -1,12 +1,12 @@
-import { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult, StringType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
+import { SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
+import { ModelBaseEdfiXsd } from '../../model/ModelBase';
 import { NoSimpleType } from '../../model/schema/SimpleType';
 import { SimpleType } from '../../model/schema/SimpleType';
 import { newStringSimpleType } from '../../model/schema/StringSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { typeGroupSimple } from './AddComplexTypesBaseEnhancer';
-import { StringType } from '../../model/StringType';
-import { EdFiXsdEntityRepository } from '../../model/EdFiXsdEntityRepository';
-import { edfiXsdRepositoryForNamespace } from '../EnhancerHelper';
 
 const enhancerName = 'AddStringSimpleTypesEnhancer';
 
@@ -17,7 +17,7 @@ function createSchemaSimpleType(stringType: StringType): SimpleType {
 
   return {
     ...newStringSimpleType(),
-    name: stringType.xsdMetaEdNameWithExtension,
+    name: (stringType.data.edfiXsd as ModelBaseEdfiXsd).xsdMetaEdNameWithExtension(),
     annotation: { ...newAnnotation(), documentation: stringType.documentation, typeGroup: typeGroupSimple },
     baseType: 'xs:string',
     minLength: stringType.minLength,
@@ -26,13 +26,8 @@ function createSchemaSimpleType(stringType: StringType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.namespace.forEach((namespace: Namespace) => {
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-
-    edFiXsdEntityRepository.stringType.forEach((stringType: StringType) => {
-      stringType.xsdSimpleType = createSchemaSimpleType(stringType);
-    });
+  (getAllEntitiesOfType(metaEd, 'stringType') as StringType[]).forEach((stringType: StringType) => {
+    (stringType.data.edfiXsd as SimpleTypeBaseEdfiXsd).xsdSimpleType = createSchemaSimpleType(stringType);
   });
 
   return {

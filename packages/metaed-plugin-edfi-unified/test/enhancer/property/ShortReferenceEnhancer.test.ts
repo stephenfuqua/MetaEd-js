@@ -2,12 +2,13 @@ import {
   newMetaEdEnvironment,
   newShortProperty,
   newSharedShortProperty,
+  newIntegerType,
   newSharedInteger,
   newNamespace,
   NoSharedSimple,
 } from 'metaed-core';
 
-import { MetaEdEnvironment, SharedInteger, SharedShortProperty, ShortProperty, Namespace } from 'metaed-core';
+import { IntegerType, MetaEdEnvironment, SharedInteger, SharedShortProperty, ShortProperty, Namespace } from 'metaed-core';
 
 import { enhance } from '../../../src/enhancer/property/ShortReferenceEnhancer';
 
@@ -18,6 +19,7 @@ describe('when enhancing short property', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: ShortProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newShortProperty(), {
@@ -28,11 +30,21 @@ describe('when enhancing short property', (): void => {
     });
     metaEd.propertyIndex.short.push(property);
 
+    referencedEntity = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have short type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -44,6 +56,7 @@ describe('when enhancing shared short property', (): void => {
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedShortProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedShortProperty(), {
@@ -61,6 +74,12 @@ describe('when enhancing shared short property', (): void => {
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
 
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
+
     enhance(metaEd);
   });
 
@@ -68,6 +87,10 @@ describe('when enhancing shared short property', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have short type with correct referring properties', (): void => {
+    expect(integerType.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -79,6 +102,7 @@ describe('when enhancing property referring to deprecated shared short', (): voi
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedShortProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedShortProperty(), {
@@ -96,6 +120,12 @@ describe('when enhancing property referring to deprecated shared short', (): voi
       isDeprecated: true,
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
+
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
 
     enhance(metaEd);
   });
@@ -115,6 +145,7 @@ describe('when enhancing short property across namespaces', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: ShortProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newShortProperty(), {
@@ -125,11 +156,21 @@ describe('when enhancing short property across namespaces', (): void => {
     });
     metaEd.propertyIndex.short.push(property);
 
+    referencedEntity = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have short type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -143,6 +184,7 @@ describe('when enhancing shared short property across namespaces', (): void => {
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedShortProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedShortProperty(), {
@@ -160,6 +202,12 @@ describe('when enhancing shared short property across namespaces', (): void => {
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
 
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
+
     enhance(metaEd);
   });
 
@@ -167,5 +215,9 @@ describe('when enhancing shared short property across namespaces', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have short type with correct referring properties', (): void => {
+    expect(integerType.referringSimpleProperties).toContain(property);
   });
 });

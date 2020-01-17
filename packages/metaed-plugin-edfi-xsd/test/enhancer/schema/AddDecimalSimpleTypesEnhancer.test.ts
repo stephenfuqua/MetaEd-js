@@ -1,16 +1,14 @@
-import { newMetaEdEnvironment, newNamespace, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { newMetaEdEnvironment, newDecimalType, newNamespace } from 'metaed-core';
+import { MetaEdEnvironment, DecimalType, Namespace } from 'metaed-core';
 import { DecimalSimpleType } from '../../../src/model/schema/DecimalSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
+import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddDecimalSimpleTypesEnhancer';
-import { addEdFiXsdEntityRepositoryTo, EdFiXsdEntityRepository } from '../../../src/model/EdFiXsdEntityRepository';
-import { edfiXsdRepositoryForNamespace } from '../../../src/enhancer/EnhancerHelper';
-import { DecimalType, newDecimalType } from '../../../src/model/DecimalType';
 
 describe('when enhancing decimal type', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const minValue = '1';
@@ -23,7 +21,6 @@ describe('when enhancing decimal type', (): void => {
   beforeAll(() => {
     enhancedItem = {
       ...newDecimalType(),
-      xsdMetaEdNameWithExtension: simpleTypeName,
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
@@ -31,14 +28,16 @@ describe('when enhancing decimal type', (): void => {
       maxValue,
       decimalPlaces,
       totalDigits,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -83,8 +82,6 @@ describe('when enhancing generated decimal type with min value only', (): void =
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const minValue = '1';
@@ -98,14 +95,16 @@ describe('when enhancing generated decimal type with min value only', (): void =
       documentation,
       generatedSimpleType: true,
       minValue,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -133,8 +132,6 @@ describe('when enhancing generated decimal type with max value only', (): void =
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const maxValue = '100';
@@ -148,14 +145,16 @@ describe('when enhancing generated decimal type with max value only', (): void =
       documentation,
       generatedSimpleType: true,
       maxValue,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -183,7 +182,6 @@ describe('when enhancing generated decimal type with decimal places only', (): v
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const decimalPlaces = '2';
@@ -197,14 +195,16 @@ describe('when enhancing generated decimal type with decimal places only', (): v
       documentation,
       generatedSimpleType: true,
       decimalPlaces,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -232,8 +232,6 @@ describe('when enhancing generated decimal type with total digits only', (): voi
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   const totalDigits = '5';
@@ -247,14 +245,16 @@ describe('when enhancing generated decimal type with total digits only', (): voi
       documentation,
       generatedSimpleType: true,
       totalDigits,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -282,8 +282,6 @@ describe('when enhancing non-generated decimal type with no restrictions', (): v
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   let enhancedItem: DecimalType;
@@ -295,14 +293,16 @@ describe('when enhancing non-generated decimal type with no restrictions', (): v
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: false,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {
@@ -330,8 +330,6 @@ describe('when enhancing generated decimal type with no restrictions', (): void 
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  addEdFiXsdEntityRepositoryTo(metaEd);
-
   const simpleTypeName = 'SimpleTypeName';
   const documentation = 'Documentation';
   let enhancedItem: DecimalType;
@@ -343,14 +341,16 @@ describe('when enhancing generated decimal type with no restrictions', (): void 
       metaEdName: simpleTypeName,
       documentation,
       generatedSimpleType: true,
+      data: {
+        edfiXsd: {},
+      },
     };
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
-    if (edFiXsdEntityRepository == null) return;
-    edFiXsdEntityRepository.decimalType.push(enhancedItem);
+    addModelBaseEdfiXsdTo(enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
-    createdSimpleType = enhancedItem.xsdSimpleType as DecimalSimpleType;
+    createdSimpleType = enhancedItem.data.edfiXsd.xsdSimpleType as DecimalSimpleType;
   });
 
   it('should create simple type', (): void => {

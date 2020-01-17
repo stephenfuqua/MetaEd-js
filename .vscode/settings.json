@@ -32,7 +32,4 @@
   "cSpell.words": [
     "metaed"
   ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
 }

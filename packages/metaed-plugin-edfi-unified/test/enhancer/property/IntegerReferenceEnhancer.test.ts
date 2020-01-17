@@ -2,12 +2,20 @@ import {
   newMetaEdEnvironment,
   newIntegerProperty,
   newSharedIntegerProperty,
+  newIntegerType,
   newSharedInteger,
   newNamespace,
   NoSharedSimple,
 } from 'metaed-core';
 
-import { IntegerProperty, MetaEdEnvironment, SharedInteger, SharedIntegerProperty, Namespace } from 'metaed-core';
+import {
+  IntegerProperty,
+  IntegerType,
+  MetaEdEnvironment,
+  SharedInteger,
+  SharedIntegerProperty,
+  Namespace,
+} from 'metaed-core';
 
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
@@ -18,6 +26,7 @@ describe('when enhancing integer property', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: IntegerProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -28,11 +37,21 @@ describe('when enhancing integer property', (): void => {
     });
     metaEd.propertyIndex.integer.push(property);
 
+    referencedEntity = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have integer type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -44,6 +63,7 @@ describe('when enhancing shared integer property', (): void => {
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedIntegerProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
@@ -61,6 +81,12 @@ describe('when enhancing shared integer property', (): void => {
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
 
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
+
     enhance(metaEd);
   });
 
@@ -68,6 +94,10 @@ describe('when enhancing shared integer property', (): void => {
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have integer type with correct referring properties', (): void => {
+    expect(integerType.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -79,6 +109,7 @@ describe('when enhancing property referring to deprecated shared integer', (): v
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedIntegerProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
@@ -96,6 +127,12 @@ describe('when enhancing property referring to deprecated shared integer', (): v
       isDeprecated: true,
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
+
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
 
     enhance(metaEd);
   });
@@ -115,6 +152,7 @@ describe('when enhancing integer property across namespaces', (): void => {
   const parentEntityName = 'ParentEntityName';
   const referencedEntityName = 'ReferencedEntityName';
   let property: IntegerProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
@@ -125,11 +163,21 @@ describe('when enhancing integer property across namespaces', (): void => {
     });
     metaEd.propertyIndex.integer.push(property);
 
+    referencedEntity = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
+
     enhance(metaEd);
   });
 
   it('should have property with no referenced entity', (): void => {
     expect(property.referencedEntity).toBe(NoSharedSimple);
+  });
+
+  it('should have integer type with no referring properties', (): void => {
+    expect(referencedEntity.referringSimpleProperties).toEqual([]);
   });
 });
 
@@ -143,6 +191,7 @@ describe('when enhancing shared integer property across namespaces', (): void =>
   const referencedEntityName = 'ReferencedEntityName';
   let property: SharedIntegerProperty;
   let referencedEntity: SharedInteger;
+  let integerType: IntegerType;
 
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
@@ -160,6 +209,12 @@ describe('when enhancing shared integer property across namespaces', (): void =>
     });
     namespace.entity.sharedInteger.set(referencedEntity.metaEdName, referencedEntity);
 
+    integerType = Object.assign(newIntegerType(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.integerType.set(referencedEntity.metaEdName, integerType);
+
     enhance(metaEd);
   });
 
@@ -167,5 +222,9 @@ describe('when enhancing shared integer property across namespaces', (): void =>
     expect(property.referencedEntity).toBe(referencedEntity);
     expect(property.referencedEntity.inReferences).toContain(property);
     expect(property.parentEntity.outReferences).toContain(property);
+  });
+
+  it('should have integer type with correct referring properties', (): void => {
+    expect(integerType.referringSimpleProperties).toContain(property);
   });
 });
