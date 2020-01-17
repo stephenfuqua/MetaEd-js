@@ -1,4 +1,4 @@
-import { MetaEdConfiguration, versionSatisfies, V3OrGreater } from 'metaed-core';
+import { MetaEdConfiguration, versionSatisfies } from 'metaed-core';
 import fs from 'fs-extra';
 import path from 'path';
 import Sugar from 'sugar';
@@ -32,7 +32,8 @@ export async function execute(
   _deployCore: boolean,
   _suppressDelete: boolean,
 ): Promise<boolean> {
-  if (versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, V3OrGreater)) {
+  // extension projects in the ODS/API only exist starting in 3.0.0
+  if (versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '<3.0.0')) {
     return true;
   }
 
