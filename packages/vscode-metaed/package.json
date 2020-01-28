@@ -10,21 +10,26 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.metaed.build"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [{
-			"command": "extension.helloWorld",
-			"title": "Hello World"
+			"command": "extension.metaed.build",
+			"title": "Build MetaEd"
 		}]
 	},
 	"scripts": {
-		"vscode:prepublish": "yarn run compile",
-		"compile": "tsc -p ./",
+		"vscode:prepublish": "yarn workspace vscode-metaed build",
+		"build": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"pretest": "yarn run compile",
-		"test": "node ./out/test/runTest.js"
+		"pretest": "yarn workspace vscode-metaed compile",
+		"test": "node ./dist/test/runTest.js"
+	},
+	"dependencies": {
+		"fs-extra": "^3.0.1",
+		"metaed-core": "2.1.2",
+		"tmp-promise": "^1.0.4"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
