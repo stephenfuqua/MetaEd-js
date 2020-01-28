@@ -12,7 +12,7 @@
 	"activationEvents": [
 		"onCommand:extension.helloWorld"
 	],
-	"main": "./out/extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [{
 			"command": "extension.helloWorld",
@@ -28,7 +28,6 @@
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.41.0",
 		"glob": "^7.1.5",
