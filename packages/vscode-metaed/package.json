@@ -29,6 +29,8 @@
 	"dependencies": {
 		"fs-extra": "^3.0.1",
 		"metaed-core": "2.1.2",
+		"ramda": "^0.25.0",
+		"semver": "^5.5.0",
 		"tmp-promise": "^1.0.4"
 	},
 	"devDependencies": {
