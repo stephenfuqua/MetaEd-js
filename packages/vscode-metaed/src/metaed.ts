@@ -6,6 +6,7 @@ import fs from 'fs-extra';
 import tmp from 'tmp-promise';
 import { MetaEdConfiguration, newMetaEdConfiguration } from 'metaed-core';
 import { findMetaEdProjectMetadata, MetaEdProjectMetadata } from './Projects';
+import { AboutPanel } from './AboutPanel';
 
 function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[]): boolean {
   let hasInvalidProject = false;
@@ -95,10 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let NEXT_TERM_ID = 1;
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand('extension.metaed.build', async () => {
+  const disposable = vscode.commands.registerCommand('metaed.build', async () => {
     // The code you place here will be executed every time your command is executed
 
     vscode.window.showInformationMessage('Building MetaEd...');
@@ -123,6 +121,13 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(disposable);
+
+  // About Panel
+  context.subscriptions.push(
+    vscode.commands.registerCommand('metaed.about', () => {
+      AboutPanel.createOrShow(context.extensionPath);
+    }),
+  );
 }
 
 // this method is called when your extension is deactivated

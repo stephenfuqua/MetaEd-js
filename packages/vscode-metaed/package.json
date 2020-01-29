@@ -2,7 +2,7 @@
 	"name": "vscode-metaed",
 	"displayName": "MetaEd for VS Code",
 	"description": "MetaEd for VS Code",
-	"version": "0.0.1",
+	"version": "2.1.2",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
@@ -10,14 +10,23 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.metaed.build"
+		"onCommand:metaed.build",
+		"onCommand:metaed.about"
 	],
-	"main": "./dist/extension.js",
+	"main": "./dist/metaed.js",
 	"contributes": {
-		"commands": [{
-			"command": "extension.metaed.build",
-			"title": "Build MetaEd"
-		}]
+		"commands": [
+			{
+			  "command": "metaed.build",
+			  "title": "Build",
+			  "category": "MetaEd"
+			},
+			{
+			  "command": "metaed.about",
+			  "title": "About",
+			  "category": "MetaEd"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn workspace vscode-metaed build",
