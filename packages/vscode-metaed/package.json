@@ -26,7 +26,19 @@
 			  "title": "About",
 			  "category": "MetaEd"
 			}
-		]
+		],
+		"menus": {
+      "editor/title": [
+        {
+          "command": "metaed.build",
+          "group": "navigation"
+				},
+				{
+          "command": "metaed.about",
+          "group": "navigation"
+        }
+      ]
+    }
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn workspace vscode-metaed build",
