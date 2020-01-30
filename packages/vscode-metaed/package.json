@@ -10,8 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:metaed.build",
-		"onCommand:metaed.about"
+		"*"
 	],
 	"main": "./dist/metaed.js",
 	"contributes": {
@@ -27,6 +26,19 @@
 			  "category": "MetaEd"
 			}
 		],
+		"languages": [
+      {
+        "id": "metaed",
+        "extensions": [".metaed"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "metaed",
+        "scopeName": "source.metaed",
+        "path": "./syntaxes/metaed.tmGrammar.json"
+      }
+    ],
 		"menus": {
       "editor/title": [
         {
