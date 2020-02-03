@@ -42,6 +42,14 @@
       ],
       "preLaunchTask": "npm: watch"
     },
+    { 
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Server",
+      "port": 6009,
+      "restart": true,
+      "outFiles": ["${workspaceRoot}/server/out/**/*.js"]
+    },
     {
       "name": "vscode-metaed Tests",
       "type": "extensionHost",

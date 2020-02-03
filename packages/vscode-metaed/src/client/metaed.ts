@@ -1,19 +1,22 @@
 // eslint-disable-next-line import/no-unresolved
-import * as vscode from 'vscode';
+import { commands, workspace, window, ExtensionContext, Terminal } from 'vscode';
 import R from 'ramda';
 import path from 'path';
 import fs from 'fs-extra';
 import tmp from 'tmp-promise';
 import { MetaEdConfiguration, newMetaEdConfiguration } from 'metaed-core';
+import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
 import { findMetaEdProjectMetadata, MetaEdProjectMetadata } from './Projects';
 import { AboutPanel } from './AboutPanel';
+
+let client: LanguageClient;
 
 function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[]): boolean {
   let hasInvalidProject = false;
   // eslint-disable-next-line no-restricted-syntax
   for (const pm of metaEdProjectMetadata) {
     if (pm.invalidProject) {
-      vscode.window.showErrorMessage(`Project file ${pm.invalidProjectReason}.`);
+      window.showErrorMessage(`Project file ${pm.invalidProjectReason}.`);
       hasInvalidProject = true;
     }
   }
@@ -67,7 +70,7 @@ async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefi
   const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata();
   if (!validProjectMetadata(metaEdProjectMetadata)) return undefined;
 
-  const lastProjectPath = vscode.workspace.workspaceFolders ? R.last(vscode.workspace.workspaceFolders).uri.fsPath : '';
+  const lastProjectPath = workspace.workspaceFolders ? R.last(workspace.workspaceFolders).uri.fsPath : '';
 
   const metaEdConfiguration: MetaEdConfiguration = {
     ...newMetaEdConfiguration(),
@@ -89,23 +92,54 @@ async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefi
   return metaEdConfiguration;
 }
 
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function launchServer(context: ExtensionContext) {
+  // The server is implemented in node
+  const serverModule = context.asAbsolutePath(path.join('dist', 'server', 'server.js'));
+  // The debug options for the server
+  // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
+  const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
+
+  // If the extension is launched in debug mode then the debug server options are used
+  // Otherwise the run options are used
+  const serverOptions: ServerOptions = {
+    run: { module: serverModule, transport: TransportKind.ipc },
+    debug: {
+      module: serverModule,
+      transport: TransportKind.ipc,
+      options: debugOptions,
+    },
+  };
+
+  // Options to control the language client
+  const clientOptions: LanguageClientOptions = {
+    // Register the server for plain text documents
+    documentSelector: [{ scheme: 'file', language: 'metaed' }],
+    synchronize: {
+      // Notify the server about file changes to metaed files contained in the workspace
+      fileEvents: workspace.createFileSystemWatcher('**/.metaed'),
+    },
+  };
+
+  // Create the language client and start the client.
+  client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions);
+
+  // Start the client. This will also launch the server
+  client.start();
+}
+
+export function activate(context: ExtensionContext) {
   // eslint-disable-next-line no-console
   console.log('Congratulations, your extension "vscode-metaed" is now active!');
 
   let NEXT_TERM_ID = 1;
 
-  const disposable = vscode.commands.registerCommand('metaed.build', async () => {
+  const disposable = commands.registerCommand('metaed.build', async () => {
     // The code you place here will be executed every time your command is executed
 
-    vscode.window.showInformationMessage('Building MetaEd...');
+    window.showInformationMessage('Building MetaEd...');
     const metaEdConsoleDirectory = path.resolve(__dirname, '../../..', 'metaed-console');
 
-    const terminal: vscode.Terminal = vscode.window.createTerminal(
-      `Ext Terminal #${NEXT_TERM_ID}`,
-      'C:\\Windows\\System32\\cmd.exe',
-    );
+    const terminal: Terminal = window.createTerminal(`Ext Terminal #${NEXT_TERM_ID}`, 'C:\\Windows\\System32\\cmd.exe');
     NEXT_TERM_ID += 1;
 
     terminal.show(true);
@@ -124,11 +158,17 @@ export function activate(context: vscode.ExtensionContext) {
 
   // About Panel
   context.subscriptions.push(
-    vscode.commands.registerCommand('metaed.about', () => {
+    commands.registerCommand('metaed.about', () => {
       AboutPanel.createOrShow(context.extensionPath);
     }),
   );
+
+  launchServer(context);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate(): Thenable<void> | undefined {
+  if (!client) {
+    return undefined;
+  }
+  return client.stop();
+}
