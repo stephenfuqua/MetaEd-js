@@ -100,7 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
     // The code you place here will be executed every time your command is executed
 
     vscode.window.showInformationMessage('Building MetaEd...');
-    const metaEdConsoleDirectory = path.resolve(__dirname, '../..', 'metaed-console');
+    const metaEdConsoleDirectory = path.resolve(__dirname, '../../..', 'metaed-console');
 
     const terminal: vscode.Terminal = vscode.window.createTerminal(
       `Ext Terminal #${NEXT_TERM_ID}`,

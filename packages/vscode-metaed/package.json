@@ -12,7 +12,7 @@
 	"activationEvents": [
 		"*"
 	],
-	"main": "./dist/metaed.js",
+	"main": "./dist/client/metaed.js",
 	"contributes": {
 		"commands": [
 			{
