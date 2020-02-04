@@ -10957,6 +10957,11 @@ vscode-uri@^1.0.6:
   resolved "https://www.myget.org/F/ed-fi/npm/vscode-uri/-/vscode-uri-1.0.6.tgz#6b8f141b0bbc44ad7b07e94f82f168ac7608ad4d"
   integrity sha1-a48UGwu8RK17B+lPgvForHYIrU0=
 
+vscode-uri@^2.1.1:
+  version "2.1.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/vscode-uri/-/vscode-uri-2.1.1.tgz#5aa1803391b6ebdd17d047f51365cf62c38f6e90"
+  integrity sha1-WqGAM5G2690X0Ef1E2XPYsOPbpA=
+
 vue-template-compiler@^2.5.16:
   version "2.5.22"
   resolved "https://www.myget.org/F/ed-fi/npm/vue-template-compiler/-/vue-template-compiler-2.5.22.tgz#c3d3c02c65f1908205c4fbd3b0ef579e51239955"

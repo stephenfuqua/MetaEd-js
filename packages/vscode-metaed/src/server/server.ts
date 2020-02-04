@@ -1,23 +1,31 @@
+// eslint-disable-next-line import/no-unresolved
+import { URI } from 'vscode-uri';
 import {
   createConnection,
-  TextDocuments,
   TextDocument,
+  TextDocuments,
   Diagnostic,
   DiagnosticSeverity,
   ProposedFeatures,
   InitializeParams,
   DidChangeConfigurationNotification,
 } from 'vscode-languageserver';
+import { State, MetaEdConfiguration, executePipeline, newState, newMetaEdConfiguration } from 'metaed-core';
+import { MetaEdProjectMetadata, validProjectMetadata, findMetaEdProjectMetadata } from '../common/Projects';
+
+export async function findMetaEdProjectMetadataForServer(workspaceFolders: string[]): Promise<MetaEdProjectMetadata[]> {
+  return findMetaEdProjectMetadata(workspaceFolders.map(folderUri => URI.parse(folderUri).fsPath));
+}
 
 const connection = createConnection(ProposedFeatures.all);
 
-// Create a simple text document manager. The text document manager
-// supports full document sync only
-const documents: TextDocuments = new TextDocuments();
-
 let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
-let hasDiagnosticRelatedInformationCapability: boolean = false;
+
+const documents: TextDocuments = new TextDocuments();
+
+const workspaceFolders: Set<string> = new Set();
+let currentFilesWithFailures: Set<string> = new Set();
 
 connection.onInitialize((params: InitializeParams) => {
   const { capabilities } = params;
@@ -26,79 +34,122 @@ connection.onInitialize((params: InitializeParams) => {
   // If not, we will fall back using global settings
   hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
   hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
-  hasDiagnosticRelatedInformationCapability = !!(
-    capabilities.textDocument &&
-    capabilities.textDocument.publishDiagnostics &&
-    capabilities.textDocument.publishDiagnostics.relatedInformation
-  );
 
   return {
     capabilities: {
-      textDocumentSync: documents.syncKind,
-      // Tell the client that the server supports code completion
       completionProvider: {
         resolveProvider: true,
+      },
+      workspaceFolders: {
+        supported: true,
+        changeNotifications: true,
       },
     },
   };
 });
 
-connection.onInitialized(() => {
+connection.onInitialized(async () => {
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     connection.client.register(DidChangeConfigurationNotification.type, undefined);
   }
   if (hasWorkspaceFolderCapability) {
-    connection.workspace.onDidChangeWorkspaceFolders(_event => {
+    connection.workspace.onDidChangeWorkspaceFolders(event => {
       connection.console.log('Workspace folder change event received.');
+      event.removed.forEach(workspaceFolder => {
+        workspaceFolders.delete(workspaceFolder.uri);
+      });
+      event.added.forEach(workspaceFolder => {
+        workspaceFolders.add(workspaceFolder.uri);
+      });
     });
+    const currentWorkspaceFolders = await connection.workspace.getWorkspaceFolders();
+    if (currentWorkspaceFolders != null) {
+      currentWorkspaceFolders.forEach(workspaceFolder => {
+        workspaceFolders.add(workspaceFolder.uri);
+      });
+    }
   }
 });
 
+async function createMetaEdConfiguration(
+  metaEdProjectMetadata: MetaEdProjectMetadata[],
+): Promise<MetaEdConfiguration | undefined> {
+  if (!validProjectMetadata(metaEdProjectMetadata)) return undefined;
+
+  const metaEdConfiguration: MetaEdConfiguration = {
+    ...newMetaEdConfiguration(),
+    defaultPluginTechVersion: '3.2.0',
+    allianceMode: false,
+  };
+
+  metaEdProjectMetadata.forEach(pm => {
+    metaEdConfiguration.projects.push({
+      namespaceName: pm.projectNamespace,
+      projectName: pm.projectName,
+      projectVersion: pm.projectVersion,
+      projectExtension: pm.projectExtension,
+    });
+    metaEdConfiguration.projectPaths.push(pm.projectPath);
+  });
+
+  return metaEdConfiguration;
+}
+
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
-  const pattern = /\b[A-Z]{2,}\b/g;
-  let m: RegExpExecArray | null;
+  // TODO: don't ignore the changed document - need to add the in buffer files
 
-  let problems = 0;
   const diagnostics: Diagnostic[] = [];
+  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadataForServer(
+    Array.from(workspaceFolders),
+  );
+  const metaEdConfiguration: MetaEdConfiguration | undefined = await createMetaEdConfiguration(metaEdProjectMetadata);
+  if (metaEdConfiguration == null) return;
 
-  // eslint-disable-next-line no-cond-assign
-  while ((m = pattern.exec(text)) && problems < 10) {
-    problems += 1;
-    const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length),
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: 'ex',
-    };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: { ...diagnostic.range },
-          },
-          message: 'Spelling matters',
+  const state: State = {
+    ...newState(),
+    pipelineOptions: {
+      runValidators: true,
+      runEnhancers: true,
+      runGenerators: false,
+      stopOnValidationFailure: false,
+    },
+    metaEdConfiguration,
+  };
+
+  const { validationFailure } = (await executePipeline(state)).state;
+
+  const filesWithFailure: Set<string> = new Set();
+  // TODO: this will only give 1 validation failure per file, need to gather all of them
+  validationFailure.forEach(failure => {
+    if (failure.fileMap != null) {
+      filesWithFailure.add(failure.fileMap.fullPath);
+
+      const tokenLength: number = failure.sourceMap && failure.sourceMap.tokenText ? failure.sourceMap.tokenText.length : 0;
+      const adjustedLine: number = !failure.fileMap || failure.fileMap.lineNumber === 0 ? 0 : failure.fileMap.lineNumber - 1;
+      const characterPosition: number = failure.sourceMap ? failure.sourceMap.column : 0;
+
+      const diagnostic: Diagnostic = {
+        severity: DiagnosticSeverity.Error, // TODO: actual severity
+        range: {
+          start: { line: adjustedLine, character: characterPosition },
+          end: { line: adjustedLine, character: characterPosition + tokenLength },
         },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: { ...diagnostic.range },
-          },
-          message: 'Particularly for names',
-        },
-      ];
+        message: failure.message,
+        source: 'MetaEd',
+      };
+
+      diagnostics.push(diagnostic);
+      // Send the computed diagnostics to VSCode.
+      connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
     }
-    diagnostics.push(diagnostic);
-  }
+  });
 
-  // Send the computed diagnostics to VSCode.
-  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+  const resolvedFailures = [...filesWithFailure].filter(file => currentFilesWithFailures.has(file));
+  resolvedFailures.forEach(resolved => {
+    connection.sendDiagnostics({ uri: resolved, diagnostics: [] });
+  });
+  currentFilesWithFailures = filesWithFailure;
 }
 
 // The content of a text document has changed. This event is emitted
@@ -111,26 +162,6 @@ connection.onDidChangeWatchedFiles(_change => {
   // Monitored files have change in VSCode
   connection.console.log('We received an file change event');
 });
-
-/*
-connection.onDidOpenTextDocument((params) => {
-	// A text document got opened in VSCode.
-	// params.textDocument.uri uniquely identifies the document. For documents store on disk this is a file URI.
-	// params.textDocument.text the initial full content of the document.
-	connection.console.log(`${params.textDocument.uri} opened.`);
-});
-connection.onDidChangeTextDocument((params) => {
-	// The content of a text document did change in VSCode.
-	// params.textDocument.uri uniquely identifies the document.
-	// params.contentChanges describe the content changes to the document.
-	connection.console.log(`${params.textDocument.uri} changed: ${JSON.stringify(params.contentChanges)}`);
-});
-connection.onDidCloseTextDocument((params) => {
-	// A text document got closed in VSCode.
-	// params.textDocument.uri uniquely identifies the document.
-	connection.console.log(`${params.textDocument.uri} closed.`);
-});
-*/
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events

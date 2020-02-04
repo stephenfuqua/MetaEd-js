@@ -6,68 +6,14 @@ import fs from 'fs-extra';
 import tmp from 'tmp-promise';
 import { MetaEdConfiguration, newMetaEdConfiguration } from 'metaed-core';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
-import { findMetaEdProjectMetadata, MetaEdProjectMetadata } from './Projects';
+import { findMetaEdProjectMetadataForClient } from './Projects';
 import { AboutPanel } from './AboutPanel';
+import { MetaEdProjectMetadata, validProjectMetadata } from '../common/Projects';
 
 let client: LanguageClient;
 
-function validProjectMetadata(metaEdProjectMetadata: MetaEdProjectMetadata[]): boolean {
-  let hasInvalidProject = false;
-  // eslint-disable-next-line no-restricted-syntax
-  for (const pm of metaEdProjectMetadata) {
-    if (pm.invalidProject) {
-      window.showErrorMessage(`Project file ${pm.invalidProjectReason}.`);
-      hasInvalidProject = true;
-    }
-  }
-  if (hasInvalidProject) return false;
-
-  // const hasExtensionProjects: boolean = R.any((pm: MetaEdProjectMetadata) => pm.isExtensionProject, metaEdProjectMetadata);
-  // const coreProjectMetadata: MetaEdProjectMetadata[] = metaEdProjectMetadata.filter(
-  //   (pm: MetaEdProjectMetadata) => !pm.isExtensionProject,
-  // );
-
-  // // if (coreProjectMetadata.length > 1) {
-  // //   outputWindow.addMessage('MetaEd does not support multiple core MetaEd projects.');
-  // //   return false;
-  // // }
-
-  // // Note - we are intentionally not validating that there are multiple extension projects with the same namespace
-
-  // if (coreProjectMetadata.length < 1) {
-  //   outputWindow.addMessage('Please set up a core MetaEd directory under MetaEd -> Settings...');
-  //   return false;
-  // }
-
-  // if (coreProjectMetadata[0].projectVersion !== getTargetDsVersionSemver()) {
-  //   outputWindow.addMessage(
-  //     'Core MetaEd project version does not match Data Standard version selected under MetaEd -> Settings...',
-  //   );
-  //   return false;
-  // }
-
-  // if (!hasExtensionProjects && !allianceMode()) {
-  //   outputWindow.addMessage('No extension project.  Please add an extension project folder.');
-  //   return false;
-  // }
-
-  // if (semver.satisfies(getTargetOdsApiVersionSemver(), '2.x')) {
-  //   // eslint-disable-next-line no-restricted-syntax
-  //   for (const pm of metaEdProjectMetadata) {
-  //     if (pm.isExtensionProject && pm.projectNamespace !== 'Extension') {
-  //       outputWindow.addMessage(
-  //         `Namespace derived from projectName (first character capitalized, remove special characters) is not "Extension". ODS/API version 2.x only supports the namespace "Extension".`,
-  //       );
-  //       return false;
-  //     }
-  //   }
-  // }
-
-  return true;
-}
-
 async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefined> {
-  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadata();
+  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadataForClient();
   if (!validProjectMetadata(metaEdProjectMetadata)) return undefined;
 
   const lastProjectPath = workspace.workspaceFolders ? R.last(workspace.workspaceFolders).uri.fsPath : '';
@@ -93,14 +39,10 @@ async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefi
 }
 
 export function launchServer(context: ExtensionContext) {
-  // The server is implemented in node
   const serverModule = context.asAbsolutePath(path.join('dist', 'server', 'server.js'));
-  // The debug options for the server
-  // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
   const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
 
-  // If the extension is launched in debug mode then the debug server options are used
-  // Otherwise the run options are used
+  // If the extension is launched in debug mode then the debug server options are used otherwise the run options are used
   const serverOptions: ServerOptions = {
     run: { module: serverModule, transport: TransportKind.ipc },
     debug: {
@@ -110,9 +52,8 @@ export function launchServer(context: ExtensionContext) {
     },
   };
 
-  // Options to control the language client
   const clientOptions: LanguageClientOptions = {
-    // Register the server for plain text documents
+    // Register the server for metaed documents
     documentSelector: [{ scheme: 'file', language: 'metaed' }],
     synchronize: {
       // Notify the server about file changes to metaed files contained in the workspace
@@ -120,10 +61,8 @@ export function launchServer(context: ExtensionContext) {
     },
   };
 
-  // Create the language client and start the client.
-  client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions);
-
   // Start the client. This will also launch the server
+  client = new LanguageClient('MetaEd', 'MetaEd', serverOptions, clientOptions);
   client.start();
 }
 
