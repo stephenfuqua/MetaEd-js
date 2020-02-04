@@ -2,7 +2,6 @@
 import { URI } from 'vscode-uri';
 import {
   createConnection,
-  TextDocument,
   TextDocuments,
   Diagnostic,
   DiagnosticSeverity,
@@ -96,7 +95,7 @@ async function createMetaEdConfiguration(
   return metaEdConfiguration;
 }
 
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
+async function validateFiles(): Promise<void> {
   // TODO: don't ignore the changed document - need to add the in buffer files
 
   const diagnostics: Diagnostic[] = [];
@@ -123,7 +122,8 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   // TODO: this will only give 1 validation failure per file, need to gather all of them
   validationFailure.forEach(failure => {
     if (failure.fileMap != null) {
-      filesWithFailure.add(failure.fileMap.fullPath);
+      const fileUri = URI.file(failure.fileMap.fullPath);
+      filesWithFailure.add(fileUri.toString());
 
       const tokenLength: number = failure.sourceMap && failure.sourceMap.tokenText ? failure.sourceMap.tokenText.length : 0;
       const adjustedLine: number = !failure.fileMap || failure.fileMap.lineNumber === 0 ? 0 : failure.fileMap.lineNumber - 1;
@@ -141,11 +141,11 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 
       diagnostics.push(diagnostic);
       // Send the computed diagnostics to VSCode.
-      connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+      connection.sendDiagnostics({ uri: fileUri.toString(), diagnostics });
     }
   });
 
-  const resolvedFailures = [...filesWithFailure].filter(file => currentFilesWithFailures.has(file));
+  const resolvedFailures = [...currentFilesWithFailures].filter(file => filesWithFailure.has(file));
   resolvedFailures.forEach(resolved => {
     connection.sendDiagnostics({ uri: resolved, diagnostics: [] });
   });
@@ -155,7 +155,12 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(change => {
-  validateTextDocument(change.document);
+  // TODO: a little hack here to clear this file before running validation
+  const changedFileUri = change.document.uri;
+  currentFilesWithFailures.delete(changedFileUri);
+  connection.sendDiagnostics({ uri: changedFileUri, diagnostics: [] });
+
+  validateFiles();
 });
 
 connection.onDidChangeWatchedFiles(_change => {
