@@ -24,21 +24,105 @@ let hasWorkspaceFolderCapability: boolean = false;
 const documents: TextDocuments = new TextDocuments();
 
 const workspaceFolders: Set<string> = new Set();
-let currentFilesWithFailures: Set<string> = new Set();
+let currentFilesWithFailures: string[] = [];
+
+async function createMetaEdConfiguration(
+  metaEdProjectMetadata: MetaEdProjectMetadata[],
+): Promise<MetaEdConfiguration | undefined> {
+  if (!validProjectMetadata(metaEdProjectMetadata)) return undefined;
+
+  const metaEdConfiguration: MetaEdConfiguration = {
+    ...newMetaEdConfiguration(),
+    defaultPluginTechVersion: '3.2.0',
+    allianceMode: false,
+  };
+
+  metaEdProjectMetadata.forEach(pm => {
+    metaEdConfiguration.projects.push({
+      namespaceName: pm.projectNamespace,
+      projectName: pm.projectName,
+      projectVersion: pm.projectVersion,
+      projectExtension: pm.projectExtension,
+    });
+    metaEdConfiguration.projectPaths.push(pm.projectPath);
+  });
+
+  return metaEdConfiguration;
+}
+
+async function validateFiles(): Promise<void> {
+  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadataForServer(
+    Array.from(workspaceFolders),
+  );
+  const metaEdConfiguration: MetaEdConfiguration | undefined = await createMetaEdConfiguration(metaEdProjectMetadata);
+  if (metaEdConfiguration == null) return;
+
+  const state: State = {
+    ...newState(),
+    pipelineOptions: {
+      runValidators: true,
+      runEnhancers: true,
+      runGenerators: false,
+      stopOnValidationFailure: false,
+    },
+    metaEdConfiguration,
+  };
+
+  const { validationFailure } = (await executePipeline(state)).state;
+
+  const filesWithFailure: Map<string, Diagnostic[]> = new Map();
+
+  validationFailure.forEach(failure => {
+    if (failure.fileMap != null) {
+      const fileUri = URI.file(failure.fileMap.fullPath);
+      if (!filesWithFailure.has(fileUri.toString())) {
+        filesWithFailure.set(fileUri.toString(), []);
+      }
+
+      const tokenLength: number = failure.sourceMap && failure.sourceMap.tokenText ? failure.sourceMap.tokenText.length : 0;
+      const adjustedLine: number = !failure.fileMap || failure.fileMap.lineNumber === 0 ? 0 : failure.fileMap.lineNumber - 1;
+      const characterPosition: number = failure.sourceMap ? failure.sourceMap.column : 0;
+
+      const diagnostics: Diagnostic[] = [];
+
+      const diagnostic: Diagnostic = {
+        severity: failure.category === 'warning' ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
+        range: {
+          start: { line: adjustedLine, character: characterPosition },
+          end: { line: adjustedLine, character: characterPosition + tokenLength },
+        },
+        message: failure.message,
+        source: 'MetaEd',
+      };
+
+      const fileWithFailureDiagnostics = filesWithFailure.get(fileUri.toString());
+      if (fileWithFailureDiagnostics != null) fileWithFailureDiagnostics.push(diagnostic);
+      connection.sendDiagnostics({ uri: fileUri.toString(), diagnostics });
+    }
+  });
+
+  // send failures
+  filesWithFailure.forEach((diagnostics: Diagnostic[], uri: string) => {
+    connection.sendDiagnostics({ uri, diagnostics });
+  });
+
+  // clear resolved failures
+  const resolvedFailures = [...currentFilesWithFailures].filter(fileUri => filesWithFailure.has(fileUri));
+  resolvedFailures.forEach(uri => {
+    connection.sendDiagnostics({ uri, diagnostics: [] });
+  });
+  currentFilesWithFailures = Array.from(filesWithFailure.keys());
+}
 
 connection.onInitialize((params: InitializeParams) => {
   const { capabilities } = params;
 
-  // Does the client support the `workspace/configuration` request?
-  // If not, we will fall back using global settings
   hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
   hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
 
   return {
     capabilities: {
-      completionProvider: {
-        resolveProvider: true,
-      },
+      completionProvider: {},
       workspaceFolders: {
         supported: true,
         changeNotifications: true,
@@ -69,108 +153,34 @@ connection.onInitialized(async () => {
       });
     }
   }
+  await validateFiles();
 });
 
-async function createMetaEdConfiguration(
-  metaEdProjectMetadata: MetaEdProjectMetadata[],
-): Promise<MetaEdConfiguration | undefined> {
-  if (!validProjectMetadata(metaEdProjectMetadata)) return undefined;
-
-  const metaEdConfiguration: MetaEdConfiguration = {
-    ...newMetaEdConfiguration(),
-    defaultPluginTechVersion: '3.2.0',
-    allianceMode: false,
-  };
-
-  metaEdProjectMetadata.forEach(pm => {
-    metaEdConfiguration.projects.push({
-      namespaceName: pm.projectNamespace,
-      projectName: pm.projectName,
-      projectVersion: pm.projectVersion,
-      projectExtension: pm.projectExtension,
-    });
-    metaEdConfiguration.projectPaths.push(pm.projectPath);
+function clearDiagnostics() {
+  currentFilesWithFailures.forEach(uri => {
+    connection.sendDiagnostics({ uri, diagnostics: [] });
   });
-
-  return metaEdConfiguration;
+  currentFilesWithFailures = [];
 }
 
-async function validateFiles(): Promise<void> {
-  // TODO: don't ignore the changed document - need to add the in buffer files
-
-  const diagnostics: Diagnostic[] = [];
-  const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadataForServer(
-    Array.from(workspaceFolders),
-  );
-  const metaEdConfiguration: MetaEdConfiguration | undefined = await createMetaEdConfiguration(metaEdProjectMetadata);
-  if (metaEdConfiguration == null) return;
-
-  const state: State = {
-    ...newState(),
-    pipelineOptions: {
-      runValidators: true,
-      runEnhancers: true,
-      runGenerators: false,
-      stopOnValidationFailure: false,
-    },
-    metaEdConfiguration,
-  };
-
-  const { validationFailure } = (await executePipeline(state)).state;
-
-  const filesWithFailure: Set<string> = new Set();
-  // TODO: this will only give 1 validation failure per file, need to gather all of them
-  validationFailure.forEach(failure => {
-    if (failure.fileMap != null) {
-      const fileUri = URI.file(failure.fileMap.fullPath);
-      filesWithFailure.add(fileUri.toString());
-
-      const tokenLength: number = failure.sourceMap && failure.sourceMap.tokenText ? failure.sourceMap.tokenText.length : 0;
-      const adjustedLine: number = !failure.fileMap || failure.fileMap.lineNumber === 0 ? 0 : failure.fileMap.lineNumber - 1;
-      const characterPosition: number = failure.sourceMap ? failure.sourceMap.column : 0;
-
-      const diagnostic: Diagnostic = {
-        severity: DiagnosticSeverity.Error, // TODO: actual severity
-        range: {
-          start: { line: adjustedLine, character: characterPosition },
-          end: { line: adjustedLine, character: characterPosition + tokenLength },
-        },
-        message: failure.message,
-        source: 'MetaEd',
-      };
-
-      diagnostics.push(diagnostic);
-      // Send the computed diagnostics to VSCode.
-      connection.sendDiagnostics({ uri: fileUri.toString(), diagnostics });
-    }
-  });
-
-  const resolvedFailures = [...currentFilesWithFailures].filter(file => filesWithFailure.has(file));
-  resolvedFailures.forEach(resolved => {
-    connection.sendDiagnostics({ uri: resolved, diagnostics: [] });
-  });
-  currentFilesWithFailures = filesWithFailure;
-}
-
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-documents.onDidChangeContent(change => {
-  // TODO: a little hack here to clear this file before running validation
-  const changedFileUri = change.document.uri;
-  currentFilesWithFailures.delete(changedFileUri);
-  connection.sendDiagnostics({ uri: changedFileUri, diagnostics: [] });
-
-  validateFiles();
+documents.onDidOpen(async () => {
+  clearDiagnostics();
+  await validateFiles();
 });
 
-connection.onDidChangeWatchedFiles(_change => {
-  // Monitored files have change in VSCode
-  connection.console.log('We received an file change event');
+// Lint on save only - not on the fly - works well with editor autosave
+documents.onDidSave(async () => {
+  clearDiagnostics();
+  await validateFiles();
 });
 
-// Make the text document manager listen on the connection
-// for open, change and close text document events
+documents.onDidClose(async () => {
+  clearDiagnostics();
+  await validateFiles();
+});
+
+// Make text document manager listen
 documents.listen(connection);
 
-// Listen on the connection
+// Make connection listen
 connection.listen();
