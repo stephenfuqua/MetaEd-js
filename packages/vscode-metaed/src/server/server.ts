@@ -33,7 +33,7 @@ async function createMetaEdConfiguration(
 
   const metaEdConfiguration: MetaEdConfiguration = {
     ...newMetaEdConfiguration(),
-    defaultPluginTechVersion: '3.2.0',
+    defaultPluginTechVersion: '3.3.0',
     allianceMode: false,
   };
 
@@ -67,6 +67,7 @@ async function validateFiles(): Promise<void> {
     },
     metaEdConfiguration,
   };
+  state.metaEd.dataStandardVersion = '3.2.0';
 
   const { validationFailure } = (await executePipeline(state)).state;
 
@@ -113,6 +114,24 @@ async function validateFiles(): Promise<void> {
   });
   currentFilesWithFailures = Array.from(filesWithFailure.keys());
 }
+
+connection.onNotification('metaed/build', async (metaEdConfiguration: MetaEdConfiguration) => {
+  const state: State = {
+    ...newState(),
+    pipelineOptions: {
+      runValidators: true,
+      runEnhancers: true,
+      runGenerators: true,
+      stopOnValidationFailure: true,
+    },
+    metaEdConfiguration,
+  };
+  state.metaEd.dataStandardVersion = '3.2.0';
+
+  await executePipeline(state);
+
+  connection.sendNotification('metaed/buildComplete');
+});
 
 connection.onInitialize((params: InitializeParams) => {
   const { capabilities } = params;
