@@ -1,5 +1,5 @@
 import { newPluginEnvironment } from 'metaed-core';
-import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { DeleteTrackingTable } from './DeleteTrackingTable';
 import { DeleteTrackingTrigger } from './DeleteTrackingTrigger';
 import { AddColumnChangeVersionForTable } from './AddColumnChangeVersionForTable';
@@ -12,8 +12,6 @@ export interface EdFiOdsChangeQueryEntityRepository {
   createTriggerUpdateChangeVersion: CreateTriggerUpdateChangeVersion[];
 }
 
-const enhancerName = 'EdFiOdsChangeQueryEntityRepositorySetupEnhancer';
-
 export function newEdFiOdsChangeQueryEntityRepository(): EdFiOdsChangeQueryEntityRepository {
   return {
     deleteTrackingTable: [],
@@ -23,29 +21,20 @@ export function newEdFiOdsChangeQueryEntityRepository(): EdFiOdsChangeQueryEntit
   };
 }
 
-export function addEdFiOdsChangeQueryEntityRepositoryTo(metaEd: MetaEdEnvironment) {
+export function addEdFiOdsChangeQueryEntityRepositoryTo(metaEd: MetaEdEnvironment, pluginName: string) {
   const namespaces: Map<Namespace, EdFiOdsChangeQueryEntityRepository> = new Map();
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespaces.set(namespace, newEdFiOdsChangeQueryEntityRepository());
   });
 
-  const edfiOdsChangeQueryPlugin = metaEd.plugin.get('edfiOdsChangeQuery');
+  const edfiOdsChangeQueryPlugin = metaEd.plugin.get(pluginName);
   if (edfiOdsChangeQueryPlugin == null) {
-    metaEd.plugin.set('edfiOdsChangeQuery', {
+    metaEd.plugin.set(pluginName, {
       ...newPluginEnvironment(),
-      shortName: 'edfiOdsChangeQuery',
+      shortName: pluginName,
       namespace: namespaces,
     });
   } else {
     edfiOdsChangeQueryPlugin.namespace = namespaces;
   }
-}
-
-export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  addEdFiOdsChangeQueryEntityRepositoryTo(metaEd);
-
-  return {
-    enhancerName,
-    success: true,
-  };
 }

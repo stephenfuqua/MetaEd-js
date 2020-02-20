@@ -1,8 +1,8 @@
 {
-  "name": "metaed-plugin-edfi-ods-changequery",
+  "name": "metaed-plugin-edfi-ods-changequery-sqlserver",
   "main": "dist/index.js",
   "version": "2.1.2",
-  "description": "Ed-Fi ODS/API Change Queries common plugin for MetaEd",
+  "description": "Ed-Fi ODS/API Change Queries plugin for MetaEd supporting SQL Server",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
@@ -15,14 +15,15 @@
   ],
   "metaed-plugin": {
     "pluginType": "artifact-specific",
-    "shortName": "edfiOdsChangeQuery",
+    "shortName": "edfiOdsChangeQuerySqlServer",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "2.x",
     "technologyVersion": ">=3.0.0",
     "dependencies": [
       "metaed-plugin-edfi-unified-advanced",
       "metaed-plugin-edfi-ods-relational",
-      "metaed-plugin-edfi-ods-sqlserver"
+      "metaed-plugin-edfi-ods-sqlserver",
+      "metaed-plugin-edfi-ods-changequery"
     ]
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "metaed-plugin-edfi-ods-relational": "2.1.2",
     "metaed-plugin-edfi-ods-sqlserver": "2.1.2",
     "metaed-plugin-edfi-unified-advanced": "2.1.2",
+    "metaed-plugin-edfi-ods-changequery": "2.1.2",
     "ramda": "^0.25.0",
     "winston": "3.0.0"
   },

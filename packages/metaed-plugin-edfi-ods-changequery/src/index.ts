@@ -1,52 +1,53 @@
-import { MetaEdPlugin } from 'metaed-core';
-import { newMetaEdPlugin } from 'metaed-core';
-
+import { MetaEdPlugin, newMetaEdPlugin } from 'metaed-core';
 import { validate as NamespaceMustNotBeNamedChanges } from './validator/NamespaceMustNotBeNamedChanges';
 
-import { generate as CreateTrackedDeleteTablesGenerator } from './generator/CreateTrackedDeleteTablesGenerator';
-import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
-import { generate as CreateChangeVersionSequenceGenerator } from './generator/CreateChangeVersionSequenceGenerator';
-import { generate as CreateChangesSchemaGenerator } from './generator/CreateChangesSchemaGenerator';
-import { generate as CreateTriggerUpdateChangeVersionGenerator } from './generator/CreateTriggerUpdateChangeVersionGenerator';
-import { generate as AddColumnChangeVersionForTableGenerator } from './generator/AddColumnChangeVersionForTableGenerator';
-import { generate as AddIndexChangeVersionForTableGenerator } from './generator/AddIndexChangeVersionForTableGenerator';
-
-import { enhance as edFiOdsChangeQueryEntityRepository } from './model/EdFiOdsChangeQueryEntityRepository';
-
-import { enhance as associationChangeQueryEnhancer } from './enhancer/AssociationChangeQueryEnhancer';
-import { enhance as associationSubclassChangeQueryEnhancer } from './enhancer/AssociationSubclassChangeQueryEnhancer';
-import { enhance as baseDescriptorChangeQueryEnhancer } from './enhancer/BaseDescriptorChangeQueryEnhancer';
-import { enhance as descriptorChangeQueryEnhancer } from './enhancer/DescriptorChangeQueryEnhancer';
-import { enhance as domainEntityChangeQueryEnhancer } from './enhancer/DomainEntityChangeQueryEnhancer';
-import { enhance as domainEntitySubclassChangeQueryEnhancer } from './enhancer/DomainEntitySubclassChangeQueryEnhancer';
-import { enhance as enumerationChangeQueryEnhancer } from './enhancer/EnumerationChangeQueryEnhancer';
-import { enhance as addColumnChangeVersionForTableEnhancer } from './enhancer/AddColumnChangeVersionForTableEnhancer';
-import { enhance as createTriggerUpdateChangeVersionEnhancer } from './enhancer/CreateTriggerUpdateChangeVersionEnhancer';
+export { changeQueryIndicated } from './enhancer/ChangeQueryIndicator';
+export { AddColumnChangeVersionForTable } from './model/AddColumnChangeVersionForTable';
+export { CreateTriggerUpdateChangeVersion } from './model/CreateTriggerUpdateChangeVersion';
+export { DeleteTrackingTable } from './model/DeleteTrackingTable';
+export { DeleteTrackingTrigger } from './model/DeleteTrackingTrigger';
+export { PairedForeignKeyColumnName } from './model/PairedForeignKeyColumnName';
+export {
+  pluginEnvironment,
+  getPrimaryKeys,
+  edfiOdsChangeQueryRepositoryForNamespace,
+  deleteTrackingTableEntities,
+  deleteTrackingTriggerEntities,
+  addColumnChangeVersionForTableEntities,
+  createTriggerUpdateChangeVersionEntities,
+  performAddColumnChangeVersionForTableEnhancement,
+  applyCreateDeleteTrackingTableEnhancement,
+  tableForModel,
+  performAssociationChangeQueryEnhancement,
+  performCreateTriggerUpdateChangeVersionEnhancement,
+  performEnumerationChangeQueryEnhancement,
+} from './enhancer/EnhancerHelper';
+export {
+  SuperclassForeignKeyFinder,
+  applyCreateDeleteTrackingTriggerEnhancements,
+} from './enhancer/DeleteTrackingTriggerCreator';
+export {
+  ChangeQueryTemplates,
+  changeQueryPath,
+  performColumnChangeVersionForTableGeneration,
+  performCreateTrackedDeleteTablesGeneration,
+  performAddIndexChangeVersionForTableGeneration,
+  performCreateChangesSchemaGeneration,
+  performCreateChangeVersionSequenceGeneration,
+  performCreateDeletedForTrackingTriggerGeneration,
+  performCreateTriggerUpdateChangeVersionGeneration,
+} from './generator/GeneratorHelper';
+export {
+  EdFiOdsChangeQueryEntityRepository,
+  newEdFiOdsChangeQueryEntityRepository,
+  addEdFiOdsChangeQueryEntityRepositoryTo,
+} from './model/EdFiOdsChangeQueryEntityRepository';
 
 export function initialize(): MetaEdPlugin {
   return {
     ...newMetaEdPlugin(),
     validator: [NamespaceMustNotBeNamedChanges],
-    enhancer: [
-      edFiOdsChangeQueryEntityRepository,
-      associationChangeQueryEnhancer,
-      associationSubclassChangeQueryEnhancer,
-      baseDescriptorChangeQueryEnhancer,
-      descriptorChangeQueryEnhancer,
-      domainEntityChangeQueryEnhancer,
-      domainEntitySubclassChangeQueryEnhancer,
-      enumerationChangeQueryEnhancer,
-      addColumnChangeVersionForTableEnhancer,
-      createTriggerUpdateChangeVersionEnhancer,
-    ],
-    generator: [
-      CreateTrackedDeleteTablesGenerator,
-      CreateDeletedForTrackingTriggersGenerator,
-      CreateChangeVersionSequenceGenerator,
-      CreateChangesSchemaGenerator,
-      CreateTriggerUpdateChangeVersionGenerator,
-      AddColumnChangeVersionForTableGenerator,
-      AddIndexChangeVersionForTableGenerator,
-    ],
+    enhancer: [],
+    generator: [],
   };
 }

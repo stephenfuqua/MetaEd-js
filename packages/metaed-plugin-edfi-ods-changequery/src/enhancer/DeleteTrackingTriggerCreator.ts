@@ -1,10 +1,10 @@
 import R from 'ramda';
-import { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
-import { Table, Column, ForeignKey, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods-relational';
-import { changeQueryIndicated } from './ChangeQueryIndicator';
-import { deleteTrackingTriggerEntities, getPrimaryKeys } from './EnhancerHelper';
+import { MetaEdEnvironment, PluginEnvironment, Namespace } from 'metaed-core';
+import { Table, ForeignKey } from 'metaed-plugin-edfi-ods-relational';
 import { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 import { PairedForeignKeyColumnName } from '../model/PairedForeignKeyColumnName';
+import { changeQueryIndicated } from './ChangeQueryIndicator';
+import { pluginEnvironment, deleteTrackingTriggerEntities } from './EnhancerHelper';
 
 export type SuperclassForeignKeyFinder = (mainTable: Table) => ForeignKey | undefined;
 
@@ -19,47 +19,36 @@ function pairUpForeignKeyColumnNames(
   return { parentTableColumnName, foreignTableColumnName };
 }
 
-export function createDeleteTrackingTriggerFromTable(
+export function applyCreateDeleteTrackingTriggerEnhancements(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
+  pluginName: string,
   mainTable: Table,
-  foreignKeyToSuperclass: ForeignKey | null = null,
+  createDeleteTrackingTriggerModel: (table: Table) => DeleteTrackingTrigger,
+  targetDatabasePluginName: string,
+  superclassForeignKeyFinder: SuperclassForeignKeyFinder = defaultSuperclassForeignKeyFinder,
 ) {
-  const deleteTrackingTrigger: DeleteTrackingTrigger = {
-    triggerSchema: mainTable.schema,
-    triggerName: `${mainTable.schema}_${mainTable.data.edfiOdsSqlServer.tableName}_TR_DeleteTracking`,
-    targetTableSchema: mainTable.schema,
-    targetTableName: mainTable.data.edfiOdsSqlServer.tableName,
-    deleteTrackingTableSchema: 'changes',
-    deleteTrackingTableName: `${mainTable.schema}_${mainTable.data.edfiOdsSqlServer.tableName}_TrackedDelete`,
-    primaryKeyColumnNames: getPrimaryKeys(mainTable).map((column: Column) => column.data.edfiOdsSqlServer.columnName),
-    targetTableIsSubclass: foreignKeyToSuperclass != null,
-    foreignKeyToSuperclass,
-  };
+  if (!changeQueryIndicated(metaEd)) return;
+  if (mainTable == null) return;
 
-  deleteTrackingTriggerEntities(metaEd, namespace).push(deleteTrackingTrigger);
+  const deleteTrackingTriggerModel = createDeleteTrackingTriggerModel(mainTable);
+  const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, pluginName);
+  deleteTrackingTriggerEntities(plugin, namespace).push(deleteTrackingTriggerModel);
 
-  if (foreignKeyToSuperclass != null) {
+  const foreignKeyToSuperclass: ForeignKey | undefined = superclassForeignKeyFinder(mainTable);
+
+  if (foreignKeyToSuperclass != null && foreignKeyToSuperclass.data[targetDatabasePluginName] != null) {
+    deleteTrackingTriggerModel.targetTableIsSubclass = true;
+    deleteTrackingTriggerModel.foreignKeyToSuperclass = foreignKeyToSuperclass;
+
     if (foreignKeyToSuperclass.data.edfiOdsChangeQuery == null) foreignKeyToSuperclass.data.edfiOdsChangeQuery = {};
     const pairedForeignKeyColumnNames: PairedForeignKeyColumnName[] = R.zipWith(
       pairUpForeignKeyColumnNames,
-      foreignKeyToSuperclass.data.edfiOdsSqlServer.parentTableColumnNames,
-      foreignKeyToSuperclass.data.edfiOdsSqlServer.foreignTableColumnNames,
+      foreignKeyToSuperclass.data[targetDatabasePluginName].parentTableColumnNames,
+      foreignKeyToSuperclass.data[targetDatabasePluginName].foreignTableColumnNames,
     );
     foreignKeyToSuperclass.data.edfiOdsChangeQuery.columnNames = pairedForeignKeyColumnNames.sort((a, b) =>
       a.parentTableColumnName.localeCompare(b.parentTableColumnName),
     );
   }
-}
-
-export function createDeleteTrackingTrigger(
-  metaEd: MetaEdEnvironment,
-  modelBase: ModelBase,
-  superclassForeignKeyFinder: SuperclassForeignKeyFinder = defaultSuperclassForeignKeyFinder,
-) {
-  if (!changeQueryIndicated(metaEd)) return;
-  const mainTable: Table = (modelBase.data.edfiOdsRelational as TopLevelEntityEdfiOds).odsEntityTable;
-  if (mainTable == null) return;
-
-  createDeleteTrackingTriggerFromTable(metaEd, modelBase.namespace, mainTable, superclassForeignKeyFinder(mainTable));
 }
