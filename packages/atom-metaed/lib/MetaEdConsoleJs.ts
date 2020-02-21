@@ -107,7 +107,7 @@ async function verifyBuildPaths(outputWindow: OutputWindow): Promise<BuildPaths 
     return null;
   }
 
-  const metaEdConsoleDirectory = getMetaEdJsConsoleSourceDirectory();
+  const metaEdConsoleDirectory = path.normalize(`${getMetaEdJsConsoleSourceDirectory()}/`); // handle missing slash for drive letter by always ensuring one
   if (!(await fs.exists(path.join(metaEdConsoleDirectory, 'package.json')))) {
     outputWindow.addMessage(
       `Unable to find package.json file in metaed-console at configured path "${metaEdConsoleDirectory}".`,
@@ -407,7 +407,7 @@ export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boole
       metaEdConfiguration.projectPaths.push(pm.projectPath);
     });
 
-    metaEdConfiguration.deployDirectory = getEdfiOdsApiSourceDirectory();
+    metaEdConfiguration.deployDirectory = path.normalize(`${getEdfiOdsApiSourceDirectory()}/`); // handle missing slash for drive letter by always ensuring one
 
     console.log('deploy() using config: ', metaEdConfiguration);
 
