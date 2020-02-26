@@ -25,9 +25,9 @@ describe('when generating schemas for core namespace', (): void => {
     expect(result.generatedOutput[0].name).toBe('ODS PostgreSQL Schema');
     expect(result.generatedOutput[0].resultStream).toBeNull();
     expect(result.generatedOutput[0].resultString).toMatchInlineSnapshot(`
-      "CREATE SCHEMA auth AUTHORIZATION postgres;
-      CREATE SCHEMA edfi AUTHORIZATION postgres;
-      CREATE SCHEMA util AUTHORIZATION postgres;
+      "CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION postgres;
+      CREATE SCHEMA IF NOT EXISTS edfi AUTHORIZATION postgres;
+      CREATE SCHEMA IF NOT EXISTS util AUTHORIZATION postgres;
       "
     `);
   });

@@ -32,17 +32,20 @@
     "metaed-plugin-edfi-ods-relational": "2.1.2",
     "metaed-plugin-edfi-unified": "2.1.2",
     "metaed-plugin-edfi-unified-advanced": "2.1.2",
+    "pg": "^7.18.2",
     "ramda": "^0.25.0",
     "sugar": "^2.0.4",
     "winston": "3.0.0"
   },
   "devDependencies": {
+    "@types/pg": "^7.14.1",
     "cli-highlight": "^1.2.3",
     "ed-fi-model-2.0": "2.0.2",
     "ed-fi-model-3.0": "2.0.3",
     "ed-fi-model-3.1": "2.0.3",
     "ed-fi-model-3.2a": "2.0.1",
-    "final-fs": "^1.6.1"
+    "final-fs": "^1.6.1",
+    "pg-structure": "^5.10.7"
   },
   "scripts": {
     "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",

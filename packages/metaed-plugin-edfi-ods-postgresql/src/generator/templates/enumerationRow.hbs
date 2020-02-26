@@ -1,7 +1,7 @@
 BEGIN;
 
 {{#enumerationRows}}
-INSERT INTO {{{schemaName}}}.{{{tableName}}}] (CodeValue, Description, ShortDescription) VALUES ('{{{codeValue}}}', '{{{description}}}', '{{{shortDescription}}}') ON CONFLICT ("{{{shortDescription}}}") DO NOTHING;
+INSERT INTO {{{schemaName}}}.{{{tableName}}} (CodeValue, Description, ShortDescription) VALUES ('{{{codeValue}}}', '{{{description}}}', '{{{shortDescription}}}') ON CONFLICT DO NOTHING;
 {{/enumerationRows}}
 
 COMMIT;
