@@ -1,0 +1,13 @@
+DO $$
+BEGIN
+    IF NOT EXISTS(
+        SELECT schema_name
+          FROM information_schema.schemata
+          WHERE schema_name = '{{schema}}'
+      )
+    THEN
+      EXECUTE 'CREATE SCHEMA {{schema}} AUTHORIZATION postgres';
+    END IF;
+
+END
+$$;

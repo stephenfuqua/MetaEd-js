@@ -83,12 +83,12 @@ export function applyCreateDeleteTrackingTableEnhancement(
   namespace: Namespace,
   pluginName: string,
   mainTable: Table,
-  createDeleteTrackingTableModel: (table: Table) => DeleteTrackingTable,
+  createDeleteTrackingTableModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTable,
 ) {
   if (!changeQueryIndicated(metaEd)) return;
   if (mainTable == null) return;
 
-  const deleteTrackingTable: DeleteTrackingTable = createDeleteTrackingTableModel(mainTable);
+  const deleteTrackingTable: DeleteTrackingTable = createDeleteTrackingTableModel(metaEd, mainTable);
 
   const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, pluginName);
   deleteTrackingTableEntities(plugin, namespace).push(deleteTrackingTable);
@@ -102,8 +102,8 @@ export function performAssociationChangeQueryEnhancement(
   metaEd: MetaEdEnvironment,
   pluginName: string,
   targetDatabasePluginName: string,
-  createDeleteTrackingTableModel: (table: Table) => DeleteTrackingTable,
-  createDeleteTrackingTriggerModel: (table: Table) => DeleteTrackingTrigger,
+  createDeleteTrackingTableModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTable,
+  createDeleteTrackingTriggerModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTrigger,
 ) {
   if (changeQueryIndicated(metaEd)) {
     getAllEntitiesOfType(metaEd, 'association').forEach((modelBase: ModelBase) => {
@@ -148,8 +148,8 @@ export function performEnumerationChangeQueryEnhancement(
   metaEd: MetaEdEnvironment,
   pluginName: string,
   targetDatabasePluginName: string,
-  createDeleteTrackingTableModel: (table: Table) => DeleteTrackingTable,
-  createDeleteTrackingTriggerModel: (table: Table) => DeleteTrackingTrigger,
+  createDeleteTrackingTableModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTable,
+  createDeleteTrackingTriggerModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTrigger,
 ) {
   if (changeQueryIndicated(metaEd)) {
     getAllEntitiesOfType(metaEd, 'enumeration').forEach((modelBase: ModelBase) => {

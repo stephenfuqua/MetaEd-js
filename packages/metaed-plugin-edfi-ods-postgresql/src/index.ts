@@ -4,14 +4,19 @@ import { generate as SchemaGenerator } from './generator/SchemaGenerator';
 import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
 
 import { enhance as templateSpecificTablePropertyEnhancer } from './enhancer/TemplateSpecificTablePropertyEnhancer';
-import { enhance as sqlServerTableNamingEnhancer } from './enhancer/PostgresqlTableNamingEnhancer';
-import { enhance as sqlServerColumnNamingEnhancer } from './enhancer/PostgresqlColumnNamingEnhancer';
-import { enhance as sqlServerForeignKeyNamingEnhancer } from './enhancer/PostgresqlForeignKeyNamingEnhancer';
+import { enhance as postgreSqlTableNamingEnhancer } from './enhancer/PostgresqlTableNamingEnhancer';
+import { enhance as postgreSqlColumnNamingEnhancer } from './enhancer/PostgresqlColumnNamingEnhancer';
+import { enhance as postgreSqlForeignKeyNamingEnhancer } from './enhancer/PostgresqlForeignKeyNamingEnhancer';
 import { enhance as addSchemaContainerEnhancer } from './enhancer/AddSchemaContainerEnhancer';
 import { enhance as tableSetupEnhancer } from './model/Table';
 import { enhance as namespaceSetupEnhancer } from './model/Namespace';
 
 export { ColumnDataTypes } from './model/ColumnDataTypes';
+
+export { enhance as postgreSqlTableSetupEnhancer } from './model/Table';
+export { enhance as postgreSqlTableNamingEnhancer } from './enhancer/PostgresqlTableNamingEnhancer';
+export { enhance as postgreSqlColumnNamingEnhancer } from './enhancer/PostgresqlColumnNamingEnhancer';
+export { enhance as postgreSqlForeignKeyNamingEnhancer } from './enhancer/PostgresqlForeignKeyNamingEnhancer';
 
 export function initialize(): MetaEdPlugin {
   return {
@@ -19,10 +24,10 @@ export function initialize(): MetaEdPlugin {
     enhancer: [
       namespaceSetupEnhancer,
       tableSetupEnhancer,
-      sqlServerTableNamingEnhancer,
-      sqlServerColumnNamingEnhancer,
+      postgreSqlTableNamingEnhancer,
+      postgreSqlColumnNamingEnhancer,
       templateSpecificTablePropertyEnhancer,
-      sqlServerForeignKeyNamingEnhancer,
+      postgreSqlForeignKeyNamingEnhancer,
       addSchemaContainerEnhancer,
     ],
     generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator],

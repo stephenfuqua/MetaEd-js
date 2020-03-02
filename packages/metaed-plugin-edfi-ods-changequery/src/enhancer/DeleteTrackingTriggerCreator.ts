@@ -24,14 +24,14 @@ export function applyCreateDeleteTrackingTriggerEnhancements(
   namespace: Namespace,
   pluginName: string,
   mainTable: Table,
-  createDeleteTrackingTriggerModel: (table: Table) => DeleteTrackingTrigger,
+  createDeleteTrackingTriggerModel: (metaEd: MetaEdEnvironment, table: Table) => DeleteTrackingTrigger,
   targetDatabasePluginName: string,
   superclassForeignKeyFinder: SuperclassForeignKeyFinder = defaultSuperclassForeignKeyFinder,
 ) {
   if (!changeQueryIndicated(metaEd)) return;
   if (mainTable == null) return;
 
-  const deleteTrackingTriggerModel = createDeleteTrackingTriggerModel(mainTable);
+  const deleteTrackingTriggerModel = createDeleteTrackingTriggerModel(metaEd, mainTable);
   const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, pluginName);
   deleteTrackingTriggerEntities(plugin, namespace).push(deleteTrackingTriggerModel);
 

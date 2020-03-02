@@ -30,6 +30,7 @@ export {
   ChangeQueryTemplates,
   changeQueryPath,
   performColumnChangeVersionForTableGeneration,
+  performCreateTrackedDeleteSchemasGeneration,
   performCreateTrackedDeleteTablesGeneration,
   performAddIndexChangeVersionForTableGeneration,
   performCreateChangesSchemaGeneration,

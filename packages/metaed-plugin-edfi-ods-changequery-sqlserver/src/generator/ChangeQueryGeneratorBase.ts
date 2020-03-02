@@ -22,6 +22,7 @@ export const template = R.memoizeWith(
   () =>
     <ChangeQueryTemplates>{
       addColumnChangeVersion: templateNamed('addColumnChangeVersion'),
+      deleteTrackingSchema: templateNamed('deleteTrackingSchema'),
       deleteTrackingTable: templateNamed('deleteTrackingTable'),
       deleteTrackingTrigger: templateNamed('deleteTrackingTrigger'),
       createTriggerUpdateChangeVersion: templateNamed('createTriggerUpdateChangeVersion'),

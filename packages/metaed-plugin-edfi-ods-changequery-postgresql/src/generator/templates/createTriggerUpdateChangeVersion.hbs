@@ -1,0 +1,5 @@
+{{#triggers}}
+CREATE TRIGGER {{triggerName}} BEFORE UPDATE ON {{{schema}}}.{{{tableName}}}
+    FOR EACH ROW EXECUTE PROCEDURE changes.UpdateChangeVersion();
+
+{{/triggers}}

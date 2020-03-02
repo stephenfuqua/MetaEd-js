@@ -12,6 +12,7 @@ function createModel(table: Table): AddColumnChangeVersionForTable {
   return {
     schema: table.schema,
     tableName: table.data.edfiOdsSqlServer.tableName,
+    tableNameHash: null,
   };
 }
 

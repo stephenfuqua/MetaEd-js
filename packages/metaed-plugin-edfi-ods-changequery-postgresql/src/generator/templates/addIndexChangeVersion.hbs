@@ -1,0 +1,4 @@
+{{#tables}}
+CREATE INDEX IF NOT EXISTS UX_{{{tableNameHash}}}_ChangeVersion ON {{{schema}}}.{{{tableName}}}(ChangeVersion);
+
+{{/tables}}

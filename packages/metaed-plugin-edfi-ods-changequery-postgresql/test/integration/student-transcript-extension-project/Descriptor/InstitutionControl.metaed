@@ -1,0 +1,2 @@
+Descriptor InstitutionControl
+    documentation "The type of control for an institution (e.g., public or private)."

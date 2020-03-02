@@ -1,0 +1,10 @@
+{{#tables}}
+CREATE TABLE {{{schema}}}.{{{tableName}}}
+(
+{{#columns}}
+       {{{data.edfiOdsPostgresql.columnName}}} {{{data.edfiOdsPostgresql.dataType}}} NOT NULL,
+{{/columns}}
+       CONSTRAINT {{{primaryKeyName}}} PRIMARY KEY ({{#primaryKeyColumns}}{{{data.edfiOdsPostgresql.columnName}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumns}})
+);
+
+{{/tables}}

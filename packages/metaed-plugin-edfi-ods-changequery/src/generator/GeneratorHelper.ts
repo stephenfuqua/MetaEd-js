@@ -1,4 +1,4 @@
-import { GeneratedOutput, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import { GeneratedOutput, MetaEdEnvironment, PluginEnvironment, versionSatisfies } from 'metaed-core';
 import { changeQueryIndicated } from '../enhancer/ChangeQueryIndicator';
 import {
   addColumnChangeVersionForTableEntities,
@@ -14,6 +14,7 @@ import { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 
 export interface ChangeQueryTemplates {
   addColumnChangeVersion: any;
+  deleteTrackingSchema: any;
   deleteTrackingTable: any;
   deleteTrackingTrigger: any;
   createTriggerUpdateChangeVersion: any;
@@ -63,6 +64,37 @@ export function performColumnChangeVersionForTableGeneration(
     });
   }
 
+  return results;
+}
+
+export function performCreateTrackedDeleteSchemasGeneration(
+  metaEd: MetaEdEnvironment,
+  template: () => ChangeQueryTemplates,
+  databaseFolderName: string,
+) {
+  const results: GeneratedOutput[] = [];
+
+  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOdsRelational') as PluginEnvironment;
+  if (versionSatisfies(targetTechnologyVersion, '<3.4.0')) {
+    return results;
+  }
+
+  if (changeQueryIndicated(metaEd)) {
+    metaEd.namespace.forEach(namespace => {
+      const generatedResult: string = template().deleteTrackingSchema({
+        schema: `Tracked_Deletes_${namespace.namespaceName.toLowerCase()}`,
+      });
+
+      results.push({
+        name: 'ODS Change Event: CreateTrackedDeleteSchemas',
+        namespace: namespace.namespaceName,
+        folderName: changeQueryPath(databaseFolderName),
+        fileName: '0045-CreateTrackedDeleteSchema.sql',
+        resultString: generatedResult,
+        resultStream: null,
+      });
+    });
+  }
   return results;
 }
 

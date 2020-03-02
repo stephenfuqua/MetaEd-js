@@ -1,0 +1,49 @@
+{
+  "name": "metaed-plugin-edfi-ods-changequery-postgresql",
+  "main": "dist/index.js",
+  "version": "2.1.2",
+  "description": "Ed-Fi ODS/API Change Queries plugin for MetaEd supporting PostgreSQL",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
+  "metaed-plugin": {
+    "pluginType": "artifact-specific",
+    "shortName": "edfiOdsChangeQueryPostgresql",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "2.x",
+    "technologyVersion": ">=3.4.0",
+    "dependencies": [
+      "metaed-plugin-edfi-unified-advanced",
+      "metaed-plugin-edfi-ods-relational",
+      "metaed-plugin-edfi-ods-postgresql",
+      "metaed-plugin-edfi-ods-changequery"
+    ]
+  },
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "hash.js": "^1.1.7",
+    "metaed-core": "2.1.2",
+    "metaed-plugin-edfi-ods-relational": "2.1.2",
+    "metaed-plugin-edfi-ods-postgresql": "2.1.2",
+    "metaed-plugin-edfi-unified-advanced": "2.1.2",
+    "metaed-plugin-edfi-ods-changequery": "2.1.2",
+    "ramda": "^0.25.0",
+    "winston": "3.0.0"
+  },
+  "devDependencies": {
+    "final-fs": "^1.6.1"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",
+    "build:clean": "rimraf dist",
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
+  }
+}

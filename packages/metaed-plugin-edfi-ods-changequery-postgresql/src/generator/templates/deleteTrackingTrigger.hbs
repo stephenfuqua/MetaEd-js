@@ -1,0 +1,16 @@
+{{#triggers}}
+CREATE FUNCTION {{{triggerSchema}}}.{{{triggerName}}}()
+    RETURNS trigger AS
+$BODY$
+BEGIN
+    INSERT INTO {{{deleteTrackingTableSchema}}}.{{{deleteTrackingTableName}}}({{#primaryKeyColumnNames}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, ChangeVersion)
+    VALUES ({{#primaryKeyColumnNames}}OLD.{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, OLD.Id, nextval('changes.ChangeVersionSequence'));
+
+    RETURN NULL;
+END;
+$BODY$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TrackDeletes AFTER DELETE ON {{{targetTableSchema}}}.{{{targetTableName}}} 
+    FOR EACH ROW EXECUTE PROCEDURE {{{triggerSchema}}}.{{{triggerName}}}();
+
+{{/triggers}}
