@@ -51,6 +51,7 @@ export const V3OrGreater: SemVer = '>=3.x';
  * https://github.com/npm/node-semver
  */
 export const versionSatisfies = (version: SemVer, range: SemVer): boolean => {
+  // we ignore prerelease suffixes, acting instead as if they were the released version
   const semverWithPrereleaseStripped = semver.coerce(version);
   if (semverWithPrereleaseStripped == null) return false;
   return semver.satisfies(semverWithPrereleaseStripped, range);

@@ -22,7 +22,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).domainModelDefinition.schemaDefinition = {
       logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
       physicalName: namespace.namespaceName.toLowerCase(),
-      version: truncatePrereleaseIfExists(namespace.projectVersion),
+      // ODS/API version 3.3.0 paired with DS 3.2a but wanted DS semver to be 3.2.0 not 3.2.0-a
+      version: versionSatisfies(targetTechnologyVersion, '3.3.0')
+        ? truncatePrereleaseIfExists(namespace.projectVersion)
+        : namespace.projectVersion,
     };
   });
 
