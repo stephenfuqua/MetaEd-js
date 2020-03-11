@@ -34,8 +34,7 @@ function deployExtensionArtifacts(metaEdConfiguration: MetaEdConfiguration): voi
       if (!fs.pathExistsSync(resolvedArtifact.src)) return;
 
       try {
-        const relativeArtifactSource = path.relative(artifactDirectory, resolvedArtifact.src);
-        winston.info(`Deploy ${relativeArtifactSource} to ${dest}`);
+        winston.info(`Deploy ${resolvedArtifact.src} to ${resolvedArtifact.dest}`);
 
         fs.copySync(resolvedArtifact.src, resolvedArtifact.dest, resolvedArtifact.options);
       } catch (err) {
