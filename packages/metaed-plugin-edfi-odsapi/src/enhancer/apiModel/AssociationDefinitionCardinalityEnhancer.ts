@@ -1,4 +1,4 @@
-import { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { EnhancerResult, MetaEdEnvironment, Namespace, PluginEnvironment, versionSatisfies } from 'metaed-core';
 import { ForeignKey, Table } from 'metaed-plugin-edfi-ods-relational';
 import { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
 import { Aggregate } from '../../model/domainMetadata/Aggregate';
@@ -9,6 +9,7 @@ import { allTablesInNamespacesBySchema, foreignKeyFor } from './EnhancerHelper';
 const enhancerName = 'AssociationDefinitionIsRequiredEnhancer';
 
 function findAggregateWithEntity(
+  targetTechnologyVersion: string,
   aggregates: Aggregate[],
   entityTableSchema: string,
   entityTableName: string,
@@ -17,12 +18,39 @@ function findAggregateWithEntity(
     const inThisAggregate: boolean = currentAggregate.entityTables.some(
       (e: EntityTable) => e.schema === entityTableSchema && e.table === entityTableName,
     );
-    return inThisAggregate ? result.concat(currentAggregate) : result;
+    // METAED-948
+    if (versionSatisfies(targetTechnologyVersion, '<3.4.0')) {
+      return inThisAggregate ? result.concat(currentAggregate) : result;
+    }
+
+    // if this is an aggregate extension, it can be a stand-in for an aggregate in a different schema
+    const inThisAggregateExtension: boolean = currentAggregate.isExtension && currentAggregate.root === entityTableName;
+    return inThisAggregate || inThisAggregateExtension ? result.concat(currentAggregate) : result;
   }, []);
   return aggregatesWithEntityTable.length === 1 ? aggregatesWithEntityTable[0] : null;
 }
 
+function childEntitySearch34(rootAggregate: Aggregate, foreignKey: ForeignKey): AssociationDefinitionCardinality {
+  const childEntitySearch: EntityTable | undefined = rootAggregate.entityTables.find(
+    (et: EntityTable) =>
+      et.table === foreignKey.parentTable.data.edfiOdsSqlServer.tableName && et.schema === foreignKey.parentTable.schema,
+  );
+  if (childEntitySearch == null) return 'OneToZeroOrMore';
+  return childEntitySearch.isRequiredCollection ? 'OneToOneOrMore' : 'OneToZeroOrMore';
+}
+
+function childEntitySearch33(rootAggregate: Aggregate, foreignKey: ForeignKey): AssociationDefinitionCardinality {
+  const childEntitySearch: EntityTable[] = rootAggregate.entityTables.filter(
+    (et: EntityTable) =>
+      et.table === foreignKey.parentTable.data.edfiOdsSqlServer.tableName && et.schema === foreignKey.parentTable.schema,
+  );
+  if (childEntitySearch.length !== 1) return 'OneToZeroOrMore';
+  if (childEntitySearch[0].isRequiredCollection) return 'OneToOneOrMore';
+  return 'OneToZeroOrMore';
+}
+
 function cardinalityFrom(
+  targetTechnologyVersion: string,
   { isIdentifying }: AssociationDefinition,
   foreignKey: ForeignKey,
   schemasTables: Map<string, Map<string, Table>>,
@@ -52,22 +80,23 @@ function cardinalityFrom(
   // OneToOneOrMore is based on the "isRequiredCollection" flag in DomainMetadata, when the foreign key is the
   // back reference from an aggregate dependent table to either the root table or an intermediate dependent table
   const rootAggregate: Aggregate | null = findAggregateWithEntity(
+    targetTechnologyVersion,
     domainMetadataAggregatesForNamespace,
     foreignKey.foreignTableSchema,
     foreignKey.foreignTableId,
   );
   if (rootAggregate == null) return 'OneToZeroOrMore';
 
-  const childEntitySearch: EntityTable[] = rootAggregate.entityTables.filter(
-    (et: EntityTable) =>
-      et.table === foreignKey.parentTable.data.edfiOdsSqlServer.tableName && et.schema === foreignKey.parentTable.schema,
-  );
-  if (childEntitySearch.length !== 1) return 'OneToZeroOrMore';
-  if (childEntitySearch[0].isRequiredCollection) return 'OneToOneOrMore';
-  return 'OneToZeroOrMore';
+  // METAED-948
+  if (versionSatisfies(targetTechnologyVersion, '<3.4.0')) {
+    return childEntitySearch33(rootAggregate, foreignKey);
+  }
+  return childEntitySearch34(rootAggregate, foreignKey);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOdsApi') as PluginEnvironment;
+
   metaEd.namespace.forEach((namespace: Namespace) => {
     const { domainModelDefinition, aggregates } = namespace.data.edfiOdsApi as NamespaceEdfiOdsApi;
     const { associationDefinitions } = domainModelDefinition;
@@ -77,7 +106,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const foreignKey = foreignKeyFor(metaEd, namespace, associationDefinition.fullName.name);
       if (foreignKey == null) return;
 
-      associationDefinition.cardinality = cardinalityFrom(associationDefinition, foreignKey, schemasTables, aggregates);
+      associationDefinition.cardinality = cardinalityFrom(
+        targetTechnologyVersion,
+        associationDefinition,
+        foreignKey,
+        schemasTables,
+        aggregates,
+      );
     });
   });
 

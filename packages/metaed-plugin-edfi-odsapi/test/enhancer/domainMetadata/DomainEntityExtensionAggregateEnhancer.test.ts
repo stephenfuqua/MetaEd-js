@@ -112,3 +112,112 @@ describe('when enhancing domainEntity extensions', (): void => {
     expect(entityTable.table).toBe(tableName);
   });
 });
+
+describe('when enhancing domainEntity extension that has a required collection table', () => {
+  const baseEntityName: string = 'BaseEntityName';
+  const baseTableName: string = 'BaseTableName';
+  const entityName: string = 'EntityName';
+  const tableId: string = 'TableId';
+  const namespaceName: string = 'namespace';
+  const extensionNamespaceName: string = 'extension';
+
+  let aggregate: Aggregate = NoAggregate;
+  let extensionNamespace: Namespace = NoNamespace;
+
+  beforeAll(() => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    const namespace: Namespace = {
+      ...newNamespace(),
+      namespaceName,
+      data: {
+        edfiOdsApi: {
+          aggregates: [],
+        },
+      },
+    };
+    extensionNamespace = {
+      ...newNamespace(),
+      namespaceName: extensionNamespaceName,
+      isExtension: true,
+      data: {
+        edfiOdsApi: {
+          aggregates: [],
+        },
+      },
+    };
+    extensionNamespace.dependencies.push(namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+
+    const baseEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: baseEntityName,
+      namespace,
+      data: {
+        edfiOdsRelational: {
+          odsTableId: baseTableName,
+        },
+        edfiOdsApi: {},
+      },
+    });
+    namespace.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
+
+    const baseEntityTable: Table = {
+      ...newTable(),
+      tableId,
+      schema: namespaceName,
+      data: { edfiOdsSqlServer: { tableName: tableId } },
+    };
+    tableEntities(metaEd, namespace).set(baseEntityTable.tableId, baseEntityTable);
+
+    const table: Table = {
+      ...newTable(),
+      tableId,
+      schema: extensionNamespaceName,
+      isRequiredCollectionTable: true,
+      data: { edfiOdsSqlServer: { tableName: tableId } },
+    };
+    tableEntities(metaEd, extensionNamespace).set(table.tableId, table);
+
+    const entity: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
+      metaEdName: entityName,
+      namespace: extensionNamespace,
+      baseEntity,
+      data: {
+        edfiOdsRelational: {
+          odsTableId: tableId,
+          odsTables: [table],
+        },
+        edfiOdsApi: {},
+      },
+    });
+    extensionNamespace.entity.domainEntityExtension.set(entity.metaEdName, entity);
+
+    enhance(metaEd);
+    ({ aggregate } = entity.data.edfiOdsApi);
+  });
+
+  it('should add aggregate to namespace', () => {
+    const extensionNamespaceAggregates: Array<Aggregate> = (extensionNamespace.data.edfiOdsApi as NamespaceEdfiOdsApi)
+      .aggregates;
+    expect(extensionNamespaceAggregates).toHaveLength(1);
+    expect(extensionNamespaceAggregates[0]).toBe(aggregate);
+  });
+
+  it('should create aggregate', () => {
+    expect(aggregate).not.toBeNull();
+    expect(aggregate.root).toBe(tableId);
+    expect(aggregate.allowPrimaryKeyUpdates).toBe(false);
+    expect(aggregate.isExtension).toBe(true);
+  });
+
+  it('should create entity tables', () => {
+    expect(aggregate.entityTables).toHaveLength(1);
+    const entityTable: EntityTable = aggregate.entityTables[0];
+    expect(entityTable).not.toBeNull();
+    expect(entityTable.schema).toBe(extensionNamespaceName);
+    expect(entityTable.table).toBe(tableId);
+    expect(entityTable.isRequiredCollection).toBe(true);
+  });
+});

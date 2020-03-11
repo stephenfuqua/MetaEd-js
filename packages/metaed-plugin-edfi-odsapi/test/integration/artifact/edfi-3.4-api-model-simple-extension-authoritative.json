@@ -1,8 +1,9 @@
 {
-  "odsApiVersion": "3.0.0",
+  "odsApiVersion": "3.4.0",
   "schemaDefinition": {
     "logicalName": "Sample",
-    "physicalName": "sample"
+    "physicalName": "sample",
+    "version": "3.0.0"
   },
   "aggregateDefinitions": [
     {
@@ -76,7 +77,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -84,7 +85,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "Id",
@@ -97,12 +102,16 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "Id",
+            "postgreSql": "Id"
+          }
         },
         {
           "propertyName": "LastModifiedDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -110,7 +119,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "LastModifiedDate",
+            "postgreSql": "LastModifiedDate"
+          }
         },
         {
           "propertyName": "MaxRating",
@@ -123,7 +136,11 @@
           },
           "description": "The maximum summary numerical rating or score for the staff evaluation.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MaxRating",
+            "postgreSql": "MaxRating"
+          }
         },
         {
           "propertyName": "MinRating",
@@ -136,7 +153,11 @@
           },
           "description": "The minimum summary numerical rating or score for the staff evaluation. If omitted, assumed to be 0.0.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MinRating",
+            "postgreSql": "MinRating"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -149,7 +170,11 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "identifiers": [
@@ -160,7 +185,11 @@
             "StaffEvaluationTitle"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffEvaluation_PK",
+            "postgreSql": "StaffEvaluation_PK"
+          }
         },
         {
           "identifierName": "UX_StaffEvaluation_Id",
@@ -168,11 +197,19 @@
             "Id"
           ],
           "isPrimary": false,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "UX_StaffEvaluation_Id",
+            "postgreSql": "UX_5f5473_Id"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "TBD"
+      "description": "TBD",
+      "tableNames": {
+        "sqlServer": "StaffEvaluation",
+        "postgreSql": "StaffEvaluation"
+      }
     },
     {
       "schema": "sample",
@@ -181,7 +218,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -189,7 +226,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "EvaluationComponent",
@@ -206,7 +247,11 @@
           "isDeprecated": true,
           "deprecationReasons": [
             "This is no longer used"
-          ]
+          ],
+          "columnNames": {
+            "sqlServer": "EvaluationComponent",
+            "postgreSql": "EvaluationComponent"
+          }
         },
         {
           "propertyName": "Id",
@@ -219,12 +264,16 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "Id",
+            "postgreSql": "Id"
+          }
         },
         {
           "propertyName": "LastModifiedDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -232,7 +281,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "LastModifiedDate",
+            "postgreSql": "LastModifiedDate"
+          }
         },
         {
           "propertyName": "MaxRating",
@@ -245,7 +298,11 @@
           },
           "description": "The max rating for the scale used for the Evaluation Component, if different from the overall staff evaluation.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MaxRating",
+            "postgreSql": "MaxRating"
+          }
         },
         {
           "propertyName": "MinRating",
@@ -258,7 +315,11 @@
           },
           "description": "The minimum rating for the scale used for the Evaluation Component, if different from the overall staff evaluation.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MinRating",
+            "postgreSql": "MinRating"
+          }
         }
       ],
       "identifiers": [
@@ -270,7 +331,11 @@
             "StaffEvaluationTitle"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffEvaluationComponent_PK",
+            "postgreSql": "StaffEvaluationComponent_PK"
+          }
         },
         {
           "identifierName": "UX_StaffEvaluationComponent_Id",
@@ -278,11 +343,19 @@
             "Id"
           ],
           "isPrimary": false,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "UX_StaffEvaluationComponent_Id",
+            "postgreSql": "UX_60e7ab_Id"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "The components of the evaluation."
+      "description": "The components of the evaluation.",
+      "tableNames": {
+        "sqlServer": "StaffEvaluationComponent",
+        "postgreSql": "StaffEvaluationComponent"
+      }
     },
     {
       "schema": "sample",
@@ -291,7 +364,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -299,7 +372,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "MaxLevel",
@@ -312,7 +389,11 @@
           },
           "description": "The maximum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MaxLevel",
+            "postgreSql": "MaxLevel"
+          }
         },
         {
           "propertyName": "MinLevel",
@@ -325,7 +406,11 @@
           },
           "description": "The minimum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MinLevel",
+            "postgreSql": "MinLevel"
+          }
         },
         {
           "propertyName": "StaffEvaluationLevel",
@@ -338,7 +423,11 @@
           },
           "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationLevel",
+            "postgreSql": "StaffEvaluationLevel"
+          }
         }
       ],
       "identifiers": [
@@ -350,11 +439,19 @@
             "StaffEvaluationTitle"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffEvaluationComponentStaffRatingLevel_PK",
+            "postgreSql": "StaffEvaluationComponentStaffRatingLevel_PK"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
+      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation.",
+      "tableNames": {
+        "sqlServer": "StaffEvaluationComponentStaffRatingLevel",
+        "postgreSql": "StaffEvaluationComponentStaffRatingLevel"
+      }
     },
     {
       "schema": "sample",
@@ -363,7 +460,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -371,7 +468,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "Id",
@@ -384,12 +485,16 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "Id",
+            "postgreSql": "Id"
+          }
         },
         {
           "propertyName": "LastModifiedDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -397,7 +502,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "LastModifiedDate",
+            "postgreSql": "LastModifiedDate"
+          }
         },
         {
           "propertyName": "Rating",
@@ -410,7 +519,11 @@
           },
           "description": "The numerical summary rating or score for the evaluation.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "Rating",
+            "postgreSql": "Rating"
+          }
         },
         {
           "propertyName": "StaffEvaluationDate",
@@ -423,7 +536,11 @@
           },
           "description": "The date for the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationDate",
+            "postgreSql": "StaffEvaluationDate"
+          }
         }
       ],
       "identifiers": [
@@ -436,7 +553,11 @@
             "StaffUSI"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffEvaluationRating_PK",
+            "postgreSql": "StaffEvaluationRating_PK"
+          }
         },
         {
           "identifierName": "UX_StaffEvaluationRating_Id",
@@ -444,11 +565,19 @@
             "Id"
           ],
           "isPrimary": false,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "UX_StaffEvaluationRating_Id",
+            "postgreSql": "UX_e34e81_Id"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "The summary rating for a staff evaluation applied to an individual educator."
+      "description": "The summary rating for a staff evaluation applied to an individual educator.",
+      "tableNames": {
+        "sqlServer": "StaffEvaluationRating",
+        "postgreSql": "StaffEvaluationRating"
+      }
     },
     {
       "schema": "sample",
@@ -457,7 +586,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -465,7 +594,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "MaxLevel",
@@ -478,7 +611,11 @@
           },
           "description": "The maximum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MaxLevel",
+            "postgreSql": "MaxLevel"
+          }
         },
         {
           "propertyName": "MinLevel",
@@ -491,7 +628,11 @@
           },
           "description": "The minimum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MinLevel",
+            "postgreSql": "MinLevel"
+          }
         },
         {
           "propertyName": "StaffEvaluationLevel",
@@ -504,7 +645,11 @@
           },
           "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationLevel",
+            "postgreSql": "StaffEvaluationLevel"
+          }
         }
       ],
       "identifiers": [
@@ -516,11 +661,19 @@
             "StaffEvaluationTitle"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffEvaluationStaffRatingLevel_PK",
+            "postgreSql": "StaffEvaluationStaffRatingLevel_PK"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
+      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation.",
+      "tableNames": {
+        "sqlServer": "StaffEvaluationStaffRatingLevel",
+        "postgreSql": "StaffEvaluationStaffRatingLevel"
+      }
     },
     {
       "schema": "sample",
@@ -529,7 +682,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -537,7 +690,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "MyCollection",
@@ -550,7 +707,11 @@
           },
           "description": "Hi",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MyCollection",
+            "postgreSql": "MyCollection"
+          }
         }
       ],
       "identifiers": [
@@ -561,11 +722,19 @@
             "StaffUSI"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffMyCollection_PK",
+            "postgreSql": "StaffMyCollection_PK"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "Hi"
+      "description": "Hi",
+      "tableNames": {
+        "sqlServer": "StaffMyCollection",
+        "postgreSql": "StaffMyCollection"
+      }
     },
     {
       "schema": "sample",
@@ -574,7 +743,7 @@
         {
           "propertyName": "CreateDate",
           "propertyType": {
-            "dbType": "DateTime",
+            "dbType": "DateTime2",
             "maxLength": 0,
             "precision": 0,
             "scale": 0,
@@ -582,7 +751,11 @@
           },
           "description": "",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "CreateDate",
+            "postgreSql": "CreateDate"
+          }
         },
         {
           "propertyName": "MaxLevel",
@@ -595,7 +768,11 @@
           },
           "description": "The maximum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MaxLevel",
+            "postgreSql": "MaxLevel"
+          }
         },
         {
           "propertyName": "MinLevel",
@@ -608,7 +785,11 @@
           },
           "description": "The minimum rating to achieve the level.",
           "isIdentifying": false,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "MinLevel",
+            "postgreSql": "MinLevel"
+          }
         },
         {
           "propertyName": "StaffEvaluationLevel",
@@ -621,7 +802,11 @@
           },
           "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationLevel",
+            "postgreSql": "StaffEvaluationLevel"
+          }
         }
       ],
       "identifiers": [
@@ -632,11 +817,19 @@
             "StaffUSI"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": false,
+          "constraintNames": {
+            "sqlServer": "StaffRatingLevel_PK",
+            "postgreSql": "StaffRatingLevel_PK"
+          }
         }
       ],
       "isAbstract": false,
-      "description": "There"
+      "description": "There",
+      "tableNames": {
+        "sqlServer": "StaffRatingLevel",
+        "postgreSql": "StaffRatingLevel"
+      }
     }
   ],
   "associationDefinitions": [
@@ -662,7 +855,11 @@
           },
           "description": "Key for School Year",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -681,11 +878,19 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluation_SchoolYearType",
+        "postgreSql": "FK_5f5473_SchoolYearType"
+      }
     },
     {
       "fullName": {
@@ -709,7 +914,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -722,7 +931,11 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -741,7 +954,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -754,11 +971,19 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluationComponent_StaffEvaluation",
+        "postgreSql": "FK_60e7ab_StaffEvaluation"
+      }
     },
     {
       "fullName": {
@@ -786,7 +1011,11 @@
           "isDeprecated": true,
           "deprecationReasons": [
             "This is no longer used"
-          ]
+          ],
+          "columnNames": {
+            "sqlServer": "EvaluationComponent",
+            "postgreSql": "EvaluationComponent"
+          }
         },
         {
           "propertyName": "SchoolYear",
@@ -799,7 +1028,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -812,7 +1045,11 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -835,7 +1072,11 @@
           "isDeprecated": true,
           "deprecationReasons": [
             "This is no longer used"
-          ]
+          ],
+          "columnNames": {
+            "sqlServer": "EvaluationComponent",
+            "postgreSql": "EvaluationComponent"
+          }
         },
         {
           "propertyName": "SchoolYear",
@@ -848,7 +1089,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -861,11 +1106,19 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluationComponentStaffRatingLevel_StaffEvaluationComponent",
+        "postgreSql": "FK_c002a7_StaffEvaluationComponent"
+      }
     },
     {
       "fullName": {
@@ -889,7 +1142,11 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": true
+          "isServerAssigned": true,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -908,11 +1165,19 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluationRating_Staff",
+        "postgreSql": "FK_e34e81_Staff"
+      }
     },
     {
       "fullName": {
@@ -936,7 +1201,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -949,7 +1218,11 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -968,7 +1241,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -981,11 +1258,19 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluationRating_StaffEvaluation",
+        "postgreSql": "FK_e34e81_StaffEvaluation"
+      }
     },
     {
       "fullName": {
@@ -1009,7 +1294,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -1022,7 +1311,11 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -1041,7 +1334,11 @@
           },
           "description": "The school year the Staff evaluation is applied.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "SchoolYear",
+            "postgreSql": "SchoolYear"
+          }
         },
         {
           "propertyName": "StaffEvaluationTitle",
@@ -1054,18 +1351,26 @@
           },
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffEvaluationTitle",
+            "postgreSql": "StaffEvaluationTitle"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffEvaluationStaffRatingLevel_StaffEvaluation",
+        "postgreSql": "FK_090e45_StaffEvaluation"
+      }
     },
     {
       "fullName": {
         "schema": "sample",
         "name": "FK_StaffMyCollection_Staff"
       },
-      "cardinality": "OneToZeroOrMore",
+      "cardinality": "OneToOneOrMore",
       "primaryEntityFullName": {
         "schema": "edfi",
         "name": "Staff"
@@ -1082,7 +1387,11 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": true
+          "isServerAssigned": true,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -1101,18 +1410,26 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffMyCollection_Staff",
+        "postgreSql": "FK_c9dedb_Staff"
+      }
     },
     {
       "fullName": {
         "schema": "sample",
         "name": "FK_StaffRatingLevel_Staff"
       },
-      "cardinality": "OneToZeroOrMore",
+      "cardinality": "OneToOneOrMore",
       "primaryEntityFullName": {
         "schema": "edfi",
         "name": "Staff"
@@ -1129,7 +1446,11 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": true
+          "isServerAssigned": true,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "secondaryEntityFullName": {
@@ -1148,11 +1469,19 @@
           },
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
-          "isServerAssigned": false
+          "isServerAssigned": false,
+          "columnNames": {
+            "sqlServer": "StaffUSI",
+            "postgreSql": "StaffUSI"
+          }
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "constraintNames": {
+        "sqlServer": "FK_StaffRatingLevel_Staff",
+        "postgreSql": "FK_b375f5_Staff"
+      }
     }
   ]
 }

@@ -4,4 +4,4 @@ Domain Entity EdFi.Staff additions
         is required collection
     common StaffRatingLevel
         documentation "There"
-        is optional
+        is required collection
