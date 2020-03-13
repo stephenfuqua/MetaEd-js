@@ -792,3 +792,125 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName2)).toBeDefined();
   });
 });
+
+// METAED-763
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only optional common property', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const commonName = 'CommonName';
+  const domainEntityName = 'DomainEntityName';
+  const domainEntityExtensionName = 'DomainEntityExtensionName';
+  const domainEntityExtensionTableName = 'DomainEntityExtensionNameExtension';
+
+  beforeAll(() => {
+    const common: Common = {
+      ...newCommon(),
+      namespace,
+      metaEdName: commonName,
+      data: {
+        edfiOdsRelational: {
+          odsTableId: commonName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    };
+    const commonPkPropertyName = 'CommonPkPropertyName';
+    const commonPkProperty: IntegerProperty = {
+      ...newIntegerProperty(),
+      metaEdName: commonPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: common,
+      data: {
+        edfiOdsRelational: {
+          odsName: commonPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    };
+    common.data.edfiOdsRelational.odsProperties.push(commonPkProperty);
+    common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
+    addEntityForNamespace(common);
+
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
+      namespace,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOdsRelational: {
+          odsTableId: domainEntityName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    };
+    const domainEntityPkPropertyName = 'DomainEntityPkPropertyName';
+    const domainEntityPkProperty: IntegerProperty = {
+      ...newIntegerProperty(),
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOdsRelational: {
+          odsName: domainEntityPkPropertyName,
+          odsContextPrefix: '',
+        },
+      },
+    };
+    domainEntity.data.edfiOdsRelational.odsProperties.push(domainEntityPkProperty);
+    addEntityForNamespace(domainEntity);
+
+    const domainEntityExtension: DomainEntityExtension = {
+      ...newDomainEntityExtension(),
+      namespace: extensionNamespace,
+      metaEdName: domainEntityExtensionName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOdsRelational: {
+          odsTableId: domainEntityExtensionName,
+          odsProperties: [],
+          odsIdentityProperties: [],
+        },
+      },
+    };
+    const domainEntityExtensionCommonProperty: CommonProperty = {
+      ...newCommonProperty(),
+      namespace: extensionNamespace,
+      metaEdName: commonName,
+      isOptional: true,
+      parentEntity: domainEntityExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOdsRelational: {
+          odsName: commonName,
+          odsContextPrefix: '',
+        },
+      },
+    };
+    domainEntityExtension.data.edfiOdsRelational.odsProperties.push(domainEntityExtensionCommonProperty);
+    addEntityForNamespace(domainEntityExtension);
+
+    metaEd.dataStandardVersion = '3.0.0';
+    initializeEdFiOdsRelationalEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create one tables', (): void => {
+    const x = tableEntities(metaEd, extensionNamespace);
+    // expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(x.size).toBe(1);
+  });
+
+  it('should not create a table for domain entity extension', (): void => {
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionTableName)).toBeUndefined();
+  });
+
+  it('should create join table from domain entity and common', (): void => {
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName)).toBeDefined();
+  });
+});
