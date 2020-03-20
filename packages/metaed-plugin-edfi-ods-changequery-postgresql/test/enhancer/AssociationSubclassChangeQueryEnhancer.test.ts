@@ -457,7 +457,7 @@ describe('when enhancing core associationSubclass targeting 3.4 ODS/API', (): vo
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTables = deleteTrackingTableEntities(plugin, namespace);
     expect(deleteTrackingTables).toHaveLength(1);
-    expect(deleteTrackingTables[0].schema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTables[0].schema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTables[0].tableName).toBe(tableName);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].data.edfiOdsPostgresql.columnName).toBe(pkColumnName);
@@ -472,11 +472,11 @@ describe('when enhancing core associationSubclass targeting 3.4 ODS/API', (): vo
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(plugin, namespace);
     expect(deleteTrackingTriggers).toHaveLength(1);
-    expect(deleteTrackingTriggers[0].triggerSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].triggerSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].triggerName).toBe(`${tableName}_TR_DelTrkg`);
     expect(deleteTrackingTriggers[0].targetTableSchema).toBe(namespaceName);
     expect(deleteTrackingTriggers[0].targetTableName).toBe(tableName);
-    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].deleteTrackingTableName).toBe(`${tableName}`);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames).toHaveLength(1);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames[0]).toBe(pkColumnName);
@@ -538,7 +538,7 @@ describe('when enhancing extension associationSubclass targeting 3.4 ODS/API', (
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTables = deleteTrackingTableEntities(plugin, namespace);
     expect(deleteTrackingTables).toHaveLength(1);
-    expect(deleteTrackingTables[0].schema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTables[0].schema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTables[0].tableName).toBe(tableName);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].data.edfiOdsPostgresql.columnName).toBe(pkColumnName);
@@ -553,11 +553,11 @@ describe('when enhancing extension associationSubclass targeting 3.4 ODS/API', (
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(plugin, namespace);
     expect(deleteTrackingTriggers).toHaveLength(1);
-    expect(deleteTrackingTriggers[0].triggerSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].triggerSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].triggerName).toBe(`${tableName}_TR_DelTrkg`);
     expect(deleteTrackingTriggers[0].targetTableSchema).toBe(namespaceName);
     expect(deleteTrackingTriggers[0].targetTableName).toBe(tableName);
-    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].deleteTrackingTableName).toBe(`${tableName}`);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames).toHaveLength(1);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames[0]).toBe(pkColumnName);

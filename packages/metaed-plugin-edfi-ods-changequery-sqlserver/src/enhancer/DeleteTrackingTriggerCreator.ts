@@ -25,7 +25,7 @@ function createDeleteTrackingTriggerModelV3dot4(mainTable: Table): DeleteTrackin
     triggerName: `${mainTable.schema}_${mainTable.data.edfiOdsSqlServer.tableName}_TR_DeleteTracking`,
     targetTableSchema: mainTable.schema,
     targetTableName: mainTable.data.edfiOdsSqlServer.tableName,
-    deleteTrackingTableSchema: `Tracked_Deletes_${mainTable.schema}`,
+    deleteTrackingTableSchema: `tracked_deletes_${mainTable.schema}`,
     deleteTrackingTableName: mainTable.data.edfiOdsSqlServer.tableName,
     primaryKeyColumnNames: getPrimaryKeys(mainTable, TARGET_DATABASE_PLUGIN_NAME).map(
       (column: Column) => column.data.edfiOdsSqlServer.columnName,

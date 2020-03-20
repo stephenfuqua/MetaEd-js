@@ -82,7 +82,7 @@ export function performCreateTrackedDeleteSchemasGeneration(
   if (changeQueryIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
       const generatedResult: string = template().deleteTrackingSchema({
-        schema: `Tracked_Deletes_${namespace.namespaceName.toLowerCase()}`,
+        schema: `tracked_deletes_${namespace.namespaceName.toLowerCase()}`,
       });
 
       results.push({

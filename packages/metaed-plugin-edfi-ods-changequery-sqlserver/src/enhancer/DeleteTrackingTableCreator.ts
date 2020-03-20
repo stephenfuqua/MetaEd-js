@@ -44,7 +44,7 @@ function createDeleteTrackingTableModelV3dot4(mainTable: Table): DeleteTrackingT
   };
 
   const deleteTrackingTable: DeleteTrackingTable = {
-    schema: `Tracked_Deletes_${mainTable.schema}`,
+    schema: `tracked_deletes_${mainTable.schema}`,
     tableName: trackingTableName,
     primaryKeyName: `PK_${trackingTableName}`,
     columns: [...getPrimaryKeys(mainTable, TARGET_DATABASE_PLUGIN_NAME)],

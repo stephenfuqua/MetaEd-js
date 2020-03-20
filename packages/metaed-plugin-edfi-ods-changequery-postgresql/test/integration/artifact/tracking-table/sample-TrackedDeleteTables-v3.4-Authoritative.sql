@@ -1,4 +1,4 @@
-CREATE TABLE Tracked_Deletes_sample.InstitutionControlDescriptor
+CREATE TABLE tracked_deletes_sample.InstitutionControlDescriptor
 (
        InstitutionControlDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE Tracked_Deletes_sample.InstitutionControlDescriptor
        CONSTRAINT InstitutionControlDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_sample.InstitutionLevelDescriptor
+CREATE TABLE tracked_deletes_sample.InstitutionLevelDescriptor
 (
        InstitutionLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE Tracked_Deletes_sample.InstitutionLevelDescriptor
        CONSTRAINT InstitutionLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_sample.PostSecondaryOrganization
+CREATE TABLE tracked_deletes_sample.PostSecondaryOrganization
 (
        NameOfInstitution VARCHAR(75) NOT NULL,
        Id UUID NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Tracked_Deletes_sample.PostSecondaryOrganization
        CONSTRAINT PostSecondaryOrganization_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_sample.SpecialEducationGraduationStatusDescriptor
+CREATE TABLE tracked_deletes_sample.SpecialEducationGraduationStatusDescriptor
 (
        SpecialEducationGraduationStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE Tracked_Deletes_sample.SpecialEducationGraduationStatusDescriptor
        CONSTRAINT SpecialEducationGraduationStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_sample.SubmissionCertificationDescriptor
+CREATE TABLE tracked_deletes_sample.SubmissionCertificationDescriptor
 (
        SubmissionCertificationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,

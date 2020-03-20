@@ -370,7 +370,7 @@ describe('when enhancing core descriptor targeting 3.4 ODS/API', (): void => {
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTables = deleteTrackingTableEntities(plugin, namespace);
     expect(deleteTrackingTables).toHaveLength(1);
-    expect(deleteTrackingTables[0].schema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTables[0].schema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTables[0].tableName).toBe(tableName);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].data.edfiOdsSqlServer.columnName).toBe(pkColumnName);
@@ -389,7 +389,7 @@ describe('when enhancing core descriptor targeting 3.4 ODS/API', (): void => {
     expect(deleteTrackingTriggers[0].triggerName).toBe(`${namespaceName}_${tableName}_TR_DeleteTracking`);
     expect(deleteTrackingTriggers[0].targetTableSchema).toBe(namespaceName);
     expect(deleteTrackingTriggers[0].targetTableName).toBe(tableName);
-    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].deleteTrackingTableName).toBe(tableName);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames).toHaveLength(1);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames[0]).toBe(pkColumnName);
@@ -444,7 +444,7 @@ describe('when enhancing extension descriptor targeting 3.4 ODS/API', (): void =
     const plugin: PluginEnvironment | undefined = pluginEnvironment(metaEd, PLUGIN_NAME);
     const deleteTrackingTables = deleteTrackingTableEntities(plugin, namespace);
     expect(deleteTrackingTables).toHaveLength(1);
-    expect(deleteTrackingTables[0].schema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTables[0].schema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTables[0].tableName).toBe(tableName);
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].data.edfiOdsSqlServer.columnName).toBe(pkColumnName);
@@ -463,7 +463,7 @@ describe('when enhancing extension descriptor targeting 3.4 ODS/API', (): void =
     expect(deleteTrackingTriggers[0].triggerName).toBe(`${namespaceName}_${tableName}_TR_DeleteTracking`);
     expect(deleteTrackingTriggers[0].targetTableSchema).toBe(namespaceName);
     expect(deleteTrackingTriggers[0].targetTableName).toBe(tableName);
-    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`Tracked_Deletes_${namespaceName}`);
+    expect(deleteTrackingTriggers[0].deleteTrackingTableSchema).toBe(`tracked_deletes_${namespaceName}`);
     expect(deleteTrackingTriggers[0].deleteTrackingTableName).toBe(tableName);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames).toHaveLength(1);
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames[0]).toBe(pkColumnName);

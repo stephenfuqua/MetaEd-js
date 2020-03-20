@@ -14,7 +14,7 @@ export function createDeleteTrackingTableModel(_metaEd: MetaEdEnvironment, mainT
   };
 
   const deleteTrackingTable: DeleteTrackingTable = {
-    schema: `Tracked_Deletes_${mainTable.schema}`,
+    schema: `tracked_deletes_${mainTable.schema}`,
     tableName: trackingTableName,
     primaryKeyName: mainTable.data.edfiOdsPostgresql.primaryKeyName,
     columns: [...getPrimaryKeys(mainTable, TARGET_DATABASE_PLUGIN_NAME)],

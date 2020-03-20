@@ -1,4 +1,4 @@
-CREATE TABLE [Tracked_Deletes_sample].[InstitutionControlDescriptor]
+CREATE TABLE [tracked_deletes_sample].[InstitutionControlDescriptor]
 (
        InstitutionControlDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE [Tracked_Deletes_sample].[InstitutionControlDescriptor]
        CONSTRAINT PK_InstitutionControlDescriptor PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE [Tracked_Deletes_sample].[InstitutionLevelDescriptor]
+CREATE TABLE [tracked_deletes_sample].[InstitutionLevelDescriptor]
 (
        InstitutionLevelDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE [Tracked_Deletes_sample].[InstitutionLevelDescriptor]
        CONSTRAINT PK_InstitutionLevelDescriptor PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE [Tracked_Deletes_sample].[PostSecondaryOrganization]
+CREATE TABLE [tracked_deletes_sample].[PostSecondaryOrganization]
 (
        NameOfInstitution [NVARCHAR](75) NOT NULL,
        Id uniqueidentifier NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE [Tracked_Deletes_sample].[PostSecondaryOrganization]
        CONSTRAINT PK_PostSecondaryOrganization PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE [Tracked_Deletes_sample].[SpecialEducationGraduationStatusDescriptor]
+CREATE TABLE [tracked_deletes_sample].[SpecialEducationGraduationStatusDescriptor]
 (
        SpecialEducationGraduationStatusDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE [Tracked_Deletes_sample].[SpecialEducationGraduationStatusDescripto
        CONSTRAINT PK_SpecialEducationGraduationStatusDescriptor PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE [Tracked_Deletes_sample].[SubmissionCertificationDescriptor]
+CREATE TABLE [tracked_deletes_sample].[SubmissionCertificationDescriptor]
 (
        SubmissionCertificationDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,

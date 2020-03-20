@@ -1,4 +1,4 @@
-CREATE TABLE Tracked_Deletes_edfi.AbsenceEventCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AbsenceEventCategoryDescriptor
 (
        AbsenceEventCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE Tracked_Deletes_edfi.AbsenceEventCategoryDescriptor
        CONSTRAINT AbsenceEventCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 ); 
 
-CREATE TABLE Tracked_Deletes_edfi.AcademicHonorCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AcademicHonorCategoryDescriptor
 (
        AcademicHonorCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE Tracked_Deletes_edfi.AcademicHonorCategoryDescriptor
        CONSTRAINT AcademicHonorCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AcademicSubjectDescriptor
+CREATE TABLE tracked_deletes_edfi.AcademicSubjectDescriptor
 (
        AcademicSubjectDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Tracked_Deletes_edfi.AcademicSubjectDescriptor
        CONSTRAINT AcademicSubjectDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AcademicWeek
+CREATE TABLE tracked_deletes_edfi.AcademicWeek
 (
        SchoolId INT NOT NULL,
        WeekIdentifier VARCHAR(80) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE Tracked_Deletes_edfi.AcademicWeek
        CONSTRAINT AcademicWeek_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AccommodationDescriptor
+CREATE TABLE tracked_deletes_edfi.AccommodationDescriptor
 (
        AccommodationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE Tracked_Deletes_edfi.AccommodationDescriptor
        CONSTRAINT AccommodationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Account
+CREATE TABLE tracked_deletes_edfi.Account
 (
        AccountIdentifier VARCHAR(50) NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE Tracked_Deletes_edfi.Account
        CONSTRAINT Account_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AccountClassificationDescriptor
+CREATE TABLE tracked_deletes_edfi.AccountClassificationDescriptor
 (
        AccountClassificationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE Tracked_Deletes_edfi.AccountClassificationDescriptor
        CONSTRAINT AccountClassificationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AccountCode
+CREATE TABLE tracked_deletes_edfi.AccountCode
 (
        AccountClassificationDescriptorId INT NOT NULL,
        AccountCodeNumber VARCHAR(50) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE Tracked_Deletes_edfi.AccountCode
        CONSTRAINT AccountCode_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AccountabilityRating
+CREATE TABLE tracked_deletes_edfi.AccountabilityRating
 (
        EducationOrganizationId INT NOT NULL,
        RatingTitle VARCHAR(60) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE Tracked_Deletes_edfi.AccountabilityRating
        CONSTRAINT AccountabilityRating_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AchievementCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AchievementCategoryDescriptor
 (
        AchievementCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE Tracked_Deletes_edfi.AchievementCategoryDescriptor
        CONSTRAINT AchievementCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Actual
+CREATE TABLE tracked_deletes_edfi.Actual
 (
        AccountIdentifier VARCHAR(50) NOT NULL,
        AsOfDate DATE NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE Tracked_Deletes_edfi.Actual
        CONSTRAINT Actual_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AdditionalCreditTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.AdditionalCreditTypeDescriptor
 (
        AdditionalCreditTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE Tracked_Deletes_edfi.AdditionalCreditTypeDescriptor
        CONSTRAINT AdditionalCreditTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AddressTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.AddressTypeDescriptor
 (
        AddressTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE Tracked_Deletes_edfi.AddressTypeDescriptor
        CONSTRAINT AddressTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AdministrationEnvironmentDescriptor
+CREATE TABLE tracked_deletes_edfi.AdministrationEnvironmentDescriptor
 (
        AdministrationEnvironmentDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE Tracked_Deletes_edfi.AdministrationEnvironmentDescriptor
        CONSTRAINT AdministrationEnvironmentDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AdministrativeFundingControlDescriptor
+CREATE TABLE tracked_deletes_edfi.AdministrativeFundingControlDescriptor
 (
        AdministrativeFundingControlDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE Tracked_Deletes_edfi.AdministrativeFundingControlDescriptor
        CONSTRAINT AdministrativeFundingControlDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Assessment
+CREATE TABLE tracked_deletes_edfi.Assessment
 (
        AssessmentIdentifier VARCHAR(60) NOT NULL,
        Namespace VARCHAR(255) NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE Tracked_Deletes_edfi.Assessment
        CONSTRAINT Assessment_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentCategoryDescriptor
 (
        AssessmentCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentCategoryDescriptor
        CONSTRAINT AssessmentCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentIdentificationSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentIdentificationSystemDescriptor
 (
        AssessmentIdentificationSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentIdentificationSystemDescriptor
        CONSTRAINT AssessmentIdentificationSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentItem
+CREATE TABLE tracked_deletes_edfi.AssessmentItem
 (
        AssessmentIdentifier VARCHAR(60) NOT NULL,
        IdentificationCode VARCHAR(60) NOT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentItem
        CONSTRAINT AssessmentItem_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentItemCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentItemCategoryDescriptor
 (
        AssessmentItemCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentItemCategoryDescriptor
        CONSTRAINT AssessmentItemCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentItemResultDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentItemResultDescriptor
 (
        AssessmentItemResultDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentItemResultDescriptor
        CONSTRAINT AssessmentItemResultDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentPeriodDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentPeriodDescriptor
 (
        AssessmentPeriodDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentPeriodDescriptor
        CONSTRAINT AssessmentPeriodDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AssessmentReportingMethodDescriptor
+CREATE TABLE tracked_deletes_edfi.AssessmentReportingMethodDescriptor
 (
        AssessmentReportingMethodDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE Tracked_Deletes_edfi.AssessmentReportingMethodDescriptor
        CONSTRAINT AssessmentReportingMethodDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AttemptStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.AttemptStatusDescriptor
 (
        AttemptStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE Tracked_Deletes_edfi.AttemptStatusDescriptor
        CONSTRAINT AttemptStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.AttendanceEventCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.AttendanceEventCategoryDescriptor
 (
        AttendanceEventCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -212,7 +212,7 @@ CREATE TABLE Tracked_Deletes_edfi.AttendanceEventCategoryDescriptor
        CONSTRAINT AttendanceEventCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.BehaviorDescriptor
+CREATE TABLE tracked_deletes_edfi.BehaviorDescriptor
 (
        BehaviorDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -220,7 +220,7 @@ CREATE TABLE Tracked_Deletes_edfi.BehaviorDescriptor
        CONSTRAINT BehaviorDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.BellSchedule
+CREATE TABLE tracked_deletes_edfi.BellSchedule
 (
        BellScheduleName VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE Tracked_Deletes_edfi.BellSchedule
        CONSTRAINT BellSchedule_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Budget
+CREATE TABLE tracked_deletes_edfi.Budget
 (
        AccountIdentifier VARCHAR(50) NOT NULL,
        AsOfDate DATE NOT NULL,
@@ -240,7 +240,7 @@ CREATE TABLE Tracked_Deletes_edfi.Budget
        CONSTRAINT Budget_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CTEProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.CTEProgramServiceDescriptor
 (
        CTEProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE Tracked_Deletes_edfi.CTEProgramServiceDescriptor
        CONSTRAINT CTEProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Calendar
+CREATE TABLE tracked_deletes_edfi.Calendar
 (
        CalendarCode VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -258,7 +258,7 @@ CREATE TABLE Tracked_Deletes_edfi.Calendar
        CONSTRAINT Calendar_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CalendarDate
+CREATE TABLE tracked_deletes_edfi.CalendarDate
 (
        CalendarCode VARCHAR(60) NOT NULL,
        Date DATE NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE Tracked_Deletes_edfi.CalendarDate
        CONSTRAINT CalendarDate_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CalendarEventDescriptor
+CREATE TABLE tracked_deletes_edfi.CalendarEventDescriptor
 (
        CalendarEventDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE Tracked_Deletes_edfi.CalendarEventDescriptor
        CONSTRAINT CalendarEventDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CalendarTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CalendarTypeDescriptor
 (
        CalendarTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -285,7 +285,7 @@ CREATE TABLE Tracked_Deletes_edfi.CalendarTypeDescriptor
        CONSTRAINT CalendarTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CareerPathwayDescriptor
+CREATE TABLE tracked_deletes_edfi.CareerPathwayDescriptor
 (
        CareerPathwayDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -293,7 +293,7 @@ CREATE TABLE Tracked_Deletes_edfi.CareerPathwayDescriptor
        CONSTRAINT CareerPathwayDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CharterApprovalAgencyTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CharterApprovalAgencyTypeDescriptor
 (
        CharterApprovalAgencyTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -301,7 +301,7 @@ CREATE TABLE Tracked_Deletes_edfi.CharterApprovalAgencyTypeDescriptor
        CONSTRAINT CharterApprovalAgencyTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CharterStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.CharterStatusDescriptor
 (
        CharterStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -309,7 +309,7 @@ CREATE TABLE Tracked_Deletes_edfi.CharterStatusDescriptor
        CONSTRAINT CharterStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CitizenshipStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.CitizenshipStatusDescriptor
 (
        CitizenshipStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -317,7 +317,7 @@ CREATE TABLE Tracked_Deletes_edfi.CitizenshipStatusDescriptor
        CONSTRAINT CitizenshipStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ClassPeriod
+CREATE TABLE tracked_deletes_edfi.ClassPeriod
 (
        ClassPeriodName VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -326,7 +326,7 @@ CREATE TABLE Tracked_Deletes_edfi.ClassPeriod
        CONSTRAINT ClassPeriod_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ClassroomPositionDescriptor
+CREATE TABLE tracked_deletes_edfi.ClassroomPositionDescriptor
 (
        ClassroomPositionDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE Tracked_Deletes_edfi.ClassroomPositionDescriptor
        CONSTRAINT ClassroomPositionDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Cohort
+CREATE TABLE tracked_deletes_edfi.Cohort
 (
        CohortIdentifier VARCHAR(20) NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -343,7 +343,7 @@ CREATE TABLE Tracked_Deletes_edfi.Cohort
        CONSTRAINT Cohort_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CohortScopeDescriptor
+CREATE TABLE tracked_deletes_edfi.CohortScopeDescriptor
 (
        CohortScopeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -351,7 +351,7 @@ CREATE TABLE Tracked_Deletes_edfi.CohortScopeDescriptor
        CONSTRAINT CohortScopeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CohortTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CohortTypeDescriptor
 (
        CohortTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -359,7 +359,7 @@ CREATE TABLE Tracked_Deletes_edfi.CohortTypeDescriptor
        CONSTRAINT CohortTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CohortYearTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CohortYearTypeDescriptor
 (
        CohortYearTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -367,7 +367,7 @@ CREATE TABLE Tracked_Deletes_edfi.CohortYearTypeDescriptor
        CONSTRAINT CohortYearTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CommunityOrganization
+CREATE TABLE tracked_deletes_edfi.CommunityOrganization
 (
        CommunityOrganizationId INT NOT NULL,
        Id UUID NOT NULL,
@@ -375,7 +375,7 @@ CREATE TABLE Tracked_Deletes_edfi.CommunityOrganization
        CONSTRAINT CommunityOrganization_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CommunityProvider
+CREATE TABLE tracked_deletes_edfi.CommunityProvider
 (
        CommunityProviderId INT NOT NULL,
        Id UUID NOT NULL,
@@ -383,7 +383,7 @@ CREATE TABLE Tracked_Deletes_edfi.CommunityProvider
        CONSTRAINT CommunityProvider_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CommunityProviderLicense
+CREATE TABLE tracked_deletes_edfi.CommunityProviderLicense
 (
        CommunityProviderId INT NOT NULL,
        LicenseIdentifier VARCHAR(20) NOT NULL,
@@ -393,7 +393,7 @@ CREATE TABLE Tracked_Deletes_edfi.CommunityProviderLicense
        CONSTRAINT CommunityProviderLicense_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CompetencyLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.CompetencyLevelDescriptor
 (
        CompetencyLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -401,7 +401,7 @@ CREATE TABLE Tracked_Deletes_edfi.CompetencyLevelDescriptor
        CONSTRAINT CompetencyLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CompetencyObjective
+CREATE TABLE tracked_deletes_edfi.CompetencyObjective
 (
        EducationOrganizationId INT NOT NULL,
        Objective VARCHAR(60) NOT NULL,
@@ -411,7 +411,7 @@ CREATE TABLE Tracked_Deletes_edfi.CompetencyObjective
        CONSTRAINT CompetencyObjective_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ContactTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.ContactTypeDescriptor
 (
        ContactTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -419,7 +419,7 @@ CREATE TABLE Tracked_Deletes_edfi.ContactTypeDescriptor
        CONSTRAINT ContactTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ContentClassDescriptor
+CREATE TABLE tracked_deletes_edfi.ContentClassDescriptor
 (
        ContentClassDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -427,7 +427,7 @@ CREATE TABLE Tracked_Deletes_edfi.ContentClassDescriptor
        CONSTRAINT ContentClassDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ContinuationOfServicesReasonDescriptor
+CREATE TABLE tracked_deletes_edfi.ContinuationOfServicesReasonDescriptor
 (
        ContinuationOfServicesReasonDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -435,7 +435,7 @@ CREATE TABLE Tracked_Deletes_edfi.ContinuationOfServicesReasonDescriptor
        CONSTRAINT ContinuationOfServicesReasonDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ContractedStaff
+CREATE TABLE tracked_deletes_edfi.ContractedStaff
 (
        AccountIdentifier VARCHAR(50) NOT NULL,
        AsOfDate DATE NOT NULL,
@@ -447,7 +447,7 @@ CREATE TABLE Tracked_Deletes_edfi.ContractedStaff
        CONSTRAINT ContractedStaff_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CostRateDescriptor
+CREATE TABLE tracked_deletes_edfi.CostRateDescriptor
 (
        CostRateDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -455,7 +455,7 @@ CREATE TABLE Tracked_Deletes_edfi.CostRateDescriptor
        CONSTRAINT CostRateDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CountryDescriptor
+CREATE TABLE tracked_deletes_edfi.CountryDescriptor
 (
        CountryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -463,7 +463,7 @@ CREATE TABLE Tracked_Deletes_edfi.CountryDescriptor
        CONSTRAINT CountryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Course
+CREATE TABLE tracked_deletes_edfi.Course
 (
        CourseCode VARCHAR(60) NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -472,7 +472,7 @@ CREATE TABLE Tracked_Deletes_edfi.Course
        CONSTRAINT Course_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseAttemptResultDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseAttemptResultDescriptor
 (
        CourseAttemptResultDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -480,7 +480,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseAttemptResultDescriptor
        CONSTRAINT CourseAttemptResultDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseDefinedByDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseDefinedByDescriptor
 (
        CourseDefinedByDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -488,7 +488,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseDefinedByDescriptor
        CONSTRAINT CourseDefinedByDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseGPAApplicabilityDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseGPAApplicabilityDescriptor
 (
        CourseGPAApplicabilityDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -496,7 +496,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseGPAApplicabilityDescriptor
        CONSTRAINT CourseGPAApplicabilityDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseIdentificationSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseIdentificationSystemDescriptor
 (
        CourseIdentificationSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -504,7 +504,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseIdentificationSystemDescriptor
        CONSTRAINT CourseIdentificationSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseLevelCharacteristicDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseLevelCharacteristicDescriptor
 (
        CourseLevelCharacteristicDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -512,7 +512,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseLevelCharacteristicDescriptor
        CONSTRAINT CourseLevelCharacteristicDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseOffering
+CREATE TABLE tracked_deletes_edfi.CourseOffering
 (
        LocalCourseCode VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -523,7 +523,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseOffering
        CONSTRAINT CourseOffering_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseRepeatCodeDescriptor
+CREATE TABLE tracked_deletes_edfi.CourseRepeatCodeDescriptor
 (
        CourseRepeatCodeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -531,7 +531,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseRepeatCodeDescriptor
        CONSTRAINT CourseRepeatCodeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CourseTranscript
+CREATE TABLE tracked_deletes_edfi.CourseTranscript
 (
        CourseAttemptResultDescriptorId INT NOT NULL,
        CourseCode VARCHAR(60) NOT NULL,
@@ -545,7 +545,7 @@ CREATE TABLE Tracked_Deletes_edfi.CourseTranscript
        CONSTRAINT CourseTranscript_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Credential
+CREATE TABLE tracked_deletes_edfi.Credential
 (
        CredentialIdentifier VARCHAR(60) NOT NULL,
        StateOfIssueStateAbbreviationDescriptorId INT NOT NULL,
@@ -554,7 +554,7 @@ CREATE TABLE Tracked_Deletes_edfi.Credential
        CONSTRAINT Credential_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CredentialFieldDescriptor
+CREATE TABLE tracked_deletes_edfi.CredentialFieldDescriptor
 (
        CredentialFieldDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -562,7 +562,7 @@ CREATE TABLE Tracked_Deletes_edfi.CredentialFieldDescriptor
        CONSTRAINT CredentialFieldDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CredentialTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CredentialTypeDescriptor
 (
        CredentialTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -570,7 +570,7 @@ CREATE TABLE Tracked_Deletes_edfi.CredentialTypeDescriptor
        CONSTRAINT CredentialTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CreditTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.CreditTypeDescriptor
 (
        CreditTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -578,7 +578,7 @@ CREATE TABLE Tracked_Deletes_edfi.CreditTypeDescriptor
        CONSTRAINT CreditTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.CurriculumUsedDescriptor
+CREATE TABLE tracked_deletes_edfi.CurriculumUsedDescriptor
 (
        CurriculumUsedDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -586,7 +586,7 @@ CREATE TABLE Tracked_Deletes_edfi.CurriculumUsedDescriptor
        CONSTRAINT CurriculumUsedDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DeliveryMethodDescriptor
+CREATE TABLE tracked_deletes_edfi.DeliveryMethodDescriptor
 (
        DeliveryMethodDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -594,7 +594,7 @@ CREATE TABLE Tracked_Deletes_edfi.DeliveryMethodDescriptor
        CONSTRAINT DeliveryMethodDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Descriptor
+CREATE TABLE tracked_deletes_edfi.Descriptor
 (
        DescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -602,7 +602,7 @@ CREATE TABLE Tracked_Deletes_edfi.Descriptor
        CONSTRAINT Descriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DiagnosisDescriptor
+CREATE TABLE tracked_deletes_edfi.DiagnosisDescriptor
 (
        DiagnosisDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -610,7 +610,7 @@ CREATE TABLE Tracked_Deletes_edfi.DiagnosisDescriptor
        CONSTRAINT DiagnosisDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DiplomaLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.DiplomaLevelDescriptor
 (
        DiplomaLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -618,7 +618,7 @@ CREATE TABLE Tracked_Deletes_edfi.DiplomaLevelDescriptor
        CONSTRAINT DiplomaLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DiplomaTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.DiplomaTypeDescriptor
 (
        DiplomaTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -626,7 +626,7 @@ CREATE TABLE Tracked_Deletes_edfi.DiplomaTypeDescriptor
        CONSTRAINT DiplomaTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisabilityDescriptor
+CREATE TABLE tracked_deletes_edfi.DisabilityDescriptor
 (
        DisabilityDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -634,7 +634,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisabilityDescriptor
        CONSTRAINT DisabilityDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisabilityDesignationDescriptor
+CREATE TABLE tracked_deletes_edfi.DisabilityDesignationDescriptor
 (
        DisabilityDesignationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -642,7 +642,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisabilityDesignationDescriptor
        CONSTRAINT DisabilityDesignationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisabilityDeterminationSourceTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.DisabilityDeterminationSourceTypeDescriptor
 (
        DisabilityDeterminationSourceTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -650,7 +650,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisabilityDeterminationSourceTypeDescriptor
        CONSTRAINT DisabilityDeterminationSourceTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisciplineAction
+CREATE TABLE tracked_deletes_edfi.DisciplineAction
 (
        DisciplineActionIdentifier VARCHAR(20) NOT NULL,
        DisciplineDate DATE NOT NULL,
@@ -660,7 +660,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisciplineAction
        CONSTRAINT DisciplineAction_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisciplineActionLengthDifferenceReasonDescriptor
+CREATE TABLE tracked_deletes_edfi.DisciplineActionLengthDifferenceReasonDescriptor
 (
        DisciplineActionLengthDifferenceReasonDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -668,7 +668,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisciplineActionLengthDifferenceReasonDescript
        CONSTRAINT DisciplineActionLengthDifferenceReasonDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisciplineDescriptor
+CREATE TABLE tracked_deletes_edfi.DisciplineDescriptor
 (
        DisciplineDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -676,7 +676,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisciplineDescriptor
        CONSTRAINT DisciplineDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisciplineIncident
+CREATE TABLE tracked_deletes_edfi.DisciplineIncident
 (
        IncidentIdentifier VARCHAR(20) NOT NULL,
        SchoolId INT NOT NULL,
@@ -685,7 +685,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisciplineIncident
        CONSTRAINT DisciplineIncident_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.DisciplineIncidentParticipationCodeDescriptor
+CREATE TABLE tracked_deletes_edfi.DisciplineIncidentParticipationCodeDescriptor
 (
        DisciplineIncidentParticipationCodeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -693,7 +693,7 @@ CREATE TABLE Tracked_Deletes_edfi.DisciplineIncidentParticipationCodeDescriptor
        CONSTRAINT DisciplineIncidentParticipationCodeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationContent
+CREATE TABLE tracked_deletes_edfi.EducationContent
 (
        ContentIdentifier VARCHAR(225) NOT NULL,
        Id UUID NOT NULL,
@@ -701,7 +701,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationContent
        CONSTRAINT EducationContent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganization
+CREATE TABLE tracked_deletes_edfi.EducationOrganization
 (
        EducationOrganizationId INT NOT NULL,
        Id UUID NOT NULL,
@@ -709,7 +709,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganization
        CONSTRAINT EducationOrganization_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationCategoryDescriptor
 (
        EducationOrganizationCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -717,7 +717,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationCategoryDescriptor
        CONSTRAINT EducationOrganizationCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationIdentificationSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationIdentificationSystemDescriptor
 (
        EducationOrganizationIdentificationSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -725,7 +725,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationIdentificationSystemDescr
        CONSTRAINT EducationOrganizationIdentificationSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationInterventionPrescriptionAssociation
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationInterventionPrescriptionAssociation
 (
        EducationOrganizationId INT NOT NULL,
        InterventionPrescriptionEducationOrganizationId INT NOT NULL,
@@ -735,7 +735,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationInterventionPrescriptionA
        CONSTRAINT EducationOrganizationInterventionPrescriptionAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationNetwork
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationNetwork
 (
        EducationOrganizationNetworkId INT NOT NULL,
        Id UUID NOT NULL,
@@ -743,7 +743,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationNetwork
        CONSTRAINT EducationOrganizationNetwork_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationNetworkAssociation
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationNetworkAssociation
 (
        EducationOrganizationNetworkId INT NOT NULL,
        MemberEducationOrganizationId INT NOT NULL,
@@ -752,7 +752,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationNetworkAssociation
        CONSTRAINT EducationOrganizationNetworkAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationPeerAssociation
+CREATE TABLE tracked_deletes_edfi.EducationOrganizationPeerAssociation
 (
        EducationOrganizationId INT NOT NULL,
        PeerEducationOrganizationId INT NOT NULL,
@@ -761,7 +761,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationOrganizationPeerAssociation
        CONSTRAINT EducationOrganizationPeerAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationPlanDescriptor
+CREATE TABLE tracked_deletes_edfi.EducationPlanDescriptor
 (
        EducationPlanDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -769,7 +769,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationPlanDescriptor
        CONSTRAINT EducationPlanDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationServiceCenter
+CREATE TABLE tracked_deletes_edfi.EducationServiceCenter
 (
        EducationServiceCenterId INT NOT NULL,
        Id UUID NOT NULL,
@@ -777,7 +777,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationServiceCenter
        CONSTRAINT EducationServiceCenter_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EducationalEnvironmentDescriptor
+CREATE TABLE tracked_deletes_edfi.EducationalEnvironmentDescriptor
 (
        EducationalEnvironmentDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -785,7 +785,7 @@ CREATE TABLE Tracked_Deletes_edfi.EducationalEnvironmentDescriptor
        CONSTRAINT EducationalEnvironmentDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ElectronicMailTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.ElectronicMailTypeDescriptor
 (
        ElectronicMailTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -793,7 +793,7 @@ CREATE TABLE Tracked_Deletes_edfi.ElectronicMailTypeDescriptor
        CONSTRAINT ElectronicMailTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EmploymentStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.EmploymentStatusDescriptor
 (
        EmploymentStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -801,7 +801,7 @@ CREATE TABLE Tracked_Deletes_edfi.EmploymentStatusDescriptor
        CONSTRAINT EmploymentStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EntryGradeLevelReasonDescriptor
+CREATE TABLE tracked_deletes_edfi.EntryGradeLevelReasonDescriptor
 (
        EntryGradeLevelReasonDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -809,7 +809,7 @@ CREATE TABLE Tracked_Deletes_edfi.EntryGradeLevelReasonDescriptor
        CONSTRAINT EntryGradeLevelReasonDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EntryTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.EntryTypeDescriptor
 (
        EntryTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -817,7 +817,7 @@ CREATE TABLE Tracked_Deletes_edfi.EntryTypeDescriptor
        CONSTRAINT EntryTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.EventCircumstanceDescriptor
+CREATE TABLE tracked_deletes_edfi.EventCircumstanceDescriptor
 (
        EventCircumstanceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -825,7 +825,7 @@ CREATE TABLE Tracked_Deletes_edfi.EventCircumstanceDescriptor
        CONSTRAINT EventCircumstanceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ExitWithdrawTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.ExitWithdrawTypeDescriptor
 (
        ExitWithdrawTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -833,7 +833,7 @@ CREATE TABLE Tracked_Deletes_edfi.ExitWithdrawTypeDescriptor
        CONSTRAINT ExitWithdrawTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.FeederSchoolAssociation
+CREATE TABLE tracked_deletes_edfi.FeederSchoolAssociation
 (
        BeginDate DATE NOT NULL,
        FeederSchoolId INT NOT NULL,
@@ -843,7 +843,7 @@ CREATE TABLE Tracked_Deletes_edfi.FeederSchoolAssociation
        CONSTRAINT FeederSchoolAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GeneralStudentProgramAssociation
+CREATE TABLE tracked_deletes_edfi.GeneralStudentProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -856,7 +856,7 @@ CREATE TABLE Tracked_Deletes_edfi.GeneralStudentProgramAssociation
        CONSTRAINT GeneralStudentProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Grade
+CREATE TABLE tracked_deletes_edfi.Grade
 (
        BeginDate DATE NOT NULL,
        GradeTypeDescriptorId INT NOT NULL,
@@ -874,7 +874,7 @@ CREATE TABLE Tracked_Deletes_edfi.Grade
        CONSTRAINT Grade_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradeLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.GradeLevelDescriptor
 (
        GradeLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -882,7 +882,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradeLevelDescriptor
        CONSTRAINT GradeLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradePointAverageWeightSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.GradePointAverageWeightSystemDescriptor
 (
        GradePointAverageWeightSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -890,7 +890,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradePointAverageWeightSystemDescriptor
        CONSTRAINT GradePointAverageWeightSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradeTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.GradeTypeDescriptor
 (
        GradeTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -898,7 +898,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradeTypeDescriptor
        CONSTRAINT GradeTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradebookEntry
+CREATE TABLE tracked_deletes_edfi.GradebookEntry
 (
        DateAssigned DATE NOT NULL,
        GradebookEntryTitle VARCHAR(60) NOT NULL,
@@ -912,7 +912,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradebookEntry
        CONSTRAINT GradebookEntry_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradebookEntryTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.GradebookEntryTypeDescriptor
 (
        GradebookEntryTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -920,7 +920,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradebookEntryTypeDescriptor
        CONSTRAINT GradebookEntryTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradingPeriod
+CREATE TABLE tracked_deletes_edfi.GradingPeriod
 (
        GradingPeriodDescriptorId INT NOT NULL,
        PeriodSequence INT NOT NULL,
@@ -931,7 +931,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradingPeriod
        CONSTRAINT GradingPeriod_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GradingPeriodDescriptor
+CREATE TABLE tracked_deletes_edfi.GradingPeriodDescriptor
 (
        GradingPeriodDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -939,7 +939,7 @@ CREATE TABLE Tracked_Deletes_edfi.GradingPeriodDescriptor
        CONSTRAINT GradingPeriodDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GraduationPlan
+CREATE TABLE tracked_deletes_edfi.GraduationPlan
 (
        EducationOrganizationId INT NOT NULL,
        GraduationPlanTypeDescriptorId INT NOT NULL,
@@ -949,7 +949,7 @@ CREATE TABLE Tracked_Deletes_edfi.GraduationPlan
        CONSTRAINT GraduationPlan_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GraduationPlanTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.GraduationPlanTypeDescriptor
 (
        GraduationPlanTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -957,7 +957,7 @@ CREATE TABLE Tracked_Deletes_edfi.GraduationPlanTypeDescriptor
        CONSTRAINT GraduationPlanTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.GunFreeSchoolsActReportingStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.GunFreeSchoolsActReportingStatusDescriptor
 (
        GunFreeSchoolsActReportingStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -965,7 +965,7 @@ CREATE TABLE Tracked_Deletes_edfi.GunFreeSchoolsActReportingStatusDescriptor
        CONSTRAINT GunFreeSchoolsActReportingStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.HomelessPrimaryNighttimeResidenceDescriptor
+CREATE TABLE tracked_deletes_edfi.HomelessPrimaryNighttimeResidenceDescriptor
 (
        HomelessPrimaryNighttimeResidenceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -973,7 +973,7 @@ CREATE TABLE Tracked_Deletes_edfi.HomelessPrimaryNighttimeResidenceDescriptor
        CONSTRAINT HomelessPrimaryNighttimeResidenceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.HomelessProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.HomelessProgramServiceDescriptor
 (
        HomelessProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -981,7 +981,7 @@ CREATE TABLE Tracked_Deletes_edfi.HomelessProgramServiceDescriptor
        CONSTRAINT HomelessProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.IdentificationDocumentUseDescriptor
+CREATE TABLE tracked_deletes_edfi.IdentificationDocumentUseDescriptor
 (
        IdentificationDocumentUseDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -989,7 +989,7 @@ CREATE TABLE Tracked_Deletes_edfi.IdentificationDocumentUseDescriptor
        CONSTRAINT IdentificationDocumentUseDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.IncidentLocationDescriptor
+CREATE TABLE tracked_deletes_edfi.IncidentLocationDescriptor
 (
        IncidentLocationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -997,7 +997,7 @@ CREATE TABLE Tracked_Deletes_edfi.IncidentLocationDescriptor
        CONSTRAINT IncidentLocationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InstitutionTelephoneNumberTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.InstitutionTelephoneNumberTypeDescriptor
 (
        InstitutionTelephoneNumberTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1005,7 +1005,7 @@ CREATE TABLE Tracked_Deletes_edfi.InstitutionTelephoneNumberTypeDescriptor
        CONSTRAINT InstitutionTelephoneNumberTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InteractivityStyleDescriptor
+CREATE TABLE tracked_deletes_edfi.InteractivityStyleDescriptor
 (
        InteractivityStyleDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1013,7 +1013,7 @@ CREATE TABLE Tracked_Deletes_edfi.InteractivityStyleDescriptor
        CONSTRAINT InteractivityStyleDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InternetAccessDescriptor
+CREATE TABLE tracked_deletes_edfi.InternetAccessDescriptor
 (
        InternetAccessDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1021,7 +1021,7 @@ CREATE TABLE Tracked_Deletes_edfi.InternetAccessDescriptor
        CONSTRAINT InternetAccessDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Intervention
+CREATE TABLE tracked_deletes_edfi.Intervention
 (
        EducationOrganizationId INT NOT NULL,
        InterventionIdentificationCode VARCHAR(60) NOT NULL,
@@ -1030,7 +1030,7 @@ CREATE TABLE Tracked_Deletes_edfi.Intervention
        CONSTRAINT Intervention_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InterventionClassDescriptor
+CREATE TABLE tracked_deletes_edfi.InterventionClassDescriptor
 (
        InterventionClassDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1038,7 +1038,7 @@ CREATE TABLE Tracked_Deletes_edfi.InterventionClassDescriptor
        CONSTRAINT InterventionClassDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InterventionEffectivenessRatingDescriptor
+CREATE TABLE tracked_deletes_edfi.InterventionEffectivenessRatingDescriptor
 (
        InterventionEffectivenessRatingDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1046,7 +1046,7 @@ CREATE TABLE Tracked_Deletes_edfi.InterventionEffectivenessRatingDescriptor
        CONSTRAINT InterventionEffectivenessRatingDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InterventionPrescription
+CREATE TABLE tracked_deletes_edfi.InterventionPrescription
 (
        EducationOrganizationId INT NOT NULL,
        InterventionPrescriptionIdentificationCode VARCHAR(60) NOT NULL,
@@ -1055,7 +1055,7 @@ CREATE TABLE Tracked_Deletes_edfi.InterventionPrescription
        CONSTRAINT InterventionPrescription_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.InterventionStudy
+CREATE TABLE tracked_deletes_edfi.InterventionStudy
 (
        EducationOrganizationId INT NOT NULL,
        InterventionStudyIdentificationCode VARCHAR(60) NOT NULL,
@@ -1064,7 +1064,7 @@ CREATE TABLE Tracked_Deletes_edfi.InterventionStudy
        CONSTRAINT InterventionStudy_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LanguageDescriptor
+CREATE TABLE tracked_deletes_edfi.LanguageDescriptor
 (
        LanguageDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1072,7 +1072,7 @@ CREATE TABLE Tracked_Deletes_edfi.LanguageDescriptor
        CONSTRAINT LanguageDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LanguageInstructionProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.LanguageInstructionProgramServiceDescriptor
 (
        LanguageInstructionProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1080,7 +1080,7 @@ CREATE TABLE Tracked_Deletes_edfi.LanguageInstructionProgramServiceDescriptor
        CONSTRAINT LanguageInstructionProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LanguageUseDescriptor
+CREATE TABLE tracked_deletes_edfi.LanguageUseDescriptor
 (
        LanguageUseDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1088,7 +1088,7 @@ CREATE TABLE Tracked_Deletes_edfi.LanguageUseDescriptor
        CONSTRAINT LanguageUseDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningObjective
+CREATE TABLE tracked_deletes_edfi.LearningObjective
 (
        LearningObjectiveId VARCHAR(60) NOT NULL,
        Namespace VARCHAR(255) NOT NULL,
@@ -1097,7 +1097,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningObjective
        CONSTRAINT LearningObjective_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningStandard
+CREATE TABLE tracked_deletes_edfi.LearningStandard
 (
        LearningStandardId VARCHAR(60) NOT NULL,
        Id UUID NOT NULL,
@@ -1105,7 +1105,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningStandard
        CONSTRAINT LearningStandard_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningStandardCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.LearningStandardCategoryDescriptor
 (
        LearningStandardCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1113,7 +1113,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningStandardCategoryDescriptor
        CONSTRAINT LearningStandardCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningStandardEquivalenceAssociation
+CREATE TABLE tracked_deletes_edfi.LearningStandardEquivalenceAssociation
 (
        Namespace VARCHAR(255) NOT NULL,
        SourceLearningStandardId VARCHAR(60) NOT NULL,
@@ -1123,7 +1123,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningStandardEquivalenceAssociation
        CONSTRAINT LearningStandardEquivalenceAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningStandardEquivalenceStrengthDescriptor
+CREATE TABLE tracked_deletes_edfi.LearningStandardEquivalenceStrengthDescriptor
 (
        LearningStandardEquivalenceStrengthDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1131,7 +1131,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningStandardEquivalenceStrengthDescriptor
        CONSTRAINT LearningStandardEquivalenceStrengthDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LearningStandardScopeDescriptor
+CREATE TABLE tracked_deletes_edfi.LearningStandardScopeDescriptor
 (
        LearningStandardScopeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1139,7 +1139,7 @@ CREATE TABLE Tracked_Deletes_edfi.LearningStandardScopeDescriptor
        CONSTRAINT LearningStandardScopeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LevelOfEducationDescriptor
+CREATE TABLE tracked_deletes_edfi.LevelOfEducationDescriptor
 (
        LevelOfEducationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1147,7 +1147,7 @@ CREATE TABLE Tracked_Deletes_edfi.LevelOfEducationDescriptor
        CONSTRAINT LevelOfEducationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LicenseStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.LicenseStatusDescriptor
 (
        LicenseStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1155,7 +1155,7 @@ CREATE TABLE Tracked_Deletes_edfi.LicenseStatusDescriptor
        CONSTRAINT LicenseStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LicenseTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.LicenseTypeDescriptor
 (
        LicenseTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1163,7 +1163,7 @@ CREATE TABLE Tracked_Deletes_edfi.LicenseTypeDescriptor
        CONSTRAINT LicenseTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LimitedEnglishProficiencyDescriptor
+CREATE TABLE tracked_deletes_edfi.LimitedEnglishProficiencyDescriptor
 (
        LimitedEnglishProficiencyDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1171,7 +1171,7 @@ CREATE TABLE Tracked_Deletes_edfi.LimitedEnglishProficiencyDescriptor
        CONSTRAINT LimitedEnglishProficiencyDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LocalEducationAgency
+CREATE TABLE tracked_deletes_edfi.LocalEducationAgency
 (
        LocalEducationAgencyId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1179,7 +1179,7 @@ CREATE TABLE Tracked_Deletes_edfi.LocalEducationAgency
        CONSTRAINT LocalEducationAgency_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LocalEducationAgencyCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.LocalEducationAgencyCategoryDescriptor
 (
        LocalEducationAgencyCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1187,7 +1187,7 @@ CREATE TABLE Tracked_Deletes_edfi.LocalEducationAgencyCategoryDescriptor
        CONSTRAINT LocalEducationAgencyCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.LocaleDescriptor
+CREATE TABLE tracked_deletes_edfi.LocaleDescriptor
 (
        LocaleDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1195,7 +1195,7 @@ CREATE TABLE Tracked_Deletes_edfi.LocaleDescriptor
        CONSTRAINT LocaleDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Location
+CREATE TABLE tracked_deletes_edfi.Location
 (
        ClassroomIdentificationCode VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -1204,7 +1204,7 @@ CREATE TABLE Tracked_Deletes_edfi.Location
        CONSTRAINT Location_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.MagnetSpecialProgramEmphasisSchoolDescriptor
+CREATE TABLE tracked_deletes_edfi.MagnetSpecialProgramEmphasisSchoolDescriptor
 (
        MagnetSpecialProgramEmphasisSchoolDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1212,7 +1212,7 @@ CREATE TABLE Tracked_Deletes_edfi.MagnetSpecialProgramEmphasisSchoolDescriptor
        CONSTRAINT MagnetSpecialProgramEmphasisSchoolDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.MediumOfInstructionDescriptor
+CREATE TABLE tracked_deletes_edfi.MediumOfInstructionDescriptor
 (
        MediumOfInstructionDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1220,7 +1220,7 @@ CREATE TABLE Tracked_Deletes_edfi.MediumOfInstructionDescriptor
        CONSTRAINT MediumOfInstructionDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.MethodCreditEarnedDescriptor
+CREATE TABLE tracked_deletes_edfi.MethodCreditEarnedDescriptor
 (
        MethodCreditEarnedDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1228,7 +1228,7 @@ CREATE TABLE Tracked_Deletes_edfi.MethodCreditEarnedDescriptor
        CONSTRAINT MethodCreditEarnedDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.MigrantEducationProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.MigrantEducationProgramServiceDescriptor
 (
        MigrantEducationProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1236,7 +1236,7 @@ CREATE TABLE Tracked_Deletes_edfi.MigrantEducationProgramServiceDescriptor
        CONSTRAINT MigrantEducationProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.MonitoredDescriptor
+CREATE TABLE tracked_deletes_edfi.MonitoredDescriptor
 (
        MonitoredDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1244,7 +1244,7 @@ CREATE TABLE Tracked_Deletes_edfi.MonitoredDescriptor
        CONSTRAINT MonitoredDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.NeglectedOrDelinquentProgramDescriptor
+CREATE TABLE tracked_deletes_edfi.NeglectedOrDelinquentProgramDescriptor
 (
        NeglectedOrDelinquentProgramDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1252,7 +1252,7 @@ CREATE TABLE Tracked_Deletes_edfi.NeglectedOrDelinquentProgramDescriptor
        CONSTRAINT NeglectedOrDelinquentProgramDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.NeglectedOrDelinquentProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.NeglectedOrDelinquentProgramServiceDescriptor
 (
        NeglectedOrDelinquentProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1260,7 +1260,7 @@ CREATE TABLE Tracked_Deletes_edfi.NeglectedOrDelinquentProgramServiceDescriptor
        CONSTRAINT NeglectedOrDelinquentProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.NetworkPurposeDescriptor
+CREATE TABLE tracked_deletes_edfi.NetworkPurposeDescriptor
 (
        NetworkPurposeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1268,7 +1268,7 @@ CREATE TABLE Tracked_Deletes_edfi.NetworkPurposeDescriptor
        CONSTRAINT NetworkPurposeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ObjectiveAssessment
+CREATE TABLE tracked_deletes_edfi.ObjectiveAssessment
 (
        AssessmentIdentifier VARCHAR(60) NOT NULL,
        IdentificationCode VARCHAR(60) NOT NULL,
@@ -1278,7 +1278,7 @@ CREATE TABLE Tracked_Deletes_edfi.ObjectiveAssessment
        CONSTRAINT ObjectiveAssessment_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.OldEthnicityDescriptor
+CREATE TABLE tracked_deletes_edfi.OldEthnicityDescriptor
 (
        OldEthnicityDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1286,7 +1286,7 @@ CREATE TABLE Tracked_Deletes_edfi.OldEthnicityDescriptor
        CONSTRAINT OldEthnicityDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.OpenStaffPosition
+CREATE TABLE tracked_deletes_edfi.OpenStaffPosition
 (
        EducationOrganizationId INT NOT NULL,
        RequisitionNumber VARCHAR(20) NOT NULL,
@@ -1295,7 +1295,7 @@ CREATE TABLE Tracked_Deletes_edfi.OpenStaffPosition
        CONSTRAINT OpenStaffPosition_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.OperationalStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.OperationalStatusDescriptor
 (
        OperationalStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1303,7 +1303,7 @@ CREATE TABLE Tracked_Deletes_edfi.OperationalStatusDescriptor
        CONSTRAINT OperationalStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.OtherNameTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.OtherNameTypeDescriptor
 (
        OtherNameTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1311,7 +1311,7 @@ CREATE TABLE Tracked_Deletes_edfi.OtherNameTypeDescriptor
        CONSTRAINT OtherNameTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Parent
+CREATE TABLE tracked_deletes_edfi.Parent
 (
        ParentUSI INT NOT NULL,
        Id UUID NOT NULL,
@@ -1319,7 +1319,7 @@ CREATE TABLE Tracked_Deletes_edfi.Parent
        CONSTRAINT Parent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ParticipationDescriptor
+CREATE TABLE tracked_deletes_edfi.ParticipationDescriptor
 (
        ParticipationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1327,7 +1327,7 @@ CREATE TABLE Tracked_Deletes_edfi.ParticipationDescriptor
        CONSTRAINT ParticipationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ParticipationStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.ParticipationStatusDescriptor
 (
        ParticipationStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1335,7 +1335,7 @@ CREATE TABLE Tracked_Deletes_edfi.ParticipationStatusDescriptor
        CONSTRAINT ParticipationStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Payroll
+CREATE TABLE tracked_deletes_edfi.Payroll
 (
        AccountIdentifier VARCHAR(50) NOT NULL,
        AsOfDate DATE NOT NULL,
@@ -1347,7 +1347,7 @@ CREATE TABLE Tracked_Deletes_edfi.Payroll
        CONSTRAINT Payroll_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PerformanceBaseConversionDescriptor
+CREATE TABLE tracked_deletes_edfi.PerformanceBaseConversionDescriptor
 (
        PerformanceBaseConversionDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1355,7 +1355,7 @@ CREATE TABLE Tracked_Deletes_edfi.PerformanceBaseConversionDescriptor
        CONSTRAINT PerformanceBaseConversionDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PerformanceLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.PerformanceLevelDescriptor
 (
        PerformanceLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1363,7 +1363,7 @@ CREATE TABLE Tracked_Deletes_edfi.PerformanceLevelDescriptor
        CONSTRAINT PerformanceLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PersonalInformationVerificationDescriptor
+CREATE TABLE tracked_deletes_edfi.PersonalInformationVerificationDescriptor
 (
        PersonalInformationVerificationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1371,7 +1371,7 @@ CREATE TABLE Tracked_Deletes_edfi.PersonalInformationVerificationDescriptor
        CONSTRAINT PersonalInformationVerificationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PlatformTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.PlatformTypeDescriptor
 (
        PlatformTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1379,7 +1379,7 @@ CREATE TABLE Tracked_Deletes_edfi.PlatformTypeDescriptor
        CONSTRAINT PlatformTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PopulationServedDescriptor
+CREATE TABLE tracked_deletes_edfi.PopulationServedDescriptor
 (
        PopulationServedDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1387,7 +1387,7 @@ CREATE TABLE Tracked_Deletes_edfi.PopulationServedDescriptor
        CONSTRAINT PopulationServedDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PostSecondaryEvent
+CREATE TABLE tracked_deletes_edfi.PostSecondaryEvent
 (
        EventDate DATE NOT NULL,
        PostSecondaryEventCategoryDescriptorId INT NOT NULL,
@@ -1397,7 +1397,7 @@ CREATE TABLE Tracked_Deletes_edfi.PostSecondaryEvent
        CONSTRAINT PostSecondaryEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PostSecondaryEventCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.PostSecondaryEventCategoryDescriptor
 (
        PostSecondaryEventCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1405,7 +1405,7 @@ CREATE TABLE Tracked_Deletes_edfi.PostSecondaryEventCategoryDescriptor
        CONSTRAINT PostSecondaryEventCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PostSecondaryInstitution
+CREATE TABLE tracked_deletes_edfi.PostSecondaryInstitution
 (
        PostSecondaryInstitutionId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1413,7 +1413,7 @@ CREATE TABLE Tracked_Deletes_edfi.PostSecondaryInstitution
        CONSTRAINT PostSecondaryInstitution_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PostSecondaryInstitutionLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.PostSecondaryInstitutionLevelDescriptor
 (
        PostSecondaryInstitutionLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1421,7 +1421,7 @@ CREATE TABLE Tracked_Deletes_edfi.PostSecondaryInstitutionLevelDescriptor
        CONSTRAINT PostSecondaryInstitutionLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PostingResultDescriptor
+CREATE TABLE tracked_deletes_edfi.PostingResultDescriptor
 (
        PostingResultDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1429,7 +1429,7 @@ CREATE TABLE Tracked_Deletes_edfi.PostingResultDescriptor
        CONSTRAINT PostingResultDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProficiencyDescriptor
+CREATE TABLE tracked_deletes_edfi.ProficiencyDescriptor
 (
        ProficiencyDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1437,7 +1437,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProficiencyDescriptor
        CONSTRAINT ProficiencyDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Program
+CREATE TABLE tracked_deletes_edfi.Program
 (
        EducationOrganizationId INT NOT NULL,
        ProgramName VARCHAR(60) NOT NULL,
@@ -1447,7 +1447,7 @@ CREATE TABLE Tracked_Deletes_edfi.Program
        CONSTRAINT Program_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgramAssignmentDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgramAssignmentDescriptor
 (
        ProgramAssignmentDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1455,7 +1455,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgramAssignmentDescriptor
        CONSTRAINT ProgramAssignmentDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgramCharacteristicDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgramCharacteristicDescriptor
 (
        ProgramCharacteristicDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1463,7 +1463,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgramCharacteristicDescriptor
        CONSTRAINT ProgramCharacteristicDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgramSponsorDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgramSponsorDescriptor
 (
        ProgramSponsorDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1471,7 +1471,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgramSponsorDescriptor
        CONSTRAINT ProgramSponsorDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgramTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgramTypeDescriptor
 (
        ProgramTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1479,7 +1479,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgramTypeDescriptor
        CONSTRAINT ProgramTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgressDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgressDescriptor
 (
        ProgressDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1487,7 +1487,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgressDescriptor
        CONSTRAINT ProgressDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProgressLevelDescriptor
+CREATE TABLE tracked_deletes_edfi.ProgressLevelDescriptor
 (
        ProgressLevelDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1495,7 +1495,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProgressLevelDescriptor
        CONSTRAINT ProgressLevelDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProviderCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.ProviderCategoryDescriptor
 (
        ProviderCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1503,7 +1503,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProviderCategoryDescriptor
        CONSTRAINT ProviderCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProviderProfitabilityDescriptor
+CREATE TABLE tracked_deletes_edfi.ProviderProfitabilityDescriptor
 (
        ProviderProfitabilityDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1511,7 +1511,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProviderProfitabilityDescriptor
        CONSTRAINT ProviderProfitabilityDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ProviderStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.ProviderStatusDescriptor
 (
        ProviderStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1519,7 +1519,7 @@ CREATE TABLE Tracked_Deletes_edfi.ProviderStatusDescriptor
        CONSTRAINT ProviderStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.PublicationStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.PublicationStatusDescriptor
 (
        PublicationStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1527,7 +1527,7 @@ CREATE TABLE Tracked_Deletes_edfi.PublicationStatusDescriptor
        CONSTRAINT PublicationStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RaceDescriptor
+CREATE TABLE tracked_deletes_edfi.RaceDescriptor
 (
        RaceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1535,7 +1535,7 @@ CREATE TABLE Tracked_Deletes_edfi.RaceDescriptor
        CONSTRAINT RaceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ReasonExitedDescriptor
+CREATE TABLE tracked_deletes_edfi.ReasonExitedDescriptor
 (
        ReasonExitedDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1543,7 +1543,7 @@ CREATE TABLE Tracked_Deletes_edfi.ReasonExitedDescriptor
        CONSTRAINT ReasonExitedDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ReasonNotTestedDescriptor
+CREATE TABLE tracked_deletes_edfi.ReasonNotTestedDescriptor
 (
        ReasonNotTestedDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1551,7 +1551,7 @@ CREATE TABLE Tracked_Deletes_edfi.ReasonNotTestedDescriptor
        CONSTRAINT ReasonNotTestedDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RecognitionTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.RecognitionTypeDescriptor
 (
        RecognitionTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1559,7 +1559,7 @@ CREATE TABLE Tracked_Deletes_edfi.RecognitionTypeDescriptor
        CONSTRAINT RecognitionTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RelationDescriptor
+CREATE TABLE tracked_deletes_edfi.RelationDescriptor
 (
        RelationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1567,7 +1567,7 @@ CREATE TABLE Tracked_Deletes_edfi.RelationDescriptor
        CONSTRAINT RelationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RepeatIdentifierDescriptor
+CREATE TABLE tracked_deletes_edfi.RepeatIdentifierDescriptor
 (
        RepeatIdentifierDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1575,7 +1575,7 @@ CREATE TABLE Tracked_Deletes_edfi.RepeatIdentifierDescriptor
        CONSTRAINT RepeatIdentifierDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ReportCard
+CREATE TABLE tracked_deletes_edfi.ReportCard
 (
        EducationOrganizationId INT NOT NULL,
        GradingPeriodDescriptorId INT NOT NULL,
@@ -1588,7 +1588,7 @@ CREATE TABLE Tracked_Deletes_edfi.ReportCard
        CONSTRAINT ReportCard_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ReporterDescriptionDescriptor
+CREATE TABLE tracked_deletes_edfi.ReporterDescriptionDescriptor
 (
        ReporterDescriptionDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1596,7 +1596,7 @@ CREATE TABLE Tracked_Deletes_edfi.ReporterDescriptionDescriptor
        CONSTRAINT ReporterDescriptionDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ResidencyStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.ResidencyStatusDescriptor
 (
        ResidencyStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1604,7 +1604,7 @@ CREATE TABLE Tracked_Deletes_edfi.ResidencyStatusDescriptor
        CONSTRAINT ResidencyStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ResponseIndicatorDescriptor
+CREATE TABLE tracked_deletes_edfi.ResponseIndicatorDescriptor
 (
        ResponseIndicatorDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1612,7 +1612,7 @@ CREATE TABLE Tracked_Deletes_edfi.ResponseIndicatorDescriptor
        CONSTRAINT ResponseIndicatorDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ResponsibilityDescriptor
+CREATE TABLE tracked_deletes_edfi.ResponsibilityDescriptor
 (
        ResponsibilityDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1620,7 +1620,7 @@ CREATE TABLE Tracked_Deletes_edfi.ResponsibilityDescriptor
        CONSTRAINT ResponsibilityDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RestraintEvent
+CREATE TABLE tracked_deletes_edfi.RestraintEvent
 (
        RestraintEventIdentifier VARCHAR(20) NOT NULL,
        SchoolId INT NOT NULL,
@@ -1630,7 +1630,7 @@ CREATE TABLE Tracked_Deletes_edfi.RestraintEvent
        CONSTRAINT RestraintEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RestraintEventReasonDescriptor
+CREATE TABLE tracked_deletes_edfi.RestraintEventReasonDescriptor
 (
        RestraintEventReasonDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1638,7 +1638,7 @@ CREATE TABLE Tracked_Deletes_edfi.RestraintEventReasonDescriptor
        CONSTRAINT RestraintEventReasonDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ResultDatatypeTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.ResultDatatypeTypeDescriptor
 (
        ResultDatatypeTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1646,7 +1646,7 @@ CREATE TABLE Tracked_Deletes_edfi.ResultDatatypeTypeDescriptor
        CONSTRAINT ResultDatatypeTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.RetestIndicatorDescriptor
+CREATE TABLE tracked_deletes_edfi.RetestIndicatorDescriptor
 (
        RetestIndicatorDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1654,7 +1654,7 @@ CREATE TABLE Tracked_Deletes_edfi.RetestIndicatorDescriptor
        CONSTRAINT RetestIndicatorDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.School
+CREATE TABLE tracked_deletes_edfi.School
 (
        SchoolId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1662,7 +1662,7 @@ CREATE TABLE Tracked_Deletes_edfi.School
        CONSTRAINT School_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SchoolCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.SchoolCategoryDescriptor
 (
        SchoolCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1670,7 +1670,7 @@ CREATE TABLE Tracked_Deletes_edfi.SchoolCategoryDescriptor
        CONSTRAINT SchoolCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SchoolChoiceImplementStatusDescriptor
+CREATE TABLE tracked_deletes_edfi.SchoolChoiceImplementStatusDescriptor
 (
        SchoolChoiceImplementStatusDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1678,7 +1678,7 @@ CREATE TABLE Tracked_Deletes_edfi.SchoolChoiceImplementStatusDescriptor
        CONSTRAINT SchoolChoiceImplementStatusDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SchoolFoodServiceProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.SchoolFoodServiceProgramServiceDescriptor
 (
        SchoolFoodServiceProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1686,7 +1686,7 @@ CREATE TABLE Tracked_Deletes_edfi.SchoolFoodServiceProgramServiceDescriptor
        CONSTRAINT SchoolFoodServiceProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SchoolTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.SchoolTypeDescriptor
 (
        SchoolTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1694,7 +1694,7 @@ CREATE TABLE Tracked_Deletes_edfi.SchoolTypeDescriptor
        CONSTRAINT SchoolTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Section
+CREATE TABLE tracked_deletes_edfi.Section
 (
        LocalCourseCode VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -1706,7 +1706,7 @@ CREATE TABLE Tracked_Deletes_edfi.Section
        CONSTRAINT Section_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SectionAttendanceTakenEvent
+CREATE TABLE tracked_deletes_edfi.SectionAttendanceTakenEvent
 (
        CalendarCode VARCHAR(60) NOT NULL,
        Date DATE NOT NULL,
@@ -1720,7 +1720,7 @@ CREATE TABLE Tracked_Deletes_edfi.SectionAttendanceTakenEvent
        CONSTRAINT SectionAttendanceTakenEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SectionCharacteristicDescriptor
+CREATE TABLE tracked_deletes_edfi.SectionCharacteristicDescriptor
 (
        SectionCharacteristicDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1728,7 +1728,7 @@ CREATE TABLE Tracked_Deletes_edfi.SectionCharacteristicDescriptor
        CONSTRAINT SectionCharacteristicDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SeparationDescriptor
+CREATE TABLE tracked_deletes_edfi.SeparationDescriptor
 (
        SeparationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1736,7 +1736,7 @@ CREATE TABLE Tracked_Deletes_edfi.SeparationDescriptor
        CONSTRAINT SeparationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SeparationReasonDescriptor
+CREATE TABLE tracked_deletes_edfi.SeparationReasonDescriptor
 (
        SeparationReasonDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1744,7 +1744,7 @@ CREATE TABLE Tracked_Deletes_edfi.SeparationReasonDescriptor
        CONSTRAINT SeparationReasonDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.ServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.ServiceDescriptor
 (
        ServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1752,7 +1752,7 @@ CREATE TABLE Tracked_Deletes_edfi.ServiceDescriptor
        CONSTRAINT ServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Session
+CREATE TABLE tracked_deletes_edfi.Session
 (
        SchoolId INT NOT NULL,
        SchoolYear SMALLINT NOT NULL,
@@ -1762,7 +1762,7 @@ CREATE TABLE Tracked_Deletes_edfi.Session
        CONSTRAINT Session_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SexDescriptor
+CREATE TABLE tracked_deletes_edfi.SexDescriptor
 (
        SexDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1770,7 +1770,7 @@ CREATE TABLE Tracked_Deletes_edfi.SexDescriptor
        CONSTRAINT SexDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SpecialEducationProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.SpecialEducationProgramServiceDescriptor
 (
        SpecialEducationProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1778,7 +1778,7 @@ CREATE TABLE Tracked_Deletes_edfi.SpecialEducationProgramServiceDescriptor
        CONSTRAINT SpecialEducationProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.SpecialEducationSettingDescriptor
+CREATE TABLE tracked_deletes_edfi.SpecialEducationSettingDescriptor
 (
        SpecialEducationSettingDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1786,7 +1786,7 @@ CREATE TABLE Tracked_Deletes_edfi.SpecialEducationSettingDescriptor
        CONSTRAINT SpecialEducationSettingDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Staff
+CREATE TABLE tracked_deletes_edfi.Staff
 (
        StaffUSI INT NOT NULL,
        Id UUID NOT NULL,
@@ -1794,7 +1794,7 @@ CREATE TABLE Tracked_Deletes_edfi.Staff
        CONSTRAINT Staff_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffAbsenceEvent
+CREATE TABLE tracked_deletes_edfi.StaffAbsenceEvent
 (
        AbsenceEventCategoryDescriptorId INT NOT NULL,
        EventDate DATE NOT NULL,
@@ -1804,7 +1804,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffAbsenceEvent
        CONSTRAINT StaffAbsenceEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffClassificationDescriptor
+CREATE TABLE tracked_deletes_edfi.StaffClassificationDescriptor
 (
        StaffClassificationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1812,7 +1812,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffClassificationDescriptor
        CONSTRAINT StaffClassificationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffCohortAssociation
+CREATE TABLE tracked_deletes_edfi.StaffCohortAssociation
 (
        BeginDate DATE NOT NULL,
        CohortIdentifier VARCHAR(20) NOT NULL,
@@ -1823,7 +1823,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffCohortAssociation
        CONSTRAINT StaffCohortAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffDisciplineIncidentAssociation
+CREATE TABLE tracked_deletes_edfi.StaffDisciplineIncidentAssociation
 (
        IncidentIdentifier VARCHAR(20) NOT NULL,
        SchoolId INT NOT NULL,
@@ -1833,7 +1833,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffDisciplineIncidentAssociation
        CONSTRAINT StaffDisciplineIncidentAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationAssignmentAssociation
+CREATE TABLE tracked_deletes_edfi.StaffEducationOrganizationAssignmentAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -1844,7 +1844,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationAssignmentAssociatio
        CONSTRAINT StaffEducationOrganizationAssignmentAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationContactAssociation
+CREATE TABLE tracked_deletes_edfi.StaffEducationOrganizationContactAssociation
 (
        ContactTitle VARCHAR(75) NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -1854,7 +1854,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationContactAssociation
        CONSTRAINT StaffEducationOrganizationContactAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationEmploymentAssociation
+CREATE TABLE tracked_deletes_edfi.StaffEducationOrganizationEmploymentAssociation
 (
        EducationOrganizationId INT NOT NULL,
        EmploymentStatusDescriptorId INT NOT NULL,
@@ -1865,7 +1865,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffEducationOrganizationEmploymentAssociatio
        CONSTRAINT StaffEducationOrganizationEmploymentAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffIdentificationSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.StaffIdentificationSystemDescriptor
 (
        StaffIdentificationSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1873,7 +1873,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffIdentificationSystemDescriptor
        CONSTRAINT StaffIdentificationSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffLeave
+CREATE TABLE tracked_deletes_edfi.StaffLeave
 (
        BeginDate DATE NOT NULL,
        StaffLeaveEventCategoryDescriptorId INT NOT NULL,
@@ -1883,7 +1883,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffLeave
        CONSTRAINT StaffLeave_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffLeaveEventCategoryDescriptor
+CREATE TABLE tracked_deletes_edfi.StaffLeaveEventCategoryDescriptor
 (
        StaffLeaveEventCategoryDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1891,7 +1891,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffLeaveEventCategoryDescriptor
        CONSTRAINT StaffLeaveEventCategoryDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StaffProgramAssociation
 (
        BeginDate DATE NOT NULL,
        ProgramEducationOrganizationId INT NOT NULL,
@@ -1903,7 +1903,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffProgramAssociation
        CONSTRAINT StaffProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffSchoolAssociation
+CREATE TABLE tracked_deletes_edfi.StaffSchoolAssociation
 (
        ProgramAssignmentDescriptorId INT NOT NULL,
        SchoolId INT NOT NULL,
@@ -1913,7 +1913,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffSchoolAssociation
        CONSTRAINT StaffSchoolAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StaffSectionAssociation
+CREATE TABLE tracked_deletes_edfi.StaffSectionAssociation
 (
        LocalCourseCode VARCHAR(60) NOT NULL,
        SchoolId INT NOT NULL,
@@ -1926,7 +1926,7 @@ CREATE TABLE Tracked_Deletes_edfi.StaffSectionAssociation
        CONSTRAINT StaffSectionAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StateAbbreviationDescriptor
+CREATE TABLE tracked_deletes_edfi.StateAbbreviationDescriptor
 (
        StateAbbreviationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1934,7 +1934,7 @@ CREATE TABLE Tracked_Deletes_edfi.StateAbbreviationDescriptor
        CONSTRAINT StateAbbreviationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StateEducationAgency
+CREATE TABLE tracked_deletes_edfi.StateEducationAgency
 (
        StateEducationAgencyId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1942,7 +1942,7 @@ CREATE TABLE Tracked_Deletes_edfi.StateEducationAgency
        CONSTRAINT StateEducationAgency_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.Student
+CREATE TABLE tracked_deletes_edfi.Student
 (
        StudentUSI INT NOT NULL,
        Id UUID NOT NULL,
@@ -1950,7 +1950,7 @@ CREATE TABLE Tracked_Deletes_edfi.Student
        CONSTRAINT Student_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentAcademicRecord
+CREATE TABLE tracked_deletes_edfi.StudentAcademicRecord
 (
        EducationOrganizationId INT NOT NULL,
        SchoolYear SMALLINT NOT NULL,
@@ -1961,7 +1961,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentAcademicRecord
        CONSTRAINT StudentAcademicRecord_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentAssessment
+CREATE TABLE tracked_deletes_edfi.StudentAssessment
 (
        AssessmentIdentifier VARCHAR(60) NOT NULL,
        Namespace VARCHAR(255) NOT NULL,
@@ -1972,7 +1972,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentAssessment
        CONSTRAINT StudentAssessment_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentCTEProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentCTEProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -1985,7 +1985,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentCTEProgramAssociation
        CONSTRAINT StudentCTEProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentCharacteristicDescriptor
+CREATE TABLE tracked_deletes_edfi.StudentCharacteristicDescriptor
 (
        StudentCharacteristicDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -1993,7 +1993,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentCharacteristicDescriptor
        CONSTRAINT StudentCharacteristicDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentCohortAssociation
+CREATE TABLE tracked_deletes_edfi.StudentCohortAssociation
 (
        BeginDate DATE NOT NULL,
        CohortIdentifier VARCHAR(20) NOT NULL,
@@ -2004,7 +2004,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentCohortAssociation
        CONSTRAINT StudentCohortAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentCompetencyObjective
+CREATE TABLE tracked_deletes_edfi.StudentCompetencyObjective
 (
        GradingPeriodDescriptorId INT NOT NULL,
        GradingPeriodSchoolId INT NOT NULL,
@@ -2019,7 +2019,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentCompetencyObjective
        CONSTRAINT StudentCompetencyObjective_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentDisciplineIncidentAssociation
+CREATE TABLE tracked_deletes_edfi.StudentDisciplineIncidentAssociation
 (
        IncidentIdentifier VARCHAR(20) NOT NULL,
        SchoolId INT NOT NULL,
@@ -2029,7 +2029,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentDisciplineIncidentAssociation
        CONSTRAINT StudentDisciplineIncidentAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentEducationOrganizationAssociation
+CREATE TABLE tracked_deletes_edfi.StudentEducationOrganizationAssociation
 (
        EducationOrganizationId INT NOT NULL,
        StudentUSI INT NOT NULL,
@@ -2038,7 +2038,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentEducationOrganizationAssociation
        CONSTRAINT StudentEducationOrganizationAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentEducationOrganizationResponsibilityAssociation
+CREATE TABLE tracked_deletes_edfi.StudentEducationOrganizationResponsibilityAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2049,7 +2049,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentEducationOrganizationResponsibilityAsso
        CONSTRAINT StudentEducationOrganizationResponsibilityAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentGradebookEntry
+CREATE TABLE tracked_deletes_edfi.StudentGradebookEntry
 (
        BeginDate DATE NOT NULL,
        DateAssigned DATE NOT NULL,
@@ -2065,7 +2065,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentGradebookEntry
        CONSTRAINT StudentGradebookEntry_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentHomelessProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentHomelessProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2078,7 +2078,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentHomelessProgramAssociation
        CONSTRAINT StudentHomelessProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentIdentificationSystemDescriptor
+CREATE TABLE tracked_deletes_edfi.StudentIdentificationSystemDescriptor
 (
        StudentIdentificationSystemDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2086,7 +2086,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentIdentificationSystemDescriptor
        CONSTRAINT StudentIdentificationSystemDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentInterventionAssociation
+CREATE TABLE tracked_deletes_edfi.StudentInterventionAssociation
 (
        EducationOrganizationId INT NOT NULL,
        InterventionIdentificationCode VARCHAR(60) NOT NULL,
@@ -2096,7 +2096,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentInterventionAssociation
        CONSTRAINT StudentInterventionAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentInterventionAttendanceEvent
+CREATE TABLE tracked_deletes_edfi.StudentInterventionAttendanceEvent
 (
        AttendanceEventCategoryDescriptorId INT NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2108,7 +2108,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentInterventionAttendanceEvent
        CONSTRAINT StudentInterventionAttendanceEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentLanguageInstructionProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentLanguageInstructionProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2121,7 +2121,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentLanguageInstructionProgramAssociation
        CONSTRAINT StudentLanguageInstructionProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentLearningObjective
+CREATE TABLE tracked_deletes_edfi.StudentLearningObjective
 (
        GradingPeriodDescriptorId INT NOT NULL,
        GradingPeriodSchoolId INT NOT NULL,
@@ -2135,7 +2135,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentLearningObjective
        CONSTRAINT StudentLearningObjective_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentMigrantEducationProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentMigrantEducationProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2148,7 +2148,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentMigrantEducationProgramAssociation
        CONSTRAINT StudentMigrantEducationProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentNeglectedOrDelinquentProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentNeglectedOrDelinquentProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2161,7 +2161,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentNeglectedOrDelinquentProgramAssociation
        CONSTRAINT StudentNeglectedOrDelinquentProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentParentAssociation
+CREATE TABLE tracked_deletes_edfi.StudentParentAssociation
 (
        ParentUSI INT NOT NULL,
        StudentUSI INT NOT NULL,
@@ -2170,7 +2170,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentParentAssociation
        CONSTRAINT StudentParentAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentParticipationCodeDescriptor
+CREATE TABLE tracked_deletes_edfi.StudentParticipationCodeDescriptor
 (
        StudentParticipationCodeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2178,7 +2178,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentParticipationCodeDescriptor
        CONSTRAINT StudentParticipationCodeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2191,7 +2191,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentProgramAssociation
        CONSTRAINT StudentProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentProgramAttendanceEvent
+CREATE TABLE tracked_deletes_edfi.StudentProgramAttendanceEvent
 (
        AttendanceEventCategoryDescriptorId INT NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2205,7 +2205,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentProgramAttendanceEvent
        CONSTRAINT StudentProgramAttendanceEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSchoolAssociation
+CREATE TABLE tracked_deletes_edfi.StudentSchoolAssociation
 (
        EntryDate DATE NOT NULL,
        SchoolId INT NOT NULL,
@@ -2215,7 +2215,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSchoolAssociation
        CONSTRAINT StudentSchoolAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSchoolAttendanceEvent
+CREATE TABLE tracked_deletes_edfi.StudentSchoolAttendanceEvent
 (
        AttendanceEventCategoryDescriptorId INT NOT NULL,
        EventDate DATE NOT NULL,
@@ -2228,7 +2228,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSchoolAttendanceEvent
        CONSTRAINT StudentSchoolAttendanceEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSchoolFoodServiceProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentSchoolFoodServiceProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2241,7 +2241,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSchoolFoodServiceProgramAssociation
        CONSTRAINT StudentSchoolFoodServiceProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSectionAssociation
+CREATE TABLE tracked_deletes_edfi.StudentSectionAssociation
 (
        BeginDate DATE NOT NULL,
        LocalCourseCode VARCHAR(60) NOT NULL,
@@ -2255,7 +2255,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSectionAssociation
        CONSTRAINT StudentSectionAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSectionAttendanceEvent
+CREATE TABLE tracked_deletes_edfi.StudentSectionAttendanceEvent
 (
        AttendanceEventCategoryDescriptorId INT NOT NULL,
        EventDate DATE NOT NULL,
@@ -2270,7 +2270,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSectionAttendanceEvent
        CONSTRAINT StudentSectionAttendanceEvent_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentSpecialEducationProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentSpecialEducationProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2283,7 +2283,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentSpecialEducationProgramAssociation
        CONSTRAINT StudentSpecialEducationProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.StudentTitleIPartAProgramAssociation
+CREATE TABLE tracked_deletes_edfi.StudentTitleIPartAProgramAssociation
 (
        BeginDate DATE NOT NULL,
        EducationOrganizationId INT NOT NULL,
@@ -2296,7 +2296,7 @@ CREATE TABLE Tracked_Deletes_edfi.StudentTitleIPartAProgramAssociation
        CONSTRAINT StudentTitleIPartAProgramAssociation_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TeachingCredentialBasisDescriptor
+CREATE TABLE tracked_deletes_edfi.TeachingCredentialBasisDescriptor
 (
        TeachingCredentialBasisDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2304,7 +2304,7 @@ CREATE TABLE Tracked_Deletes_edfi.TeachingCredentialBasisDescriptor
        CONSTRAINT TeachingCredentialBasisDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TeachingCredentialDescriptor
+CREATE TABLE tracked_deletes_edfi.TeachingCredentialDescriptor
 (
        TeachingCredentialDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2312,7 +2312,7 @@ CREATE TABLE Tracked_Deletes_edfi.TeachingCredentialDescriptor
        CONSTRAINT TeachingCredentialDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TechnicalSkillsAssessmentDescriptor
+CREATE TABLE tracked_deletes_edfi.TechnicalSkillsAssessmentDescriptor
 (
        TechnicalSkillsAssessmentDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2320,7 +2320,7 @@ CREATE TABLE Tracked_Deletes_edfi.TechnicalSkillsAssessmentDescriptor
        CONSTRAINT TechnicalSkillsAssessmentDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TelephoneNumberTypeDescriptor
+CREATE TABLE tracked_deletes_edfi.TelephoneNumberTypeDescriptor
 (
        TelephoneNumberTypeDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2328,7 +2328,7 @@ CREATE TABLE Tracked_Deletes_edfi.TelephoneNumberTypeDescriptor
        CONSTRAINT TelephoneNumberTypeDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TermDescriptor
+CREATE TABLE tracked_deletes_edfi.TermDescriptor
 (
        TermDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2336,7 +2336,7 @@ CREATE TABLE Tracked_Deletes_edfi.TermDescriptor
        CONSTRAINT TermDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TitleIPartAParticipantDescriptor
+CREATE TABLE tracked_deletes_edfi.TitleIPartAParticipantDescriptor
 (
        TitleIPartAParticipantDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2344,7 +2344,7 @@ CREATE TABLE Tracked_Deletes_edfi.TitleIPartAParticipantDescriptor
        CONSTRAINT TitleIPartAParticipantDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TitleIPartAProgramServiceDescriptor
+CREATE TABLE tracked_deletes_edfi.TitleIPartAProgramServiceDescriptor
 (
        TitleIPartAProgramServiceDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2352,7 +2352,7 @@ CREATE TABLE Tracked_Deletes_edfi.TitleIPartAProgramServiceDescriptor
        CONSTRAINT TitleIPartAProgramServiceDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TitleIPartASchoolDesignationDescriptor
+CREATE TABLE tracked_deletes_edfi.TitleIPartASchoolDesignationDescriptor
 (
        TitleIPartASchoolDesignationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2360,7 +2360,7 @@ CREATE TABLE Tracked_Deletes_edfi.TitleIPartASchoolDesignationDescriptor
        CONSTRAINT TitleIPartASchoolDesignationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.TribalAffiliationDescriptor
+CREATE TABLE tracked_deletes_edfi.TribalAffiliationDescriptor
 (
        TribalAffiliationDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2368,7 +2368,7 @@ CREATE TABLE Tracked_Deletes_edfi.TribalAffiliationDescriptor
        CONSTRAINT TribalAffiliationDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.VisaDescriptor
+CREATE TABLE tracked_deletes_edfi.VisaDescriptor
 (
        VisaDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
@@ -2376,7 +2376,7 @@ CREATE TABLE Tracked_Deletes_edfi.VisaDescriptor
        CONSTRAINT VisaDescriptor_PK PRIMARY KEY (ChangeVersion)
 );
 
-CREATE TABLE Tracked_Deletes_edfi.WeaponDescriptor
+CREATE TABLE tracked_deletes_edfi.WeaponDescriptor
 (
        WeaponDescriptorId INT NOT NULL,
        Id UUID NOT NULL,
