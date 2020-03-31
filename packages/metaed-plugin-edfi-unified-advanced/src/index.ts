@@ -10,6 +10,7 @@ import { validate as deprecatedEntitySubclassWarning } from './validator/Depreca
 import { validate as deprecatedPropertyWarning } from './validator/Deprecated/DeprecatedPropertyWarning';
 import { validate as deprecatedDomainItemReferenceWarning } from './validator/Deprecated/DeprecatedDomainItemReferenceWarning';
 import { validate as deprecatedInterchangeItemReferenceWarning } from './validator/Deprecated/DeprecatedInterchangeItemReferenceWarning';
+import { validate as commonPropertyCollectionTargetMustContainIdentity } from './validator/CommonProperty/CommonPropertyCollectionTargetMustContainIdentity';
 
 export function initialize(): MetaEdPlugin {
   return {
@@ -25,6 +26,7 @@ export function initialize(): MetaEdPlugin {
       deprecatedPropertyWarning,
       deprecatedDomainItemReferenceWarning,
       deprecatedInterchangeItemReferenceWarning,
+      commonPropertyCollectionTargetMustContainIdentity,
     ],
   };
 }
