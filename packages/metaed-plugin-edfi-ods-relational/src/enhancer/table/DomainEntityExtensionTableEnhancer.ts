@@ -4,6 +4,7 @@ import {
   getEntitiesOfTypeForNamespaces,
   versionSatisfies,
   NoNamespace,
+  V3OrGreater,
 } from 'metaed-core';
 import { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from 'metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
@@ -25,10 +26,9 @@ import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
 
 const enhancerName = 'DomainEntityExtensionTableEnhancer';
-const targetVersions = '>=3.x';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, V3OrGreater)) return { enhancerName, success: true };
 
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'domainEntityExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))

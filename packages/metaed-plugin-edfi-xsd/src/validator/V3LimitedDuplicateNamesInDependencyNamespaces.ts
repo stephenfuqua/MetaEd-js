@@ -4,18 +4,13 @@ import {
   ValidationFailure,
   PluginEnvironment,
   TopLevelEntity,
-  SemVer,
   versionSatisfies,
+  V3OrGreater,
 } from 'metaed-core';
 import { duplicateNameFinder } from './DuplicateNameFinder';
 
-const targetTechnologyVersion: SemVer = '3.x';
-
 function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
-  return versionSatisfies(
-    (metaEd.plugin.get('edfiXsd') as PluginEnvironment).targetTechnologyVersion,
-    targetTechnologyVersion,
-  );
+  return versionSatisfies((metaEd.plugin.get('edfiXsd') as PluginEnvironment).targetTechnologyVersion, V3OrGreater);
 }
 
 function failureCollector(

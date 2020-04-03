@@ -45,7 +45,7 @@ export const V2Only: SemVer = '^2.x';
 /**
  *
  */
-export const V3OrGreater: SemVer = '>=3.x';
+export const V3OrGreater: SemVer = '>=3.0.0';
 
 /**
  * https://github.com/npm/node-semver
