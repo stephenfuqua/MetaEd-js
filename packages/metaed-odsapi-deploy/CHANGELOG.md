@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3-dev.6](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.1.3-dev.5...v2.1.3-dev.6) (2020-04-03)
+
+**Note:** Version bump only for package metaed-odsapi-deploy
+
+
+
+
+
 ## [2.1.3-dev.5](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.1.3-dev.4...v2.1.3-dev.5) (2020-03-20)
 
 **Note:** Version bump only for package metaed-odsapi-deploy
