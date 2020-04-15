@@ -4,8 +4,12 @@ CREATE FUNCTION {{{triggerSchema}}}.{{{triggerName}}}()
 $BODY$
 BEGIN
     INSERT INTO {{{deleteTrackingTableSchema}}}.{{{deleteTrackingTableName}}}({{#primaryKeyColumnNames}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, ChangeVersion)
+{{#if targetTableIsSubclass}}
+    SELECT {{#primaryKeyColumnNames}}OLD.{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, nextval('changes.ChangeVersionSequence')
+    FROM {{#foreignKeyToSuperclass}}{{{foreignTableSchema}}}.{{{foreignTable.data.edfiOdsPostgresql.tableName}}} WHERE {{#data.edfiOdsChangeQuery.columnNames}}{{{foreignTableColumnName}}} = OLD.{{{parentTableColumnName}}}{{#unless @last}} AND {{/unless}}{{/data.edfiOdsChangeQuery.columnNames}}{{/foreignKeyToSuperclass}};
+{{else}}
     VALUES ({{#primaryKeyColumnNames}}OLD.{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, OLD.Id, nextval('changes.ChangeVersionSequence'));
-
+{{/if}}
     RETURN NULL;
 END;
 $BODY$ LANGUAGE plpgsql;
