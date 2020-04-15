@@ -104,5 +104,6 @@
 		"tslint": "^5.20.0",
 		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
-	}
+	},
+	"gitHead": "9cbcd31c3f9fd0bb3100e6a06878e4cf85a439e4"
 }

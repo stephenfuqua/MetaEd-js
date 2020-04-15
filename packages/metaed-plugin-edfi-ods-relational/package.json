@@ -48,5 +48,6 @@
     "build:dist": "tsc",
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose",
     "test:single": "jest --runInBand"
-  }
+  },
+  "gitHead": "9cbcd31c3f9fd0bb3100e6a06878e4cf85a439e4"
 }
