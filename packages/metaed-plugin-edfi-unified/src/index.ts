@@ -81,6 +81,7 @@ import { validate as identityRenameTypeMustMatchBaseProperty } from './validator
 
 import { validate as inlineCommonExistsOnlyInCoreNamespace } from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
 import { validate as inlineCommonPropertyMustMatchAnInlineCommon } from './validator/InlineCommonProperty/InlineCommonPropertyMustMatchAnInlineCommon';
+import { validate as inlineCommonPropertyMustNotBeACollection } from './validator/InlineCommonProperty/InlineCommonPropertyMustNotBeACollection';
 
 import { validate as integerPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/IntegerProperty/IntegerPropertyMinValueMustNotBeGreaterThanMaxValue';
 import { validate as integerPropertyMustNotMatchASharedDecimal } from './validator/IntegerProperty/IntegerPropertyMustNotMatchASharedDecimal';
@@ -287,6 +288,7 @@ function validatorList(): Validator[] {
 
     inlineCommonExistsOnlyInCoreNamespace,
     inlineCommonPropertyMustMatchAnInlineCommon,
+    inlineCommonPropertyMustNotBeACollection,
 
     integerPropertyMinValueMustNotBeGreaterThanMaxValue,
     integerPropertyMustNotMatchASharedDecimal,
