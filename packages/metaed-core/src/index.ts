@@ -170,6 +170,7 @@ export { NoTopLevelEntity } from './model/TopLevelEntity';
 export { NoSharedSimple } from './model/SharedSimple';
 export { NoNamespace } from './model/Namespace';
 export { NoInterchangeItem } from './model/InterchangeItem';
+export { NoEntityProperty } from './model/property/EntityProperty';
 
 // Factories
 export { newMetaEdEnvironment } from './MetaEdEnvironment';
@@ -189,6 +190,7 @@ export { asDecimalProperty, newDecimalProperty } from './model/property/DecimalP
 export { asDescriptorProperty, newDescriptorProperty } from './model/property/DescriptorProperty';
 export { asDomainEntityProperty, newDomainEntityProperty } from './model/property/DomainEntityProperty';
 export { asDurationProperty, newDurationProperty } from './model/property/DurationProperty';
+export { newEntityProperty } from './model/property/EntityProperty';
 export { asEnumerationProperty, newEnumerationProperty } from './model/property/EnumerationProperty';
 export { asInlineCommonProperty, newInlineCommonProperty } from './model/property/InlineCommonProperty';
 export { asIntegerProperty, newIntegerProperty } from './model/property/IntegerProperty';
