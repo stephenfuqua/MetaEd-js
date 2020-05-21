@@ -47,19 +47,19 @@ export function identifiersFrom(table: Table): EntityIdentifier[] {
     });
   }
 
-  table.uniqueIndexes.forEach((column: Column) => {
+  if (table.uniqueIndexes.length > 0) {
     result.push({
-      identifierName: `${table.data.edfiOdsSqlServer.tableName}_UX_${column.data.edfiOdsSqlServer.columnName}`,
-      identifyingPropertyNames: [column.data.edfiOdsSqlServer.columnName],
+      identifierName: `${table.data.edfiOdsSqlServer.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
+      identifyingPropertyNames: table.uniqueIndexes.map((column: Column) => column.data.edfiOdsSqlServer.columnName),
       isPrimary: false,
       isUpdatable: false,
       constraintNames: {
-        sqlServer: `${table.data.edfiOdsSqlServer.tableName}_UX_${column.data.edfiOdsSqlServer.columnName}`,
+        sqlServer: `${table.data.edfiOdsSqlServer.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
         // only applies to person entities and cannot be triggered by extensions
-        postgreSql: `${table.data.edfiOdsPostgresql.tableName}_UX_${column.data.edfiOdsSqlServer.columnName}`,
+        postgreSql: `${table.data.edfiOdsPostgresql.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
       },
     });
-  });
+  }
 
   if (table.includeLastModifiedDateAndIdColumn) {
     result.push({

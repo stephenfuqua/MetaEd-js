@@ -10,10 +10,11 @@ describe('when enhancing entity with unique id property', (): void => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
-    integerProperty = Object.assign(newIntegerProperty(), {
+    integerProperty = {
+      ...newIntegerProperty(),
       metaEdName: 'UniqueId',
       namespace,
-      roleName: 'roleNameName',
+      roleName: 'RoleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
@@ -23,9 +24,10 @@ describe('when enhancing entity with unique id property', (): void => {
           odsIsUniqueIndex: false,
         },
       },
-    });
+    };
 
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName,
       namespace,
       data: {
@@ -34,7 +36,7 @@ describe('when enhancing entity with unique id property', (): void => {
           odsIdentityProperties: [integerProperty],
         },
       },
-    });
+    };
 
     namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
@@ -82,6 +84,122 @@ describe('when enhancing entity with unique id property', (): void => {
   });
 });
 
+describe('when enhancing entity with unique id property and additional identity property', (): void => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const domainEntityName = 'DomainEntityName';
+  let integerIdentityProperty: IntegerProperty;
+  let uniqueIdProperty: IntegerProperty;
+
+  beforeAll(() => {
+    uniqueIdProperty = {
+      ...newIntegerProperty(),
+      metaEdName: 'UniqueId',
+      namespace,
+      roleName: 'RoleNameName',
+      shortenTo: 'ShortenToName',
+      documentation: 'doc',
+      isPartOfIdentity: true,
+      data: {
+        edfiOdsRelational: {
+          odsIsIdentityDatabaseType: false,
+          odsIsUniqueIndex: false,
+        },
+      },
+    };
+
+    integerIdentityProperty = {
+      ...newIntegerProperty(),
+      metaEdName: 'IntegerIdentityProperty',
+      namespace,
+      documentation: 'doc',
+      isPartOfIdentity: true,
+      data: {
+        edfiOdsRelational: {
+          odsIsIdentityDatabaseType: false,
+          odsIsUniqueIndex: false,
+        },
+      },
+    };
+
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
+      metaEdName: domainEntityName,
+      namespace,
+      data: {
+        edfiOdsRelational: {
+          odsProperties: [uniqueIdProperty, integerIdentityProperty],
+          odsIdentityProperties: [uniqueIdProperty, integerIdentityProperty],
+        },
+      },
+    };
+
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
+    enhance(metaEd);
+  });
+
+  it('should remove unique id property', (): void => {
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).not.toContain(uniqueIdProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).not.toContain(uniqueIdProperty);
+  });
+
+  it('should remove integer identity property', (): void => {
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).not.toContain(integerIdentityProperty);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).not.toContain(integerIdentityProperty);
+  });
+
+  it('should add unique id copy as not part of identity', (): void => {
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
+    const property: any = domainEntity.data.edfiOdsRelational.odsProperties.find(
+      x => x.metaEdName === uniqueIdProperty.metaEdName,
+    );
+    expect(property).toBeDefined();
+    expect(property.metaEdName).toBe(uniqueIdProperty.metaEdName);
+    expect(property.roleName).toBe(uniqueIdProperty.roleName);
+    expect(property.shortenTo).toBe(uniqueIdProperty.shortenTo);
+    expect(property.documentation).toBe(uniqueIdProperty.documentation);
+    expect(property.isPartOfIdentity).toBe(false);
+    expect(property.data.edfiOdsRelational.odsIsIdentityDatabaseType).toBe(false);
+    expect(property.data.edfiOdsRelational.odsIsUniqueIndex).toBe(true);
+  });
+
+  it('should add integer identity copy as not part of identity', (): void => {
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
+    const property: any = domainEntity.data.edfiOdsRelational.odsProperties.find(
+      x => x.metaEdName === integerIdentityProperty.metaEdName,
+    );
+    expect(property).toBeDefined();
+    expect(property.metaEdName).toBe(integerIdentityProperty.metaEdName);
+    expect(property.documentation).toBe(integerIdentityProperty.documentation);
+    expect(property.isPartOfIdentity).toBe(false);
+    expect(property.data.edfiOdsRelational.odsIsIdentityDatabaseType).toBe(false);
+    expect(property.data.edfiOdsRelational.odsIsUniqueIndex).toBe(true);
+  });
+
+  it('should add usi property', (): void => {
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
+    const property: any = domainEntity.data.edfiOdsRelational.odsProperties.find(x => x.metaEdName === 'USI');
+    expect(property).toBeDefined();
+    expect(property.metaEdName).toBe('USI');
+    expect(property.roleName).toBe(uniqueIdProperty.roleName);
+    expect(property.shortenTo).toBe(uniqueIdProperty.shortenTo);
+    expect(property.documentation).toBe(uniqueIdProperty.documentation);
+    expect(property.isPartOfIdentity).toBe(true);
+    expect(property.parentEntityName).toBe(uniqueIdProperty.parentEntityName);
+    expect(property.parentEntity).toBe(uniqueIdProperty.parentEntity);
+    expect(property.data.edfiOdsRelational.odsName).toBe(`${uniqueIdProperty.roleName}USI`);
+    expect(property.data.edfiOdsRelational.odsIsCollection).toBe(false);
+    expect(property.data.edfiOdsRelational.odsContextPrefix).toBe(uniqueIdProperty.shortenTo);
+    expect(property.data.edfiOdsRelational.odsIsIdentityDatabaseType).toBe(true);
+    expect(property.data.edfiOdsRelational.odsIsUniqueIndex).toBe(false);
+    expect(domainEntity.data.edfiOdsRelational.odsProperties).toContain(property);
+    expect(domainEntity.data.edfiOdsRelational.odsIdentityProperties).toContain(property);
+  });
+});
+
 describe('when enhancing entity with non unique id property', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -90,10 +208,11 @@ describe('when enhancing entity with non unique id property', (): void => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
-    integerProperty = Object.assign(newIntegerProperty(), {
+    integerProperty = {
+      ...newIntegerProperty(),
       metaEdName: 'UniqueID',
       namespace,
-      roleName: 'roleNameName',
+      roleName: 'RoleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
@@ -103,9 +222,10 @@ describe('when enhancing entity with non unique id property', (): void => {
           odsIsUniqueIndex: false,
         },
       },
-    });
+    };
 
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName,
       namespace,
       data: {
@@ -114,7 +234,7 @@ describe('when enhancing entity with non unique id property', (): void => {
           odsIdentityProperties: [integerProperty],
         },
       },
-    });
+    };
 
     namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
@@ -143,9 +263,10 @@ describe('when enhancing entity with unique id property in extension namespace',
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
-    integerProperty = Object.assign(newIntegerProperty(), {
+    integerProperty = {
+      ...newIntegerProperty(),
       metaEdName: 'UniqueID',
-      roleName: 'roleNameName',
+      roleName: 'RoleNameName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
       isPartOfIdentity: true,
@@ -155,9 +276,10 @@ describe('when enhancing entity with unique id property in extension namespace',
           odsIsUniqueIndex: false,
         },
       },
-    });
+    };
 
-    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+    const domainEntity: DomainEntity = {
+      ...newDomainEntity(),
       metaEdName: domainEntityName,
       namespace: extensionNamespace,
       data: {
@@ -166,7 +288,7 @@ describe('when enhancing entity with unique id property in extension namespace',
           odsIdentityProperties: [integerProperty],
         },
       },
-    });
+    };
 
     namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);

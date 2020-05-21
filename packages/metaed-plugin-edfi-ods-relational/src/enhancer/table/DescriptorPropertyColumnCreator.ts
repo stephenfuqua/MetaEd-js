@@ -37,6 +37,7 @@ export function descriptorPropertyColumnCreator(): ColumnCreator {
         isPartOfPrimaryKey:
           !strategy.suppressPrimaryKeyCreation() &&
           (property.isPartOfIdentity || property.data.edfiOdsRelational.odsIsCollection),
+        isUniqueIndex: property.data.edfiOdsRelational.odsIsUniqueIndex,
         referenceContext: property.data.edfiOdsRelational.odsName,
         mergedReferenceContexts: [property.data.edfiOdsRelational.odsName],
         sourceEntityProperties: [property],

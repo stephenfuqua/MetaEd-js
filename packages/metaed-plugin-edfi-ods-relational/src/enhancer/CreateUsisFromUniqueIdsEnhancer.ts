@@ -1,39 +1,43 @@
-import R from 'ramda';
 import { getEntitiesOfTypeForNamespaces, newIntegerProperty } from 'metaed-core';
 import { EnhancerResult, EntityProperty, IntegerProperty, MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
+import { TopLevelEntityEdfiOds } from '../model/TopLevelEntity';
 
 const enhancerName = 'CreateUsisFromUniqueIdsEnhancer';
+
+// UniqueId properties become unique indexes, but demoted from primary key
+// As of METAED-1134, all other identity properties are demoted and made unique indexes as well
+function demoteIdentityPropertiesAndAddToUniqueIndex(topLevelEntityEdfiOds: TopLevelEntityEdfiOds) {
+  topLevelEntityEdfiOds.odsProperties = topLevelEntityEdfiOds.odsProperties.filter(x => !x.isPartOfIdentity);
+  topLevelEntityEdfiOds.odsIdentityProperties.forEach(identityProperty => {
+    const formerIdentityProperty: EntityProperty = { ...identityProperty };
+    formerIdentityProperty.data.edfiOdsRelational.odsIsUniqueIndex = true;
+    formerIdentityProperty.isPartOfIdentity = false;
+    topLevelEntityEdfiOds.odsProperties.push(formerIdentityProperty);
+  });
+
+  topLevelEntityEdfiOds.odsIdentityProperties = [];
+}
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
 
   getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
-    const uniqueIdStrategy = x => x.metaEdName === 'UniqueId';
     const uniqueIdProperty: EntityProperty | null = entity.data.edfiOdsRelational.odsIdentityProperties.find(
-      uniqueIdStrategy,
+      x => x.metaEdName === 'UniqueId',
     );
     if (uniqueIdProperty == null) return;
 
-    // UniqueId properties are unique indexes, but demoted from primary key
-    entity.data.edfiOdsRelational.odsProperties = R.reject(uniqueIdStrategy)(entity.data.edfiOdsRelational.odsProperties);
-    entity.data.edfiOdsRelational.odsIdentityProperties = R.reject(uniqueIdStrategy)(
-      entity.data.edfiOdsRelational.odsIdentityProperties,
-    );
-
-    const odsUniqueIdProperty: EntityProperty = { ...uniqueIdProperty } as EntityProperty;
-    odsUniqueIdProperty.data.edfiOdsRelational.odsIsUniqueIndex = true;
-    odsUniqueIdProperty.isPartOfIdentity = false;
-    entity.data.edfiOdsRelational.odsProperties.push(odsUniqueIdProperty);
+    demoteIdentityPropertiesAndAddToUniqueIndex(entity.data.edfiOdsRelational);
 
     // a UniqueId property gets a parallel USI identity column
     const usiProperty: IntegerProperty = {
       ...newIntegerProperty(),
       metaEdName: 'USI',
-      roleName: odsUniqueIdProperty.roleName,
-      shortenTo: odsUniqueIdProperty.shortenTo,
-      documentation: odsUniqueIdProperty.documentation,
+      roleName: uniqueIdProperty.roleName,
+      shortenTo: uniqueIdProperty.shortenTo,
+      documentation: uniqueIdProperty.documentation,
       isPartOfIdentity: true,
       parentEntityName: uniqueIdProperty.parentEntityName,
       parentEntity: uniqueIdProperty.parentEntity,

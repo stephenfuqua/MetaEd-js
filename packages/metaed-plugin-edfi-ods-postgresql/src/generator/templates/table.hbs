@@ -19,9 +19,9 @@ CREATE TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} (
     CONSTRAINT {{data.edfiOdsPostgresql.tableName}}_AK UNIQUE ({{#alternateKeys}}{{{data.edfiOdsPostgresql.columnName}}}{{#unless @last}}, {{/unless}}{{/alternateKeys}})
 {{/if}}
 ); 
-{{#uniqueIndexes}}
-CREATE UNIQUE INDEX {{{../data.edfiOdsPostgresql.tableName}}}_UI_{{{data.edfiOdsPostgresql.columnName}}} ON {{{../schema}}}.{{{../data.edfiOdsPostgresql.tableName}}} ({{{data.edfiOdsPostgresql.columnName}}});
-{{/uniqueIndexes}}
+{{#if uniqueIndexes.length}}
+CREATE UNIQUE INDEX {{{data.edfiOdsPostgresql.tableName}}}_UI_{{{uniqueIndexes.0.data.edfiOdsPostgresql.columnName}}} ON {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} ({{#uniqueIndexes}}{{{data.edfiOdsPostgresql.columnName}}}{{#unless @last}}, {{/unless}}{{/uniqueIndexes}});
+{{/if}}
 {{#if includeCreateDateColumn}}
 ALTER TABLE {{{schema}}}.{{{data.edfiOdsPostgresql.tableName}}} ALTER COLUMN CreateDate SET DEFAULT current_timestamp;
 {{/if}}

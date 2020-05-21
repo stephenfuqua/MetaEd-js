@@ -28,12 +28,14 @@ CREATE TABLE [{{{schema}}}].[{{{data.edfiOdsSqlServer.tableName}}}] (
 {{/if}}
 ) ON [PRIMARY]
 GO
+{{#if uniqueIndexes.length}}
+CREATE UNIQUE NONCLUSTERED INDEX [{{{data.edfiOdsSqlServer.tableName}}}_UI_{{{uniqueIndexes.0.data.edfiOdsSqlServer.columnName}}}] ON [{{{schema}}}].[{{{data.edfiOdsSqlServer.tableName}}}] (
 {{#uniqueIndexes}}
-CREATE UNIQUE NONCLUSTERED INDEX [{{{../data.edfiOdsSqlServer.tableName}}}_UI_{{{data.edfiOdsSqlServer.columnName}}}] ON [{{{../schema}}}].[{{{../data.edfiOdsSqlServer.tableName}}}] (
-    [{{{data.edfiOdsSqlServer.columnName}}}] ASC
+    [{{{data.edfiOdsSqlServer.columnName}}}] ASC{{#unless @last}},{{/unless}}
+{{/uniqueIndexes}}
 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-{{/uniqueIndexes}}
+{{/if}}
 {{#if includeCreateDateColumn}}
 ALTER TABLE [{{{schema}}}].[{{{data.edfiOdsSqlServer.tableName}}}] ADD CONSTRAINT [{{{data.edfiOdsSqlServer.tableName}}}_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
 GO
