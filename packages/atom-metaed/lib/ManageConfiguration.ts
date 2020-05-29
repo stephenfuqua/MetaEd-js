@@ -29,6 +29,7 @@ const odsApiVersionSupport: Map<string, string[]> = new Map([
   ['3.2.0', ['3.1.0']],
   ['3.3.0', ['3.2.0']],
   ['3.4.0', ['3.2.0-b']],
+  ['4.0.0', ['3.2.0-c']],
 ]);
 
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
@@ -40,6 +41,7 @@ export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDispos
       if (newValue === '3.1.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.1'));
       if (newValue === '3.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2a'));
       if (newValue === '3.2.0-b') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2b'));
+      if (newValue === '3.2.0-c') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2c'));
     }),
   );
 }
