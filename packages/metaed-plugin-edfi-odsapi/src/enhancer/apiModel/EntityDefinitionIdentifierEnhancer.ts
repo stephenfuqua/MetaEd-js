@@ -41,7 +41,7 @@ export function identifiersFrom(table: Table): EntityIdentifier[] {
       isUpdatable: false,
       constraintNames: {
         sqlServer: `${table.data.edfiOdsSqlServer.tableName}_AK`,
-        // only applies to base discriptor entity and cannot be triggered by extensions
+        // only applies to base descriptor entity and cannot be triggered by extensions
         postgreSql: `${table.data.edfiOdsPostgresql.tableName}_AK`,
       },
     });
@@ -49,14 +49,14 @@ export function identifiersFrom(table: Table): EntityIdentifier[] {
 
   if (table.uniqueIndexes.length > 0) {
     result.push({
-      identifierName: `${table.data.edfiOdsSqlServer.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
+      identifierName: `${table.data.edfiOdsSqlServer.tableName}_UI_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
       identifyingPropertyNames: table.uniqueIndexes.map((column: Column) => column.data.edfiOdsSqlServer.columnName),
       isPrimary: false,
       isUpdatable: false,
       constraintNames: {
-        sqlServer: `${table.data.edfiOdsSqlServer.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
+        sqlServer: `${table.data.edfiOdsSqlServer.tableName}_UI_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
         // only applies to person entities and cannot be triggered by extensions
-        postgreSql: `${table.data.edfiOdsPostgresql.tableName}_UX_${table.uniqueIndexes[0].data.edfiOdsSqlServer.columnName}`,
+        postgreSql: `${table.data.edfiOdsPostgresql.tableName}_UI_${table.uniqueIndexes[0].data.edfiOdsPostgresql.columnName}`,
       },
     });
   }
