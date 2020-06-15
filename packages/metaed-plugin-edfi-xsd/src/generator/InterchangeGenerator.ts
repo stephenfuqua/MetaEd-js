@@ -25,7 +25,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     .filter((interchange: MergedInterchange) => !interchange.namespace.isExtension)
     .forEach(interchange => {
       const templateData = {
-        schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
+        schemaVersion: formatVersionForSchema(metaEd),
         interchange,
       };
       const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));
@@ -44,7 +44,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     .filter((interchange: MergedInterchange) => interchange.namespace.isExtension)
     .forEach((interchange: MergedInterchange) => {
       const templateData = {
-        schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
+        schemaVersion: formatVersionForSchema(metaEd),
         interchange,
       };
       const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));

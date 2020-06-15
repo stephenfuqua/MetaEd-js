@@ -3,8 +3,8 @@ import handlebars from 'handlebars';
 import { html as beautify } from 'js-beautify';
 import fs from 'fs';
 import path from 'path';
-import semverLib from 'semver';
-import { SemVer, MetaEdEnvironment, Namespace } from 'metaed-core';
+import semver from 'semver';
+import { SemVer, MetaEdEnvironment, Namespace, versionSatisfies, PluginEnvironment, V4OrGreater } from 'metaed-core';
 import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
@@ -59,9 +59,15 @@ export function formatAndPrependHeader(xsdBody: string): string {
   return formatXml(completeXsd);
 }
 
-export function formatVersionForSchema(version: SemVer): string {
-  if (!semverLib.valid(version)) return '';
-  const semverified = semverLib.parse(version);
+function isTargetTechnologyV4OrGreater(metaEd: MetaEdEnvironment): boolean {
+  return versionSatisfies((metaEd.plugin.get('edfiXsd') as PluginEnvironment).targetTechnologyVersion, V4OrGreater);
+}
+
+export function formatVersionForSchema(metaEd: MetaEdEnvironment): string {
+  const version: SemVer = metaEd.dataStandardVersion;
+  if (isTargetTechnologyV4OrGreater(metaEd)) return version;
+  if (!semver.valid(version)) return '';
+  const semverified = semver.parse(version);
   if (semverified == null) return '';
   const major: string = semverified.major < 10 ? `0${semverified.major}` : `${semverified.major}`;
   const minor = `${semverified.minor}`;

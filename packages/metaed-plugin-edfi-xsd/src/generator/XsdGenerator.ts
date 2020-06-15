@@ -20,7 +20,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     if (hasDuplicateEntityNameInNamespace(metaEd, namespace)) return;
 
     const schema: SchemaContainer = (namespace.data.edfiXsd as NamespaceEdfiXsd).xsdSchema;
-    schema.schemaVersion = formatVersionForSchema(metaEd.dataStandardVersion);
+    schema.schemaVersion = formatVersionForSchema(metaEd);
     const formattedGeneratedResult = formatAndPrependHeader(template().schema(schema));
     generatedOutput.push({
       name: 'XSD',

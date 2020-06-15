@@ -1,5 +1,13 @@
 // Functions
-export { prependIndefiniteArticle, orderByProp, orderByPath, versionSatisfies, V2Only, V3OrGreater } from './Utility';
+export {
+  prependIndefiniteArticle,
+  orderByProp,
+  orderByPath,
+  versionSatisfies,
+  V2Only,
+  V3OrGreater,
+  V4OrGreater,
+} from './Utility';
 export { executePipeline } from './pipeline/Pipeline';
 export { createMetaEdFile } from './file/MetaEdFile';
 export { validateConfiguration } from './pipeline/ValidateConfiguration';
