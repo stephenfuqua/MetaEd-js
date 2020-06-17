@@ -8,29 +8,52 @@ import {
   setCoreMetaEdSourceDirectory,
   getTargetDsVersion,
   setTargetDsVersion,
-  getTargetOdsApiVersion,
   setTargetOdsApiVersion,
+  getTargetOdsApiVersion,
 } from './PackageSettings';
 import { devEnvironmentCorrectedPath, nextMacroTask } from './Utility';
 
-// keys are ODS/API versions, values are arrays of DS versions supported
-const odsApiVersionSupport: Map<string, string[]> = new Map([
-  ['2.0.0', ['2.0.1']],
-  ['2.1.0', ['2.0.1']],
-  ['2.2.0', ['2.0.1']],
-  ['2.3.0', ['2.0.1']],
-  ['2.3.1', ['2.0.1']],
-  ['2.4.0', ['2.0.1']],
-  ['2.5.0', ['2.2.0']],
-  ['2.6.0', ['2.2.0']],
-  ['3.0.0', ['3.0.0']],
-  ['3.1.0', ['3.1.0']],
-  ['3.1.1', ['3.1.0']],
-  ['3.2.0', ['3.1.0']],
-  ['3.3.0', ['3.2.0']],
-  ['3.4.0', ['3.2.0-b']],
-  ['4.0.0', ['3.2.0-c']],
+// keys are ODS/API versions, values are arrays of DS versions supported, as settings enums
+const odsApiVersionSupport: Map<string, any[]> = new Map([
+  ['2.0.0', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.1.0', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.2.0', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.3.0', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.3.1', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.4.0', [{ value: '2.0.1', description: '2.0.1' }]],
+  ['2.5.0', [{ value: '2.2.0', description: '2.2' }]],
+  ['2.6.0', [{ value: '2.2.0', description: '2.2' }]],
+  ['3.0.0', [{ value: '3.0.0', description: '3.0' }]],
+  ['3.1.0', [{ value: '3.1.0', description: '3.1' }]],
+  ['3.1.1', [{ value: '3.1.0', description: '3.1' }]],
+  ['3.2.0', [{ value: '3.1.0', description: '3.1' }]],
+  ['3.3.0', [{ value: '3.2.0', description: '3.2a' }]],
+  ['3.4.0', [{ value: '3.2.0-b', description: '3.2b' }]],
+  ['4.0.0', [{ value: '3.2.0-c', description: '3.2c' }]],
 ]);
+
+async function updateDsVersionEnumsToMatch(targetOdsApiVersion: string) {
+  const dsVersionEnums = odsApiVersionSupport.get(targetOdsApiVersion);
+  const [dsVersion] = dsVersionEnums == null ? [{ value: '3.0.0', description: '3.0' }] : dsVersionEnums;
+  // using any type because this is not an official path
+  (atom.config as any).schema.properties['atom-metaed'].properties.targetDsVersion.enum = [dsVersion];
+
+  // to refresh the settings panel with enum changes, need to close and reopen - refresh() and update() aren't enough
+  await atom.workspace.getActivePane().destroyActiveItem();
+  await atom.workspace.open('atom://config/packages/atom-metaed');
+  setTargetDsVersion(dsVersion.value);
+}
+
+export function switchCoreDsProjectOptionsOnOdsApiChange(disposableTracker: CompositeDisposable) {
+  disposableTracker.add(
+    atom.config.onDidChange(
+      'atom-metaed.targetOdsApiVersion',
+      async ({ newValue }: { oldValue: string; newValue: string }) => {
+        await updateDsVersionEnumsToMatch(newValue);
+      },
+    ),
+  );
+}
 
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
   disposableTracker.add(
@@ -46,13 +69,6 @@ export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDispos
   );
 }
 
-async function setCoreToTwoDotX() {
-  setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
-  setTargetDsVersion('2.0.1');
-  setTargetOdsApiVersion('2.3.1');
-  await nextMacroTask();
-}
-
 async function setCoreToThreeDotX() {
   setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
   setTargetDsVersion('3.0.0');
@@ -63,14 +79,16 @@ async function setCoreToThreeDotX() {
 // initialize package settings if invalid
 export async function initializePackageSettings() {
   if (!getTargetDsVersion()) {
-    await setCoreToTwoDotX();
+    await setCoreToThreeDotX();
   }
   if (!getCoreMetaEdSourceDirectory() || !(await fs.exists(path.resolve(getCoreMetaEdSourceDirectory())))) {
-    await setCoreToTwoDotX();
+    await setCoreToThreeDotX();
   }
   if (!atom.config.get('metaed-exception-report.user')) {
     atom.config.set('metaed-exception-report.user', newUuid());
   }
+  await updateDsVersionEnumsToMatch(getTargetOdsApiVersion());
+
   await nextMacroTask();
 }
 
@@ -135,41 +153,4 @@ export function manageLegacyIssues(disposableTracker: CompositeDisposable) {
       projectPaths.forEach(async projectPath => warnOnMetaEdJsonExistence(projectPath));
     }),
   );
-}
-
-export function odsApiAndDsCombinationValid(odsApiVersion: string, dsVersion: string): boolean {
-  const supportedDsVersions: string[] | undefined = odsApiVersionSupport.get(odsApiVersion);
-  if (!supportedDsVersions) return false;
-  return supportedDsVersions.includes(dsVersion);
-}
-
-function warnOnDsAndOdsApiMismatch() {
-  if (!odsApiAndDsCombinationValid(getTargetOdsApiVersion(), getTargetDsVersion())) {
-    const notification = atom.notifications.addWarning(
-      `The targeted Ed-Fi Data Standard version is not supported by the targeted Ed-Fi ODS/API version.  Please ensure those settings are in sync.`,
-      {
-        dismissable: true,
-        buttons: [
-          {
-            text: 'Go to Settings',
-            onDidClick: () => {
-              atom.workspace.open('atom://config/packages/atom-metaed');
-              return notification.dismiss();
-            },
-          },
-          {
-            text: 'Close',
-            onDidClick: () => notification.dismiss(),
-          },
-        ],
-      },
-    );
-  }
-}
-
-// warn if DS and ODS/API settings don't match
-export function ensureWarningsOnDsAndOdsApiMismatch(disposableTracker: CompositeDisposable) {
-  warnOnDsAndOdsApiMismatch();
-  disposableTracker.add(atom.config.onDidChange('atom-metaed.targetOdsApiVersion', () => warnOnDsAndOdsApiMismatch()));
-  disposableTracker.add(atom.config.onDidChange('atom-metaed.targetDsVersion', () => warnOnDsAndOdsApiMismatch()));
 }

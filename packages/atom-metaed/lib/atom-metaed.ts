@@ -11,8 +11,8 @@ import {
   manageLegacyIssues,
   initializePackageSettings,
   ensureLinterUiSettings,
-  ensureWarningsOnDsAndOdsApiMismatch,
   switchCoreDsProjectOnDsChange,
+  switchCoreDsProjectOptionsOnOdsApiChange,
 } from './ManageConfiguration';
 import { MetaEdAboutModel, metaEdAboutView } from './MetaEdAbout';
 import { updateEditorIfCore, addCopyBackToCore } from './MakeCoreTabsReadOnly';
@@ -68,7 +68,7 @@ export async function activate() {
   await manageLegacyIssues(disposableTracker);
   await initializePackageSettings();
   await ensureLinterUiSettings();
-  ensureWarningsOnDsAndOdsApiMismatch(disposableTracker);
+  switchCoreDsProjectOptionsOnOdsApiChange(disposableTracker);
   switchCoreDsProjectOnDsChange(disposableTracker);
 
   if (!allianceMode()) hideTreeViewContextMenuOperationsWhenCore();
