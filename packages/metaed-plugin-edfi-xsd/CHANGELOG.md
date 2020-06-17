@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1-dev.4](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.2.1-dev.3...v2.2.1-dev.4) (2020-06-17)
+
+**Note:** Version bump only for package metaed-plugin-edfi-xsd
+
+
+
+
+
 ## [2.2.1-dev.3](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.2.1-dev.2...v2.2.1-dev.3) (2020-06-16)
 
 **Note:** Version bump only for package metaed-plugin-edfi-xsd
