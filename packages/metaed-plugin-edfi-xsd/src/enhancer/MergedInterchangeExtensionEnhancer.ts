@@ -62,16 +62,27 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
             namespace: extensionNamespace,
           };
 
-          interchangeToExtend.elements.forEach(element => {
+          interchangeToExtend.elements.forEach(item => {
             const interchangeItem = {
               ...newInterchangeItem(),
-              metaEdName: element.metaEdName,
-              namespace: element.namespace,
-              referencedEntity: element.referencedEntity,
-              documentation: element.documentation,
+              metaEdName: item.metaEdName,
+              namespace: item.namespace,
+              referencedEntity: item.referencedEntity,
+              documentation: item.documentation,
             };
             addInterchangeItemEdfiXsdTo(interchangeItem);
             extensionInterchange.elements.push(interchangeItem);
+          });
+          interchangeToExtend.identityTemplates.forEach(item => {
+            const interchangeItem = {
+              ...newInterchangeItem(),
+              metaEdName: item.metaEdName,
+              namespace: item.namespace,
+              referencedEntity: item.referencedEntity,
+              documentation: item.documentation,
+            };
+            addInterchangeItemEdfiXsdTo(interchangeItem);
+            extensionInterchange.identityTemplates.push(interchangeItem);
           });
           addMergedInterchangeToRepository(metaEd, extensionInterchange);
         }
@@ -83,6 +94,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           }))
           .filter(elementPair => elementPair.extensionElement);
 
+        // TODO: refactor this, it's an abuse of map() as is
         extensionInterchange.elements = extensionInterchange.elements.map(e => {
           const elementToExtend = elementsToExtend.find(i => i.element.metaEdName === e.metaEdName);
           if (elementToExtend) {
