@@ -6,7 +6,7 @@ export {
   versionSatisfies,
   V2Only,
   V3OrGreater,
-  V4OrGreater,
+  V5OrGreater,
 } from './Utility';
 export { executePipeline } from './pipeline/Pipeline';
 export { createMetaEdFile } from './file/MetaEdFile';

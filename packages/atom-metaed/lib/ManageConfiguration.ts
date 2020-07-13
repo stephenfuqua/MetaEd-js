@@ -29,7 +29,7 @@ const odsApiVersionSupport: Map<string, any[]> = new Map([
   ['3.2.0', [{ value: '3.1.0', description: '3.1' }]],
   ['3.3.0', [{ value: '3.2.0', description: '3.2a' }]],
   ['3.4.0', [{ value: '3.2.0-b', description: '3.2b' }]],
-  ['4.0.0', [{ value: '3.2.0-c', description: '3.2c' }]],
+  ['5.0.0', [{ value: '3.2.0-c', description: '3.2c' }]],
 ]);
 
 async function updateDsVersionEnumsToMatch(targetOdsApiVersion: string) {

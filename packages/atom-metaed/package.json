@@ -27,7 +27,7 @@
       "title": "Target Ed-Fi ODS/API Version",
       "description": "Select the target Ed-Fi ODS/API version.",
       "type": "string",
-      "default": "3.0.0",
+      "default": "5.0.0",
       "enum": [
         {
           "value": "2.0.0",
@@ -86,8 +86,8 @@
           "description": "3.4"
         },
         {
-          "value": "4.0.0",
-          "description": "4.0"
+          "value": "5.0.0",
+          "description": "5.0"
         }
       ]
     },
@@ -96,7 +96,7 @@
       "title": "Target Ed-Fi Data Standard Version",
       "description": "Select the target Ed-Fi Data Standard version.",
       "type": "string",
-      "default": "3.0.0",
+      "default": "3.2.0-c",
       "enum": []
     },
     "edfiOdsApiSourceDirectory": {
