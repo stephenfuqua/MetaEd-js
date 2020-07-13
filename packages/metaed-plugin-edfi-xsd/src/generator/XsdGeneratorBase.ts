@@ -53,7 +53,6 @@ function formatXml(unformattedXml: string): string {
 export function formatAndPrependHeader(xsdBody: string): string {
   const completeXsd: string = template().xsdWithHeader({
     xsdBody,
-    copyrightYear: new Date().getFullYear(),
   });
 
   return formatXml(completeXsd);
