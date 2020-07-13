@@ -104,7 +104,7 @@ describe('when generating single interchange', (): void => {
   });
 
   it('should generate valid xsd', (): void => {
-    const xsSchema = R.view(nextSecond, result);
+    const xsSchema = R.view(nextHead, result);
 
     const schemaLocation = R.view(nextHead, xsSchema);
     expect(R.view(nameOf, schemaLocation)).toBe('xs:include');
@@ -309,7 +309,7 @@ describe('when generating single interchange with extension', (): void => {
   });
 
   it('should have interchange name', (): void => {
-    const xsSchema = R.view(nextSecond, xmlParser.xml2js(result[0].resultString));
+    const xsSchema = R.view(nextHead, xmlParser.xml2js(result[0].resultString));
 
     const interchangeElement = R.view(nextThird, xsSchema);
     expect(R.view(nameOf, interchangeElement)).toBe('xs:element');

@@ -57,7 +57,7 @@ describe('when generating schema', (): void => {
   });
 
   it('should generate valid xsd', (): void => {
-    const xsSchema = result.elements[1];
+    const xsSchema = result.elements[0];
 
     const schemaDocumentationAnnotation = xsSchema.elements[1];
     expect(schemaDocumentationAnnotation.name).toBe('xs:annotation');
