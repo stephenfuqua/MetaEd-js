@@ -4639,7 +4639,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The environment in which the test was administered. For example:\r\n    Electronic\r\n    Classroom\r\n    Testing Center\r\n    ..."
+      "description": "The environment in which the test was administered. For example:    Electronic    Classroom    Testing Center    ..."
     },
     {
       "schema": "edfi",
@@ -5313,7 +5313,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The analyzed result of a student's response to an assessment item.. For example:\r\n    Correct\r\n    Incorrect\r\n    Met standard\r\n    ..."
+      "description": "The analyzed result of a student's response to an assessment item.. For example:    Correct    Incorrect    Met standard    ..."
     },
     {
       "schema": "edfi",
@@ -5410,7 +5410,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:\r\n        1. Specification of performance level by minimum and maximum score\r\n        2. Specification of performance level by cut score, using only minimum score\r\n        3. Specification of performance level without any mapping to scores."
+      "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:        1. Specification of performance level by minimum and maximum score        2. Specification of performance level by cut score, using only minimum score        3. Specification of performance level without any mapping to scores."
     },
     {
       "schema": "edfi",
@@ -7456,7 +7456,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The result from the student's attempt to take the course, for example:\r\n    Pass\r\n    Fail\r\n    Incomplete\r\n    Withdrawn"
+      "description": "The result from the student's attempt to take the course, for example:    Pass    Fail    Incomplete    Withdrawn"
     },
     {
       "schema": "edfi",
@@ -10050,7 +10050,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in                      'which an address is located.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -15146,7 +15146,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:\r\n        1. Specification of performance level by minimum and maximum score    \r\n        2. Specification of performance level by cut score, using only minimum score    \r\n        3. Specification of performance level without any mapping to scores."
+      "description": "Definition of the performance levels and the associated cut scores. Three styles are supported:        1. Specification of performance level by minimum and maximum score            2. Specification of performance level by cut score, using only minimum score            3. Specification of performance level without any mapping to scores."
     },
     {
       "schema": "edfi",
@@ -15752,7 +15752,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in                      'which an address is located.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -17255,7 +17255,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The primary reason student is not tested. For example:\r\n    Absent\r\n    Refusal by parent\r\n    Refusal by student\r\n    Medical waiver\r\n    Illness\r\n    Disruptive behavior\r\n    LEP Exempt\r\n    '..."
+      "description": "The primary reason student is not tested. For example:    Absent    Refusal by parent    Refusal by student    Medical waiver    Illness    Disruptive behavior    LEP Exempt    '..."
     },
     {
       "schema": "edfi",
@@ -17613,7 +17613,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "Indicator of the response.  For example:\r\n    Nonscorable response\r\n    Ineffective response\r\n    Effective response\r\n    Partial response\r\n    ..."
+      "description": "Indicator of the response.  For example:    Nonscorable response    Ineffective response    Effective response    Partial response    ..."
     },
     {
       "schema": "edfi",
@@ -17844,7 +17844,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "Indicator if the test was retaken.  For example:\r\n    Primary administration\r\n    First retest\r\n    Second retest\r\n    ..."
+      "description": "Indicator if the test was retaken.  For example:    Primary administration    First retest    Second retest    ..."
     },
     {
       "schema": "edfi",
@@ -18974,7 +18974,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "This entity represents an individual who performs specified activities for any public or private education institution or agency that provides instructional and/or support services to students or staff at the early childhood level through high school completion. For example, this includes:\r\n    1. An \"employee\" who performs services under the direction of the employing institution or agency is compensated for such services by the employer and is eligible for employee benefits and wage or salary tax withholdings\r\n    2. A \"contractor\" or \"consultant\" who performs services for an agreed upon fee or an employee of a management service contracted to work on site\r\n    3. A \"volunteer\" who performs services on a voluntary and uncompensated basis\r\n    4. An in-kind service provider\r\n    5. An independent contractor or businessperson working at a school site."
+      "description": "This entity represents an individual who performs specified activities for any public or private education institution or agency that provides instructional and/or support services to students or staff at the early childhood level through high school completion. For example, this includes:    1. An \"employee\" who performs services under the direction of the employing institution or agency is compensated for such services by the employer and is eligible for employee benefits and wage or salary tax withholdings    2. A \"contractor\" or \"consultant\" who performs services for an agreed upon fee or an employee of a management service contracted to work on site    3. A \"volunteer\" who performs services on a voluntary and uncompensated basis    4. An in-kind service provider    5. An independent contractor or businessperson working at a school site."
     },
     {
       "schema": "edfi",
@@ -19199,7 +19199,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in                      'which an address is located.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -19790,7 +19790,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in                      'which an address is located.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -23070,7 +23070,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The specific type of special variation used in how an examination is presented, how it is administered, or how the test taker is allowed to respond. This generally refers to changes that do not substantially alter what the examination measures. The proper use of accommodations does not substantially change academic level or performance criteria. For example:\r\n        Braille\r\n        Enlarged monitor view\r\n        Extra time\r\n        Large Print\r\n        Setting\r\n        Oral Administration\r\n        ..."
+      "description": "The specific type of special variation used in how an examination is presented, how it is administered, or how the test taker is allowed to respond. This generally refers to changes that do not substantially alter what the examination measures. The proper use of accommodations does not substantially change academic level or performance criteria. For example:        Braille        Enlarged monitor view        Extra time        Large Print        Setting        Oral Administration        ..."
     },
     {
       "schema": "edfi",
@@ -23750,7 +23750,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Indicator that student participated in career and technical education at private agencies or institutions that are reported by the state for purposes of the Elementary and Secondary Education Act (ESEA).\r\nStudents in private institutions which do not receive Perkins funding are reported only in the state file.",
+          "description": "Indicator that student participated in career and technical education at private agencies or institutions that are reported by the state for purposes of the Elementary and Secondary Education Act (ESEA).Students in private institutions which do not receive Perkins funding are reported only in the state file.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -24261,7 +24261,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in                      'which an address is located.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -24953,7 +24953,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "Reflects important characteristics of the student's home situation:\r\n        Displaced Homemaker, Immigrant, Migratory, Military Parent, Pregnant Teen, Single Parent, and Unaccompanied Youth."
+      "description": "Reflects important characteristics of the student's home situation:        Displaced Homemaker, Immigrant, Migratory, Military Parent, Pregnant Teen, Single Parent, and Unaccompanied Youth."
     },
     {
       "schema": "edfi",
@@ -27919,7 +27919,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Indicates whether the Student receiving special education and related services is:\r\n        1) in the age range of birth to 22 years, and\r\n        2) has a serious, ongoing illness or a chronic condition that has lasted or is anticipated to last at least 12 or more months or has required at least one month of hospitalization, and that requires daily, ongoing medical treatments and monitoring by appropriately trained personnel which may include parents or other family members, and\r\n        3) requires the routine use of medical device or of assistive technology to compensate for the loss of usefulness of a body function needed to participate in activities of daily living, and\r\n        4) lives with ongoing threat to his or her continued well-being.\r\n        Aligns with federal requirements.",
+          "description": "Indicates whether the Student receiving special education and related services is:        1) in the age range of birth to 22 years, and        2) has a serious, ongoing illness or a chronic condition that has lasted or is anticipated to last at least 12 or more months or has required at least one month of hospitalization, and that requires daily, ongoing medical treatments and monitoring by appropriately trained personnel which may include parents or other family members, and        3) requires the routine use of medical device or of assistive technology to compensate for the loss of usefulness of a body function needed to participate in activities of daily living, and        4) lives with ongoing threat to his or her continued well-being.        Aligns with federal requirements.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -29671,7 +29671,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The category of an assessment based on format and content. For example:\r\n        Achievement test\r\n        Advanced placement test\r\n        Alternate assessment/grade-level standards\r\n        Attitudinal test\r\n        Cognitive and perceptual skills test\r\n        ...",
+          "description": "The category of an assessment based on format and content. For example:        Achievement test        Advanced placement test        Alternate assessment/grade-level standards        Attitudinal test        Cognitive and perceptual skills test        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -29718,7 +29718,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -29765,7 +29765,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "If the assessment spans a range of grades, then this attribute holds the lowest grade assessed. If only one grade level is assessed, then this attribute is omitted. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "If the assessment spans a range of grades, then this attribute holds the lowest grade assessed. If only one grade level is assessed, then this attribute is omitted. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -29853,7 +29853,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -29911,7 +29911,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30072,7 +30072,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30130,7 +30130,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30197,7 +30197,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30255,7 +30255,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30416,7 +30416,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30474,7 +30474,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30547,7 +30547,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Category or type of the AssessmentItem. For example:\r\n        Multiple choice\r\n        Analytic\r\n        Prose\r\n        ...",
+          "description": "Category or type of the AssessmentItem. For example:        Multiple choice        Analytic        Prose        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -30635,7 +30635,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30706,7 +30706,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30880,7 +30880,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -30938,7 +30938,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31052,7 +31052,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31110,7 +31110,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31318,7 +31318,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31376,7 +31376,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31537,7 +31537,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31595,7 +31595,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31808,7 +31808,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -31866,7 +31866,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -32027,7 +32027,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -32085,7 +32085,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -37235,7 +37235,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The result from the student's attempt to take the course, for example:\r\n        Pass\r\n        Fail\r\n        Incomplete\r\n        Withdrawn.",
+          "description": "The result from the student's attempt to take the course, for example:        Pass        Fail        Incomplete        Withdrawn.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -37717,7 +37717,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The result from the student's attempt to take the course, for example:\r\n        Pass\r\n        Fail\r\n        Incomplete\r\n        Withdrawn.",
+          "description": "The result from the student's attempt to take the course, for example:        Pass        Fail        Incomplete        Withdrawn.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -37814,7 +37814,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The result from the student's attempt to take the course, for example:\r\n        Pass\r\n        Fail\r\n        Incomplete\r\n        Withdrawn.",
+          "description": "The result from the student's attempt to take the course, for example:        Pass        Fail        Incomplete        Withdrawn.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -39776,7 +39776,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Identifies where the DisciplineIncident occurred and whether or not it occurred on school, for example:\r\n        On school\r\n        Administrative offices area\r\n        Cafeteria area\r\n        Classroom\r\n        Hallway or stairs\r\n        ...",
+          "description": "Identifies where the DisciplineIncident occurred and whether or not it occurred on school, for example:        On school        Administrative offices area        Cafeteria area        Classroom        Hallway or stairs        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -39823,7 +39823,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Information on the type of individual who reported the DisciplineIncident. When known and/or if useful, use a more specific option code (e.g., \"Counselor\" rather than \"Professional Staff\"); for example:\r\n        Student\r\n        Parent/guardian\r\n        Law enforcement officer\r\n        Nonschool personnel\r\n        Representative of visiting school\r\n        ...",
+          "description": "Information on the type of individual who reported the DisciplineIncident. When known and/or if useful, use a more specific option code (e.g., \"Counselor\" rather than \"Professional Staff\"); for example:        Student        Parent/guardian        Law enforcement officer        Nonschool personnel        Representative of visiting school        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -45285,7 +45285,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -45343,7 +45343,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -45556,7 +45556,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -45653,7 +45653,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -45900,7 +45900,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -45997,7 +45997,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -52559,7 +52559,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -52617,7 +52617,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -52684,7 +52684,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -52755,7 +52755,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -52835,7 +52835,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -52906,7 +52906,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -52986,7 +52986,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53057,7 +53057,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53195,7 +53195,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -53236,7 +53236,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53307,7 +53307,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53434,7 +53434,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53505,7 +53505,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53632,7 +53632,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53703,7 +53703,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53924,7 +53924,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -53995,7 +53995,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -54222,7 +54222,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "Reflects the type of employment or contract desired for the position; for example:\r\n        Probationary\r\n        Contractual\r\n        Substitute/temporary\r\n        Tenured or permanent\r\n        Volunteer/no contract\r\n        ...",
+          "description": "Reflects the type of employment or contract desired for the position; for example:        Probationary        Contractual        Substitute/temporary        Tenured or permanent        Volunteer/no contract        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -54316,7 +54316,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The name of the program for which the OpenStaffPosition will be assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education'\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the OpenStaffPosition will be assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education'        Bilingual/English as a Second Language.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -61750,7 +61750,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The setting in which a child receives education and related services; for example:\r\n        Center-based instruction\r\n        Home-based instruction\r\n        Hospital class\r\n        Mainstream\r\n        Residential care and treatment facility\r\n        ...",
+          "description": "The setting in which a child receives education and related services; for example:        Center-based instruction        Home-based instruction        Hospital class        Mainstream        Residential care and treatment facility        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -61917,7 +61917,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The media through which teachers provide instruction to students and students and teachers communicate about instructional matters; for example:\r\n        Technology-based instruction in classroom\r\n        Correspondence instruction\r\n        Face-to-face instruction\r\n        Virtual/On-line Distance learning\r\n        Center-based instruction\r\n        ...",
+          "description": "The media through which teachers provide instruction to students and students and teachers communicate about instructional matters; for example:        Technology-based instruction in classroom        Correspondence instruction        Face-to-face instruction        Virtual/On-line Distance learning        Center-based instruction        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -61964,7 +61964,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The type of students the Section is offered and tailored to; for example:\r\n        Bilingual students\r\n        Remedial education students\r\n        Gifted and talented students\r\n        Career and Technical Education students\r\n        Special education students\r\n        ...",
+          "description": "The type of students the Section is offered and tailored to; for example:        Bilingual students        Remedial education students        Gifted and talented students        Career and Technical Education students        Special education students        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -64013,7 +64013,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:\r\n        1 - American Indian or Alaskan Native\r\n        2 - Asian or Pacific Islander\r\n        3 - Black, not of Hispanic origin\r\n        4 - Hispanic\r\n        5 - White, not of Hispanic origin.",
+          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:        1 - American Indian or Alaskan Native        2 - Asian or Pacific Islander        3 - Black, not of Hispanic origin        4 - Hispanic        5 - White, not of Hispanic origin.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -64910,7 +64910,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "Reflects the type of employment or contract; for example:\r\n        Probationary\r\n        Contractual\r\n        Substitute/temporary\r\n        Tenured or permanent\r\n        Volunteer/no contract\r\n        ...",
+          "description": "Reflects the type of employment or contract; for example:        Probationary        Contractual        Substitute/temporary        Tenured or permanent        Volunteer/no contract        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -64968,7 +64968,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Reflects the type of employment or contract; for example:\r\n        Probationary\r\n        Contractual\r\n        Substitute/temporary\r\n        Tenured or permanent\r\n        Volunteer/no contract\r\n        ...",
+          "description": "Reflects the type of employment or contract; for example:        Probationary        Contractual        Substitute/temporary        Tenured or permanent        Volunteer/no contract        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -65740,7 +65740,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "Reflects the type of employment or contract; for example:\r\n        Probationary\r\n        Contractual\r\n        Substitute/temporary\r\n        Tenured or permanent\r\n        Volunteer/no contract\r\n        ...",
+          "description": "Reflects the type of employment or contract; for example:        Probationary        Contractual        Substitute/temporary        Tenured or permanent        Volunteer/no contract        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -65787,7 +65787,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Type of employment separation; for example: Voluntary separation, Involuntary separation,\r\n        Mutual agreement\r\n        Other, etc.",
+          "description": "Type of employment separation; for example: Voluntary separation, Involuntary separation,        Mutual agreement        Other, etc.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -65834,7 +65834,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Reason for terminating the employment; for example:\r\n        Employment in education\r\n        Employment outside of education\r\n        Retirement\r\n        Family/personal relocation\r\n        Change of assignment.",
+          "description": "Reason for terminating the employment; for example:        Employment in education        Employment outside of education        Retirement        Family/personal relocation        Change of assignment.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -66753,7 +66753,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The code describing the type of leave taken, for example:\r\n        Sick\r\n        Personal\r\n        Vacation.",
+          "description": "The code describing the type of leave taken, for example:        Sick        Personal        Vacation.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -67609,7 +67609,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The name of the program for which the individual is assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the individual is assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education        Bilingual/English as a Second Language.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -67825,7 +67825,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The name of the program for which the individual is assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the individual is assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education        Bilingual/English as a Second Language.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -67870,7 +67870,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The name of the program for which the individual is assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the individual is assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education        Bilingual/English as a Second Language.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -67971,7 +67971,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The name of the program for which the individual is assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the individual is assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education        Bilingual/English as a Second Language.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -68016,7 +68016,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The name of the program for which the individual is assigned; for example:\r\n        Regular education\r\n        Title I-Academic\r\n        Title I-Non-Academic\r\n        Special Education\r\n        Bilingual/English as a Second Language.",
+          "description": "The name of the program for which the individual is assigned; for example:        Regular education        Title I-Academic        Title I-Non-Academic        Special Education        Bilingual/English as a Second Language.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -68089,7 +68089,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The type of position the Staff member holds in the specific class/section; for example:\r\n        Teacher of Record, Assistant Teacher, Support Teacher, Substitute Teacher...",
+          "description": "The type of position the Staff member holds in the specific class/section; for example:        Teacher of Record, Assistant Teacher, Support Teacher, Substitute Teacher...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -69806,7 +69806,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The level of diploma/credential that is awarded to a student in recognition of his/her completion of the curricular requirements.\r\n        Minimum high school program\r\n        Recommended high school program\r\n        Distinguished Achievement Program.",
+          "description": "The level of diploma/credential that is awarded to a student in recognition of his/her completion of the curricular requirements.        Minimum high school program        Recommended high school program        Distinguished Achievement Program.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -70546,7 +70546,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The environment in which the test was administered. For example:\r\n        Electronic\r\n        Classroom\r\n        Testing Center\r\n        ...",
+          "description": "The environment in which the test was administered. For example:        Electronic        Classroom        Testing Center        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -70587,7 +70587,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -70645,7 +70645,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -70859,7 +70859,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The primary reason student is not tested. For example:\r\n        Absent\r\n        Refusal by parent\r\n        Refusal by student\r\n        Medical waiver\r\n        Illness\r\n        Disruptive behavior\r\n        LEP Exempt\r\n        ...",
+          "description": "The primary reason student is not tested. For example:        Absent        Refusal by parent        Refusal by student        Medical waiver        Illness        Disruptive behavior        LEP Exempt        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -70906,7 +70906,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Indicator if the test was retaken. For example:\r\n        Primary administration\r\n        First retest\r\n        Second retest\r\n        ...",
+          "description": "Indicator if the test was retaken. For example:        Primary administration        First retest        Second retest        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -71047,7 +71047,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The specific type of special variation used in how an examination is presented, how it is administered, or how the test taker is allowed to respond. This generally refers to changes that do not substantially alter what the examination measures. The proper use of accommodations does not substantially change academic level or performance criteria. For example:\r\n        Braille\r\n        Enlarged monitor view\r\n        Extra time\r\n        Large Print\r\n        Setting\r\n        Oral Administration\r\n        ...",
+          "description": "The specific type of special variation used in how an examination is presented, how it is administered, or how the test taker is allowed to respond. This generally refers to changes that do not substantially alter what the examination measures. The proper use of accommodations does not substantially change academic level or performance criteria. For example:        Braille        Enlarged monitor view        Extra time        Large Print        Setting        Oral Administration        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -71101,7 +71101,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71185,7 +71185,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71265,7 +71265,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71336,7 +71336,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71422,7 +71422,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The analyzed result of a student's response to an assessment item. For example:\r\n        Correct\r\n        Incorrect\r\n         Met standard\r\n        ...",
+          "description": "The analyzed result of a student's response to an assessment item. For example:        Correct        Incorrect         Met standard        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -71469,7 +71469,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Indicator of the response. For example:\r\n        Nonscorable response\r\n        Ineffective response\r\n        Effective response\r\n        Partial response\r\n        ...",
+          "description": "Indicator of the response. For example:        Nonscorable response        Ineffective response        Effective response        Partial response        ...",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -71523,7 +71523,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71607,7 +71607,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71794,7 +71794,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -71878,7 +71878,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72065,7 +72065,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72149,7 +72149,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72229,7 +72229,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72300,7 +72300,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72393,7 +72393,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72477,7 +72477,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72664,7 +72664,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72761,7 +72761,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -72961,7 +72961,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -73058,7 +73058,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:\r\n        Adult\r\n        Prekindergarten\r\n        First grade\r\n        Second grade\r\n        ...",
+          "description": "The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:        Adult        Prekindergarten        First grade        Second grade        ...",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -75548,7 +75548,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The role or type of participation of a student in a discipline incident; \r\n        for example:\r\n        Victim\r\n        Perpetrator\r\n        Witness\r\n        Reporter.",
+          "description": "The role or type of participation of a student in a discipline incident;         for example:        Victim        Perpetrator        Witness        Reporter.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -75835,7 +75835,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:\r\n        1 - American Indian or Alaskan Native\r\n        2 - Asian or Pacific Islander\r\n        3 - Black, not of Hispanic origin\r\n        4 - Hispanic\r\n        5 - White, not of Hispanic origin.",
+          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:        1 - American Indian or Alaskan Native        2 - Asian or Pacific Islander        3 - Black, not of Hispanic origin        4 - Hispanic        5 - White, not of Hispanic origin.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -80169,7 +80169,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "A code describing the attendance event, for example:\r\n        Present\r\n        Unexcused absence\r\n        Excused absence\r\n        Tardy.",
+          "description": "A code describing the attendance event, for example:        Present        Unexcused absence        Excused absence        Tardy.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -83483,7 +83483,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The nature of an individual's relationship to a student; for example:\r\n        Father, Mother, Step Father, Step Mother, Foster Father, Foster Mother, Guardian, etc.",
+          "description": "The nature of an individual's relationship to a student; for example:        Father, Mother, Step Father, Step Mother, Foster Father, Foster Mother, Guardian, etc.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -84213,7 +84213,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "A code describing the attendance event, for example:\r\n        Present\r\n        Unexcused absence\r\n        Excused absence\r\n        Tardy.",
+          "description": "A code describing the attendance event, for example:        Present        Unexcused absence        Excused absence        Tardy.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -85267,7 +85267,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "A code describing the attendance event, for example:\r\n        Present\r\n        Unexcused absence\r\n        Excused absence\r\n        Tardy.",
+          "description": "A code describing the attendance event, for example:        Present        Unexcused absence        Excused absence        Tardy.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -86002,7 +86002,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "An indication as to whether a student has previously taken a given course.\r\n        Repeated, counted in grade point average\r\n        Repeated, not counted in grade point average\r\n        Not repeated\r\n        Other.",
+          "description": "An indication as to whether a student has previously taken a given course.        Repeated, counted in grade point average        Repeated, not counted in grade point average        Not repeated        Other.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -86247,7 +86247,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "A code describing the attendance event, for example:\r\n        Present\r\n        Unexcused absence\r\n        Excused absence\r\n        Tardy.",
+          "description": "A code describing the attendance event, for example:        Present        Unexcused absence        Excused absence        Tardy.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -87909,7 +87909,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "An indication of the type of Title I program, if any, in which the student is participating and by which the student is served:\r\n        Public Targeted Assistance Program\r\n        Public Schoolwide Program\r\n        Private School Students Participating\r\n        Local Neglected Program.",
+          "description": "An indication of the type of Title I program, if any, in which the student is participating and by which the student is served:        Public Targeted Assistance Program        Public Schoolwide Program        Private School Students Participating        Local Neglected Program.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
