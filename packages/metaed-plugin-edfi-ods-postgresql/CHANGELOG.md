@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1-dev.2](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.3.1-dev.1...v2.3.1-dev.2) (2020-10-27)
+
+**Note:** Version bump only for package metaed-plugin-edfi-ods-postgresql
+
+
+
+
+
 ## [2.3.1-dev.1](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v2.3.1-dev.0...v2.3.1-dev.1) (2020-10-14)
 
 **Note:** Version bump only for package metaed-plugin-edfi-ods-postgresql
