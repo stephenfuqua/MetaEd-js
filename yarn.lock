@@ -934,10 +934,10 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
-"@types/atom@1.36.1":
-  version "1.36.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/@types/atom/-/@types/atom-1.36.1.tgz#01bbe4cbdf07446645e20a64fc5105850f6a789f"
-  integrity sha1-Abvky98HRGZF4gpk/FEFhQ9qeJ8=
+"@types/atom@1.40.4":
+  version "1.40.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/@types/atom/-/@types/atom-1.40.4.tgz#97c5afcd1fd42ca7612dac27613f0c4c9f74ae54"
+  integrity sha1-l8WvzR/ULKdhLawnYT8MTJ90rlQ=
   dependencies:
     "@types/node" "*"
 

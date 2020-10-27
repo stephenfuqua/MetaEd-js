@@ -87,17 +87,28 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
       'atom-metaed:deploy': async () => {
         if (outputWindow == null) return;
 
-        // @ts-ignore: typings file is wrong, AtomEnvironment.confirm returns a number when buttons is an array
-        const result: number = atom.confirm({
-          message: 'Are you sure you want to deploy MetaEd artifacts?',
-          detailedMessage:
-            'This will overwrite extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
-          buttons: ['OK', 'Cancel'],
+        const dialog = atom.notifications.addInfo('Are you sure you want to deploy MetaEd artifacts?', {
+          description:
+            'This will overwrite extension files in the Ed-Fi ODS/API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS/API.',
+          dismissable: true,
+          icon: 'question',
+          buttons: [
+            {
+              text: 'OK',
+              onDidClick: async () => {
+                if (dialog) dialog.dismiss();
+                const success: boolean = await build(outputWindow);
+                if (success) await deploy(outputWindow, allianceMode());
+              },
+            },
+            {
+              text: 'Cancel',
+              onDidClick: () => {
+                if (dialog) dialog.dismiss();
+              },
+            },
+          ],
         });
-        if (result !== 0) return;
-
-        const success: boolean = await build(outputWindow);
-        if (success) await deploy(outputWindow, allianceMode());
       },
     }),
   );
