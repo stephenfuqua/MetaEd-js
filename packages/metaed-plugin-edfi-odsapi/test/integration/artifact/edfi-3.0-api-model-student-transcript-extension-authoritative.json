@@ -342,7 +342,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -389,7 +390,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -436,7 +438,8 @@
         }
       ],
       "isIdentifying": false,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -483,7 +486,8 @@
         }
       ],
       "isIdentifying": false,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -530,7 +534,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -577,7 +582,8 @@
         }
       ],
       "isIdentifying": false,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -702,7 +708,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -749,7 +756,8 @@
         }
       ],
       "isIdentifying": false,
-      "isRequired": false
+      "isRequired": false,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -874,7 +882,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -921,7 +930,8 @@
         }
       ],
       "isIdentifying": false,
-      "isRequired": false
+      "isRequired": false,
+      "isIntegrityRelaxed": false
     },
     {
       "fullName": {
@@ -968,7 +978,8 @@
         }
       ],
       "isIdentifying": true,
-      "isRequired": true
+      "isRequired": true,
+      "isIntegrityRelaxed": false
     }
   ]
 }

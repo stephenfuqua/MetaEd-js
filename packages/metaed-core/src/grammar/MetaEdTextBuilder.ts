@@ -1206,6 +1206,12 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  withPossiblyExternal(possiblyExternal: boolean = false): MetaEdTextBuilder {
+    if (!possiblyExternal) return this;
+    this.addLine('possibly external');
+    return this;
+  }
+
   withStringRestrictions(minLength: string | null = null, maxLength: string | null = null): MetaEdTextBuilder {
     this.increaseIndentation();
 
@@ -1244,8 +1250,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
-  withReferenceAdditions(isWeak: boolean = false): MetaEdTextBuilder {
+  withReferenceAdditions(isWeak: boolean = false, possiblyExternal: boolean = false): MetaEdTextBuilder {
     this.increaseIndentation();
+    this.withPossiblyExternal(possiblyExternal);
     this.withIsWeakReference(isWeak);
     this.decreaseIndentation();
 
@@ -1435,6 +1442,7 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     deprecatedReason: string | null = null,
+    possiblyExternal: boolean = false,
   ): MetaEdTextBuilder {
     this.withProperty(
       'association',
@@ -1447,7 +1455,7 @@ export class MetaEdTextBuilder {
       null,
       deprecatedReason,
     );
-    this.withReferenceAdditions(isWeak);
+    this.withReferenceAdditions(isWeak, possiblyExternal);
     return this;
   }
 
@@ -1463,6 +1471,7 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     deprecatedReason: string | null = null,
+    possiblyExternal: boolean = false,
   ): MetaEdTextBuilder {
     this.withProperty(
       'domain entity',
@@ -1475,7 +1484,7 @@ export class MetaEdTextBuilder {
       null,
       deprecatedReason,
     );
-    this.withReferenceAdditions(isWeak);
+    this.withReferenceAdditions(isWeak, possiblyExternal);
     return this;
   }
 

@@ -1228,6 +1228,11 @@ describe('when building association source map', (): void => {
           "line": 2,
           "tokenText": "EntityName",
         },
+        "possiblyExternal": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedEntity": Object {
           "column": 0,
           "line": 0,
@@ -1377,6 +1382,11 @@ describe('when building association source map', (): void => {
           "column": 14,
           "line": 2,
           "tokenText": "EntityName",
+        },
+        "possiblyExternal": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
         },
         "referencedEntity": Object {
           "column": 0,

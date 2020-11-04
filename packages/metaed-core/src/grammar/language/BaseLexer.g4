@@ -62,6 +62,7 @@ IDENTITY_RENAME :        'renames identity property';
 IS_QUERYABLE_FIELD :     'is queryable field';
 IS_QUERYABLE_ONLY :      'is queryable only';
 IS_WEAK_REFERENCE :      'is weak';
+POSSIBLY_EXTERNAL :      'possibly external';
 MERGE_REFERENCE :        'merge';
 MIN_LENGTH :             'min length';
 MAX_LENGTH :             'max length';

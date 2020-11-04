@@ -20,6 +20,7 @@ export interface AssociationDefinition {
   secondaryEntityProperties: ApiProperty[];
   isIdentifying: boolean;
   isRequired: boolean;
+  isIntegrityRelaxed: boolean;
 }
 
 export function newAssociationDefinition(): AssociationDefinition {
@@ -32,5 +33,6 @@ export function newAssociationDefinition(): AssociationDefinition {
     secondaryEntityProperties: [],
     isIdentifying: false,
     isRequired: false,
+    isIntegrityRelaxed: false,
   };
 }

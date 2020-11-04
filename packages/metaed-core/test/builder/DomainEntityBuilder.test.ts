@@ -8,6 +8,8 @@ import { DomainEntitySourceMap } from '../../src/model/DomainEntity';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 import { StringProperty } from '../../src/model/property/StringProperty';
+import { DomainEntityProperty } from '../../src/model/property/DomainEntityProperty';
+import { AssociationProperty } from '../../src/model/property/AssociationProperty';
 
 describe('when building simple domain entity in extension namespace', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -2182,5 +2184,127 @@ describe('when building abstract entity source map', (): void => {
               },
             }
         `);
+  });
+});
+
+describe('when building domain entity with a possibly external association property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withAssociationProperty(propertyName, 'doc', true, false, false, null, null, null, true)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should be possibly external', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).possiblyExternal).toBe(true);
+  });
+});
+
+describe('when building domain entity with a possibly external domain entity property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDomainEntityProperty(propertyName, 'doc', true, false, false, null, null, null, true)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should be possibly external', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).possiblyExternal).toBe(
+      true,
+    );
+  });
+});
+
+describe('when building domain entity without a possibly external association property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withAssociationProperty(propertyName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should not be possibly external', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).possiblyExternal).toBe(
+      false,
+    );
+  });
+});
+
+describe('when building domain entity without a possibly external domain entity property', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: ValidationFailure[] = [];
+  const namespaceName = 'Namespace';
+  const entityName = 'EntityName';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDomainEntityProperty(propertyName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should not be possibly external', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).possiblyExternal).toBe(
+      false,
+    );
   });
 });

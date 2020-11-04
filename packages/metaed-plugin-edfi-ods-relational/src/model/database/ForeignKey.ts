@@ -1,6 +1,6 @@
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, asCommonProperty, NoNamespace } from 'metaed-core';
+import { orderByProp, asCommonProperty, NoNamespace, DomainEntityProperty, AssociationProperty } from 'metaed-core';
 import { EntityProperty, PropertyType, Namespace } from 'metaed-core';
 import { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
 import { NoTable, getPrimaryKeys, getColumn } from './Table';
@@ -20,6 +20,7 @@ export interface ForeignKeySourceReference {
   isSubclassRelationship: boolean;
   isExtensionRelationship: boolean;
   isSyntheticRelationship: boolean;
+  isPossiblyExternal: boolean;
   propertyType: PropertyType;
 }
 
@@ -48,6 +49,7 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
     isSubclassRelationship: false,
     isExtensionRelationship: false,
     isSyntheticRelationship: false,
+    isPossiblyExternal: false,
     propertyType: 'unknown',
   };
 }
@@ -97,6 +99,10 @@ export function foreignKeySourceReferenceFrom(property: EntityProperty): Foreign
     isSubclassRelationship: isSubclassRelationship(property),
     isExtensionRelationship: isExtensionRelationship(property),
     isSyntheticRelationship: false,
+    isPossiblyExternal:
+      property.type === 'domainEntity' || property.type === 'association'
+        ? (property as DomainEntityProperty | AssociationProperty).possiblyExternal
+        : false,
     propertyType: property.type,
   };
 }

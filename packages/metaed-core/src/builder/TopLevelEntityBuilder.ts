@@ -808,6 +808,14 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     );
   }
 
+  enterPossiblyExternal(context: MetaEdGrammar.PossiblyExternalContext) {
+    if (this.currentProperty === NoEntityProperty) return;
+    (this.currentProperty as DomainEntityProperty | AssociationProperty).possiblyExternal = true;
+    (this.currentProperty.sourceMap as
+      | DomainEntityPropertySourceMap
+      | AssociationPropertySourceMap).possiblyExternal = sourceMapFrom(context);
+  }
+
   // @ts-ignore
   enterMergeDirective(context: MetaEdGrammar.MergeDirectiveContext) {
     if (this.currentProperty === NoEntityProperty) return;

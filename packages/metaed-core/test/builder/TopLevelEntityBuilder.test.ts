@@ -1659,6 +1659,11 @@ describe('when building required entity properties', (): void => {
           "line": 2,
           "tokenText": "EntityName",
         },
+        "possiblyExternal": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
         "referencedEntity": Object {
           "column": 0,
           "line": 0,

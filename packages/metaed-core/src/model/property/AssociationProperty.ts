@@ -5,6 +5,7 @@ import { NoSourceMap } from '../SourceMap';
 import { EntityProperty } from './EntityProperty';
 
 export interface AssociationPropertySourceMap extends ReferentialPropertySourceMap {
+  possiblyExternal: SourceMap;
   isWeak: SourceMap;
 }
 
@@ -14,12 +15,14 @@ export interface AssociationPropertySourceMap extends ReferentialPropertySourceM
 export function newAssociationPropertySourceMap(): AssociationPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
+    possiblyExternal: NoSourceMap,
     isWeak: NoSourceMap,
   };
 }
 
 export interface AssociationProperty extends ReferentialProperty {
   sourceMap: AssociationPropertySourceMap;
+  possiblyExternal: boolean;
   isWeak: boolean;
 }
 
@@ -31,6 +34,7 @@ export function newAssociationProperty(): AssociationProperty {
     ...newReferentialProperty(),
     type: 'association',
     typeHumanizedName: 'Association Property',
+    possiblyExternal: false,
     isWeak: false,
     sourceMap: newAssociationPropertySourceMap(),
   };

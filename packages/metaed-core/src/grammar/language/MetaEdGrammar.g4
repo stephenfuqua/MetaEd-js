@@ -463,11 +463,13 @@ percentProperty : PERCENT simplePropertyName metaEdId? propertyComponents ;
 
 associationProperty : ASSOCIATION_KEYWORD propertyName metaEdId?
             propertyComponents
+            possiblyExternal?
             isWeakReference?
             mergeDirective* ;
 
 domainEntityProperty : DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
             propertyComponents
+            possiblyExternal?
             isWeakReference?
             mergeDirective* ;
 
@@ -506,6 +508,10 @@ yearProperty : YEAR simplePropertyName metaEdId?
 // ReferenceProperty
 isWeakReference
     : IS_WEAK_REFERENCE
+    ;
+
+possiblyExternal
+    : POSSIBLY_EXTERNAL
     ;
 
 mergeDirective
