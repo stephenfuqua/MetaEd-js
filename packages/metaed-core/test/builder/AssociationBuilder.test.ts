@@ -1228,7 +1228,7 @@ describe('when building association source map', (): void => {
           "line": 2,
           "tokenText": "EntityName",
         },
-        "possiblyExternal": Object {
+        "potentiallyLogical": Object {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
@@ -1383,7 +1383,7 @@ describe('when building association source map', (): void => {
           "line": 2,
           "tokenText": "EntityName",
         },
-        "possiblyExternal": Object {
+        "potentiallyLogical": Object {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",

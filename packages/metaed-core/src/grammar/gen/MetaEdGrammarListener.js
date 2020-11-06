@@ -875,12 +875,12 @@ MetaEdGrammarListener.prototype.exitIsWeakReference = function(ctx) {
 };
 
 
-// Enter a parse tree produced by MetaEdGrammar#possiblyExternal.
-MetaEdGrammarListener.prototype.enterPossiblyExternal = function(ctx) {
+// Enter a parse tree produced by MetaEdGrammar#potentiallyLogical.
+MetaEdGrammarListener.prototype.enterPotentiallyLogical = function(ctx) {
 };
 
-// Exit a parse tree produced by MetaEdGrammar#possiblyExternal.
-MetaEdGrammarListener.prototype.exitPossiblyExternal = function(ctx) {
+// Exit a parse tree produced by MetaEdGrammar#potentiallyLogical.
+MetaEdGrammarListener.prototype.exitPotentiallyLogical = function(ctx) {
 };
 
 

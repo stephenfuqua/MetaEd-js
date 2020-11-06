@@ -2187,7 +2187,7 @@ describe('when building abstract entity source map', (): void => {
   });
 });
 
-describe('when building domain entity with a possibly external association property', (): void => {
+describe('when building domain entity with a potentially logical association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
@@ -2211,12 +2211,14 @@ describe('when building domain entity with a possibly external association prope
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be possibly external', (): void => {
-    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).possiblyExternal).toBe(true);
+  it('should be potentially logical', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).potentiallyLogical).toBe(
+      true,
+    );
   });
 });
 
-describe('when building domain entity with a possibly external domain entity property', (): void => {
+describe('when building domain entity with a potentially logical domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
@@ -2240,14 +2242,14 @@ describe('when building domain entity with a possibly external domain entity pro
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be possibly external', (): void => {
-    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).possiblyExternal).toBe(
+  it('should be potentially logical', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).potentiallyLogical).toBe(
       true,
     );
   });
 });
 
-describe('when building domain entity without a possibly external association property', (): void => {
+describe('when building domain entity without a potentially logical association property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
@@ -2271,14 +2273,14 @@ describe('when building domain entity without a possibly external association pr
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not be possibly external', (): void => {
-    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).possiblyExternal).toBe(
+  it('should not be potentially logical', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as AssociationProperty).potentiallyLogical).toBe(
       false,
     );
   });
 });
 
-describe('when building domain entity without a possibly external domain entity property', (): void => {
+describe('when building domain entity without a potentially logical domain entity property', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
@@ -2302,8 +2304,8 @@ describe('when building domain entity without a possibly external domain entity 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should not be possibly external', (): void => {
-    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).possiblyExternal).toBe(
+  it('should not be potentially logical', (): void => {
+    expect((getDomainEntity(namespace.entity, entityName).properties[0] as DomainEntityProperty).potentiallyLogical).toBe(
       false,
     );
   });

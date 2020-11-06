@@ -5,7 +5,7 @@ import { NoSourceMap } from '../SourceMap';
 import { EntityProperty } from './EntityProperty';
 
 export interface DomainEntityPropertySourceMap extends ReferentialPropertySourceMap {
-  possiblyExternal: SourceMap;
+  potentiallyLogical: SourceMap;
   isWeak: SourceMap;
   definesAssociation: SourceMap;
 }
@@ -16,7 +16,7 @@ export interface DomainEntityPropertySourceMap extends ReferentialPropertySource
 export function newDomainEntityPropertySourceMap(): DomainEntityPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
-    possiblyExternal: NoSourceMap,
+    potentiallyLogical: NoSourceMap,
     isWeak: NoSourceMap,
     definesAssociation: NoSourceMap,
   };
@@ -24,7 +24,7 @@ export function newDomainEntityPropertySourceMap(): DomainEntityPropertySourceMa
 
 export interface DomainEntityProperty extends ReferentialProperty {
   sourceMap: DomainEntityPropertySourceMap;
-  possiblyExternal: boolean;
+  potentiallyLogical: boolean;
   isWeak: boolean;
   definesAssociation: boolean;
 }
@@ -37,7 +37,7 @@ export function newDomainEntityProperty(): DomainEntityProperty {
     ...newReferentialProperty(),
     type: 'domainEntity',
     typeHumanizedName: 'Domain Entity Property',
-    possiblyExternal: false,
+    potentiallyLogical: false,
     isWeak: false,
     definesAssociation: false,
     sourceMap: newDomainEntityPropertySourceMap(),

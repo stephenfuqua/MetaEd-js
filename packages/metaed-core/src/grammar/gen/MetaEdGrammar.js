@@ -859,14 +859,15 @@ var literalNames = [ null, "'Abstract Entity'", "'Association'", "'Begin Namespa
                      "'core'", "'allow primary key updates'", "'decimal places'", 
                      "'is part of identity'", "'renames identity property'", 
                      "'is queryable field'", "'is queryable only'", "'is weak'", 
-                     "'possibly external'", "'merge'", "'min length'", "'max length'", 
-                     "'min value'", "'max value'", "'is optional'", "'is optional collection'", 
-                     "'is required'", "'is required collection'", "'role name'", 
-                     "'shorten to'", "'of'", "'position'", "'total digits'", 
-                     "'with'", "'with optional map type'", "'with map type'", 
-                     "'deprecated'", "'documentation'", "'inherited'", "'extended documentation'", 
-                     "'use case documentation'", "'footer documentation'", 
-                     null, null, null, null, null, "'+'", "'-'", "'.'" ];
+                     "'potentially logical'", "'merge'", "'min length'", 
+                     "'max length'", "'min value'", "'max value'", "'is optional'", 
+                     "'is optional collection'", "'is required'", "'is required collection'", 
+                     "'role name'", "'shorten to'", "'of'", "'position'", 
+                     "'total digits'", "'with'", "'with optional map type'", 
+                     "'with map type'", "'deprecated'", "'documentation'", 
+                     "'inherited'", "'extended documentation'", "'use case documentation'", 
+                     "'footer documentation'", null, null, null, null, null, 
+                     "'+'", "'-'", "'.'" ];
 
 var symbolicNames = [ null, "ABSTRACT_ENTITY", "ASSOCIATION", "BEGIN_NAMESPACE", 
                       "END_NAMESPACE", "CHOICE", "COMMON", "DESCRIPTOR", 
@@ -885,7 +886,7 @@ var symbolicNames = [ null, "ABSTRACT_ENTITY", "ASSOCIATION", "BEGIN_NAMESPACE",
                       "STRING", "TIME", "YEAR", "ADDITIONS", "BASED_ON", 
                       "CORE", "CASCADE_UPDATE", "DECIMAL_PLACES", "IDENTITY", 
                       "IDENTITY_RENAME", "IS_QUERYABLE_FIELD", "IS_QUERYABLE_ONLY", 
-                      "IS_WEAK_REFERENCE", "POSSIBLY_EXTERNAL", "MERGE_REFERENCE", 
+                      "IS_WEAK_REFERENCE", "POTENTIALLY_LOGICAL", "MERGE_REFERENCE", 
                       "MIN_LENGTH", "MAX_LENGTH", "MIN_VALUE", "MAX_VALUE", 
                       "OPTIONAL", "OPTIONAL_COLLECTION", "REQUIRED", "REQUIRED_COLLECTION", 
                       "ROLE_NAME", "SHORTEN_TO", "SUBDOMAIN_OF", "SUBDOMAIN_POSITION", 
@@ -925,7 +926,7 @@ var ruleNames =  [ "metaEd", "namespace", "namespaceType", "topLevelEntity",
                    "associationProperty", "domainEntityProperty", "sharedDecimalProperty", 
                    "sharedIntegerProperty", "sharedShortProperty", "sharedStringProperty", 
                    "shortProperty", "stringProperty", "timeProperty", "yearProperty", 
-                   "isWeakReference", "possiblyExternal", "mergeDirective", 
+                   "isWeakReference", "potentiallyLogical", "mergeDirective", 
                    "sourcePropertyPath", "targetPropertyPath", "propertyPath", 
                    "signed_int", "unaryOperator", "abstractEntityName", 
                    "associationName", "baseKeyName", "baseName", "baseNamespace", 
@@ -1019,7 +1020,7 @@ MetaEdGrammar.IDENTITY_RENAME = 57;
 MetaEdGrammar.IS_QUERYABLE_FIELD = 58;
 MetaEdGrammar.IS_QUERYABLE_ONLY = 59;
 MetaEdGrammar.IS_WEAK_REFERENCE = 60;
-MetaEdGrammar.POSSIBLY_EXTERNAL = 61;
+MetaEdGrammar.POTENTIALLY_LOGICAL = 61;
 MetaEdGrammar.MERGE_REFERENCE = 62;
 MetaEdGrammar.MIN_LENGTH = 63;
 MetaEdGrammar.MAX_LENGTH = 64;
@@ -1151,7 +1152,7 @@ MetaEdGrammar.RULE_stringProperty = 92;
 MetaEdGrammar.RULE_timeProperty = 93;
 MetaEdGrammar.RULE_yearProperty = 94;
 MetaEdGrammar.RULE_isWeakReference = 95;
-MetaEdGrammar.RULE_possiblyExternal = 96;
+MetaEdGrammar.RULE_potentiallyLogical = 96;
 MetaEdGrammar.RULE_mergeDirective = 97;
 MetaEdGrammar.RULE_sourcePropertyPath = 98;
 MetaEdGrammar.RULE_targetPropertyPath = 99;
@@ -9289,8 +9290,8 @@ AssociationPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-AssociationPropertyContext.prototype.possiblyExternal = function() {
-    return this.getTypedRuleContext(PossiblyExternalContext,0);
+AssociationPropertyContext.prototype.potentiallyLogical = function() {
+    return this.getTypedRuleContext(PotentiallyLogicalContext,0);
 };
 
 AssociationPropertyContext.prototype.isWeakReference = function() {
@@ -9349,9 +9350,9 @@ MetaEdGrammar.prototype.associationProperty = function() {
         this.state = 1014;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===MetaEdGrammar.POSSIBLY_EXTERNAL) {
+        if(_la===MetaEdGrammar.POTENTIALLY_LOGICAL) {
             this.state = 1013;
-            this.possiblyExternal();
+            this.potentiallyLogical();
         }
 
         this.state = 1017;
@@ -9418,8 +9419,8 @@ DomainEntityPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-DomainEntityPropertyContext.prototype.possiblyExternal = function() {
-    return this.getTypedRuleContext(PossiblyExternalContext,0);
+DomainEntityPropertyContext.prototype.potentiallyLogical = function() {
+    return this.getTypedRuleContext(PotentiallyLogicalContext,0);
 };
 
 DomainEntityPropertyContext.prototype.isWeakReference = function() {
@@ -9478,9 +9479,9 @@ MetaEdGrammar.prototype.domainEntityProperty = function() {
         this.state = 1032;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===MetaEdGrammar.POSSIBLY_EXTERNAL) {
+        if(_la===MetaEdGrammar.POTENTIALLY_LOGICAL) {
             this.state = 1031;
-            this.possiblyExternal();
+            this.potentiallyLogical();
         }
 
         this.state = 1035;
@@ -10444,7 +10445,7 @@ MetaEdGrammar.prototype.isWeakReference = function() {
     return localctx;
 };
 
-function PossiblyExternalContext(parser, parent, invokingState) {
+function PotentiallyLogicalContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -10453,42 +10454,42 @@ function PossiblyExternalContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = MetaEdGrammar.RULE_possiblyExternal;
+    this.ruleIndex = MetaEdGrammar.RULE_potentiallyLogical;
     return this;
 }
 
-PossiblyExternalContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-PossiblyExternalContext.prototype.constructor = PossiblyExternalContext;
+PotentiallyLogicalContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+PotentiallyLogicalContext.prototype.constructor = PotentiallyLogicalContext;
 
-PossiblyExternalContext.prototype.POSSIBLY_EXTERNAL = function() {
-    return this.getToken(MetaEdGrammar.POSSIBLY_EXTERNAL, 0);
+PotentiallyLogicalContext.prototype.POTENTIALLY_LOGICAL = function() {
+    return this.getToken(MetaEdGrammar.POTENTIALLY_LOGICAL, 0);
 };
 
-PossiblyExternalContext.prototype.enterRule = function(listener) {
+PotentiallyLogicalContext.prototype.enterRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.enterPossiblyExternal(this);
+        listener.enterPotentiallyLogical(this);
 	}
 };
 
-PossiblyExternalContext.prototype.exitRule = function(listener) {
+PotentiallyLogicalContext.prototype.exitRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.exitPossiblyExternal(this);
+        listener.exitPotentiallyLogical(this);
 	}
 };
 
 
 
 
-MetaEdGrammar.PossiblyExternalContext = PossiblyExternalContext;
+MetaEdGrammar.PotentiallyLogicalContext = PotentiallyLogicalContext;
 
-MetaEdGrammar.prototype.possiblyExternal = function() {
+MetaEdGrammar.prototype.potentiallyLogical = function() {
 
-    var localctx = new PossiblyExternalContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 192, MetaEdGrammar.RULE_possiblyExternal);
+    var localctx = new PotentiallyLogicalContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 192, MetaEdGrammar.RULE_potentiallyLogical);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 1146;
-        this.match(MetaEdGrammar.POSSIBLY_EXTERNAL);
+        this.match(MetaEdGrammar.POTENTIALLY_LOGICAL);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

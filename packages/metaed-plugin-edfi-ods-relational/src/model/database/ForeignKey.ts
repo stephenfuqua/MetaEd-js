@@ -20,7 +20,7 @@ export interface ForeignKeySourceReference {
   isSubclassRelationship: boolean;
   isExtensionRelationship: boolean;
   isSyntheticRelationship: boolean;
-  isPossiblyExternal: boolean;
+  isPotentiallyLogical: boolean;
   propertyType: PropertyType;
 }
 
@@ -49,7 +49,7 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
     isSubclassRelationship: false,
     isExtensionRelationship: false,
     isSyntheticRelationship: false,
-    isPossiblyExternal: false,
+    isPotentiallyLogical: false,
     propertyType: 'unknown',
   };
 }
@@ -99,9 +99,9 @@ export function foreignKeySourceReferenceFrom(property: EntityProperty): Foreign
     isSubclassRelationship: isSubclassRelationship(property),
     isExtensionRelationship: isExtensionRelationship(property),
     isSyntheticRelationship: false,
-    isPossiblyExternal:
+    isPotentiallyLogical:
       property.type === 'domainEntity' || property.type === 'association'
-        ? (property as DomainEntityProperty | AssociationProperty).possiblyExternal
+        ? (property as DomainEntityProperty | AssociationProperty).potentiallyLogical
         : false,
     propertyType: property.type,
   };

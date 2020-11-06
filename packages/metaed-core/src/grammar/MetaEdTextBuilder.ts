@@ -1206,9 +1206,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
-  withPossiblyExternal(possiblyExternal: boolean = false): MetaEdTextBuilder {
-    if (!possiblyExternal) return this;
-    this.addLine('possibly external');
+  withPotentiallyLogical(potentiallyLogical: boolean = false): MetaEdTextBuilder {
+    if (!potentiallyLogical) return this;
+    this.addLine('potentially logical');
     return this;
   }
 
@@ -1250,9 +1250,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
-  withReferenceAdditions(isWeak: boolean = false, possiblyExternal: boolean = false): MetaEdTextBuilder {
+  withReferenceAdditions(isWeak: boolean = false, potentiallyLogical: boolean = false): MetaEdTextBuilder {
     this.increaseIndentation();
-    this.withPossiblyExternal(possiblyExternal);
+    this.withPotentiallyLogical(potentiallyLogical);
     this.withIsWeakReference(isWeak);
     this.decreaseIndentation();
 
@@ -1442,7 +1442,7 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     deprecatedReason: string | null = null,
-    possiblyExternal: boolean = false,
+    potentiallyLogical: boolean = false,
   ): MetaEdTextBuilder {
     this.withProperty(
       'association',
@@ -1455,7 +1455,7 @@ export class MetaEdTextBuilder {
       null,
       deprecatedReason,
     );
-    this.withReferenceAdditions(isWeak, possiblyExternal);
+    this.withReferenceAdditions(isWeak, potentiallyLogical);
     return this;
   }
 
@@ -1471,7 +1471,7 @@ export class MetaEdTextBuilder {
     context: string | null = null,
     metaEdId: string | null = null,
     deprecatedReason: string | null = null,
-    possiblyExternal: boolean = false,
+    potentiallyLogical: boolean = false,
   ): MetaEdTextBuilder {
     this.withProperty(
       'domain entity',
@@ -1484,7 +1484,7 @@ export class MetaEdTextBuilder {
       null,
       deprecatedReason,
     );
-    this.withReferenceAdditions(isWeak, possiblyExternal);
+    this.withReferenceAdditions(isWeak, potentiallyLogical);
     return this;
   }
 

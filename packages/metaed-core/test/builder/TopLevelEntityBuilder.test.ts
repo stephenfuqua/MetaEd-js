@@ -1659,7 +1659,7 @@ describe('when building required entity properties', (): void => {
           "line": 2,
           "tokenText": "EntityName",
         },
-        "possiblyExternal": Object {
+        "potentiallyLogical": Object {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
