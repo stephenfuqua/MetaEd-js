@@ -36,21 +36,35 @@ export function getReferencePropertiesAndAssociatedColumns(table: Table): Proper
   )(table);
 }
 
+function differsBySingleAdditionalParentPropertyPrefix(unprefixedColumn: Column, candidateColumn: Column): boolean {
+  if (candidateColumn.nameComponents.length === 1) return false;
+  if (!candidateColumn.nameComponents[0].isParentPropertyContext) return false;
+  if (candidateColumn.nameComponents.length !== unprefixedColumn.nameComponents.length + 1) return false;
+  return unprefixedColumn.nameComponents.reduce((result, unprefixedColumnNameComponent, index) => {
+    if (!result) return false;
+    return unprefixedColumnNameComponent.name === candidateColumn.nameComponents[index + 1].name;
+  }, true);
+}
+
 export function getMatchingColumnFromSourceEntityProperties(columnToMatch: Column, columns: Column[]): Column | undefined {
-  const matchingColumns: Column[] = columns.filter((column: Column) =>
+  const matchingColumnCandidates: Column[] = columns.filter((column: Column) =>
     R.not(R.isEmpty(R.intersection(columnToMatch.sourceEntityProperties, column.sourceEntityProperties))),
   );
-  if (matchingColumns.length === 1) return R.head(matchingColumns);
+  if (matchingColumnCandidates.length === 1) return R.head(matchingColumnCandidates);
 
-  const columnIdMatch: Column | undefined = matchingColumns.find(
-    (column: Column) => column.columnId === columnToMatch.columnId,
+  const columnIdMatch: Column | undefined = matchingColumnCandidates.find(
+    (candidateColumn: Column) => candidateColumn.columnId === columnToMatch.columnId,
   );
   if (columnIdMatch != null) return columnIdMatch;
 
-  const contextMatch: Column | undefined = matchingColumns.find((column: Column) =>
-    column.mergedReferenceContexts.includes(columnToMatch.referenceContext),
+  const contextMatch: Column | undefined = matchingColumnCandidates.find((candidateColumn: Column) =>
+    candidateColumn.mergedReferenceContexts.includes(columnToMatch.referenceContext),
   );
-  return contextMatch;
+  if (contextMatch != null) return contextMatch;
+
+  return matchingColumnCandidates.find((candidateColumn: Column) =>
+    differsBySingleAdditionalParentPropertyPrefix(columnToMatch, candidateColumn),
+  );
 }
 
 export function getMergePropertyColumn(table: Table, column: Column, property: EntityProperty): Column | undefined {
