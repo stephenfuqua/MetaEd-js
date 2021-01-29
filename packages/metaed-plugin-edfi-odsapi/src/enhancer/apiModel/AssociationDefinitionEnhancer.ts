@@ -44,7 +44,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
             schema: foreignKey.parentTable.schema,
             name: foreignKey.parentTable.data.edfiOdsSqlServer.tableName,
           },
-          isIntegrityRelaxed: foreignKey.sourceReference.isPotentiallyLogical,
+          potentiallyLogical: foreignKey.sourceReference.isPotentiallyLogical,
         });
       });
     });
