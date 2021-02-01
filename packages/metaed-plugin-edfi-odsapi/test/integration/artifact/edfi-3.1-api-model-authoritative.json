@@ -28963,7 +28963,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29011,7 +29011,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29059,7 +29059,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29107,7 +29107,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29155,7 +29155,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29203,7 +29203,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29251,7 +29251,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29299,7 +29299,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29399,7 +29399,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29525,7 +29525,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29573,7 +29573,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29621,7 +29621,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29669,7 +29669,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29717,7 +29717,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29817,7 +29817,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29865,7 +29865,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29913,7 +29913,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -29961,7 +29961,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30009,7 +30009,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30057,7 +30057,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30105,7 +30105,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30153,7 +30153,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30227,7 +30227,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30301,7 +30301,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30349,7 +30349,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30397,7 +30397,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30471,7 +30471,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30519,7 +30519,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30567,7 +30567,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30641,7 +30641,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30715,7 +30715,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30763,7 +30763,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30811,7 +30811,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30885,7 +30885,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30933,7 +30933,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -30981,7 +30981,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31081,7 +31081,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31129,7 +31129,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31177,7 +31177,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31251,7 +31251,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31299,7 +31299,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31373,7 +31373,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31421,7 +31421,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31469,7 +31469,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31517,7 +31517,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31591,7 +31591,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31639,7 +31639,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31687,7 +31687,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31761,7 +31761,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31861,7 +31861,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31909,7 +31909,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -31983,7 +31983,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32031,7 +32031,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32079,7 +32079,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32153,7 +32153,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32305,7 +32305,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32353,7 +32353,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32401,7 +32401,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32449,7 +32449,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32497,7 +32497,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32571,7 +32571,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32645,7 +32645,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32719,7 +32719,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32793,7 +32793,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32841,7 +32841,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32941,7 +32941,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -32989,7 +32989,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33037,7 +33037,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33085,7 +33085,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33185,7 +33185,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33311,7 +33311,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33359,7 +33359,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33407,7 +33407,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33507,7 +33507,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33555,7 +33555,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33603,7 +33603,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33651,7 +33651,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33699,7 +33699,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33747,7 +33747,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33795,7 +33795,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33843,7 +33843,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33917,7 +33917,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -33965,7 +33965,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34013,7 +34013,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34061,7 +34061,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34109,7 +34109,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34157,7 +34157,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34231,7 +34231,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34331,7 +34331,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34379,7 +34379,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34427,7 +34427,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34475,7 +34475,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34523,7 +34523,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34571,7 +34571,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34619,7 +34619,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34667,7 +34667,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34715,7 +34715,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34763,7 +34763,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34811,7 +34811,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34859,7 +34859,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34907,7 +34907,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -34955,7 +34955,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35003,7 +35003,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35051,7 +35051,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35099,7 +35099,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35147,7 +35147,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35195,7 +35195,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35295,7 +35295,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35343,7 +35343,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35391,7 +35391,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35439,7 +35439,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35487,7 +35487,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35535,7 +35535,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35583,7 +35583,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35631,7 +35631,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35679,7 +35679,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35727,7 +35727,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35775,7 +35775,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35823,7 +35823,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35871,7 +35871,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35945,7 +35945,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -35993,7 +35993,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36041,7 +36041,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36115,7 +36115,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36163,7 +36163,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36211,7 +36211,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36285,7 +36285,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36359,7 +36359,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36433,7 +36433,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36481,7 +36481,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36555,7 +36555,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36603,7 +36603,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36651,7 +36651,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36725,7 +36725,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36773,7 +36773,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36847,7 +36847,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36895,7 +36895,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -36995,7 +36995,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37043,7 +37043,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37169,7 +37169,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37295,7 +37295,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37343,7 +37343,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37469,7 +37469,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37517,7 +37517,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37565,7 +37565,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37639,7 +37639,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37687,7 +37687,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37735,7 +37735,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37783,7 +37783,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37831,7 +37831,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37879,7 +37879,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37927,7 +37927,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -37975,7 +37975,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38101,7 +38101,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38149,7 +38149,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38353,7 +38353,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38401,7 +38401,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38449,7 +38449,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38497,7 +38497,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38545,7 +38545,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38593,7 +38593,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38641,7 +38641,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38715,7 +38715,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38789,7 +38789,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38837,7 +38837,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38911,7 +38911,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -38959,7 +38959,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39007,7 +39007,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39055,7 +39055,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39103,7 +39103,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39151,7 +39151,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39199,7 +39199,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39247,7 +39247,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39295,7 +39295,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39343,7 +39343,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39391,7 +39391,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39439,7 +39439,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39487,7 +39487,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39535,7 +39535,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39583,7 +39583,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39631,7 +39631,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39731,7 +39731,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39779,7 +39779,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39827,7 +39827,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39927,7 +39927,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -39975,7 +39975,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40075,7 +40075,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40175,7 +40175,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40223,7 +40223,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40271,7 +40271,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40319,7 +40319,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40367,7 +40367,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40415,7 +40415,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40463,7 +40463,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40537,7 +40537,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40611,7 +40611,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40659,7 +40659,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40707,7 +40707,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40755,7 +40755,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40803,7 +40803,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40851,7 +40851,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40899,7 +40899,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40947,7 +40947,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -40995,7 +40995,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41043,7 +41043,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41091,7 +41091,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41139,7 +41139,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41187,7 +41187,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41235,7 +41235,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41283,7 +41283,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41331,7 +41331,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41379,7 +41379,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41427,7 +41427,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41475,7 +41475,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41523,7 +41523,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41571,7 +41571,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41619,7 +41619,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41667,7 +41667,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41741,7 +41741,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41789,7 +41789,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41837,7 +41837,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41885,7 +41885,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41933,7 +41933,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -41981,7 +41981,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42029,7 +42029,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42077,7 +42077,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42125,7 +42125,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42173,7 +42173,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42221,7 +42221,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42269,7 +42269,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42317,7 +42317,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42391,7 +42391,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42439,7 +42439,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42487,7 +42487,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42535,7 +42535,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42583,7 +42583,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42631,7 +42631,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42679,7 +42679,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42727,7 +42727,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42775,7 +42775,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42823,7 +42823,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42871,7 +42871,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42919,7 +42919,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -42967,7 +42967,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43015,7 +43015,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43063,7 +43063,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43111,7 +43111,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43159,7 +43159,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43207,7 +43207,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43255,7 +43255,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43355,7 +43355,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43403,7 +43403,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43451,7 +43451,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43499,7 +43499,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43625,7 +43625,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43673,7 +43673,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43877,7 +43877,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -43925,7 +43925,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44051,7 +44051,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44203,7 +44203,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44407,7 +44407,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44481,7 +44481,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44685,7 +44685,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44733,7 +44733,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44781,7 +44781,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44829,7 +44829,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44877,7 +44877,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44925,7 +44925,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -44973,7 +44973,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45021,7 +45021,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45069,7 +45069,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45117,7 +45117,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45165,7 +45165,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45213,7 +45213,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45261,7 +45261,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45309,7 +45309,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45357,7 +45357,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45457,7 +45457,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45531,7 +45531,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45657,7 +45657,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45705,7 +45705,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45753,7 +45753,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45853,7 +45853,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -45927,7 +45927,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46027,7 +46027,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46075,7 +46075,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46227,7 +46227,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46275,7 +46275,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46323,7 +46323,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46371,7 +46371,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46523,7 +46523,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46571,7 +46571,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46619,7 +46619,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46667,7 +46667,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46715,7 +46715,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46763,7 +46763,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46811,7 +46811,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46859,7 +46859,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46907,7 +46907,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -46955,7 +46955,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47003,7 +47003,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47051,7 +47051,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47099,7 +47099,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47147,7 +47147,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47195,7 +47195,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47269,7 +47269,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47343,7 +47343,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47391,7 +47391,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47439,7 +47439,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47487,7 +47487,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47561,7 +47561,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47609,7 +47609,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47683,7 +47683,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47731,7 +47731,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47805,7 +47805,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47879,7 +47879,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -47953,7 +47953,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48027,7 +48027,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48101,7 +48101,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48149,7 +48149,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48197,7 +48197,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48245,7 +48245,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48293,7 +48293,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48341,7 +48341,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48415,7 +48415,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48489,7 +48489,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48537,7 +48537,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48585,7 +48585,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48659,7 +48659,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48707,7 +48707,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48781,7 +48781,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48855,7 +48855,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48929,7 +48929,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -48977,7 +48977,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49051,7 +49051,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49125,7 +49125,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49173,7 +49173,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49221,7 +49221,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49269,7 +49269,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49317,7 +49317,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49391,7 +49391,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49439,7 +49439,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49513,7 +49513,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49587,7 +49587,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49635,7 +49635,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49683,7 +49683,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49757,7 +49757,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49805,7 +49805,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49853,7 +49853,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49901,7 +49901,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -49975,7 +49975,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50023,7 +50023,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50097,7 +50097,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50171,7 +50171,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50219,7 +50219,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50293,7 +50293,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50341,7 +50341,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50415,7 +50415,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50489,7 +50489,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50537,7 +50537,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50585,7 +50585,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50633,7 +50633,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50707,7 +50707,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50755,7 +50755,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50829,7 +50829,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50877,7 +50877,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50951,7 +50951,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -50999,7 +50999,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51073,7 +51073,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51121,7 +51121,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51195,7 +51195,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51269,7 +51269,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51317,7 +51317,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51365,7 +51365,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51413,7 +51413,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51461,7 +51461,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51509,7 +51509,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51557,7 +51557,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51605,7 +51605,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51653,7 +51653,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51701,7 +51701,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51749,7 +51749,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51797,7 +51797,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51845,7 +51845,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51893,7 +51893,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51941,7 +51941,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -51989,7 +51989,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52037,7 +52037,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52085,7 +52085,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52133,7 +52133,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52181,7 +52181,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52229,7 +52229,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52277,7 +52277,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52325,7 +52325,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52373,7 +52373,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52421,7 +52421,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52469,7 +52469,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52517,7 +52517,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52565,7 +52565,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52613,7 +52613,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52661,7 +52661,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52709,7 +52709,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52757,7 +52757,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52805,7 +52805,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52853,7 +52853,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52901,7 +52901,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52949,7 +52949,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -52997,7 +52997,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53045,7 +53045,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53093,7 +53093,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53141,7 +53141,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53189,7 +53189,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53237,7 +53237,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53311,7 +53311,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53411,7 +53411,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53511,7 +53511,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53611,7 +53611,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53685,7 +53685,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53785,7 +53785,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53833,7 +53833,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53933,7 +53933,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -53981,7 +53981,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54081,7 +54081,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54129,7 +54129,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54177,7 +54177,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54225,7 +54225,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54325,7 +54325,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54373,7 +54373,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54421,7 +54421,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54469,7 +54469,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54517,7 +54517,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54565,7 +54565,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54613,7 +54613,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54661,7 +54661,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54709,7 +54709,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54783,7 +54783,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54831,7 +54831,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54905,7 +54905,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -54953,7 +54953,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55001,7 +55001,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55049,7 +55049,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55097,7 +55097,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55145,7 +55145,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55193,7 +55193,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55241,7 +55241,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55315,7 +55315,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55363,7 +55363,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55411,7 +55411,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55459,7 +55459,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55507,7 +55507,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55555,7 +55555,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55603,7 +55603,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55651,7 +55651,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55699,7 +55699,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55773,7 +55773,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55821,7 +55821,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55869,7 +55869,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55917,7 +55917,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -55965,7 +55965,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56013,7 +56013,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56061,7 +56061,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56109,7 +56109,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56157,7 +56157,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56205,7 +56205,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56305,7 +56305,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56353,7 +56353,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56401,7 +56401,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56449,7 +56449,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56497,7 +56497,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56545,7 +56545,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56593,7 +56593,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56641,7 +56641,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56689,7 +56689,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56737,7 +56737,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56785,7 +56785,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56833,7 +56833,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56881,7 +56881,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56929,7 +56929,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -56977,7 +56977,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57025,7 +57025,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57073,7 +57073,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57121,7 +57121,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57169,7 +57169,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57217,7 +57217,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57265,7 +57265,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57365,7 +57365,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57413,7 +57413,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57461,7 +57461,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57535,7 +57535,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57635,7 +57635,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57683,7 +57683,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57783,7 +57783,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57883,7 +57883,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -57931,7 +57931,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58031,7 +58031,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58079,7 +58079,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58127,7 +58127,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58175,7 +58175,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58223,7 +58223,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58271,7 +58271,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58319,7 +58319,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58367,7 +58367,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58415,7 +58415,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58463,7 +58463,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58511,7 +58511,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58559,7 +58559,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58607,7 +58607,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58655,7 +58655,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58703,7 +58703,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58751,7 +58751,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58799,7 +58799,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58925,7 +58925,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -58973,7 +58973,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -59281,7 +59281,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -59459,7 +59459,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -59637,7 +59637,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -59867,7 +59867,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60045,7 +60045,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60249,7 +60249,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60297,7 +60297,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60345,7 +60345,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60393,7 +60393,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60441,7 +60441,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60489,7 +60489,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60537,7 +60537,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60585,7 +60585,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60685,7 +60685,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60785,7 +60785,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60885,7 +60885,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60933,7 +60933,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -60981,7 +60981,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61029,7 +61029,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61077,7 +61077,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61125,7 +61125,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61173,7 +61173,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61221,7 +61221,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61269,7 +61269,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61317,7 +61317,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61365,7 +61365,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61413,7 +61413,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61461,7 +61461,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61509,7 +61509,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61557,7 +61557,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61605,7 +61605,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61653,7 +61653,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61701,7 +61701,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61749,7 +61749,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61797,7 +61797,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61845,7 +61845,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61893,7 +61893,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -61941,7 +61941,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62067,7 +62067,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62115,7 +62115,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62163,7 +62163,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62211,7 +62211,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62285,7 +62285,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62333,7 +62333,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62381,7 +62381,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62429,7 +62429,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62555,7 +62555,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62707,7 +62707,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62755,7 +62755,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62907,7 +62907,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -62955,7 +62955,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63003,7 +63003,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63077,7 +63077,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63229,7 +63229,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63277,7 +63277,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63429,7 +63429,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63477,7 +63477,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63629,7 +63629,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63729,7 +63729,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63881,7 +63881,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63929,7 +63929,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -63977,7 +63977,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64025,7 +64025,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64073,7 +64073,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64121,7 +64121,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64169,7 +64169,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64243,7 +64243,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64343,7 +64343,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64469,7 +64469,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64569,7 +64569,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64617,7 +64617,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64665,7 +64665,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64713,7 +64713,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64761,7 +64761,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64809,7 +64809,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64857,7 +64857,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64905,7 +64905,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -64953,7 +64953,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65001,7 +65001,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65049,7 +65049,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65097,7 +65097,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65145,7 +65145,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65193,7 +65193,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65267,7 +65267,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65315,7 +65315,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65389,7 +65389,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65437,7 +65437,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65511,7 +65511,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65559,7 +65559,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65633,7 +65633,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65681,7 +65681,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65729,7 +65729,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65777,7 +65777,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65903,7 +65903,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65951,7 +65951,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -65999,7 +65999,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66047,7 +66047,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66095,7 +66095,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66143,7 +66143,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66243,7 +66243,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66291,7 +66291,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66391,7 +66391,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66491,7 +66491,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66539,7 +66539,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66613,7 +66613,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66661,7 +66661,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66709,7 +66709,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66757,7 +66757,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66805,7 +66805,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66853,7 +66853,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66901,7 +66901,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66949,7 +66949,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -66997,7 +66997,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67045,7 +67045,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67093,7 +67093,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67141,7 +67141,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67189,7 +67189,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67237,7 +67237,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67285,7 +67285,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67333,7 +67333,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67381,7 +67381,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67429,7 +67429,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67477,7 +67477,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67525,7 +67525,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67573,7 +67573,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67647,7 +67647,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67695,7 +67695,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67743,7 +67743,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67791,7 +67791,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67839,7 +67839,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67887,7 +67887,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67935,7 +67935,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -67983,7 +67983,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68031,7 +68031,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68079,7 +68079,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68179,7 +68179,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68227,7 +68227,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68275,7 +68275,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68323,7 +68323,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68371,7 +68371,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68419,7 +68419,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68467,7 +68467,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68567,7 +68567,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68615,7 +68615,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68663,7 +68663,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68711,7 +68711,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68759,7 +68759,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68807,7 +68807,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68907,7 +68907,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -68955,7 +68955,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69055,7 +69055,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69103,7 +69103,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69255,7 +69255,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69303,7 +69303,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69351,7 +69351,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69399,7 +69399,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69447,7 +69447,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69495,7 +69495,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69543,7 +69543,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69591,7 +69591,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69639,7 +69639,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69687,7 +69687,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69735,7 +69735,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69783,7 +69783,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69831,7 +69831,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69879,7 +69879,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69927,7 +69927,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -69975,7 +69975,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70023,7 +70023,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70071,7 +70071,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70119,7 +70119,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70167,7 +70167,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70215,7 +70215,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70263,7 +70263,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70311,7 +70311,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70359,7 +70359,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70407,7 +70407,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70455,7 +70455,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70503,7 +70503,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70629,7 +70629,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70755,7 +70755,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70803,7 +70803,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70851,7 +70851,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -70899,7 +70899,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71025,7 +71025,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71073,7 +71073,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71121,7 +71121,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71247,7 +71247,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71425,7 +71425,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71551,7 +71551,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71599,7 +71599,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71673,7 +71673,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71721,7 +71721,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71769,7 +71769,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71817,7 +71817,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71865,7 +71865,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71913,7 +71913,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -71961,7 +71961,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72009,7 +72009,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72057,7 +72057,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72183,7 +72183,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72283,7 +72283,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72331,7 +72331,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72379,7 +72379,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72505,7 +72505,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72553,7 +72553,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72601,7 +72601,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72727,7 +72727,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72775,7 +72775,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72823,7 +72823,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -72949,7 +72949,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73049,7 +73049,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73175,7 +73175,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73223,7 +73223,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73271,7 +73271,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73423,7 +73423,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73471,7 +73471,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73519,7 +73519,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73671,7 +73671,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73719,7 +73719,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73793,7 +73793,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73841,7 +73841,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -73993,7 +73993,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74119,7 +74119,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74167,7 +74167,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74267,7 +74267,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74393,7 +74393,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74441,7 +74441,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74619,7 +74619,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -74849,7 +74849,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75079,7 +75079,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75283,7 +75283,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75461,7 +75461,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75509,7 +75509,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75557,7 +75557,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75735,7 +75735,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75783,7 +75783,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -75961,7 +75961,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76035,7 +76035,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76083,7 +76083,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76131,7 +76131,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76179,7 +76179,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76279,7 +76279,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76327,7 +76327,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76375,7 +76375,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76423,7 +76423,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76471,7 +76471,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76519,7 +76519,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76567,7 +76567,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76615,7 +76615,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76663,7 +76663,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76737,7 +76737,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76837,7 +76837,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76885,7 +76885,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -76933,7 +76933,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77007,7 +77007,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77055,7 +77055,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77103,7 +77103,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77177,7 +77177,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77225,7 +77225,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77325,7 +77325,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77373,7 +77373,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77447,7 +77447,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77495,7 +77495,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77543,7 +77543,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77617,7 +77617,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77665,7 +77665,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77739,7 +77739,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77787,7 +77787,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77887,7 +77887,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -77935,7 +77935,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78009,7 +78009,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78057,7 +78057,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78157,7 +78157,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78205,7 +78205,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78279,7 +78279,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78327,7 +78327,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78401,7 +78401,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78501,7 +78501,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78575,7 +78575,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78623,7 +78623,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78697,7 +78697,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78797,7 +78797,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78871,7 +78871,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78919,7 +78919,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -78993,7 +78993,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79041,7 +79041,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79089,7 +79089,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79137,7 +79137,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79185,7 +79185,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79233,7 +79233,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79437,7 +79437,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79641,7 +79641,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79819,7 +79819,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79867,7 +79867,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -79915,7 +79915,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80093,7 +80093,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80141,7 +80141,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80189,7 +80189,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80237,7 +80237,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80285,7 +80285,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80333,7 +80333,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80407,7 +80407,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80481,7 +80481,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80529,7 +80529,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80577,7 +80577,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80625,7 +80625,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80673,7 +80673,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80721,7 +80721,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80821,7 +80821,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80869,7 +80869,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80917,7 +80917,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -80991,7 +80991,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81039,7 +81039,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81217,7 +81217,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81265,7 +81265,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81313,7 +81313,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81361,7 +81361,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81409,7 +81409,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81457,7 +81457,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81635,7 +81635,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81683,7 +81683,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81861,7 +81861,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -81909,7 +81909,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82035,7 +82035,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82109,7 +82109,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82157,7 +82157,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82335,7 +82335,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82539,7 +82539,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82743,7 +82743,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82947,7 +82947,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -82995,7 +82995,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83173,7 +83173,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83221,7 +83221,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83399,7 +83399,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83577,7 +83577,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83625,7 +83625,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83673,7 +83673,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83721,7 +83721,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83769,7 +83769,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83947,7 +83947,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -83995,7 +83995,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84043,7 +84043,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84091,7 +84091,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84139,7 +84139,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84187,7 +84187,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84235,7 +84235,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84283,7 +84283,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84331,7 +84331,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84379,7 +84379,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84427,7 +84427,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84605,7 +84605,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84653,7 +84653,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84831,7 +84831,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84879,7 +84879,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84927,7 +84927,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -84975,7 +84975,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85075,7 +85075,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85123,7 +85123,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85223,7 +85223,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85271,7 +85271,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85319,7 +85319,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85367,7 +85367,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85415,7 +85415,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85515,7 +85515,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85563,7 +85563,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85611,7 +85611,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85659,7 +85659,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85707,7 +85707,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85755,7 +85755,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85803,7 +85803,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85903,7 +85903,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85951,7 +85951,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -85999,7 +85999,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86047,7 +86047,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86147,7 +86147,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86195,7 +86195,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86373,7 +86373,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86421,7 +86421,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86599,7 +86599,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86647,7 +86647,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86695,7 +86695,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86847,7 +86847,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86895,7 +86895,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86943,7 +86943,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -86991,7 +86991,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87143,7 +87143,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87191,7 +87191,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87369,7 +87369,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87417,7 +87417,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87465,7 +87465,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87513,7 +87513,7 @@
       ],
       "isIdentifying": false,
       "isRequired": false,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87691,7 +87691,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87739,7 +87739,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87943,7 +87943,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -87991,7 +87991,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88169,7 +88169,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88217,7 +88217,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88395,7 +88395,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88573,7 +88573,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88621,7 +88621,7 @@
       ],
       "isIdentifying": false,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88669,7 +88669,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88847,7 +88847,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88895,7 +88895,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88943,7 +88943,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -88991,7 +88991,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89039,7 +89039,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89087,7 +89087,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89135,7 +89135,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89183,7 +89183,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89231,7 +89231,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89279,7 +89279,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89327,7 +89327,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89375,7 +89375,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -89423,7 +89423,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     }
   ]
 }

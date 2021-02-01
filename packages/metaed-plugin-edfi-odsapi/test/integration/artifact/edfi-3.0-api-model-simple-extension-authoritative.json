@@ -686,7 +686,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -760,7 +760,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -868,7 +868,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -916,7 +916,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -990,7 +990,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -1064,7 +1064,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -1112,7 +1112,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     },
     {
       "fullName": {
@@ -1160,7 +1160,7 @@
       ],
       "isIdentifying": true,
       "isRequired": true,
-      "isIntegrityRelaxed": false
+      "potentiallyLogical": false
     }
   ]
 }
