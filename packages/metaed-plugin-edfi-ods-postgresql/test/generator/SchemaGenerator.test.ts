@@ -13,6 +13,12 @@ describe('when generating schemas for core namespace', (): void => {
       isExtension: false,
     };
     metaEd.namespace.set('EdFi', namespace);
+    metaEd.plugin.set('edfiOdsPostgresql', {
+      targetTechnologyVersion: '3.0.0',
+      shortName: '',
+      namespace: new Map(),
+      config: {},
+    });
 
     result = await generate(metaEd);
   });

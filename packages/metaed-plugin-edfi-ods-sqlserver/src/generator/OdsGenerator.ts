@@ -1,11 +1,15 @@
 import winston from 'winston';
 import { versionSatisfies, GeneratedOutput, GeneratorResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import { shouldApplyLicenseHeader } from 'metaed-plugin-edfi-ods-relational';
 import { dataPath, fileNameFor, registerPartials, structurePath, template } from './OdsGeneratorBase';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export async function generateTables(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOdsSqlServer') as PluginEnvironment;
+  const { targetTechnologyVersion } = (metaEd.plugin.get('edfiOdsSqlServer') as PluginEnvironment) || {
+    targetTechnologyVersion: '2.0.0',
+  };
+  const useLicenseHeader = shouldApplyLicenseHeader(metaEd);
 
   const results: GeneratedOutput[] = [];
 
@@ -13,6 +17,7 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
     const generatedResult: string = template().table({
       tables: namespace.data.edfiOdsSqlServer.odsSchema.tables,
       useDatetime2: versionSatisfies(targetTechnologyVersion, '>=3.1.1'),
+      useLicenseHeader,
     });
 
     results.push({
@@ -33,10 +38,12 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
 
 export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
+  const useLicenseHeader = shouldApplyLicenseHeader(metaEd);
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().foreignKey({
       foreignKeys: namespace.data.edfiOdsSqlServer.odsSchema.foreignKeys,
+      useLicenseHeader,
     });
 
     results.push({
@@ -57,10 +64,12 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
 
 export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
+  const useLicenseHeader = shouldApplyLicenseHeader(metaEd);
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().extendedProperties({
       tables: namespace.data.edfiOdsSqlServer.odsSchema.tables,
+      useLicenseHeader,
     });
 
     results.push({
@@ -81,10 +90,12 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
 
 export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
+  const useLicenseHeader = shouldApplyLicenseHeader(metaEd);
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().enumerationRow({
       enumerationRows: namespace.data.edfiOdsSqlServer.odsSchema.enumerationRows,
+      useLicenseHeader,
     });
 
     results.push({
@@ -105,10 +116,12 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
 
 export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: GeneratedOutput[] = [];
+  const useLicenseHeader = shouldApplyLicenseHeader(metaEd);
 
   metaEd.namespace.forEach(namespace => {
     const generatedResult: string = template().schoolYearEnumerationRow({
       schoolYearEnumerationRows: namespace.data.edfiOdsSqlServer.odsSchema.schoolYearEnumerationRows,
+      useLicenseHeader,
     });
 
     results.push({
