@@ -7,11 +7,6 @@ import { NoTable, Table } from './Table';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
-export interface ColumnNaming {
-  columnId: string;
-  nameComponents: ColumnNameComponent[];
-}
-
 /** A single component of the name of the column used by dependent plugins to construct the actual name */
 export interface ColumnNameComponent {
   /** the string name component itself */
@@ -44,6 +39,11 @@ export function newColumnNameComponent(): ColumnNameComponent {
     isParentPropertyContext: false,
     isSynthetic: false,
   };
+}
+
+export interface ColumnNaming {
+  columnId: string;
+  nameComponents: ColumnNameComponent[];
 }
 
 /** The reason why this column exists */
@@ -222,7 +222,7 @@ export function columnConstraintMerge(existing: Column, received: Column): Colum
 
 export function addSourceEntityProperty(column: Column, property: EntityProperty): void {
   const existingProperty = column.sourceEntityProperties.find(
-    x => x.metaEdName === property.metaEdName && x.type === property.type,
+    (x) => x.metaEdName === property.metaEdName && x.type === property.type,
   );
   if (existingProperty == null) {
     column.sourceEntityProperties.push(property);
@@ -234,7 +234,7 @@ export function addSourceEntityProperty(column: Column, property: EntityProperty
 }
 
 export function addMergedReferenceContext(column: Column, referenceContext: string): void {
-  const existingProperty: string | undefined = column.mergedReferenceContexts.find(x => x === referenceContext);
+  const existingProperty: string | undefined = column.mergedReferenceContexts.find((x) => x === referenceContext);
   if (existingProperty == null) {
     column.mergedReferenceContexts.push(referenceContext);
   } else {

@@ -5,12 +5,12 @@ import {
   MetaEdTextBuilder,
   NamespaceBuilder,
   newMetaEdEnvironment,
+  newPluginEnvironment,
 } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
 import { initializeNamespaceDependencies } from '../ValidationTestHelper';
 import { validate } from '../../../src/validator/UnsupportedExtension/MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
-import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
 describe('when merging property of an extension entity with a core property of the same name', (): void => {
   let failures: ValidationFailure[];
@@ -61,7 +61,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
-    initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeUnifiedPlugin().enhancer.forEach((enhance) => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
       Object.assign(newPluginEnvironment(), {
@@ -133,7 +133,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
-    initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeUnifiedPlugin().enhancer.forEach((enhance) => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
       Object.assign(newPluginEnvironment(), {
@@ -197,7 +197,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
     initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
-    initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    initializeUnifiedPlugin().enhancer.forEach((enhance) => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
       Object.assign(newPluginEnvironment(), {

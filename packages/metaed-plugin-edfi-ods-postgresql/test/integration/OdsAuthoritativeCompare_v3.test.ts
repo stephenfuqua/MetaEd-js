@@ -100,7 +100,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     validateConfiguration(state);
     loadPlugins(state);
     state.pluginManifest = state.pluginManifest.filter(
-      manifest =>
+      (manifest) =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
         manifest.shortName === 'edfiOdsPostgresql',
@@ -124,49 +124,49 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     const tables: Table[] = orderByPath(['data', 'edfiOdsPostgresql', 'tableName'])([
       ...tableEntities(state.metaEd, coreNamespace).values(),
     ]);
-    tableOrder = tables.map(table => table.data.edfiOdsPostgresql.tableName);
+    tableOrder = tables.map((table) => table.data.edfiOdsPostgresql.tableName);
     fkOrder = tables.reduce(
       (acc: string[], table: Table) =>
-        acc.concat([...table.foreignKeys.map(fk => fk.data.edfiOdsPostgresql.foreignKeyName)]),
+        acc.concat([...table.foreignKeys.map((fk) => fk.data.edfiOdsPostgresql.foreignKeyName)]),
       [],
     );
 
     rowOrder = orderRows([...rowEntities(state.metaEd, coreNamespace).values()]).map(
-      x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
+      (x) => x.name + (x.type === 'enumerationRow' ? x.description : ''),
     );
 
     [tablesResult, foreignKeysResult, extendedPropertiesResult, schoolYearsResult] = state.generatorResults.filter(
-      x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
+      (x) => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
     )[0].generatedOutput;
 
     [idIndexResult] = state.generatorResults.filter(
-      x => x.generatorName === 'edfiOdsPostgresql.IdIndexesGenerator',
+      (x) => x.generatorName === 'edfiOdsPostgresql.IdIndexesGenerator',
     )[0].generatedOutput;
 
     const tableFileBaseName = path.basename(tablesResult.fileName, '.sql');
     generatedTablesFile = `${outputDirectory}/${tableFileBaseName}.sql`;
     authoritativeTablesFile = `${artifactPath}/${tableFileBaseName}-Authoritative.sql`;
-    await ffs.writeFile(generatedTablesFile, tablesResult.resultString, 'utf-8');
+    await ffs.writeFile(generatedTablesFile, tablesResult.resultString, { encoding: 'utf-8' });
 
     const foreignKeysFileBaseName = path.basename(foreignKeysResult.fileName, '.sql');
     generatedForeignKeysFile = `${outputDirectory}/${foreignKeysFileBaseName}.sql`;
     authoritativeForeignKeysFile = `${artifactPath}/${foreignKeysFileBaseName}-Authoritative.sql`;
-    await ffs.writeFile(generatedForeignKeysFile, foreignKeysResult.resultString, 'utf-8');
+    await ffs.writeFile(generatedForeignKeysFile, foreignKeysResult.resultString, { encoding: 'utf-8' });
 
     const extendedPropertiesFileBaseName = path.basename(extendedPropertiesResult.fileName, '.sql');
     generatedExtendedPropertiesFile = `${outputDirectory}/${extendedPropertiesFileBaseName}.sql`;
     authoritativeExtendedPropertiesFile = `${artifactPath}/${extendedPropertiesFileBaseName}-Authoritative.sql`;
-    await ffs.writeFile(generatedExtendedPropertiesFile, extendedPropertiesResult.resultString, 'utf-8');
+    await ffs.writeFile(generatedExtendedPropertiesFile, extendedPropertiesResult.resultString, { encoding: 'utf-8' });
 
     const schoolYearsFileBaseName = path.basename(schoolYearsResult.fileName, '.sql');
     generatedSchoolYearsFile = `${outputDirectory}/${schoolYearsFileBaseName}.sql`;
     authoritativeSchoolYearsFile = `${artifactPath}/${schoolYearsFileBaseName}-Authoritative.sql`;
-    await ffs.writeFile(generatedSchoolYearsFile, schoolYearsResult.resultString, 'utf-8');
+    await ffs.writeFile(generatedSchoolYearsFile, schoolYearsResult.resultString, { encoding: 'utf-8' });
 
     const idIndexFileBaseName = path.basename(idIndexResult.fileName, '.sql');
     generatedIdIndexFile = `${outputDirectory}/${idIndexFileBaseName}.sql`;
     authoritativeIdIndexFile = `${artifactPath}/${idIndexFileBaseName}-Authoritative.sql`;
-    await ffs.writeFile(generatedIdIndexFile, idIndexResult.resultString, 'utf-8');
+    await ffs.writeFile(generatedIdIndexFile, idIndexResult.resultString, { encoding: 'utf-8' });
   });
 
   it('should have correct table order', (): void => {
@@ -188,7 +188,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     expect(tablesResult).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeTablesFile} ${generatedTablesFile}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -198,7 +198,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     expect(foreignKeysResult).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeForeignKeysFile} ${generatedForeignKeysFile}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -208,7 +208,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     expect(extendedPropertiesResult).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtendedPropertiesFile} ${generatedExtendedPropertiesFile}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -218,7 +218,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     expect(schoolYearsResult).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeSchoolYearsFile} ${generatedSchoolYearsFile}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -228,7 +228,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
     expect(idIndexResult).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeIdIndexFile} ${generatedIdIndexFile}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -280,7 +280,7 @@ describe('when generating ods with simple extensions and comparing it to data st
     validateConfiguration(state);
     loadPlugins(state);
     state.pluginManifest = state.pluginManifest.filter(
-      manifest =>
+      (manifest) =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
         manifest.shortName === 'edfiOdsPostgresql',
@@ -297,7 +297,7 @@ describe('when generating ods with simple extensions and comparing it to data st
     }
 
     const generatorResult: GeneratorResult = state.generatorResults.filter(
-      x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
+      (x) => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
     )[0];
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
@@ -309,15 +309,15 @@ describe('when generating ods with simple extensions and comparing it to data st
     generatedExtensionOdsFilename = `${artifactPath}/Simple-${extensionFileBaseName}.sql`;
     authoritativeExtensionOdsFilename = `${artifactPath}/Simple-${extensionFileBaseName}-Authoritative.sql`;
 
-    await ffs.writeFile(generatedCoreOdsFilename, generatedCoreOutput.resultString, 'utf-8');
-    await ffs.writeFile(generatedExtensionOdsFilename, generatedExtensionOutput.resultString, 'utf-8');
+    await ffs.writeFile(generatedCoreOdsFilename, generatedCoreOutput.resultString, { encoding: 'utf-8' });
+    await ffs.writeFile(generatedExtensionOdsFilename, generatedExtensionOutput.resultString, { encoding: 'utf-8' });
   });
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -327,7 +327,7 @@ describe('when generating ods with simple extensions and comparing it to data st
     expect(generatedExtensionOutput).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -379,7 +379,7 @@ describe('when generating ods with student transcript extensions and comparing i
     validateConfiguration(state);
     loadPlugins(state);
     state.pluginManifest = state.pluginManifest.filter(
-      manifest =>
+      (manifest) =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
         manifest.shortName === 'edfiOdsPostgresql',
@@ -396,7 +396,7 @@ describe('when generating ods with student transcript extensions and comparing i
     }
 
     const generatorResult: GeneratorResult = state.generatorResults.filter(
-      x => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
+      (x) => x.generatorName === 'edfiOdsPostgresql.OdsGenerator',
     )[0];
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
@@ -408,15 +408,15 @@ describe('when generating ods with student transcript extensions and comparing i
     generatedExtensionOdsFilename = `${artifactPath}/Transcript-${extensionFileBaseName}.sql`;
     authoritativeExtensionOdsFilename = `${artifactPath}/Transcript-${extensionFileBaseName}-Authoritative.sql`;
 
-    await ffs.writeFile(generatedCoreOdsFilename, generatedCoreOutput.resultString, 'utf-8');
-    await ffs.writeFile(generatedExtensionOdsFilename, generatedExtensionOutput.resultString, 'utf-8');
+    await ffs.writeFile(generatedCoreOdsFilename, generatedCoreOutput.resultString, { encoding: 'utf-8' });
+    await ffs.writeFile(generatedExtensionOdsFilename, generatedExtensionOutput.resultString, { encoding: 'utf-8' });
   });
 
   it('should have core with no differences', async () => {
     expect(generatedCoreOutput).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOdsFilename} ${generatedCoreOdsFilename}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);
@@ -426,7 +426,7 @@ describe('when generating ods with student transcript extensions and comparing i
     expect(generatedExtensionOutput).toBeDefined();
     const gitCommand = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtensionOdsFilename} ${generatedExtensionOdsFilename}`;
     // @ts-ignore "error" not used
-    const result = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
+    const result = await new Promise((resolve) => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: string[] = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
     expect(expectOneOf).toContain(result);

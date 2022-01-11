@@ -26,7 +26,7 @@ export function templateNamed(templateName: string) {
   return interchangeOrderMetadataHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoizeWith(R.identity, () => templateNamed('InterchangeOrderMetadata'))();
+export const template = R.memoizeWith(R.identity, () => templateNamed('interchangeOrderMetadata'))();
 
 function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   return {
@@ -105,7 +105,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
       if (namespace.isExtension && coreInterchangeMetadata != null) {
         coreInterchangeMetadata.forEach((coreInterchange: InterchangeMetadata) => {
-          if (interchangeMetadata.every(interchange => interchange.name !== coreInterchange.name))
+          if (interchangeMetadata.every((interchange) => interchange.name !== coreInterchange.name))
             interchangeMetadata.push(coreInterchange);
         });
       }

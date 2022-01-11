@@ -83,15 +83,9 @@ export async function connect(databaseName: string, retry: number = retryCount):
     // NOTE: This is a work around for the following error. This seems to occur most often when a fresh database has been
     // created and a connection attempt is made while it is in transition.
     // Error: [Microsoft][SQL Server Native Client 11.0]TCP Provider: An existing connection was forcibly closed by the remote host.
-    if (
-      retry > 0 &&
-      RegExp('TCP Provider: An existing connection was forcibly closed by the remote host.').test(error.message)
-    ) {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      pool = await connect(
-        databaseName,
-        retry - 1,
-      );
+    if (retry > 0 && /TCP Provider: An existing connection was forcibly closed by the remote host./.test(error.message)) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      pool = await connect(databaseName, retry - 1);
     } else {
       throw error;
     }
@@ -165,7 +159,7 @@ export async function executeGeneratedSql(generatedSql: string, databaseName: st
   const sqlStatements: string[] = generatedSql.split('\nGO\n');
   await database(
     databaseName,
-    async db => {
+    async (db) => {
       winston.verbose(`[${databaseName}] executeGeneratedSql`);
       // eslint-disable-next-line no-restricted-syntax
       for (const sql of sqlStatements) {

@@ -4,11 +4,12 @@ import * as path from 'path';
 import { scanForPlugins, newState } from 'metaed-core';
 import { vscodeMetaEdPackageJson } from './Utility';
 
-// TODO: this class is using TypeScript-only directives (e.g. "private")
+// TODO: this class shouldn't be using TypeScript-only directives (e.g. "private")
 export class AboutPanel {
   /**
    * Only allow a single panel to exist at a time.
    */
+  // eslint-disable-next-line no-use-before-define
   public static currentPanel: AboutPanel | undefined;
 
   public static readonly viewType = 'aboutPanel';
@@ -68,7 +69,7 @@ export class AboutPanel {
 
     // Handle messages from the webview
     this.myPanel.webview.onDidReceiveMessage(
-      message => {
+      (message) => {
         switch (message.command) {
           case 'alert':
             vscode.window.showErrorMessage(message.text);
@@ -97,7 +98,7 @@ export class AboutPanel {
   }
 
   private update() {
-    const pluginList: string[] = scanForPlugins(newState()).map(pm => `${pm.npmName} ${pm.version}`);
+    const pluginList: string[] = scanForPlugins(newState()).map((pm) => `${pm.npmName} ${pm.version}`);
     const version: string = vscodeMetaEdPackageJson() != null ? ` v${vscodeMetaEdPackageJson().version}` : '';
     const backgroundUri = this.myPanel.webview.asWebviewUri(
       vscode.Uri.file(path.resolve(this.extensionPath, './static/MetaEd-About-Background.png')),

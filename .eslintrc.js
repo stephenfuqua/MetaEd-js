@@ -1,10 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  'extends': [
-    'airbnb-base',
-    'prettier',
-    'prettier/@typescript-eslint'
-  ],
+  extends: ['airbnb-base', 'prettier'],
   plugins: ['@typescript-eslint', 'prettier'],
   settings: {
     'import/resolver': {
@@ -34,6 +30,9 @@ module.exports = {
     // artifact of the Flow days, imports were indeed duplicated because types had to be separate
     'import/no-duplicates': 'off',
 
+    // Just migrated to Node 16, not ready for this undertaking
+    'import/extensions': 'off',
+
     // relax this to avoid unnecessary temp variables
     'no-param-reassign': [
       2,
@@ -41,6 +40,9 @@ module.exports = {
         props: false,
       },
     ],
+
+    // unhappy with our one-liner Promise constructor arrow functions
+    'no-promise-executor-return': 'off',
 
     // prettier issues are warnings here
     'prettier/prettier': 'warn',
