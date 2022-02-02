@@ -10,7 +10,7 @@ export function setCoreMetaEdSourceDirectory(directory: string) {
 }
 
 export function getMetaEdJsConsoleSourceDirectory(): string {
-  return devEnvironmentCorrectedPath('metaed-console');
+  return devEnvironmentCorrectedPath('@edfi/metaed-console');
 }
 
 export function getEdfiOdsApiSourceDirectory(): string {

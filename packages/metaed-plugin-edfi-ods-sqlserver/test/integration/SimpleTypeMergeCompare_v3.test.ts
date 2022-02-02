@@ -1,7 +1,7 @@
 import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
-import { GeneratedOutput, State, GeneratorResult } from 'metaed-core';
+import { GeneratedOutput, State, GeneratorResult } from '@edfi/metaed-core';
 import {
   buildMetaEd,
   buildParseTree,
@@ -15,7 +15,7 @@ import {
   runGenerators,
   validateConfiguration,
   walkBuilders,
-} from 'metaed-core';
+} from '@edfi/metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(40000);
@@ -37,7 +37,7 @@ describe('when generating ods tables file with simple merges', (): void => {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
       defaultPluginTechVersion: '3.1.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.0/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',
@@ -136,7 +136,7 @@ describe('when generating ods foreign keys file with simple merges', (): void =>
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
       defaultPluginTechVersion: '3.1.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.0/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',

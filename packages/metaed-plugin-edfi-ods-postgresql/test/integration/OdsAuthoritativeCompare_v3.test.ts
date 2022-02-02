@@ -21,8 +21,8 @@ import {
   walkBuilders,
   GeneratedOutput,
   GeneratorResult,
-} from 'metaed-core';
-import { Table, tableEntities, rowEntities } from 'metaed-plugin-edfi-ods-relational';
+} from '@edfi/metaed-core';
+import { Table, tableEntities, rowEntities } from '@edfi/metaed-plugin-edfi-ods-relational';
 import { orderRows } from '../../src/enhancer/AddSchemaContainerEnhancer';
 
 jest.unmock('final-fs');
@@ -80,7 +80,7 @@ describe('when generating ods and comparing it to data standard 3.1 authoritativ
           targetTechnologyVersion: '3.2.0',
         },
       },
-      projectPaths: ['./node_modules/ed-fi-model-3.1/'],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.1/'],
       projects: [
         {
           projectName: 'Ed-Fi',
@@ -252,7 +252,7 @@ describe('when generating ods with simple extensions and comparing it to data st
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
       defaultPluginTechVersion: '3.2.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.1/', sampleExtensionPath],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.1/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',
@@ -351,7 +351,7 @@ describe('when generating ods with student transcript extensions and comparing i
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
       defaultPluginTechVersion: '3.2.0',
-      projectPaths: ['./node_modules/ed-fi-model-3.1/', sampleExtensionPath],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.1/', sampleExtensionPath],
       projects: [
         {
           projectName: 'Ed-Fi',

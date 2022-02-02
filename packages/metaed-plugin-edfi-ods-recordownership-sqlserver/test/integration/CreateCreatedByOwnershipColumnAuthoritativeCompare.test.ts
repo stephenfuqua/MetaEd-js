@@ -1,7 +1,7 @@
 import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
-import { GeneratedOutput, State } from 'metaed-core';
+import { GeneratedOutput, State } from '@edfi/metaed-core';
 import {
   buildMetaEd,
   buildParseTree,
@@ -15,7 +15,7 @@ import {
   runGenerators,
   validateConfiguration,
   walkBuilders,
-} from 'metaed-core';
+} from '@edfi/metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(40000);
@@ -63,7 +63,7 @@ describe('when generating CreatedByOwnership columns and comparing to ODS/API 3.
           targetTechnologyVersion: '3.3.0',
         },
       },
-      projectPaths: ['./node_modules/ed-fi-model-3.2a/'],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.2a/'],
       projects: [
         {
           projectName: 'Ed-Fi',
@@ -164,7 +164,7 @@ describe('when generating CreatedByOwnership columns and comparing to ODS/API 5.
           targetTechnologyVersion: '5.0.0',
         },
       },
-      projectPaths: ['./node_modules/ed-fi-model-3.2a/'],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.2a/'],
       projects: [
         {
           projectName: 'Ed-Fi',
@@ -265,7 +265,7 @@ describe('when generating CreatedByOwnership columns and comparing to ODS/API 5.
           targetTechnologyVersion: '5.0.0',
         },
       },
-      projectPaths: ['./node_modules/ed-fi-model-3.2a/'],
+      projectPaths: ['./node_modules/@edfi/ed-fi-model-3.2a/'],
       projects: [
         {
           projectName: 'Ed-Fi',

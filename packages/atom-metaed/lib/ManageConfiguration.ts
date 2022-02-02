@@ -68,21 +68,21 @@ export function switchCoreDsProjectOptionsOnOdsApiChange(disposableTracker: Comp
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
   disposableTracker.add(
     atom.config.onDidChange('atom-metaed.targetDsVersion', ({ newValue }: { oldValue: string; newValue: string }) => {
-      if (newValue === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
-      if (newValue === '2.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.2'));
-      if (newValue === '3.0.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
-      if (newValue === '3.1.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.1'));
-      if (newValue === '3.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2a'));
-      if (newValue === '3.2.0-b') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2b'));
-      if (newValue === '3.2.0-c') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.2c'));
-      if (newValue === '3.3.0-a') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.3a'));
-      if (newValue === '3.3.1-b') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.3b'));
+      if (newValue === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-2.0'));
+      if (newValue === '2.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-2.2'));
+      if (newValue === '3.0.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.0'));
+      if (newValue === '3.1.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.1'));
+      if (newValue === '3.2.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.2a'));
+      if (newValue === '3.2.0-b') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.2b'));
+      if (newValue === '3.2.0-c') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.2c'));
+      if (newValue === '3.3.0-a') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.3a'));
+      if (newValue === '3.3.1-b') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.3b'));
     }),
   );
 }
 
 async function setCoreToFiveDotX() {
-  setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.3b'));
+  setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('@edfi/ed-fi-model-3.3b'));
   setTargetDsVersion('3.3.1-b');
   setTargetOdsApiVersion('5.3.0');
   await nextMacroTask();
