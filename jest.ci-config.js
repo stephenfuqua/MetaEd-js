@@ -13,4 +13,17 @@ module.exports = {
     },
   },
   modulePathIgnorePatterns: ['dist*', 'docs*'],
+  reporters: [
+    'default',
+    [
+      'jest-junit',
+      {
+        ancestorSeparator: ' > ',
+        uniqueOutputName: false,
+        suiteNameTemplate: '{filepath}',
+        classNameTemplate: '{classname}',
+        titleTemplate: '{title}',
+      },
+    ],
+  ],
 };
