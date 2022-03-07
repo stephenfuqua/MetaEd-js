@@ -1,0 +1,22 @@
+name: Lint and Test
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node
+      uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2.5.1
+      with:
+        node-version: '16'
+        check-latest: true
+        registry-url: 'https://www.myget.org/F/ed-fi/npm/'
+
+    - name: Install
+      run: yarn install
+      shell: bash
+
+    - name: Lint
+      run: yarn test:lint
+      shell: bash
+
+    - name: Unit tests
+      run: yarn test:unit:ci --ci  --config ./jest.ci-config.js
+      shell: bash 
