@@ -4,8 +4,9 @@ import { validate as NamespaceMustNotBeNamedChanges } from './validator/Namespac
 export { changeQueryIndicated } from './enhancer/ChangeQueryIndicator';
 export { AddColumnChangeVersionForTable } from './model/AddColumnChangeVersionForTable';
 export { CreateTriggerUpdateChangeVersion } from './model/CreateTriggerUpdateChangeVersion';
-export { DeleteTrackingTable } from './model/DeleteTrackingTable';
-export { DeleteTrackingTrigger } from './model/DeleteTrackingTrigger';
+export { ChangeDataColumn, newChangeDataColumn } from './model/ChangeDataColumn';
+export { DeleteTrackingTable, newDeleteTrackingTable } from './model/DeleteTrackingTable';
+export { DeleteTrackingTrigger, newDeleteTrackingTrigger } from './model/DeleteTrackingTrigger';
 export { PairedForeignKeyColumnName } from './model/PairedForeignKeyColumnName';
 export {
   pluginEnvironment,
@@ -28,15 +29,14 @@ export {
 } from './enhancer/DeleteTrackingTriggerCreator';
 export {
   ChangeQueryTemplates,
-  changeQueryPath,
-  performColumnChangeVersionForTableGeneration,
-  performCreateTrackedDeleteSchemasGeneration,
-  performCreateTrackedDeleteTablesGeneration,
-  performAddIndexChangeVersionForTableGeneration,
-  performCreateChangesSchemaGeneration,
-  performCreateChangeVersionSequenceGeneration,
-  performCreateDeletedForTrackingTriggerGeneration,
-  performCreateTriggerUpdateChangeVersionGeneration,
+  generateAddColumnChangeVersionForTable,
+  generateCreateTrackedDeleteSchemas5dot3,
+  generateCreateTrackedDeleteTables,
+  generateAddIndexChangeVersionForTable,
+  generateCreateChangesSchema,
+  generateCreateChangeVersionSequence,
+  generateCreateDeletedForTrackingTrigger,
+  generateCreateTriggerUpdateChangeVersion,
 } from './generator/GeneratorHelper';
 export {
   EdFiOdsChangeQueryEntityRepository,
