@@ -10,7 +10,7 @@ import {
 } from '@edfi/metaed-plugin-edfi-ods-relational';
 import { ColumnDataTypes } from '../model/ColumnDataTypes';
 
-const enhancerName = 'SqlServerTableNamingEnhancer';
+const enhancerName = 'SqlServerColumnNamingEnhancer';
 
 function simpleColumnNameComponentCollapse(columnNameComponent: ColumnNameComponent[]): string {
   return columnNameComponent.map((nameComponent) => nameComponent.name).reduce(appendOverlapCollapsing, '');
@@ -25,6 +25,10 @@ export function resolveDataType(column: Column): string {
     case 'decimal':
       return ColumnDataTypes.decimal((column as DecimalColumn).precision, (column as DecimalColumn).scale);
     case 'string':
+      // SQL Server supports up to 4000 characters in an NVARCHAR, for anything bigger it needs to be an NVARCHAR(MAX)
+      if (parseInt((column as StringColumn).length, 10) > 4000) {
+        return ColumnDataTypes.string('MAX');
+      }
       return ColumnDataTypes.string((column as StringColumn).length);
     default:
       return ColumnDataTypes[column.type];
