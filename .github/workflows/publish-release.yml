@@ -1,27 +1,30 @@
-name: Publish Dev Version
+name: Publish Release
 on:
   workflow_dispatch:
-    debug_enabled:
-      description: Run the build with tmate debugging enabled     
-      required: true
-      default: false
-      type: boolean
-  pull_request:
-    types: [closed]
-    branches:
-      - main
-jobs:
-  publish-dev:
-    name: Publish Dev
+    inputs:
+      bump:
+        description: 'Version Bump'
+        required: true
+        default: 'patch' 
+        type: choice
+        options:
+        - major
+        - minor
+        - patch
+      debug_enabled:
+        description: Run the build with tmate debugging enabled     
+        required: true
+        default: false
+        type: boolean
 
-    # Only if closed due to merge or manual trigger
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+jobs:
+  publish-major:
+    name: Publish Release
 
     uses: Ed-Fi-Closed/MetaEd-js/.github/workflows/reusable-publish.yml@main
     with:
-      bump: dev
+      bump: ${{ github.event.inputs.bump }}
       debug_enabled: ${{ github.event.inputs.debug_enabled }}
-
     secrets:
       EDFI_BUILD_AGENT_PAT: ${{ secrets.EDFI_BUILD_AGENT_PAT }}
       EDFIBUILDAGENT_PRIVATE_KEY: ${{ secrets.EDFIBUILDAGENT_PRIVATE_KEY }}
