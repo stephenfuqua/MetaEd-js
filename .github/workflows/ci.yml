@@ -19,4 +19,4 @@ jobs:
         with:
           name: Test Reporting
           path: "*.xml"
-          reporter: jest-junit 
+          reporter: jest-junit
