@@ -8,17 +8,20 @@
 {{/if}}
 {{/if}}
 {{#if isStyle6dot0}}
+-- For performance reasons on existing data sets, all existing records will start with ChangeVersion of 0.
 DO $$
 BEGIN
 {{/if}}
 {{#tables}}
-{{#if isStyle6dot0}}IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='{{{schema}}}' AND table_name='{{{tableName}}}' AND column_name='changeversion') THEN
-{{/if}}
-ALTER TABLE {{{schema}}}.{{{tableName}}}
-ADD ChangeVersion BIGINT DEFAULT nextval('changes.ChangeVersionSequence') NOT NULL;
-{{#if isStyle6dot0}}END IF;
-{{/if}}
+{{#if isStyle6dot0}}IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='{{{schema}}}' AND table_name='{{{tableNameLowercased}}}' AND column_name='changeversion') THEN
+ALTER TABLE {{{schema}}}.{{{tableName}}} ADD ChangeVersion BIGINT DEFAULT (0) NOT NULL;
+ALTER TABLE {{{schema}}}.{{{tableName}}} ALTER ChangeVersion SET DEFAULT nextval('changes.ChangeVersionSequence');
+END IF;
 
+{{else}}
+ALTER TABLE {{{schema}}}.{{{tableName}}} ADD ChangeVersion BIGINT DEFAULT nextval('changes.ChangeVersionSequence') NOT NULL;
+
+{{/if}}
 {{/tables}}
 {{#if isStyle6dot0}}
 END

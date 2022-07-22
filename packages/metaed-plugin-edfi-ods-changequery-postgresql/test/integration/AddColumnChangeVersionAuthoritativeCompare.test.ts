@@ -86,7 +86,7 @@ describe('when generating add column changeversion and comparing to ODS/API 5.0 
       (manifest) =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
-        manifest.shortName === 'edfiOdsSqlServer' ||
+        manifest.shortName === 'edfiOdsPostgresql' ||
         manifest.shortName === 'edfiOdsChangeQuery' ||
         manifest.shortName === PLUGIN_NAME,
     );
@@ -197,7 +197,7 @@ describe('when generating add column changeversion with simple extensions and co
       (manifest) =>
         manifest.shortName === 'edfiUnified' ||
         manifest.shortName === 'edfiOdsRelational' ||
-        manifest.shortName === 'edfiOdsSqlServer' ||
+        manifest.shortName === 'edfiOdsPostgresql' ||
         manifest.shortName === 'edfiOdsChangeQuery' ||
         manifest.shortName === PLUGIN_NAME,
     );
