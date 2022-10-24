@@ -241,7 +241,7 @@
     "@edfi/metaed-plugin-edfi-xml-dictionary": "3.1.0",
     "@edfi/metaed-plugin-edfi-xsd": "3.1.0",
     "adm-zip": "^0.5.9",
-    "ansi-html": "^0.0.7",
+    "ansi-html": "0.0.8",
     "atom-message-panel": "^1.3.1",
     "atom-package-deps": "^4.6.2",
     "atom-space-pen-views": "2.2.0",
@@ -257,7 +257,7 @@
     "stream-splitter": "0.3.2",
     "tmp-promise": "^1.1.0",
     "uuid": "3.4.0",
-    "winston": "3.7.2"
+    "winston": "3.8.2"
   },
   "devDependencies": {
     "@types/atom": "1.40.11",
