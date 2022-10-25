@@ -10,7 +10,6 @@
     "@typescript-eslint/parser": "5.40.1",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
-    "documentation": "^14.0.0",
     "eslint": "8.26.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.5.0",
@@ -42,7 +41,6 @@
   },
   "scripts": {
     "antlr-gen": "java -jar ./antlr/antlr-4.6-complete.jar -Dlanguage=JavaScript -o ./packages/metaed-core/src/grammar/gen ./packages/metaed-core/src/grammar/language/BaseLexer.g4 ./packages/metaed-core/src/grammar/language/MetaEdGrammar.g4",
-    "doc-gen": "yarn rimraf docs/ && yarn documentation build packages/metaed-core/src/** --sort-order alpha -f html -o docs",
     "metaed:build": "node ./packages/metaed-console/dist/index.js",
     "metaed:deploy": "node ./packages/metaed-odsapi-deploy/dist/index.js",
     "build": "lerna run build --stream",
