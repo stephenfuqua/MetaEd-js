@@ -1,7 +1,8 @@
-// eslint-disable-next-line import/no-unresolved
-import { commands, workspace, window, ExtensionContext } from 'vscode';
+/* eslint-disable import/no-unresolved */
+import { commands, workspace, window, ExtensionContext, TextDocumentChangeEvent, TextEditor, TextDocument } from 'vscode';
 import R from 'ramda';
 import path from 'path';
+import debounce from 'p-debounce';
 import { MetaEdConfiguration, newMetaEdConfiguration } from '@edfi/metaed-core';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient/node';
 import { findMetaEdProjectMetadataForClient } from './Projects';
@@ -9,6 +10,10 @@ import { AboutPanel } from './AboutPanel';
 import { MetaEdProjectMetadata, validProjectMetadata } from '../common/Projects';
 
 let client: LanguageClient;
+
+const sendLintCommandToServer: () => Promise<void> = debounce(async () => {
+  await client.sendNotification('metaed/lint');
+}, 500);
 
 async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefined> {
   const metaEdProjectMetadata: MetaEdProjectMetadata[] = await findMetaEdProjectMetadataForClient();
@@ -18,7 +23,7 @@ async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefi
 
   const metaEdConfiguration: MetaEdConfiguration = {
     ...newMetaEdConfiguration(),
-    defaultPluginTechVersion: '3.3.0',
+    defaultPluginTechVersion: '6.1.0',
     allianceMode: false,
     artifactDirectory: path.join(lastProjectPath, 'MetaEdOutput'),
   };
@@ -37,7 +42,81 @@ async function createMetaEdConfiguration(): Promise<MetaEdConfiguration | undefi
   return metaEdConfiguration;
 }
 
-export async function launchServer(context: ExtensionContext) {
+/**
+ * True if both the file part of a MetaEd project (associated with the MetaEd extension) and ends in .metaed
+ */
+function isDotMetaEdFile(document: TextDocument): boolean {
+  return document?.languageId === 'metaed' && document.uri.path.endsWith('.metaed');
+}
+
+/**
+ * Adds event subscriptions for MetaEd VS Code command and document/editor listeners
+ */
+async function addSubscriptions(context: ExtensionContext) {
+  context.subscriptions.push(
+    commands.registerCommand('metaed.build', () => {
+      (async () => {
+        const metaEdConfiguration = await createMetaEdConfiguration();
+        await client.sendNotification('metaed/build', metaEdConfiguration);
+        // This seems to need to come after the client.sendNotification(), otherwise blocks it sometimes
+        await window.showInformationMessage('Building MetaEd...');
+      })();
+    }),
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand('metaed.lint', () => {
+      (async () => {
+        await sendLintCommandToServer();
+      })();
+    }),
+  );
+
+  // About Panel
+  context.subscriptions.push(
+    commands.registerCommand('metaed.about', () => {
+      AboutPanel.createOrShow(context.extensionPath);
+    }),
+  );
+
+  context.subscriptions.push(
+    window.onDidChangeActiveTextEditor((textEditor: TextEditor | undefined) => {
+      if (textEditor != null && isDotMetaEdFile(textEditor.document)) {
+        client.outputChannel.appendLine(`${Date.now()}: client onDidChangeActiveTextEditor sending lint command to server`);
+        (async () => {
+          await sendLintCommandToServer();
+        })();
+      }
+    }),
+  );
+
+  context.subscriptions.push(
+    workspace.onDidChangeTextDocument((changeEvent: TextDocumentChangeEvent) => {
+      if (isDotMetaEdFile(changeEvent.document)) {
+        client.outputChannel.appendLine(`${Date.now()}: client onDidChangeTextDocument sending lint command to server`);
+        (async () => {
+          await sendLintCommandToServer();
+        })();
+      }
+    }),
+  );
+
+  context.subscriptions.push(
+    workspace.onDidCloseTextDocument((textDocument: TextDocument) => {
+      if (isDotMetaEdFile(textDocument)) {
+        client.outputChannel.appendLine(`${Date.now()}: client onDidCloseTextDocument sending lint command to server`);
+        (async () => {
+          await sendLintCommandToServer();
+        })();
+      }
+    }),
+  );
+}
+
+/**
+ * Extension lifecycle function invoked by VS Code to activate extension
+ */
+export async function activate(context: ExtensionContext) {
   const serverModule = context.asAbsolutePath(path.join('dist', 'server', 'server.js'));
   const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
 
@@ -64,35 +143,33 @@ export async function launchServer(context: ExtensionContext) {
   client = new LanguageClient('MetaEd', 'MetaEd', serverOptions, clientOptions);
   await client.start();
 
-  client.onNotification('metaed/buildComplete', () => {
-    window.showInformationMessage('MetaEd Build Complete');
-  });
-}
+  client.outputChannel.appendLine(`${Date.now()}: MetaEd extension is starting...`);
 
-export async function activate(context: ExtensionContext) {
-  // eslint-disable-next-line no-console
-  console.log('Congratulations, your extension "vscode-metaed" is now active!');
+  await addSubscriptions(context);
 
-  const disposable = commands.registerCommand('metaed.build', async () => {
-    // The code you place here will be executed every time your command is executed
-
-    window.showInformationMessage('Building MetaEd...');
-    const metaEdConfiguration = await createMetaEdConfiguration();
-    client.sendNotification('metaed/build', metaEdConfiguration);
+  client.onNotification('metaed/buildComplete', (failure: boolean) => {
+    (async () => {
+      if (failure) {
+        await window.showInformationMessage('MetaEd build failure - see Problems window');
+        await commands.executeCommand('workbench.action.problems.focus');
+      } else {
+        await window.showInformationMessage(`MetaEd build success: Find results in 'MetaEdOutput' folder.`);
+      }
+    })();
   });
 
-  context.subscriptions.push(disposable);
+  // Trigger an initial lint after extension startup is complete
+  if (window.activeTextEditor != null) {
+    await sendLintCommandToServer();
+  }
 
-  // About Panel
-  context.subscriptions.push(
-    commands.registerCommand('metaed.about', () => {
-      AboutPanel.createOrShow(context.extensionPath);
-    }),
-  );
-
-  launchServer(context);
+  client.outputChannel.appendLine('MetaEd has started 🎬');
+  await window.showInformationMessage('MetaEd has started 🎬');
 }
 
+/**
+ * Extension lifecycle function invoked by VS Code to deactivate extension
+ */
 export function deactivate(): Promise<void> | undefined {
   if (!client) {
     return undefined;
