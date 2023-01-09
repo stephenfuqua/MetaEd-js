@@ -44,11 +44,10 @@
     "@edfi/ed-fi-model-3.2a": "3.0.1",
     "@types/pg": "^7.14.11",
     "cli-highlight": "^2.1.11",
-    "final-fs": "^1.6.1",
     "pg-structure": "^7.13.1"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",
+    "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",
     "build:clean": "rimraf dist",
     "build:dist": "tsc",
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose",

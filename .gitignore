@@ -9,9 +9,6 @@ node_modules/
 npm-debug.log
 tmp
 
-## Webstorm:
-.idea/
-
 ## VSCode:
 .vscode/
 
@@ -93,15 +90,5 @@ CreatedByOwnership-v5.0-Alliance.sql
 MetaEdOutput-Experimental/
 MetaEdOutput/
 
-yarn-error.log
 .secrets
 metaed.conf.json
-
-# Modern Yarn
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions

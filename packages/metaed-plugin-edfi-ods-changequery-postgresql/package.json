@@ -41,11 +41,10 @@
     "@edfi/ed-fi-model-3.0": "3.0.1",
     "@edfi/ed-fi-model-3.2a": "3.0.1",
     "@edfi/ed-fi-model-3.3b": "3.0.1",
-    "@edfi/ed-fi-model-4.0a": "3.0.3",
-    "final-fs": "^1.6.1"
+    "@edfi/ed-fi-model-4.0a": "3.0.3"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",
+    "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",
     "build:clean": "rimraf dist",
     "build:dist": "tsc",
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"

@@ -3,7 +3,7 @@
 
 // eslint-disable-next-line import/no-unresolved
 import { Notification, TextEditor } from 'atom';
-import R from 'ramda';
+import * as R from 'ramda';
 import fs from 'fs-extra';
 import klawSync from 'klaw-sync';
 import path from 'path';
@@ -72,7 +72,7 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, outputWindow: O
 
   try {
     if (await fs.exists(artifactDirectory)) {
-      const metaEdFilePaths: string[] = klawSync(artifactDirectory, {
+      const metaEdFilePaths = klawSync(artifactDirectory, {
         filter: (item) => ['.metaed', '.metaEd', '.MetaEd', '.METAED'].includes(path.extname(item.path)),
       });
       if (metaEdFilePaths.length > 0) {
@@ -87,7 +87,7 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, outputWindow: O
     return true;
   } catch (exception) {
     console.error(exception);
-    outputWindow.addMessage(`Unable to peform operation on output directory at path "${artifactDirectory}".`);
+    outputWindow.addMessage(`Unable to perform operation on output directory at path "${artifactDirectory}".`);
     outputWindow.addMessage(exception.message);
     if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
       outputWindow.addMessage('Please close any files or folders that may be open in other applications.');
