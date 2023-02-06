@@ -12,14 +12,16 @@ import {
   isReferenceGroup,
 } from '../model/ReferenceComponent';
 import { CollectedProperty } from '../model/CollectedProperty';
-import { EntityMeadowlarkData } from '../model/EntityMeadowlarkData';
-import { EntityPropertyMeadowlarkData } from '../model/EntityPropertyMeadowlarkData';
+import { EntityApiSchemaData } from '../model/EntityApiSchemaData';
+import { EntityPropertyApiSchemaData } from '../model/EntityPropertyApiSchemaData';
 
 /**
  * All of the identity properties of the given entity, in sorted order
  */
 export function identityReferenceComponentsFrom(identityProperties: EntityProperty[]): ReferenceComponent[] {
-  return identityProperties.map((property) => (property.data.meadowlark as EntityPropertyMeadowlarkData).referenceComponent);
+  return identityProperties.map(
+    (property) => (property.data.edfiApiSchema as EntityPropertyApiSchemaData).referenceComponent,
+  );
 }
 
 /**
@@ -27,7 +29,7 @@ export function identityReferenceComponentsFrom(identityProperties: EntityProper
  */
 export function referenceGroupsFrom(sortedProperties: EntityProperty[]): ReferenceGroup[] {
   return sortedProperties
-    .map((property) => (property.data.meadowlark as EntityPropertyMeadowlarkData).referenceComponent)
+    .map((property) => (property.data.edfiApiSchema as EntityPropertyApiSchemaData).referenceComponent)
     .filter((rc) => isReferenceGroup(rc)) as ReferenceGroup[];
 }
 
@@ -36,7 +38,7 @@ export function referenceGroupsFrom(sortedProperties: EntityProperty[]): Referen
  */
 export function flattenedIdentityPropertiesFrom(identityProperties: EntityProperty[]): EntityProperty[] {
   const referenceElements: ReferenceElement[] = identityProperties.flatMap((identityProperty) =>
-    flattenReferenceElementsFromComponent(identityProperty.data.meadowlark.referenceComponent),
+    flattenReferenceElementsFromComponent(identityProperty.data.edfiApiSchema.referenceComponent),
   );
   return referenceElements.map((referenceElement) => referenceElement.sourceProperty);
 }
@@ -45,7 +47,7 @@ export function flattenedIdentityPropertiesFrom(identityProperties: EntityProper
  * CollectedProperties of all of the descriptor properties on the entity.
  */
 export function descriptorCollectedPropertiesFrom(entity: TopLevelEntity): CollectedProperty[] {
-  return (entity.data.meadowlark as EntityMeadowlarkData).collectedProperties.filter(
+  return (entity.data.edfiApiSchema as EntityApiSchemaData).collectedProperties.filter(
     (cp) => cp.property.type === 'descriptor',
   );
 }
