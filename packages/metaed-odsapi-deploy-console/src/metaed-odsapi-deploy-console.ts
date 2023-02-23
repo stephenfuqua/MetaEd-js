@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import chalk from 'chalk';
 import path from 'path';
 import winston from 'winston';
@@ -11,7 +12,7 @@ import {
   newMetaEdEnvironment,
   findDataStandardVersions,
 } from '@edfi/metaed-core';
-import {
+import type {
   SemVer,
   MetaEdConfiguration,
   State,
@@ -20,7 +21,7 @@ import {
   MetaEdProjectPathPairs,
   MetaEdProject,
 } from '@edfi/metaed-core';
-import { runDeployTasks } from './RunDeployTasks';
+import { runDeployTasks } from '@edfi/metaed-odsapi-deploy';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
@@ -105,21 +106,24 @@ export async function metaEdDeploy() {
 
   let metaEdConfiguration: MetaEdConfiguration;
 
-  if (yargs.argv.metaEdConfiguration == null) {
+  if (yargs.argv['metaEdConfiguration'] == null) {
     // if this function was called outside the normal CLI flow, do nothing and return
-    if (yargs.argv.source == null || yargs.argv.projectNames == null) return;
+    if (yargs.argv['source'] == null || yargs.argv['projectNames'] == null) return;
 
-    const resolvedProjects: MetaEdProjectPathPairs[] = await scanForProjects(yargs.argv.source, yargs.argv.projectNames);
+    const resolvedProjects: MetaEdProjectPathPairs[] = await scanForProjects(
+      yargs.argv['source'],
+      yargs.argv['projectNames'],
+    );
 
     metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: path.join(resolvedProjects.slice(-1)[0].path, 'MetaEdOutput'),
-      deployDirectory: yargs.argv.target,
+      deployDirectory: yargs.argv['target'],
       projectPaths: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.path),
       projects: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.project),
     };
-    if (yargs.argv.defaultPluginTechVersion != null) {
-      metaEdConfiguration.defaultPluginTechVersion = yargs.argv.defaultPluginTechVersion;
+    if (yargs.argv['defaultPluginTechVersion'] != null) {
+      metaEdConfiguration.defaultPluginTechVersion = yargs.argv['defaultPluginTechVersion'];
     }
     const pipelineOptions: PipelineOptions = {
       ...newPipelineOptions(),
@@ -140,14 +144,14 @@ export async function metaEdDeploy() {
       process.exitCode = 1;
     }
   } else {
-    metaEdConfiguration = { ...(yargs.argv.metaEdConfiguration as any) };
-    if (yargs.argv.defaultPluginTechVersion != null) {
-      metaEdConfiguration.defaultPluginTechVersion = yargs.argv.defaultPluginTechVersion;
+    metaEdConfiguration = { ...(yargs.argv['metaEdConfiguration'] as any) };
+    if (yargs.argv['defaultPluginTechVersion'] != null) {
+      metaEdConfiguration.defaultPluginTechVersion = yargs.argv['defaultPluginTechVersion'];
     }
   }
 
   // Run all deployment tasks
-  const deploySuccess = await runDeployTasks(metaEdConfiguration, yargs.argv.core, yargs.argv.suppressDelete);
+  const deploySuccess = await runDeployTasks(metaEdConfiguration, yargs.argv['core'], yargs.argv['suppressDelete']);
   if (!deploySuccess) process.exitCode = 1;
 
   const endTime = Date.now() - startTime;
