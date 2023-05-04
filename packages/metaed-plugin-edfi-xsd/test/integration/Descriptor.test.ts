@@ -42,7 +42,7 @@ describe('when generating xsd for descriptor', (): void => {
   });
 
   it('should generate descriptor reference', (): void => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptorReferenceType']", coreResult);
+    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreEntityDescriptorReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 });
@@ -98,7 +98,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   });
 
   it('should generate core domain entity reference', (): void => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntityDescriptorReferenceType']", coreResult);
+    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreEntityDescriptorReferenceType']", coreResult);
     expect(elements).toHaveLength(1);
   });
 

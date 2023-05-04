@@ -13,7 +13,7 @@ import { Table } from '../model/database/Table';
 // Assessment.Version collides with AssessmentContentStandard.Version
 // Rename ContentStandard.Version to ContentStandard.AssessmentVersion when ContentStandard hangs off of Assessment
 const enhancerName = 'AssessmentContentStandardTableDiminisher';
-const targetVersions = '2.0.0 || 2.0.1 || 3.0.0';
+const targetVersions = '3.0.0';
 
 const assessmentContentStandard = 'AssessmentContentStandard';
 const assessmentVersion = 'AssessmentVersion';

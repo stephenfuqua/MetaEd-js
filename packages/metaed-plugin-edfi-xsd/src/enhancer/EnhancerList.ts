@@ -41,7 +41,6 @@ import { enhance as addCommonSubclassComplexTypesEnhancer } from './schema/AddCo
 import { enhance as addCommonExtensionComplexTypesEnhancer } from './schema/AddCommonExtensionComplexTypesEnhancer';
 import { enhance as addDecimalSimpleTypesEnhancer } from './schema/AddDecimalSimpleTypesEnhancer';
 import { enhance as addDescriptorComplexTypesEnhancer } from './schema/AddDescriptorComplexTypesEnhancer';
-import { enhance as AddDescriptorComplexTypesEnhancerV2 } from './schema/AddDescriptorComplexTypesEnhancerV2';
 import { enhance as AddDescriptorExtendedReferenceTypesEnhancer } from './schema/AddDescriptorExtendedReferenceTypesEnhancer';
 import { enhance as addDomainEntityComplexTypesEnhancer } from './schema/AddDomainEntityComplexTypesEnhancer';
 import { enhance as addDomainEntityExtensionComplexTypesEnhancer } from './schema/AddDomainEntityExtensionComplexTypesEnhancer';
@@ -50,16 +49,8 @@ import { enhance as addEnumerationSimpleTypesEnhancer } from './schema/AddEnumer
 import { enhance as addIntegerSimpleTypesEnhancer } from './schema/AddIntegerSimpleTypesEnhancer';
 import { enhance as addStringSimpleTypesEnhancer } from './schema/AddStringSimpleTypesEnhancer';
 import { enhance as addSchemaContainerEnhancer } from './schema/AddSchemaContainerEnhancer';
-import { enhance as addSchemaContainerEnhancerV2 } from './schema/AddSchemaContainerEnhancerV2';
 
 import { enhance as addLookupTypesDiminisher } from '../diminisher/AddLookupTypesDiminisher';
-import { enhance as modifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher } from '../diminisher/ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher';
-import { enhance as modifyDisciplineActionLengthToUseIntegerDiminisher } from '../diminisher/ModifyDisciplineActionLengthToUseIntegerDiminisher';
-import { enhance as modifyEducationContentLearningResourceToInlineSequenceDiminisher } from '../diminisher/ModifyEducationContentLearningResourceToInlineSequenceDiminisher';
-import { enhance as modifyIdentityTypeOrderToMatchLegacyOrderDiminisher } from '../diminisher/ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher';
-import { enhance as modifyOrderOfPriorityToUsePositiveIntegerDiminisher } from '../diminisher/ModifyOrderOfPriorityToUsePositiveIntegerDiminisher';
-import { enhance as modifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher } from '../diminisher/ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher';
-import { enhance as modifyTotalInstructionalDaysToUseIntDiminisher } from '../diminisher/ModifyTotalInstructionalDaysToUseIntDiminisher';
 
 import { enhance as hasDuplicateEntityNameInDependencyNamespaceEnhancer } from './HasDuplicateEntityNameInDependencyNamespaceEnhancer';
 
@@ -129,7 +120,6 @@ export function enhancerList(): Enhancer[] {
     addCommonExtensionComplexTypesEnhancer,
     addCommonSubclassComplexTypesEnhancer,
     addDescriptorComplexTypesEnhancer,
-    AddDescriptorComplexTypesEnhancerV2,
     AddDescriptorExtendedReferenceTypesEnhancer,
     addDomainEntityComplexTypesEnhancer,
     addDomainEntityExtensionComplexTypesEnhancer,
@@ -141,17 +131,9 @@ export function enhancerList(): Enhancer[] {
 
     // DiminisherPhase
     addLookupTypesDiminisher,
-    modifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher,
-    modifyDisciplineActionLengthToUseIntegerDiminisher,
-    modifyEducationContentLearningResourceToInlineSequenceDiminisher,
-    modifyIdentityTypeOrderToMatchLegacyOrderDiminisher,
-    modifyOrderOfPriorityToUsePositiveIntegerDiminisher,
-    modifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher,
-    modifyTotalInstructionalDaysToUseIntDiminisher,
 
     // SchemaCreationPhase
     addSchemaContainerEnhancer,
-    addSchemaContainerEnhancerV2,
 
     // MergeInterchangeElementOrderPhase
     mergedInterchangeElementOrderEnhancer,
