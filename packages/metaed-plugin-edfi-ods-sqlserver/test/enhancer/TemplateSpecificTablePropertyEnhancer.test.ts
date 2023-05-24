@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { MetaEdEnvironment, Namespace, newMetaEdEnvironment, newNamespace } from '@edfi/metaed-core';
+import { MetaEdEnvironment, Namespace, PluginEnvironment, newMetaEdEnvironment, newNamespace } from '@edfi/metaed-core';
 import {
   initializeEdFiOdsRelationalEntityRepository,
   newColumn,
@@ -28,6 +28,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
 
   beforeAll(() => {
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -51,7 +53,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
@@ -78,6 +80,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 
   beforeAll(() => {
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -101,7 +105,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
@@ -128,6 +132,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
 
   beforeAll(() => {
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -199,7 +205,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
     tableEntities(metaEd, namespace).set(foreignTable1.tableId, foreignTable1);
     tableEntities(metaEd, namespace).set(foreignTable2.tableId, foreignTable2);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerTableNamingEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
@@ -241,6 +247,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
 
   beforeAll(() => {
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -264,7 +272,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
@@ -290,6 +298,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 
   beforeAll(() => {
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -320,7 +330,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
@@ -349,6 +359,8 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
   beforeAll(() => {
     const description = "Test 'description' with 'quotes'";
     initializeEdFiOdsRelationalEntityRepository(metaEd);
+    const edfiOdsRelationalPluginEnvironment: PluginEnvironment | undefined = metaEd.plugin.get('edfiOdsRelational');
+    if (edfiOdsRelationalPluginEnvironment != null) edfiOdsRelationalPluginEnvironment.targetTechnologyVersion = '7.0.0';
 
     const table: Table = {
       ...newTable(),
@@ -362,7 +374,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
     };
     tableEntities(metaEd, namespace).set(table.tableId, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '5.0.0-pre.1';
     tableSetupEnhancer(metaEd);
     sqlServerColumnNamingEnhancer(metaEd);
     enhance(metaEd);
