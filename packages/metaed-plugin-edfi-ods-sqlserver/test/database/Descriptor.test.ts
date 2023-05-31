@@ -4,6 +4,7 @@ import {
   EnumerationBuilder,
   MetaEdTextBuilder,
   NamespaceBuilder,
+  SemVer,
   newMetaEdEnvironment,
 } from '@edfi/metaed-core';
 import { MetaEdEnvironment, Namespace } from '@edfi/metaed-core';
@@ -1406,5 +1407,49 @@ describe('when extension descriptor has required reference properties to core en
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+});
+
+describe('when descriptor is generated for ODS/API version 7+', (): void => {
+  const metaEdBase: MetaEdEnvironment = newMetaEdEnvironment();
+  const metaEd: MetaEdEnvironment = metaEdBase;
+  const namespaceName = 'EdFi';
+  const baseDescriptorTableName = 'Descriptor';
+  const descriptorName = 'DescriptorName';
+  const targetTechnologyVersion: SemVer = '7.0.0';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDescriptor(descriptorName)
+      .withDocumentation('Documentation')
+      .withEndDescriptor()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd, undefined, targetTechnologyVersion);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have discriminator column', async () => {
+    const discriminatorColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'discriminator');
+    expect(await columnExists(discriminatorColumn)).toBe(true);
+    expect(await columnIsNullable(discriminatorColumn)).toBe(true);
+    expect(await columnDataType(discriminatorColumn)).toBe(columnDataTypes.nvarchar);
+    expect(await columnLength(discriminatorColumn)).toBe(128);
+  });
+
+  it('should have Uri column', async () => {
+    const UriColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'Uri');
+    expect(await columnExists(UriColumn)).toBe(true);
+    expect(await columnIsNullable(UriColumn)).toBe(false);
+    expect(await columnDataType(UriColumn)).toBe(columnDataTypes.nvarchar);
+  });
+
+  it('should have alternate keys with namespace first', async () => {
+    expect(await tableUniqueConstraints(table(namespaceName, baseDescriptorTableName))).toEqual(['Namespace', 'CodeValue']);
   });
 });

@@ -6,6 +6,17 @@ export function hasAlternateKeys(table: Table): boolean {
 }
 
 export function getAlternateKeys(table: Table): Column[] {
+  if (
+    table.includeComputedDescriptorUriColumn &&
+    table.tableId.toLowerCase() === 'descriptor' &&
+    table.columns.some((x) => x.isPartOfAlternateKey && x.columnId.toLowerCase() === 'namespace')
+  ) {
+    const namespaceColumn = table.columns.filter((x) => x.isPartOfAlternateKey && x.columnId.toLowerCase() === 'namespace');
+    const alternativeKeyColumns = orderByPath(['data', 'edfiOdsPostgresql', 'columnName'])(
+      table.columns.filter((x) => x.isPartOfAlternateKey && x.columnId.toLowerCase() !== 'namespace'),
+    );
+    return namespaceColumn.concat(alternativeKeyColumns);
+  }
   return orderByPath(['data', 'edfiOdsPostgresql', 'columnName'])(table.columns.filter((x) => x.isPartOfAlternateKey));
 }
 

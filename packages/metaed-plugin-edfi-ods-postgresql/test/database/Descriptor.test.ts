@@ -5,6 +5,7 @@ import {
   MetaEdTextBuilder,
   NamespaceBuilder,
   DescriptorBuilder,
+  SemVer,
 } from '@edfi/metaed-core';
 import { enhanceGenerateAndExecuteSql, rollbackAndEnd } from './DatabaseTestBase';
 
@@ -230,6 +231,51 @@ describe('when descriptor does not have a map type', (): void => {
     const table = db.schemas.get(schemaName).tables.get(descriptorTableName);
 
     expect(() => table.columns.get(`${baseDescriptorTableName}TypeId`)).toThrow();
+    await rollbackAndEnd();
+  });
+});
+
+describe('when descriptor is generated for ODS/API version 7+', (): void => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'EdFi';
+  const schemaName = namespaceName.toLowerCase();
+  const baseDescriptorTableName = 'descriptor';
+  const descriptorName = 'DescriptorName';
+  const targetTechnologyVersion: SemVer = '7.0.0';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDescriptor(descriptorName)
+      .withDocumentation('Documentation')
+      .withEndDescriptor()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
+  });
+
+  it('should have discriminator and uri columns', async () => {
+    const db: Db = (await enhanceGenerateAndExecuteSql(metaEd, targetTechnologyVersion)) as Db;
+    const table = db.schemas.get(schemaName).tables.get(baseDescriptorTableName);
+    const discriminatorColumn = table.columns.get('discriminator');
+    expect(discriminatorColumn.notNull).toBe(false);
+    expect(discriminatorColumn.type.name).toBe('character varying');
+    expect(discriminatorColumn.length).toBe(128);
+
+    const uriColumn = table.columns.get('uri');
+    expect(uriColumn.notNull).toBe(false);
+    expect(uriColumn.type.name).toBe('character varying');
+    expect(uriColumn.length).toBe(306);
+
+    await rollbackAndEnd();
+  });
+  it('should have alternate keys namespace first', async () => {
+    const db: Db = (await enhanceGenerateAndExecuteSql(metaEd, targetTechnologyVersion)) as Db;
+    const table = db.schemas.get(schemaName).tables.get(baseDescriptorTableName);
+    expect(table.uniqueConstraints.length).toBe(1);
+    expect(table.uniqueConstraints[0].columns[0].name).toBe('namespace');
+    expect(table.uniqueConstraints[0].columns[1].name).toBe('codevalue');
     await rollbackAndEnd();
   });
 });

@@ -1997,6 +1997,8 @@ CREATE TABLE [edfi].[Descriptor] (
     [PriorDescriptorId] [INT] NULL,
     [EffectiveBeginDate] [DATE] NULL,
     [EffectiveEndDate] [DATE] NULL,
+    [Discriminator] [NVARCHAR](128) NULL,
+    [Uri] AS CONCAT(Namespace, '#', CodeValue) PERSISTED NOT NULL,
     [CreateDate] [DATETIME2] NOT NULL,
     [LastModifiedDate] [DATETIME2] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
@@ -2004,8 +2006,8 @@ CREATE TABLE [edfi].[Descriptor] (
         [DescriptorId] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
     CONSTRAINT [Descriptor_AK] UNIQUE NONCLUSTERED (
-        [CodeValue] ASC,
-        [Namespace] ASC
+        [Namespace] ASC,
+        [CodeValue] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -2014,6 +2016,8 @@ GO
 ALTER TABLE [edfi].[Descriptor] ADD CONSTRAINT [Descriptor_DF_Id] DEFAULT (newid()) FOR [Id]
 GO
 ALTER TABLE [edfi].[Descriptor] ADD CONSTRAINT [Descriptor_DF_LastModifiedDate] DEFAULT (getdate()) FOR [LastModifiedDate]
+GO
+CREATE UNIQUE INDEX UX_Descriptor_Uri ON [edfi].[Descriptor] (Uri) INCLUDE (DescriptorId, Discriminator)
 GO
 
 -- Table [edfi].[DescriptorMapping] --
