@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// Licensed to the Ed-Fi Alliance under one or more agreements.
-// The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
-// See the LICENSE and NOTICES files in the project root for more information.
-
 import Ajv from 'ajv/dist/2020';
 import addFormatsTo from 'ajv-formats';
 import {
@@ -184,6 +179,53 @@ describe('when building simple domain entity with all the simple non-collections
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "OptionalBooleanProperty": Array [
+          "$.optionalBooleanProperty",
+        ],
+        "OptionalDecimalProperty": Array [
+          "$.optionalDecimalProperty",
+        ],
+        "OptionalPercentProperty": Array [
+          "$.optionalPercentProperty",
+        ],
+        "OptionalShortProperty": Array [
+          "$.optionalShortProperty",
+        ],
+        "OptionalYear": Array [
+          "$.optionalYear",
+        ],
+        "RequiredCurrencyProperty": Array [
+          "$.requiredCurrencyProperty",
+        ],
+        "RequiredDateProperty": Array [
+          "$.requiredDateProperty",
+        ],
+        "RequiredDatetimeProperty": Array [
+          "$.requiredDatetimeProperty",
+        ],
+        "RequiredDurationProperty": Array [
+          "$.requiredDurationProperty",
+        ],
+        "RequiredIntegerProperty": Array [
+          "$.requiredIntegerProperty",
+        ],
+        "RequiredTimeProperty": Array [
+          "$.requiredTimeProperty",
+        ],
+        "SchoolYear": Array [
+          "$.schoolYearTypeReference.schoolYear",
+        ],
+        "StringIdentity": Array [
+          "$.stringIdentity",
+        ],
+      }
+    `);
   });
 });
 
@@ -508,6 +550,56 @@ describe('when building simple domain entity with all the simple collections', (
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "OptionalBooleanProperty": Array [
+          "$.optionalBooleanProperties[*].optionalBooleanProperty",
+        ],
+        "OptionalDecimalProperty": Array [
+          "$.optionalDecimalProperties[*].optionalDecimalProperty",
+        ],
+        "OptionalPercentProperty": Array [
+          "$.optionalPercentProperties[*].optionalPercentProperty",
+        ],
+        "OptionalShortProperty": Array [
+          "$.optionalShortProperties[*].optionalShortProperty",
+        ],
+        "OptionalYear": Array [
+          "$.optionalYears[*].optionalYear",
+        ],
+        "RequiredCurrencyProperty": Array [
+          "$.requiredCurrencyProperties[*].requiredCurrencyProperty",
+        ],
+        "RequiredDateProperty": Array [
+          "$.requiredDateProperties[*].requiredDateProperty",
+        ],
+        "RequiredDatetimeProperty": Array [
+          "$.requiredDatetimeProperties[*].requiredDatetimeProperty",
+        ],
+        "RequiredDurationProperty": Array [
+          "$.requiredDurationProperties[*].requiredDurationProperty",
+        ],
+        "RequiredIntegerProperty": Array [
+          "$.requiredIntegerProperties[*].requiredIntegerProperty",
+        ],
+        "RequiredStringProperty": Array [
+          "$.requiredStringProperties[*].requiredStringProperty",
+        ],
+        "RequiredTimeProperty": Array [
+          "$.requiredTimeProperties[*].requiredTimeProperty",
+        ],
+        "SchoolYear": Array [
+          "$.schoolYearTypeReference.schoolYear",
+        ],
+        "StringIdentity": Array [
+          "$.stringIdentity",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building a domain entity referencing another referencing another with identity', () => {
@@ -647,6 +739,43 @@ describe('when building a domain entity referencing another referencing another 
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "ClassPeriod": Array [
+          "$.classPeriods[*].classPeriodReference.classPeriodName",
+          "$.classPeriods[*].classPeriodReference.schoolId",
+        ],
+        "ClassPeriod.ClassPeriodName": Array [
+          "$.classPeriods[*].classPeriodReference.classPeriodName",
+        ],
+        "ClassPeriod.School": Array [
+          "$.classPeriods[*].classPeriodReference.schoolId",
+        ],
+        "ClassPeriod.School.SchoolId": Array [
+          "$.classPeriods[*].classPeriodReference.schoolId",
+        ],
+        "CourseOffering": Array [
+          "$.courseOfferingReference.localCourseCode",
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.LocalCourseCode": Array [
+          "$.courseOfferingReference.localCourseCode",
+        ],
+        "CourseOffering.School": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.School.SchoolId": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "SectionIdentifier": Array [
+          "$.sectionIdentifier",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building a domain entity referencing CourseOffering with an implicit merge between School and Session.School', () => {
@@ -764,6 +893,49 @@ describe('when building a domain entity referencing CourseOffering with an impli
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "CourseOffering": Array [
+          "$.courseOfferingReference.localCourseCode",
+          "$.courseOfferingReference.schoolId",
+          "$.courseOfferingReference.schoolYear",
+          "$.courseOfferingReference.sessionName",
+        ],
+        "CourseOffering.LocalCourseCode": Array [
+          "$.courseOfferingReference.localCourseCode",
+        ],
+        "CourseOffering.School": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.School.SchoolId": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.Session": Array [
+          "$.courseOfferingReference.schoolId",
+          "$.courseOfferingReference.schoolYear",
+          "$.courseOfferingReference.sessionName",
+        ],
+        "CourseOffering.Session.School": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.Session.School.SchoolId": Array [
+          "$.courseOfferingReference.schoolId",
+        ],
+        "CourseOffering.Session.SchoolYear": Array [
+          "$.courseOfferingReference.schoolYear",
+        ],
+        "CourseOffering.Session.SessionName": Array [
+          "$.courseOfferingReference.sessionName",
+        ],
+        "SectionIdentifier": Array [
+          "$.sectionIdentifier",
+        ],
+      }
+    `);
   });
 });
 
@@ -928,6 +1100,35 @@ describe('when building domain entity with nested choice and inline commons', ()
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "ContentIdentifier": Array [
+          "$.contentIdentifier",
+        ],
+        "Description": Array [
+          "$.description",
+        ],
+        "EducationContent": Array [
+          "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+        ],
+        "EducationContent.ContentIdentifier": Array [
+          "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+        ],
+        "LearningResourceMetadataURI": Array [
+          "$.learningResourceMetadataURI",
+        ],
+        "RequiredURI": Array [
+          "$.requiredURIs[*].requiredURI",
+        ],
+        "URI": Array [
+          "$.derivativeSourceURIs[*].derivativeSourceURI",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building domain entity with scalar collection named with prefix of parent entity', () => {
@@ -1013,6 +1214,20 @@ describe('when building domain entity with scalar collection named with prefix o
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "ContentIdentifier": Array [
+          "$.contentIdentifier",
+        ],
+        "EducationContentSuffixName": Array [
+          "$.suffixNames[*].suffixName",
+        ],
+      }
+    `);
   });
 });
 
@@ -1114,6 +1329,23 @@ describe('when building domain entity with Association/DomainEntity collection n
     const entity = namespace.entity.domainEntity.get(domainEntityName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get(domainEntityName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "ContentIdentifier": Array [
+          "$.contentIdentifier",
+        ],
+        "EducationContentSuffixName": Array [
+          "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+        ],
+        "EducationContentSuffixName.StringIdentity": Array [
+          "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building domain entity with a simple common collection', () => {
@@ -1214,6 +1446,23 @@ describe('when building domain entity with a simple common collection', () => {
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessmentIdentificationCode.AssessmentIdentificationSystem": Array [
+          "$.identificationCodes[*].assessmentIdentificationSystemDescriptor",
+        ],
+        "AssessmentIdentificationCode.IdentificationCode": Array [
+          "$.identificationCodes[*].identificationCode",
+        ],
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+      }
+    `);
   });
 });
 
@@ -1327,6 +1576,23 @@ describe('when building domain entity subclass with common collection and descri
     const entity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "CommunityOrganizationId": Array [
+          "$.communityOrganizationId",
+        ],
+        "EducationOrganizationIdentificationCode.EducationOrganizationIdentificationSystem": Array [
+          "$.identificationCodes[*].educationOrganizationIdentificationSystemDescriptor",
+        ],
+        "EducationOrganizationIdentificationCode.IdentificationCode": Array [
+          "$.identificationCodes[*].identificationCode",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building association with a common collection in a common collection', () => {
@@ -1339,7 +1605,7 @@ describe('when building association with a common collection in a common collect
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity('StudentEducationOrganizationAssociation')
       .withDocumentation('doc')
-      .withIntegerIdentity('Student', 'doc')
+      .withIntegerIdentity('StudentId', 'doc')
       .withCommonProperty('Address', 'doc', false, true)
       .withEndDomainEntity()
 
@@ -1427,13 +1693,13 @@ describe('when building association with a common collection in a common collect
             "type": "array",
             "uniqueItems": false,
           },
-          "student": Object {
+          "studentId": Object {
             "description": "doc",
             "type": "integer",
           },
         },
         "required": Array [
-          "student",
+          "studentId",
         ],
         "title": "EdFi.StudentEducationOrganizationAssociation",
         "type": "object",
@@ -1444,6 +1710,26 @@ describe('when building association with a common collection in a common collect
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('StudentEducationOrganizationAssociation');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('StudentEducationOrganizationAssociation');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "Address.Period.BeginDate": Array [
+          "$.addresses[*].periods[*].beginDate",
+        ],
+        "Address.Period.EndDate": Array [
+          "$.addresses[*].periods[*].endDate",
+        ],
+        "Address.StreetNumberName": Array [
+          "$.addresses[*].streetNumberName",
+        ],
+        "StudentId": Array [
+          "$.studentId",
+        ],
+      }
+    `);
   });
 });
 
@@ -1518,6 +1804,20 @@ describe('when building domain entity with a descriptor with role name', () => {
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessedGradeLevel": Array [
+          "$.assessedGradeLevelDescriptor",
+        ],
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+      }
+    `);
   });
 });
 
@@ -1606,6 +1906,20 @@ describe('when building domain entity with a descriptor collection with role nam
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessedGradeLevel": Array [
+          "$.assessedGradeLevels[*].gradeLevelDescriptor",
+        ],
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+      }
+    `);
   });
 });
 
@@ -1706,6 +2020,26 @@ describe('when building domain entity with a common with a choice', () => {
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+        "ContentStandard.PublicationDate": Array [
+          "$.contentStandard.publicationDate",
+        ],
+        "ContentStandard.PublicationYear": Array [
+          "$.contentStandard.publicationYear",
+        ],
+        "ContentStandard.Title": Array [
+          "$.contentStandard.title",
+        ],
+      }
+    `);
   });
 });
 
@@ -1814,6 +2148,23 @@ describe('when building domain entity with a common and a common collection with
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+        "AssessmentPeriod.BeginDate": Array [
+          "$.period.beginDate",
+        ],
+        "AssessmentScore.MinimumScore": Array [
+          "$.scores[*].minimumScore",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building domain entity with an all-caps property', () => {
@@ -1880,6 +2231,20 @@ describe('when building domain entity with an all-caps property', () => {
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+        "URI": Array [
+          "$.uri",
+        ],
+      }
+    `);
   });
 });
 
@@ -1982,6 +2347,26 @@ describe('when building domain entity with a common with a domain entity referen
     const entity = namespace.entity.domainEntity.get('Assessment');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('Assessment');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "AssessmentIdentifier": Array [
+          "$.assessmentIdentifier",
+        ],
+        "ContentStandard.MandatingEducationOrganization": Array [
+          "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+        ],
+        "ContentStandard.MandatingEducationOrganization.EducationOrganizationId": Array [
+          "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+        ],
+        "ContentStandard.Title": Array [
+          "$.contentStandard.title",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building domain entity with two school year enumerations, one role named', () => {
@@ -2083,6 +2468,23 @@ describe('when building domain entity with two school year enumerations, one rol
     const entity = namespace.entity.domainEntity.get('StudentSchoolAssociation');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('StudentSchoolAssociation');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "ClassOfSchoolYear": Array [
+          "$.classOfSchoolYearTypeReference.schoolYear",
+        ],
+        "SchoolId": Array [
+          "$.schoolId",
+        ],
+        "SchoolYear": Array [
+          "$.schoolYearTypeReference.schoolYear",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building domain entity with reference to domain entity with school year enumeration as part of identity', () => {
@@ -2174,6 +2576,27 @@ describe('when building domain entity with reference to domain entity with schoo
     const entity = namespace.entity.domainEntity.get('StudentSchoolAssociation');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('StudentSchoolAssociation');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "Calendar": Array [
+          "$.calendarReference.schoolId",
+          "$.calendarReference.schoolYear",
+        ],
+        "Calendar.SchoolId": Array [
+          "$.calendarReference.schoolId",
+        ],
+        "Calendar.SchoolYear": Array [
+          "$.calendarReference.schoolYear",
+        ],
+        "SchoolId": Array [
+          "$.schoolId",
+        ],
+      }
+    `);
+  });
 });
 
 describe('when building a descriptor', () => {
@@ -2241,6 +2664,11 @@ describe('when building a descriptor', () => {
     const entity = namespace.entity.descriptor.get('GradeLevel');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
   });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.descriptor.get('GradeLevel');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`Object {}`);
+  });
 });
 
 describe('when building a school year enumeration', () => {
@@ -2294,6 +2722,11 @@ describe('when building a school year enumeration', () => {
   it('should be well-formed according to ajv', () => {
     const entity = namespace.entity.schoolYearEnumeration.get('SchoolYear');
     ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.schoolYearEnumeration.get('SchoolYear');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`Object {}`);
   });
 });
 
@@ -2402,6 +2835,25 @@ describe('when building a schema for studentEducationOrganizationAssociation', (
         ],
         "title": "EdFi.StudentCohort",
         "type": "object",
+      }
+    `);
+  });
+
+  it('should be well-formed according to ajv', () => {
+    const entity = namespace.entity.domainEntity.get('StudentCohort');
+    ajv.compile(entity.data.edfiApiSchema.jsonSchema);
+  });
+
+  it('should be correct entityJsonPaths', () => {
+    const entity = namespace.entity.domainEntity.get('StudentCohort');
+    expect(entity.data.edfiApiSchema.entityJsonPaths).toMatchInlineSnapshot(`
+      Object {
+        "CohortYear.SchoolYear": Array [
+          "$.cohortYears[*].schoolYearTypeReference.schoolYear",
+        ],
+        "StudentUniqueId": Array [
+          "$.studentUniqueId",
+        ],
       }
     `);
   });

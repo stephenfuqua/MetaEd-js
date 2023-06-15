@@ -1,19 +1,18 @@
-// SPDX-License-Identifier: Apache-2.0
-// Licensed to the Ed-Fi Alliance under one or more agreements.
-// The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
-// See the LICENSE and NOTICES files in the project root for more information.
-
-import { EntityProperty, TopLevelEntity } from '@edfi/metaed-core';
+import type { EntityProperty, TopLevelEntity } from '@edfi/metaed-core';
 import {
   ReferenceElement,
-  flattenReferenceElementsFromComponent,
   ReferenceComponent,
   ReferenceGroup,
   isReferenceGroup,
+  isReferenceElement,
 } from '../model/ReferenceComponent';
-import { CollectedProperty } from '../model/CollectedProperty';
-import { EntityApiSchemaData } from '../model/EntityApiSchemaData';
-import { EntityPropertyApiSchemaData } from '../model/EntityPropertyApiSchemaData';
+import type { CollectedProperty } from '../model/CollectedProperty';
+import type { EntityApiSchemaData } from '../model/EntityApiSchemaData';
+import type { EntityPropertyApiSchemaData } from '../model/EntityPropertyApiSchemaData';
+import type { FlattenedIdentityProperty } from '../model/FlattenedIdentityProperty';
+import type { PropertyPath } from '../model/BrandedTypes';
+
+type ReferenceElementsWithPaths = Map<ReferenceElement, PropertyPath[]>;
 
 /**
  * All of the identity properties of the given entity, in sorted order
@@ -34,13 +33,88 @@ export function referenceGroupsFrom(sortedProperties: EntityProperty[]): Referen
 }
 
 /**
- * All of the non-reference properties that make up the identity of the given entity, in sorted order
+ * Takes two property paths and joins them, returning a new dot-separated path.
  */
-export function flattenedIdentityPropertiesFrom(identityProperties: EntityProperty[]): EntityProperty[] {
-  const referenceElements: ReferenceElement[] = identityProperties.flatMap((identityProperty) =>
-    flattenReferenceElementsFromComponent(identityProperty.data.edfiApiSchema.referenceComponent),
-  );
-  return referenceElements.map((referenceElement) => referenceElement.sourceProperty);
+function joinPropertyPaths(currentPropertyPath: PropertyPath, newPropertyPath: PropertyPath): PropertyPath {
+  if (currentPropertyPath === '') return newPropertyPath;
+  return `${currentPropertyPath}.${newPropertyPath}` as PropertyPath;
+}
+
+/**
+ * Flatten a graph of ReferenceComponents into an array of ReferenceElements, discarding any
+ * ReferenceGroups that are part of the graph but preserving the path information.
+ */
+function flattenReferenceElementsFromComponent(
+  referenceComponent: ReferenceComponent,
+  currentPropertyPath: PropertyPath,
+  propertyPathAccumulator: PropertyPath[],
+  referenceElementsAccumulator: ReferenceElementsWithPaths,
+) {
+  if (isReferenceElement(referenceComponent)) {
+    referenceElementsAccumulator.set(
+      referenceComponent,
+      propertyPathAccumulator.concat(
+        joinPropertyPaths(currentPropertyPath, referenceComponent.sourceProperty.fullPropertyName as PropertyPath),
+      ),
+    );
+  } else {
+    (referenceComponent as ReferenceGroup).referenceComponents.forEach((subReferenceComponent) => {
+      if (isReferenceElement(subReferenceComponent)) {
+        const subReferenceElement: ReferenceElement = subReferenceComponent as ReferenceElement;
+        referenceElementsAccumulator.set(
+          subReferenceElement,
+          propertyPathAccumulator.concat(
+            joinPropertyPaths(currentPropertyPath, subReferenceElement.sourceProperty.fullPropertyName as PropertyPath),
+          ),
+        );
+      } else {
+        const nextPropertyPath: PropertyPath = joinPropertyPaths(
+          currentPropertyPath,
+          subReferenceComponent.sourceProperty.fullPropertyName as PropertyPath,
+        );
+
+        flattenReferenceElementsFromComponent(
+          subReferenceComponent,
+          nextPropertyPath,
+          propertyPathAccumulator.concat(nextPropertyPath),
+          referenceElementsAccumulator,
+        );
+      }
+    });
+  }
+}
+
+/**
+ * Converts the given list of identity properties to only the "leaf" non-reference properties, in sorted order.
+ * Includes the paths showing how the property came to be part of the identity, if it was via a reference identity
+ * property.
+ */
+export function flattenedIdentityPropertiesFrom(identityProperties: EntityProperty[]): FlattenedIdentityProperty[] {
+  const referenceElementsWithPaths: ReferenceElementsWithPaths = new Map();
+
+  identityProperties.forEach((identityProperty) => {
+    const initialPropertyPath = (
+      identityProperty.type === 'association' || identityProperty.type === 'domainEntity'
+        ? identityProperty.fullPropertyName
+        : ''
+    ) as PropertyPath;
+
+    flattenReferenceElementsFromComponent(
+      identityProperty.data.edfiApiSchema.referenceComponent,
+      initialPropertyPath,
+      initialPropertyPath === '' ? [] : [initialPropertyPath],
+      referenceElementsWithPaths,
+    );
+  });
+
+  const result: FlattenedIdentityProperty[] = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [referenceElement, propertyPaths] of referenceElementsWithPaths) {
+    result.push({ identityProperty: referenceElement.sourceProperty, propertyPaths });
+  }
+
+  return result;
 }
 
 /**

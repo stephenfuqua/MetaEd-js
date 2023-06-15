@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// Licensed to the Ed-Fi Alliance under one or more agreements.
-// The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
-// See the LICENSE and NOTICES files in the project root for more information.
-
 import deepFreeze from 'deep-freeze';
 import { EntityProperty, newEntityProperty, NoEntityProperty } from '@edfi/metaed-core';
 
@@ -74,22 +69,4 @@ export function isReferenceGroup(referenceComponent: ReferenceComponent): refere
 
 export function isReferenceElement(referenceComponent: ReferenceComponent): referenceComponent is ReferenceElement {
   return (referenceComponent as ReferenceElement).isElement;
-}
-
-/**
- * Flatten a graph of ReferenceComponents into an array of ReferenceElements, discarding any
- * ReferenceGroups that are part of the graph.
- */
-export function flattenReferenceElementsFromComponent(referenceComponent: ReferenceComponent): ReferenceElement[] {
-  if (isReferenceElement(referenceComponent)) return [referenceComponent];
-
-  const result: ReferenceElement[] = [];
-  referenceComponent.referenceComponents.forEach((referenceElement) => {
-    if (isReferenceElement(referenceElement)) {
-      result.push(referenceElement as ReferenceElement);
-    } else {
-      result.push(...flattenReferenceElementsFromComponent(referenceElement as ReferenceGroup));
-    }
-  });
-  return result;
 }

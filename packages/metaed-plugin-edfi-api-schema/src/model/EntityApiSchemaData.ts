@@ -1,12 +1,9 @@
-// SPDX-License-Identifier: Apache-2.0
-// Licensed to the Ed-Fi Alliance under one or more agreements.
-// The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
-// See the LICENSE and NOTICES files in the project root for more information.
-
 import { MetaEdEnvironment, EnhancerResult, getAllEntitiesOfType, ModelBase } from '@edfi/metaed-core';
 import { ApiEntityMapping, NoApiEntityMapping } from './ApiEntityMapping';
 import type { CollectedProperty } from './CollectedProperty';
 import { SchemaRoot, NoSchemaRoot } from './JsonSchema';
+import type { EqualityConstraint } from './EqualityConstraint';
+import type { EntityJsonPaths } from './EntityJsonPaths';
 
 export type EntityApiSchemaData = {
   /**
@@ -17,10 +14,29 @@ export type EntityApiSchemaData = {
    * The API document JSON schema that corresponds to this MetaEd entity.
    */
   jsonSchema: SchemaRoot;
+
   /**
    * Properties that belong under this entity in the API body
    */
   collectedProperties: CollectedProperty[];
+
+  /**
+   * A mapping of dot-separated MetaEd property paths to corresponding JsonPaths to data elements
+   * in the API document.
+   *
+   * Includes both paths ending in references and paths ending in scalars. PropertyPaths ending in
+   * scalars have a single JsonPath, while PropertyPaths ending in references may have multiple
+   * JsonPaths, as document references are often composed of multiple elements.
+   *
+   * The JsonPaths array is always is sorted order.
+   */
+  entityJsonPaths: EntityJsonPaths;
+
+  /**
+   * A list of EqualityConstraints to be applied to an Ed-Fi API document. An EqualityConstraint
+   * is a source/target JsonPath pair.
+   */
+  equalityConstraints: EqualityConstraint[];
 };
 
 /**
@@ -33,6 +49,8 @@ export function addEntityApiSchemaDataTo(entity: ModelBase) {
     apiMapping: NoApiEntityMapping,
     jsonSchema: NoSchemaRoot,
     collectedProperties: [],
+    entityJsonPaths: {},
+    equalityConstraints: [],
   });
 }
 
