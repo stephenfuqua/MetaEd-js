@@ -86,6 +86,7 @@ describe('when enhancing core integer property with big hint', (): void => {
     ...newIntegerProperty(),
     metaEdName: propertyName,
     namespace,
+    hasRestriction: true,
     hasBigHint: true,
     data: { edfiXsd: {} as any },
   };

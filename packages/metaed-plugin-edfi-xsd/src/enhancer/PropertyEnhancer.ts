@@ -72,11 +72,6 @@ function reconcileSimpleTypeExtension(property: SimpleProperty, typeName: string
   return prependedWithProjectExtension(property.referencedEntity.namespace.projectExtension, typeName);
 }
 
-function determineIntegerTypeFor(integerProperty: IntegerProperty): string {
-  if (integerProperty.hasBigHint) return 'xs:long';
-  return 'xs:int';
-}
-
 function xsdTypeFor(property: EntityProperty): string {
   const typeStringFor: { [propertyType: string]: () => string } = {
     sharedDecimal: () => reconcileSimpleTypeExtension(property as SharedDecimalProperty, property.referencedType),
@@ -92,10 +87,15 @@ function xsdTypeFor(property: EntityProperty): string {
     time: () => 'xs:time',
     year: () => 'xs:gYear',
     decimal: () => reconcileSimpleTypeExtension(property as DecimalProperty, property.metaEdName),
-    integer: () =>
-      property.hasRestriction
+    integer: () => {
+      if ((property as IntegerProperty).hasBigHint) {
+        return 'xs:long';
+      }
+
+      return property.hasRestriction
         ? reconcileSimpleTypeExtension(property as IntegerProperty, property.metaEdName)
-        : determineIntegerTypeFor(property as IntegerProperty),
+        : 'xs:int';
+    },
     short: () =>
       property.hasRestriction ? reconcileSimpleTypeExtension(property as ShortProperty, property.metaEdName) : 'xs:short',
     string: () => reconcileSimpleTypeExtension(property as StringProperty, property.metaEdName),
