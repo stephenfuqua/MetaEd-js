@@ -36,6 +36,11 @@ export const V3OrGreater: SemVer = '>=3.0.0';
 export const V5OrGreater: SemVer = '>=5.0.0';
 
 /**
+ *
+ */
+export const V7OrGreater: SemVer = '>=7.0.0';
+
+/**
  * https://github.com/npm/node-semver
  */
 export const versionSatisfies = (version: SemVer, range: SemVer): boolean => {
@@ -45,6 +50,18 @@ export const versionSatisfies = (version: SemVer, range: SemVer): boolean => {
   return semver.satisfies(semverWithPrereleaseStripped, range);
 };
 
+export function formatVersionWithSuppressPrereleaseVersion(dataStandardVersion: SemVer, suppressPrereleaseVersion: boolean) {
+  if (suppressPrereleaseVersion) {
+    if (!semver.valid(dataStandardVersion)) return dataStandardVersion;
+    const semverified = semver.parse(dataStandardVersion);
+    if (semverified == null) return '';
+    const major: string = semverified.major < 10 ? `${semverified.major}` : `${semverified.major}`;
+    const minor = `${semverified.minor}`;
+    const patch = '0';
+    return `${major}.${minor}.${patch}`;
+  }
+  return dataStandardVersion;
+}
 /**
  *
  */

@@ -31,6 +31,11 @@ export async function metaEdConsole() {
       type: 'string',
       demandOption: true,
     })
+    .option('suppressPrereleaseVersion', {
+      describe: 'Suppress the prerelease identifier in the version',
+      type: 'boolean',
+      default: true,
+    })
     .help()
     .alias('help', 'h')
     .version()
@@ -54,7 +59,11 @@ export async function metaEdConsole() {
 
   if (argv['defaultPluginTechVersion'] != null)
     state.metaEdConfiguration.defaultPluginTechVersion = argv['defaultPluginTechVersion'];
-
+  if (argv['metaEdConfiguration'] == null) {
+    if (argv['suppressPrereleaseVersion'] != null)
+      state.metaEdConfiguration.suppressPrereleaseVersion = argv['suppressPrereleaseVersion'];
+    else state.metaEdConfiguration.suppressPrereleaseVersion = true;
+  }
   const dataStandardVersions: SemVer[] = findDataStandardVersions(state.metaEdConfiguration.projects);
 
   if (dataStandardVersions.length === 0) {

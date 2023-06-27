@@ -98,6 +98,11 @@ export async function metaEdDeploy() {
       type: 'string',
       demandOption: true,
     })
+    .option('suppressPrereleaseVersion', {
+      describe: 'Suppress the prerelease identifier in the version',
+      type: 'boolean',
+      default: true,
+    })
     .help()
     .alias('help', 'h')
     .version()
@@ -131,8 +136,15 @@ export async function metaEdDeploy() {
       runGenerators: true,
       stopOnValidationFailure: true,
     };
+    let suppressPrereleaseVersion: boolean;
+    if (yargs.argv['suppressPrereleaseVersion'] != null) suppressPrereleaseVersion = yargs.argv['suppressPrereleaseVersion'];
+    else suppressPrereleaseVersion = true;
     const dataStandardVersion: SemVer = dataStandardVersionFor(metaEdConfiguration.projects);
-    const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
+    const metaEd: MetaEdEnvironment = {
+      ...newMetaEdEnvironment(),
+      dataStandardVersion,
+      suppressPrereleaseVersion,
+    };
     const state: State = { ...newState(), metaEdConfiguration, pipelineOptions, metaEd, metaEdPlugins: defaultPlugins() };
 
     try {
