@@ -18,10 +18,24 @@ import { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 // Handlebars instance scoped for this plugin
 export const xsdHandlebars = handlebars.create();
 
+/**
+ * This function escapes XML characters to replace them with the encoded version or a word equivalent.
+ * @param xmlString string to be cleaned.
+ * @returns The string with the escape characters replaced.
+ */
+function replaceXmlEscapeCharacters(xmlString: string): string {
+  return xmlString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function templateString(templateName: string) {
   return fs.readFileSync(path.join(__dirname, 'templates', `${templateName}.hbs`)).toString();
 }
 
+export function registerHandleBarHelper() {
+  xsdHandlebars.registerHelper('replaceXmlEscapeCharacters', (documentation: string) =>
+    replaceXmlEscapeCharacters(documentation),
+  );
+}
 export function templateNamed(templateName: string) {
   return xsdHandlebars.compile(templateString(templateName));
 }
@@ -41,6 +55,8 @@ export const registerPartials = R.once(() => {
     complexTypeItem: templateString('complexTypeItem'),
     simpleType: templateString('simpleType'),
   } as any);
+  // Add a helper to replace escape characters
+  registerHandleBarHelper();
 });
 
 function formatXml(unformattedXml: string): string {
