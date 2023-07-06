@@ -1,7 +1,7 @@
-import { getEntitiesOfTypeForNamespaces } from '@edfi/metaed-core';
+import { SemVer, getEntitiesOfTypeForNamespaces, targetTechnologyVersionFor, versionSatisfies } from '@edfi/metaed-core';
 import { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, Namespace } from '@edfi/metaed-core';
 import {
-  addColumns,
+  addColumnsWithoutSort,
   addForeignKey,
   getPrimaryKeys,
   newTable,
@@ -25,7 +25,7 @@ import {
 } from '../../model/database/ForeignKey';
 import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
-import { Column, newColumn, newColumnNameComponent } from '../../model/database/Column';
+import { Column, columnSortV7, newColumn, newColumnNameComponent } from '../../model/database/Column';
 import { ForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
@@ -36,6 +36,7 @@ const PRIMARY_KEY_DESCRIPTOR =
   'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.';
 
 function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[] {
+  const targetTechnologyVersion: SemVer = targetTechnologyVersionFor('edfiOdsRelational', metaEd);
   const tables: Table[] = [];
 
   const mainTable: Table = {
@@ -89,7 +90,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
     isNullable: false,
     description: PRIMARY_KEY_DESCRIPTOR,
   };
-  addColumns(mainTable, [primaryKey], ColumnTransformUnchanged);
+  addColumnsWithoutSort(mainTable, [primaryKey], ColumnTransformUnchanged, targetTechnologyVersion);
 
   const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   // Bail out if core namespace isn't defined
@@ -133,7 +134,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
       description: PRIMARY_KEY_DESCRIPTOR,
     };
 
-    addColumns(mainTable, [mapTypeColumn], ColumnTransformUnchanged);
+    addColumnsWithoutSort(mainTable, [mapTypeColumn], ColumnTransformUnchanged, targetTechnologyVersion);
 
     const mapTypeForeignKey: ForeignKey = createForeignKeyUsingSourceReference(
       {
@@ -149,12 +150,31 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
     addForeignKey(mainTable, mapTypeForeignKey);
   }
 
-  const primaryKeys: Column[] = collectPrimaryKeys(descriptor, BuildStrategyDefault, columnCreatorFactory);
+  const primaryKeys: Column[] = collectPrimaryKeys(
+    descriptor,
+    BuildStrategyDefault,
+    columnCreatorFactory,
+    targetTechnologyVersion,
+  );
   primaryKeys.push(primaryKey);
+
   descriptor.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-    tableBuilder.buildTables(property, TableStrategy.default(mainTable), primaryKeys, BuildStrategyDefault, tables, null);
+    tableBuilder.buildTables(
+      property,
+      TableStrategy.default(mainTable),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+      targetTechnologyVersion,
+      null,
+    );
   });
+
+  // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    columnSortV7(mainTable, []);
+  }
 
   return tables;
 }

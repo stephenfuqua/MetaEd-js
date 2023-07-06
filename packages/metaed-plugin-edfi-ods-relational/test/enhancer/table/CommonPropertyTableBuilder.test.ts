@@ -1,4 +1,4 @@
-import { newCommon, newCommonProperty, newDomainEntity, newIntegerProperty } from '@edfi/metaed-core';
+import { SemVer, newCommon, newCommonProperty, newDomainEntity, newIntegerProperty } from '@edfi/metaed-core';
 import { Common, CommonProperty, DomainEntity, IntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
@@ -9,6 +9,8 @@ import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+
+const targetTechnologyVersion: SemVer = '6.1.0';
 
 describe('when building common property table', (): void => {
   const tableName = 'TableName';
@@ -73,7 +75,7 @@ describe('when building common property table', (): void => {
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
@@ -84,6 +86,7 @@ describe('when building common property table', (): void => {
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });
@@ -181,7 +184,7 @@ describe('when building optional common property table', (): void => {
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
@@ -192,11 +195,12 @@ describe('when building optional common property table', (): void => {
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });
 
-  it('should return join table table', (): void => {
+  it('should return join table', (): void => {
     expect(tables).toHaveLength(1);
     expect(tables[0].tableId).toBe(tableName + commonName);
     expect(tables[0].schema).toBe(tableSchema);
@@ -288,7 +292,7 @@ describe('when building required collection common property table', (): void => 
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
@@ -299,6 +303,7 @@ describe('when building required collection common property table', (): void => 
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });
@@ -383,7 +388,7 @@ describe('when building required collection common property table with make leaf
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
@@ -394,6 +399,7 @@ describe('when building required collection common property table with make leaf
       primaryKeys,
       BuildStrategyDefault.makeLeafColumnsNullable(),
       tables,
+      targetTechnologyVersion,
       null,
     );
   });

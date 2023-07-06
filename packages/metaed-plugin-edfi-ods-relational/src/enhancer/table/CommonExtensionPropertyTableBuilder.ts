@@ -1,13 +1,13 @@
-import { asCommonProperty, getEntityFromNamespaceChain, Namespace } from '@edfi/metaed-core';
+import { asCommonProperty, getEntityFromNamespaceChain, Namespace, SemVer, versionSatisfies } from '@edfi/metaed-core';
 import { ModelBase, EntityProperty, MergeDirective, ReferentialProperty } from '@edfi/metaed-core';
 import {
   TableNameGroup,
-  addColumns,
   addForeignKey,
   newTable,
   newTableNameComponent,
   newTableExistenceReason,
   newTableNameGroup,
+  addColumnsWithoutSort,
 } from '../../model/database/Table';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -15,7 +15,7 @@ import { ColumnTransform } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { BuildStrategy } from './BuildStrategy';
-import { Column } from '../../model/database/Column';
+import { Column, columnSortV7 } from '../../model/database/Column';
 import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 import { foreignKeySourceReferenceFrom } from '../../model/database/ForeignKey';
 import { ForeignKey, createForeignKeyUsingSourceReference } from '../../model/database/ForeignKey';
@@ -34,6 +34,7 @@ function buildExtensionTables(
   joinTableNamespace: Namespace,
   tables: Table[],
   tableFactory: TableBuilderFactory,
+  targetTechnologyVersion: SemVer,
 ): void {
   const commonExtension: ModelBase | null = getEntityFromNamespaceChain(
     property.metaEdName,
@@ -105,7 +106,12 @@ function buildExtensionTables(
   );
 
   addForeignKey(extensionTable, foreignKey);
-  addColumns(extensionTable, primaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(joinTableId));
+  addColumnsWithoutSort(
+    extensionTable,
+    primaryKeys,
+    ColumnTransform.primaryKeyWithNewReferenceContext(joinTableId),
+    targetTechnologyVersion,
+  );
 
   commonExtension.data.edfiOdsRelational.odsProperties.forEach((odsProperty: EntityProperty) => {
     const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(odsProperty);
@@ -115,9 +121,15 @@ function buildExtensionTables(
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });
+
+  // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    columnSortV7(extensionTable, primaryKeys);
+  }
 }
 
 export function commonExtensionPropertyTableBuilder(
@@ -131,6 +143,7 @@ export function commonExtensionPropertyTableBuilder(
       parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
       tables: Table[],
+      targetTechnologyVersion: SemVer,
     ): void {
       const commonProperty = asCommonProperty(property);
       let strategy: BuildStrategy = buildStrategy;
@@ -143,9 +156,17 @@ export function commonExtensionPropertyTableBuilder(
 
       const primaryKeys: Column[] = [];
       if (!commonProperty.isOptional) {
-        primaryKeys.push(...collectPrimaryKeys(commonProperty.referencedEntity, strategy, columnFactory));
+        primaryKeys.push(
+          ...collectPrimaryKeys(commonProperty.referencedEntity, strategy, columnFactory, targetTechnologyVersion),
+        );
       }
-      primaryKeys.push(...parentPrimaryKeys);
+
+      // For ODS/API 7+, parent primary keys come first
+      if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+        primaryKeys.unshift(...parentPrimaryKeys);
+      } else {
+        primaryKeys.push(...parentPrimaryKeys);
+      }
 
       const joinTableId: string = parentTableStrategy.tableId + commonProperty.data.edfiOdsRelational.odsName;
 
@@ -174,6 +195,7 @@ export function commonExtensionPropertyTableBuilder(
         commonProperty.referencedEntity.namespace,
         tables,
         tableFactory,
+        targetTechnologyVersion,
       );
     },
   };

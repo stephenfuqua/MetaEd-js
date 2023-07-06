@@ -1,9 +1,9 @@
 import { newNamespace, Namespace } from '@edfi/metaed-core';
 import {
   addColumn,
-  addColumns,
+  addColumnsWithoutSort,
+  addColumnsWithSort,
   getAllColumns,
-  getColumnWithStrongestConstraint,
   getNonPrimaryKeys,
   getPrimaryKeys,
   newTable,
@@ -19,35 +19,25 @@ import {
 } from '../../../src/model/database/ForeignKey';
 import { ForeignKeyStrategyDefault } from '../../../src/model/database/ForeignKeyStrategy';
 
-describe('when getting strongest constrain column with no existing column', (): void => {
-  const mockStrategy = jest.fn((existing: Column) => existing);
+describe('when addColumn with no existing column', (): void => {
   const columnName = 'ColumnName';
-  let column: Column;
+  const table: Table = newTable();
 
   beforeAll(() => {
-    column = getColumnWithStrongestConstraint(
-      newTable(),
-      { ...newColumn(), type: 'boolean', columnId: columnName },
-      mockStrategy,
-    );
-  });
-
-  it('should not call strategy', (): void => {
-    expect(mockStrategy).not.toBeCalled();
+    addColumn(table, { ...newColumn(), type: 'boolean', columnId: columnName }, '6.1.0');
   });
 
   it('should return the column', (): void => {
-    expect(column.columnId).toBe(columnName);
-    expect(column.type).toBe('boolean');
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].columnId).toBe(columnName);
+    expect(table.columns[0].type).toBe('boolean');
   });
 });
 
 describe('when getting strongest constrain column with an existing column', (): void => {
-  const mockStrategy = jest.fn((existing: Column) => existing);
   const columnName = 'ColumnName';
   let existingColumn: Column;
   let receivedColumn: Column;
-  let column: Column;
   let table: Table;
 
   beforeAll(() => {
@@ -56,17 +46,12 @@ describe('when getting strongest constrain column with an existing column', (): 
     table.columns.push(existingColumn);
 
     receivedColumn = { ...newColumn(), type: 'boolean', columnId: columnName };
-    column = getColumnWithStrongestConstraint(table, receivedColumn, mockStrategy);
+    addColumn(table, receivedColumn, '6.1.0');
   });
 
-  it('should call strategy with both columns', (): void => {
-    expect(mockStrategy).toBeCalled();
-    expect(mockStrategy).toBeCalledWith(existingColumn, receivedColumn);
-    expect(column).toBe(existingColumn);
-  });
-
-  it('should remove existing column from table', (): void => {
-    expect(table.columns).toHaveLength(0);
+  it('should replace existing column', (): void => {
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0]).toStrictEqual(receivedColumn);
   });
 });
 
@@ -76,7 +61,7 @@ describe('when using add column', (): void => {
 
   beforeAll(() => {
     table = newTable();
-    addColumn(table, { ...newColumn(), type: 'boolean', columnId: columnName });
+    addColumn(table, { ...newColumn(), type: 'boolean', columnId: columnName }, '6.1.0');
   });
 
   it('should add column to table', (): void => {
@@ -86,34 +71,141 @@ describe('when using add column', (): void => {
   });
 });
 
-describe('when using add column range', (): void => {
+describe('when using add column range without sort', (): void => {
   let table: Table;
 
   beforeAll(() => {
     table = { ...newTable(), tableId: 'TableName' };
     table.columns.push({ ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' });
 
-    addColumns(
+    addColumnsWithoutSort(
       table,
       [
-        { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' },
-        { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName' },
-        { ...newColumn(), type: 'date', columnId: 'DateColumnName' },
-        { ...newColumn(), type: 'decimal', scale: '10', precision: '4', columnId: 'DecimalColumnName' } as DecimalColumn,
-        { ...newColumn(), type: 'duration', columnId: 'DurationColumnName' },
-        { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' },
-        { ...newColumn(), type: 'percent', columnId: 'PercentColumnName' },
-        { ...newColumn(), type: 'short', columnId: 'ShortColumnName' },
-        { ...newColumn(), type: 'string', maxLength: '100', columnId: 'StringColumnName' } as StringColumn,
-        { ...newColumn(), type: 'time', columnId: 'TimeColumnName' },
         { ...newColumn(), type: 'year', columnId: 'YearColumnName' },
+        { ...newColumn(), type: 'time', columnId: 'TimeColumnName' },
+        { ...newColumn(), type: 'string', maxLength: '100', columnId: 'StringColumnName' } as StringColumn,
+        { ...newColumn(), type: 'short', columnId: 'ShortColumnName' },
+        { ...newColumn(), type: 'percent', columnId: 'PercentColumnName' },
+        { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' },
+        { ...newColumn(), type: 'duration', columnId: 'DurationColumnName' },
+        { ...newColumn(), type: 'decimal', scale: '10', precision: '4', columnId: 'DecimalColumnName' } as DecimalColumn,
+        { ...newColumn(), type: 'date', columnId: 'DateColumnName' },
+        { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName' },
+        { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' },
       ],
       ColumnTransformUnchanged,
+      '6.1.0',
     );
   });
 
   it('should add all columns except existing', (): void => {
-    expect(table.columns).toHaveLength(11);
+    expect(table.columns.map((c) => c.columnId)).toMatchInlineSnapshot(`
+      Array [
+        "YearColumnName",
+        "TimeColumnName",
+        "StringColumnName",
+        "ShortColumnName",
+        "PercentColumnName",
+        "IntegerColumnName",
+        "DurationColumnName",
+        "DecimalColumnName",
+        "DateColumnName",
+        "CurrencyColumnName",
+        "BooleanColumnName",
+      ]
+    `);
+  });
+});
+
+describe('when using add column range with sort for version <7.0.0', (): void => {
+  let table: Table;
+
+  beforeAll(() => {
+    table = { ...newTable(), tableId: 'TableName' };
+    table.columns.push({ ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' });
+
+    addColumnsWithSort(
+      table,
+      [
+        { ...newColumn(), type: 'year', columnId: 'YearColumnName' },
+        { ...newColumn(), type: 'time', columnId: 'TimeColumnName' },
+        { ...newColumn(), type: 'string', maxLength: '100', columnId: 'StringColumnName' } as StringColumn,
+        { ...newColumn(), type: 'short', columnId: 'ShortColumnName' },
+        { ...newColumn(), type: 'percent', columnId: 'PercentColumnName' },
+        { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' },
+        { ...newColumn(), type: 'duration', columnId: 'DurationColumnName' },
+        { ...newColumn(), type: 'decimal', scale: '10', precision: '4', columnId: 'DecimalColumnName' } as DecimalColumn,
+        { ...newColumn(), type: 'date', columnId: 'DateColumnName' },
+        { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName' },
+        { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' },
+      ],
+      ColumnTransformUnchanged,
+      '6.1.0',
+    );
+  });
+
+  it('should add all columns except existing', (): void => {
+    expect(table.columns.map((c) => c.columnId)).toMatchInlineSnapshot(`
+      Array [
+        "YearColumnName",
+        "TimeColumnName",
+        "StringColumnName",
+        "ShortColumnName",
+        "PercentColumnName",
+        "IntegerColumnName",
+        "DurationColumnName",
+        "DecimalColumnName",
+        "DateColumnName",
+        "CurrencyColumnName",
+        "BooleanColumnName",
+      ]
+    `);
+  });
+});
+
+describe('when using add column range with sort for ODS/API 7.0', (): void => {
+  let table: Table;
+
+  beforeAll(() => {
+    table = { ...newTable(), tableId: 'TableName' };
+    table.columns.push({ ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' });
+
+    addColumnsWithSort(
+      table,
+      [
+        { ...newColumn(), type: 'year', columnId: 'YearColumnName' },
+        { ...newColumn(), type: 'time', columnId: 'TimeColumnName' },
+        { ...newColumn(), type: 'string', maxLength: '100', columnId: 'StringColumnName' } as StringColumn,
+        { ...newColumn(), type: 'short', columnId: 'ShortColumnName' },
+        { ...newColumn(), type: 'percent', columnId: 'PercentColumnName' },
+        { ...newColumn(), type: 'integer', columnId: 'IntegerColumnName' },
+        { ...newColumn(), type: 'duration', columnId: 'DurationColumnName' },
+        { ...newColumn(), type: 'decimal', scale: '10', precision: '4', columnId: 'DecimalColumnName' } as DecimalColumn,
+        { ...newColumn(), type: 'date', columnId: 'DateColumnName' },
+        { ...newColumn(), type: 'currency', columnId: 'CurrencyColumnName' },
+        { ...newColumn(), type: 'boolean', columnId: 'BooleanColumnName' },
+      ],
+      ColumnTransformUnchanged,
+      '7.0.0',
+    );
+  });
+
+  it('should add all columns except existing', (): void => {
+    expect(table.columns.map((c) => c.columnId)).toMatchInlineSnapshot(`
+      Array [
+        "BooleanColumnName",
+        "CurrencyColumnName",
+        "DateColumnName",
+        "DecimalColumnName",
+        "DurationColumnName",
+        "IntegerColumnName",
+        "PercentColumnName",
+        "ShortColumnName",
+        "StringColumnName",
+        "TimeColumnName",
+        "YearColumnName",
+      ]
+    `);
   });
 });
 

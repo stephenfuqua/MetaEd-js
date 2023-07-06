@@ -34,7 +34,7 @@ describe('when collecting primary key columns for identity property', (): void =
       },
     });
 
-    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory, '6.1.0');
   });
 
   it('should return a primary key column', (): void => {
@@ -99,7 +99,7 @@ describe('when collecting primary key columns for inline common property', (): v
       },
     });
 
-    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory, '6.1.0');
   });
 
   it('should return a primary key column', (): void => {
@@ -179,7 +179,7 @@ describe('when collecting primary key columns for identity property and inline c
       },
     });
 
-    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory, '6.1.0');
   });
 
   it('should return two columns', (): void => {
@@ -270,16 +270,15 @@ describe('when collecting primary key columns for two inline common properties w
       },
     });
 
-    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+    columns = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory, '6.1.0');
   });
 
   it('should return two columns', (): void => {
     expect(columns).toHaveLength(2);
   });
 
-  it('should return a primary key column', (): void => {
+  it('should return a primary key column role named first', (): void => {
     expect(columns[0].type).toBe('integer');
-
     expect(columns[0].columnId).toBe(propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(false);
@@ -289,7 +288,7 @@ describe('when collecting primary key columns for two inline common properties w
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 
-  it('should return a primary key column role name', (): void => {
+  it('should return a primary key column second', (): void => {
     expect(columns[1].type).toBe('integer');
     expect(columns[1].columnId).toBe(contextName + propertyName);
     expect(columns[1].description).toBe(propertyDocumentation);

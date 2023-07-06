@@ -1,4 +1,4 @@
-import { DomainEntity, Common, InlineCommonProperty, IntegerProperty } from '@edfi/metaed-core';
+import { DomainEntity, Common, InlineCommonProperty, IntegerProperty, SemVer } from '@edfi/metaed-core';
 import { newDomainEntity, newInlineCommon, newInlineCommonProperty, newIntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
@@ -9,6 +9,8 @@ import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+
+const targetTechnologyVersion: SemVer = '6.1.0';
 
 describe('when building inline common property table', (): void => {
   const inlineCommonEntityPropertyName1 = 'InlineCommonEntityPropertyName1';
@@ -69,7 +71,7 @@ describe('when building inline common property table', (): void => {
     inlineCommon.data.edfiOdsRelational.odsProperties.push(inlineCommonEntityProperty1);
     inlineCommonProperty.referencedEntity = inlineCommon;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(inlineCommonProperty);
@@ -79,6 +81,7 @@ describe('when building inline common property table', (): void => {
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });
@@ -152,7 +155,7 @@ describe('when building optional inline common property table', (): void => {
     inlineCommon.data.edfiOdsRelational.odsProperties.push(inlineCommonEntityProperty1);
     inlineCommonProperty.referencedEntity = inlineCommon;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(inlineCommonProperty);
@@ -162,6 +165,7 @@ describe('when building optional inline common property table', (): void => {
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });

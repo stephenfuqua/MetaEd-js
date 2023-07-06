@@ -1,4 +1,4 @@
-import { DomainEntity, Choice, ChoiceProperty, IntegerProperty } from '@edfi/metaed-core';
+import { DomainEntity, Choice, ChoiceProperty, IntegerProperty, SemVer } from '@edfi/metaed-core';
 import { newDomainEntity, newChoice, newChoiceProperty, newIntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
@@ -9,6 +9,8 @@ import { Column } from '../../../src/model/database/Column';
 import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
 import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+
+const targetTechnologyVersion: SemVer = '6.1.0';
 
 describe('when building choice property table with two integer properties', (): void => {
   const choiceEntityPropertyName1 = 'ChoiceEntityPropertyName1';
@@ -76,7 +78,7 @@ describe('when building choice property table with two integer properties', (): 
     choice.data.edfiOdsRelational.odsProperties.push(...[choiceEntityProperty1, choiceEntityProperty2]);
     entityChoiceProperty.referencedEntity = choice;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty);
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
     const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityChoiceProperty);
@@ -86,6 +88,7 @@ describe('when building choice property table with two integer properties', (): 
       primaryKeys,
       BuildStrategyDefault,
       tables,
+      targetTechnologyVersion,
       null,
     );
   });

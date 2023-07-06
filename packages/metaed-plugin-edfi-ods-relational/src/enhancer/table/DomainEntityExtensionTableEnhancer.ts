@@ -5,6 +5,8 @@ import {
   versionSatisfies,
   NoNamespace,
   V3OrGreater,
+  targetTechnologyVersionFor,
+  SemVer,
 } from '@edfi/metaed-core';
 import { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from '@edfi/metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
@@ -21,7 +23,7 @@ import {
 import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { isOdsReferenceProperty } from '../../model/property/ReferenceProperty';
-import { Column } from '../../model/database/Column';
+import { Column, columnSortV7 } from '../../model/database/Column';
 import { Table } from '../../model/database/Table';
 import { TableBuilder } from './TableBuilder';
 
@@ -29,6 +31,7 @@ const enhancerName = 'DomainEntityExtensionTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, V3OrGreater)) return { enhancerName, success: true };
+  const targetTechnologyVersion: SemVer = targetTechnologyVersionFor('edfiOdsRelational', metaEd);
 
   getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'domainEntityExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))
@@ -81,7 +84,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         tables.push(mainTable);
       }
 
-      const primaryKeys: Column[] = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
+      const primaryKeys: Column[] = collectPrimaryKeys(
+        entity,
+        BuildStrategyDefault,
+        columnCreatorFactory,
+        targetTechnologyVersion,
+      );
 
       entity.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
         const tableStrategy: TableStrategy = TableStrategy.extension(
@@ -105,8 +113,21 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
             : NoTableNameGroup,
         );
         const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-        tableBuilder.buildTables(property, tableStrategy, primaryKeys, BuildStrategyDefault, tables, null);
+        tableBuilder.buildTables(
+          property,
+          tableStrategy,
+          primaryKeys,
+          BuildStrategyDefault,
+          tables,
+          targetTechnologyVersion,
+          null,
+        );
       });
+
+      // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order
+      if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+        columnSortV7(mainTable, []);
+      }
 
       entity.data.edfiOdsRelational.odsTables = tables;
       addTables(metaEd, tables);

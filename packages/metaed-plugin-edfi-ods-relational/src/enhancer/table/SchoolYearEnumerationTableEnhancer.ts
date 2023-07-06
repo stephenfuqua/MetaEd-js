@@ -1,4 +1,9 @@
-import { getEntitiesOfTypeForNamespaces, SchoolYearEnumeration } from '@edfi/metaed-core';
+import {
+  getEntitiesOfTypeForNamespaces,
+  SchoolYearEnumeration,
+  SemVer,
+  targetTechnologyVersionFor,
+} from '@edfi/metaed-core';
 import { EnhancerResult, MetaEdEnvironment, ModelBase } from '@edfi/metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import {
@@ -7,7 +12,7 @@ import {
   newTableNameGroup,
   newTableNameComponent,
   newTableExistenceReason,
-  addColumns,
+  addColumnsWithoutSort,
 } from '../../model/database/Table';
 import { newColumn, StringColumn, newColumnNameComponent } from '../../model/database/Column';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
@@ -15,8 +20,8 @@ import { ColumnType } from '../../model/database/ColumnType';
 
 const enhancerName = 'SchoolYearEnumerationTableEnhancer';
 
-// @ts-ignore - "metaEd" is never read
 function build(metaEd: MetaEdEnvironment, entity: SchoolYearEnumeration): Table {
+  const targetTechnologyVersion: SemVer = targetTechnologyVersionFor('edfiOdsRelational', metaEd);
   const { namespace, documentation } = entity;
   const table: Table = {
     ...newTable(),
@@ -47,7 +52,7 @@ function build(metaEd: MetaEdEnvironment, entity: SchoolYearEnumeration): Table 
     isAggregateRootTable: true,
   };
 
-  addColumns(
+  addColumnsWithoutSort(
     table,
     [
       {
@@ -80,6 +85,7 @@ function build(metaEd: MetaEdEnvironment, entity: SchoolYearEnumeration): Table 
       },
     ],
     ColumnTransformUnchanged,
+    targetTechnologyVersion,
   );
   return table;
 }

@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import { EntityProperty, ReferentialProperty, asReferentialProperty } from '@edfi/metaed-core';
-import { addColumns, addForeignKey, newTable, newTableExistenceReason } from '../../model/database/Table';
+import { EntityProperty, ReferentialProperty, SemVer, asReferentialProperty } from '@edfi/metaed-core';
+import { addColumnsWithoutSort, addForeignKey, newTable, newTableExistenceReason } from '../../model/database/Table';
 import { joinTableNamer } from './TableNaming';
 import { ColumnTransform, ColumnTransformPrimaryKey, ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
@@ -28,10 +28,11 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
       parentPrimaryKeys: Column[],
       buildStrategy: BuildStrategy,
       tables: Table[],
+      targetTechnologyVersion: SemVer,
       parentIsRequired: boolean | null,
     ): void {
       const enumeration: ReferentialProperty = asReferentialProperty(property);
-      const columnCreator: ColumnCreator = factory.columnCreatorFor(enumeration);
+      const columnCreator: ColumnCreator = factory.columnCreatorFor(enumeration, targetTechnologyVersion);
 
       if (!enumeration.data.edfiOdsRelational.odsIsCollection) {
         const enumerationColumn: Column = R.head(columnCreator.createColumns(enumeration, buildStrategy));
@@ -44,7 +45,12 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           foreignKeyStrategyFor(enumeration),
         );
         addForeignKey(parentTableStrategy.table, foreignKey);
-        addColumns(parentTableStrategy.table, [enumerationColumn], buildStrategy.leafColumns(ColumnTransformUnchanged));
+        addColumnsWithoutSort(
+          parentTableStrategy.table,
+          [enumerationColumn],
+          buildStrategy.leafColumns(ColumnTransformUnchanged),
+          targetTechnologyVersion,
+        );
       } else {
         const { tableId, nameGroup } = joinTableNamer(enumeration, parentTableStrategy, buildStrategy);
         const joinTable: Table = {
@@ -77,10 +83,11 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           ),
         );
         addForeignKey(joinTable, parentForeignKey);
-        addColumns(
+        addColumnsWithoutSort(
           joinTable,
           parentPrimaryKeys,
           ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.tableId),
+          targetTechnologyVersion,
         );
 
         const columns: Column[] = columnCreator.createColumns(enumeration, buildStrategy.columnNamerIgnoresRoleName());
@@ -93,7 +100,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           foreignKeyStrategyFor(enumeration),
         );
         addForeignKey(joinTable, foreignKey);
-        addColumns(joinTable, columns, ColumnTransformPrimaryKey);
+        addColumnsWithoutSort(joinTable, columns, ColumnTransformPrimaryKey, targetTechnologyVersion);
       }
     },
   };

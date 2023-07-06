@@ -2,13 +2,15 @@ import deepFreeze from 'deep-freeze';
 import * as R from 'ramda';
 import {
   Logger,
-  orderByProp,
   NoTopLevelEntity,
   NoNamespace,
   ModelBase,
   TopLevelEntity,
   EntityProperty,
   Namespace,
+  orderByProp,
+  SemVer,
+  versionSatisfies,
 } from '@edfi/metaed-core';
 import { columnConstraintMerge, Column, NoColumn } from './Column';
 import { ColumnTransform } from './ColumnTransform';
@@ -212,26 +214,65 @@ export function isTableNameComponent(nameElement: TableNameElement): nameElement
   return (nameElement as TableNameComponent).isComponent;
 }
 
-export function getColumnWithStrongestConstraint(
-  table: Table,
-  column: Column,
-  constraintStrategy: (existing: Column, received: Column) => Column,
-): Column {
+/**
+ * Adds a column while doing delete and append for duplicate columns rather than replacement
+ */
+function addColumnV5(table: Table, column: Column) {
   const existingColumn = table.columns.find((x) => x.columnId === column.columnId);
-  if (existingColumn == null) return column;
-
-  Logger.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
-  table.columns = R.reject((c: Column) => c.columnId === column.columnId)(table.columns);
-  return constraintStrategy(existingColumn, column);
+  if (existingColumn == null) {
+    table.columns.push(column);
+  } else {
+    Logger.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+    table.columns = R.reject((c: Column) => c.columnId === column.columnId)(table.columns);
+    table.columns.push(columnConstraintMerge(existingColumn, column));
+  }
 }
 
-export function addColumn(table: Table, column: Column): void {
-  const clone: Column = getColumnWithStrongestConstraint(table, column, columnConstraintMerge);
-  table.columns.push(clone);
+/**
+ * Adds a column while doing replacement for duplicate columns rather than delete and append
+ */
+function addColumnV7(table: Table, column: Column) {
+  const existingColumnIndex = table.columns.findIndex((x) => x.columnId === column.columnId);
+  if (existingColumnIndex === -1) {
+    table.columns.push(column);
+  } else {
+    Logger.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+    table.columns[existingColumnIndex] = columnConstraintMerge(table.columns[existingColumnIndex], column);
+  }
 }
 
-export function addColumns(table: Table, columns: Column[], strategy: ColumnTransform): void {
-  strategy.transform(columns).forEach((column) => addColumn(table, column));
+export function addColumn(table: Table, column: Column, targetTechnologyVersion: SemVer): void {
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    addColumnV7(table, column);
+  } else {
+    addColumnV5(table, column);
+  }
+}
+
+export function addColumnsWithoutSort(
+  table: Table,
+  columns: Column[],
+  strategy: ColumnTransform,
+  targetTechnologyVersion: SemVer,
+): void {
+  strategy.transform(columns).forEach((column) => addColumn(table, column, targetTechnologyVersion));
+}
+
+/**
+ * Adds columns to table. Does so in sorted order if appropriate for the ODS/API targetTechnologyVersion
+ */
+export function addColumnsWithSort(
+  table: Table,
+  columns: Column[],
+  strategy: ColumnTransform,
+  targetTechnologyVersion: SemVer,
+): void {
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    const sortedColumns: Column[] = orderByProp('columnId')(strategy.transform(columns));
+    sortedColumns.forEach((column) => addColumn(table, column, targetTechnologyVersion));
+  } else {
+    strategy.transform(columns).forEach((column) => addColumn(table, column, targetTechnologyVersion));
+  }
 }
 
 export function getPrimaryKeys(table: Table): Column[] {

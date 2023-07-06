@@ -1,4 +1,4 @@
-import { EntityProperty, MetaEdEnvironment, TopLevelEntity } from '@edfi/metaed-core';
+import { EntityProperty, MetaEdEnvironment, SemVer, TopLevelEntity, versionSatisfies } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -13,19 +13,53 @@ import { TableBuilder } from './TableBuilder';
 
 // Build top level and sub level tables for the given top level entity,
 // including columns for each property and cascading through special property types as needed
-export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Table, tables: Table[]): void {
-  const primaryKeys: Column[] = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory).map((x: Column) =>
-    cloneColumn(x),
-  );
+export function buildTablesFromProperties(
+  entity: TopLevelEntity,
+  mainTable: Table,
+  tables: Table[],
+  targetTechnologyVersion: SemVer,
+): void {
+  const primaryKeys: Column[] = collectPrimaryKeys(
+    entity,
+    BuildStrategyDefault,
+    columnCreatorFactory,
+    targetTechnologyVersion,
+  ).map((x: Column) => cloneColumn(x));
+
+  // For ODS/API 7+, collected primary keys of main tables need to be sorted
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    primaryKeys.sort((a: Column, b: Column) => a.columnId.localeCompare(b.columnId));
+  }
 
   entity.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-    tableBuilder.buildTables(property, TableStrategy.default(mainTable), primaryKeys, BuildStrategyDefault, tables, null);
+    tableBuilder.buildTables(
+      property,
+      TableStrategy.default(mainTable),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+      targetTechnologyVersion,
+      null,
+    );
   });
+
+  // For ODS/API 7+, primary keys of main table needs to be brought to the front and sorted
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    mainTable.columns.sort((a: Column, b: Column) => {
+      // If neither are PKs, order alphabetically
+      if (!a.isPartOfPrimaryKey && !b.isPartOfPrimaryKey) return a.columnId.localeCompare(b.columnId);
+      // If first is a PK and second is not, it stays first
+      if (a.isPartOfPrimaryKey && !b.isPartOfPrimaryKey) return -1;
+      // If second is a PK and first is not, it needs to move up
+      if (!a.isPartOfPrimaryKey && b.isPartOfPrimaryKey) return 1;
+      // If they are both primary keys, order alphabetically
+      return a.columnId.localeCompare(b.columnId);
+    });
+  }
 }
 
-// @ts-ignore - "metaEd" is never read
-export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity, aggregateRootTable: boolean): Table {
+export function buildMainTable(_metaEd: MetaEdEnvironment, entity: TopLevelEntity, aggregateRootTable: boolean): Table {
   const mainTable: Table = {
     ...newTable(),
     namespace: entity.namespace,
