@@ -487,3 +487,77 @@ describe('when building a domain entity with a descriptor collection that meets 
     expect(gradeLevelDescriptorApiName).toEqual('gradeLevels');
   });
 });
+
+describe('when building a domain entity with a optional collections with prefix of name matching suffix of parent entity name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let assessmentScoreApiName: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('ObjectiveAssessment')
+      .withDocumentation('doc')
+      .withStringIdentity('IdentificationCode', 'doc', '30')
+      .withCommonProperty('AssessmentScore', 'doc', false, true)
+      .withStringProperty('AssessmentDescription', 'doc', false, true, '100')
+      .withIntegerProperty('AssessmentNumber', 'doc', false, true)
+      .withEndDomainEntity()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    domainEntityReferenceEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+    referenceComponentEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should have the prefix removed from AssessmentScore', () => {
+    assessmentScoreApiName = metaEd.propertyIndex.common[0].data.edfiApiSchema.apiMapping.fullName;
+    expect(assessmentScoreApiName).toEqual('scores');
+  });
+
+  it('should have the prefix removed from AssessmentDescription', () => {
+    assessmentScoreApiName = metaEd.propertyIndex.string[1].data.edfiApiSchema.apiMapping.fullName;
+    expect(assessmentScoreApiName).toEqual('descriptions');
+  });
+
+  it('should have the prefix removed from AssessmentNumber', () => {
+    assessmentScoreApiName = metaEd.propertyIndex.integer[0].data.edfiApiSchema.apiMapping.fullName;
+    expect(assessmentScoreApiName).toEqual('numbers');
+  });
+});
+
+describe('when building a domain entity with a optional collection with prefix of role name matching suffix of parent entity name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let discussionTopicAWithRoleNameApiName: any = null;
+  let meadowlarkData: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('ClassDiscussion')
+      .withDocumentation('doc')
+      .withStringProperty('Topic', 'doc', false, true, '100', '0', 'DiscussionTopicWithRoleName')
+      .withEndDomainEntity()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    domainEntityReferenceEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+    referenceComponentEnhancer(metaEd);
+    enhance(metaEd);
+
+    meadowlarkData = metaEd.propertyIndex.string[0].data.edfiApiSchema;
+  });
+
+  it('should have the prefix removed from the name', () => {
+    discussionTopicAWithRoleNameApiName = meadowlarkData.apiMapping.fullName;
+    expect(discussionTopicAWithRoleNameApiName).toEqual('topicWithRoleNameTopics');
+  });
+});
