@@ -24,7 +24,10 @@ export function collectProperties(
   // InlineCommon and Choice are never objects in the API document. Instead pull up their property collections.
   if (currentProperty.type === 'inlineCommon' || currentProperty.type === 'choice') {
     const optionalDueToParent =
-      currentProperty.isOptional || currentProperty.isOptionalCollection || propertyModifier.optionalDueToParent;
+      currentProperty.isOptional ||
+      currentProperty.isOptionalCollection ||
+      propertyModifier.optionalDueToParent ||
+      currentProperty.type === 'choice';
     const parentPrefixes =
       currentProperty.roleName === currentProperty.metaEdName
         ? [...propertyModifier.parentPrefixes]
