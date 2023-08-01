@@ -4,8 +4,17 @@ import {
   DomainEntityBuilder,
   MetaEdTextBuilder,
   NamespaceBuilder,
+  AssociationBuilder,
+  ChoiceBuilder,
+  CommonBuilder,
 } from '@edfi/metaed-core';
-import { domainEntityReferenceEnhancer, mergeDirectiveEnhancer } from '@edfi/metaed-plugin-edfi-unified';
+import {
+  associationReferenceEnhancer,
+  choiceReferenceEnhancer,
+  commonReferenceEnhancer,
+  domainEntityReferenceEnhancer,
+  mergeDirectiveEnhancer,
+} from '@edfi/metaed-plugin-edfi-unified';
 import { enhance as entityPropertyApiSchemaDataSetupEnhancer } from '../../src/model/EntityPropertyApiSchemaData';
 import { enhance as entityApiSchemaDataSetupEnhancer } from '../../src/model/EntityApiSchemaData';
 import { enhance as referenceComponentEnhancer } from '../../src/enhancer/ReferenceComponentEnhancer';
@@ -13,6 +22,7 @@ import { enhance as apiPropertyMappingEnhancer } from '../../src/enhancer/ApiPro
 import { enhance as propertyCollectingEnhancer } from '../../src/enhancer/PropertyCollectingEnhancer';
 import { enhance as apiEntityMappingEnhancer } from '../../src/enhancer/ApiEntityMappingEnhancer';
 import { enhance as jsonSchemaEnhancer } from '../../src/enhancer/JsonSchemaEnhancer';
+import { enhance as jsonPathsMappingEnhancer } from '../../src/enhancer/JsonPathsMappingEnhancer';
 
 import { enhance } from '../../src/enhancer/EqualityConstraintEnhancer';
 
@@ -49,7 +59,7 @@ describe('when building domain entity with DomainEntity collection and single me
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
-
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -103,6 +113,7 @@ describe('when building domain entity with single merge directive', () => {
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -160,6 +171,7 @@ describe('when building domain entity with DomainEntity collection and two merge
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -232,6 +244,7 @@ describe('when building domain entity with DomainEntity collection and single me
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -300,6 +313,7 @@ describe('when building domain entity with DomainEntity collection and single me
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -379,6 +393,7 @@ describe('when two domain entities with all four possible simple identities are 
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -467,6 +482,7 @@ describe('when merging on both a reference and a simple identity down multiple l
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -547,6 +563,7 @@ describe('when merging on a reference with multiple levels of domain entities be
     propertyCollectingEnhancer(metaEd);
     apiEntityMappingEnhancer(metaEd);
     jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
     enhance(metaEd);
   });
 
@@ -565,6 +582,137 @@ describe('when merging on a reference with multiple levels of domain entities be
         Object {
           "sourceJsonPath": "$.courseOfferingReference.schoolYear",
           "targetJsonPath": "$.sectionReference.schoolYear",
+        },
+      ]
+    `);
+  });
+});
+
+describe('when merging on a reference through a choice', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'EdFi';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity('StudentCompetencyObjective')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('Student', 'doc')
+      .withChoiceProperty('StudentCompetencyObjectiveChoice', 'doc', false, false)
+      .withMergeDirective('StudentCompetencyObjectiveChoice.StudentSectionAssociation.Student', 'Student')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('Student')
+      .withDocumentation('doc')
+      .withIntegerIdentity('StudentId', 'doc')
+      .withEndDomainEntity()
+
+      .withStartChoice('StudentCompetencyObjectiveChoice')
+      .withDocumentation('doc')
+      .withAssociationProperty('StudentSectionAssociation', 'doc', false, true)
+      .withEndChoice()
+
+      .withStartAssociation('StudentSectionAssociation')
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('Student', 'doc')
+      .withAssociationDomainEntityProperty('Section', 'doc')
+      .withEndAssociation()
+
+      .withStartDomainEntity('Section')
+      .withDocumentation('doc')
+      .withIntegerIdentity('SectionId', 'doc')
+      .withEndDomainEntity()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new ChoiceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    domainEntityReferenceEnhancer(metaEd);
+    associationReferenceEnhancer(metaEd);
+    choiceReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+    referenceComponentEnhancer(metaEd);
+    apiPropertyMappingEnhancer(metaEd);
+    propertyCollectingEnhancer(metaEd);
+    apiEntityMappingEnhancer(metaEd);
+    jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create the correct equality constraints', () => {
+    const entity = metaEd.namespace.get(namespaceName)?.entity.domainEntity.get('StudentCompetencyObjective');
+    expect(entity?.data.edfiApiSchema.equalityConstraints).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "sourceJsonPath": "$.studentSectionAssociations[*].studentSectionAssociationReference.studentId",
+          "targetJsonPath": "$.studentReference.studentId",
+        },
+      ]
+    `);
+  });
+});
+
+describe('when merging on a reference through a common collection', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'EdFi';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+
+      .withStartDomainEntity('StudentAssessment')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('Assessment', 'doc')
+      .withCommonProperty('StudentAssessmentItem', 'doc', false, true)
+      .withMergeDirective('StudentAssessmentItem.AssessmentItem.Assessment', 'Assessment')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('Assessment')
+      .withDocumentation('doc')
+      .withIntegerIdentity('AssessmentId', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('AssessmentItem')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('Assessment', 'doc')
+      .withEndDomainEntity()
+
+      .withStartCommon('StudentAssessmentItem')
+      .withDocumentation('doc')
+      .withDomainEntityIdentity('AssessmentItem', 'doc')
+      .withEndCommon()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    domainEntityReferenceEnhancer(metaEd);
+    commonReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+    referenceComponentEnhancer(metaEd);
+    apiPropertyMappingEnhancer(metaEd);
+    propertyCollectingEnhancer(metaEd);
+    apiEntityMappingEnhancer(metaEd);
+    jsonSchemaEnhancer(metaEd);
+    jsonPathsMappingEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create the correct equality constraints', () => {
+    const entity = metaEd.namespace.get(namespaceName)?.entity.domainEntity.get('StudentAssessment');
+    expect(entity?.data.edfiApiSchema.equalityConstraints).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "sourceJsonPath": "$.items[*].assessmentItemReference.assessmentId",
+          "targetJsonPath": "$.assessmentReference.assessmentId",
         },
       ]
     `);
