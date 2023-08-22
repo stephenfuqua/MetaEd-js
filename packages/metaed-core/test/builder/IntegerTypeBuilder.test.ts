@@ -13,7 +13,6 @@ describe('when building shared integer in extension namespace', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -24,7 +23,7 @@ describe('when building shared integer in extension namespace', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartSharedInteger(entityName, metaEdId)
+      .withStartSharedInteger(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
@@ -61,10 +60,6 @@ describe('when building shared integer in extension namespace', (): void => {
 
   it('should have type humanized name', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
-  });
-
-  it('should have metaed id', (): void => {
-    expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', (): void => {
@@ -107,7 +102,6 @@ describe('when building shared integer with big min value', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
 
   const expectedRepositoryId = `${projectExtension}-${entityName}`;
@@ -116,7 +110,7 @@ describe('when building shared integer with big min value', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartSharedInteger(entityName, metaEdId)
+      .withStartSharedInteger(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(null, null, true, false)
       .withEndSharedInteger()
@@ -147,7 +141,6 @@ describe('when building shared integer with big max value', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
 
   const expectedRepositoryId = `${projectExtension}-${entityName}`;
@@ -156,7 +149,7 @@ describe('when building shared integer with big max value', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartSharedInteger(entityName, metaEdId)
+      .withStartSharedInteger(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(null, null, false, true)
       .withEndSharedInteger()
@@ -195,9 +188,9 @@ describe('when building integer property with big min value', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
+      .withStartDomainEntity('DomainEntity')
       .withDocumentation(documentation)
-      .withIntegerProperty(entityName, documentation, true, false, null, null, null, null, null, true, false)
+      .withIntegerProperty(entityName, documentation, true, false, null, null, null, null, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -234,9 +227,9 @@ describe('when building integer property with big max value', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
+      .withStartDomainEntity('DomainEntity')
       .withDocumentation(documentation)
-      .withIntegerProperty(entityName, documentation, true, false, null, null, null, null, null, false, true)
+      .withIntegerProperty(entityName, documentation, true, false, null, null, null, null, false, true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -307,7 +300,6 @@ describe('when building domain entity with integer property in extension namespa
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -318,9 +310,9 @@ describe('when building domain entity with integer property in extension namespa
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
+      .withStartDomainEntity('DomainEntity')
       .withDocumentation(documentation)
-      .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
+      .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -357,10 +349,6 @@ describe('when building domain entity with integer property in extension namespa
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', (): void => {
-    expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
-  });
-
   it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
@@ -393,7 +381,6 @@ describe('when building shared short in extension namespace', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -404,7 +391,7 @@ describe('when building shared short in extension namespace', (): void => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartSharedShort(entityName, metaEdId)
+      .withStartSharedShort(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
@@ -443,10 +430,6 @@ describe('when building shared short in extension namespace', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', (): void => {
-    expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
-  });
-
   it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
@@ -479,7 +462,6 @@ describe('when building domain entity with short property in extension namespace
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -490,9 +472,9 @@ describe('when building domain entity with short property in extension namespace
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
+      .withStartDomainEntity('DomainEntity')
       .withDocumentation(documentation)
-      .withShortProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
+      .withShortProperty(entityName, documentation, true, false, maxValue, minValue)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -529,10 +511,6 @@ describe('when building domain entity with short property in extension namespace
     expect(getIntegerType(namespace.entity, expectedRepositoryId).typeHumanizedName).toBe('Integer Type');
   });
 
-  it('should have metaed id', (): void => {
-    expect(getIntegerType(namespace.entity, expectedRepositoryId).metaEdId).toBe(metaEdId);
-  });
-
   it('should have documentation', (): void => {
     expect(getIntegerType(namespace.entity, expectedRepositoryId).documentation).toBe(documentation);
   });
@@ -565,9 +543,7 @@ describe('when building multiple shared integers in extension namespace', (): vo
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const entityName2 = 'EntityName2';
-  const metaEdId2 = '1234';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -579,12 +555,12 @@ describe('when building multiple shared integers in extension namespace', (): vo
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartSharedInteger(entityName, metaEdId)
+      .withStartSharedInteger(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
 
-      .withStartSharedInteger(entityName2, metaEdId2)
+      .withStartSharedInteger(entityName2)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
@@ -616,9 +592,7 @@ describe('when building domain entity with multiple integer properties in extens
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '123';
   const entityName2 = 'EntityName2';
-  const metaEdId2 = '1234';
   const documentation = 'doc';
   const minValue = '2';
   const maxValue = '100';
@@ -630,10 +604,10 @@ describe('when building domain entity with multiple integer properties in extens
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
+      .withStartDomainEntity('DomainEntity')
       .withDocumentation(documentation)
-      .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
-      .withIntegerProperty(entityName2, documentation, true, false, maxValue, minValue, null, metaEdId2)
+      .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue)
+      .withIntegerProperty(entityName2, documentation, true, false, maxValue, minValue)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))

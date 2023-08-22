@@ -13,9 +13,7 @@ describe('when building choice in extension namespace', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const propertyName = 'PropertyName';
-  const propertyMetaEdId = '2';
   const propertyDocumentation = 'PropertyDocumentation';
   const entityDocumentation = 'EntityDocumentation';
   let namespace: any = null;
@@ -25,9 +23,9 @@ describe('when building choice in extension namespace', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -53,10 +51,6 @@ describe('when building choice in extension namespace', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', (): void => {
-    expect(getChoice(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
-  });
-
   it('should have project extension', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
@@ -78,7 +72,6 @@ describe('when building choice in extension namespace', (): void => {
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
-    expect(property.metaEdId).toBe(propertyMetaEdId);
     expect(property.isRequired).toBe(true);
     expect(property.documentation).toBe(propertyDocumentation);
   });
@@ -132,9 +125,7 @@ describe('when building duplicate choices', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const propertyName = 'PropertyName';
-  const propertyMetaEdId = '2';
   const propertyDocumentation = 'PropertyDocumentation';
   const entityDocumentation = 'EntityDocumentation';
   let namespace: any = null;
@@ -144,14 +135,14 @@ describe('when building duplicate choices', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
 
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -210,11 +201,9 @@ describe('when building choice with no choice name', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
-  const entityMetaEdId = '1';
   const entityDocumentation = 'EntityDocumentation';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
-  const propertyMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -222,9 +211,9 @@ describe('when building choice with no choice name', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -240,8 +229,8 @@ describe('when building choice with no choice name', (): void => {
   it('should have missing id error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
       Array [
-        "missing ID at '[1]', column: 10, line: 2, token: [1]",
-        "missing ID at '[1]', column: 10, line: 2, token: [1]",
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
       ]
     `);
   });
@@ -255,11 +244,9 @@ describe('when building choice with lowercase choice name', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const entityMetaEdId = '1';
   const entityDocumentation = 'EntityDocumentation';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
-  const propertyMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -267,9 +254,9 @@ describe('when building choice with lowercase choice name', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -300,10 +287,8 @@ describe('when building choice with no documentation', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
-  const propertyMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -311,8 +296,8 @@ describe('when building choice with no documentation', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withStartChoice(entityName)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -334,10 +319,6 @@ describe('when building choice with no documentation', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', (): void => {
-    expect(getChoice(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
-  });
-
   it('should have project extension', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
@@ -353,8 +334,8 @@ describe('when building choice with no documentation', (): void => {
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
       Array [
-        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
-        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
       ]
     `);
   });
@@ -368,7 +349,6 @@ describe('when building choice with no property', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const entityDocumentation = 'EntityDocumentation';
   let namespace: any = null;
 
@@ -377,7 +357,7 @@ describe('when building choice with no property', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
       .withEndChoice()
       .withEndNamespace()
@@ -398,10 +378,6 @@ describe('when building choice with no property', (): void => {
 
   it('should have namespace', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getChoice(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -434,11 +410,9 @@ describe('when building choice with invalid trailing text', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const entityDocumentation = 'EntityDocumentation';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
-  const propertyMetaEdId = '2';
   const trailingText = '\r\nTrailingText';
   let namespace: any = null;
 
@@ -447,9 +421,9 @@ describe('when building choice with invalid trailing text', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withTrailingText(trailingText)
       .withEndChoice()
       .withEndNamespace()
@@ -472,10 +446,6 @@ describe('when building choice with invalid trailing text', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', (): void => {
-    expect(getChoice(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
-  });
-
   it('should have project extension', (): void => {
     expect(getChoice(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
@@ -493,7 +463,6 @@ describe('when building choice with invalid trailing text', (): void => {
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
-    expect(property.metaEdId).toBe(propertyMetaEdId);
     expect(property.isRequired).toBe(true);
     expect(property.documentation).toBe(propertyDocumentation);
   });
@@ -515,9 +484,7 @@ describe('when building choice source map', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const entityMetaEdId = '1';
   const propertyName = 'PropertyName';
-  const propertyMetaEdId = '2';
   const propertyDocumentation = 'PropertyDocumentation';
   const entityDocumentation = 'EntityDocumentation';
   let namespace: any = null;
@@ -527,9 +494,9 @@ describe('when building choice source map', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartChoice(entityName, entityMetaEdId)
+      .withStartChoice(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndChoice()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -540,10 +507,6 @@ describe('when building choice source map', (): void => {
 
   it('should have a documentation property', (): void => {
     expect(getChoice(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
-  });
-
-  it('should have a metaEdId property', (): void => {
-    expect(getChoice(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', (): void => {
@@ -592,11 +555,6 @@ describe('when building choice source map', (): void => {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
-        },
-        "metaEdId": Object {
-          "column": 20,
-          "line": 2,
-          "tokenText": "[1]",
         },
         "metaEdName": Object {
           "column": 9,

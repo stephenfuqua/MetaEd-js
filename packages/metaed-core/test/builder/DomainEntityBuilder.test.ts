@@ -15,7 +15,6 @@ describe('when building simple domain entity in extension namespace', (): void =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const maxLength = '10';
   const minLength = '2';
   const projectExtension = 'ProjectExtension';
@@ -30,7 +29,7 @@ describe('when building simple domain entity in extension namespace', (): void =
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, maxLength, minLength)
@@ -57,10 +56,6 @@ describe('when building simple domain entity in extension namespace', (): void =
 
   it('should have correct namespace', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have correct metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', (): void => {
@@ -156,7 +151,6 @@ describe('when building duplicate domain entities', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const projectExtension = 'ProjectExtension';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -169,13 +163,13 @@ describe('when building duplicate domain entities', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
 
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -233,7 +227,6 @@ describe('when building duplicate property names', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const projectExtension = 'ProjectExtension';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -245,7 +238,7 @@ describe('when building duplicate property names', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -293,7 +286,6 @@ describe('when building duplicate property names with different role name names'
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const projectExtension = 'ProjectExtension';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -305,7 +297,7 @@ describe('when building duplicate property names with different role name names'
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context1')
@@ -325,7 +317,6 @@ describe('when building duplicate property names with same role name name', (): 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const projectExtension = 'ProjectExtension';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -337,7 +328,7 @@ describe('when building duplicate property names with same role name name', (): 
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context')
@@ -385,7 +376,6 @@ describe('when building domain entity without extension', (): void => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: ValidationFailure[] = [];
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const entityName = 'EntityName';
   const stringPropertyName = 'StringPropertyName';
   let namespace: any = null;
@@ -395,7 +385,7 @@ describe('when building domain entity without extension', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
@@ -417,10 +407,6 @@ describe('when building domain entity without extension', (): void => {
 
   it('should have correct namespace', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have correct metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have no project extension', (): void => {
@@ -498,7 +484,7 @@ describe('when building domain entity with a role name and shorten to', (): void
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCommonProperty(propertyName, 'doc', true, false, roleNameName, null, shortenToName)
+      .withCommonProperty(propertyName, 'doc', true, false, roleNameName, shortenToName)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -864,11 +850,6 @@ describe('when building domain entity with shared integer reference', (): void =
           "line": 0,
           "tokenText": "NoSourceMap",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 44,
           "line": 5,
@@ -1053,11 +1034,6 @@ describe('when building domain entity with shared integer reference without name
         },
         "mergeDirectives": Array [],
         "mergeTargetedBy": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
-        "metaEdId": Object {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
@@ -1376,7 +1352,6 @@ describe('when building abstract entity in extension namespace', (): void => {
   const validationFailures: ValidationFailure[] = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'Namespace';
-  const metaEdId = '1';
   const projectExtension = 'ProjectExtension';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -1389,7 +1364,7 @@ describe('when building abstract entity in extension namespace', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartAbstractEntity(entityName, metaEdId)
+      .withStartAbstractEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1412,10 +1387,6 @@ describe('when building abstract entity in extension namespace', (): void => {
 
   it('should have correct namespace', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have correct metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', (): void => {
@@ -1461,7 +1432,6 @@ describe('when building domain entity with no project extension', (): void => {
   const projectExtension = '';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1471,7 +1441,7 @@ describe('when building domain entity with no project extension', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1483,13 +1453,13 @@ describe('when building domain entity with no project extension', (): void => {
 
   it('should have extraneous input and mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
-              "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
-              "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
-              "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
-            ]
-        `);
+      Array [
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 4, line: 3, token: documentation",
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 4, line: 3, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -1501,7 +1471,6 @@ describe('when building domain entity with lowercase project extension', (): voi
   const projectExtension = 'projectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1511,7 +1480,7 @@ describe('when building domain entity with lowercase project extension', (): voi
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1539,7 +1508,6 @@ describe('when building domain entity with no namespace', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1549,7 +1517,7 @@ describe('when building domain entity with no namespace', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1561,13 +1529,13 @@ describe('when building domain entity with no namespace', (): void => {
 
   it('should have missing namespace id error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
-              "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
-              "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
-              "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
-            ]
-        `);
+      Array [
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 4, line: 3, token: documentation",
+        "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+        "mismatched input 'documentation' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 4, line: 3, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -1579,7 +1547,6 @@ describe('when building domain entity with no end namespace', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1589,7 +1556,7 @@ describe('when building domain entity with no end namespace', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1650,7 +1617,6 @@ describe('when building domain entity with no domain entity name', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1661,7 +1627,7 @@ describe('when building domain entity with no domain entity name', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1679,11 +1645,11 @@ describe('when building domain entity with no domain entity name', (): void => {
 
   it('should have no viable alternative error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Domain Entity[1]', column: 17, line: 2, token: [1]",
-              "no viable alternative at input 'Domain Entity[1]', column: 17, line: 2, token: [1]",
-            ]
-        `);
+      Array [
+        "no viable alternative at input 'Domain Entitydocumentation', column: 4, line: 3, token: documentation",
+        "no viable alternative at input 'Domain Entitydocumentation', column: 4, line: 3, token: documentation",
+      ]
+    `);
   });
 });
 
@@ -1695,7 +1661,6 @@ describe('when building domain entity with lowercase domain entity name', (): vo
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1706,7 +1671,7 @@ describe('when building domain entity with lowercase domain entity name', (): vo
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1727,44 +1692,6 @@ describe('when building domain entity with lowercase domain entity name', (): vo
             Array [
               "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
               "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
-            ]
-        `);
-  });
-});
-
-describe('when building domain entity with no metaed id', (): void => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: ValidationFailure[] = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const entityName = 'EntityName';
-  const metaEdId = '';
-  const documentation = 'Doc';
-  const propertyName = 'PropertyName';
-  const stringPropertyName = 'StringPropertyName';
-
-  beforeAll(() => {
-    const builder = new DomainEntityBuilder(metaEd, validationFailures);
-
-    textBuilder
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
-      .withDocumentation(documentation)
-      .withIntegerProperty(propertyName, 'doc', true, false)
-      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(builder);
-  });
-
-  it('should have syntax error', (): void => {
-    expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
-              "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
             ]
         `);
   });
@@ -1778,54 +1705,30 @@ describe('when building domain entity with no documentation', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
-  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
-
-    namespace = metaEd.namespace.get(namespaceName);
-  });
-
-  it('should have namespace', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should not have project extension', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should not have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have documentation', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).documentation).toBe('');
-  });
-
-  it('should have no properties', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
-            Array [
-              "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
-              "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
-            ]
-        `);
+      Array [
+        "no viable alternative at input 'Domain EntityEntityNameinteger', column: 4, line: 3, token: integer",
+        "no viable alternative at input 'Domain EntityEntityNameinteger', column: 4, line: 3, token: integer",
+      ]
+    `);
   });
 });
 
@@ -1837,7 +1740,6 @@ describe('when building domain entity with no properties', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   let namespace: any = null;
 
@@ -1846,7 +1748,7 @@ describe('when building domain entity with no properties', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -1862,10 +1764,6 @@ describe('when building domain entity with no properties', (): void => {
 
   it('should not have project extension', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should not have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', (): void => {
@@ -1893,7 +1791,6 @@ describe('when building domain entity with invalid trailing text', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   const stringPropertyName = 'StringPropertyName';
@@ -1905,7 +1802,7 @@ describe('when building domain entity with invalid trailing text', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
@@ -1924,10 +1821,6 @@ describe('when building domain entity with invalid trailing text', (): void => {
 
   it('should not have project extension', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should not have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', (): void => {
@@ -1965,7 +1858,6 @@ describe('when building domain entity source map', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Doc';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -1975,7 +1867,7 @@ describe('when building domain entity source map', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity(entityName, metaEdId)
+      .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCascadeUpdate()
       .withIntegerProperty(propertyName, 'Doc', true, false)
@@ -1995,10 +1887,6 @@ describe('when building domain entity source map', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
-  it('should have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
 
   it('should have documentation', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
@@ -2014,67 +1902,62 @@ describe('when building domain entity source map', (): void => {
 
   it('should have line, column, text for each property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "allowPrimaryKeyUpdates": Object {
-                "column": 4,
-                "line": 5,
-                "tokenText": "allow primary key updates",
-              },
-              "baseEntity": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityNamespaceName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "deprecationReason": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "documentation": Object {
-                "column": 4,
-                "line": 3,
-                "tokenText": "documentation",
-              },
-              "identityProperties": Array [],
-              "isAbstract": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "isDeprecated": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "metaEdId": Object {
-                "column": 27,
-                "line": 2,
-                "tokenText": "[1]",
-              },
-              "metaEdName": Object {
-                "column": 16,
-                "line": 2,
-                "tokenText": "EntityName",
-              },
-              "properties": Array [],
-              "queryableFields": Array [],
-              "type": Object {
-                "column": 2,
-                "line": 2,
-                "tokenText": "Domain Entity",
-              },
-            }
-        `);
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 4,
+          "line": 5,
+          "tokenText": "allow primary key updates",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "identityProperties": Array [],
+        "isAbstract": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 16,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Domain Entity",
+        },
+      }
+    `);
   });
 });
 
@@ -2085,7 +1968,6 @@ describe('when building abstract entity source map', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const propertyName = 'PropertyName';
   const documentation = 'Doc';
   let namespace: any = null;
@@ -2095,7 +1977,7 @@ describe('when building abstract entity source map', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartAbstractEntity(entityName, metaEdId)
+      .withStartAbstractEntity(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'Doc', true, false)
       .withEndAbstractEntity()
@@ -2114,10 +1996,6 @@ describe('when building abstract entity source map', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
-  it('should have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
-    expect(getDomainEntity(namespace.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
 
   it('should have documentation', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
@@ -2133,67 +2011,62 @@ describe('when building abstract entity source map', (): void => {
 
   it('should have line, column, text for each property', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).sourceMap).toMatchInlineSnapshot(`
-            Object {
-              "allowPrimaryKeyUpdates": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntity": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "baseEntityNamespaceName": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "deprecationReason": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "documentation": Object {
-                "column": 4,
-                "line": 3,
-                "tokenText": "documentation",
-              },
-              "identityProperties": Array [],
-              "isAbstract": Object {
-                "column": 2,
-                "line": 2,
-                "tokenText": "Abstract Entity",
-              },
-              "isDeprecated": Object {
-                "column": 0,
-                "line": 0,
-                "tokenText": "NoSourceMap",
-              },
-              "metaEdId": Object {
-                "column": 29,
-                "line": 2,
-                "tokenText": "[1]",
-              },
-              "metaEdName": Object {
-                "column": 18,
-                "line": 2,
-                "tokenText": "EntityName",
-              },
-              "properties": Array [],
-              "queryableFields": Array [],
-              "type": Object {
-                "column": 2,
-                "line": 2,
-                "tokenText": "Abstract Entity",
-              },
-            }
-        `);
+      Object {
+        "allowPrimaryKeyUpdates": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntity": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "baseEntityNamespaceName": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "deprecationReason": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "documentation": Object {
+          "column": 4,
+          "line": 3,
+          "tokenText": "documentation",
+        },
+        "identityProperties": Array [],
+        "isAbstract": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Abstract Entity",
+        },
+        "isDeprecated": Object {
+          "column": 0,
+          "line": 0,
+          "tokenText": "NoSourceMap",
+        },
+        "metaEdName": Object {
+          "column": 18,
+          "line": 2,
+          "tokenText": "EntityName",
+        },
+        "properties": Array [],
+        "queryableFields": Array [],
+        "type": Object {
+          "column": 2,
+          "line": 2,
+          "tokenText": "Abstract Entity",
+        },
+      }
+    `);
   });
 });
 
@@ -2212,7 +2085,7 @@ describe('when building domain entity with a potentially logical association pro
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withAssociationProperty(propertyName, 'doc', true, false, false, null, null, null, true)
+      .withAssociationProperty(propertyName, 'doc', true, false, false, null, null, true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -2243,7 +2116,7 @@ describe('when building domain entity with a potentially logical domain entity p
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, 'doc', true, false, false, null, null, null, true)
+      .withDomainEntityProperty(propertyName, 'doc', true, false, false, null, null, true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))

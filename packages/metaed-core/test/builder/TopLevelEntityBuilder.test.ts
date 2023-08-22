@@ -100,7 +100,7 @@ describe('when building deprecated association property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withAssociationProperty(propertyName, 'doc', false, false, false, null, null, deprecationReason)
+      .withAssociationProperty(propertyName, 'doc', false, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -261,7 +261,7 @@ describe('when building deprecated boolean property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withBooleanProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withBooleanProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -350,7 +350,7 @@ describe('when building deprecated choice property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withChoiceProperty(propertyName, 'doc', false, false, null, null, null, deprecationReason)
+      .withChoiceProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -439,7 +439,7 @@ describe('when building deprecated common property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCommonProperty(propertyName, 'doc', false, false, null, null, null, deprecationReason)
+      .withCommonProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -599,7 +599,7 @@ describe('when building deprecated currency property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCurrencyProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withCurrencyProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -688,7 +688,7 @@ describe('when building deprecated date property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDateProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withDateProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -777,7 +777,7 @@ describe('when building deprecated datetime property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDatetimeProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withDatetimeProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -999,11 +999,6 @@ describe('when building decimal property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 12,
           "line": 5,
@@ -1089,7 +1084,7 @@ describe('when building deprecated decimal property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDecimalProperty(propertyName, 'doc', true, false, '6', '2', '100', '1000', null, null, deprecationReason)
+      .withDecimalProperty(propertyName, 'doc', true, false, '6', '2', '100', '1000', null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -1178,7 +1173,7 @@ describe('when building deprecated descriptor property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDescriptorProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withDescriptorProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -1268,7 +1263,7 @@ describe('when building deprecated domain entity property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, 'doc', false, false, false, null, null, deprecationReason)
+      .withDomainEntityProperty(propertyName, 'doc', false, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -1429,7 +1424,7 @@ describe('when building deprecated duration property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDurationProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withDurationProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -1460,7 +1455,6 @@ describe('when building required entity properties', (): void => {
   const propertyType = 'association';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
-  const metaEdId = '1';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -1470,7 +1464,7 @@ describe('when building required entity properties', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withAssociationProperty(propertyName, propertyDocumentation, true, false, false, null, metaEdId)
+      .withAssociationProperty(propertyName, propertyDocumentation, true, false, false)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -1498,10 +1492,6 @@ describe('when building required entity properties', (): void => {
 
   it('should have metaEdName', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].metaEdName).toBe(propertyName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].metaEdId).toBe(metaEdId);
   });
 
   it('should have namespace', (): void => {
@@ -1533,11 +1523,6 @@ describe('when building required entity properties', (): void => {
   it('should have source map for metaEdName', (): void => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.metaEdName).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.metaEdName).not.toBe(NoSourceMap);
-  });
-
-  it('should have source map for metaEdId', (): void => {
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.metaEdId).toBeDefined();
-    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.metaEdId).not.toBe(NoSourceMap);
   });
 
   it('should have source map for parentEntityName', (): void => {
@@ -1643,11 +1628,6 @@ describe('when building required entity properties', (): void => {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
-        },
-        "metaEdId": Object {
-          "column": 29,
-          "line": 5,
-          "tokenText": "[1]",
         },
         "metaEdName": Object {
           "column": 16,
@@ -2259,7 +2239,7 @@ describe('when building deprecated shared entity property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withSharedDecimalProperty(propertyName, '', 'doc', false, false, null, null, deprecationReason)
+      .withSharedDecimalProperty(propertyName, '', 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
@@ -2347,7 +2327,7 @@ describe('when building deprecated enumeration property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withEnumerationProperty(propertyName, 'doc', false, false, null, null, deprecationReason)
+      .withEnumerationProperty(propertyName, 'doc', false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -2438,7 +2418,7 @@ describe('when building deprecated inline common property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withInlineCommonProperty(propertyName, propertyDocumentation, false, false, null, null, null, deprecationReason)
+      .withInlineCommonProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -2631,11 +2611,6 @@ describe('when building integer property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 12,
           "line": 5,
@@ -2718,7 +2693,7 @@ describe('when building integer property with big max value', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, null, false, true)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, false, true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -2763,7 +2738,7 @@ describe('when building integer property with big min value', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, null, true, false)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -2811,7 +2786,7 @@ describe('when building integer property with big min value and big max value', 
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, null, true, true)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, null, true, true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -2852,17 +2827,7 @@ describe('when building deprecated integer property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withIntegerProperty(
-        propertyName,
-        propertyDocumentation,
-        true,
-        false,
-        maxValue,
-        minValue,
-        null,
-        null,
-        deprecationReason,
-      )
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, maxValue, minValue, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -3461,7 +3426,7 @@ describe('when building percent property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withPercentProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withPercentProperty(propertyName, propertyDocumentation, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -3614,7 +3579,7 @@ describe('when building deprecated school year enumeration property', (): void =
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withEnumerationProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withEnumerationProperty(propertyName, propertyDocumentation, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -3949,11 +3914,6 @@ describe('when building short property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 10,
           "line": 5,
@@ -4189,11 +4149,6 @@ describe('when building string property', (): void => {
           "line": 0,
           "tokenText": "NoSourceMap",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 11,
           "line": 5,
@@ -4278,17 +4233,7 @@ describe('when building deprecated string property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withStringProperty(
-        propertyName,
-        propertyDocumentation,
-        true,
-        false,
-        maxLength,
-        minLength,
-        null,
-        null,
-        deprecationReason,
-      )
+      .withStringProperty(propertyName, propertyDocumentation, true, false, maxLength, minLength, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -4379,7 +4324,7 @@ describe('when building deprecated time property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withTimeProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withTimeProperty(propertyName, propertyDocumentation, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
@@ -4470,7 +4415,7 @@ describe('when building deprecated year property', (): void => {
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withYearProperty(propertyName, propertyDocumentation, false, false, null, null, deprecationReason)
+      .withYearProperty(propertyName, propertyDocumentation, false, false, null, deprecationReason)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))

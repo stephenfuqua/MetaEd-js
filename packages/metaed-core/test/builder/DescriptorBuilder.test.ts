@@ -15,7 +15,6 @@ describe('when building descriptor without map type', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -25,7 +24,7 @@ describe('when building descriptor without map type', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
@@ -51,10 +50,6 @@ describe('when building descriptor without map type', (): void => {
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -133,7 +128,6 @@ describe('when building multiple descriptors', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -143,12 +137,12 @@ describe('when building multiple descriptors', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
 
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
@@ -208,12 +202,10 @@ describe('when building descriptor with optional map type', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const mapTypeDocumentation = 'MapTypeDocumentation';
   const itemShortDescription = 'ItemShortDescription';
   const itemDocumentation = 'ItemDocumentation';
-  const itemMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -221,11 +213,11 @@ describe('when building descriptor with optional map type', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withStartMapType(false)
       .withDocumentation(mapTypeDocumentation)
-      .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
+      .withEnumerationItem(itemShortDescription, itemDocumentation)
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
@@ -246,10 +238,6 @@ describe('when building descriptor with optional map type', (): void => {
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -296,10 +284,6 @@ describe('when building descriptor with optional map type', (): void => {
       itemDocumentation,
     );
   });
-
-  it('should have enumeration item with metaEdId ', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
-  });
 });
 
 describe('when building descriptor with required map type', (): void => {
@@ -309,12 +293,10 @@ describe('when building descriptor with required map type', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const mapTypeDocumentation = 'MapTypeDocumentation';
   const itemShortDescription = 'ItemShortDescription';
   const itemDocumentation = 'ItemDocumentation';
-  const itemMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -322,11 +304,11 @@ describe('when building descriptor with required map type', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withStartMapType(true)
       .withDocumentation(mapTypeDocumentation)
-      .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
+      .withEnumerationItem(itemShortDescription, itemDocumentation)
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
@@ -347,10 +329,6 @@ describe('when building descriptor with required map type', (): void => {
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -397,10 +375,6 @@ describe('when building descriptor with required map type', (): void => {
       itemDocumentation,
     );
   });
-
-  it('should have enumeration item with metaEdId ', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
-  });
 });
 
 describe('when building descriptor with no descriptor name', (): void => {
@@ -411,7 +385,6 @@ describe('when building descriptor with no descriptor name', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   let namespace: any = null;
 
@@ -420,7 +393,7 @@ describe('when building descriptor with no descriptor name', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withEndDescriptor()
       .withEndNamespace()
@@ -437,8 +410,8 @@ describe('when building descriptor with no descriptor name', (): void => {
   it('should have extraneous input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
       Array [
-        "missing ID at '[1]', column: 14, line: 2, token: [1]",
-        "missing ID at '[1]', column: 14, line: 2, token: [1]",
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+        "missing ID at 'documentation', column: 4, line: 3, token: documentation",
       ]
     `);
   });
@@ -452,7 +425,6 @@ describe('when building descriptor with lowercase descriptor name', (): void => 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -462,7 +434,7 @@ describe('when building descriptor with lowercase descriptor name', (): void => 
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
@@ -495,7 +467,6 @@ describe('when building descriptor with no documentation', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const propertyName = 'PropertyName';
   let namespace: any = null;
 
@@ -504,7 +475,7 @@ describe('when building descriptor with no documentation', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
@@ -531,10 +502,6 @@ describe('when building descriptor with no documentation', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
-  });
-
   it('should have project extension', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
@@ -556,8 +523,8 @@ describe('when building descriptor with no documentation', (): void => {
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
       Array [
-        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
-        "mismatched input 'integer' expecting {'deprecated', 'documentation'}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
+        "mismatched input 'integer' expecting {'deprecated', 'documentation', METAED_ID}, column: 4, line: 3, token: integer",
       ]
     `);
   });
@@ -571,11 +538,9 @@ describe('when building descriptor with no documentation in map type', (): void 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const itemShortDescription = 'ItemShortDescription';
   const itemDocumentation = 'ItemDocumentation';
-  const itemMetaEdId = '2';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -583,10 +548,10 @@ describe('when building descriptor with no documentation in map type', (): void 
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withStartMapType(true)
-      .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
+      .withEnumerationItem(itemShortDescription, itemDocumentation)
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
@@ -607,10 +572,6 @@ describe('when building descriptor with no documentation in map type', (): void 
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -658,10 +619,6 @@ describe('when building descriptor with no documentation in map type', (): void 
     );
   });
 
-  it('should have enumeration item with metaEdId ', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
-  });
-
   it('should have mismatched input error', (): void => {
     expect(textBuilder.errorMessages).toMatchInlineSnapshot(`
       Array [
@@ -680,7 +637,6 @@ describe('when building descriptor with no enumeration item in map type', (): vo
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const mapTypeDocumentation = 'MapTypeDocumentation';
   let namespace: any = null;
@@ -690,7 +646,7 @@ describe('when building descriptor with no enumeration item in map type', (): vo
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withStartMapType(true)
       .withDocumentation(mapTypeDocumentation)
@@ -714,10 +670,6 @@ describe('when building descriptor with no enumeration item in map type', (): vo
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -771,7 +723,6 @@ describe('when building descriptor with invalid trailing text', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   const trailingText = '\r\nTrailingText';
@@ -782,7 +733,7 @@ describe('when building descriptor with invalid trailing text', (): void => {
 
     textBuilder
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withTrailingText(trailingText)
@@ -809,10 +760,6 @@ describe('when building descriptor with invalid trailing text', (): void => {
 
   it('should have namespace', (): void => {
     expect(getDescriptor(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', (): void => {
@@ -855,7 +802,6 @@ describe('when building descriptor source map with optional map type', (): void 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -865,7 +811,7 @@ describe('when building descriptor source map with optional map type', (): void 
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStartMapType(false)
@@ -888,10 +834,6 @@ describe('when building descriptor source map with optional map type', (): void 
 
   it('should have metaEdName', (): void => {
     expect(getDescriptor(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(getDescriptor(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have isMapTypeOptional', (): void => {
@@ -952,11 +894,6 @@ describe('when building descriptor source map with optional map type', (): void 
           "line": 9,
           "tokenText": "with optional map type",
         },
-        "metaEdId": Object {
-          "column": 24,
-          "line": 2,
-          "tokenText": "[1]",
-        },
         "metaEdName": Object {
           "column": 13,
           "line": 2,
@@ -981,7 +918,6 @@ describe('when building descriptor source map with required map type', (): void 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   let namespace: any = null;
@@ -991,7 +927,7 @@ describe('when building descriptor source map with required map type', (): void 
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStartMapType(true)
@@ -1066,11 +1002,6 @@ describe('when building descriptor source map with required map type', (): void 
           "line": 9,
           "tokenText": "with map type",
         },
-        "metaEdId": Object {
-          "column": 24,
-          "line": 2,
-          "tokenText": "[1]",
-        },
         "metaEdName": Object {
           "column": 13,
           "line": 2,
@@ -1095,7 +1026,6 @@ describe('when building required map type enumeration source map', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   const mapDocumentation = 'MapDocumentation';
@@ -1107,12 +1037,12 @@ describe('when building required map type enumeration source map', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', false, false)
       .withStartMapType(true)
       .withDocumentation(mapDocumentation)
-      .withEnumerationItem(shortDescription, 'doc', '2')
+      .withEnumerationItem(shortDescription, 'doc')
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
@@ -1187,11 +1117,6 @@ describe('when building required map type enumeration source map', (): void => {
           "line": 9,
           "tokenText": "with map type",
         },
-        "metaEdId": Object {
-          "column": 0,
-          "line": 0,
-          "tokenText": "NoSourceMap",
-        },
         "metaEdName": Object {
           "column": 0,
           "line": 0,
@@ -1216,7 +1141,6 @@ describe('when building map type enumeration item source map', (): void => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
-  const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
   const mapDocumentation = 'MapDocumentation';
@@ -1228,12 +1152,12 @@ describe('when building map type enumeration item source map', (): void => {
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDescriptor(entityName, metaEdId)
+      .withStartDescriptor(entityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStartMapType(true)
       .withDocumentation(mapDocumentation)
-      .withEnumerationItem(shortDescription, 'doc', '2')
+      .withEnumerationItem(shortDescription, 'doc')
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
@@ -1250,12 +1174,6 @@ describe('when building map type enumeration item source map', (): void => {
   it('should have documentation', (): void => {
     expect(
       getDescriptor(namespace.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.documentation,
-    ).toBeDefined();
-  });
-
-  it('should have metaEdId', (): void => {
-    expect(
-      getDescriptor(namespace.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.metaEdId,
     ).toBeDefined();
   });
 
@@ -1283,11 +1201,6 @@ describe('when building map type enumeration item source map', (): void => {
           "column": 0,
           "line": 0,
           "tokenText": "NoSourceMap",
-        },
-        "metaEdId": Object {
-          "column": 30,
-          "line": 12,
-          "tokenText": "[2]",
         },
         "metaEdName": Object {
           "column": 0,
