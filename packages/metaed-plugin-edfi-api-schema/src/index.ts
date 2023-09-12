@@ -1,12 +1,13 @@
 import type { MetaEdPlugin } from '@edfi/metaed-core';
 import { enhancerList } from './enhancer/EnhancerList';
+import { generate as apiSchemaGenerator } from './generator/ApiSchemaGenerator';
 
 export { enhance as entityApiSchemaDataSetupEnhancer } from './model/EntityApiSchemaData';
 export { enhance as entityPropertyApiSchemaDataSetupEnhancer } from './model/EntityPropertyApiSchemaData';
 export { enhance as apiEntityMappingEnhancer } from './enhancer/ApiEntityMappingEnhancer';
 export { enhance as apiPropertyMappingEnhancer } from './enhancer/ApiPropertyMappingEnhancer';
 export { enhance as equalityConstraintEnhancer } from './enhancer/EqualityConstraintEnhancer';
-export { enhance as jsonPathsMappingEnhancer } from './enhancer/JsonPathsMappingEnhancer';
+export { enhance as allJsonPathsMappingEnhancer } from './enhancer/AllJsonPathsMappingEnhancer';
 export { enhance as jsonSchemaEnhancerForInsert } from './enhancer/JsonSchemaEnhancerForInsert';
 export { enhance as jsonSchemaEnhancerForUpdate } from './enhancer/JsonSchemaEnhancerForUpdate';
 export { enhance as propertyCollectingEnhancer } from './enhancer/PropertyCollectingEnhancer';
@@ -29,7 +30,7 @@ export function initialize(): MetaEdPlugin {
   return {
     enhancer: enhancerList(),
     validator: [],
-    generator: [],
+    generator: [apiSchemaGenerator],
     shortName: 'edfiApiSchema',
   };
 }
