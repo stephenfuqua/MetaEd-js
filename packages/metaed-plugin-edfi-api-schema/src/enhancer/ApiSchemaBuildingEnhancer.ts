@@ -13,6 +13,7 @@ import { ProjectSchema } from '../model/api-schema/ProjectSchema';
 import { SemVer } from '../model/api-schema/SemVer';
 import { ResourceSchema } from '../model/api-schema/ResourceSchema';
 import { ResourceSchemaMapping } from '../model/api-schema/ResourceSchemaMapping';
+import { ProjectNamespace } from '../model/api-schema/ProjectNamespace';
 
 /**
  *
@@ -38,22 +39,24 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const { apiSchema } = (metaEd.plugin.get('edfiApiSchema') as PluginEnvironment).data as PluginEnvironmentEdfiApiSchema;
 
   Array.from(metaEd.namespace.values()).forEach((namespace: Namespace) => {
-    const resourceSchemaMapping: ResourceSchemaMapping = {};
+    const resourceSchemas: ResourceSchemaMapping = {};
 
     const projectSchema: ProjectSchema = {
       projectName: namespace.projectName,
       projectVersion: namespace.projectVersion as SemVer,
       isExtensionProject: namespace.isExtension,
       description: namespace.projectDescription,
-      resourceSchemaMapping,
+      resourceSchemas,
     };
 
-    apiSchema.projects.push(projectSchema);
+    const projectNamespace: ProjectNamespace = projectSchema.projectName.toLowerCase() as ProjectNamespace;
+
+    apiSchema.projectSchemas[projectNamespace] = projectSchema;
 
     getEntitiesOfTypeForNamespaces([namespace], 'domainEntity').forEach((domainEntity) => {
       // Abstract entities are not resources (e.g. EducationOrganization)
       if ((domainEntity as DomainEntity).isAbstract) return;
-      resourceSchemaMapping[(domainEntity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
+      resourceSchemas[(domainEntity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
         domainEntity as TopLevelEntity,
       );
     });
@@ -62,14 +65,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       // This is a workaround for the fact that the ODS/API required GeneralStudentProgramAssociation to
       // be abstract although there is no MetaEd language annotation to make an Association abstract.
       if (association.metaEdName !== 'GeneralStudentProgramAssociation') return;
-      resourceSchemaMapping[(association.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
+      resourceSchemas[(association.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
         association as TopLevelEntity,
       );
     });
 
     getEntitiesOfTypeForNamespaces([namespace], 'domainEntitySubclass', 'associationSubclass', 'descriptor').forEach(
       (entity) => {
-        resourceSchemaMapping[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
+        resourceSchemas[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
           entity as TopLevelEntity,
         );
       },
