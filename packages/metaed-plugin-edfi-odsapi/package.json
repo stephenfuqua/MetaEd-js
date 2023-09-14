@@ -24,8 +24,8 @@
     "@edfi/metaed-plugin-edfi-xsd": "4.2.2-dev.6",
     "deep-freeze": "^0.0.1",
     "handlebars": "^4.7.7",
-    "ramda": "^0.28.0",
-    "semver": "^5.7.1",
+    "ramda": "^0.29.0",
+    "semver": "^7.5.4",
     "sugar": "^2.0.6"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
 import { metaEdConsole } from './metaed-console';
 
-metaEdConsole().catch(null);
+// eslint-disable-next-line no-void
+void metaEdConsole().catch(null);

@@ -1,3 +1,4 @@
 import { metaEdDeploy } from './metaed-odsapi-deploy-console';
 
-metaEdDeploy().catch(null);
+// eslint-disable-next-line no-void
+void metaEdDeploy().catch(null);
