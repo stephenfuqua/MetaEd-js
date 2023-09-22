@@ -4,9 +4,10 @@ import type { CollectedProperty } from './CollectedProperty';
 import { SchemaRoot, NoSchemaRoot } from './JsonSchema';
 import type { EqualityConstraint } from './EqualityConstraint';
 import type { JsonPathsMapping } from './JsonPathsMapping';
-import { ResourceName } from './api-schema/ResourceName';
+import { MetaEdResourceName } from './api-schema/MetaEdResourceName';
 import { EndpointName } from './api-schema/EndpointName';
-import { PropertyFullName } from './api-schema/PropertyFullName';
+import { MetaEdPropertyFullName } from './api-schema/MetaEdPropertyFullName';
+import { DocumentPathsMapping } from './api-schema/DocumentPathsMapping';
 
 export type EntityApiSchemaData = {
   /**
@@ -66,22 +67,18 @@ export type EntityApiSchemaData = {
   /**
    * The API resource name for this entity, if it is a TopLevelEntity.
    */
-  resourceName: ResourceName;
+  resourceName: MetaEdResourceName;
 
   /**
    * The property fullnames for every identity property on this entity, in sorted order
    */
-  identityFullnames: PropertyFullName[];
+  identityFullnames: MetaEdPropertyFullName[];
 
   /**
-   * A mapping of MetaEd property full names to corresponding JsonPaths to data elements
-   * in the API document. This is a subset of allJsonPathsMapping, omitting property paths
-   * of referenced entities. Like allJsonPathsMapping, a scalar property will have a single
-   * JsonPath, while reference properties may have multiple JsonPaths.
-   *
-   * The JsonPaths array is always is sorted order.
+   * A mapping of PropertyFullNames to DocumentPaths, which are JsonPaths in an API document for a specific MetaEd
+   * property.
    */
-  documentPathsMapping: JsonPathsMapping;
+  documentPathsMapping: DocumentPathsMapping;
 };
 
 /**
@@ -97,7 +94,7 @@ export function addEntityApiSchemaDataTo(entity: ModelBase) {
     allJsonPathsMapping: {},
     equalityConstraints: [],
     endpointName: '' as EndpointName,
-    resourceName: '' as ResourceName,
+    resourceName: '' as MetaEdResourceName,
     identityFullnames: [],
   });
 }

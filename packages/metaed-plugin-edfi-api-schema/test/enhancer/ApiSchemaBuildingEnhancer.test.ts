@@ -12,6 +12,8 @@ import {
   DescriptorBuilder,
   EnumerationBuilder,
   newPluginEnvironment,
+  AssociationBuilder,
+  AssociationSubclassBuilder,
 } from '@edfi/metaed-core';
 import {
   domainEntityReferenceEnhancer,
@@ -21,6 +23,7 @@ import {
   descriptorReferenceEnhancer,
   domainEntitySubclassBaseClassEnhancer,
   enumerationReferenceEnhancer,
+  associationSubclassBaseClassEnhancer,
 } from '@edfi/metaed-plugin-edfi-unified';
 import { enhance as entityPropertyApiSchemaDataSetupEnhancer } from '../../src/model/EntityPropertyApiSchemaData';
 import { enhance as entityApiSchemaDataSetupEnhancer } from '../../src/model/EntityApiSchemaData';
@@ -6241,5 +6244,625 @@ describe('when building a domain entity with an inline common property with a de
     expect(
       metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.sections.resourceName,
     ).toMatchInlineSnapshot(`"Section"`);
+  });
+});
+
+describe('when building a Domain Entity subclass', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const namespaceName = 'EdFi';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartAbstractEntity('EducationOrganization')
+      .withDocumentation('doc')
+      .withIntegerIdentity('EducationOrganizationId', 'doc')
+      .withIntegerProperty('SuperclassProperty', 'doc', true, false)
+      .withEndAbstractEntity()
+
+      .withStartDomainEntitySubclass('School', 'EducationOrganization')
+      .withDocumentation('doc')
+      .withIntegerIdentityRename('SchoolId', 'EducationOrganizationId', 'doc')
+      .withIntegerProperty('SubclassProperty', 'doc', true, false)
+      .withEndDomainEntitySubclass()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
+
+    domainEntitySubclassBaseClassEnhancer(metaEd);
+    runApiSchemaEnhancers(metaEd);
+  });
+
+  it('should be correct equalityConstraints for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.equalityConstraints,
+    ).toMatchInlineSnapshot(`Array []`);
+  });
+
+  it('should be correct identityFullnames for School', () => {
+    expect(metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.identityFullnames)
+      .toMatchInlineSnapshot(`
+      Array [
+        "SchoolId",
+      ]
+    `);
+  });
+
+  it('should be correct jsonSchemaForInsert for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.jsonSchemaForInsert,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "schoolId": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [
+          "schoolId",
+          "subclassProperty",
+          "superclassProperty",
+        ],
+        "title": "EdFi.School",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct jsonSchemaForQuery for School', () => {
+    expect(metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.jsonSchemaForQuery)
+      .toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "schoolId": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [],
+        "title": "EdFi.School",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct jsonSchemaForUpdate for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.jsonSchemaForUpdate,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "id": Object {
+            "description": "The item id",
+            "type": "string",
+          },
+          "schoolId": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [
+          "id",
+          "schoolId",
+          "subclassProperty",
+          "superclassProperty",
+        ],
+        "title": "EdFi.School",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct resourceName for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.resourceName,
+    ).toMatchInlineSnapshot(`"School"`);
+  });
+
+  it('should have isSubclass flag for School', () => {
+    expect(metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.isSubclass).toBe(
+      true,
+    );
+  });
+
+  it('should have correct subclassType', () => {
+    expect(metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.subclassType).toBe(
+      'domainEntity',
+    );
+  });
+
+  it('should have correct superclassProjectName for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.superclassProjectName,
+    ).toMatchInlineSnapshot(`"EdFi"`);
+  });
+
+  it('should have correct superclassResourceName for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.superclassResourceName,
+    ).toMatchInlineSnapshot(`"EducationOrganization"`);
+  });
+
+  it('should have correct superclassIdentityFullname for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools
+        .superclassIdentityFullname,
+    ).toMatchInlineSnapshot(`"EducationOrganizationId"`);
+  });
+
+  it('should have correct subclassIdentityFullname for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools
+        .subclassIdentityFullname,
+    ).toMatchInlineSnapshot(`"SchoolId"`);
+  });
+
+  it('should have correct documentPathsMapping for School', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.schools.documentPathsMapping,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "SchoolId": Object {
+          "isReference": false,
+          "pathOrder": Array [
+            "schoolId",
+          ],
+          "paths": Object {
+            "schoolId": "$.schoolId",
+          },
+        },
+        "SubclassProperty": Object {
+          "isReference": false,
+          "pathOrder": Array [
+            "subclassProperty",
+          ],
+          "paths": Object {
+            "subclassProperty": "$.subclassProperty",
+          },
+        },
+        "SuperclassProperty": Object {
+          "isReference": false,
+          "pathOrder": Array [
+            "superclassProperty",
+          ],
+          "paths": Object {
+            "superclassProperty": "$.superclassProperty",
+          },
+        },
+      }
+    `);
+  });
+});
+
+describe('when building an Association subclass', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const namespaceName = 'EdFi';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartAssociation('GeneralStudentProgramAssociation')
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('School', 'doc')
+      .withAssociationDomainEntityProperty('Program', 'doc')
+      .withIntegerProperty('SuperclassProperty', 'doc', true, false)
+      .withEndAssociation()
+
+      .withStartAssociationSubclass('StudentProgramAssociation', 'GeneralStudentProgramAssociation')
+      .withDocumentation('doc')
+      .withIntegerProperty('SubclassProperty', 'doc', true, false)
+      .withEndAssociationSubclass()
+
+      .withStartDomainEntity('School')
+      .withDocumentation('doc')
+      .withIntegerIdentity('SchoolId', 'doc')
+      .withStringIdentity('SchoolName', 'doc', '30')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('Program')
+      .withDocumentation('doc')
+      .withIntegerIdentity('ProgramId', 'doc')
+      .withStringIdentity('ProgramName', 'doc', '30')
+      .withEndDomainEntity()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
+
+    associationSubclassBaseClassEnhancer(metaEd);
+    domainEntityReferenceEnhancer(metaEd);
+    runApiSchemaEnhancers(metaEd);
+  });
+
+  it('should be correct equalityConstraints for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .equalityConstraints,
+    ).toMatchInlineSnapshot(`Array []`);
+  });
+
+  it('should be correct identityFullnames for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .identityFullnames,
+    ).toMatchInlineSnapshot(`
+      Array [
+        "Program",
+        "School",
+      ]
+    `);
+  });
+
+  it('should be correct jsonSchemaForInsert for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .jsonSchemaForInsert,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "programReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "programId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "programName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "programId",
+              "programName",
+            ],
+            "type": "object",
+          },
+          "schoolReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "schoolId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "schoolName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "schoolId",
+              "schoolName",
+            ],
+            "type": "object",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [
+          "subclassProperty",
+          "schoolReference",
+          "programReference",
+          "superclassProperty",
+        ],
+        "title": "EdFi.StudentProgramAssociation",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct jsonSchemaForQuery for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .jsonSchemaForQuery,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "programReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "programId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "programName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "programId",
+              "programName",
+            ],
+            "type": "object",
+          },
+          "schoolReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "schoolId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "schoolName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "schoolId",
+              "schoolName",
+            ],
+            "type": "object",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [],
+        "title": "EdFi.StudentProgramAssociation",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct jsonSchemaForUpdate for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .jsonSchemaForUpdate,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "id": Object {
+            "description": "The item id",
+            "type": "string",
+          },
+          "programReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "programId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "programName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "programId",
+              "programName",
+            ],
+            "type": "object",
+          },
+          "schoolReference": Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "schoolId": Object {
+                "description": "doc",
+                "type": "integer",
+              },
+              "schoolName": Object {
+                "description": "doc",
+                "maxLength": 30,
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "schoolId",
+              "schoolName",
+            ],
+            "type": "object",
+          },
+          "subclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+          "superclassProperty": Object {
+            "description": "doc",
+            "type": "integer",
+          },
+        },
+        "required": Array [
+          "id",
+          "subclassProperty",
+          "schoolReference",
+          "programReference",
+          "superclassProperty",
+        ],
+        "title": "EdFi.StudentProgramAssociation",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be correct resourceName for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .resourceName,
+    ).toMatchInlineSnapshot(`"StudentProgramAssociation"`);
+  });
+
+  it('should have isSubclass flag for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .isSubclass,
+    ).toBe(true);
+  });
+
+  it('should have correct subclassType', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .subclassType,
+    ).toBe('association');
+  });
+
+  it('should have correct superclassProjectName for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .superclassProjectName,
+    ).toMatchInlineSnapshot(`"EdFi"`);
+  });
+
+  it('should have correct superclassResourceName for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .superclassResourceName,
+    ).toMatchInlineSnapshot(`"GeneralStudentProgramAssociation"`);
+  });
+
+  it('should have correct documentPathsMapping for StudentProgramAssociation', () => {
+    expect(
+      metaEd.plugin.get('edfiApiSchema')?.data.apiSchema.projectSchemas.edfi.resourceSchemas.studentProgramAssociations
+        .documentPathsMapping,
+    ).toMatchInlineSnapshot(`
+      Object {
+        "Program": Object {
+          "isDescriptor": false,
+          "isReference": true,
+          "pathOrder": Array [
+            "programId",
+            "programName",
+          ],
+          "paths": Object {
+            "programId": "$.programReference.programId",
+            "programName": "$.programReference.programName",
+          },
+          "projectName": "EdFi",
+          "resourceName": "Program",
+        },
+        "School": Object {
+          "isDescriptor": false,
+          "isReference": true,
+          "pathOrder": Array [
+            "schoolId",
+            "schoolName",
+          ],
+          "paths": Object {
+            "schoolId": "$.schoolReference.schoolId",
+            "schoolName": "$.schoolReference.schoolName",
+          },
+          "projectName": "EdFi",
+          "resourceName": "School",
+        },
+        "SubclassProperty": Object {
+          "isReference": false,
+          "pathOrder": Array [
+            "subclassProperty",
+          ],
+          "paths": Object {
+            "subclassProperty": "$.subclassProperty",
+          },
+        },
+        "SuperclassProperty": Object {
+          "isReference": false,
+          "pathOrder": Array [
+            "superclassProperty",
+          ],
+          "paths": Object {
+            "superclassProperty": "$.superclassProperty",
+          },
+        },
+      }
+    `);
   });
 });

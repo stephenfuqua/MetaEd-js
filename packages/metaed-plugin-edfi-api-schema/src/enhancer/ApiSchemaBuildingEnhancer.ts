@@ -1,3 +1,4 @@
+import { invariant } from 'ts-invariant';
 import {
   MetaEdEnvironment,
   EnhancerResult,
@@ -6,6 +7,9 @@ import {
   PluginEnvironment,
   DomainEntity,
   TopLevelEntity,
+  EntityProperty,
+  DomainEntitySubclass,
+  AssociationSubclass,
 } from '@edfi/metaed-core';
 import { EntityApiSchemaData } from '../model/EntityApiSchemaData';
 import { PluginEnvironmentEdfiApiSchema } from '../model/PluginEnvironment';
@@ -14,6 +18,8 @@ import { SemVer } from '../model/api-schema/SemVer';
 import { ResourceSchema } from '../model/api-schema/ResourceSchema';
 import { ResourceSchemaMapping } from '../model/api-schema/ResourceSchemaMapping';
 import { ProjectNamespace } from '../model/api-schema/ProjectNamespace';
+import { MetaEdProjectName } from '../model/api-schema/MetaEdProjectName';
+import { MetaEdPropertyFullName } from '../model/api-schema/MetaEdPropertyFullName';
 
 /**
  *
@@ -30,8 +36,54 @@ function buildResourceSchema(entity: TopLevelEntity): ResourceSchema {
     equalityConstraints: entityApiSchemaData.equalityConstraints,
     identityFullnames: entityApiSchemaData.identityFullnames,
     documentPathsMapping: entityApiSchemaData.documentPathsMapping,
+    isSubclass: false,
   };
 }
+
+/**
+ * Includes DomainEntity superclass information in the ResourceSchema
+ */
+function buildDomainEntitySubclassResourceSchema(entity: DomainEntitySubclass): ResourceSchema {
+  const baseResourceSchema: ResourceSchema = buildResourceSchema(entity);
+
+  invariant(entity.baseEntity != null, `Domain Entity Subclass ${entity.metaEdName} must have a base entity`);
+  const superclassEntityApiSchemaData = entity.baseEntity.data.edfiApiSchema as EntityApiSchemaData;
+
+  const subclassIdentityRenameProperty: EntityProperty | undefined = entity.properties.find((p) => p.isIdentityRename);
+  invariant(
+    subclassIdentityRenameProperty != null,
+    `Domain Entity Subclass ${entity.metaEdName} must have an identity rename property`,
+  );
+
+  return {
+    ...baseResourceSchema,
+    superclassProjectName: entity.baseEntity.namespace.projectName as MetaEdProjectName,
+    superclassResourceName: superclassEntityApiSchemaData.resourceName,
+    superclassIdentityFullname: subclassIdentityRenameProperty.baseKeyName as MetaEdPropertyFullName,
+    subclassIdentityFullname: subclassIdentityRenameProperty.fullPropertyName as MetaEdPropertyFullName,
+    isSubclass: true,
+    subclassType: 'domainEntity',
+  };
+}
+
+/**
+ * Includes Association superclass information in the ResourceSchema
+ */
+function buildAssociationSubclassResourceSchema(entity: AssociationSubclass): ResourceSchema {
+  const baseResourceSchema: ResourceSchema = buildResourceSchema(entity);
+
+  invariant(entity.baseEntity != null, `Association Subclass ${entity.metaEdName} must have a base entity`);
+  const superclassEntityApiSchemaData = entity.baseEntity.data.edfiApiSchema as EntityApiSchemaData;
+
+  return {
+    ...baseResourceSchema,
+    superclassProjectName: entity.baseEntity.namespace.projectName as MetaEdProjectName,
+    superclassResourceName: superclassEntityApiSchemaData.resourceName,
+    isSubclass: true,
+    subclassType: 'association',
+  };
+}
+
 /**
  * This enhancer uses the results of the other enhancers to build the API Schema object
  */
@@ -70,13 +122,21 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       );
     });
 
-    getEntitiesOfTypeForNamespaces([namespace], 'domainEntitySubclass', 'associationSubclass', 'descriptor').forEach(
-      (entity) => {
-        resourceSchemas[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
-          entity as TopLevelEntity,
-        );
-      },
-    );
+    getEntitiesOfTypeForNamespaces([namespace], 'descriptor').forEach((entity) => {
+      resourceSchemas[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] = buildResourceSchema(
+        entity as TopLevelEntity,
+      );
+    });
+
+    getEntitiesOfTypeForNamespaces([namespace], 'domainEntitySubclass').forEach((entity) => {
+      resourceSchemas[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] =
+        buildDomainEntitySubclassResourceSchema(entity as TopLevelEntity);
+    });
+
+    getEntitiesOfTypeForNamespaces([namespace], 'associationSubclass').forEach((entity) => {
+      resourceSchemas[(entity.data.edfiApiSchema as EntityApiSchemaData).endpointName] =
+        buildAssociationSubclassResourceSchema(entity as TopLevelEntity);
+    });
   });
   return {
     enhancerName: 'ApiSchemaBuildingEnhancer',
