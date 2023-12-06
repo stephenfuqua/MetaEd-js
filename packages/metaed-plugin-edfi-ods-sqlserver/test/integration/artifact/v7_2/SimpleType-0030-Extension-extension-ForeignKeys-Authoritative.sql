@@ -8,10 +8,6 @@ REFERENCES [extension].[BalanceSheetDimension] ([BalanceSheetCode], [FiscalYear]
 ON DELETE CASCADE
 GO
 
-CREATE NONCLUSTERED INDEX [FK_BalanceSheetDimensionReportingTag_BalanceSheetDimension]
-ON [extension].[BalanceSheetDimensionReportingTag] ([BalanceSheetCode] ASC, [FiscalYear] ASC)
-GO
-
 ALTER TABLE [extension].[BalanceSheetDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_BalanceSheetDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
 REFERENCES [extension].[ReportingTagDescriptor] ([ReportingTagDescriptorId])
 GO
@@ -38,10 +34,6 @@ GO
 
 ALTER TABLE [extension].[ChartOfAccount] WITH CHECK ADD CONSTRAINT [FK_ChartOfAccount_EducationOrganization] FOREIGN KEY ([EducationOrganizationId])
 REFERENCES [edfi].[EducationOrganization] ([EducationOrganizationId])
-GO
-
-CREATE NONCLUSTERED INDEX [FK_ChartOfAccount_EducationOrganization]
-ON [extension].[ChartOfAccount] ([EducationOrganizationId] ASC)
 GO
 
 ALTER TABLE [extension].[ChartOfAccount] WITH CHECK ADD CONSTRAINT [FK_ChartOfAccount_FunctionDimension] FOREIGN KEY ([FiscalYear], [FunctionCode])
@@ -105,10 +97,6 @@ REFERENCES [extension].[ChartOfAccount] ([AccountIdentifier], [EducationOrganiza
 ON DELETE CASCADE
 GO
 
-CREATE NONCLUSTERED INDEX [FK_ChartOfAccountReportingTag_ChartOfAccount]
-ON [extension].[ChartOfAccountReportingTag] ([AccountIdentifier] ASC, [EducationOrganizationId] ASC, [FiscalYear] ASC)
-GO
-
 ALTER TABLE [extension].[ChartOfAccountReportingTag] WITH CHECK ADD CONSTRAINT [FK_ChartOfAccountReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
 REFERENCES [extension].[ReportingTagDescriptor] ([ReportingTagDescriptorId])
 GO
@@ -127,10 +115,6 @@ REFERENCES [extension].[FunctionDimension] ([FiscalYear], [FunctionCode])
 ON DELETE CASCADE
 GO
 
-CREATE NONCLUSTERED INDEX [FK_FunctionDimensionReportingTag_FunctionDimension]
-ON [extension].[FunctionDimensionReportingTag] ([FiscalYear] ASC, [FunctionCode] ASC)
-GO
-
 ALTER TABLE [extension].[FunctionDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_FunctionDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
 REFERENCES [extension].[ReportingTagDescriptor] ([ReportingTagDescriptorId])
 GO
@@ -142,10 +126,6 @@ GO
 ALTER TABLE [extension].[FundDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_FundDimensionReportingTag_FundDimension] FOREIGN KEY ([FiscalYear], [FundCode])
 REFERENCES [extension].[FundDimension] ([FiscalYear], [FundCode])
 ON DELETE CASCADE
-GO
-
-CREATE NONCLUSTERED INDEX [FK_FundDimensionReportingTag_FundDimension]
-ON [extension].[FundDimensionReportingTag] ([FiscalYear] ASC, [FundCode] ASC)
 GO
 
 ALTER TABLE [extension].[FundDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_FundDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
@@ -168,17 +148,9 @@ ALTER TABLE [extension].[LocalAccount] WITH CHECK ADD CONSTRAINT [FK_LocalAccoun
 REFERENCES [edfi].[EducationOrganization] ([EducationOrganizationId])
 GO
 
-CREATE NONCLUSTERED INDEX [FK_LocalAccount_EducationOrganization]
-ON [extension].[LocalAccount] ([EducationOrganizationId] ASC)
-GO
-
 ALTER TABLE [extension].[LocalAccountReportingTag] WITH CHECK ADD CONSTRAINT [FK_LocalAccountReportingTag_LocalAccount] FOREIGN KEY ([AccountIdentifier], [EducationOrganizationId], [FiscalYear])
 REFERENCES [extension].[LocalAccount] ([AccountIdentifier], [EducationOrganizationId], [FiscalYear])
 ON DELETE CASCADE
-GO
-
-CREATE NONCLUSTERED INDEX [FK_LocalAccountReportingTag_LocalAccount]
-ON [extension].[LocalAccountReportingTag] ([AccountIdentifier] ASC, [EducationOrganizationId] ASC, [FiscalYear] ASC)
 GO
 
 ALTER TABLE [extension].[LocalAccountReportingTag] WITH CHECK ADD CONSTRAINT [FK_LocalAccountReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
@@ -226,10 +198,6 @@ REFERENCES [extension].[ObjectDimension] ([FiscalYear], [ObjectCode])
 ON DELETE CASCADE
 GO
 
-CREATE NONCLUSTERED INDEX [FK_ObjectDimensionReportingTag_ObjectDimension]
-ON [extension].[ObjectDimensionReportingTag] ([FiscalYear] ASC, [ObjectCode] ASC)
-GO
-
 ALTER TABLE [extension].[ObjectDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_ObjectDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
 REFERENCES [extension].[ReportingTagDescriptor] ([ReportingTagDescriptorId])
 GO
@@ -241,10 +209,6 @@ GO
 ALTER TABLE [extension].[OperationalUnitDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_OperationalUnitDimensionReportingTag_OperationalUnitDimension] FOREIGN KEY ([FiscalYear], [OperationalUnitCode])
 REFERENCES [extension].[OperationalUnitDimension] ([FiscalYear], [OperationalUnitCode])
 ON DELETE CASCADE
-GO
-
-CREATE NONCLUSTERED INDEX [FK_OperationalUnitDimensionReportingTag_OperationalUnitDimension]
-ON [extension].[OperationalUnitDimensionReportingTag] ([FiscalYear] ASC, [OperationalUnitCode] ASC)
 GO
 
 ALTER TABLE [extension].[OperationalUnitDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_OperationalUnitDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
@@ -260,10 +224,6 @@ REFERENCES [extension].[ProgramDimension] ([FiscalYear], [ProgramCode])
 ON DELETE CASCADE
 GO
 
-CREATE NONCLUSTERED INDEX [FK_ProgramDimensionReportingTag_ProgramDimension]
-ON [extension].[ProgramDimensionReportingTag] ([FiscalYear] ASC, [ProgramCode] ASC)
-GO
-
 ALTER TABLE [extension].[ProgramDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_ProgramDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
 REFERENCES [extension].[ReportingTagDescriptor] ([ReportingTagDescriptorId])
 GO
@@ -275,10 +235,6 @@ GO
 ALTER TABLE [extension].[ProjectDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_ProjectDimensionReportingTag_ProjectDimension] FOREIGN KEY ([FiscalYear], [ProjectCode])
 REFERENCES [extension].[ProjectDimension] ([FiscalYear], [ProjectCode])
 ON DELETE CASCADE
-GO
-
-CREATE NONCLUSTERED INDEX [FK_ProjectDimensionReportingTag_ProjectDimension]
-ON [extension].[ProjectDimensionReportingTag] ([FiscalYear] ASC, [ProjectCode] ASC)
 GO
 
 ALTER TABLE [extension].[ProjectDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_ProjectDimensionReportingTag_ReportingTagDescriptor] FOREIGN KEY ([ReportingTagDescriptorId])
@@ -305,9 +261,5 @@ GO
 ALTER TABLE [extension].[SourceDimensionReportingTag] WITH CHECK ADD CONSTRAINT [FK_SourceDimensionReportingTag_SourceDimension] FOREIGN KEY ([FiscalYear], [SourceCode])
 REFERENCES [extension].[SourceDimension] ([FiscalYear], [SourceCode])
 ON DELETE CASCADE
-GO
-
-CREATE NONCLUSTERED INDEX [FK_SourceDimensionReportingTag_SourceDimension]
-ON [extension].[SourceDimensionReportingTag] ([FiscalYear] ASC, [SourceCode] ASC)
 GO
 
