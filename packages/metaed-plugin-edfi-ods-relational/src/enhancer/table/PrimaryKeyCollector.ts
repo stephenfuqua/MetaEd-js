@@ -1,13 +1,19 @@
-import { ReferentialProperty, SemVer, TopLevelEntity, versionSatisfies } from '@edfi/metaed-core';
+import { MetaEdPropertyPath, ReferentialProperty, SemVer, TopLevelEntity, versionSatisfies } from '@edfi/metaed-core';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
-import { ColumnCreator } from './ColumnCreator';
-import { ColumnCreatorFactory } from './ColumnCreatorFactory';
+import { createColumnFor } from './ColumnCreator';
+import { appendToPropertyPath } from '../EnhancerHelper';
 
+/**
+ * Collects the primary keys for a given entity. Includes BuildStrategy to adjust column naming/attributes.
+ * Collects currentPropertyPath to assign to columns, and originalEntity to track the initial source.
+ * originalEntity differs from entity when, for example, the referencedEntity of a ReferentialProperty is followed.
+ */
 export function collectPrimaryKeys(
+  originalEntity: TopLevelEntity,
   entity: TopLevelEntity,
   strategy: BuildStrategy,
-  factory: ColumnCreatorFactory,
+  currentPropertyPath: MetaEdPropertyPath,
   targetTechnologyVersion: SemVer,
 ): Column[] {
   if (!entity.data.edfiOdsRelational) return [];
@@ -15,17 +21,25 @@ export function collectPrimaryKeys(
   const columns: Column[] = [];
 
   entity.data.edfiOdsRelational.odsIdentityProperties.forEach((property: ReferentialProperty) => {
-    const columnCreator: ColumnCreator = factory.columnCreatorFor(property, targetTechnologyVersion);
-    columns.push(...columnCreator.createColumns(property, strategy));
+    columns.push(
+      ...createColumnFor(
+        originalEntity,
+        property,
+        strategy,
+        appendToPropertyPath(currentPropertyPath, property),
+        targetTechnologyVersion,
+      ),
+    );
   });
 
   entity.data.edfiOdsRelational.odsProperties.forEach((property: ReferentialProperty) => {
     if (property.type !== 'inlineCommon') return;
     columns.push(
       ...collectPrimaryKeys(
+        originalEntity,
         property.referencedEntity,
         strategy.appendParentContextProperty(property),
-        factory,
+        appendToPropertyPath(currentPropertyPath, property),
         targetTechnologyVersion,
       ),
     );

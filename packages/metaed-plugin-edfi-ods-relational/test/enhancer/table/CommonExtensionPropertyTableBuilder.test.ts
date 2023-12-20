@@ -7,6 +7,7 @@ import {
   newNamespace,
   addEntityForNamespace,
   SemVer,
+  MetaEdPropertyPath,
 } from '@edfi/metaed-core';
 import {
   Common,
@@ -17,14 +18,12 @@ import {
   Namespace,
 } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { newTable } from '../../../src/model/database/Table';
-import { tableBuilderFactory } from '../../../src/enhancer/table/TableBuilderFactory';
 import { TableStrategy } from '../../../src/model/database/TableStrategy';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
-import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
+import { buildTableFor } from '../../../src/enhancer/table/TableBuilder';
 
 const targetTechnologyVersion: SemVer = '6.1.0';
 
@@ -54,6 +53,7 @@ describe('when building common property extension table', (): void => {
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkName,
+      fullPropertyName: commonPkName,
       namespace: coreNamespace,
       parentEntity: common,
       isPartOfIdentity: true,
@@ -85,6 +85,7 @@ describe('when building common property extension table', (): void => {
     addEntityForNamespace(commonExtension);
     const commonExtensionProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonExtensionPropertyName,
+      fullPropertyName: commonExtensionPropertyName,
       parentEntity: commonExtension,
       namespace: extensionNamespace,
       data: {
@@ -99,6 +100,7 @@ describe('when building common property extension table', (): void => {
     commonExtension.data.edfiOdsRelational.odsProperties.push(commonExtensionProperty);
 
     const entity: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
+      metaEdName: 'Entity',
       namespace: extensionNamespace,
       data: {
         edfiOdsRelational: {
@@ -110,6 +112,7 @@ describe('when building common property extension table', (): void => {
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       namespace: extensionNamespace,
       parentEntity: entity,
       isPartOfIdentity: true,
@@ -125,6 +128,7 @@ describe('when building common property extension table', (): void => {
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
+      fullPropertyName: commonName,
       namespace: extensionNamespace,
       referencedNamespaceName: extensionNamespace.namespaceName,
       parentEntity: entity,
@@ -140,20 +144,27 @@ describe('when building common property extension table', (): void => {
     entity.data.edfiOdsRelational.odsProperties.push(entityPkProperty, commonProperty);
     entity.data.edfiOdsRelational.odsIdentityProperties.push(entityPkProperty);
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '6.1.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
+      BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '6.1.0',
+    );
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
-    tableBuilder.buildTables(
-      commonProperty,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+
+    buildTableFor({
+      originalEntity: entity,
+      property: commonProperty,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: commonProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return join table', (): void => {
@@ -170,6 +181,18 @@ describe('when building common property extension table', (): void => {
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[2].columnId).toBe(commonExtensionPropertyName);
     expect(tables[0].columns[2].isPartOfPrimaryKey).toBe(false);
+  });
+
+  it('should have correct column property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[2].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonExtensionPropertyName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[2].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should have one foreign key', (): void => {

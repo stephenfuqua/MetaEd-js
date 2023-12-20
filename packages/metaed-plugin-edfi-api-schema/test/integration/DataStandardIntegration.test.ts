@@ -442,6 +442,10 @@ describe('when generating api schema targeting tech version 5.3 with data standa
           "sourceJsonPath": "$.gradingPeriods[*].gradingPeriodReference.schoolId",
           "targetJsonPath": "$.schoolReference.schoolId",
         },
+        Object {
+          "sourceJsonPath": "$.schoolReference.schoolId",
+          "targetJsonPath": "$.academicWeeks[*].academicWeekReference.schoolId",
+        },
       ]
     `);
   });
@@ -1377,6 +1381,10 @@ describe('when generating api schema targeting tech version 6.1 with data standa
           "sourceJsonPath": "$.gradingPeriods[*].gradingPeriodReference.schoolId",
           "targetJsonPath": "$.schoolReference.schoolId",
         },
+        Object {
+          "sourceJsonPath": "$.schoolReference.schoolId",
+          "targetJsonPath": "$.academicWeeks[*].academicWeekReference.schoolId",
+        },
       ]
     `);
   });
@@ -2091,6 +2099,10 @@ describe('when generating api schema targeting tech version 7.0 with data standa
         Object {
           "sourceJsonPath": "$.gradingPeriods[*].gradingPeriodReference.schoolId",
           "targetJsonPath": "$.schoolReference.schoolId",
+        },
+        Object {
+          "sourceJsonPath": "$.schoolReference.schoolId",
+          "targetJsonPath": "$.academicWeeks[*].academicWeekReference.schoolId",
         },
       ]
     `);

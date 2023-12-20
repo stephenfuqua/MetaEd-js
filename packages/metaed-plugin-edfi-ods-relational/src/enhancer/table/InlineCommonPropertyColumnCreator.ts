@@ -1,16 +1,20 @@
-import { EntityProperty, SemVer } from '@edfi/metaed-core';
-import { collectColumns } from './CommonPropertyColumnCreatorBase';
+import { EntityProperty, MetaEdPropertyPath, SemVer, TopLevelEntity } from '@edfi/metaed-core';
+import { collectColumns } from './CommonAndChoicePropertyColumnCreatorBase';
 import { BuildStrategy } from './BuildStrategy';
 import { Column } from '../../model/database/Column';
-import { ColumnCreator } from './ColumnCreator';
-import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
 export function inlineCommonPropertyColumnCreator(
-  factory: ColumnCreatorFactory,
+  originalEntity: TopLevelEntity,
+  property: EntityProperty,
+  strategy: BuildStrategy,
+  currentPropertyPath: MetaEdPropertyPath,
   targetTechnologyVersion: SemVer,
-): ColumnCreator {
-  return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Column[] =>
-      collectColumns(property, strategy.appendParentContextProperty(property), factory, targetTechnologyVersion),
-  };
+): Column[] {
+  return collectColumns(
+    originalEntity,
+    property,
+    strategy.appendParentContextProperty(property),
+    currentPropertyPath,
+    targetTechnologyVersion,
+  );
 }

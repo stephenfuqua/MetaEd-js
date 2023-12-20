@@ -1,14 +1,19 @@
-import { SemVer, newCommon, newCommonProperty, newDomainEntity, newIntegerProperty } from '@edfi/metaed-core';
+import {
+  MetaEdPropertyPath,
+  SemVer,
+  newCommon,
+  newCommonProperty,
+  newDomainEntity,
+  newIntegerProperty,
+} from '@edfi/metaed-core';
 import { Common, CommonProperty, DomainEntity, IntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { newTable } from '../../../src/model/database/Table';
-import { tableBuilderFactory } from '../../../src/enhancer/table/TableBuilderFactory';
 import { TableStrategy } from '../../../src/model/database/TableStrategy';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
-import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
+import { buildTableFor } from '../../../src/enhancer/table/TableBuilder';
 
 const targetTechnologyVersion: SemVer = '7.1.0';
 
@@ -16,6 +21,7 @@ describe('when building common property table', (): void => {
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
+  const commonName = 'CommonName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
   const tables: Table[] = [];
@@ -31,6 +37,7 @@ describe('when building common property table', (): void => {
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkName,
+      fullPropertyName: commonPkName,
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
@@ -46,6 +53,7 @@ describe('when building common property table', (): void => {
     common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -54,6 +62,7 @@ describe('when building common property table', (): void => {
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -67,6 +76,8 @@ describe('when building common property table', (): void => {
       },
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      metaEdName: commonName,
+      fullPropertyName: commonName,
       parentEntity: entity,
       referencedEntity: common,
       data: {
@@ -75,20 +86,27 @@ describe('when building common property table', (): void => {
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
+      BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
-    tableBuilder.buildTables(
-      commonProperty,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+
+    buildTableFor({
+      originalEntity: entity,
+      property: commonProperty,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: commonProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return join table', (): void => {
@@ -103,6 +121,16 @@ describe('when building common property table', (): void => {
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[1].columnId).toBe(commonPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should have one foreign key', (): void => {
@@ -139,6 +167,7 @@ describe('when building optional common property table', (): void => {
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkName,
+      fullPropertyName: commonPkName,
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
@@ -154,6 +183,7 @@ describe('when building optional common property table', (): void => {
     common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -162,6 +192,7 @@ describe('when building optional common property table', (): void => {
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -175,6 +206,8 @@ describe('when building optional common property table', (): void => {
       },
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      metaEdName: commonName,
+      fullPropertyName: commonName,
       parentEntity: entity,
       referencedEntity: common,
       isOptional: true,
@@ -184,20 +217,27 @@ describe('when building optional common property table', (): void => {
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
+      BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
-    tableBuilder.buildTables(
-      commonProperty,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+
+    buildTableFor({
+      originalEntity: entity,
+      property: commonProperty,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: commonProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return join table', (): void => {
@@ -212,6 +252,16 @@ describe('when building optional common property table', (): void => {
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[1].columnId).toBe(commonPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(false);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should have one foreign key', (): void => {
@@ -232,6 +282,7 @@ describe('when building required collection common property table', (): void => 
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
+  const commonName = 'CommonName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
   const tables: Table[] = [];
@@ -247,6 +298,7 @@ describe('when building required collection common property table', (): void => 
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkName,
+      fullPropertyName: commonPkName,
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
@@ -262,6 +314,7 @@ describe('when building required collection common property table', (): void => 
     common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -270,6 +323,7 @@ describe('when building required collection common property table', (): void => 
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       data: {
         edfiOdsRelational: {
@@ -282,6 +336,8 @@ describe('when building required collection common property table', (): void => 
       },
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      metaEdName: commonName,
+      fullPropertyName: commonName,
       parentEntity: entity,
       referencedEntity: common,
       isRequiredCollection: true,
@@ -292,20 +348,27 @@ describe('when building required collection common property table', (): void => 
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
+      BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
-    tableBuilder.buildTables(
-      commonProperty,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+
+    buildTableFor({
+      originalEntity: entity,
+      property: commonProperty,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: commonProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return required collection table', (): void => {
@@ -321,6 +384,16 @@ describe('when building required collection common property table', (): void => 
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[1].columnId).toBe(commonPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -328,6 +401,7 @@ describe('when building required collection common property table with make leaf
   const tableName = 'TableName';
   const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
+  const commonName = 'CommonName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
   const tables: Table[] = [];
@@ -343,6 +417,7 @@ describe('when building required collection common property table with make leaf
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkName,
+      fullPropertyName: commonPkName,
       parentEntity: common,
       isPartOfIdentity: true,
       data: {
@@ -358,6 +433,7 @@ describe('when building required collection common property table with make leaf
     common.data.edfiOdsRelational.odsIdentityProperties.push(commonPkProperty);
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -366,6 +442,7 @@ describe('when building required collection common property table with make leaf
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       data: {
         edfiOdsRelational: {
@@ -378,6 +455,8 @@ describe('when building required collection common property table with make leaf
       },
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      metaEdName: commonName,
+      fullPropertyName: commonName,
       parentEntity: entity,
       referencedEntity: common,
       isRequiredCollection: true,
@@ -388,20 +467,27 @@ describe('when building required collection common property table with make leaf
         },
       },
     });
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
+      BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
 
     const mainTable: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(commonProperty);
-    tableBuilder.buildTables(
-      commonProperty,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault.makeLeafColumnsNullable(),
+
+    buildTableFor({
+      originalEntity: entity,
+      property: commonProperty,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault.makeLeafColumnsNullable(),
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: commonProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return required collection table', (): void => {
@@ -417,5 +503,15 @@ describe('when building required collection common property table with make leaf
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[1].columnId).toBe(commonPkName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });

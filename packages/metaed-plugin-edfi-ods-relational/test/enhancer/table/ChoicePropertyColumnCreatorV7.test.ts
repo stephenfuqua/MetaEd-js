@@ -1,9 +1,16 @@
-import { newChoice, newChoiceProperty, newIntegerProperty, newStringProperty } from '@edfi/metaed-core';
+import {
+  DomainEntity,
+  MetaEdPropertyPath,
+  newChoice,
+  newChoiceProperty,
+  newDomainEntity,
+  newIntegerProperty,
+  newStringProperty,
+} from '@edfi/metaed-core';
 import { Choice, ChoiceProperty, IntegerProperty, StringProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 import { Column, StringColumn } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when creating columns for choice with is collection property', (): void => {
   const propertyName = 'PropertyName';
@@ -34,6 +41,17 @@ describe('when creating columns for choice with is collection property', (): voi
       },
     });
 
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [choiceProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
     property = Object.assign(newStringProperty(), {
       metaEdName: propertyName,
       documentation: propertyDocumentation,
@@ -51,8 +69,7 @@ describe('when creating columns for choice with is collection property', (): voi
 
     choice.data.edfiOdsRelational.odsProperties.push(property);
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(choiceProperty, '7.0.0');
-    columns = columnCreator.createColumns(choiceProperty, BuildStrategyDefault);
+    columns = createColumnFor(entity, choiceProperty, BuildStrategyDefault, '' as MetaEdPropertyPath, '7.0.0');
   });
 
   it('should return no columns', (): void => {
@@ -61,6 +78,7 @@ describe('when creating columns for choice with is collection property', (): voi
 });
 
 describe('when creating columns for choice with only one property', (): void => {
+  const choiceName = 'ChoiceName';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
   const length = '50';
@@ -68,7 +86,6 @@ describe('when creating columns for choice with only one property', (): void => 
   let columns: Column[];
 
   beforeAll(() => {
-    const choiceName = 'ChoiceName';
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
       data: {
@@ -81,6 +98,7 @@ describe('when creating columns for choice with only one property', (): void => 
 
     const choiceProperty: ChoiceProperty = Object.assign(newChoiceProperty(), {
       metaEdName: choiceName,
+      fullPropertyName: choiceName,
       referencedEntity: choice,
       data: {
         edfiOdsRelational: {
@@ -89,8 +107,20 @@ describe('when creating columns for choice with only one property', (): void => 
       },
     });
 
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [choiceProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
     property = Object.assign(newStringProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       maxLength: length,
       data: {
@@ -105,8 +135,7 @@ describe('when creating columns for choice with only one property', (): void => 
 
     choice.data.edfiOdsRelational.odsProperties.push(property);
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(choiceProperty, '7.0.0');
-    columns = columnCreator.createColumns(choiceProperty, BuildStrategyDefault);
+    columns = createColumnFor(entity, choiceProperty, BuildStrategyDefault, '' as MetaEdPropertyPath, '7.0.0');
   });
 
   it('should return a single column', (): void => {
@@ -120,10 +149,13 @@ describe('when creating columns for choice with only one property', (): void => 
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].originalContextPrefix).toBe('');
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
 describe('when creating columns for choice with two properties', (): void => {
+  const choiceName = 'ChoiceName';
   const stringPropertyName = 'StringPropertyName';
   const integerPropertyName = 'IntegerPropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
@@ -133,7 +165,6 @@ describe('when creating columns for choice with two properties', (): void => {
   let columns: Column[];
 
   beforeAll(() => {
-    const choiceName = 'ChoiceName';
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
       data: {
@@ -146,6 +177,7 @@ describe('when creating columns for choice with two properties', (): void => {
 
     const choiceProperty: ChoiceProperty = Object.assign(newChoiceProperty(), {
       metaEdName: choiceName,
+      fullPropertyName: choiceName,
       referencedEntity: choice,
       data: {
         edfiOdsRelational: {
@@ -154,8 +186,20 @@ describe('when creating columns for choice with two properties', (): void => {
       },
     });
 
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [choiceProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
     stringProperty = Object.assign(newStringProperty(), {
       metaEdName: stringPropertyName,
+      fullPropertyName: stringPropertyName,
       documentation: propertyDocumentation,
       maxLength: length,
       data: {
@@ -170,6 +214,7 @@ describe('when creating columns for choice with two properties', (): void => {
 
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
+      fullPropertyName: integerPropertyName,
       documentation: propertyDocumentation,
       data: {
         edfiOdsRelational: {
@@ -184,8 +229,7 @@ describe('when creating columns for choice with two properties', (): void => {
     choice.data.edfiOdsRelational.odsProperties.push(stringProperty);
     choice.data.edfiOdsRelational.odsProperties.push(integerProperty);
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(choiceProperty, '7.0.0');
-    columns = columnCreator.createColumns(choiceProperty, BuildStrategyDefault);
+    columns = createColumnFor(entity, choiceProperty, BuildStrategyDefault, 'FirstLevel' as MetaEdPropertyPath, '7.0.0');
   });
 
   it('should return two columns', (): void => {
@@ -202,6 +246,8 @@ describe('when creating columns for choice with two properties', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].originalContextPrefix).toBe('');
     expect(columns[0].sourceEntityProperties[0]).toBe(stringProperty);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"FirstLevel.StringPropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should return an integer column', (): void => {
@@ -213,5 +259,7 @@ describe('when creating columns for choice with two properties', (): void => {
     expect(columns[1].isPartOfPrimaryKey).toBe(false);
     expect(columns[1].originalContextPrefix).toBe('');
     expect(columns[1].sourceEntityProperties[0]).toBe(integerProperty);
+    expect(columns[1].propertyPath).toMatchInlineSnapshot(`"FirstLevel.IntegerPropertyName"`);
+    expect(columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });

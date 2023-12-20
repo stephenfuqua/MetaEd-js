@@ -1,14 +1,19 @@
-import { DomainEntity, Descriptor, DescriptorProperty, IntegerProperty, SemVer } from '@edfi/metaed-core';
+import {
+  DomainEntity,
+  Descriptor,
+  DescriptorProperty,
+  IntegerProperty,
+  SemVer,
+  MetaEdPropertyPath,
+} from '@edfi/metaed-core';
 import { newDomainEntity, newDescriptor, newDescriptorProperty, newIntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { newTable } from '../../../src/model/database/Table';
-import { tableBuilderFactory } from '../../../src/enhancer/table/TableBuilderFactory';
 import { TableStrategy } from '../../../src/model/database/TableStrategy';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
-import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
+import { buildTableFor } from '../../../src/enhancer/table/TableBuilder';
 
 const targetTechnologyVersion: SemVer = '7.1.0';
 
@@ -23,6 +28,7 @@ describe('when building descriptor property table', (): void => {
     table = { ...newTable(), schema: 'TableSchema', tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -31,6 +37,7 @@ describe('when building descriptor property table', (): void => {
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'EntityPkName',
+      fullPropertyName: 'EntityPkName',
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -44,6 +51,8 @@ describe('when building descriptor property table', (): void => {
       },
     });
     const entityDescriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
+      metaEdName: descriptorName,
+      fullPropertyName: descriptorName,
       parentEntity: entity,
       data: {
         edfiOdsRelational: {
@@ -64,6 +73,7 @@ describe('when building descriptor property table', (): void => {
     });
     const descriptorEntityProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'DescriptorEntityPropertyName1',
+      fullPropertyName: 'DescriptorEntityPropertyName1',
       isPartOfIdentity: false,
       data: {
         edfiOdsRelational: {
@@ -75,19 +85,25 @@ describe('when building descriptor property table', (): void => {
     descriptor.data.edfiOdsRelational.odsProperties.push(descriptorEntityProperty1);
     entityDescriptorProperty.referencedEntity = descriptor;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
-
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
-    tableBuilder.buildTables(
-      entityDescriptorProperty,
-      TableStrategy.default(table),
-      primaryKeys,
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
       BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
+
+    buildTableFor({
+      originalEntity: entity,
+      property: entityDescriptorProperty,
+      parentTableStrategy: TableStrategy.default(table),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: entityDescriptorProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return no join table', (): void => {
@@ -97,6 +113,14 @@ describe('when building descriptor property table', (): void => {
   it('should create one column', (): void => {
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(`${descriptorPropertyName}Id`);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"DescriptorName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(table.columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should create one foreign key', (): void => {
@@ -126,6 +150,7 @@ describe('when building collection descriptor property table', (): void => {
     table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -134,6 +159,7 @@ describe('when building collection descriptor property table', (): void => {
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -148,6 +174,7 @@ describe('when building collection descriptor property table', (): void => {
     });
     const entityDescriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorName,
+      fullPropertyName: descriptorName,
       parentEntity: entity,
       data: {
         edfiOdsRelational: {
@@ -168,6 +195,7 @@ describe('when building collection descriptor property table', (): void => {
     });
     const descriptorEntityProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: descriptorEntityPropertyName1,
+      fullPropertyName: descriptorEntityPropertyName1,
       isPartOfIdentity: false,
       data: {
         edfiOdsRelational: {
@@ -179,19 +207,25 @@ describe('when building collection descriptor property table', (): void => {
     descriptor.data.edfiOdsRelational.odsProperties.push(descriptorEntityProperty1);
     entityDescriptorProperty.referencedEntity = descriptor;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
-
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
-    tableBuilder.buildTables(
-      entityDescriptorProperty,
-      TableStrategy.default(table),
-      primaryKeys,
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
       BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
+
+    buildTableFor({
+      originalEntity: entity,
+      property: entityDescriptorProperty,
+      parentTableStrategy: TableStrategy.default(table),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: entityDescriptorProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return join table', (): void => {
@@ -206,6 +240,16 @@ describe('when building collection descriptor property table', (): void => {
     expect(tables[0].columns[0].isPartOfPrimaryKey).toBe(true);
     expect(tables[0].columns[1].columnId).toBe(`${descriptorName}Id`);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"DescriptorName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should create one foreign key', (): void => {

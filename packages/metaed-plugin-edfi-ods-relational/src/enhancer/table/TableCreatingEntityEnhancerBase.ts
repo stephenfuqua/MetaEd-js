@@ -1,15 +1,20 @@
-import { EntityProperty, MetaEdEnvironment, SemVer, TopLevelEntity, versionSatisfies } from '@edfi/metaed-core';
+import {
+  EntityProperty,
+  MetaEdEnvironment,
+  MetaEdPropertyPath,
+  SemVer,
+  TopLevelEntity,
+  versionSatisfies,
+} from '@edfi/metaed-core';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
-import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { newTable, newTableNameComponent, newTableExistenceReason, newTableNameGroup } from '../../model/database/Table';
-import { tableEntities } from '../EnhancerHelper';
-import { tableBuilderFactory } from './TableBuilderFactory';
+import { appendToPropertyPath, tableEntities } from '../EnhancerHelper';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { Column } from '../../model/database/Column';
 import { Table } from '../../model/database/Table';
-import { TableBuilder } from './TableBuilder';
+import { buildTableFor } from './TableBuilder';
 
 // Build top level and sub level tables for the given top level entity,
 // including columns for each property and cascading through special property types as needed
@@ -19,10 +24,13 @@ export function buildTablesFromProperties(
   tables: Table[],
   targetTechnologyVersion: SemVer,
 ): void {
+  const currentPropertyPath: MetaEdPropertyPath = '' as MetaEdPropertyPath;
+
   const primaryKeys: Column[] = collectPrimaryKeys(
     entity,
+    entity,
     BuildStrategyDefault,
-    columnCreatorFactory,
+    currentPropertyPath,
     targetTechnologyVersion,
   ).map((x: Column) => cloneColumn(x));
 
@@ -32,16 +40,17 @@ export function buildTablesFromProperties(
   }
 
   entity.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-    tableBuilder.buildTables(
+    buildTableFor({
+      originalEntity: entity,
       property,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      currentPropertyPath: appendToPropertyPath(currentPropertyPath, property),
+      parentIsRequired: null,
+    });
   });
 
   // For ODS/API 7+, primary keys of main table needs to be brought to the front and sorted

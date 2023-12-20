@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import * as R from 'ramda';
-import { EntityProperty, Logger, TopLevelEntity } from '@edfi/metaed-core';
+import { EntityProperty, Logger, MetaEdPropertyPath, TopLevelEntity } from '@edfi/metaed-core';
 import { ColumnType } from './ColumnType';
 import { NoTable, Table } from './Table';
 
@@ -50,6 +50,17 @@ export interface Column {
   /** The string identifier for the column, independent of the column name */
   columnId: string;
 
+  /**
+   * The dot-separated MetaEd property path that leads to the creation of this column.
+   * Empty string if this is a synthetic column.
+   */
+  propertyPath: MetaEdPropertyPath;
+
+  /**
+   * The TopLevelEntity this column comes from, or null if this is a synthetic column.
+   */
+  originalEntity: TopLevelEntity | null;
+
   type: ColumnType;
   referenceContext: string;
   description: string;
@@ -87,6 +98,8 @@ export function newColumn(): Column {
     nameComponents: [],
     parentTable: NoTable,
     columnId: '',
+    propertyPath: '' as MetaEdPropertyPath,
+    originalEntity: null,
     type: 'unknown',
     referenceContext: '',
     description: '',
@@ -196,7 +209,9 @@ export function addMergedReferenceContext(column: Column, referenceContext: stri
   if (existingProperty == null) {
     column.mergedReferenceContexts.push(referenceContext);
   } else {
-    // Logger.warn(`Attempt to add duplicate merged reference context: ${referenceContext} to column ${column.columnId} failed.`);
+    Logger.warn(
+      `Attempt to add duplicate merged reference context: ${referenceContext} to column ${column.columnId} failed.`,
+    );
   }
 }
 

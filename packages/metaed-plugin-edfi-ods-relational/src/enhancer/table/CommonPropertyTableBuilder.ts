@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { SemVer, asCommonProperty, versionSatisfies } from '@edfi/metaed-core';
+import { MetaEdPropertyPath, SemVer, TopLevelEntity, asCommonProperty, versionSatisfies } from '@edfi/metaed-core';
 import { EntityProperty, MergeDirective, ReferentialProperty, Namespace } from '@edfi/metaed-core';
 import {
   TableNameGroup,
@@ -16,13 +16,13 @@ import { ForeignKeyStrategy } from '../../model/database/ForeignKeyStrategy';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { BuildStrategy } from './BuildStrategy';
 import { Column, columnSortV7 } from '../../model/database/Column';
-import { ColumnCreatorFactory } from './ColumnCreatorFactory';
 import { ForeignKey, createForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
-import { TableBuilder } from './TableBuilder';
-import { TableBuilderFactory } from './TableBuilderFactory';
+import { TableBuilderParameters, buildTableFor } from './TableBuilder';
+import { appendToPropertyPath } from '../EnhancerHelper';
 
 function buildJoinTables(
+  originalEntity: TopLevelEntity,
   property: ReferentialProperty,
   parentTableStrategy: TableStrategy,
   parentPrimaryKeys: Column[],
@@ -33,9 +33,9 @@ function buildJoinTables(
   joinTableNamespace: Namespace,
   joinTableSchema: string,
   tables: Table[],
-  tableFactory: TableBuilderFactory,
   targetTechnologyVersion: SemVer,
   parentIsRequired: boolean | null,
+  currentPropertyPath: MetaEdPropertyPath,
 ): void {
   const joinTable: Table = {
     ...newTable(),
@@ -75,16 +75,17 @@ function buildJoinTables(
   }
 
   property.referencedEntity.data.edfiOdsRelational.odsProperties.forEach((referenceProperty: EntityProperty) => {
-    const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(referenceProperty);
-    tableBuilder.buildTables(
-      referenceProperty,
-      TableStrategy.default(joinTable),
-      primaryKeys,
-      strategy,
+    buildTableFor({
+      originalEntity,
+      property: referenceProperty,
+      parentTableStrategy: TableStrategy.default(joinTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: strategy,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: appendToPropertyPath(currentPropertyPath, referenceProperty),
+    });
   });
 
   // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order
@@ -119,73 +120,75 @@ function buildJoinTables(
   }
 }
 
-export function commonPropertyTableBuilder(
-  tableFactory: TableBuilderFactory,
-  columnFactory: ColumnCreatorFactory,
-): TableBuilder {
-  return {
-    buildTables(
-      property: EntityProperty,
-      parentTableStrategy: TableStrategy,
-      parentPrimaryKeys: Column[],
-      buildStrategy: BuildStrategy,
-      tables: Table[],
-      targetTechnologyVersion: SemVer,
-      parentIsRequired: boolean | null,
-    ): void {
-      const commonProperty = asCommonProperty(property);
-      let strategy: BuildStrategy = buildStrategy;
+export function commonPropertyTableBuilder({
+  originalEntity,
+  property,
+  parentTableStrategy,
+  parentPrimaryKeys,
+  buildStrategy,
+  tables,
+  targetTechnologyVersion,
+  parentIsRequired,
+  currentPropertyPath,
+}: TableBuilderParameters): void {
+  const commonProperty = asCommonProperty(property);
+  let strategy: BuildStrategy = buildStrategy;
 
-      if (commonProperty.mergeDirectives.length > 0) {
-        strategy = strategy.skipPath(
-          commonProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPathStrings.slice(1)),
-        );
-      }
+  if (commonProperty.mergeDirectives.length > 0) {
+    strategy = strategy.skipPath(
+      commonProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPathStrings.slice(1)),
+    );
+  }
 
-      const primaryKeys: Column[] = [];
-      if (!commonProperty.isOptional) {
-        primaryKeys.push(
-          ...collectPrimaryKeys(commonProperty.referencedEntity, strategy, columnFactory, targetTechnologyVersion),
-        );
-      }
-
-      // For ODS/API 7+, parent primary keys come first
-      if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
-        primaryKeys.unshift(...parentPrimaryKeys);
-      } else {
-        primaryKeys.push(...parentPrimaryKeys);
-      }
-      const joinTableId: string = parentTableStrategy.tableId + commonProperty.data.edfiOdsRelational.odsName;
-
-      const joinTableNameGroup: TableNameGroup = {
-        ...newTableNameGroup(),
-        nameElements: [
-          parentTableStrategy.nameGroup,
-          {
-            ...newTableNameComponent(),
-            name: commonProperty.data.edfiOdsRelational.odsName,
-            isPropertyOdsName: true,
-            sourceProperty: commonProperty,
-          },
-        ],
-        sourceProperty: commonProperty,
-      };
-
-      buildJoinTables(
-        commonProperty,
-        parentTableStrategy,
-        parentPrimaryKeys,
-        primaryKeys,
-        buildStrategy,
-        joinTableId,
-        joinTableNameGroup,
-        parentTableStrategy.table.namespace,
-        parentTableStrategy.table.schema,
-        tables,
-        tableFactory,
+  const primaryKeys: Column[] = [];
+  if (!commonProperty.isOptional) {
+    primaryKeys.push(
+      ...collectPrimaryKeys(
+        originalEntity,
+        commonProperty.referencedEntity,
+        strategy,
+        currentPropertyPath,
         targetTechnologyVersion,
-        parentIsRequired,
-      );
-    },
+      ),
+    );
+  }
+
+  // For ODS/API 7+, parent primary keys come first
+  if (versionSatisfies(targetTechnologyVersion, '>=7.0.0')) {
+    primaryKeys.unshift(...parentPrimaryKeys);
+  } else {
+    primaryKeys.push(...parentPrimaryKeys);
+  }
+  const joinTableId: string = parentTableStrategy.tableId + commonProperty.data.edfiOdsRelational.odsName;
+
+  const joinTableNameGroup: TableNameGroup = {
+    ...newTableNameGroup(),
+    nameElements: [
+      parentTableStrategy.nameGroup,
+      {
+        ...newTableNameComponent(),
+        name: commonProperty.data.edfiOdsRelational.odsName,
+        isPropertyOdsName: true,
+        sourceProperty: commonProperty,
+      },
+    ],
+    sourceProperty: commonProperty,
   };
+
+  buildJoinTables(
+    originalEntity,
+    commonProperty,
+    parentTableStrategy,
+    parentPrimaryKeys,
+    primaryKeys,
+    buildStrategy,
+    joinTableId,
+    joinTableNameGroup,
+    parentTableStrategy.table.namespace,
+    parentTableStrategy.table.schema,
+    tables,
+    targetTechnologyVersion,
+    parentIsRequired,
+    currentPropertyPath,
+  );
 }

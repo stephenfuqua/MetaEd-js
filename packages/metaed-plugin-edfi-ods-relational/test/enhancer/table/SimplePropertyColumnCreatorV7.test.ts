@@ -1,4 +1,6 @@
 import {
+  DomainEntity,
+  MetaEdPropertyPath,
   newBooleanProperty,
   newCurrencyProperty,
   newDateProperty,
@@ -35,10 +37,9 @@ import {
   TimeProperty,
   YearProperty,
 } from '@edfi/metaed-core';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
 import { Column, DecimalColumn, StringColumn } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when converting boolean property to column', (): void => {
   const propertyName = 'PropertyName';
@@ -50,6 +51,7 @@ describe('when converting boolean property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newBooleanProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -64,8 +66,24 @@ describe('when converting boolean property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -78,6 +96,8 @@ describe('when converting boolean property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -91,6 +111,7 @@ describe('when converting currency property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newCurrencyProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -105,8 +126,24 @@ describe('when converting currency property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -119,6 +156,8 @@ describe('when converting currency property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -132,6 +171,7 @@ describe('when converting date property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newDateProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -146,8 +186,24 @@ describe('when converting date property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -160,6 +216,8 @@ describe('when converting date property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -173,6 +231,7 @@ describe('when converting datetime property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newDatetimeProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -187,8 +246,24 @@ describe('when converting datetime property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -201,6 +276,8 @@ describe('when converting datetime property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -216,6 +293,7 @@ describe('when converting decimal property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -232,8 +310,24 @@ describe('when converting decimal property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -248,6 +342,8 @@ describe('when converting decimal property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -261,6 +357,7 @@ describe('when converting duration property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newDurationProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -275,8 +372,24 @@ describe('when converting duration property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -289,6 +402,8 @@ describe('when converting duration property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -302,6 +417,7 @@ describe('when converting integer property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -316,8 +432,24 @@ describe('when converting integer property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -330,6 +462,8 @@ describe('when converting integer property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -345,6 +479,7 @@ describe('when converting integer property with big hint to column', (): void =>
       ...newIntegerProperty(),
       hasBigHint: true,
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -359,8 +494,24 @@ describe('when converting integer property with big hint to column', (): void =>
       },
     };
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -373,6 +524,8 @@ describe('when converting integer property with big hint to column', (): void =>
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -386,6 +539,7 @@ describe('when converting percent property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newPercentProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -400,8 +554,24 @@ describe('when converting percent property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -414,6 +584,8 @@ describe('when converting percent property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -429,6 +601,7 @@ describe('when converting shared decimal property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -445,8 +618,24 @@ describe('when converting shared decimal property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -461,6 +650,8 @@ describe('when converting shared decimal property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -474,6 +665,7 @@ describe('when converting shared integer property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -488,8 +680,24 @@ describe('when converting shared integer property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -502,6 +710,8 @@ describe('when converting shared integer property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -515,6 +725,7 @@ describe('when converting shared short property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newSharedShortProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -529,8 +740,24 @@ describe('when converting shared short property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -543,6 +770,8 @@ describe('when converting shared short property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -557,6 +786,7 @@ describe('when converting shared string property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -572,8 +802,24 @@ describe('when converting shared string property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -587,6 +833,8 @@ describe('when converting shared string property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -600,6 +848,7 @@ describe('when converting short property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newShortProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -614,8 +863,24 @@ describe('when converting short property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -628,6 +893,8 @@ describe('when converting short property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -642,6 +909,7 @@ describe('when converting string property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -657,8 +925,24 @@ describe('when converting string property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -672,6 +956,8 @@ describe('when converting string property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -685,6 +971,7 @@ describe('when converting time property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newTimeProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -699,8 +986,24 @@ describe('when converting time property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -713,6 +1016,8 @@ describe('when converting time property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -726,6 +1031,7 @@ describe('when converting year property to column', (): void => {
   beforeAll(() => {
     property = Object.assign(newYearProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       parentEntity: newDomainEntity(),
       isPartOfIdentity: true,
@@ -740,8 +1046,24 @@ describe('when converting year property to column', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '7.0.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault,
+      property.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return converted column', (): void => {
@@ -754,5 +1076,7 @@ describe('when converting year property to column', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].originalContextPrefix).toBe(contextName);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });

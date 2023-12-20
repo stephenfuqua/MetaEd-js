@@ -7,12 +7,12 @@ import {
   V3OrGreater,
   targetTechnologyVersionFor,
   SemVer,
+  MetaEdPropertyPath,
 } from '@edfi/metaed-core';
 import { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from '@edfi/metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
-import { columnCreatorFactory } from './ColumnCreatorFactory';
 import {
   newTable,
   newTableNameComponent,
@@ -20,12 +20,11 @@ import {
   newTableNameGroup,
   NoTableNameGroup,
 } from '../../model/database/Table';
-import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { isOdsReferenceProperty } from '../../model/property/ReferenceProperty';
 import { Column, columnSortV7 } from '../../model/database/Column';
 import { Table } from '../../model/database/Table';
-import { TableBuilder } from './TableBuilder';
+import { buildTableFor } from './TableBuilder';
 
 const enhancerName = 'DomainEntityExtensionTableEnhancer';
 
@@ -86,8 +85,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       const primaryKeys: Column[] = collectPrimaryKeys(
         entity,
+        entity,
         BuildStrategyDefault,
-        columnCreatorFactory,
+        '' as MetaEdPropertyPath,
         targetTechnologyVersion,
       );
 
@@ -112,16 +112,18 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               }
             : NoTableNameGroup,
         );
-        const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-        tableBuilder.buildTables(
+
+        buildTableFor({
+          originalEntity: entity,
           property,
-          tableStrategy,
-          primaryKeys,
-          BuildStrategyDefault,
+          parentTableStrategy: tableStrategy,
+          parentPrimaryKeys: primaryKeys,
+          buildStrategy: BuildStrategyDefault,
           tables,
           targetTechnologyVersion,
-          null,
-        );
+          parentIsRequired: null,
+          currentPropertyPath: property.fullPropertyName as MetaEdPropertyPath,
+        });
       });
 
       // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order

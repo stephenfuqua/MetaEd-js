@@ -1,5 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import * as R from 'ramda';
+import { invariant } from 'ts-invariant';
 import {
   Logger,
   NoTopLevelEntity,
@@ -16,6 +17,7 @@ import { columnConstraintMerge, Column, NoColumn } from './Column';
 import { ColumnTransform } from './ColumnTransform';
 import { ForeignKey } from './ForeignKey';
 import { simpleTableNameGroupConcat } from './TableNameGroupHelper';
+import { ColumnConflictPath } from './ColumnConflictPath';
 
 // eslint-disable-next-line no-use-before-define
 export type TableNameElement = TableNameComponent | TableNameGroup;
@@ -89,6 +91,9 @@ export interface Table {
   existenceReason: TableExistenceReason;
   tableId: string;
 
+  /** A list of all the column conflict paths that lead to the creation of this table */
+  columnConflictPaths: ColumnConflictPath[];
+
   namespace: Namespace;
   schema: string;
   type: string;
@@ -127,6 +132,8 @@ export function newTable(): Table {
     nameGroup: NoTableNameGroup,
     existenceReason: NoTableExistenceReason,
     tableId: '',
+
+    columnConflictPaths: [],
 
     namespace: NoNamespace,
     schema: '',
@@ -222,6 +229,35 @@ export function isTableNameComponent(nameElement: TableNameElement): nameElement
 }
 
 /**
+ * Add columnConflictPaths to the table
+ */
+function addColumnConflictPaths(table: Table, firstColumn: Column, secondColumn: Column) {
+  // Ignore synthetic USI columns
+  if (
+    firstColumn.sourceEntityProperties.length === 1 &&
+    firstColumn.sourceEntityProperties[0].data.edfiOdsRelational.isUsiProperty
+  ) {
+    return;
+  }
+
+  invariant(
+    firstColumn.originalEntity != null,
+    `Column ${firstColumn.columnId} for Table ${table.tableId} is duplicate column with no originalEntity`,
+  );
+  invariant(
+    secondColumn.originalEntity != null,
+    `Column ${secondColumn.columnId} for Table ${table.tableId} is duplicate column with no originalEntity`,
+  );
+
+  table.columnConflictPaths.push({
+    firstPath: firstColumn.propertyPath,
+    secondPath: secondColumn.propertyPath,
+    firstOriginalEntity: firstColumn.originalEntity,
+    secondOriginalEntity: secondColumn.originalEntity,
+  });
+}
+
+/**
  * Adds a column while doing delete and append for duplicate columns rather than replacement
  */
 function addColumnV5(table: Table, column: Column) {
@@ -230,6 +266,9 @@ function addColumnV5(table: Table, column: Column) {
     table.columns.push(column);
   } else {
     Logger.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+
+    addColumnConflictPaths(table, existingColumn, column);
+
     table.columns = R.reject((c: Column) => c.columnId === column.columnId)(table.columns);
     table.columns.push(columnConstraintMerge(existingColumn, column));
   }
@@ -244,6 +283,9 @@ function addColumnV7(table: Table, column: Column) {
     table.columns.push(column);
   } else {
     Logger.debug(`  Duplicate column ${column.columnId} on table ${simpleTableNameGroupConcat(table.nameGroup)}.`);
+
+    addColumnConflictPaths(table, table.columns[existingColumnIndex], column);
+
     table.columns[existingColumnIndex] = columnConstraintMerge(table.columns[existingColumnIndex], column);
   }
 }

@@ -1,9 +1,8 @@
-import { DomainEntity, DomainEntityProperty, IntegerProperty } from '@edfi/metaed-core';
+import { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdPropertyPath } from '@edfi/metaed-core';
 import { newDomainEntity, newDomainEntityProperty, newIntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when creating columns for identity collection reference property', (): void => {
   let columns: Column[];
@@ -11,6 +10,7 @@ describe('when creating columns for identity collection reference property', ():
   beforeAll(() => {
     const property: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'PropertyName',
+      fullPropertyName: 'PropertyName',
       documentation: 'PropertyDocumentation',
       isPartOfIdentity: true,
       data: {
@@ -32,6 +32,8 @@ describe('when creating columns for identity collection reference property', ():
     });
 
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: 'DomainEntityProperty',
+      fullPropertyName: 'DomainEntityProperty',
       referencedEntity: domainEntity,
       data: {
         edfiOdsRelational: {
@@ -41,8 +43,24 @@ describe('when creating columns for identity collection reference property', ():
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(domainEntityProperty, '7.0.0');
-    columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [domainEntityProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      domainEntityProperty,
+      BuildStrategyDefault,
+      'DomainEntityProperty' as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return no columns', (): void => {
@@ -60,6 +78,7 @@ describe('when creating columns for identity reference property', (): void => {
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
@@ -82,6 +101,8 @@ describe('when creating columns for identity reference property', (): void => {
     });
 
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityPropertyName,
+      fullPropertyName: domainEntityPropertyName,
       referencedEntity: domainEntity,
       data: {
         edfiOdsRelational: {
@@ -92,8 +113,24 @@ describe('when creating columns for identity reference property', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(domainEntityProperty, '7.0.0');
-    columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [domainEntityProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      domainEntityProperty,
+      BuildStrategyDefault,
+      domainEntityProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return a primary key column', (): void => {
@@ -105,6 +142,8 @@ describe('when creating columns for identity reference property', (): void => {
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
     expect(columns[0].referenceContext).toBe(domainEntityPropertyName + propertyName);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"DomainEntityPropertyName.PropertyName"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -120,6 +159,7 @@ describe('when creating columns for identity reference properties with composite
   beforeAll(() => {
     property1 = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName1,
+      fullPropertyName: propertyName1,
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
@@ -134,6 +174,7 @@ describe('when creating columns for identity reference properties with composite
 
     property2 = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName2,
+      fullPropertyName: propertyName2,
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
@@ -156,6 +197,8 @@ describe('when creating columns for identity reference properties with composite
     });
 
     const domainEntityProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityPropertyName,
+      fullPropertyName: domainEntityPropertyName,
       referencedEntity: domainEntity,
       data: {
         edfiOdsRelational: {
@@ -166,8 +209,24 @@ describe('when creating columns for identity reference properties with composite
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(domainEntityProperty, '7.0.0');
-    columns = columnCreator.createColumns(domainEntityProperty, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [domainEntityProperty],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      domainEntityProperty,
+      BuildStrategyDefault,
+      domainEntityProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return two columns', (): void => {
@@ -182,6 +241,8 @@ describe('when creating columns for identity reference properties with composite
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property1);
     expect(columns[0].referenceContext).toBe(domainEntityPropertyName + propertyName1);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(`"DomainEntityPropertyName.PropertyName1"`);
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should return a primary key column for second property', (): void => {
@@ -192,6 +253,8 @@ describe('when creating columns for identity reference properties with composite
     expect(columns[1].isPartOfPrimaryKey).toBe(true);
     expect(columns[1].sourceEntityProperties[0]).toBe(property2);
     expect(columns[1].referenceContext).toBe(domainEntityPropertyName + propertyName2);
+    expect(columns[1].propertyPath).toMatchInlineSnapshot(`"DomainEntityPropertyName.PropertyName2"`);
+    expect(columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });
 
@@ -206,6 +269,7 @@ describe('when creating columns for identity reference property that references 
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName1,
+      fullPropertyName: propertyName1,
       documentation: propertyDocumentation,
       isPartOfIdentity: true,
       data: {
@@ -228,6 +292,8 @@ describe('when creating columns for identity reference property that references 
     });
 
     const domainEntityProperty1: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityPropertyName1,
+      fullPropertyName: domainEntityPropertyName1,
       referencedEntity: domainEntity1,
       data: {
         edfiOdsRelational: {
@@ -248,6 +314,8 @@ describe('when creating columns for identity reference property that references 
     });
 
     const domainEntityProperty2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityPropertyName2,
+      fullPropertyName: domainEntityPropertyName2,
       referencedEntity: domainEntity2,
       data: {
         edfiOdsRelational: {
@@ -258,8 +326,24 @@ describe('when creating columns for identity reference property that references 
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(domainEntityProperty2, '7.0.0');
-    columns = columnCreator.createColumns(domainEntityProperty2, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [domainEntityProperty2],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      domainEntityProperty2,
+      BuildStrategyDefault,
+      domainEntityProperty2.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
   });
 
   it('should return a primary key column', (): void => {
@@ -271,5 +355,9 @@ describe('when creating columns for identity reference property that references 
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
     expect(columns[0].referenceContext).toBe(domainEntityPropertyName2 + domainEntityPropertyName1 + propertyName1);
+    expect(columns[0].propertyPath).toMatchInlineSnapshot(
+      `"DomainEntityPropertyName2.DomainEntityPropertyName1.PropertyName1"`,
+    );
+    expect(columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });

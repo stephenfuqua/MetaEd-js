@@ -1,18 +1,17 @@
-import { DomainEntity, Choice, ChoiceProperty, IntegerProperty, SemVer } from '@edfi/metaed-core';
+import { DomainEntity, Choice, ChoiceProperty, IntegerProperty, SemVer, MetaEdPropertyPath } from '@edfi/metaed-core';
 import { newDomainEntity, newChoice, newChoiceProperty, newIntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { newTable } from '../../../src/model/database/Table';
-import { tableBuilderFactory } from '../../../src/enhancer/table/TableBuilderFactory';
 import { TableStrategy } from '../../../src/model/database/TableStrategy';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
-import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+import { buildTableFor } from '../../../src/enhancer/table/TableBuilder';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 
 const targetTechnologyVersion: SemVer = '7.1.0';
 
 describe('when building choice property table with two integer properties', (): void => {
+  const choiceName = 'ChoiceName';
   const choiceEntityPropertyName1 = 'ChoiceEntityPropertyName1';
   const choiceEntityPropertyName2 = 'ChoiceEntityPropertyName2';
   const entityPkName = 'EntityPkName';
@@ -23,6 +22,7 @@ describe('when building choice property table with two integer properties', (): 
     table = { ...newTable(), schema: 'TableSchema', tableId: 'TableName' };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -31,6 +31,7 @@ describe('when building choice property table with two integer properties', (): 
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -44,6 +45,8 @@ describe('when building choice property table with two integer properties', (): 
       },
     });
     const entityChoiceProperty: ChoiceProperty = Object.assign(newChoiceProperty(), {
+      metaEdName: choiceName,
+      fullPropertyName: choiceName,
       parentEntity: entity,
       data: {
         edfiOdsRelational: {},
@@ -51,6 +54,7 @@ describe('when building choice property table with two integer properties', (): 
     });
 
     const choice: Choice = Object.assign(newChoice(), {
+      metaEdName: choiceName,
       data: {
         edfiOdsRelational: {
           odsProperties: [],
@@ -59,6 +63,7 @@ describe('when building choice property table with two integer properties', (): 
     });
     const choiceEntityProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: choiceEntityPropertyName1,
+      fullPropertyName: choiceEntityPropertyName1,
       data: {
         edfiOdsRelational: {
           odsContextPrefix: '',
@@ -68,6 +73,7 @@ describe('when building choice property table with two integer properties', (): 
     });
     const choiceEntityProperty2: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: choiceEntityPropertyName2,
+      fullPropertyName: choiceEntityPropertyName2,
       data: {
         edfiOdsRelational: {
           odsContextPrefix: '',
@@ -78,19 +84,25 @@ describe('when building choice property table with two integer properties', (): 
     choice.data.edfiOdsRelational.odsProperties.push(...[choiceEntityProperty1, choiceEntityProperty2]);
     entityChoiceProperty.referencedEntity = choice;
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
-
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityChoiceProperty);
-    tableBuilder.buildTables(
-      entityChoiceProperty,
-      TableStrategy.default(table),
-      primaryKeys,
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
       BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
+
+    buildTableFor({
+      originalEntity: entity,
+      property: entityChoiceProperty,
+      parentTableStrategy: TableStrategy.default(table),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: entityChoiceProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return no join table', (): void => {
@@ -101,5 +113,11 @@ describe('when building choice property table with two integer properties', (): 
     expect(table.columns).toHaveLength(2);
     expect(table.columns[0].columnId).toBe(choiceEntityPropertyName1);
     expect(table.columns[1].columnId).toBe(choiceEntityPropertyName2);
+
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"ChoiceName.ChoiceEntityPropertyName1"`);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(`"ChoiceName.ChoiceEntityPropertyName2"`);
+
+    expect(table.columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(table.columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 });

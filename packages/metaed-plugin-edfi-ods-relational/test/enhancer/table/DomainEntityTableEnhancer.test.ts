@@ -1,5 +1,9 @@
 import {
   addEntityForNamespace,
+  DomainEntityBuilder,
+  Enhancer,
+  MetaEdTextBuilder,
+  NamespaceBuilder,
   newCommon,
   newCommonProperty,
   newDescriptor,
@@ -11,6 +15,7 @@ import {
   newIntegerProperty,
   newMetaEdEnvironment,
   newNamespace,
+  newPluginEnvironment,
   NoTopLevelEntity,
 } from '@edfi/metaed-core';
 import {
@@ -32,6 +37,7 @@ import { enhance } from '../../../src/enhancer/table/DomainEntityTableEnhancer';
 import { enhance as initializeEdFiOdsRelationalEntityRepository } from '../../../src/model/EdFiOdsRelationalEntityRepository';
 import { ForeignKey } from '../../../src/model/database/ForeignKey';
 import { Table } from '../../../src/model/database/Table';
+import { allEnhancersBeforeTableCreation } from '../PluginHelper';
 
 describe('when DomainEntityTableEnhancer enhances entity with simple property', (): void => {
   const namespaceName = 'EdFi';
@@ -58,6 +64,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
     });
     const property: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: propertyName,
+      fullPropertyName: propertyName,
       namespace,
       roleName: '',
       data: {
@@ -91,6 +98,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(propertyName);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"PropertyName"`);
   });
 
   it('should reference the original entity', (): void => {
@@ -125,6 +133,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkPropertyName,
+      fullPropertyName: entityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -136,6 +145,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const requiredCollectionProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName,
+      fullPropertyName: domainEntityName,
       roleName: '',
       parentEntity: entity,
       data: {
@@ -163,6 +173,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: domainEntityPkPropertyName,
+      fullPropertyName: domainEntityPkPropertyName,
       isPartOfIdentity: true,
       roleName: '',
       data: {
@@ -193,6 +204,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 
   it('should create table for domainEntity with one primary key column', (): void => {
@@ -202,6 +214,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(domainEntityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"DomainEntityPkPropertyName"`);
   });
 
   it('should create join table from entity and domainEntity', (): void => {
@@ -216,12 +229,14 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + domainEntityName) as Table;
     expect(joinTable.columns[0].columnId).toBe(entityPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(joinTable.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 
   it('should have join table with foreign key to domainEntity', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + domainEntityName) as Table;
     expect(joinTable.columns[1].columnId).toBe(domainEntityPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
+    expect(joinTable.columns[1].propertyPath).toMatchInlineSnapshot(`"DomainEntityName.DomainEntityPkPropertyName"`);
   });
 });
 
@@ -250,6 +265,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkPropertyName,
+      fullPropertyName: entityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -261,6 +277,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const requiredCollectionProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
+      fullPropertyName: commonName,
       roleName: '',
       parentEntity: entity,
       data: {
@@ -289,6 +306,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
+      fullPropertyName: commonPkPropertyName,
       isPartOfIdentity: true,
       roleName: '',
       data: {
@@ -319,6 +337,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 
   it('should create join table from entity and domainEntity', (): void => {
@@ -333,12 +352,14 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName) as Table;
     expect(joinTable.columns[0].columnId).toBe(commonPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(joinTable.columns[0].propertyPath).toMatchInlineSnapshot(`"CommonName.CommonPkPropertyName"`);
   });
 
   it('should have join table with foreign key to entity', (): void => {
     const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName) as Table;
     expect(joinTable.columns[1].columnId).toBe(entityPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
+    expect(joinTable.columns[1].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 });
 
@@ -369,6 +390,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkPropertyName,
+      fullPropertyName: entityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -380,6 +402,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const requiredProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
+      fullPropertyName: referencedEntityName,
       isRequired: true,
       parentEntity: entity,
       data: {
@@ -407,6 +430,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const referencedEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: referencedEntityPkPropertyName,
+      fullPropertyName: referencedEntityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
@@ -418,6 +442,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const referencedEntityRequiredProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: subReferencedEntityName,
+      fullPropertyName: subReferencedEntityName,
       isRequired: true,
       parentEntity: referencedEntity,
       data: {
@@ -446,6 +471,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const subReferencedEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: subReferencedEntityPkPropertyName,
+      fullPropertyName: subReferencedEntityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: subReferencedEntity,
       data: {
@@ -477,9 +503,11 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     expect(table.columns).toHaveLength(2);
     expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
 
     expect(table.columns[1].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityName.ReferencedEntityPkPropertyName"`);
   });
 
   it('should create table for referencedEntity with one primary key and one non primary key column', (): void => {
@@ -489,9 +517,23 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     expect(table.columns).toHaveLength(2);
     expect(table.columns[0].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityPkPropertyName"`);
 
     expect(table.columns[1].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(
+      `"SubReferencedEntityName.SubReferencedEntityPkPropertyName"`,
+    );
+  });
+
+  it('should create table for subReferencedEntity', (): void => {
+    const table: Table = tableEntities(metaEd, namespace).get(subReferencedEntityName) as Table;
+    expect(table).toBeDefined();
+
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].columnId).toBe(subReferencedEntityPkPropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"SubReferencedEntityPkPropertyName"`);
   });
 });
 
@@ -522,6 +564,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkPropertyName,
+      fullPropertyName: entityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -533,6 +576,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const entityRequiredProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
+      fullPropertyName: referencedEntityName,
       isRequired: true,
       parentEntity: entity,
       data: {
@@ -560,6 +604,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const referencedEntityPkProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: referencedEntityPkPropertyName,
+      fullPropertyName: referencedEntityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
@@ -571,6 +616,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const referencedEntityPkProperty2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: subReferencedEntityName,
+      fullPropertyName: subReferencedEntityName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
@@ -600,6 +646,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     });
     const subReferencedEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: subReferencedEntityPkPropertyName,
+      fullPropertyName: subReferencedEntityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: subReferencedEntity,
       data: {
@@ -631,12 +678,17 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     expect(table.columns).toHaveLength(3);
     expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
 
     expect(table.columns[1].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityName.ReferencedEntityPkPropertyName"`);
 
     expect(table.columns[2].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[2].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[2].propertyPath).toMatchInlineSnapshot(
+      `"ReferencedEntityName.SubReferencedEntityName.SubReferencedEntityPkPropertyName"`,
+    );
   });
 
   it('should create table for referencedEntity with two primary key columns', (): void => {
@@ -646,9 +698,23 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     expect(table.columns).toHaveLength(2);
     expect(table.columns[0].columnId).toBe(referencedEntityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityPkPropertyName"`);
 
     expect(table.columns[1].columnId).toBe(subReferencedEntityPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(
+      `"SubReferencedEntityName.SubReferencedEntityPkPropertyName"`,
+    );
+  });
+
+  it('should create table for subReferencedEntity', (): void => {
+    const table: Table = tableEntities(metaEd, namespace).get(subReferencedEntityName) as Table;
+    expect(table).toBeDefined();
+
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].columnId).toBe(subReferencedEntityPkPropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"SubReferencedEntityPkPropertyName"`);
   });
 });
 
@@ -711,6 +777,74 @@ describe("when DomainEntityTableEnhancer enhances entity with collection propert
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with two reference properties that have same primary key names', (): void => {
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '5.0.0-pre.1' };
+  metaEd.plugin.set('edfiOdsRelational', { ...newPluginEnvironment(), targetTechnologyVersion: '7.0.0' });
+
+  const entityName = 'EntityName';
+  const referencedEntityName1 = 'ReferencedEntityName1';
+  const referencedEntityName2 = 'ReferencedEntityName2';
+  const commonPkPropertyName = 'CommonPkPropertyName';
+
+  let namespace: Namespace;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withDomainEntityIdentity(referencedEntityName1, 'doc')
+      .withDomainEntityIdentity(referencedEntityName2, 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(referencedEntityName1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(commonPkPropertyName, 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(referencedEntityName2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(commonPkPropertyName, 'doc')
+      .withEndDomainEntity()
+
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    namespace = metaEd.namespace.get('EdFi') as Namespace;
+    allEnhancersBeforeTableCreation().forEach((enhancer: Enhancer) => {
+      enhancer(metaEd);
+    });
+
+    enhance(metaEd);
+  });
+
+  it('should create three tables, one for each entity', (): void => {
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(referencedEntityName1)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(referencedEntityName2)).toBeDefined();
+  });
+
+  it('should create single column in entity table', (): void => {
+    const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
+    expect(table.columns).toHaveLength(1);
+    expect(table.columns[0].columnId).toBe(commonPkPropertyName);
+    expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityName1.CommonPkPropertyName"`);
+  });
+
+  it('should record the column collision', (): void => {
+    const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
+    expect(table.columnConflictPaths).toHaveLength(1);
+    expect(table.columnConflictPaths[0].firstPath).toBe('ReferencedEntityName1.CommonPkPropertyName');
+    expect(table.columnConflictPaths[0].secondPath).toBe('ReferencedEntityName2.CommonPkPropertyName');
+    expect(table.columnConflictPaths[0].firstOriginalEntity.metaEdName).toBe(entityName);
+    expect(table.columnConflictPaths[0].secondOriginalEntity.metaEdName).toBe(entityName);
+  });
+});
+
+describe('when DomainEntityTableEnhancer enhances entity with two reference properties that have same primary key names', (): void => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -735,6 +869,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     });
     const entityPkProperty1: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName1,
+      fullPropertyName: referencedEntityName1,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -746,6 +881,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     });
     const entityPkProperty2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName2,
+      fullPropertyName: referencedEntityName2,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -774,6 +910,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     });
     const referencedEntity1PkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
+      fullPropertyName: commonPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity1,
       data: {
@@ -789,6 +926,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
 
     const referencedEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName2,
+      fullPropertyName: referencedEntityName2,
       documentation,
       namespace,
       data: {
@@ -801,6 +939,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     });
     const referencedEntity2PkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
+      fullPropertyName: commonPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity2,
       data: {
@@ -826,11 +965,21 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     expect(tableEntities(metaEd, namespace).get(referencedEntityName1)).toBeDefined();
     expect(tableEntities(metaEd, namespace).get(referencedEntityName2)).toBeDefined();
   });
+
   it('should create single column in entity table', (): void => {
     const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"ReferencedEntityName1.CommonPkPropertyName"`);
+  });
+
+  it('should record the column collision', (): void => {
+    const table: Table = tableEntities(metaEd, namespace).get(entityName) as Table;
+    expect(table.columnConflictPaths[0].firstPath).toBe('ReferencedEntityName1.CommonPkPropertyName');
+    expect(table.columnConflictPaths[0].secondPath).toBe('ReferencedEntityName2.CommonPkPropertyName');
+    expect(table.columnConflictPaths[0].firstOriginalEntity.metaEdName).toBe(entityName);
+    expect(table.columnConflictPaths[0].secondOriginalEntity.metaEdName).toBe(entityName);
   });
 });
 
@@ -1319,6 +1468,7 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     });
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkPropertyName,
+      fullPropertyName: entityPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -1330,6 +1480,7 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
+      fullPropertyName: commonName,
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
@@ -1356,6 +1507,7 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     });
     const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonPkPropertyName,
+      fullPropertyName: commonPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -1367,6 +1519,7 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     });
     const commonNonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonNonPkPropertyName,
+      fullPropertyName: commonNonPkPropertyName,
       isPartOfIdentity: false,
       parentEntity: entity,
       data: {
@@ -1397,6 +1550,7 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].columnId).toBe(entityPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 
   it('should create join table with two primary keys and one non primary key', (): void => {
@@ -1406,11 +1560,14 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
     expect(table.columns).toHaveLength(3);
     expect(table.columns[0].columnId).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[0].propertyPath).toMatchInlineSnapshot(`"EntityNameForCommon.CommonPkPropertyName"`);
 
     expect(table.columns[1].columnId).toBe(commonNonPkPropertyName);
     expect(table.columns[1].isPartOfPrimaryKey).toBe(false);
+    expect(table.columns[1].propertyPath).toMatchInlineSnapshot(`"EntityNameForCommon.CommonNonPkPropertyName"`);
 
     expect(table.columns[2].columnId).toBe(entityPkPropertyName);
     expect(table.columns[2].isPartOfPrimaryKey).toBe(true);
+    expect(table.columns[2].propertyPath).toMatchInlineSnapshot(`"EntityPkPropertyName"`);
   });
 });

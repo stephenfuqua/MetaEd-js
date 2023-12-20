@@ -1,9 +1,8 @@
-import { EnumerationProperty } from '@edfi/metaed-core';
+import { DomainEntity, EnumerationProperty, MetaEdPropertyPath, newDomainEntity } from '@edfi/metaed-core';
 import { newEnumerationProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 
 describe('when creating columns for enumeration property', (): void => {
   const propertyName = 'PropertyName';
@@ -27,8 +26,18 @@ describe('when creating columns for enumeration property', (): void => {
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(entity, property, BuildStrategyDefault, '' as MetaEdPropertyPath, '6.1.0');
   });
 
   it('should return a column', (): void => {
@@ -65,8 +74,18 @@ describe('when creating columns for primary key enumeration property', (): void 
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(entity, property, BuildStrategyDefault, '' as MetaEdPropertyPath, '6.1.0');
   });
 
   it('should return a primary key column', (): void => {
@@ -105,8 +124,18 @@ describe('when creating columns for identity rename enumeration property', (): v
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(entity, property, BuildStrategyDefault, '' as MetaEdPropertyPath, '6.1.0');
   });
 
   it('should return a primary key column with base key name', (): void => {
@@ -144,8 +173,18 @@ describe('when creating columns for nullable enumeration property', (): void => 
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(entity, property, BuildStrategyDefault, '' as MetaEdPropertyPath, '6.1.0');
   });
 
   it('should return a column', (): void => {
@@ -183,8 +222,24 @@ describe('when creating columns for primary key enumeration property with suppre
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy(),
+      '' as MetaEdPropertyPath,
+      '6.1.0',
+    );
   });
 
   it('should return a column', (): void => {
@@ -223,8 +278,24 @@ describe('when creating columns for identity rename enumeration property with su
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property, '6.1.0');
-    columns = columnCreator.createColumns(property, BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy());
+    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
+      properties: [property],
+      data: {
+        edfiOdsRelational: {
+          odsTableId: 'Entity',
+          odsProperties: [],
+        },
+      },
+    });
+
+    columns = createColumnFor(
+      entity,
+      property,
+      BuildStrategyDefault.suppressPrimaryKeyCreationFromPropertiesStrategy(),
+      '' as MetaEdPropertyPath,
+      '6.1.0',
+    );
   });
 
   it('should return a column with base key name', (): void => {

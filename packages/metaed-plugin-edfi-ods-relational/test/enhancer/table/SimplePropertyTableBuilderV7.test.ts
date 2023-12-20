@@ -1,14 +1,12 @@
-import { SemVer, newDomainEntity, newIntegerProperty } from '@edfi/metaed-core';
+import { MetaEdPropertyPath, SemVer, newDomainEntity, newIntegerProperty } from '@edfi/metaed-core';
 import { DomainEntity, IntegerProperty } from '@edfi/metaed-core';
 import { BuildStrategyDefault } from '../../../src/enhancer/table/BuildStrategy';
-import { columnCreatorFactory } from '../../../src/enhancer/table/ColumnCreatorFactory';
 import { newTable } from '../../../src/model/database/Table';
-import { tableBuilderFactory } from '../../../src/enhancer/table/TableBuilderFactory';
 import { TableStrategy } from '../../../src/model/database/TableStrategy';
 import { Column } from '../../../src/model/database/Column';
-import { ColumnCreator } from '../../../src/enhancer/table/ColumnCreator';
 import { Table } from '../../../src/model/database/Table';
-import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
+import { buildTableFor } from '../../../src/enhancer/table/TableBuilder';
+import { createColumnFor } from '../../../src/enhancer/table/ColumnCreator';
 
 const targetTechnologyVersion: SemVer = '7.1.0';
 
@@ -24,6 +22,7 @@ describe('when building simple entity property table with collection property an
     const table: Table = { ...newTable(), schema: tableSchema, tableId: tableName };
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: 'Entity',
       data: {
         edfiOdsRelational: {
           odsCascadePrimaryKeyUpdates: false,
@@ -33,6 +32,7 @@ describe('when building simple entity property table with collection property an
 
     const entityProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPropertyName,
+      fullPropertyName: entityPropertyName,
       documentation: entityPropertyDocumentation,
       parentEntity: entity,
       isPartOfIdentity: false,
@@ -49,6 +49,7 @@ describe('when building simple entity property table with collection property an
 
     const entityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: entityPkName,
+      fullPropertyName: entityPkName,
       parentEntity: entity,
       isPartOfIdentity: true,
       data: {
@@ -62,19 +63,25 @@ describe('when building simple entity property table with collection property an
       },
     });
 
-    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(entityPkProperty, '7.0.0');
-    const primaryKeys: Column[] = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
-
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityProperty);
-    tableBuilder.buildTables(
-      entityProperty,
-      TableStrategy.default(table),
-      primaryKeys,
+    const primaryKeys: Column[] = createColumnFor(
+      entity,
+      entityPkProperty,
       BuildStrategyDefault,
+      entityPkProperty.fullPropertyName as MetaEdPropertyPath,
+      '7.0.0',
+    );
+
+    buildTableFor({
+      originalEntity: entity,
+      property: entityProperty,
+      parentTableStrategy: TableStrategy.default(table),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: entityProperty.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   it('should return join table', (): void => {
@@ -97,6 +104,16 @@ describe('when building simple entity property table with collection property an
   it('should convert collection to primary key', (): void => {
     expect(tables[0].columns[1].columnId).toBe(entityPropertyName);
     expect(tables[0].columns[1].isPartOfPrimaryKey).toBe(true);
+  });
+
+  it('should have correct property paths', (): void => {
+    expect(tables[0].columns[0].propertyPath).toMatchInlineSnapshot(`"EntityPkName"`);
+    expect(tables[0].columns[1].propertyPath).toMatchInlineSnapshot(`"EntityPropertyName"`);
+  });
+
+  it('should have correct original entities', (): void => {
+    expect(tables[0].columns[0].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
+    expect(tables[0].columns[1].originalEntity?.metaEdName).toMatchInlineSnapshot(`"Entity"`);
   });
 
   it('should have foreign key', (): void => {

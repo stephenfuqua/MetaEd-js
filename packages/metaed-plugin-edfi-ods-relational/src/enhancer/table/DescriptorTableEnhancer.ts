@@ -1,4 +1,10 @@
-import { SemVer, getEntitiesOfTypeForNamespaces, targetTechnologyVersionFor, versionSatisfies } from '@edfi/metaed-core';
+import {
+  MetaEdPropertyPath,
+  SemVer,
+  getEntitiesOfTypeForNamespaces,
+  targetTechnologyVersionFor,
+  versionSatisfies,
+} from '@edfi/metaed-core';
 import { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, Namespace } from '@edfi/metaed-core';
 import {
   addColumnsWithoutSort,
@@ -12,7 +18,6 @@ import {
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
-import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { enumerationTableCreator } from './EnumerationTableCreator';
 import { ForeignKeyStrategyDefault } from '../../model/database/ForeignKeyStrategy';
@@ -23,12 +28,11 @@ import {
   newForeignKeySourceReference,
   createForeignKeyUsingSourceReference,
 } from '../../model/database/ForeignKey';
-import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import { Column, columnSortV7, newColumn, newColumnNameComponent } from '../../model/database/Column';
 import { ForeignKey } from '../../model/database/ForeignKey';
 import { Table } from '../../model/database/Table';
-import { TableBuilder } from './TableBuilder';
+import { buildTableFor } from './TableBuilder';
 
 const enhancerName = 'DescriptorTableEnhancer';
 
@@ -89,6 +93,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
     isPartOfPrimaryKey: true,
     isNullable: false,
     description: PRIMARY_KEY_DESCRIPTOR,
+    propertyPath: '' as MetaEdPropertyPath, // Synthetic column
   };
   addColumnsWithoutSort(mainTable, [primaryKey], ColumnTransformUnchanged, targetTechnologyVersion);
 
@@ -154,23 +159,25 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Table[
 
   const primaryKeys: Column[] = collectPrimaryKeys(
     descriptor,
+    descriptor,
     BuildStrategyDefault,
-    columnCreatorFactory,
+    '' as MetaEdPropertyPath,
     targetTechnologyVersion,
   );
   primaryKeys.push(primaryKey);
 
   descriptor.data.edfiOdsRelational.odsProperties.forEach((property: EntityProperty) => {
-    const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);
-    tableBuilder.buildTables(
+    buildTableFor({
+      originalEntity: descriptor,
       property,
-      TableStrategy.default(mainTable),
-      primaryKeys,
-      BuildStrategyDefault,
+      parentTableStrategy: TableStrategy.default(mainTable),
+      parentPrimaryKeys: primaryKeys,
+      buildStrategy: BuildStrategyDefault,
       tables,
       targetTechnologyVersion,
-      null,
-    );
+      parentIsRequired: null,
+      currentPropertyPath: property.fullPropertyName as MetaEdPropertyPath,
+    });
   });
 
   // For ODS/API 7.0+, we need to correct column sort order after iterating over odsProperties in MetaEd model order
