@@ -1,5 +1,3 @@
-import Ajv from 'ajv/dist/2020';
-import addFormatsTo from 'ajv-formats';
 import {
   newMetaEdEnvironment,
   MetaEdEnvironment,
@@ -33,13 +31,12 @@ import { enhance as subclassApiEntityMappingEnhancer } from '../../src/enhancer/
 import { enhance as propertyCollectingEnhancer } from '../../src/enhancer/PropertyCollectingEnhancer';
 import { enhance as subclassPropertyCollectingEnhancer } from '../../src/enhancer/SubclassPropertyCollectingEnhancer';
 import { enhance } from '../../src/enhancer/AllJsonPathsMappingEnhancer';
-import { JsonPathsInfo } from '../../src/model/JsonPathsMapping';
+import { JsonPath } from '../../src/model/api-schema/JsonPath';
 
-const ajv = new Ajv({ allErrors: true });
-addFormatsTo(ajv);
+type SimpleJsonPathsInfo = { jsonPath: JsonPath; entityName: string; propertyName: string };
 
 export type Snapshotable = {
-  jsonPaths: { [key: MetaEdPropertyPath]: JsonPathsInfo };
+  jsonPaths: { [key: MetaEdPropertyPath]: SimpleJsonPathsInfo };
   isTopLevel: { [key: MetaEdPropertyPath]: boolean };
   terminalPropertyFullName: { [key: MetaEdPropertyPath]: string };
 };
@@ -47,12 +44,16 @@ export type Snapshotable = {
 export function snapshotify(entity: TopLevelEntity | undefined): Snapshotable {
   const { allJsonPathsMapping } = entity?.data.edfiApiSchema as EntityApiSchemaData;
 
-  const jsonPaths = {} as { [key: MetaEdPropertyPath]: JsonPathsInfo };
+  const jsonPaths = {} as { [key: MetaEdPropertyPath]: SimpleJsonPathsInfo };
   const isTopLevel = {} as { [key: MetaEdPropertyPath]: boolean };
   const terminalPropertyFullName = {} as { [key: MetaEdPropertyPath]: string };
 
   Object.entries(allJsonPathsMapping).forEach(([key, value]) => {
-    jsonPaths[key] = value.jsonPaths;
+    jsonPaths[key] = value.jsonPathPropertyPairs.map((jppp) => ({
+      jsonPath: jppp.jsonPath,
+      entityName: jppp.sourceProperty.parentEntityName,
+      propertyName: jppp.sourceProperty.metaEdName,
+    }));
     isTopLevel[key] = value.isTopLevel;
     if (value.isTopLevel) {
       terminalPropertyFullName[key] = value.terminalProperty.fullPropertyName;
@@ -113,43 +114,95 @@ describe('when building simple domain entity with all the simple non-collections
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "OptionalBooleanProperty": Array [
-          "$.optionalBooleanProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalBooleanProperty",
+            "propertyName": "OptionalBooleanProperty",
+          },
         ],
         "OptionalDecimalProperty": Array [
-          "$.optionalDecimalProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalDecimalProperty",
+            "propertyName": "OptionalDecimalProperty",
+          },
         ],
         "OptionalPercentProperty": Array [
-          "$.optionalPercentProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalPercentProperty",
+            "propertyName": "OptionalPercentProperty",
+          },
         ],
         "OptionalShortProperty": Array [
-          "$.optionalShortProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalShortProperty",
+            "propertyName": "OptionalShortProperty",
+          },
         ],
         "OptionalYear": Array [
-          "$.optionalYear",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalYear",
+            "propertyName": "OptionalYear",
+          },
         ],
         "RequiredCurrencyProperty": Array [
-          "$.requiredCurrencyProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredCurrencyProperty",
+            "propertyName": "RequiredCurrencyProperty",
+          },
         ],
         "RequiredDateProperty": Array [
-          "$.requiredDateProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDateProperty",
+            "propertyName": "RequiredDateProperty",
+          },
         ],
         "RequiredDatetimeProperty": Array [
-          "$.requiredDatetimeProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDatetimeProperty",
+            "propertyName": "RequiredDatetimeProperty",
+          },
         ],
         "RequiredDurationProperty": Array [
-          "$.requiredDurationProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDurationProperty",
+            "propertyName": "RequiredDurationProperty",
+          },
         ],
         "RequiredIntegerProperty": Array [
-          "$.requiredIntegerProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredIntegerProperty",
+            "propertyName": "RequiredIntegerProperty",
+          },
         ],
         "RequiredTimeProperty": Array [
-          "$.requiredTimeProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredTimeProperty",
+            "propertyName": "RequiredTimeProperty",
+          },
         ],
         "SchoolYear": Array [
-          "$.schoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.schoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "StringIdentity": Array [
-          "$.stringIdentity",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.stringIdentity",
+            "propertyName": "StringIdentity",
+          },
         ],
       }
     `);
@@ -238,46 +291,102 @@ describe('when building simple domain entity with all the simple collections', (
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "OptionalBooleanProperty": Array [
-          "$.optionalBooleanProperties[*].optionalBooleanProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalBooleanProperties[*].optionalBooleanProperty",
+            "propertyName": "OptionalBooleanProperty",
+          },
         ],
         "OptionalDecimalProperty": Array [
-          "$.optionalDecimalProperties[*].optionalDecimalProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalDecimalProperties[*].optionalDecimalProperty",
+            "propertyName": "OptionalDecimalProperty",
+          },
         ],
         "OptionalPercentProperty": Array [
-          "$.optionalPercentProperties[*].optionalPercentProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalPercentProperties[*].optionalPercentProperty",
+            "propertyName": "OptionalPercentProperty",
+          },
         ],
         "OptionalShortProperty": Array [
-          "$.optionalShortProperties[*].optionalShortProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalShortProperties[*].optionalShortProperty",
+            "propertyName": "OptionalShortProperty",
+          },
         ],
         "OptionalYear": Array [
-          "$.optionalYears[*].optionalYear",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.optionalYears[*].optionalYear",
+            "propertyName": "OptionalYear",
+          },
         ],
         "RequiredCurrencyProperty": Array [
-          "$.requiredCurrencyProperties[*].requiredCurrencyProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredCurrencyProperties[*].requiredCurrencyProperty",
+            "propertyName": "RequiredCurrencyProperty",
+          },
         ],
         "RequiredDateProperty": Array [
-          "$.requiredDateProperties[*].requiredDateProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDateProperties[*].requiredDateProperty",
+            "propertyName": "RequiredDateProperty",
+          },
         ],
         "RequiredDatetimeProperty": Array [
-          "$.requiredDatetimeProperties[*].requiredDatetimeProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDatetimeProperties[*].requiredDatetimeProperty",
+            "propertyName": "RequiredDatetimeProperty",
+          },
         ],
         "RequiredDurationProperty": Array [
-          "$.requiredDurationProperties[*].requiredDurationProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredDurationProperties[*].requiredDurationProperty",
+            "propertyName": "RequiredDurationProperty",
+          },
         ],
         "RequiredIntegerProperty": Array [
-          "$.requiredIntegerProperties[*].requiredIntegerProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredIntegerProperties[*].requiredIntegerProperty",
+            "propertyName": "RequiredIntegerProperty",
+          },
         ],
         "RequiredStringProperty": Array [
-          "$.requiredStringProperties[*].requiredStringProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredStringProperties[*].requiredStringProperty",
+            "propertyName": "RequiredStringProperty",
+          },
         ],
         "RequiredTimeProperty": Array [
-          "$.requiredTimeProperties[*].requiredTimeProperty",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.requiredTimeProperties[*].requiredTimeProperty",
+            "propertyName": "RequiredTimeProperty",
+          },
         ],
         "SchoolYear": Array [
-          "$.schoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.schoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "StringIdentity": Array [
-          "$.stringIdentity",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.stringIdentity",
+            "propertyName": "StringIdentity",
+          },
         ],
       }
     `);
@@ -374,33 +483,77 @@ describe('when building a domain entity referencing another referencing another 
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ClassPeriod": Array [
-          "$.classPeriods[*].classPeriodReference.classPeriodName",
-          "$.classPeriods[*].classPeriodReference.schoolId",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.classPeriods[*].classPeriodReference.classPeriodName",
+            "propertyName": "ClassPeriod",
+          },
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.classPeriods[*].classPeriodReference.schoolId",
+            "propertyName": "ClassPeriod",
+          },
         ],
         "ClassPeriod.ClassPeriodName": Array [
-          "$.classPeriods[*].classPeriodReference.classPeriodName",
+          Object {
+            "entityName": "ClassPeriod",
+            "jsonPath": "$.classPeriods[*].classPeriodReference.classPeriodName",
+            "propertyName": "ClassPeriodName",
+          },
         ],
         "ClassPeriod.School": Array [
-          "$.classPeriods[*].classPeriodReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.classPeriods[*].classPeriodReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "ClassPeriod.School.SchoolId": Array [
-          "$.classPeriods[*].classPeriodReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.classPeriods[*].classPeriodReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering": Array [
-          "$.courseOfferingReference.localCourseCode",
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.localCourseCode",
+            "propertyName": "CourseOffering",
+          },
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "CourseOffering",
+          },
         ],
         "CourseOffering.LocalCourseCode": Array [
-          "$.courseOfferingReference.localCourseCode",
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.courseOfferingReference.localCourseCode",
+            "propertyName": "LocalCourseCode",
+          },
         ],
         "CourseOffering.School": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering.School.SchoolId": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "SectionIdentifier": Array [
-          "$.sectionIdentifier",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.sectionIdentifier",
+            "propertyName": "SectionIdentifier",
+          },
         ],
       }
     `);
@@ -482,39 +635,99 @@ describe('when building a domain entity referencing CourseOffering with an impli
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "CourseOffering": Array [
-          "$.courseOfferingReference.localCourseCode",
-          "$.courseOfferingReference.schoolId",
-          "$.courseOfferingReference.schoolYear",
-          "$.courseOfferingReference.sessionName",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.localCourseCode",
+            "propertyName": "CourseOffering",
+          },
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "CourseOffering",
+          },
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.schoolYear",
+            "propertyName": "CourseOffering",
+          },
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.courseOfferingReference.sessionName",
+            "propertyName": "CourseOffering",
+          },
         ],
         "CourseOffering.LocalCourseCode": Array [
-          "$.courseOfferingReference.localCourseCode",
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.courseOfferingReference.localCourseCode",
+            "propertyName": "LocalCourseCode",
+          },
         ],
         "CourseOffering.School": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering.School.SchoolId": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering.Session": Array [
-          "$.courseOfferingReference.schoolId",
-          "$.courseOfferingReference.schoolYear",
-          "$.courseOfferingReference.sessionName",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.courseOfferingReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.courseOfferingReference.sessionName",
+            "propertyName": "SessionName",
+          },
         ],
         "CourseOffering.Session.School": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering.Session.School.SchoolId": Array [
-          "$.courseOfferingReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.courseOfferingReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "CourseOffering.Session.SchoolYear": Array [
-          "$.courseOfferingReference.schoolYear",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.courseOfferingReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "CourseOffering.Session.SessionName": Array [
-          "$.courseOfferingReference.sessionName",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.courseOfferingReference.sessionName",
+            "propertyName": "SessionName",
+          },
         ],
         "SectionIdentifier": Array [
-          "$.sectionIdentifier",
+          Object {
+            "entityName": "DomainEntityName",
+            "jsonPath": "$.sectionIdentifier",
+            "propertyName": "SectionIdentifier",
+          },
         ],
       }
     `);
@@ -546,30 +759,70 @@ describe('when building a domain entity referencing CourseOffering with an impli
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "LocalCourseCode": Array [
-          "$.localCourseCode",
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.localCourseCode",
+            "propertyName": "LocalCourseCode",
+          },
         ],
         "School": Array [
-          "$.schoolReference.schoolId",
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.schoolReference.schoolId",
+            "propertyName": "School",
+          },
         ],
         "School.SchoolId": Array [
-          "$.schoolReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.schoolReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "Session": Array [
-          "$.sessionReference.schoolId",
-          "$.sessionReference.schoolYear",
-          "$.sessionReference.sessionName",
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.sessionReference.schoolId",
+            "propertyName": "Session",
+          },
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.sessionReference.schoolYear",
+            "propertyName": "Session",
+          },
+          Object {
+            "entityName": "CourseOffering",
+            "jsonPath": "$.sessionReference.sessionName",
+            "propertyName": "Session",
+          },
         ],
         "Session.School": Array [
-          "$.sessionReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.sessionReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "Session.School.SchoolId": Array [
-          "$.sessionReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.sessionReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "Session.SchoolYear": Array [
-          "$.sessionReference.schoolYear",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.sessionReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "Session.SessionName": Array [
-          "$.sessionReference.sessionName",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.sessionReference.sessionName",
+            "propertyName": "SessionName",
+          },
         ],
       }
     `);
@@ -600,16 +853,32 @@ describe('when building a domain entity referencing CourseOffering with an impli
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "School": Array [
-          "$.schoolReference.schoolId",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.schoolReference.schoolId",
+            "propertyName": "School",
+          },
         ],
         "School.SchoolId": Array [
-          "$.schoolReference.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.schoolReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "SchoolYear": Array [
-          "$.schoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.schoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "SessionName": Array [
-          "$.sessionName",
+          Object {
+            "entityName": "Session",
+            "jsonPath": "$.sessionName",
+            "propertyName": "SessionName",
+          },
         ],
       }
     `);
@@ -636,7 +905,11 @@ describe('when building a domain entity referencing CourseOffering with an impli
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "SchoolId": Array [
-          "$.schoolId",
+          Object {
+            "entityName": "School",
+            "jsonPath": "$.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
       }
     `);
@@ -720,31 +993,67 @@ describe('when building domain entity with nested choice and inline commons', ()
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ContentIdentifier": Array [
-          "$.contentIdentifier",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.contentIdentifier",
+            "propertyName": "ContentIdentifier",
+          },
         ],
         "LearningResourceChoice.LearningResource.ContentClass": Array [
-          "$.contentClassDescriptor",
+          Object {
+            "entityName": "LearningResource",
+            "jsonPath": "$.contentClassDescriptor",
+            "propertyName": "ContentClass",
+          },
         ],
         "LearningResourceChoice.LearningResource.DerivativeSourceEducationContentSource.EducationContent": Array [
-          "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+          Object {
+            "entityName": "EducationContentSource",
+            "jsonPath": "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+            "propertyName": "EducationContent",
+          },
         ],
         "LearningResourceChoice.LearningResource.DerivativeSourceEducationContentSource.EducationContent.ContentIdentifier": Array [
-          "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.derivativeSourceEducationContents[*].derivativeSourceEducationContentReference.contentIdentifier",
+            "propertyName": "ContentIdentifier",
+          },
         ],
         "LearningResourceChoice.LearningResource.DerivativeSourceEducationContentSource.URI": Array [
-          "$.derivativeSourceURIs[*].derivativeSourceURI",
+          Object {
+            "entityName": "EducationContentSource",
+            "jsonPath": "$.derivativeSourceURIs[*].derivativeSourceURI",
+            "propertyName": "URI",
+          },
         ],
         "LearningResourceChoice.LearningResource.Description": Array [
-          "$.description",
+          Object {
+            "entityName": "LearningResource",
+            "jsonPath": "$.description",
+            "propertyName": "Description",
+          },
         ],
         "LearningResourceChoice.LearningResource.ShortDescription": Array [
-          "$.shortDescription",
+          Object {
+            "entityName": "LearningResource",
+            "jsonPath": "$.shortDescription",
+            "propertyName": "ShortDescription",
+          },
         ],
         "LearningResourceChoice.LearningResourceMetadataURI": Array [
-          "$.learningResourceMetadataURI",
+          Object {
+            "entityName": "LearningResourceChoice",
+            "jsonPath": "$.learningResourceMetadataURI",
+            "propertyName": "LearningResourceMetadataURI",
+          },
         ],
         "RequiredURI": Array [
-          "$.requiredURIs[*].requiredURI",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.requiredURIs[*].requiredURI",
+            "propertyName": "RequiredURI",
+          },
         ],
       }
     `);
@@ -813,10 +1122,18 @@ describe('when building domain entity with scalar collection named with prefix o
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ContentIdentifier": Array [
-          "$.contentIdentifier",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.contentIdentifier",
+            "propertyName": "ContentIdentifier",
+          },
         ],
         "EducationContentSuffixName": Array [
-          "$.suffixNames[*].suffixName",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.suffixNames[*].suffixName",
+            "propertyName": "EducationContentSuffixName",
+          },
         ],
       }
     `);
@@ -877,13 +1194,25 @@ describe('when building domain entity with Association/DomainEntity collection n
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ContentIdentifier": Array [
-          "$.contentIdentifier",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.contentIdentifier",
+            "propertyName": "ContentIdentifier",
+          },
         ],
         "EducationContentSuffixName": Array [
-          "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+          Object {
+            "entityName": "EducationContent",
+            "jsonPath": "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+            "propertyName": "EducationContentSuffixName",
+          },
         ],
         "EducationContentSuffixName.StringIdentity": Array [
-          "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+          Object {
+            "entityName": "EducationContentSuffixName",
+            "jsonPath": "$.educationContentSuffixNames[*].educationContentSuffixNameReference.stringIdentity",
+            "propertyName": "StringIdentity",
+          },
         ],
       }
     `);
@@ -940,10 +1269,18 @@ describe('when building domain entity with acronym property name', () => {
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ContentIdentifier": Array [
-          "$.contentIdentifier",
+          Object {
+            "entityName": "StudentSpecialEducationProgramAssociation",
+            "jsonPath": "$.contentIdentifier",
+            "propertyName": "ContentIdentifier",
+          },
         ],
         "IEPBeginDate": Array [
-          "$.iepBeginDate",
+          Object {
+            "entityName": "StudentSpecialEducationProgramAssociation",
+            "jsonPath": "$.iepBeginDate",
+            "propertyName": "IEPBeginDate",
+          },
         ],
       }
     `);
@@ -1011,13 +1348,25 @@ describe('when building domain entity with a simple common collection', () => {
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessmentIdentificationCode.AssessmentIdentificationSystem": Array [
-          "$.identificationCodes[*].assessmentIdentificationSystemDescriptor",
+          Object {
+            "entityName": "AssessmentIdentificationCode",
+            "jsonPath": "$.identificationCodes[*].assessmentIdentificationSystemDescriptor",
+            "propertyName": "AssessmentIdentificationSystem",
+          },
         ],
         "AssessmentIdentificationCode.IdentificationCode": Array [
-          "$.identificationCodes[*].identificationCode",
+          Object {
+            "entityName": "AssessmentIdentificationCode",
+            "jsonPath": "$.identificationCodes[*].identificationCode",
+            "propertyName": "IdentificationCode",
+          },
         ],
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
       }
     `);
@@ -1098,13 +1447,25 @@ describe('when building domain entity subclass with common collection and descri
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "CommunityOrganizationId": Array [
-          "$.communityOrganizationId",
+          Object {
+            "entityName": "CommunityOrganization",
+            "jsonPath": "$.communityOrganizationId",
+            "propertyName": "CommunityOrganizationId",
+          },
         ],
         "EducationOrganizationIdentificationCode.EducationOrganizationIdentificationSystem": Array [
-          "$.identificationCodes[*].educationOrganizationIdentificationSystemDescriptor",
+          Object {
+            "entityName": "EducationOrganizationIdentificationCode",
+            "jsonPath": "$.identificationCodes[*].educationOrganizationIdentificationSystemDescriptor",
+            "propertyName": "EducationOrganizationIdentificationSystem",
+          },
         ],
         "EducationOrganizationIdentificationCode.IdentificationCode": Array [
-          "$.identificationCodes[*].identificationCode",
+          Object {
+            "entityName": "EducationOrganizationIdentificationCode",
+            "jsonPath": "$.identificationCodes[*].identificationCode",
+            "propertyName": "IdentificationCode",
+          },
         ],
       }
     `);
@@ -1174,16 +1535,32 @@ describe('when building association with a common collection in a common collect
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "Address.Period.BeginDate": Array [
-          "$.addresses[*].periods[*].beginDate",
+          Object {
+            "entityName": "Period",
+            "jsonPath": "$.addresses[*].periods[*].beginDate",
+            "propertyName": "BeginDate",
+          },
         ],
         "Address.Period.EndDate": Array [
-          "$.addresses[*].periods[*].endDate",
+          Object {
+            "entityName": "Period",
+            "jsonPath": "$.addresses[*].periods[*].endDate",
+            "propertyName": "EndDate",
+          },
         ],
         "Address.StreetNumberName": Array [
-          "$.addresses[*].streetNumberName",
+          Object {
+            "entityName": "Address",
+            "jsonPath": "$.addresses[*].streetNumberName",
+            "propertyName": "StreetNumberName",
+          },
         ],
         "StudentId": Array [
-          "$.studentId",
+          Object {
+            "entityName": "StudentEducationOrganizationAssociation",
+            "jsonPath": "$.studentId",
+            "propertyName": "StudentId",
+          },
         ],
       }
     `);
@@ -1248,10 +1625,18 @@ describe('when building domain entity with a descriptor with role name', () => {
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessedGradeLevel": Array [
-          "$.assessedGradeLevelDescriptor",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessedGradeLevelDescriptor",
+            "propertyName": "GradeLevel",
+          },
         ],
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
       }
     `);
@@ -1312,10 +1697,18 @@ describe('when building domain entity with a descriptor collection with role nam
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessedGradeLevel": Array [
-          "$.assessedGradeLevels[*].gradeLevelDescriptor",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessedGradeLevels[*].gradeLevelDescriptor",
+            "propertyName": "GradeLevel",
+          },
         ],
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
       }
     `);
@@ -1385,16 +1778,32 @@ describe('when building domain entity with a common with a choice', () => {
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
         "ContentStandard.PublicationDateChoice.PublicationDate": Array [
-          "$.contentStandard.publicationDate",
+          Object {
+            "entityName": "PublicationDateChoice",
+            "jsonPath": "$.contentStandard.publicationDate",
+            "propertyName": "PublicationDate",
+          },
         ],
         "ContentStandard.PublicationDateChoice.PublicationYear": Array [
-          "$.contentStandard.publicationYear",
+          Object {
+            "entityName": "PublicationDateChoice",
+            "jsonPath": "$.contentStandard.publicationYear",
+            "propertyName": "PublicationYear",
+          },
         ],
         "ContentStandard.Title": Array [
-          "$.contentStandard.title",
+          Object {
+            "entityName": "ContentStandard",
+            "jsonPath": "$.contentStandard.title",
+            "propertyName": "Title",
+          },
         ],
       }
     `);
@@ -1465,13 +1874,25 @@ describe('when building domain entity with a common and a common collection with
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
         "AssessmentPeriod.BeginDate": Array [
-          "$.period.beginDate",
+          Object {
+            "entityName": "AssessmentPeriod",
+            "jsonPath": "$.period.beginDate",
+            "propertyName": "BeginDate",
+          },
         ],
         "AssessmentScore.MinimumScore": Array [
-          "$.scores[*].minimumScore",
+          Object {
+            "entityName": "AssessmentScore",
+            "jsonPath": "$.scores[*].minimumScore",
+            "propertyName": "MinimumScore",
+          },
         ],
       }
     `);
@@ -1526,10 +1947,18 @@ describe('when building domain entity with an all-caps property', () => {
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
         "URI": Array [
-          "$.uri",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.uri",
+            "propertyName": "URI",
+          },
         ],
       }
     `);
@@ -1597,16 +2026,32 @@ describe('when building domain entity with a common with a domain entity referen
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AssessmentIdentifier": Array [
-          "$.assessmentIdentifier",
+          Object {
+            "entityName": "Assessment",
+            "jsonPath": "$.assessmentIdentifier",
+            "propertyName": "AssessmentIdentifier",
+          },
         ],
         "ContentStandard.MandatingEducationOrganization": Array [
-          "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+          Object {
+            "entityName": "ContentStandard",
+            "jsonPath": "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+            "propertyName": "EducationOrganization",
+          },
         ],
         "ContentStandard.MandatingEducationOrganization.EducationOrganizationId": Array [
-          "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+          Object {
+            "entityName": "EducationOrganization",
+            "jsonPath": "$.contentStandard.mandatingEducationOrganizationReference.educationOrganizationId",
+            "propertyName": "EducationOrganizationId",
+          },
         ],
         "ContentStandard.Title": Array [
-          "$.contentStandard.title",
+          Object {
+            "entityName": "ContentStandard",
+            "jsonPath": "$.contentStandard.title",
+            "propertyName": "Title",
+          },
         ],
       }
     `);
@@ -1671,13 +2116,25 @@ describe('when building domain entity with two school year enumerations, one rol
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "ClassOfSchoolYear": Array [
-          "$.classOfSchoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.classOfSchoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "SchoolId": Array [
-          "$.schoolId",
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "SchoolYear": Array [
-          "$.schoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.schoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
       }
     `);
@@ -1741,17 +2198,37 @@ describe('when building domain entity with reference to domain entity with schoo
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "Calendar": Array [
-          "$.calendarReference.schoolId",
-          "$.calendarReference.schoolYear",
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.calendarReference.schoolId",
+            "propertyName": "Calendar",
+          },
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.calendarReference.schoolYear",
+            "propertyName": "Calendar",
+          },
         ],
         "Calendar.SchoolId": Array [
-          "$.calendarReference.schoolId",
+          Object {
+            "entityName": "Calendar",
+            "jsonPath": "$.calendarReference.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
         "Calendar.SchoolYear": Array [
-          "$.calendarReference.schoolYear",
+          Object {
+            "entityName": "Calendar",
+            "jsonPath": "$.calendarReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "SchoolId": Array [
-          "$.schoolId",
+          Object {
+            "entityName": "StudentSchoolAssociation",
+            "jsonPath": "$.schoolId",
+            "propertyName": "SchoolId",
+          },
         ],
       }
     `);
@@ -1899,10 +2376,18 @@ describe('when building a schema for studentEducationOrganizationAssociation', (
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "CohortYear.SchoolYear": Array [
-          "$.years[*].schoolYearTypeReference.schoolYear",
+          Object {
+            "entityName": "CohortYear",
+            "jsonPath": "$.years[*].schoolYearTypeReference.schoolYear",
+            "propertyName": "SchoolYear",
+          },
         ],
         "StudentUniqueId": Array [
-          "$.studentUniqueId",
+          Object {
+            "entityName": "StudentCohort",
+            "jsonPath": "$.studentUniqueId",
+            "propertyName": "StudentUniqueId",
+          },
         ],
       }
     `);
@@ -1971,10 +2456,18 @@ describe('when building a domain entity with an inline common property with a de
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "AvailableCredits.CreditType": Array [
-          "$.availableCreditTypeDescriptor",
+          Object {
+            "entityName": "Credits",
+            "jsonPath": "$.availableCreditTypeDescriptor",
+            "propertyName": "CreditType",
+          },
         ],
         "SectionIdentifier": Array [
-          "$.sectionIdentifier",
+          Object {
+            "entityName": "Section",
+            "jsonPath": "$.sectionIdentifier",
+            "propertyName": "SectionIdentifier",
+          },
         ],
       }
     `);
@@ -2042,13 +2535,25 @@ describe('when building a domain entity referencing another using a shortenTo di
     expect(mappings.jsonPaths).toMatchInlineSnapshot(`
       Object {
         "CompetencyObjective": Array [
-          "$.objectiveCompetencyObjectiveReference.identity2",
+          Object {
+            "entityName": "StudentCompetencyObjective",
+            "jsonPath": "$.objectiveCompetencyObjectiveReference.identity2",
+            "propertyName": "CompetencyObjective",
+          },
         ],
         "CompetencyObjective.Identity2": Array [
-          "$.objectiveCompetencyObjectiveReference.identity2",
+          Object {
+            "entityName": "CompetencyObjective",
+            "jsonPath": "$.objectiveCompetencyObjectiveReference.identity2",
+            "propertyName": "Identity2",
+          },
         ],
         "Identity1": Array [
-          "$.identity1",
+          Object {
+            "entityName": "StudentCompetencyObjective",
+            "jsonPath": "$.identity1",
+            "propertyName": "Identity1",
+          },
         ],
       }
     `);
