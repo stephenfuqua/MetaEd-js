@@ -17,25 +17,34 @@ import type { EntityApiSchemaData } from '../model/EntityApiSchemaData';
 import type { JsonPathsInfo, JsonPathsMapping } from '../model/JsonPathsMapping';
 import type { EntityPropertyApiSchemaData } from '../model/EntityPropertyApiSchemaData';
 import { PropertyModifier, prefixedName, propertyModifierConcat } from '../model/PropertyModifier';
-import { singularize, topLevelApiNameOnEntity } from '../Utility';
+import {
+  prependPrefixWithCollapse,
+  findIdenticalRoleNamePatternPrefix,
+  singularize,
+  topLevelApiNameOnEntity,
+} from '../Utility';
 import { FlattenedIdentityProperty } from '../model/FlattenedIdentityProperty';
 import { JsonPath } from '../model/api-schema/JsonPath';
 
 const enhancerName = 'JsonPathsMappingEnhancer';
 
-type AppendNextJsonPathNameOptions = { singularizeName: boolean };
+type AppendNextJsonPathNameOptions = { singularizeName: boolean; specialPrefix: string };
 
 function appendNextJsonPathName(
   currentJsonPath: JsonPath,
   apiMappingName: string,
   property: EntityProperty,
   propertyModifier: PropertyModifier,
-  { singularizeName }: AppendNextJsonPathNameOptions = { singularizeName: false },
+  { singularizeName, specialPrefix }: AppendNextJsonPathNameOptions = { singularizeName: false, specialPrefix: '' },
 ): JsonPath {
   if (property.type === 'inlineCommon' || property.type === 'choice') return currentJsonPath;
 
   let nextName = prefixedName(apiMappingName, property, propertyModifier);
   if (singularizeName) nextName = singularize(nextName);
+
+  if (specialPrefix !== '') {
+    nextName = prependPrefixWithCollapse(nextName, specialPrefix);
+  }
 
   return `${currentJsonPath}.${nextName}` as JsonPath;
 }
@@ -89,6 +98,8 @@ function jsonPathsForReferentialProperty(
       flattenedIdentityProperty.identityProperty.data.edfiApiSchema as EntityPropertyApiSchemaData
     ).apiMapping;
 
+    const specialPrefix: string = findIdenticalRoleNamePatternPrefix(flattenedIdentityProperty);
+
     // Because these are flattened, we know they are non-reference properties
     jsonPathsForNonReference(
       flattenedIdentityProperty.identityProperty,
@@ -101,6 +112,7 @@ function jsonPathsForReferentialProperty(
         identityPropertyApiMapping.fullName,
         flattenedIdentityProperty.identityProperty,
         propertyModifier,
+        { singularizeName: false, specialPrefix },
       ),
       false,
     );
@@ -306,6 +318,7 @@ function jsonPathsForNonReferenceCollection(
     [currentPropertyPath],
     appendNextJsonPathName(`${currentJsonPath}[*]` as JsonPath, apiMapping.fullName, property, propertyModifier, {
       singularizeName: true,
+      specialPrefix: '',
     }),
     isTopLevel,
   );
