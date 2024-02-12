@@ -22,15 +22,6 @@ type PathsAndPropertiesPair = { propertyPaths: MetaEdPropertyPath[]; propertyCha
 type ReferenceElementsWithPaths = Map<ReferenceElement, PathsAndPropertiesPair>;
 
 /**
- * All of the identity properties of the given entity, in sorted order
- */
-export function identityReferenceComponentsFrom(identityProperties: EntityProperty[]): ReferenceComponent[] {
-  return identityProperties.map(
-    (property) => (property.data.edfiApiSchema as EntityPropertyApiSchemaData).referenceComponent,
-  );
-}
-
-/**
  * All of the reference groups of all of the properties of the given entity, in sorted order
  */
 export function referenceGroupsFrom(sortedProperties: EntityProperty[]): ReferenceGroup[] {
@@ -51,8 +42,28 @@ function joinPropertyPaths(
 }
 
 /**
+ * Returns true if the given property should be "merged away" due to its being marked as a
+ * merge directive source along the given property chain.
+ */
+function isMergedAway(property: EntityProperty, propertyChain: EntityProperty[]): boolean {
+  // Some property types are never merged away
+  if (
+    property.type === 'choice' ||
+    property.type === 'common' ||
+    property.type === 'inlineCommon' ||
+    property.type === 'schoolYearEnumeration'
+  ) {
+    return false;
+  }
+  return propertyChain.some((propertyAlongChain) => property.mergeSourcedBy.includes(propertyAlongChain));
+}
+
+/**
  * Flatten a graph of ReferenceComponents into an array of ReferenceElements, discarding any
  * ReferenceGroups that are part of the graph but preserving the property and property path information.
+ *
+ * Omits properties that have been "merged away", meaning the property is marked as a merge directive source
+ * along this property chain.
  */
 function flattenReferenceElementsFromComponent(
   referenceComponent: ReferenceComponent,
@@ -63,6 +74,8 @@ function flattenReferenceElementsFromComponent(
   referenceElementsAccumulator: ReferenceElementsWithPaths,
 ) {
   if (isReferenceElement(referenceComponent)) {
+    if (isMergedAway(referenceComponent.sourceProperty, currentPropertyChain)) return;
+
     referenceElementsAccumulator.set(referenceComponent, {
       propertyPaths: propertyPathAccumulator.concat(
         joinPropertyPaths(currentPropertyPath, referenceComponent.sourceProperty.fullPropertyName as MetaEdPropertyPath),
@@ -71,6 +84,8 @@ function flattenReferenceElementsFromComponent(
     });
   } else {
     (referenceComponent as ReferenceGroup).referenceComponents.forEach((subReferenceComponent) => {
+      if (isMergedAway(subReferenceComponent.sourceProperty, currentPropertyChain)) return;
+
       if (isReferenceElement(subReferenceComponent)) {
         const subReferenceElement: ReferenceElement = subReferenceComponent as ReferenceElement;
         referenceElementsAccumulator.set(subReferenceElement, {
@@ -105,6 +120,9 @@ function flattenReferenceElementsFromComponent(
  * Converts the given list of identity properties to only the "leaf" non-reference properties, in sorted order.
  * Includes the paths showing how the property came to be part of the identity, if it was via a reference identity
  * property.
+ *
+ * Omits properties that have been "merged away", meaning the property is marked as a merge directive source
+ * along this property chain.
  */
 export function flattenedIdentityPropertiesFrom(identityProperties: EntityProperty[]): FlattenedIdentityProperty[] {
   const referenceElementsWithPaths: ReferenceElementsWithPaths = new Map();

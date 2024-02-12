@@ -44,10 +44,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
               sourceJsonPaths != null && targetJsonPaths != null,
               'Invariant failed in MergeDirectiveEqualityConstraintEnhancer: source or target JsonPaths are undefined',
             );
-            invariant(
-              sourceJsonPaths.length === targetJsonPaths.length,
-              'Invariant failed in MergeDirectiveEqualityConstraintEnhancer: source and target JsonPath lengths not equal',
-            );
+
+            if (sourceJsonPaths.length !== targetJsonPaths.length) {
+              // Occurs when property path has been merged away
+              return;
+            }
 
             sourceJsonPaths.forEach((sourceJsonPath: JsonPath, matchingTargetJsonPathIndex: number) => {
               equalityConstraints.push({
