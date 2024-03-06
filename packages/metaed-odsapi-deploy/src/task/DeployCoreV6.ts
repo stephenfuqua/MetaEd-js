@@ -3,6 +3,7 @@ import { versionSatisfies, Logger } from '@edfi/metaed-core';
 import fs from 'fs-extra';
 import path from 'path';
 import { CopyOptions } from '../CopyOptions';
+import { DeployResult } from './DeployResult';
 
 const corePath: string = 'Ed-Fi-ODS/Application/EdFi.Ods.Standard/Artifacts';
 const artifacts: CopyOptions[] = [
@@ -15,27 +16,38 @@ const artifacts: CopyOptions[] = [
   { src: 'XSD/', dest: `${corePath}/Schemas/` },
 ];
 
-function deployCoreArtifacts(metaEdConfiguration: MetaEdConfiguration) {
+function deployCoreArtifacts(metaEdConfiguration: MetaEdConfiguration): DeployResult {
   const { artifactDirectory, deployDirectory } = metaEdConfiguration;
   const projectName: string = 'EdFi';
+  let deployResult: DeployResult = {
+    success: true,
+  };
 
-  artifacts.forEach((artifact: CopyOptions) => {
+  artifacts.every((artifact: CopyOptions) => {
     const resolvedArtifact: CopyOptions = {
       ...artifact,
       src: path.resolve(artifactDirectory, projectName, artifact.src),
       dest: path.resolve(deployDirectory, artifact.dest),
     };
-    if (!fs.pathExistsSync(resolvedArtifact.src)) return;
+    if (!fs.pathExistsSync(resolvedArtifact.src)) return true;
 
     try {
       const relativeArtifactSource = path.relative(artifactDirectory, resolvedArtifact.src);
       Logger.info(`Deploy ${relativeArtifactSource} to ${artifact.dest}`);
 
       fs.copySync(resolvedArtifact.src, resolvedArtifact.dest, resolvedArtifact.options);
+      return true;
     } catch (err) {
-      Logger.error(`Attempted deploy of ${artifact.src} failed due to issue: ${err.message}`);
+      deployResult = {
+        success: false,
+        failureMessage: `Attempted deploy of ${artifact.src} failed due to issue: ${err.message}`,
+      };
+      Logger.error(deployResult.failureMessage);
+      return false;
     }
   });
+
+  return deployResult;
 }
 
 export async function execute(
@@ -43,13 +55,11 @@ export async function execute(
   _dataStandardVersion: SemVer,
   deployCore: boolean,
   _suppressDelete: boolean,
-): Promise<boolean> {
-  if (!deployCore) return true;
+): Promise<DeployResult> {
+  if (!deployCore) return { success: true };
   if (!versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '>=3.3.0 <7.0.0')) {
-    return true;
+    return { success: true };
   }
 
-  deployCoreArtifacts(metaEdConfiguration);
-
-  return true;
+  return deployCoreArtifacts(metaEdConfiguration);
 }

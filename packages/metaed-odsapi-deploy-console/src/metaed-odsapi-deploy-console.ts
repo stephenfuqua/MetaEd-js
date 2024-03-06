@@ -21,7 +21,7 @@ import type {
   MetaEdProjectPathPairs,
   MetaEdProject,
 } from '@edfi/metaed-core';
-import { runDeployTasks } from '@edfi/metaed-odsapi-deploy';
+import { DeployResult, runDeployTasks } from '@edfi/metaed-odsapi-deploy';
 import { defaultPlugins } from '@edfi/metaed-default-plugins';
 
 export function dataStandardVersionFor(projects: MetaEdProject[]): SemVer {
@@ -160,13 +160,13 @@ export async function metaEdDeploy() {
   }
 
   // Run all deployment tasks
-  const deploySuccess = await runDeployTasks(
+  const deploySuccess: DeployResult = await runDeployTasks(
     metaEdConfiguration,
     dataStandardVersionFor(metaEdConfiguration.projects),
     yargs.argv['core'],
     yargs.argv['suppressDelete'],
   );
-  if (!deploySuccess) process.exitCode = 1;
+  if (!deploySuccess.success) process.exitCode = 1;
 
   const endTime = Date.now() - startTime;
   Logger.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);

@@ -3,26 +3,31 @@ import fs from 'fs-extra';
 import path from 'path';
 import Sugar from 'sugar';
 import { directoryExcludeList } from './DeployConstants';
+import { DeployResult } from './DeployResult';
 
 const projectPaths: string[] = ['Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.{projectName}/'];
 
-export function extensionProjectsExists(metaEdConfiguration: MetaEdConfiguration): boolean {
+export function extensionProjectsExists(metaEdConfiguration: MetaEdConfiguration): DeployResult {
   const { artifactDirectory, deployDirectory } = metaEdConfiguration;
   const projectsNames: string[] = fs.readdirSync(artifactDirectory).filter((x: string) => !directoryExcludeList.includes(x));
+  let deployResult: DeployResult = {
+    success: true,
+  };
 
-  let result: boolean = true;
-
-  projectsNames.forEach((projectName: string) => {
-    projectPaths.forEach((projectPath: string) => {
+  projectsNames.every((projectName: string) =>
+    projectPaths.every((projectPath: string) => {
       const resolvedPath = path.resolve(deployDirectory, Sugar.String.format(projectPath, { projectName }));
-      if (fs.pathExistsSync(resolvedPath)) return;
+      if (fs.pathExistsSync(resolvedPath)) return true;
+      deployResult = {
+        success: false,
+        failureMessage: `Expected ${projectName} project but was not at path: ${resolvedPath}`,
+      };
+      Logger.error(deployResult.failureMessage);
+      return false;
+    }),
+  );
 
-      Logger.error(`Expected ${projectName} project but was not at path: ${resolvedPath}`);
-      result = false;
-    });
-  });
-
-  return result;
+  return deployResult;
 }
 
 export async function execute(
@@ -30,10 +35,10 @@ export async function execute(
   _dataStandardVersion: SemVer,
   _deployCore: boolean,
   _suppressDelete: boolean,
-): Promise<boolean> {
+): Promise<DeployResult> {
   // extension projects in the ODS/API only exist starting in 3.0.0
   if (versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '<3.0.0')) {
-    return true;
+    return { success: true };
   }
 
   return extensionProjectsExists(metaEdConfiguration);

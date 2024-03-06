@@ -5,6 +5,7 @@ import path from 'path';
 import Sugar from 'sugar';
 import { CopyOptions } from '../CopyOptions';
 import { directoryExcludeList } from './DeployConstants';
+import { DeployResult } from './DeployResult';
 
 const extensionPath: string = 'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.{projectName}/Artifacts';
 const artifacts: CopyOptions[] = [
@@ -17,29 +18,40 @@ const artifacts: CopyOptions[] = [
   { src: 'XSD/', dest: `${extensionPath}/Schemas/` },
 ];
 
-function deployExtensionArtifacts(metaEdConfiguration: MetaEdConfiguration): void {
+function deployExtensionArtifacts(metaEdConfiguration: MetaEdConfiguration): DeployResult {
   const { artifactDirectory, deployDirectory } = metaEdConfiguration;
   const projectsNames: string[] = fs.readdirSync(artifactDirectory).filter((x: string) => !directoryExcludeList.includes(x));
+  let deployResult: DeployResult = {
+    success: true,
+  };
 
-  projectsNames.forEach((projectName: string) => {
-    artifacts.forEach((artifact: CopyOptions) => {
+  projectsNames.every((projectName: string) =>
+    artifacts.every((artifact: CopyOptions) => {
       const dest = Sugar.String.format(artifact.dest, { projectName });
       const resolvedArtifact: CopyOptions = {
         ...artifact,
         src: path.resolve(artifactDirectory, projectName, artifact.src),
         dest: path.resolve(deployDirectory, dest),
       };
-      if (!fs.pathExistsSync(resolvedArtifact.src)) return;
+      if (!fs.pathExistsSync(resolvedArtifact.src)) return true;
 
       try {
         Logger.info(`Deploy ${resolvedArtifact.src} to ${resolvedArtifact.dest}`);
 
         fs.copySync(resolvedArtifact.src, resolvedArtifact.dest, resolvedArtifact.options);
+        return true;
       } catch (err) {
-        Logger.error(`Attempted deploy of ${artifact.src} failed due to issue: ${err.message}`);
+        deployResult = {
+          success: false,
+          failureMessage: `Attempted deploy of ${artifact.src} failed due to issue: ${err.message}`,
+        };
+        Logger.error(deployResult.failureMessage);
+        return false;
       }
-    });
-  });
+    }),
+  );
+
+  return deployResult;
 }
 
 export async function execute(
@@ -47,12 +59,10 @@ export async function execute(
   _dataStandardVersion: SemVer,
   _deployCore: boolean,
   _suppressDelete: boolean,
-): Promise<boolean> {
+): Promise<DeployResult> {
   if (!versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '>=3.3.0 <7.0.0')) {
-    return true;
+    return { success: true };
   }
 
-  deployExtensionArtifacts(metaEdConfiguration);
-
-  return true;
+  return deployExtensionArtifacts(metaEdConfiguration);
 }
