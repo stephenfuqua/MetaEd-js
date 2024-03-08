@@ -24,6 +24,7 @@ import { DocumentObjectKey } from '../model/api-schema/DocumentObjectKey';
 import { uncapitalize } from '../Utility';
 import { AbstractResourceMapping } from '../model/api-schema/AbstractResourceMapping';
 import { CaseInsensitiveEndpointNameMapping } from '../model/api-schema/CaseInsensitiveEndpointNameMapping';
+import { buildSchoolYearResourceSchema } from './SchoolYearHardCodedSchemaBuilder';
 
 /**
  *
@@ -44,7 +45,6 @@ function buildResourceSchema(entity: TopLevelEntity): ResourceSchema {
     isSubclass: false,
   };
 }
-
 /**
  * Includes DomainEntity superclass information in the ResourceSchema
  */
@@ -165,6 +165,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       caseInsensitiveEndpointNameMapping[endpointName.toLowerCase()] = endpointName;
       resourceSchemas[endpointName] = buildAssociationSubclassResourceSchema(entity as TopLevelEntity);
     });
+
+    buildSchoolYearResourceSchema(resourceNameMapping, caseInsensitiveEndpointNameMapping, resourceSchemas);
   });
   return {
     enhancerName: 'ApiSchemaBuildingEnhancer',
