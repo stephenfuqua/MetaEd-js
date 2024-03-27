@@ -30,17 +30,17 @@ function removePropertyPathPrefixes(jsonPathsMapping: JsonPathsMapping, startOfP
 }
 
 /**
- * Returns a stripped down copy of the given allJsonPathsMapping, with the only properties being those
+ * Returns a stripped down copy of the given mergeJsonPathsMapping, with the only properties being those
  * property paths that descend below the given starting path and end at a single scalar value.
  *
  * Note this can return entries that are effectively duplicates. For example, both
  * CourseOffering.School and CourseOffering.School.SchoolId, which both resolve to the same
  * JsonPath and same terminalProperty of School.SchoolId
  */
-function findDeepScalarPaths(allJsonPathsMapping: JsonPathsMapping, startOfPropertyPath: string): JsonPathsMapping {
+function findDeepScalarPaths(mergeJsonPathsMapping: JsonPathsMapping, startOfPropertyPath: string): JsonPathsMapping {
   const result: JsonPathsMapping = {};
 
-  Object.entries(allJsonPathsMapping).forEach(([k, v]) => {
+  Object.entries(mergeJsonPathsMapping).forEach(([k, v]) => {
     if (k === startOfPropertyPath) return;
     if (!k.startsWith(`${startOfPropertyPath}.`)) return;
     if (v.jsonPathPropertyPairs.length !== 1) return;
@@ -52,9 +52,9 @@ function findDeepScalarPaths(allJsonPathsMapping: JsonPathsMapping, startOfPrope
   return result;
 }
 
-function allJsonPathsMappingFor(entity: TopLevelEntity): JsonPathsMapping {
+function mergeJsonPathsMappingFor(entity: TopLevelEntity): JsonPathsMapping {
   const edfiApiSchemaData = entity.data.edfiApiSchema as EntityApiSchemaData;
-  return edfiApiSchemaData.allJsonPathsMapping;
+  return edfiApiSchemaData.mergeJsonPathsMapping;
 }
 
 function addNewReferenceJsonPathsTo(
@@ -117,7 +117,7 @@ function dedupeReferenceJsonPathsMapping(mapping: ReferenceJsonPathsMapping): Re
 function addReferenceJsonPath(
   startOfPropertyPath: string,
   jsonPathsInfo: JsonPathsInfo,
-  allJsonPathsMapping: JsonPathsMapping,
+  mergeJsonPathsMapping: JsonPathsMapping,
   result: ReferenceJsonPathsMapping,
 ) {
   // Only want paths at the top level
@@ -127,12 +127,14 @@ function addReferenceJsonPath(
   if (jsonPathsInfo.terminalProperty.type === 'association' || jsonPathsInfo.terminalProperty.type === 'domainEntity') {
     const referenceProperty: ReferentialProperty = jsonPathsInfo.terminalProperty as ReferentialProperty;
 
-    const deepScalarPaths: JsonPathsMapping = findDeepScalarPaths(allJsonPathsMapping, startOfPropertyPath);
+    const deepScalarPaths: JsonPathsMapping = findDeepScalarPaths(mergeJsonPathsMapping, startOfPropertyPath);
     const propertyPathsLikeReferencedEntity: JsonPathsMapping = removePropertyPathPrefixes(
       deepScalarPaths,
       startOfPropertyPath,
     );
-    const referencedEntityAllJsonPathsMapping: JsonPathsMapping = allJsonPathsMappingFor(referenceProperty.referencedEntity);
+    const referencedEntityAllJsonPathsMapping: JsonPathsMapping = mergeJsonPathsMappingFor(
+      referenceProperty.referencedEntity,
+    );
 
     const matchedReferenceJsonPathsMapping: ReferenceJsonPathsMapping = matchupJsonPaths(
       startOfPropertyPath,
@@ -151,17 +153,17 @@ function addReferenceJsonPath(
 function referenceJsonPathsMappingFor(entity: TopLevelEntity): ReferenceJsonPathsMapping {
   const result: ReferenceJsonPathsMapping = {};
 
-  const allJsonPathsMapping: JsonPathsMapping = allJsonPathsMappingFor(entity);
+  const mergeJsonPathsMapping: JsonPathsMapping = mergeJsonPathsMappingFor(entity);
 
-  Object.entries(allJsonPathsMapping).forEach(([propertyPath, jsonPathsInfo]) => {
-    addReferenceJsonPath(propertyPath, jsonPathsInfo, allJsonPathsMapping, result);
+  Object.entries(mergeJsonPathsMapping).forEach(([propertyPath, jsonPathsInfo]) => {
+    addReferenceJsonPath(propertyPath, jsonPathsInfo, mergeJsonPathsMapping, result);
   });
 
   return result;
 }
 
 /**
- * Derives a ReferenceJsonPathsMapping for each entity by taking the allJsonPathsMapping and matching reference
+ * Derives a ReferenceJsonPathsMapping for each entity by taking the mergeJsonPathsMapping and matching reference
  * JsonPaths for a document to the identity JsonPaths for the document being referenced.
  */
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

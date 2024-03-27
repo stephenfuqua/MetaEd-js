@@ -51,6 +51,16 @@ export type EntityApiSchemaData = {
   allJsonPathsMapping: JsonPathsMapping;
 
   /**
+   * A mapping of dot-separated MetaEd property paths to corresponding JsonPaths to data elements
+   * in the API document.
+   *
+   * Similar to allJsonPathsMapping in structure, but preserves original MetaEd naming
+   *
+   * The JsonPaths array is always is sorted order.
+   */
+  mergeJsonPathsMapping: JsonPathsMapping;
+
+  /**
    * A list of EqualityConstraints to be applied to an Ed-Fi API document. An EqualityConstraint
    * is a source/target JsonPath pair.
    */
@@ -101,6 +111,7 @@ export function addEntityApiSchemaDataTo(entity: ModelBase) {
     jsonSchemaForInsert: NoSchemaRoot,
     collectedApiProperties: [],
     allJsonPathsMapping: {},
+    mergeJsonPathsMapping: {},
     equalityConstraints: [],
     endpointName: '' as EndpointName,
     resourceName: '' as MetaEdResourceName,
