@@ -20,33 +20,32 @@ import { PropertyModifier, prefixedName, propertyModifierConcat } from '../model
 import {
   prependPrefixWithCollapse,
   findIdenticalRoleNamePatternPrefix,
-  singularize,
   topLevelApiNameOnEntity,
+  uncapitalize,
 } from '../Utility';
 import { FlattenedIdentityProperty } from '../model/FlattenedIdentityProperty';
 import { JsonPath } from '../model/api-schema/JsonPath';
 
 const enhancerName = 'AllJsonPathsMappingEnhancer';
 
-type AppendNextJsonPathNameOptions = { singularizeName: boolean; specialPrefix: string };
+type AppendNextJsonPathNameOptions = { specialPrefix: string };
 
 function appendNextJsonPathName(
   currentJsonPath: JsonPath,
   apiMappingName: string,
   property: EntityProperty,
   propertyModifier: PropertyModifier,
-  { singularizeName, specialPrefix }: AppendNextJsonPathNameOptions = { singularizeName: false, specialPrefix: '' },
+  { specialPrefix }: AppendNextJsonPathNameOptions = { specialPrefix: '' },
 ): JsonPath {
   if (property.type === 'inlineCommon' || property.type === 'choice') return currentJsonPath;
 
-  let nextName = prefixedName(apiMappingName, property, propertyModifier);
-  if (singularizeName) nextName = singularize(nextName);
+  let nextName = prefixedName(apiMappingName, propertyModifier);
 
   if (specialPrefix !== '') {
     nextName = prependPrefixWithCollapse(nextName, specialPrefix);
   }
 
-  return `${currentJsonPath}.${nextName}` as JsonPath;
+  return `${currentJsonPath}.${uncapitalize(nextName)}` as JsonPath;
 }
 
 /**
@@ -133,7 +132,7 @@ function jsonPathsForReferentialProperty(
           identityPropertyApiMapping.fullName,
           flattenedIdentityProperty.identityProperty,
           propertyModifier,
-          { singularizeName: false, specialPrefix },
+          { specialPrefix },
         ),
         false,
       );
@@ -230,7 +229,6 @@ function jsonPathsForChoiceAndInlineCommonProperty(
         childPropertyApiMapping.topLevelName,
         allProperty.property,
         concatenatedPropertyModifier,
-        { singularizeName: false, specialPrefix: '' },
       ),
       isTopLevel,
     );
@@ -339,10 +337,7 @@ function jsonPathsForNonReferenceCollection(
     property,
     allJsonPathsMapping,
     [currentPropertyPath],
-    appendNextJsonPathName(`${currentJsonPath}[*]` as JsonPath, apiMapping.fullName, property, propertyModifier, {
-      singularizeName: true,
-      specialPrefix: '',
-    }),
+    appendNextJsonPathName(`${currentJsonPath}[*]` as JsonPath, apiMapping.fullName, property, propertyModifier),
     isTopLevel,
   );
 }
