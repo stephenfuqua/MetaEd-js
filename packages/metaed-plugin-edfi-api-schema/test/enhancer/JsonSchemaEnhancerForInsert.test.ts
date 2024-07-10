@@ -158,6 +158,7 @@ describe('when building simple domain entity with all the simple non-collections
             "description": "doc10",
             "maxLength": 30,
             "minLength": 20,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
         },
@@ -480,6 +481,7 @@ describe('when building simple domain entity with all the simple collections', (
             "description": "doc10",
             "maxLength": 30,
             "minLength": 20,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
         },
@@ -577,11 +579,13 @@ describe('when building a domain entity referencing another referencing another 
                     "classPeriodName": Object {
                       "description": "doc",
                       "maxLength": 30,
+                      "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                       "type": "string",
                     },
                     "schoolId": Object {
                       "description": "doc",
                       "maxLength": 30,
+                      "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                       "type": "string",
                     },
                   },
@@ -607,11 +611,13 @@ describe('when building a domain entity referencing another referencing another 
               "localCourseCode": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
               "schoolId": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
             },
@@ -624,6 +630,7 @@ describe('when building a domain entity referencing another referencing another 
           "sectionIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
         },
@@ -713,11 +720,13 @@ describe('when building a domain entity referencing CourseOffering with an impli
               "localCourseCode": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
               "schoolId": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
               "schoolYear": Object {
@@ -729,6 +738,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
               "sessionName": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
             },
@@ -743,6 +753,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
           "sectionIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
         },
@@ -844,6 +855,7 @@ describe('when building domain entity with nested choice and inline commons', ()
           "contentIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "derivativeSourceEducationContents": Object {
@@ -856,6 +868,7 @@ describe('when building domain entity with nested choice and inline commons', ()
                     "contentIdentifier": Object {
                       "description": "doc",
                       "maxLength": 30,
+                      "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                       "type": "string",
                     },
                   },
@@ -898,6 +911,7 @@ describe('when building domain entity with nested choice and inline commons', ()
           "learningResourceMetadataURI": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s*$).+",
             "type": "string",
           },
           "requiredURIs": Object {
@@ -922,6 +936,7 @@ describe('when building domain entity with nested choice and inline commons', ()
           "shortDescription": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s*$).+",
             "type": "string",
           },
         },
@@ -989,6 +1004,7 @@ describe('when building domain entity with scalar collection named with prefix o
           "contentIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "suffixNames": Object {
@@ -1080,6 +1096,7 @@ describe('when building domain entity with Association/DomainEntity collection n
           "contentIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "educationContentSuffixNames": Object {
@@ -1092,6 +1109,7 @@ describe('when building domain entity with Association/DomainEntity collection n
                     "stringIdentity": Object {
                       "description": "doc",
                       "maxLength": 30,
+                      "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                       "type": "string",
                     },
                   },
@@ -1175,6 +1193,7 @@ describe('when building domain entity with acronym property name', () => {
           "contentIdentifier": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "iepBeginDate": Object {
@@ -1271,6 +1290,7 @@ describe('when building domain entity with a simple common collection', () => {
                 "identificationCode": Object {
                   "description": "doc",
                   "maxLength": 30,
+                  "pattern": "^(?!\\\\s*$).+",
                   "type": "string",
                 },
               },
@@ -1383,6 +1403,7 @@ describe('when building domain entity subclass with common collection and descri
                 "identificationCode": Object {
                   "description": "doc",
                   "maxLength": 30,
+                  "pattern": "^(?!\\\\s*$).+",
                   "type": "string",
                 },
               },
@@ -1498,6 +1519,7 @@ describe('when building association with a common collection in a common collect
                 "streetNumberName": Object {
                   "description": "doc",
                   "maxLength": 30,
+                  "pattern": "^(?!\\\\s*$).+",
                   "type": "string",
                 },
               },
@@ -1761,11 +1783,13 @@ describe('when building domain entity with a common with a choice', () => {
               "publicationDate": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s*$).+",
                 "type": "string",
               },
               "publicationYear": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s*$).+",
                 "type": "string",
               },
               "title": Object {
@@ -1870,6 +1894,7 @@ describe('when building domain entity with a common and a common collection with
                 "minimumScore": Object {
                   "description": "doc",
                   "maxLength": 30,
+                  "pattern": "^(?!\\\\s*$).+",
                   "type": "string",
                 },
               },
@@ -2458,6 +2483,7 @@ describe('when building a schema for studentEducationOrganizationAssociation', (
           "studentUniqueId": Object {
             "description": "",
             "maxLength": 100,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "years": Object {
@@ -2651,6 +2677,7 @@ describe('when building a domain entity referencing another using a shortenTo di
           "identity1": Object {
             "description": "doc",
             "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
             "type": "string",
           },
           "objectiveCompetencyObjectiveReference": Object {
@@ -2659,6 +2686,7 @@ describe('when building a domain entity referencing another using a shortenTo di
               "identity2": Object {
                 "description": "doc",
                 "maxLength": 30,
+                "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
                 "type": "string",
               },
             },
@@ -2671,6 +2699,85 @@ describe('when building a domain entity referencing another using a shortenTo di
         "required": Array [
           "identity1",
           "objectiveCompetencyObjectiveReference",
+        ],
+        "title": "EdFi.StudentCompetencyObjective",
+        "type": "object",
+      }
+    `);
+  });
+
+  it('should be well-formed according to ajv', () => {
+    const entity = namespace.entity.domainEntity.get('StudentCompetencyObjective');
+    ajv.compile(entity.data.edfiApiSchema.jsonSchemaForInsert);
+  });
+});
+
+describe('when building a domain entity with different string properties', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName = 'EdFi';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity('StudentCompetencyObjective')
+      .withDocumentation('doc')
+      .withStringIdentity('StringIdentity', 'doc', '30')
+      .withStringProperty('StringRequired', 'doc', true, false, '30')
+      .withStringProperty('StringOptional', 'doc', false, false, '30')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    namespace = metaEd.namespace.get(namespaceName);
+
+    domainEntityReferenceEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+
+    referenceComponentEnhancer(metaEd);
+    apiPropertyMappingEnhancer(metaEd);
+    propertyCollectingEnhancer(metaEd);
+    apiEntityMappingEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should be a correct schema', () => {
+    const entity = namespace.entity.domainEntity.get('StudentCompetencyObjective');
+    expect(entity.data.edfiApiSchema.jsonSchemaForInsert).toMatchInlineSnapshot(`
+      Object {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "description": "doc",
+        "properties": Object {
+          "_ext": Object {
+            "additionalProperties": true,
+            "description": "optional extension collection",
+            "properties": Object {},
+            "type": "object",
+          },
+          "stringIdentity": Object {
+            "description": "doc",
+            "maxLength": 30,
+            "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
+            "type": "string",
+          },
+          "stringOptional": Object {
+            "description": "doc",
+            "maxLength": 30,
+            "type": "string",
+          },
+          "stringRequired": Object {
+            "description": "doc",
+            "maxLength": 30,
+            "pattern": "^(?!\\\\s*$).+",
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "stringIdentity",
+          "stringRequired",
         ],
         "title": "EdFi.StudentCompetencyObjective",
         "type": "object",
