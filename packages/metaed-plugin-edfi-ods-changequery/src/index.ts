@@ -1,7 +1,6 @@
 import type { MetaEdPlugin } from '@edfi/metaed-core';
 import { validate as NamespaceMustNotBeNamedChanges } from './validator/NamespaceMustNotBeNamedChanges';
 
-export { changeQueryIndicated } from './enhancer/ChangeQueryIndicator';
 export { AddColumnChangeVersionForTable, newAddColumnChangeVersionForTable } from './model/AddColumnChangeVersionForTable';
 export {
   CreateTriggerUpdateChangeVersion,
@@ -11,10 +10,13 @@ export { ChangeDataColumn, newChangeDataColumn } from './model/ChangeDataColumn'
 export { DeleteTrackingTable, newDeleteTrackingTable } from './model/DeleteTrackingTable';
 export { DeleteTrackingTrigger, newDeleteTrackingTrigger } from './model/DeleteTrackingTrigger';
 export { PairedForeignKeyColumnName } from './model/PairedForeignKeyColumnName';
+export { IndirectUpdateCascadeTrigger } from './model/IndirectUpdateCascadeTrigger';
 export {
+  pairedForeignKeyColumnNamesFrom,
   pluginEnvironment,
   getPrimaryKeys,
   edfiOdsChangeQueryRepositoryForNamespace,
+  indirectUpdateCascadeTriggerEntities,
   deleteTrackingTableEntities,
   deleteTrackingTriggerEntities,
   addColumnChangeVersionForTableEntities,
@@ -33,8 +35,8 @@ export {
   SuperclassForeignKeyFinder,
   applyCreateDeleteTrackingTriggerEnhancements,
 } from './enhancer/DeleteTrackingTriggerCreator';
+export { enhance as indirectUpdateCascadeTriggerEnhancer } from './enhancer/IndirectUpdateCascadeTriggerEnhancer';
 export {
-  ChangeQueryTemplates,
   generateAddColumnChangeVersionForTable,
   generateCreateTrackedDeleteSchemas5dot3,
   generateCreateTrackedDeleteTables,
@@ -45,6 +47,8 @@ export {
   generateCreateTriggerUpdateChangeVersion,
   changeQueryPath,
 } from './generator/GeneratorHelper';
+export { ChangeQueryTemplates } from './generator/ChangeQueryTemplates';
+export { generateIndirectUpdateCascadeTrigger } from './generator/CreateIndirectUpdateCascadeTriggerGenerator';
 export {
   EdFiOdsChangeQueryEntityRepository,
   newEdFiOdsChangeQueryEntityRepository,
