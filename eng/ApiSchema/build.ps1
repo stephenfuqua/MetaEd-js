@@ -1,7 +1,7 @@
 [CmdLetBinding()]
 param (
     [string]
-    [ValidateSet("Clean", "Build", "BuildAndPublish", "PushPackage", "Unzip", "Package")]
+    [ValidateSet("Clean", "Build", "BuildAndPublish", "PushPackage", "Unzip", "Package", "RunMetaEd", "MoveMetaEdSchema")]
     $Command = "Build",
 
     [String]
@@ -156,6 +156,43 @@ function Invoke-Publish {
     Invoke-Step { PublishApi }
 }
 
+function RunMetaEd {
+    Write-Output "Run MetadEd Project"
+    Invoke-Execute { npm install }
+    Invoke-Execute { npm run build }
+    Set-Location -Path ./packages/metaed-console
+
+    Write-Output "Get Working Dir"
+    Get-Location
+    Get-ChildItem
+    
+    <#
+    After building the project from the parent directory, we need to confirm it's functional using the following command,
+    which will use the provided config file. For more details, 
+    please refer to the readme file located in ./packages/meteaed-console/src/README.md
+    #>     
+    Invoke-Execute { node ./dist/index.js -a `
+        -c /home/runner/work/MetaEd-js/MetaEd-js/eng/ApiSchema/ApiSchemaPackaging-GitHub.json }
+}
+
+function CopyMetaEdFiles {
+    Write-Output "Copy the MetaEd Files into the ApiSchema Folder"
+
+    Write-Output ("Copy the ApiSchema.json into the " + $solutionRoot)
+    Copy-Item -Path ./MetaEdOutput/ApiSchema/ApiSchema/ApiSchema.json -Destination $solutionRoot
+    
+    Write-Output ("Copy the XSD content into the " + $solutionRoot + "/xsd")
+    Copy-Item -Path ./MetaEdOutput/EdFi/XSD/* -Destination $solutionRoot/xsd/
+}
+
+function Invoke-RunMetaEd {
+    Invoke-Step { RunMetaEd }
+}
+
+function Invoke-CopyMetaEd {
+    Invoke-Step { CopyMetaEdFiles }
+}
+
 Invoke-Main {
     switch ($Command) {
         Clean { Invoke-Clean }
@@ -166,7 +203,9 @@ Invoke-Main {
             Invoke-Publish
         }        
         Package { Invoke-BuildPackage }
-        PushPackage{ Invoke-PushPackage }
+        PushPackage { Invoke-PushPackage }
+        RunMetaEd { Invoke-RunMetaEd }
+        MoveMetaEdSchema { Invoke-CopyMetaEd }
         default { throw "Command '$Command' is not recognized" }
     }
 }
