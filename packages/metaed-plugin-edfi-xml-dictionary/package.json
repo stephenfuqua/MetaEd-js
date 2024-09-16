@@ -21,12 +21,15 @@
     "@xmldom/xmldom": "^0.8.10",
     "handlebars": "^4.7.7",
     "js-beautify": "^1.14.7",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+    "write-excel-file": "^2.0.9"
   },
   "scripts": {
     "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",
     "build:clean": "rimraf dist",
     "build:dist": "tsc",
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
+  },
+  "devDependencies": {
+    "read-excel-file": "^5.8.5"
   }
 }
