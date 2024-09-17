@@ -3133,14 +3133,17 @@ describe('when building a Domain Entity subclass', () => {
         "SchoolId": Object {
           "isReference": false,
           "path": "$.schoolId",
+          "type": "number",
         },
         "SubclassProperty": Object {
           "isReference": false,
           "path": "$.subclassProperty",
+          "type": "number",
         },
         "SuperclassProperty": Object {
           "isReference": false,
           "path": "$.superclassProperty",
+          "type": "number",
         },
       }
     `);
@@ -3344,10 +3347,12 @@ describe('when building an Association subclass', () => {
             Object {
               "identityJsonPath": "$.programId",
               "referenceJsonPath": "$.programReference.programId",
+              "type": "number",
             },
             Object {
               "identityJsonPath": "$.programName",
               "referenceJsonPath": "$.programReference.programName",
+              "type": "string",
             },
           ],
           "resourceName": "Program",
@@ -3360,10 +3365,12 @@ describe('when building an Association subclass', () => {
             Object {
               "identityJsonPath": "$.schoolId",
               "referenceJsonPath": "$.schoolReference.schoolId",
+              "type": "number",
             },
             Object {
               "identityJsonPath": "$.schoolName",
               "referenceJsonPath": "$.schoolReference.schoolName",
+              "type": "string",
             },
           ],
           "resourceName": "School",
@@ -3371,10 +3378,12 @@ describe('when building an Association subclass', () => {
         "SubclassProperty": Object {
           "isReference": false,
           "path": "$.subclassProperty",
+          "type": "number",
         },
         "SuperclassProperty": Object {
           "isReference": false,
           "path": "$.superclassProperty",
+          "type": "number",
         },
       }
     `);

@@ -5,6 +5,7 @@
 
 import { JsonPath } from './JsonPath';
 import { ReferenceJsonPaths } from './ReferenceJsonPaths';
+import { PathType } from './PathType';
 
 /**
  * JsonPath information for a reference MetaEd property
@@ -91,6 +92,11 @@ export type DescriptorReferencePath = {
    * The JsonPath to the document value
    */
   path: JsonPath;
+
+  /**
+   * Type of the descriptor reference path
+   */
+  type: PathType;
 };
 
 /**
@@ -106,6 +112,11 @@ export type ScalarPath = {
    * The JsonPath to the scalar value
    */
   path: JsonPath;
+
+  /**
+   * Type of the scalar
+   */
+  type: PathType;
 };
 
 /**

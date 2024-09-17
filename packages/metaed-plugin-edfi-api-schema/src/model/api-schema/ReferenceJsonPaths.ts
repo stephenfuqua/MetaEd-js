@@ -4,6 +4,7 @@
 // See the LICENSE and NOTICES files in the project root for more information.
 
 import { JsonPath } from './JsonPath';
+import { PathType } from './PathType';
 
 /**
  * JsonPath information for a document reference and it's corresponding identity in the referenced document.
@@ -24,4 +25,9 @@ export type ReferenceJsonPaths = {
    * The corresponding JsonPath for the identity element in the document being referenced
    */
   identityJsonPath: JsonPath;
+
+  /**
+   * Type of the reference JsonPath
+   */
+  type: PathType;
 };
