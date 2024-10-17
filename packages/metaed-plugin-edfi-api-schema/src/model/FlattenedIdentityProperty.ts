@@ -1,4 +1,5 @@
-import { EntityProperty, MetaEdPropertyPath } from '@edfi/metaed-core';
+import deepFreeze from 'deep-freeze';
+import { EntityProperty, MergeDirectiveInfo, MetaEdPropertyPath, NoEntityProperty } from '@edfi/metaed-core';
 
 /**
  * A flattened identity property is a simple property that is part of a reference identity for an
@@ -18,9 +19,32 @@ import { EntityProperty, MetaEdPropertyPath } from '@edfi/metaed-core';
  * Section.CourseOffering.Session
  * Section.CourseOffering
  * Section
+ *
+ * mergedAwayBy indicates that this flattened identity property is merged away due to a merge
+ * directive. A merged away property is still visible in the document that it belongs to,
+ * but is not expressed in a reference to that document.
+ *
+ * If a property is merged away, mergeCoveredBy refers to the FlattenedIdentityProperty that
+ * is standing in for the merged away property.
  */
 export type FlattenedIdentityProperty = {
   identityProperty: EntityProperty;
   propertyPaths: MetaEdPropertyPath[];
   propertyChain: EntityProperty[];
+  mergedAwayBy: MergeDirectiveInfo | null;
+  mergeCoveredBy: FlattenedIdentityProperty | null;
+  mergeCovers: FlattenedIdentityProperty | null;
 };
+
+export function newFlattenedIdentityProperty(): FlattenedIdentityProperty {
+  return {
+    identityProperty: NoEntityProperty,
+    propertyPaths: [],
+    propertyChain: [],
+    mergedAwayBy: null,
+    mergeCoveredBy: null,
+    mergeCovers: null,
+  };
+}
+
+export const NoFlattenedIdentityProperty = deepFreeze(newFlattenedIdentityProperty());
