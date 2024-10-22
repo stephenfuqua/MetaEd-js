@@ -53,8 +53,10 @@ function deployCoreArtifacts(
 
   if (additionalMssqlScriptsDirectory) {
     try {
-      Logger.info(`Deploy ${additionalMssqlScriptsDirectory} to ${path.resolve(deployDirectory, '/MsSql/Data/Ods')}`);
-      fs.copySync(additionalMssqlScriptsDirectory, path.resolve(deployDirectory, '/MsSql/Data/Ods'));
+      const dataPath = path.resolve(deployDirectory, `${corePath}/MsSql/Data/Ods`);
+      Logger.info(`Deploy ${additionalMssqlScriptsDirectory} to ${dataPath}`);
+
+      fs.copySync(additionalMssqlScriptsDirectory, path.resolve(deployDirectory, dataPath));
     } catch (err) {
       deployResult = {
         success: false,
@@ -66,7 +68,10 @@ function deployCoreArtifacts(
 
   if (additionalPostgresScriptsDirectory) {
     try {
-      fs.copySync(additionalPostgresScriptsDirectory, path.resolve(deployDirectory, '/PgSql/Data/Ods'));
+      const dataPath = path.resolve(deployDirectory, `${corePath}/PgSql/Data/Ods`);
+      Logger.info(`Deploy ${additionalPostgresScriptsDirectory} to ${dataPath}`);
+
+      fs.copySync(additionalPostgresScriptsDirectory, path.resolve(deployDirectory, dataPath));
     } catch (err) {
       deployResult = {
         success: false,
@@ -88,7 +93,7 @@ export async function execute(
   additionalPostgresScriptsDirectory?: string,
 ): Promise<DeployResult> {
   if (!deployCore) return { success: true };
-  if (!versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '>=3.3.0 <7.0.0')) {
+  if (!versionSatisfies(metaEdConfiguration.defaultPluginTechVersion, '>=5.4.0 <7.0.0')) {
     return { success: true };
   }
 
