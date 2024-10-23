@@ -111,11 +111,21 @@ function adjustForMerges(referencingJsonPathsInfo: JsonPathsInfo, fromReferencin
   //
   // Take the last property path, as it is the deepest level path for the property
   // (e.g. Session.School.SchoolId as opposed to Session at the first level)
-  const coveringMergePropertyPath: string | undefined = mergeCoveredBy.propertyPaths.at(-1);
+  let coveringMergePropertyPath: string | undefined = mergeCoveredBy.propertyPaths.at(-1);
 
-  // There should always be a property path, but need to handle
+  // There should always be a property path, but need to handle for TypeScript
   if (coveringMergePropertyPath == null) return referencingJsonPathsInfo;
 
+  // Append "Descriptor" to propertyPath if terminal property is a descriptor, to match descriptor paths
+  // in fromReferencingEntity, which derives from an allJsonPathsMapping
+  if (mergeCoveredBy.propertyChain.at(-1)?.type === 'descriptor') {
+    coveringMergePropertyPath += 'Descriptor';
+  }
+
+  invariant(
+    fromReferencingEntity[coveringMergePropertyPath] != null,
+    `coveringMergePropertyPath "${coveringMergePropertyPath}" not found in fromReferencingEntity JsonPathsMapping`,
+  );
   return fromReferencingEntity[coveringMergePropertyPath];
 }
 
@@ -126,8 +136,14 @@ function matchupJsonPaths(
   const result: ReferenceJsonPaths[] = [];
 
   Object.entries(fromReferencingEntity).forEach(([referencingPropertyPath, referencingJsonPathsInfo]) => {
-    invariant(fromReferencedEntity[referencingPropertyPath] != null);
-    invariant(referencingJsonPathsInfo.jsonPathPropertyPairs.length === 1);
+    invariant(
+      fromReferencedEntity[referencingPropertyPath] != null,
+      `referencingPropertyPath "${referencingPropertyPath}" not found in fromReferencedEntity JsonPathsMapping`,
+    );
+    invariant(
+      referencingJsonPathsInfo.jsonPathPropertyPairs.length === 1,
+      `referencingJsonPathsInfo.jsonPathPropertyPairs should have a single entry but had ${referencingJsonPathsInfo.jsonPathPropertyPairs.length}`,
+    );
 
     const mergeAdjustedReferencingJsonPathsInfo: JsonPathsInfo = adjustForMerges(
       referencingJsonPathsInfo,
