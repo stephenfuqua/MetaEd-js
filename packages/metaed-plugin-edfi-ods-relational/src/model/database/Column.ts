@@ -79,7 +79,6 @@ export interface Column {
   isFromUniqueIdProperty: boolean;
   /** is the column derived from an usi column */
   isFromUsiProperty: boolean;
-
   data: any;
 }
 
