@@ -8,7 +8,12 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
 } from '@edfi/metaed-core';
-import { domainEntityReferenceEnhancer } from '@edfi/metaed-plugin-edfi-unified';
+import {
+  domainEntityReferenceEnhancer,
+  choiceReferenceEnhancer,
+  inlineCommonReferenceEnhancer,
+  descriptorReferenceEnhancer,
+} from '@edfi/metaed-plugin-edfi-unified';
 import { enhance as entityPropertyApiSchemaDataSetupEnhancer } from '../../src/model/EntityPropertyApiSchemaData';
 import { enhance as entityApiSchemaDataSetupEnhancer } from '../../src/model/EntityApiSchemaData';
 import { enhance as namespaceSetupEnhancer } from '../../src/model/Namespace';
@@ -21,8 +26,14 @@ import { enhance as propertyCollectingEnhancer } from '../../src/enhancer/Proper
 import { enhance as subclassPropertyCollectingEnhancer } from '../../src/enhancer/SubclassPropertyCollectingEnhancer';
 import { enhance as resourceNameEnhancer } from '../../src/enhancer/ResourceNameEnhancer';
 import { enhance as jsonSchemaEnhancerForInsert } from '../../src/enhancer/JsonSchemaForInsertEnhancer';
+import { enhance as allJsonPathsMappingEnhancer } from '../../src/enhancer/AllJsonPathsMappingEnhancer';
+import { enhance as mergeDirectiveEqualityConstraintEnhancer } from '../../src/enhancer/MergeDirectiveEqualityConstraintEnhancer';
 import { enhance as openApiRequestBodyComponentEnhancer } from '../../src/enhancer/OpenApiRequestBodyComponentEnhancer';
 import { enhance as openApiReferenceComponentEnhancer } from '../../src/enhancer/OpenApiReferenceComponentEnhancer';
+import { enhance as identityFullnameEnhancer } from '../../src/enhancer/IdentityFullnameEnhancer';
+import { enhance as subclassIdentityFullnameEnhancer } from '../../src/enhancer/SubclassIdentityFullnameEnhancer';
+import { enhance as documentPathsMappingEnhancer } from '../../src/enhancer/DocumentPathsMappingEnhancer';
+import { enhance as queryFieldMappingEnhancer } from '../../src/enhancer/QueryFieldMappingEnhancer';
 import { enhance } from '../../src/enhancer/OpenApiSpecificationEnhancer';
 
 function runApiSchemaEnhancers(metaEd: MetaEdEnvironment) {
@@ -38,6 +49,13 @@ function runApiSchemaEnhancers(metaEd: MetaEdEnvironment) {
   subclassApiEntityMappingEnhancer(metaEd);
   resourceNameEnhancer(metaEd);
   jsonSchemaEnhancerForInsert(metaEd);
+  allJsonPathsMappingEnhancer(metaEd);
+  mergeDirectiveEqualityConstraintEnhancer(metaEd);
+  resourceNameEnhancer(metaEd);
+  identityFullnameEnhancer(metaEd);
+  subclassIdentityFullnameEnhancer(metaEd);
+  documentPathsMappingEnhancer(metaEd);
+  queryFieldMappingEnhancer(metaEd);
   openApiRequestBodyComponentEnhancer(metaEd);
   openApiReferenceComponentEnhancer(metaEd);
 }
@@ -257,6 +275,131 @@ describe('when building simple domain entity with all the simple non-collections
                 Object {
                   "$ref": "#/components/parameters/totalCount",
                 },
+                Object {
+                  "description": "",
+                  "in": "query",
+                  "name": "id",
+                  "schema": Object {
+                    "type": "string",
+                  },
+                },
+                Object {
+                  "description": "doc1",
+                  "in": "query",
+                  "name": "optionalBooleanProperty",
+                  "schema": Object {
+                    "type": "boolean",
+                  },
+                },
+                Object {
+                  "description": "doc2",
+                  "in": "query",
+                  "name": "requiredCurrencyProperty",
+                  "schema": Object {
+                    "format": "double",
+                    "type": "number",
+                  },
+                },
+                Object {
+                  "description": "doc3",
+                  "in": "query",
+                  "name": "optionalDecimalProperty",
+                  "schema": Object {
+                    "format": "double",
+                    "type": "number",
+                  },
+                },
+                Object {
+                  "description": "doc4",
+                  "in": "query",
+                  "name": "requiredDurationProperty",
+                  "schema": Object {
+                    "maxLength": 30,
+                    "type": "string",
+                  },
+                },
+                Object {
+                  "description": "doc5",
+                  "in": "query",
+                  "name": "optionalPercentProperty",
+                  "schema": Object {
+                    "format": "double",
+                    "type": "number",
+                  },
+                },
+                Object {
+                  "description": "doc6",
+                  "in": "query",
+                  "name": "requiredDateProperty",
+                  "schema": Object {
+                    "format": "date",
+                    "type": "string",
+                  },
+                },
+                Object {
+                  "description": "doc7",
+                  "in": "query",
+                  "name": "requiredDatetimeProperty",
+                  "schema": Object {
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                },
+                Object {
+                  "description": "doc8",
+                  "in": "query",
+                  "name": "requiredIntegerProperty",
+                  "schema": Object {
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                },
+                Object {
+                  "description": "doc9",
+                  "in": "query",
+                  "name": "optionalShortProperty",
+                  "schema": Object {
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                },
+                Object {
+                  "description": "doc10",
+                  "in": "query",
+                  "name": "stringIdentity",
+                  "schema": Object {
+                    "maxLength": 30,
+                    "minLength": 20,
+                    "type": "string",
+                  },
+                  "x-Ed-Fi-isIdentity": true,
+                },
+                Object {
+                  "description": "doc11",
+                  "in": "query",
+                  "name": "requiredTimeProperty",
+                  "schema": Object {
+                    "type": "string",
+                  },
+                },
+                Object {
+                  "description": "doc12",
+                  "in": "query",
+                  "name": "schoolYear",
+                  "schema": Object {
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                },
+                Object {
+                  "description": "doc13",
+                  "in": "query",
+                  "name": "optionalYear",
+                  "schema": Object {
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                },
               ],
               "responses": Object {
                 "200": Object {
@@ -309,6 +452,7 @@ describe('when building simple domain entity with all the simple non-collections
                 },
                 "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
                 "required": true,
+                "x-bodyName": "DomainEntityName",
               },
               "responses": Object {
                 "200": Object {
@@ -541,6 +685,34 @@ describe('when building simple domain entity with all the simple collections', (
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc10",
+                "in": "query",
+                "name": "stringIdentity",
+                "schema": Object {
+                  "maxLength": 30,
+                  "minLength": 20,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
+              Object {
+                "description": "doc13",
+                "in": "query",
+                "name": "schoolYear",
+                "schema": Object {
+                  "format": "int32",
+                  "type": "integer",
+                },
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -593,6 +765,7 @@ describe('when building simple domain entity with all the simple collections', (
               },
               "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
               "required": true,
+              "x-bodyName": "DomainEntityName",
             },
             "responses": Object {
               "200": Object {
@@ -1088,6 +1261,24 @@ describe('when building a domain entity referencing another referencing another 
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "classPeriodName",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -1140,6 +1331,7 @@ describe('when building a domain entity referencing another referencing another 
               },
               "description": "The JSON representation of the ClassPeriod resource to be created or updated.",
               "required": true,
+              "x-bodyName": "ClassPeriod",
             },
             "responses": Object {
               "200": Object {
@@ -1320,6 +1512,24 @@ describe('when building a domain entity referencing another referencing another 
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "localCourseCode",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -1372,6 +1582,7 @@ describe('when building a domain entity referencing another referencing another 
               },
               "description": "The JSON representation of the CourseOffering resource to be created or updated.",
               "required": true,
+              "x-bodyName": "CourseOffering",
             },
             "responses": Object {
               "200": Object {
@@ -1552,6 +1763,24 @@ describe('when building a domain entity referencing another referencing another 
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "sectionIdentifier",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -1604,6 +1833,7 @@ describe('when building a domain entity referencing another referencing another 
               },
               "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
               "required": true,
+              "x-bodyName": "DomainEntityName",
             },
             "responses": Object {
               "200": Object {
@@ -1784,6 +2014,24 @@ describe('when building a domain entity referencing another referencing another 
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "schoolId",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -1836,6 +2084,7 @@ describe('when building a domain entity referencing another referencing another 
               },
               "description": "The JSON representation of the School resource to be created or updated.",
               "required": true,
+              "x-bodyName": "School",
             },
             "responses": Object {
               "200": Object {
@@ -2234,6 +2483,24 @@ describe('when building a domain entity referencing CourseOffering with an impli
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "localCourseCode",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -2286,6 +2553,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
               },
               "description": "The JSON representation of the CourseOffering resource to be created or updated.",
               "required": true,
+              "x-bodyName": "CourseOffering",
             },
             "responses": Object {
               "200": Object {
@@ -2466,6 +2734,24 @@ describe('when building a domain entity referencing CourseOffering with an impli
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "sectionIdentifier",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -2518,6 +2804,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
               },
               "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
               "required": true,
+              "x-bodyName": "DomainEntityName",
             },
             "responses": Object {
               "200": Object {
@@ -2698,6 +2985,24 @@ describe('when building a domain entity referencing CourseOffering with an impli
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "schoolId",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -2750,6 +3055,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
               },
               "description": "The JSON representation of the School resource to be created or updated.",
               "required": true,
+              "x-bodyName": "School",
             },
             "responses": Object {
               "200": Object {
@@ -2930,6 +3236,34 @@ describe('when building a domain entity referencing CourseOffering with an impli
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "sessionName",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "schoolYear",
+                "schema": Object {
+                  "format": "int32",
+                  "type": "integer",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -2982,6 +3316,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
               },
               "description": "The JSON representation of the Session resource to be created or updated.",
               "required": true,
+              "x-bodyName": "Session",
             },
             "responses": Object {
               "200": Object {
@@ -3348,7 +3683,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
 describe('when building domain entity with nested choice and inline commons', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName = 'EdFi';
-  const domainEntityName = 'DomainEntityName';
+  const domainEntityName = 'EducationContent';
   let namespace: any = null;
 
   beforeAll(() => {
@@ -3392,6 +3727,9 @@ describe('when building domain entity with nested choice and inline commons', ()
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     domainEntityReferenceEnhancer(metaEd);
+    choiceReferenceEnhancer(metaEd);
+    inlineCommonReferenceEnhancer(metaEd);
+    descriptorReferenceEnhancer(metaEd);
     runApiSchemaEnhancers(metaEd);
     enhance(metaEd);
 
@@ -3402,10 +3740,10 @@ describe('when building domain entity with nested choice and inline commons', ()
     const { openApiSpecification } = namespace.data.edfiApiSchema;
     expect(openApiSpecification.paths).toMatchInlineSnapshot(`
       Object {
-        "/edfi/domainEntityNames": Object {
+        "/edfi/educationContents": Object {
           "get": Object {
             "description": "This GET operation provides access to resources using the \\"Get\\" search pattern.  The values of any properties of the resource that are specified will be used to return all matching results (if it exists).",
-            "operationId": "getDomainEntityName",
+            "operationId": "getEducationContent",
             "parameters": Array [
               Object {
                 "$ref": "#/components/parameters/offset",
@@ -3422,6 +3760,60 @@ describe('when building domain entity with nested choice and inline commons', ()
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "contentIdentifier",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "learningResourceMetadataURI",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "description",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "shortDescription",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "contentClassDescriptor",
+                "schema": Object {
+                  "maxLength": 306,
+                  "type": "string",
+                },
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -3429,7 +3821,7 @@ describe('when building domain entity with nested choice and inline commons', ()
                   "application/json": Object {
                     "schema": Object {
                       "items": Object {
-                        "$ref": "#/components/schemas/EdFi_DomainEntityName",
+                        "$ref": "#/components/schemas/EdFi_EducationContent",
                       },
                       "type": "array",
                     },
@@ -3458,22 +3850,23 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "summary": "Retrieves specific resources using the resource's property values (using the \\"Get\\" pattern).",
             "tags": Array [
-              "domainEntityNames",
+              "educationContents",
             ],
           },
           "post": Object {
             "description": "The POST operation can be used to create or update resources. In database terms, this is often referred to as an \\"upsert\\" operation (insert + update). Clients should NOT include the resource \\"id\\" in the JSON body because it will result in an error. The web service will identify whether the resource already exists based on the natural key values provided, and update or create the resource appropriately. It is recommended to use POST for both create and update except while updating natural key of a resource in which case PUT operation must be used.",
-            "operationId": "postDomainEntityName",
+            "operationId": "postEducationContent",
             "requestBody": Object {
               "content": Object {
                 "application/json": Object {
                   "schema": Object {
-                    "$ref": "#/components/schemas/EdFi_DomainEntityName",
+                    "$ref": "#/components/schemas/EdFi_EducationContent",
                   },
                 },
               },
-              "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
+              "description": "The JSON representation of the EducationContent resource to be created or updated.",
               "required": true,
+              "x-bodyName": "EducationContent",
             },
             "responses": Object {
               "200": Object {
@@ -3506,14 +3899,14 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "summary": "Creates or updates resources based on the natural key values of the supplied resource.",
             "tags": Array [
-              "domainEntityNames",
+              "educationContents",
             ],
           },
         },
-        "/edfi/domainEntityNames/{id}": Object {
+        "/edfi/educationContents/{id}": Object {
           "delete": Object {
             "description": "The DELETE operation is used to delete an existing resource by identifier. If the resource doesn't exist, an error will result (the resource will not be found).",
-            "operationId": "deleteDomainEntityName",
+            "operationId": "deleteEducationContent",
             "parameters": Array [
               Object {
                 "description": "A resource identifier that uniquely identifies the resource.",
@@ -3559,13 +3952,13 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "summary": "Deletes an existing resource using the resource identifier.",
             "tags": Array [
-              "domainEntityNames",
+              "educationContents",
             ],
           },
           "get": Object {},
           "put": Object {
             "description": "The PUT operation is used to update a resource by identifier. If the resource identifier (\\"id\\") is provided in the JSON body, it will be ignored. Additionally, this API resource is not configured for cascading natural key updates. Natural key values for this resource cannot be changed using PUT operation, so the recommendation is to use POST as that supports upsert behavior.",
-            "operationId": "putDomainEntityName",
+            "operationId": "putEducationContent",
             "parameters": Array [
               Object {
                 "description": "A resource identifier that uniquely identifies the resource.",
@@ -3593,11 +3986,11 @@ describe('when building domain entity with nested choice and inline commons', ()
               "content": Object {
                 "application/json": Object {
                   "schema": Object {
-                    "$ref": "#/components/schemas/EdFi_DomainEntityName",
+                    "$ref": "#/components/schemas/EdFi_EducationContent",
                   },
                 },
               },
-              "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
+              "description": "The JSON representation of the EducationContent resource to be created or updated.",
             },
             "responses": Object {
               "204": Object {
@@ -3630,7 +4023,7 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "summary": "Updates a resource based on the resource identifier.",
             "tags": Array [
-              "domainEntityNames",
+              "educationContents",
             ],
           },
         },
@@ -3638,10 +4031,58 @@ describe('when building domain entity with nested choice and inline commons', ()
     `);
     expect(openApiSpecification.components.schemas).toMatchInlineSnapshot(`
       Object {
-        "EdFi_DomainEntityName": Object {
+        "EdFi_EducationContent": Object {
           "description": "doc",
           "properties": Object {
+            "contentClassDescriptor": Object {
+              "description": "doc",
+              "type": "string",
+            },
             "contentIdentifier": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+            "derivativeSourceEducationContents": Object {
+              "items": Object {
+                "properties": Object {
+                  "derivativeSourceEducationContentReference": Object {
+                    "$ref": "#/components/schemas/EdFi_EducationContent_Reference",
+                  },
+                },
+                "required": Array [
+                  "derivativeSourceEducationContentReference",
+                ],
+                "type": "object",
+              },
+              "minItems": 0,
+              "type": "array",
+              "uniqueItems": false,
+            },
+            "derivativeSourceURIs": Object {
+              "items": Object {
+                "properties": Object {
+                  "derivativeSourceURI": Object {
+                    "description": "doc",
+                    "maxLength": 30,
+                    "type": "string",
+                  },
+                },
+                "required": Array [
+                  "derivativeSourceURI",
+                ],
+                "type": "object",
+              },
+              "minItems": 0,
+              "type": "array",
+              "uniqueItems": false,
+            },
+            "description": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+            "learningResourceMetadataURI": Object {
               "description": "doc",
               "maxLength": 30,
               "type": "string",
@@ -3664,6 +4105,11 @@ describe('when building domain entity with nested choice and inline commons', ()
               "type": "array",
               "uniqueItems": false,
             },
+            "shortDescription": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
           },
           "required": Array [
             "contentIdentifier",
@@ -3671,7 +4117,7 @@ describe('when building domain entity with nested choice and inline commons', ()
           ],
           "type": "object",
         },
-        "EdFi_DomainEntityName_Reference": Object {
+        "EdFi_EducationContent_Reference": Object {
           "properties": Object {
             "contentIdentifier": Object {
               "description": "doc",
@@ -3739,6 +4185,24 @@ describe('when building domain entity with scalar collection named with prefix o
               Object {
                 "$ref": "#/components/parameters/totalCount",
               },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "doc",
+                "in": "query",
+                "name": "contentIdentifier",
+                "schema": Object {
+                  "maxLength": 30,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
             ],
             "responses": Object {
               "200": Object {
@@ -3791,6 +4255,7 @@ describe('when building domain entity with scalar collection named with prefix o
               },
               "description": "The JSON representation of the DomainEntityName resource to be created or updated.",
               "required": true,
+              "x-bodyName": "DomainEntityName",
             },
             "responses": Object {
               "200": Object {

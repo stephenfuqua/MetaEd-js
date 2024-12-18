@@ -1,21 +1,23 @@
-import type { OpenAPIV3 } from 'openapi-types';
+import { invariant } from 'ts-invariant';
 import {
   type MetaEdEnvironment,
   type EnhancerResult,
   type TopLevelEntity,
   type Namespace,
   getEntitiesOfTypeForNamespaces,
+  EntityProperty,
+  StringProperty,
+  IntegerProperty,
 } from '@edfi/metaed-core';
 import type { ProjectNamespace } from '../model/api-schema/ProjectNamespace';
 import type { EntityApiSchemaData } from '../model/EntityApiSchemaData';
 import type { EndpointName } from '../model/api-schema/EndpointName';
-
-type Schemas = { [key: string]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject };
+import { Operation, PathsObject, ComponentsObject, Parameter, Document, Schemas, SchemaObject } from '../model/OpenApiTypes';
 
 /**
  * Returns the "post" section of non-id "path" for the given entity
  */
-function createPostSectionFor(entity: TopLevelEntity, endpointName: EndpointName): OpenAPIV3.OperationObject {
+function createPostSectionFor(entity: TopLevelEntity, endpointName: EndpointName): Operation {
   return {
     description:
       'The POST operation can be used to create or update resources. In database terms, this is often referred to as an "upsert" operation (insert + update). Clients should NOT include the resource "id" in the JSON body because it will result in an error. The web service will identify whether the resource already exists based on the natural key values provided, and update or create the resource appropriately. It is recommended to use POST for both create and update except while updating natural key of a resource in which case PUT operation must be used.',
@@ -30,7 +32,7 @@ function createPostSectionFor(entity: TopLevelEntity, endpointName: EndpointName
         },
       },
       required: true,
-      // 'x-bodyName': entity.metaEdName,  ----- in ODS/API but not part of OpenAPI spec
+      'x-bodyName': entity.metaEdName,
     },
     responses: {
       '200': {
@@ -66,9 +68,10 @@ function createPostSectionFor(entity: TopLevelEntity, endpointName: EndpointName
   };
 }
 
-type Parameters = OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject;
-
-function newStaticGetByQueryParameters(): Parameters[] {
+/**
+ * Returns the hardcoded set of get by query parameters common to all resources.
+ */
+function newStaticGetByQueryParameters(): Parameter[] {
   return [
     {
       $ref: '#/components/parameters/offset',
@@ -85,10 +88,18 @@ function newStaticGetByQueryParameters(): Parameters[] {
     {
       $ref: '#/components/parameters/totalCount',
     },
+    {
+      name: 'id',
+      in: 'query',
+      description: '',
+      schema: {
+        type: 'string',
+      },
+    },
   ];
 }
 
-function newStaticByIdParameters(): Parameters[] {
+function newStaticByIdParameters(): Parameter[] {
   return [
     {
       name: 'id',
@@ -106,14 +117,96 @@ function newStaticByIdParameters(): Parameters[] {
 }
 
 /**
+ * Returns an OpenAPI schema object corresponding to the given property based on its type.
+ */
+function schemaObjectFrom(property: EntityProperty): SchemaObject {
+  switch (property.type) {
+    case 'boolean':
+      return { type: 'boolean' };
+
+    case 'duration':
+      return { type: 'string', maxLength: 30 };
+
+    case 'currency':
+    case 'decimal':
+    case 'percent':
+    case 'sharedDecimal':
+      return { type: 'number', format: 'double' };
+
+    case 'date':
+      return { type: 'string', format: 'date' };
+
+    case 'datetime':
+      return { type: 'string', format: 'date-time' };
+
+    case 'descriptor':
+    case 'enumeration':
+      return { type: 'string', maxLength: 306 };
+
+    case 'integer':
+    case 'sharedInteger': {
+      const integerProperty: IntegerProperty = property as IntegerProperty;
+      return { type: 'integer', format: integerProperty.hasBigHint ? 'int64' : 'int32' };
+    }
+
+    case 'short':
+    case 'sharedShort':
+    case 'schoolYearEnumeration':
+    case 'year':
+      return { type: 'integer', format: 'int32' };
+
+    case 'string':
+    case 'sharedString': {
+      const result: SchemaObject = { type: 'string' };
+      const stringProperty: StringProperty = property as StringProperty;
+      if (stringProperty.minLength) result.minLength = Number(stringProperty.minLength);
+      if (stringProperty.maxLength) result.maxLength = Number(stringProperty.maxLength);
+      return result;
+    }
+
+    case 'time':
+      return { type: 'string' };
+
+    default:
+      return { type: 'boolean' };
+  }
+}
+
+/**
+ * Returns the set of get by query parameters for the given entity
+ */
+function getByQueryParametersFor(entity: TopLevelEntity): Parameter[] {
+  const result: Parameter[] = [];
+  const edfiApiSchemaData = entity.data.edfiApiSchema as EntityApiSchemaData;
+  Object.entries(edfiApiSchemaData.queryFieldMapping).forEach(([fieldName, pathInfo]) => {
+    invariant(pathInfo.length > 0, 'There should be at least one pathInfo in a queryFieldMapping');
+    invariant(pathInfo[0].sourceProperty != null, 'There should be a sourceProperty on pathInfos');
+    const { sourceProperty } = pathInfo[0];
+
+    if (['association', 'choice', 'common', 'domainEntity', 'inlineCommon'].includes(sourceProperty.type)) return;
+
+    const parameter: Parameter = {
+      name: fieldName,
+      in: 'query',
+      description: sourceProperty.documentation,
+      schema: schemaObjectFrom(sourceProperty),
+    };
+    if (sourceProperty.isPartOfIdentity) parameter['x-Ed-Fi-isIdentity'] = true;
+
+    result.push(parameter);
+  });
+  return result;
+}
+
+/**
  * Returns the "get" section of the non-id "path" for the given entity
  */
-function createGetByQuerySectionFor(entity: TopLevelEntity, endpointName: EndpointName): OpenAPIV3.OperationObject {
+function createGetByQuerySectionFor(entity: TopLevelEntity, endpointName: EndpointName): Operation {
   return {
     description:
       'This GET operation provides access to resources using the "Get" search pattern.  The values of any properties of the resource that are specified will be used to return all matching results (if it exists).',
     operationId: `get${entity.metaEdName}`,
-    parameters: [...newStaticGetByQueryParameters()],
+    parameters: [...newStaticGetByQueryParameters(), ...getByQueryParametersFor(entity)],
     responses: {
       '200': {
         description: 'The requested resource was successfully retrieved.',
@@ -155,7 +248,7 @@ function createGetByQuerySectionFor(entity: TopLevelEntity, endpointName: Endpoi
 /**
  * Returns the "get" section of id "path" for the given entity
  */
-function createGetByIdSectionFor(_entity: TopLevelEntity, _endpointName: EndpointName): OpenAPIV3.OperationObject {
+function createGetByIdSectionFor(_entity: TopLevelEntity, _endpointName: EndpointName): Operation {
   // TODO: METAED-1585
   return {} as any;
 }
@@ -163,7 +256,7 @@ function createGetByIdSectionFor(_entity: TopLevelEntity, _endpointName: Endpoin
 /**
  * Returns the "put" section of id "path" for the given entity
  */
-function createPutSectionFor(entity: TopLevelEntity, endpointName: EndpointName): OpenAPIV3.OperationObject {
+function createPutSectionFor(entity: TopLevelEntity, endpointName: EndpointName): Operation {
   return {
     description:
       'The PUT operation is used to update a resource by identifier. If the resource identifier ("id") is provided in the JSON body, it will be ignored. Additionally, this API resource is not configured for cascading natural key updates. Natural key values for this resource cannot be changed using PUT operation, so the recommendation is to use POST as that supports upsert behavior.',
@@ -227,7 +320,7 @@ function createPutSectionFor(entity: TopLevelEntity, endpointName: EndpointName)
 /**
  * Returns the "delete" section of id "path" for the given entity
  */
-function createDeleteSectionFor(entity: TopLevelEntity, endpointName: EndpointName): OpenAPIV3.OperationObject {
+function createDeleteSectionFor(entity: TopLevelEntity, endpointName: EndpointName): Operation {
   return {
     description:
       "The DELETE operation is used to delete an existing resource by identifier. If the resource doesn't exist, an error will result (the resource will not be found).",
@@ -269,7 +362,7 @@ function createDeleteSectionFor(entity: TopLevelEntity, endpointName: EndpointNa
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const paths: OpenAPIV3.PathsObject = {};
+    const paths: PathsObject = {};
     const schemas: Schemas = {};
 
     getEntitiesOfTypeForNamespaces(
@@ -306,7 +399,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       schemas[openApiRequestBodyComponentPropertyName] = openApiRequestBodyComponent;
     });
 
-    const components: OpenAPIV3.ComponentsObject = {
+    const components: ComponentsObject = {
       schemas,
       responses: {
         Created: {
@@ -365,7 +458,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       },
     };
 
-    const swaggerDocument: OpenAPIV3.Document = {
+    const swaggerDocument: Document = {
       openapi: '3.0.0',
       info: {
         title: 'Ed-Fi Alliance Data Management Service',
