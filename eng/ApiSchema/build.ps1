@@ -4,8 +4,8 @@ param (
     [ValidateSet("DotNetClean", "Build", "BuildAndPublish", "PushPackage", "Unzip", "Package", "RunMetaEd", "MoveMetaEdSchema")]
     $Command = "Build",
 
-    [String]
-    $Version="1.0.0",
+    [string]
+    $Version = "1.0.0",
 
     [ValidateSet("Debug", "Release")]
     $Configuration = "Debug",
@@ -30,13 +30,16 @@ param (
     $DryRun,
 
     [string]
-    $schemaPackagingConfigFile = "/home/runner/work/MetaEd-js/MetaEd-js/eng/ApiSchema/ApiSchemaPackaging-GitHub.json"
+    $SchemaPackagingConfigFile,
+
+    [string]
+    $ApiSchemaPackageType = ""
 )
 
 $solutionRoot = "$PSScriptRoot"
-$defaultSolution = "$solutionRoot/EdFi.DataStandard51.ApiSchema.sln"
+$defaultSolution = "$solutionRoot/EdFi.DataStandard52.ApiSchema.sln"
 $applicationRoot = "$solutionRoot/"
-$projectName = "EdFi.DataStandard51.ApiSchema"
+$projectName = "EdFi.DataStandard52.ApiSchema"
 
 function Restore {
     dotnet restore $defaultSolution
@@ -47,7 +50,7 @@ function DotNetClean {
 }
 
 function Compile {
-    dotnet build $defaultSolution -c $Configuration -p:Version=$Version --nologo --no-restore
+    dotnet build $defaultSolution -c $Configuration -p:Version=$Version -p:ApiSchemaPackageType=$ApiSchemaPackageType --nologo --no-restore
 }
 
 function PublishApi {
@@ -114,7 +117,8 @@ function Invoke-Build {
 
 function BuildPackage {
     $projectPath = "$applicationRoot/$projectName.csproj"
-    dotnet pack $projectPath -c release -p:PackageVersion=$Version --output $PSScriptRoot
+    $PackageName = "$projectName$ApiSchemaPackageType"
+    dotnet pack $projectPath -c release  -p:PackageId=$PackageName -p:PackageVersion=$Version --output $PSScriptRoot
 }
 
 function RunMetaEd {
@@ -133,14 +137,26 @@ function RunMetaEd {
     config file. For more details, please refer to the readme file located in
     ./packages/meteaed-console/src/README.md
     #>
-    node ./dist/index.js -a -c $schemaPackagingConfigFile
+    node ./dist/index.js -a -c $SchemaPackagingConfigFile
 }
 
 function CopyMetaEdFiles {
     # Copy the MetaEd Files into the ApiSchema Folder
-    Copy-Item -Path ./MetaEdOutput/EdFi/ApiSchema/ApiSchema.json -Destination $solutionRoot
 
-    Copy-Item -Path ./MetaEdOutput/EdFi/XSD/* -Destination $solutionRoot/xsd/
+    if($ApiSchemaPackageType -eq 'Core'){
+        Copy-Item -Path ./MetaEdOutput/EdFi/ApiSchema/ApiSchema.json -Destination $solutionRoot
+        Copy-Item -Path ./MetaEdOutput/EdFi/XSD/* -Destination $solutionRoot/xsd/        
+    }
+    if($ApiSchemaPackageType -eq 'TPDM'){
+        Copy-Item -Path ./MetaEdOutput/TPDM/ApiSchema/ApiSchema-EXTENSION.json -Destination $solutionRoot
+
+        $destinationPath = "$solutionRoot/xsd/"
+        if (!(Test-Path -Path $destinationPath)) {
+            New-Item -ItemType Directory -Path $destinationPath -Force | Out-Null
+        }
+        Copy-Item -Path ./MetaEdOutput/TPDM/XSD/* -Destination $solutionRoot/xsd/   
+        Copy-Item -Path ./MetaEdOutput/TPDM/Interchange/* -Destination $solutionRoot/xsd/                
+    }
 }
 
 switch ($Command) {
