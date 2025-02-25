@@ -109,13 +109,9 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R ./
 
-      - name: Download and Unzip files
-        if: matrix.config == 'Core'
-        working-directory: ./MetaEd-js/          
-        run: ./eng/ApiSchema/build.ps1 Unzip
 
       - name: Move MetaEd ApiSchema Files
-        working-directory: ./MetaEd-js/  
+        working-directory: ./MetaEd-js/
         run: ./eng/ApiSchema/build.ps1 -Command MoveMetaEdSchema -ApiSchemaPackageType "${{ matrix.config  }}"
 
       - name: Run Build
@@ -124,10 +120,10 @@ jobs:
 
       - name: API Schema Package - Create NuGet File
         working-directory: ./MetaEd-js/      
-        run: ./eng/ApiSchema/build.ps1 Package -Version "1.0.${{ github.run_number }}" -ApiSchemaPackageType ".${{ matrix.config }}"
+        run: ./eng/ApiSchema/build.ps1 Package -Version "1.0.${{ github.run_number }}" -ApiSchemaPackageType "${{ matrix.config }}"
 
       - name: Publish Package
-        working-directory: ./MetaEd-js/      
+        working-directory: ./MetaEd-js/
         run: ./eng/ApiSchema/build.ps1 BuildAndPublish -Version "1.0.${{ github.run_number }}"
 
       - name: Upload Package as Artifact
