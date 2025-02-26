@@ -42,33 +42,45 @@
     "description": "TPDM-Core",
     "educationOrganizationHierarchy": {
       "CommunityOrganization": [
-        "CommunityProvider"
+      ],
+      "CommunityProvider": [
+        "CommunityOrganization"
       ],
       "EducationOrganization": [
-        "CommunityOrganization",
-        "CommunityProvider",
-        "EducationOrganizationNetwork",
-        "EducationServiceCenter",
-        "LocalEducationAgency",
-        "OrganizationDepartment",
-        "PostSecondaryInstitution",
-        "School",
-        "StateEducationAgency",
-        "EducationOrganization",
-        "OrganizationDepartment"
+      ],
+      "EducationOrganizationNetwork": [
       ],
       "EducationServiceCenter": [
-        "LocalEducationAgency"
+        "StateEducationAgency"
       ],
       "LocalEducationAgency": [
+        "EducationServiceCenter",
         "LocalEducationAgency",
-        "School"
+        "StateEducationAgency"
+      ],
+      "OrganizationDepartment": [
+        "EducationOrganization"
+      ],
+      "PostSecondaryInstitution": [
+      ],
+      "School": [
+        "LocalEducationAgency"
       ],
       "StateEducationAgency": [
-        "EducationServiceCenter",
-        "LocalEducationAgency"
       ]
     },
+    "educationOrganizationTypes": [
+      "CommunityOrganization",
+      "CommunityProvider",
+      "EducationOrganizationNetwork",
+      "EducationServiceCenter",
+      "LocalEducationAgency",
+      "OrganizationDepartment",
+      "PostSecondaryInstitution",
+      "School",
+      "StateEducationAgency",
+      "EducationOrganization"
+    ],
     "isExtensionProject": true,
     "openApiExtensionFragments": {
       "exts": {
@@ -10159,7 +10171,10 @@
         "resourceName": "EducatorPreparationProgram",
         "securityElements": {
           "EducationOrganization": [
-            "$.educationOrganizationReference.educationOrganizationId"
+            {
+              "jsonPath": "$.educationOrganizationReference.educationOrganizationId",
+              "metaEdName": "EducationOrganization"
+            }
           ],
           "Namespace": [
           ]
@@ -14913,7 +14928,10 @@
         "resourceName": "PerformanceEvaluation",
         "securityElements": {
           "EducationOrganization": [
-            "$.educationOrganizationReference.educationOrganizationId"
+            {
+              "jsonPath": "$.educationOrganizationReference.educationOrganizationId",
+              "metaEdName": "EducationOrganization"
+            }
           ],
           "Namespace": [
           ]
