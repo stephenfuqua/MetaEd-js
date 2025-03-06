@@ -38,7 +38,7 @@ import { enhance as identityFullnameEnhancer } from '../../src/enhancer/Identity
 import { enhance as subclassIdentityFullnameEnhancer } from '../../src/enhancer/SubclassIdentityFullnameEnhancer';
 import { enhance as documentPathsMappingEnhancer } from '../../src/enhancer/DocumentPathsMappingEnhancer';
 import { enhance as queryFieldMappingEnhancer } from '../../src/enhancer/QueryFieldMappingEnhancer';
-import { enhance as openApiSpecificationEnhancer } from '../../src/enhancer/OpenApiSpecificationEnhancer';
+import { enhance as openApiCoreSpecificationEnhancer } from '../../src/enhancer/OpenApiCoreSpecificationEnhancer';
 import { enhance } from '../../src/enhancer/OpenApiExtensionFragmentEnhancer';
 
 function runApiSchemaEnhancers(metaEd: MetaEdEnvironment) {
@@ -101,9 +101,9 @@ describe('when building simple domain entity with all the simple non-collections
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/domainEntityNames": Object {
           "get": Object {
@@ -525,7 +525,7 @@ describe('when building simple domain entity with all the simple non-collections
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_DomainEntityName": Object {
           "description": "doc",
@@ -625,8 +625,8 @@ describe('when building simple domain entity with all the simple non-collections
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
@@ -634,6 +634,14 @@ describe('when building simple domain entity with all the simple non-collections
         },
       ]
     `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -674,9 +682,9 @@ describe('when building simple domain entity with all the simple collections', (
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/domainEntityNames": Object {
           "get": Object {
@@ -1001,7 +1009,7 @@ describe('when building simple domain entity with all the simple collections', (
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_DomainEntityName": Object {
           "description": "doc",
@@ -1264,8 +1272,8 @@ describe('when building simple domain entity with all the simple collections', (
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
@@ -1273,6 +1281,14 @@ describe('when building simple domain entity with all the simple collections', (
         },
       ]
     `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -1319,9 +1335,9 @@ describe('when building a domain entity referencing another referencing another 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/classPeriods": Object {
           "get": Object {
@@ -2569,7 +2585,7 @@ describe('when building a domain entity referencing another referencing another 
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_ClassPeriod": Object {
           "description": "doc",
@@ -2734,8 +2750,8 @@ describe('when building a domain entity referencing another referencing another 
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
@@ -2755,6 +2771,14 @@ describe('when building a domain entity referencing another referencing another 
         },
       ]
     `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -2802,9 +2826,9 @@ describe('when building a domain entity referencing CourseOffering with an impli
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/courseOfferings": Object {
           "get": Object {
@@ -4062,7 +4086,7 @@ describe('when building a domain entity referencing CourseOffering with an impli
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_CourseOffering": Object {
           "description": "doc",
@@ -4260,8 +4284,8 @@ describe('when building a domain entity referencing CourseOffering with an impli
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
@@ -4281,6 +4305,14 @@ describe('when building a domain entity referencing CourseOffering with an impli
         },
       ]
     `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -4340,9 +4372,9 @@ describe('when building domain entity with nested choice and inline commons', ()
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/educationContents": Object {
           "get": Object {
@@ -4693,7 +4725,7 @@ describe('when building domain entity with nested choice and inline commons', ()
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_EducationContent": Object {
           "description": "doc",
@@ -4796,12 +4828,441 @@ describe('when building domain entity with nested choice and inline commons', ()
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
           "name": "educationContents",
+        },
+      ]
+    `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`
+      Object {
+        "/extension/contentClassDescriptors": Object {
+          "get": Object {
+            "description": "This GET operation provides access to resources using the \\"Get\\" search pattern.  The values of any properties of the resource that are specified will be used to return all matching results (if it exists).",
+            "operationId": "getContentClass",
+            "parameters": Array [
+              Object {
+                "$ref": "#/components/parameters/offset",
+              },
+              Object {
+                "$ref": "#/components/parameters/limit",
+              },
+              Object {
+                "$ref": "#/components/parameters/MinChangeVersion",
+              },
+              Object {
+                "$ref": "#/components/parameters/MaxChangeVersion",
+              },
+              Object {
+                "$ref": "#/components/parameters/totalCount",
+              },
+              Object {
+                "description": "",
+                "in": "query",
+                "name": "id",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "A code or abbreviation that is used to refer to the descriptor.",
+                "in": "query",
+                "name": "codeValue",
+                "schema": Object {
+                  "maxLength": 50,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
+              Object {
+                "description": "The description of the descriptor.",
+                "in": "query",
+                "name": "description",
+                "schema": Object {
+                  "maxLength": 1024,
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "The beginning date of the period when the descriptor is in effect. If omitted, the default is immediate effectiveness.",
+                "in": "query",
+                "name": "effectiveBeginDate",
+                "schema": Object {
+                  "format": "date",
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "The end date of the period when the descriptor is in effect.",
+                "in": "query",
+                "name": "effectiveEndDate",
+                "schema": Object {
+                  "format": "date",
+                  "type": "string",
+                },
+              },
+              Object {
+                "description": "A globally unique namespace that identifies this descriptor set. Author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary.",
+                "in": "query",
+                "name": "namespace",
+                "schema": Object {
+                  "maxLength": 255,
+                  "type": "string",
+                },
+                "x-Ed-Fi-isIdentity": true,
+              },
+              Object {
+                "description": "A shortened description for the descriptor.",
+                "in": "query",
+                "name": "shortDescription",
+                "schema": Object {
+                  "maxLength": 75,
+                  "type": "string",
+                },
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "content": Object {
+                  "application/json": Object {
+                    "schema": Object {
+                      "items": Object {
+                        "$ref": "#/components/schemas/Extension_ContentClass",
+                      },
+                      "type": "array",
+                    },
+                  },
+                },
+                "description": "The requested resource was successfully retrieved.",
+              },
+              "304": Object {
+                "$ref": "#/components/responses/NotModified",
+              },
+              "400": Object {
+                "$ref": "#/components/responses/BadRequest",
+              },
+              "401": Object {
+                "$ref": "#/components/responses/Unauthorized",
+              },
+              "403": Object {
+                "$ref": "#/components/responses/Forbidden",
+              },
+              "404": Object {
+                "$ref": "#/components/responses/NotFoundUseSnapshot",
+              },
+              "500": Object {
+                "$ref": "#/components/responses/Error",
+              },
+            },
+            "summary": "Retrieves specific resources using the resource's property values (using the \\"Get\\" pattern).",
+            "tags": Array [
+              "contentClassDescriptors",
+            ],
+          },
+          "post": Object {
+            "description": "The POST operation can be used to create or update resources. In database terms, this is often referred to as an \\"upsert\\" operation (insert + update). Clients should NOT include the resource \\"id\\" in the JSON body because it will result in an error. The web service will identify whether the resource already exists based on the natural key values provided, and update or create the resource appropriately. It is recommended to use POST for both create and update except while updating natural key of a resource in which case PUT operation must be used.",
+            "operationId": "postContentClass",
+            "requestBody": Object {
+              "content": Object {
+                "application/json": Object {
+                  "schema": Object {
+                    "$ref": "#/components/schemas/Extension_ContentClass",
+                  },
+                },
+              },
+              "description": "The JSON representation of the ContentClass resource to be created or updated.",
+              "required": true,
+              "x-bodyName": "ContentClass",
+            },
+            "responses": Object {
+              "200": Object {
+                "$ref": "#/components/responses/Updated",
+              },
+              "201": Object {
+                "$ref": "#/components/responses/Created",
+              },
+              "400": Object {
+                "$ref": "#/components/responses/BadRequest",
+              },
+              "401": Object {
+                "$ref": "#/components/responses/Unauthorized",
+              },
+              "403": Object {
+                "$ref": "#/components/responses/Forbidden",
+              },
+              "405": Object {
+                "description": "Method Is Not Allowed. When the Use-Snapshot header is set to true, the method is not allowed.",
+              },
+              "409": Object {
+                "$ref": "#/components/responses/Conflict",
+              },
+              "412": Object {
+                "$ref": "#/components/responses/PreconditionFailed",
+              },
+              "500": Object {
+                "$ref": "#/components/responses/Error",
+              },
+            },
+            "summary": "Creates or updates resources based on the natural key values of the supplied resource.",
+            "tags": Array [
+              "contentClassDescriptors",
+            ],
+          },
+        },
+        "/extension/contentClassDescriptors/{id}": Object {
+          "delete": Object {
+            "description": "The DELETE operation is used to delete an existing resource by identifier. If the resource doesn't exist, an error will result (the resource will not be found).",
+            "operationId": "deleteContentClassesById",
+            "parameters": Array [
+              Object {
+                "description": "A resource identifier that uniquely identifies the resource.",
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "$ref": "#/components/parameters/If-None-Match",
+              },
+            ],
+            "responses": Object {
+              "204": Object {
+                "$ref": "#/components/responses/Updated",
+              },
+              "400": Object {
+                "$ref": "#/components/responses/BadRequest",
+              },
+              "401": Object {
+                "$ref": "#/components/responses/Unauthorized",
+              },
+              "403": Object {
+                "$ref": "#/components/responses/Forbidden",
+              },
+              "404": Object {
+                "$ref": "#/components/responses/NotFound",
+              },
+              "405": Object {
+                "description": "Method Is Not Allowed. When the Use-Snapshot header is set to true, the method is not allowed.",
+              },
+              "409": Object {
+                "$ref": "#/components/responses/Conflict",
+              },
+              "412": Object {
+                "$ref": "#/components/responses/PreconditionFailed",
+              },
+              "500": Object {
+                "$ref": "#/components/responses/Error",
+              },
+            },
+            "summary": "Deletes an existing resource using the resource identifier.",
+            "tags": Array [
+              "contentClassDescriptors",
+            ],
+          },
+          "get": Object {
+            "description": "This GET operation retrieves a resource by the specified resource identifier.",
+            "operationId": "getContentClassesById",
+            "parameters": Array [
+              Object {
+                "description": "A resource identifier that uniquely identifies the resource.",
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "$ref": "#/components/parameters/If-None-Match",
+              },
+              Object {
+                "description": "Indicates if the configured Snapshot should be used.",
+                "in": "header",
+                "name": "Use-Snapshot",
+                "schema": Object {
+                  "default": false,
+                  "type": "boolean",
+                },
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "content": Object {
+                  "application/json": Object {
+                    "schema": Object {
+                      "$ref": "#/components/schemas/Extension_ContentClass",
+                    },
+                  },
+                },
+                "description": "The requested resource was successfully retrieved.",
+              },
+              "304": Object {
+                "$ref": "#/components/responses/NotModified",
+              },
+              "400": Object {
+                "$ref": "#/components/responses/BadRequest",
+              },
+              "401": Object {
+                "$ref": "#/components/responses/Unauthorized",
+              },
+              "403": Object {
+                "$ref": "#/components/responses/Forbidden",
+              },
+              "404": Object {
+                "$ref": "#/components/responses/NotFoundUseSnapshot",
+              },
+              "500": Object {
+                "$ref": "#/components/responses/Error",
+              },
+            },
+            "summary": "Retrieves a specific resource using the resource's identifier (using the \\"Get By Id\\" pattern).",
+            "tags": Array [
+              "contentClassDescriptors",
+            ],
+          },
+          "put": Object {
+            "description": "The PUT operation is used to update a resource by identifier. If the resource identifier (\\"id\\") is provided in the JSON body, it will be ignored. Additionally, this API resource is not configured for cascading natural key updates. Natural key values for this resource cannot be changed using PUT operation, so the recommendation is to use POST as that supports upsert behavior.",
+            "operationId": "putContentClass",
+            "parameters": Array [
+              Object {
+                "description": "A resource identifier that uniquely identifies the resource.",
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+              Object {
+                "$ref": "#/components/parameters/If-None-Match",
+              },
+              Object {
+                "description": "Indicates if the configured Snapshot should be used.",
+                "in": "header",
+                "name": "Use-Snapshot",
+                "schema": Object {
+                  "default": false,
+                  "type": "boolean",
+                },
+              },
+            ],
+            "requestBody": Object {
+              "content": Object {
+                "application/json": Object {
+                  "schema": Object {
+                    "$ref": "#/components/schemas/Extension_ContentClass",
+                  },
+                },
+              },
+              "description": "The JSON representation of the ContentClass resource to be created or updated.",
+            },
+            "responses": Object {
+              "204": Object {
+                "$ref": "#/components/responses/Updated",
+              },
+              "400": Object {
+                "$ref": "#/components/responses/BadRequest",
+              },
+              "401": Object {
+                "$ref": "#/components/responses/Unauthorized",
+              },
+              "403": Object {
+                "$ref": "#/components/responses/Forbidden",
+              },
+              "404": Object {
+                "$ref": "#/components/responses/NotFound",
+              },
+              "405": Object {
+                "description": "Method Is Not Allowed. When the Use-Snapshot header is set to true, the method is not allowed.",
+              },
+              "409": Object {
+                "$ref": "#/components/responses/Conflict",
+              },
+              "412": Object {
+                "$ref": "#/components/responses/PreconditionFailed",
+              },
+              "500": Object {
+                "$ref": "#/components/responses/Error",
+              },
+            },
+            "summary": "Updates a resource based on the resource identifier.",
+            "tags": Array [
+              "contentClassDescriptors",
+            ],
+          },
+        },
+      }
+    `);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`
+      Object {
+        "Extension_ContentClass": Object {
+          "description": "An Ed-Fi Descriptor",
+          "properties": Object {
+            "codeValue": Object {
+              "description": "The descriptor code value",
+              "maxLength": 50,
+              "minLength": 1,
+              "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
+              "type": "string",
+            },
+            "description": Object {
+              "description": "The descriptor description",
+              "maxLength": 1024,
+              "type": "string",
+            },
+            "effectiveBeginDate": Object {
+              "description": "The descriptor effective begin date",
+              "format": "date",
+              "type": "string",
+            },
+            "effectiveEndDate": Object {
+              "description": "The descriptor effective end date",
+              "format": "date",
+              "type": "string",
+            },
+            "id": Object {
+              "description": "",
+              "type": "string",
+            },
+            "namespace": Object {
+              "description": "The descriptor namespace as a URI",
+              "maxLength": 255,
+              "minLength": 1,
+              "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
+              "type": "string",
+            },
+            "shortDescription": Object {
+              "description": "The descriptor short description",
+              "maxLength": 75,
+              "minLength": 1,
+              "pattern": "^(?!\\\\s).*(?<!\\\\s)$",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "namespace",
+            "codeValue",
+            "shortDescription",
+          ],
+          "type": "object",
+        },
+      }
+    `);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "description": "doc",
+          "name": "contentClassDescriptors",
         },
       ]
     `);
@@ -4834,9 +5295,9 @@ describe('when building domain entity with scalar collection named with prefix o
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should be correct openApiExtensionFragments', () => {
-    const { openApiExtensionFragments } = namespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`
+  it('should be correct openApiExtensionResourceFragments', () => {
+    const { openApiExtensionResourceFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`
       Object {
         "/extension/domainEntityNames": Object {
           "get": Object {
@@ -5151,7 +5612,7 @@ describe('when building domain entity with scalar collection named with prefix o
         },
       }
     `);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
       Object {
         "Extension_DomainEntityName": Object {
           "description": "doc",
@@ -5201,8 +5662,8 @@ describe('when building domain entity with scalar collection named with prefix o
         },
       }
     `);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`
       Array [
         Object {
           "description": "doc",
@@ -5210,6 +5671,14 @@ describe('when building domain entity with scalar collection named with prefix o
         },
       ]
     `);
+  });
+
+  it('should be correct openApiExtensionDescriptorFragments', () => {
+    const { openApiExtensionDescriptorFragments } = namespace.data.edfiApiSchema;
+    expect(openApiExtensionDescriptorFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.exts).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionDescriptorFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -5252,12 +5721,12 @@ describe('when domain entity extension references domain entity in different nam
     domainEntityReferenceEnhancer(metaEd);
     domainEntityExtensionBaseClassEnhancer(metaEd);
     runApiSchemaEnhancers(metaEd);
-    openApiSpecificationEnhancer(metaEd);
+    openApiCoreSpecificationEnhancer(metaEd);
     enhance(metaEd);
   });
 
   it('should be a correct schema for core namespace', () => {
-    expect(coreNamespace.data.edfiApiSchema.coreOpenApiSpecification.components.schemas).toMatchInlineSnapshot(`
+    expect(coreNamespace.data.edfiApiSchema.openApiCoreResources.components.schemas).toMatchInlineSnapshot(`
         Object {
           "EdFi_EntityName": Object {
             "description": "doc",
@@ -5314,10 +5783,10 @@ describe('when domain entity extension references domain entity in different nam
   });
 
   it('should be a correct ext for extension namespace that references core schema', () => {
-    const { openApiExtensionFragments } = extensionNamespace.data.edfiApiSchema;
-    expect(openApiExtensionFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
-    expect(openApiExtensionFragments.exts).toMatchInlineSnapshot(`
+    const { openApiExtensionResourceFragments } = extensionNamespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`
         Object {
           "EdFi_EntityName": Object {
             "description": "",
@@ -5330,6 +5799,6 @@ describe('when domain entity extension references domain entity in different nam
           },
         }
       `);
-    expect(openApiExtensionFragments.newTags).toMatchInlineSnapshot(`Array []`);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`Array []`);
   });
 });
