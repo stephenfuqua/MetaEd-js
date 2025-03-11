@@ -17,6 +17,7 @@ import { JsonPath } from './api-schema/JsonPath';
 import { QueryFieldMapping } from './api-schema/QueryFieldMapping';
 import { NoOpenApiObject, OpenApiObject } from './OpenApi';
 import { EducationOrganizationSecurityElement } from './api-schema/EducationOrganizationSecurityElement';
+import { OpenApiRequestBodyCollectionSchema } from './OpenApiRequestBodyCollectionSchema';
 
 export type EntityApiSchemaData = {
   /**
@@ -48,6 +49,11 @@ export type EntityApiSchemaData = {
    * The property name for the Open API reference component.
    */
   openApiReferenceComponentPropertyName: string;
+
+  /**
+   * The Open API request body collection component list for this MetaEd entity.
+   */
+  openApiRequestBodyCollectionComponents: OpenApiRequestBodyCollectionSchema[];
 
   /**
    * Properties that belong under this entity in the API body. Excludes Choice and Inline Common properties
@@ -157,6 +163,7 @@ export function addEntityApiSchemaDataTo(entity: ModelBase) {
     jsonSchemaForInsert: NoSchemaRoot,
     openApiRequestBodyComponent: NoOpenApiObject,
     openApiRequestBodyComponentPropertyName: '',
+    openApiRequestBodyCollectionComponents: [],
     openApiReferenceComponent: NoOpenApiObject,
     openApiReferenceComponentPropertyName: '',
     collectedApiProperties: [],

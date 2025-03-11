@@ -12,13 +12,14 @@ import type { EntityApiSchemaData } from '../model/EntityApiSchemaData';
 import type { EntityPropertyApiSchemaData } from '../model/EntityPropertyApiSchemaData';
 import { OpenApiArray, OpenApiObject, OpenApiProperties, OpenApiProperty, OpenApiReference } from '../model/OpenApi';
 import { PropertyModifier, prefixedName, propertyModifierConcat } from '../model/PropertyModifier';
-import { singularize, topLevelApiNameOnEntity, uncapitalize } from '../Utility';
+import { topLevelApiNameOnEntity, uncapitalize } from '../Utility';
 import {
   openApiObjectFrom,
   isOpenApiPropertyRequired,
   SchoolYearOpenApis,
   openApiPropertyForNonReference,
   newSchoolYearOpenApis,
+  openApiCollectionReferenceNameFor,
 } from './OpenApiComponentEnhancerBase';
 
 const enhancerName = 'OpenApiRequestBodyComponentEnhancer';
@@ -144,6 +145,7 @@ export function openApiObjectForScalarCommonProperty(
   property: CommonProperty,
   propertyModifier: PropertyModifier,
   schoolYearOpenApis: SchoolYearOpenApis,
+  propertiesChain: EntityProperty[],
 ): OpenApiObject {
   const openApiProperties: OpenApiProperties = {};
   const required: string[] = [];
@@ -161,12 +163,12 @@ export function openApiObjectForScalarCommonProperty(
     const openApiPropertyName: string = uncapitalize(
       prefixedName(referencePropertyApiMapping.topLevelName, concatenatedPropertyModifier),
     );
-
     // eslint-disable-next-line no-use-before-define
     const openApiProperty: OpenApiProperty = openApiPropertyFor(
       collectedApiProperty.property,
       concatenatedPropertyModifier,
       schoolYearOpenApis,
+      propertiesChain,
     );
 
     openApiProperties[openApiPropertyName] = openApiProperty;
@@ -178,41 +180,41 @@ export function openApiObjectForScalarCommonProperty(
 }
 
 /**
- * Returns an OpenApi array that specifies the API body element shape
- * corresponding to the given non-reference collection property.
+ * Returns an OpenApiReference to the OpenApi reference component for the referenced entity
  */
-function openApiArrayForNonReferenceCollection(
+function openApiNonResourceReferenceFor(fullName: string): OpenApiReference {
+  return {
+    $ref: `#/components/schemas/${fullName}`,
+  };
+}
+
+/**
+ * Returns an OpenApi array specification based on the provided collection property.
+ */
+function openApiArrayForNonResourceReferenceCollection(
   property: EntityProperty,
   propertyModifier: PropertyModifier,
-  schoolYearOpenApis: SchoolYearOpenApis,
+  propertiesChain: EntityProperty[],
 ): OpenApiArray {
-  const { apiMapping } = property.data.edfiApiSchema as EntityPropertyApiSchemaData;
-  const propertyName = uncapitalize(singularize(prefixedName(apiMapping.fullName, propertyModifier)));
-
-  const openApiProperty: { [key: string]: OpenApiProperty } = {
-    [propertyName]: openApiPropertyForNonReference(property, schoolYearOpenApis),
-  };
-
   return {
-    ...openApiArrayFrom(openApiObjectFrom(openApiProperty, [propertyName])),
+    ...openApiArrayFrom(
+      openApiNonResourceReferenceFor(openApiCollectionReferenceNameFor(property, propertyModifier, propertiesChain)),
+    ),
     minItems: isOpenApiPropertyRequired(property, propertyModifier) ? 1 : 0,
   };
 }
 
 /**
- * Returns an OpenApi fragment that specifies the API body element shape
- * corresponding to the given descriptor collection property.
+ * Returns an OpenApi array specification based on the provided common collection property.
  */
-function openApiArrayForDescriptorCollection(property: EntityProperty, propertyModifier: PropertyModifier): OpenApiArray {
-  const { apiMapping } = property.data.edfiApiSchema as EntityPropertyApiSchemaData;
-  const descriptorName = uncapitalize(prefixedName(apiMapping.descriptorCollectionName, propertyModifier));
-
-  const descriptorOpenApiProperty: { [key: string]: OpenApiProperty } = {
-    [descriptorName]: { type: 'string', description: 'An Ed-Fi Descriptor' },
-  };
-
+function openApiArrayForCommonCollection(
+  property: EntityProperty,
+  propertyModifier: PropertyModifier,
+  propertiesChain: EntityProperty[],
+): OpenApiArray {
+  const referenceName: string = openApiCollectionReferenceNameFor(property, propertyModifier, propertiesChain);
   return {
-    ...openApiArrayFrom(openApiObjectFrom(descriptorOpenApiProperty, [descriptorName])),
+    ...openApiArrayFrom(openApiNonResourceReferenceFor(referenceName)),
     minItems: isOpenApiPropertyRequired(property, propertyModifier) ? 1 : 0,
   };
 }
@@ -225,6 +227,7 @@ export function openApiPropertyFor(
   property: EntityProperty,
   propertyModifier: PropertyModifier,
   schoolYearOpenApis: SchoolYearOpenApis,
+  propertiesChain: EntityProperty[],
 ): OpenApiProperty {
   const { apiMapping } = property.data.edfiApiSchema as EntityPropertyApiSchemaData;
 
@@ -235,18 +238,21 @@ export function openApiPropertyFor(
     return openApiReferenceFor(property as ReferentialProperty);
   }
   if (apiMapping.isDescriptorCollection) {
-    return openApiArrayForDescriptorCollection(property, propertyModifier);
+    return openApiArrayForNonResourceReferenceCollection(property, propertyModifier, propertiesChain);
   }
   if (apiMapping.isCommonCollection) {
-    return openApiArrayFrom(
-      openApiObjectForScalarCommonProperty(property as CommonProperty, propertyModifier, schoolYearOpenApis),
-    );
+    return openApiArrayForCommonCollection(property, propertyModifier, propertiesChain);
   }
   if (apiMapping.isScalarCommon) {
-    return openApiObjectForScalarCommonProperty(property as CommonProperty, propertyModifier, schoolYearOpenApis);
+    return openApiObjectForScalarCommonProperty(
+      property as CommonProperty,
+      propertyModifier,
+      schoolYearOpenApis,
+      propertiesChain,
+    );
   }
   if (property.isRequiredCollection || property.isOptionalCollection) {
-    return openApiArrayForNonReferenceCollection(property, propertyModifier, schoolYearOpenApis);
+    return openApiArrayForNonResourceReferenceCollection(property, propertyModifier, propertiesChain);
   }
   return openApiPropertyForNonReference(property, schoolYearOpenApis);
 }
@@ -265,14 +271,14 @@ function buildOpenApiRequestBody(entityForOpenApi: TopLevelEntity, schoolYearOpe
 
   const { collectedApiProperties } = entityForOpenApi.data.edfiApiSchema as EntityApiSchemaData;
 
-  collectedApiProperties.forEach(({ property, propertyModifier }) => {
+  collectedApiProperties.forEach(({ property, propertyModifier, propertyChain }) => {
     const topLevelName = topLevelApiNameOnEntity(entityForOpenApi, property);
     const openApiObjectBaseName = uncapitalize(prefixedName(topLevelName, propertyModifier));
 
     const openApiProperty: OpenApiProperty =
       property.type === 'schoolYearEnumeration'
         ? openApiPropertyForSchoolYearEnumeration(property, schoolYearOpenApis.schoolYearEnumerationOpenApi)
-        : openApiPropertyFor(property, propertyModifier, schoolYearOpenApis);
+        : openApiPropertyFor(property, propertyModifier, schoolYearOpenApis, propertyChain);
 
     openApiProperties[openApiObjectBaseName] = openApiProperty;
     addRequired(isOpenApiPropertyRequired(property, propertyModifier), openApiRoot, openApiObjectBaseName);

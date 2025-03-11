@@ -680,6 +680,7 @@ export function createSchemasPathsTagsFrom(entity: TopLevelEntity): SchemasPaths
     openApiReferenceComponentPropertyName,
     openApiRequestBodyComponent,
     openApiRequestBodyComponentPropertyName,
+    openApiRequestBodyCollectionComponents,
   } = entity.data.edfiApiSchema as EntityApiSchemaData;
 
   // Add to Schemas
@@ -688,6 +689,10 @@ export function createSchemasPathsTagsFrom(entity: TopLevelEntity): SchemasPaths
     schemas[openApiReferenceComponentPropertyName] = openApiReferenceComponent;
   }
   schemas[openApiRequestBodyComponentPropertyName] = openApiRequestBodyComponent;
+
+  openApiRequestBodyCollectionComponents.forEach(({ propertyName, schema }) => {
+    schemas[propertyName] = schema;
+  });
 
   // Add to global tags
   tags.push({

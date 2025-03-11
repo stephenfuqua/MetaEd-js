@@ -34,6 +34,7 @@ import { enhance as allJsonPathsMappingEnhancer } from '../../src/enhancer/AllJs
 import { enhance as mergeDirectiveEqualityConstraintEnhancer } from '../../src/enhancer/MergeDirectiveEqualityConstraintEnhancer';
 import { enhance as openApiRequestBodyComponentEnhancer } from '../../src/enhancer/OpenApiRequestBodyComponentEnhancer';
 import { enhance as openApiReferenceComponentEnhancer } from '../../src/enhancer/OpenApiReferenceComponentEnhancer';
+import { enhance as openApiRequestBodyCollectionComponentEnhancer } from '../../src/enhancer/OpenApiRequestBodyCollectionComponentEnhancer';
 import { enhance as identityFullnameEnhancer } from '../../src/enhancer/IdentityFullnameEnhancer';
 import { enhance as subclassIdentityFullnameEnhancer } from '../../src/enhancer/SubclassIdentityFullnameEnhancer';
 import { enhance as documentPathsMappingEnhancer } from '../../src/enhancer/DocumentPathsMappingEnhancer';
@@ -63,6 +64,7 @@ function runApiSchemaEnhancers(metaEd: MetaEdEnvironment) {
   queryFieldMappingEnhancer(metaEd);
   openApiRequestBodyComponentEnhancer(metaEd);
   openApiReferenceComponentEnhancer(metaEd);
+  openApiRequestBodyCollectionComponentEnhancer(metaEd);
 }
 
 describe('when building simple domain entity with all the simple non-collections', () => {
@@ -1016,16 +1018,7 @@ describe('when building simple domain entity with all the simple collections', (
           "properties": Object {
             "optionalBooleanProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "optionalBooleanProperty": Object {
-                    "description": "doc1",
-                    "type": "boolean",
-                  },
-                },
-                "required": Array [
-                  "optionalBooleanProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_OptionalBooleanProperty",
               },
               "minItems": 0,
               "type": "array",
@@ -1033,16 +1026,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "optionalDecimalProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "optionalDecimalProperty": Object {
-                    "description": "doc3",
-                    "type": "number",
-                  },
-                },
-                "required": Array [
-                  "optionalDecimalProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_OptionalDecimalProperty",
               },
               "minItems": 0,
               "type": "array",
@@ -1050,16 +1034,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "optionalPercentProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "optionalPercentProperty": Object {
-                    "description": "doc5",
-                    "type": "number",
-                  },
-                },
-                "required": Array [
-                  "optionalPercentProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_OptionalPercentProperty",
               },
               "minItems": 0,
               "type": "array",
@@ -1067,16 +1042,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "optionalShortProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "optionalShortProperty": Object {
-                    "description": "doc9",
-                    "type": "integer",
-                  },
-                },
-                "required": Array [
-                  "optionalShortProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_OptionalShortProperty",
               },
               "minItems": 0,
               "type": "array",
@@ -1084,16 +1050,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "optionalYears": Object {
               "items": Object {
-                "properties": Object {
-                  "optionalYear": Object {
-                    "description": "doc14",
-                    "type": "integer",
-                  },
-                },
-                "required": Array [
-                  "optionalYear",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_OptionalYear",
               },
               "minItems": 0,
               "type": "array",
@@ -1101,16 +1058,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredCurrencyProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredCurrencyProperty": Object {
-                    "description": "doc2",
-                    "type": "number",
-                  },
-                },
-                "required": Array [
-                  "requiredCurrencyProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredCurrencyProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1118,17 +1066,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredDateProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredDateProperty": Object {
-                    "description": "doc6",
-                    "format": "date",
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "requiredDateProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredDateProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1136,17 +1074,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredDatetimeProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredDatetimeProperty": Object {
-                    "description": "doc7",
-                    "format": "date-time",
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "requiredDatetimeProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredDatetimeProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1154,16 +1082,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredDurationProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredDurationProperty": Object {
-                    "description": "doc4",
-                    "type": "number",
-                  },
-                },
-                "required": Array [
-                  "requiredDurationProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredDurationProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1171,18 +1090,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredIntegerProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredIntegerProperty": Object {
-                    "description": "doc8",
-                    "maximum": 10,
-                    "minimum": 5,
-                    "type": "integer",
-                  },
-                },
-                "required": Array [
-                  "requiredIntegerProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredIntegerProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1190,18 +1098,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredStringProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredStringProperty": Object {
-                    "description": "doc11",
-                    "maxLength": 31,
-                    "minLength": 21,
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "requiredStringProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredStringProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1209,17 +1106,7 @@ describe('when building simple domain entity with all the simple collections', (
             },
             "requiredTimeProperties": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredTimeProperty": Object {
-                    "description": "doc12",
-                    "format": "time",
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "requiredTimeProperty",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_RequiredTimeProperty",
               },
               "minItems": 1,
               "type": "array",
@@ -1256,6 +1143,66 @@ describe('when building simple domain entity with all the simple collections', (
           ],
           "type": "object",
         },
+        "Extension_DomainEntityName_OptionalBooleanProperty": Object {
+          "properties": Object {
+            "optionalBooleanProperty": Object {
+              "description": "doc1",
+              "type": "boolean",
+            },
+          },
+          "required": Array [
+            "optionalBooleanProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_OptionalDecimalProperty": Object {
+          "properties": Object {
+            "optionalDecimalProperty": Object {
+              "description": "doc3",
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "optionalDecimalProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_OptionalPercentProperty": Object {
+          "properties": Object {
+            "optionalPercentProperty": Object {
+              "description": "doc5",
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "optionalPercentProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_OptionalShortProperty": Object {
+          "properties": Object {
+            "optionalShortProperty": Object {
+              "description": "doc9",
+              "type": "integer",
+            },
+          },
+          "required": Array [
+            "optionalShortProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_OptionalYear": Object {
+          "properties": Object {
+            "optionalYear": Object {
+              "description": "doc14",
+              "type": "integer",
+            },
+          },
+          "required": Array [
+            "optionalYear",
+          ],
+          "type": "object",
+        },
         "Extension_DomainEntityName_Reference": Object {
           "properties": Object {
             "stringIdentity": Object {
@@ -1267,6 +1214,111 @@ describe('when building simple domain entity with all the simple collections', (
           },
           "required": Array [
             "stringIdentity",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredCurrencyProperty": Object {
+          "properties": Object {
+            "requiredCurrencyProperty": Object {
+              "description": "doc2",
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "requiredCurrencyProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredDateProperty": Object {
+          "properties": Object {
+            "requiredDateProperty": Object {
+              "description": "doc6",
+              "format": "date",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "requiredDateProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredDatetimeProperty": Object {
+          "properties": Object {
+            "requiredDatetimeProperty": Object {
+              "description": "doc7",
+              "format": "date-time",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "requiredDatetimeProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredDurationProperty": Object {
+          "properties": Object {
+            "requiredDurationProperty": Object {
+              "description": "doc4",
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "requiredDurationProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredIntegerProperty": Object {
+          "properties": Object {
+            "requiredIntegerProperty": Object {
+              "description": "doc8",
+              "maximum": 10,
+              "minimum": 5,
+              "type": "integer",
+            },
+          },
+          "required": Array [
+            "requiredIntegerProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredStringProperty": Object {
+          "properties": Object {
+            "requiredStringProperty": Object {
+              "description": "doc11",
+              "maxLength": 31,
+              "minLength": 21,
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "requiredStringProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_RequiredTimeProperty": Object {
+          "properties": Object {
+            "requiredTimeProperty": Object {
+              "description": "doc12",
+              "format": "time",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "requiredTimeProperty",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_SchoolYear": Object {
+          "properties": Object {
+            "schoolYear": Object {
+              "description": "A school year between 1900 and 2100",
+              "maximum": 2100,
+              "minimum": 1900,
+              "type": "integer",
+            },
+          },
+          "required": Array [
+            "schoolYear",
           ],
           "type": "object",
         },
@@ -4757,17 +4809,7 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "derivativeSourceURIs": Object {
               "items": Object {
-                "properties": Object {
-                  "derivativeSourceURI": Object {
-                    "description": "doc",
-                    "maxLength": 30,
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "derivativeSourceURI",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceURI",
               },
               "minItems": 0,
               "type": "array",
@@ -4785,17 +4827,7 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "requiredURIs": Object {
               "items": Object {
-                "properties": Object {
-                  "requiredURI": Object {
-                    "description": "doc",
-                    "maxLength": 30,
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "requiredURI",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_EducationContent_RequiredURI",
               },
               "minItems": 1,
               "type": "array",
@@ -4813,6 +4845,19 @@ describe('when building domain entity with nested choice and inline commons', ()
           ],
           "type": "object",
         },
+        "Extension_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceURI": Object {
+          "properties": Object {
+            "derivativeSourceURI": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "derivativeSourceURI",
+          ],
+          "type": "object",
+        },
         "Extension_EducationContent_Reference": Object {
           "properties": Object {
             "contentIdentifier": Object {
@@ -4823,6 +4868,19 @@ describe('when building domain entity with nested choice and inline commons', ()
           },
           "required": Array [
             "contentIdentifier",
+          ],
+          "type": "object",
+        },
+        "Extension_EducationContent_RequiredURI": Object {
+          "properties": Object {
+            "requiredURI": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "requiredURI",
           ],
           "type": "object",
         },
@@ -5624,17 +5682,7 @@ describe('when building domain entity with scalar collection named with prefix o
             },
             "suffixNames": Object {
               "items": Object {
-                "properties": Object {
-                  "suffixName": Object {
-                    "description": "doc",
-                    "maxLength": 30,
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "suffixName",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_DomainEntityNameSuffixName",
               },
               "minItems": 1,
               "type": "array",
@@ -5644,6 +5692,19 @@ describe('when building domain entity with scalar collection named with prefix o
           "required": Array [
             "contentIdentifier",
             "suffixNames",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_DomainEntityNameSuffixName": Object {
+          "properties": Object {
+            "suffixName": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "suffixName",
           ],
           "type": "object",
         },
