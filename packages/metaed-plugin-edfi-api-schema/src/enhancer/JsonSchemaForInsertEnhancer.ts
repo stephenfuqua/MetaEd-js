@@ -447,8 +447,9 @@ function buildJsonSchema(entityForSchema: TopLevelEntity, schoolYearSchemas: Sch
   if (entityForSchema.type === 'domainEntityExtension' || entityForSchema.type === 'associationExtension') {
     // New schemaProperties to go under _ext
     schemaProperties = {};
-    // eslint-disable-next-line no-underscore-dangle
-    schemaRoot.properties._ext = {
+    const extensionSchemaName = entityForSchema.namespace.projectName.toLocaleLowerCase() as string;
+
+    schemaRoot.properties[`_ext.${extensionSchemaName}`] = {
       description: 'optional extension collection',
       type: 'object',
       properties: schemaProperties,
