@@ -42,26 +42,32 @@ param (
 )
 
 $solutionRoot = "$PSScriptRoot"
-$defaultSolution = "$solutionRoot/EdFi.DataStandard52.ApiSchema.sln"
 $applicationRoot = "$solutionRoot/"
-$projectName = "EdFi.DataStandard52.ApiSchema"
+if($ApiSchemaPackageType -eq 'Core'){
+    $projectName = "EdFi.DataStandard52.ApiSchema"
+}
+else {
+    $projectName = "EdFi.$ApiSchemaPackageType.ApiSchema"
+}
+
+$projectPath = "$applicationRoot/$projectName.csproj"
 
 function Restore {
-    dotnet restore $defaultSolution
+    dotnet restore $projectPath
 }
 
 function DotNetClean {
-    dotnet clean $defaultSolution -c $Configuration --nologo -v minimal
+    dotnet clean $projectPath  -c $Configuration --nologo -v minimal
 }
 
 function Compile {
-    dotnet build $defaultSolution -c $Configuration -p:Version=$Version -p:ApiSchemaPackageType=$ApiSchemaPackageType --nologo --no-restore
+    dotnet build $projectPath -c $Configuration -p:Version=$Version --nologo --no-restore
 }
 
 function PublishApi {
     $project = $applicationRoot
     $outputPath = "$project/publish"
-    dotnet publish $project -c $Configuration -o $outputPath --nologo
+    dotnet publish $projectPath -c $Configuration -o $outputPath --nologo
 }
 
 function PushPackage {
@@ -113,22 +119,14 @@ function Invoke-Build {
 }
 
 function BuildPackage {
-    $projectPath = "$applicationRoot/$projectName.csproj"
-    $arguments = @("-c", "release", "-p:PackageVersion=$Version", "--output", $PSScriptRoot)
-
-    if ($ApiSchemaPackageType) {
-        $PackageName = "$projectName.$ApiSchemaPackageType"
-        $arguments += "-p:ApiSchemaPackageType=$ApiSchemaPackageType"
-    } else {
-        $PackageName = "$projectName"
-    }
-
-    $arguments += "-p:PackageId=$PackageName"
+    $arguments = @("-c", "release", "-p:PackageVersion=$Version", "-p:PackageId=$projectName", "--output", $PSScriptRoot)
     dotnet pack $projectPath @arguments
 }
 
 function RunMetaEd {
     # Run MetadEd Project
+    npm config set registry https://registry.npmjs.org/
+    npm cache clean --force
     npm install
     npm run build
     Set-Location -Path ./packages/metaed-console
@@ -148,7 +146,7 @@ function RunMetaEd {
 
 function CopyMetaEdFiles {
     # Copy the MetaEd Files into the ApiSchema Folder
-
+    
     $destinationPath = "$solutionRoot/xsd/"
     if (!(Test-Path -Path $destinationPath)) {
         New-Item -ItemType Directory -Path $destinationPath -Force | Out-Null
@@ -160,16 +158,31 @@ function CopyMetaEdFiles {
         Copy-Item -Path ./MetaEdOutput/EdFi/Interchange/* -Destination $solutionRoot/xsd/
     }
     if($ApiSchemaPackageType -eq 'TPDM'){
-        Copy-Item -Path ./MetaEdOutput/TPDM/ApiSchema/ApiSchema-EXTENSION.json -Destination $solutionRoot
-        Copy-Item -Path ./MetaEdOutput/TPDM/XSD/* -Destination $solutionRoot/xsd/
-        Copy-Item -Path ./MetaEdOutput/TPDM/Interchange/* -Destination $solutionRoot/xsd/
+        Copy-Item -Path ./MetaEdOutput/TPDM/ApiSchema/ApiSchema-EXTENSION.json -Destination "$solutionRoot/ApiSchema-$ApiSchemaPackageType-EXTENSION.json"
+        Copy-Item -Path ./MetaEdOutput/TPDM/XSD/EXTENSION-Ed-Fi-Extended-Core.xsd -Destination "$solutionRoot/xsd/$ApiSchemaPackageType-EXTENSION-Ed-Fi-Extended-Core.xsd"
+        Get-ChildItem -Path ./MetaEdOutput/TPDM/Interchange/ -File | ForEach-Object {
+            $newFileName = "$ApiSchemaPackageType-$($_.Name)"
+            $destinationFile = Join-Path -Path "$solutionRoot/xsd" -ChildPath $newFileName
+            Copy-Item -Path $_.FullName -Destination $destinationFile
+        }
+    }
+    if($ApiSchemaPackageType -eq 'Homograph'){
+        Copy-Item -Path ./MetaEdOutput/Homograph/ApiSchema/ApiSchema-EXTENSION.json -Destination "$solutionRoot/ApiSchema-$ApiSchemaPackageType-EXTENSION.json"
+    }
+    if($ApiSchemaPackageType -eq 'Sample'){
+        Copy-Item -Path ./MetaEdOutput/Sample/ApiSchema/ApiSchema-EXTENSION.json -Destination "$solutionRoot/ApiSchema-$ApiSchemaPackageType-EXTENSION.json"
+        Copy-Item -Path ./MetaEdOutput/Sample/XSD/EXTENSION-Ed-Fi-Extended-Core.xsd -Destination "$solutionRoot/xsd/$ApiSchemaPackageType-EXTENSION-Ed-Fi-Extended-Core.xsd"
+        Get-ChildItem -Path ./MetaEdOutput/Sample/Interchange/ -File | ForEach-Object {
+            $newFileName = "$ApiSchemaPackageType-$($_.Name)"
+            $destinationFile = Join-Path -Path "$solutionRoot/xsd" -ChildPath $newFileName
+            Copy-Item -Path $_.FullName -Destination $destinationFile
+        }
     }
 
     Get-ChildItem -Path "$solutionRoot" -Recurse -Include "*.json", "xsd\*.xsd" | Select-Object FullName
     Get-ChildItem -Path "$solutionRoot" -Recurse -Include "*.xsd" | Select-Object FullName
     Get-ChildItem -Path "$solutionRoot/xsd/" -Recurse -Include "*.xsd" | Select-Object FullName
 }
-
 switch ($Command) {
     DotNetClean { DotNetClean }
     Build { Invoke-Build }
