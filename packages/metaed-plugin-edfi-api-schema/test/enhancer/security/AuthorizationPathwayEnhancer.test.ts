@@ -91,12 +91,59 @@ describe('when building StudentSchoolAssociation', () => {
     runEnhancers(metaEd);
   });
 
-  it('should have the StudentSchoolAssociationAuthorization pathway', () => {
+  it('should have the StudentSchoolAssociationAuthorization and ContactStudentSchoolAuthorization pathway', () => {
     const entity = metaEd.namespace.get(namespaceName)?.entity.association.get(resourceName);
     const { authorizationPathways } = entity?.data.edfiApiSchema as EntityApiSchemaData;
     expect(authorizationPathways).toMatchInlineSnapshot(`
       Array [
         "StudentSchoolAssociationAuthorization",
+        "ContactStudentSchoolAuthorization",
+      ]
+    `);
+  });
+});
+
+describe('when building StudentContactAssociation', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const namespaceName = 'EdFi';
+  const resourceName = 'StudentContactAssociation';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+
+      .withStartDomainEntity('Contact')
+      .withDocumentation('doc')
+      .withIntegerIdentity('ContactUniqueId', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('Student')
+      .withDocumentation('doc')
+      .withStringIdentity('StudentUniqueId', 'doc', '30')
+      .withEndDomainEntity()
+
+      .withStartAssociation(resourceName)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('Student', 'doc')
+      .withAssociationDomainEntityProperty('Contact', 'doc')
+      .withEndAssociation()
+
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
+
+    domainEntityReferenceEnhancer(metaEd);
+    runEnhancers(metaEd);
+  });
+
+  it('should have the ContactStudentSchoolAuthorization pathway', () => {
+    const entity = metaEd.namespace.get(namespaceName)?.entity.association.get(resourceName);
+    const { authorizationPathways } = entity?.data.edfiApiSchema as EntityApiSchemaData;
+    expect(authorizationPathways).toMatchInlineSnapshot(`
+      Array [
+        "ContactStudentSchoolAuthorization",
       ]
     `);
   });

@@ -15220,10 +15220,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -15317,7 +15313,9 @@
           ]
         },
         "resourceName": "AccreditationStatusDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -15331,10 +15329,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -15428,7 +15422,9 @@
           ]
         },
         "resourceName": "AidTypeDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -15442,10 +15438,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -15798,8 +15790,14 @@
           ]
         },
         "resourceName": "CandidateEducatorPreparationProgramAssociation",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.educatorPreparationProgramReference.educationOrganizationId",
+              "metaEdName": "EducatorPreparationProgram"
+            }
           ],
           "Namespace": [
           ],
@@ -15811,10 +15809,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
           "$.addresses[*].doNotPublishIndicator",
           "$.economicDisadvantaged",
@@ -17056,7 +17050,9 @@
           ]
         },
         "resourceName": "Candidate",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17069,10 +17065,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -17166,7 +17158,9 @@
           ]
         },
         "resourceName": "CertificationRouteDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17180,10 +17174,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -17277,7 +17267,9 @@
           ]
         },
         "resourceName": "CoteachingStyleObservedDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17291,10 +17283,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -17388,7 +17376,9 @@
           ]
         },
         "resourceName": "CredentialStatusDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17401,10 +17391,6 @@
       "credentials": {
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
           "$._ext.tpdm.boardCertificationIndicator"
         ],
@@ -17629,7 +17615,9 @@
           "$._ext.tpdm.studentAcademicRecords[*].studentAcademicRecordReference.schoolYear"
         ],
         "resourceName": "Credential",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17642,10 +17630,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -17817,7 +17801,9 @@
           ]
         },
         "resourceName": "EducatorPreparationProgram",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
             {
               "jsonPath": "$.educationOrganizationReference.educationOrganizationId",
@@ -17834,10 +17820,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -17931,7 +17913,9 @@
           ]
         },
         "resourceName": "EducatorRoleDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -17945,10 +17929,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -18042,7 +18022,9 @@
           ]
         },
         "resourceName": "EnglishLanguageExamDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -18056,10 +18038,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -18153,7 +18131,9 @@
           ]
         },
         "resourceName": "EPPProgramPathwayDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -18167,10 +18147,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -18264,7 +18240,9 @@
           ]
         },
         "resourceName": "EvaluationElementRatingLevelDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -18278,10 +18256,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -18884,8 +18858,18 @@
           ]
         },
         "resourceName": "EvaluationElementRating",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationElementReference.educationOrganizationId",
+              "metaEdName": "EvaluationElement"
+            },
+            {
+              "jsonPath": "$.evaluationObjectiveRatingReference.educationOrganizationId",
+              "metaEdName": "EvaluationObjectiveRating"
+            }
           ],
           "Namespace": [
           ],
@@ -18897,10 +18881,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -19238,8 +19218,14 @@
           ]
         },
         "resourceName": "EvaluationElement",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationObjectiveReference.educationOrganizationId",
+              "metaEdName": "EvaluationObjective"
+            }
           ],
           "Namespace": [
           ],
@@ -19251,10 +19237,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -19760,8 +19742,18 @@
           ]
         },
         "resourceName": "EvaluationObjectiveRating",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationObjectiveReference.educationOrganizationId",
+              "metaEdName": "EvaluationObjective"
+            },
+            {
+              "jsonPath": "$.evaluationRatingReference.educationOrganizationId",
+              "metaEdName": "EvaluationRating"
+            }
           ],
           "Namespace": [
           ],
@@ -19773,10 +19765,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -20111,8 +20099,14 @@
           ]
         },
         "resourceName": "EvaluationObjective",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationReference.educationOrganizationId",
+              "metaEdName": "Evaluation"
+            }
           ],
           "Namespace": [
           ],
@@ -20124,10 +20118,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -20221,7 +20211,9 @@
           ]
         },
         "resourceName": "EvaluationPeriodDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -20235,10 +20227,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -20332,7 +20320,9 @@
           ]
         },
         "resourceName": "EvaluationRatingLevelDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -20346,10 +20336,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -20443,7 +20429,9 @@
           ]
         },
         "resourceName": "EvaluationRatingStatusDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -20457,10 +20445,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -21151,8 +21135,18 @@
           ]
         },
         "resourceName": "EvaluationRating",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationReference.educationOrganizationId",
+              "metaEdName": "Evaluation"
+            },
+            {
+              "jsonPath": "$.performanceEvaluationRatingReference.educationOrganizationId",
+              "metaEdName": "PerformanceEvaluationRating"
+            }
           ],
           "Namespace": [
           ],
@@ -21164,10 +21158,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -21261,7 +21251,9 @@
           ]
         },
         "resourceName": "EvaluationTypeDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -21275,10 +21267,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -21593,8 +21581,14 @@
           ]
         },
         "resourceName": "Evaluation",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.performanceEvaluationReference.educationOrganizationId",
+              "metaEdName": "PerformanceEvaluation"
+            }
           ],
           "Namespace": [
           ],
@@ -21606,11 +21600,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-            "$.studentReference.studentUniqueId"
-          ]
-        },
         "booleanJsonPaths": [
           "$.pellGrantRecipient"
         ],
@@ -21786,7 +21775,9 @@
           ]
         },
         "resourceName": "FinancialAid",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -21800,10 +21791,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -21897,7 +21884,9 @@
           ]
         },
         "resourceName": "GenderDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -21911,10 +21900,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -22008,7 +21993,9 @@
           ]
         },
         "resourceName": "ObjectiveRatingLevelDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -22022,10 +22009,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -22119,7 +22102,9 @@
           ]
         },
         "resourceName": "PerformanceEvaluationRatingLevelDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -22133,10 +22118,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
           "$.announced"
         ],
@@ -22650,8 +22631,14 @@
           ]
         },
         "resourceName": "PerformanceEvaluationRating",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.performanceEvaluationReference.educationOrganizationId",
+              "metaEdName": "PerformanceEvaluation"
+            }
           ],
           "Namespace": [
           ],
@@ -22663,10 +22650,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -22760,7 +22743,9 @@
           ]
         },
         "resourceName": "PerformanceEvaluationTypeDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -22774,10 +22759,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23078,7 +23059,9 @@
           ]
         },
         "resourceName": "PerformanceEvaluation",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
             {
               "jsonPath": "$.educationOrganizationReference.educationOrganizationId",
@@ -23095,10 +23078,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23390,8 +23369,14 @@
           ]
         },
         "resourceName": "RubricDimension",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
+            {
+              "jsonPath": "$.evaluationElementReference.educationOrganizationId",
+              "metaEdName": "EvaluationElement"
+            }
           ],
           "Namespace": [
           ],
@@ -23403,10 +23388,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23500,7 +23481,9 @@
           ]
         },
         "resourceName": "RubricRatingLevelDescriptor",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -23513,10 +23496,6 @@
       "schools": {
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23580,7 +23559,9 @@
           "$._ext.tpdm.postSecondaryInstitutionReference.postSecondaryInstitutionId"
         ],
         "resourceName": "School",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -23593,10 +23574,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23757,7 +23734,9 @@
           ]
         },
         "resourceName": "SurveyResponsePersonTargetAssociation",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -23770,10 +23749,6 @@
       "surveyResponses": {
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -23848,7 +23823,9 @@
         "numericJsonPaths": [
         ],
         "resourceName": "SurveyResponse",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [
@@ -23861,10 +23838,6 @@
         "allowIdentityUpdates": false,
         "authorizationPathways": [
         ],
-        "authorizationSecurable": {
-          "Student": [
-          ]
-        },
         "booleanJsonPaths": [
         ],
         "dateTimeJsonPaths": [
@@ -24054,7 +24027,9 @@
           ]
         },
         "resourceName": "SurveySectionResponsePersonTargetAssociation",
-        "securityElements": {
+        "securableElements": {
+          "Contact": [
+          ],
           "EducationOrganization": [
           ],
           "Namespace": [

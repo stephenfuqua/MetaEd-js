@@ -87,13 +87,11 @@ function buildResourceSchema(entity: TopLevelEntity): NonExtensionResourceSchema
     booleanJsonPaths: entityApiSchemaData.booleanJsonPaths,
     numericJsonPaths: entityApiSchemaData.numericJsonPaths,
     dateTimeJsonPaths: entityApiSchemaData.dateTimeJsonPaths,
-    securityElements: {
-      Namespace: entityApiSchemaData.namespaceSecurityElements,
-      EducationOrganization: entityApiSchemaData.educationOrganizationSecurityElements,
-      Student: entityApiSchemaData.studentSecurityElements,
-    },
-    authorizationSecurable: {
-      Student: entityApiSchemaData.studentAuthorizationSecurablePaths,
+    securableElements: {
+      Namespace: entityApiSchemaData.namespaceSecurableElements,
+      EducationOrganization: entityApiSchemaData.educationOrganizationSecurableElements,
+      Student: entityApiSchemaData.studentSecurableElements,
+      Contact: entityApiSchemaData.contactSecurableElements,
     },
     authorizationPathways: entityApiSchemaData.authorizationPathways,
     isResourceExtension: false,
@@ -113,13 +111,11 @@ function buildResourceExtensionSchema(entity: TopLevelEntity): ResourceExtension
     booleanJsonPaths: entityApiSchemaData.booleanJsonPaths,
     numericJsonPaths: entityApiSchemaData.numericJsonPaths,
     dateTimeJsonPaths: entityApiSchemaData.dateTimeJsonPaths,
-    securityElements: {
+    securableElements: {
       Namespace: [],
       EducationOrganization: [],
       Student: [],
-    },
-    authorizationSecurable: {
-      Student: [],
+      Contact: [],
     },
     authorizationPathways: [],
     isResourceExtension: true,
