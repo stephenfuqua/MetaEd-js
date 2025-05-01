@@ -693,7 +693,13 @@ export function createSchemasPathsTagsFrom(entity: TopLevelEntity): SchemasPaths
     // Not all entities have a reference component (e.g. descriptors, school year enumeration)
     schemas[openApiReferenceComponentPropertyName] = openApiReferenceComponent;
   }
-  schemas[openApiRequestBodyComponentPropertyName] = openApiRequestBodyComponent;
+
+  // Add 'Descriptor' suffix when entity is a Descriptor
+  const key =
+    entity.type === 'descriptor'
+      ? `${openApiRequestBodyComponentPropertyName}Descriptor`
+      : openApiRequestBodyComponentPropertyName;
+  schemas[key] = openApiRequestBodyComponent;
 
   openApiRequestBodyCollectionComponents.forEach(({ propertyName, schema }) => {
     schemas[propertyName] = schema;
