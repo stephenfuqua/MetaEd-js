@@ -418,15 +418,7 @@ describe('when building domain entity with nested choice and inline commons', ()
           },
           "derivativeSourceEducationContents": Object {
             "items": Object {
-              "properties": Object {
-                "derivativeSourceEducationContentReference": Object {
-                  "$ref": "#/components/schemas/EdFi_EducationContent_Reference",
-                },
-              },
-              "required": Array [
-                "derivativeSourceEducationContentReference",
-              ],
-              "type": "object",
+              "$ref": "#/components/schemas/EdFi_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceEducationContent",
             },
             "minItems": 0,
             "type": "array",
@@ -473,6 +465,20 @@ describe('when building domain entity with nested choice and inline commons', ()
     `);
     expect(entity.data.edfiApiSchema.openApiRequestBodyCollectionComponents).toMatchInlineSnapshot(`
       Array [
+        Object {
+          "propertyName": "EdFi_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceEducationContent",
+          "schema": Object {
+            "properties": Object {
+              "derivativeSourceEducationContentReference": Object {
+                "$ref": "#/components/schemas/EdFi_EducationContent_Reference",
+              },
+            },
+            "required": Array [
+              "derivativeSourceEducationContentReference",
+            ],
+            "type": "object",
+          },
+        },
         Object {
           "propertyName": "EdFi_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceURI",
           "schema": Object {
@@ -1639,6 +1645,94 @@ describe('when domain entity extension references domain entity in different nam
   it('should be a correct schema', () => {
     const entity = extensionNamespace.entity.domainEntityExtension.get(entityName);
     expect(entity.data.edfiApiSchema.openApiRequestBodyCollectionComponents).toMatchInlineSnapshot(`Array []`);
+  });
+});
+
+describe('when domain entity extension references domain entity collection in different namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const entityName = 'EntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(referencedEntityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('ReferencedIdentity', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('EntityIdentity', 'doc')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
+      .withDomainEntityProperty(`EdFi.${referencedEntityName}`, 'doc', true, true)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    extensionNamespace = metaEd.namespace.get('Extension') ?? newNamespace();
+    extensionNamespace?.dependencies.push(metaEd.namespace.get('EdFi') ?? newNamespace());
+
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntityExtensionBaseClassEnhancer(metaEd);
+    entityPropertyApiSchemaDataSetupEnhancer(metaEd);
+    entityApiSchemaDataSetupEnhancer(metaEd);
+    referenceComponentEnhancer(metaEd);
+    apiPropertyMappingEnhancer(metaEd);
+    propertyCollectingEnhancer(metaEd);
+    apiEntityMappingEnhancer(metaEd);
+    openApiRequestBodyComponentEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should be a correct schema', () => {
+    const entity = extensionNamespace.entity.domainEntityExtension.get(entityName);
+    expect(entity.data.edfiApiSchema.openApiRequestBodyComponent).toMatchInlineSnapshot(`
+      Object {
+        "description": "",
+        "properties": Object {
+          "referencedEntityNames": Object {
+            "items": Object {
+              "$ref": "#/components/schemas/Extension_EntityName_ReferencedEntityName",
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": false,
+          },
+        },
+        "required": Array [
+          "referencedEntityNames",
+        ],
+        "type": "object",
+      }
+    `);
+    expect(entity.data.edfiApiSchema.openApiRequestBodyCollectionComponents).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "propertyName": "Extension_EntityName_ReferencedEntityName",
+          "schema": Object {
+            "properties": Object {
+              "referencedEntityNameReference": Object {
+                "$ref": "#/components/schemas/EdFi_ReferencedEntityName_Reference",
+              },
+            },
+            "required": Array [
+              "referencedEntityNameReference",
+            ],
+            "type": "object",
+          },
+        },
+      ]
+    `);
   });
 });
 

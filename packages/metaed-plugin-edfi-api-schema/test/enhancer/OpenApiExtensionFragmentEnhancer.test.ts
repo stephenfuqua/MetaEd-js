@@ -2705,15 +2705,7 @@ describe('when building a domain entity referencing another referencing another 
           "properties": Object {
             "classPeriods": Object {
               "items": Object {
-                "properties": Object {
-                  "classPeriodReference": Object {
-                    "$ref": "#/components/schemas/Extension_ClassPeriod_Reference",
-                  },
-                },
-                "required": Array [
-                  "classPeriodReference",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_DomainEntityName_ClassPeriod",
               },
               "minItems": 1,
               "type": "array",
@@ -2732,6 +2724,17 @@ describe('when building a domain entity referencing another referencing another 
             "sectionIdentifier",
             "courseOfferingReference",
             "classPeriods",
+          ],
+          "type": "object",
+        },
+        "Extension_DomainEntityName_ClassPeriod": Object {
+          "properties": Object {
+            "classPeriodReference": Object {
+              "$ref": "#/components/schemas/Extension_ClassPeriod_Reference",
+            },
+          },
+          "required": Array [
+            "classPeriodReference",
           ],
           "type": "object",
         },
@@ -2794,7 +2797,7 @@ describe('when building a domain entity referencing another referencing another 
       Array [
         Object {
           "description": "doc",
-          "name": "domainEntityNames",
+          "name": "classPeriods",
         },
         Object {
           "description": "doc",
@@ -2802,7 +2805,7 @@ describe('when building a domain entity referencing another referencing another 
         },
         Object {
           "description": "doc",
-          "name": "classPeriods",
+          "name": "domainEntityNames",
         },
         Object {
           "description": "doc",
@@ -4319,19 +4322,19 @@ describe('when building a domain entity referencing CourseOffering with an impli
       Array [
         Object {
           "description": "doc",
-          "name": "domainEntityNames",
-        },
-        Object {
-          "description": "doc",
           "name": "courseOfferings",
         },
         Object {
           "description": "doc",
-          "name": "sessions",
+          "name": "domainEntityNames",
         },
         Object {
           "description": "doc",
           "name": "schools",
+        },
+        Object {
+          "description": "doc",
+          "name": "sessions",
         },
       ]
     `);
@@ -4771,15 +4774,7 @@ describe('when building domain entity with nested choice and inline commons', ()
             },
             "derivativeSourceEducationContents": Object {
               "items": Object {
-                "properties": Object {
-                  "derivativeSourceEducationContentReference": Object {
-                    "$ref": "#/components/schemas/Extension_EducationContent_Reference",
-                  },
-                },
-                "required": Array [
-                  "derivativeSourceEducationContentReference",
-                ],
-                "type": "object",
+                "$ref": "#/components/schemas/Extension_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceEducationContent",
               },
               "minItems": 0,
               "type": "array",
@@ -4820,6 +4815,17 @@ describe('when building domain entity with nested choice and inline commons', ()
           "required": Array [
             "contentIdentifier",
             "requiredURIs",
+          ],
+          "type": "object",
+        },
+        "Extension_EducationContent_LearningResourceChoice_LearningResource_EducationContentSource_DerivativeSourceEducationContent": Object {
+          "properties": Object {
+            "derivativeSourceEducationContentReference": Object {
+              "$ref": "#/components/schemas/Extension_EducationContent_Reference",
+            },
+          },
+          "required": Array [
+            "derivativeSourceEducationContentReference",
           ],
           "type": "object",
         },
@@ -5851,5 +5857,173 @@ describe('when domain entity extension references domain entity in different nam
         }
       `);
     expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`Array []`);
+  });
+});
+
+describe('when domain entity extension references domain entity collection in different namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const entityName = 'EntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(referencedEntityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('ReferencedIdentity', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('EntityIdentity', 'doc')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'Extension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
+      .withDomainEntityProperty(`EdFi.${referencedEntityName}`, 'doc', true, true)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    extensionNamespace = metaEd.namespace.get('Extension') ?? newNamespace();
+    extensionNamespace?.dependencies.push(metaEd.namespace.get('EdFi') ?? newNamespace());
+
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntityExtensionBaseClassEnhancer(metaEd);
+    runApiSchemaEnhancers(metaEd);
+    openApiCoreSpecificationEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should be a correct ext for extension namespace that references core schema', () => {
+    const { openApiExtensionResourceFragments } = extensionNamespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newPaths).toMatchInlineSnapshot(`Object {}`);
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
+      Object {
+        "Extension_EntityName_ReferencedEntityName": Object {
+          "properties": Object {
+            "referencedEntityNameReference": Object {
+              "$ref": "#/components/schemas/EdFi_ReferencedEntityName_Reference",
+            },
+          },
+          "required": Array [
+            "referencedEntityNameReference",
+          ],
+          "type": "object",
+        },
+      }
+    `);
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`
+      Object {
+        "EdFi_EntityName": Object {
+          "description": "",
+          "properties": Object {
+            "referencedEntityNames": Object {
+              "items": Object {
+                "$ref": "#/components/schemas/Extension_EntityName_ReferencedEntityName",
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": false,
+            },
+          },
+          "required": Array [
+            "referencedEntityNames",
+          ],
+          "type": "object",
+        },
+      }
+    `);
+    expect(openApiExtensionResourceFragments.newTags).toMatchInlineSnapshot(`Array []`);
+  });
+});
+
+describe('when domain entity extension has a simple string collection', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set('edfiApiSchema', newPluginEnvironment());
+  const entityName = 'EntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(referencedEntityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('ReferencedIdentity', 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity('EntityIdentity', 'doc')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'Extension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
+      .withStringProperty('StringCollection', 'doc', true, true, '30')
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    extensionNamespace = metaEd.namespace.get('Extension') ?? newNamespace();
+    extensionNamespace?.dependencies.push(metaEd.namespace.get('EdFi') ?? newNamespace());
+
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntityExtensionBaseClassEnhancer(metaEd);
+    runApiSchemaEnhancers(metaEd);
+    openApiCoreSpecificationEnhancer(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should be a correct ext for extension with simple collection', () => {
+    const { openApiExtensionResourceFragments } = extensionNamespace.data.edfiApiSchema;
+    expect(openApiExtensionResourceFragments.newSchemas).toMatchInlineSnapshot(`
+      Object {
+        "Extension_EntityName_StringCollection": Object {
+          "properties": Object {
+            "stringCollection": Object {
+              "description": "doc",
+              "maxLength": 30,
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "stringCollection",
+          ],
+          "type": "object",
+        },
+      }
+    `);
+    expect(openApiExtensionResourceFragments.exts).toMatchInlineSnapshot(`
+      Object {
+        "EdFi_EntityName": Object {
+          "description": "",
+          "properties": Object {
+            "stringCollections": Object {
+              "items": Object {
+                "$ref": "#/components/schemas/Extension_EntityName_StringCollection",
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": false,
+            },
+          },
+          "required": Array [
+            "stringCollections",
+          ],
+          "type": "object",
+        },
+      }
+    `);
   });
 });

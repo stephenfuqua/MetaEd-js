@@ -20,7 +20,6 @@ import {
 } from '../model/OpenApiTypes';
 import { pluralize } from '../Utility';
 import { ProjectEndpointName } from '../model/api-schema/ProjectEndpointName';
-import { SchemasPathsTags } from '../model/SchemasPathsTags';
 
 /**
  * Creates the set of hardcoded component parameters
@@ -660,12 +659,49 @@ export function createDeleteSectionFor(entity: TopLevelEntity, endpointName: End
 }
 
 /**
- * Creates the schemas, paths and tags from a given TopLevelEntity
+ * Creates the schemas from a given TopLevelEntity
  */
-export function createSchemasPathsTagsFrom(entity: TopLevelEntity): SchemasPathsTags {
+export function createSchemasFrom(entity: TopLevelEntity): Schemas {
   const schemas: Schemas = {};
+
+  const {
+    openApiReferenceComponent,
+    openApiReferenceComponentPropertyName,
+    openApiRequestBodyComponent,
+    openApiRequestBodyComponentPropertyName,
+    openApiRequestBodyCollectionComponents,
+  } = entity.data.edfiApiSchema as EntityApiSchemaData;
+
+  // DomainEntityExtension and AssociationExtension do not have their own references or request bodies
+  if (entity.type !== 'domainEntityExtension' && entity.type !== 'associationExtension') {
+    // Add reference component
+    // Not all entities have a reference component (e.g. descriptors, school year enumeration)
+    if (openApiReferenceComponentPropertyName !== '') {
+      schemas[openApiReferenceComponentPropertyName] = openApiReferenceComponent;
+    }
+
+    // Add request body component
+    // 'Descriptor' suffix when entity is a Descriptor
+    const key =
+      entity.type === 'descriptor'
+        ? `${openApiRequestBodyComponentPropertyName}Descriptor`
+        : openApiRequestBodyComponentPropertyName;
+    schemas[key] = openApiRequestBodyComponent;
+  }
+
+  // Add collection components
+  openApiRequestBodyCollectionComponents.forEach(({ propertyName, schema }) => {
+    schemas[propertyName] = schema;
+  });
+
+  return schemas;
+}
+
+/**
+ * Creates the paths from a given TopLevelEntity
+ */
+export function createPathsFrom(entity: TopLevelEntity): PathsObject {
   const paths: PathsObject = {};
-  const tags: TagObject[] = [];
 
   const projectEndpointName: ProjectEndpointName = entity.namespace.projectName.toLowerCase() as ProjectEndpointName;
   const { endpointName } = entity.data.edfiApiSchema as EntityApiSchemaData;
@@ -682,47 +718,28 @@ export function createSchemasPathsTagsFrom(entity: TopLevelEntity): SchemasPaths
     delete: createDeleteSectionFor(entity, endpointName),
   };
 
-  const {
-    openApiReferenceComponent,
-    openApiReferenceComponentPropertyName,
-    openApiRequestBodyComponent,
-    openApiRequestBodyComponentPropertyName,
-    openApiRequestBodyCollectionComponents,
-  } = entity.data.edfiApiSchema as EntityApiSchemaData;
+  return paths;
+}
 
-  // Add to Schemas
-  if (openApiReferenceComponentPropertyName !== '') {
-    // Not all entities have a reference component (e.g. descriptors, school year enumeration)
-    schemas[openApiReferenceComponentPropertyName] = openApiReferenceComponent;
-  }
+/**
+ * Creates the tags from a given TopLevelEntity
+ */
+export function createTagsFrom(entity: TopLevelEntity): TagObject[] {
+  const tags: TagObject[] = [];
 
-  // Add 'Descriptor' suffix when entity is a Descriptor
-  const key =
-    entity.type === 'descriptor'
-      ? `${openApiRequestBodyComponentPropertyName}Descriptor`
-      : openApiRequestBodyComponentPropertyName;
-  schemas[key] = openApiRequestBodyComponent;
+  const { endpointName } = entity.data.edfiApiSchema as EntityApiSchemaData;
 
-  openApiRequestBodyCollectionComponents.forEach(({ propertyName, schema }) => {
-    schemas[propertyName] = schema;
-  });
-
-  // Add to global tags
   tags.push({
     name: endpointName,
     description: entity.documentation,
   });
 
-  return { schemas, paths, tags };
+  return tags;
 }
 
 /**
  * Sorts tag objects by name, returning a new array.
  */
 export function sortTagsByName(tags: TagObject[]): TagObject[] {
-  const sortedTags = [...tags];
-
-  sortedTags.sort((a, b) => a.name.localeCompare(b.name));
-
-  return sortedTags;
+  return [...tags].sort((a, b) => a.name.localeCompare(b.name));
 }

@@ -23,6 +23,7 @@ import {
   SchoolYearOpenApis,
   newSchoolYearOpenApis,
   openApiPropertyForNonReference,
+  openApiArrayItemForReferenceCollection,
 } from './OpenApiComponentEnhancerBase';
 import { openApiObjectForScalarCommonProperty } from './OpenApiRequestBodyComponentEnhancer';
 import { OpenApiRequestBodyCollectionSchema } from '../model/OpenApiRequestBodyCollectionSchema';
@@ -81,7 +82,12 @@ export function openApiCollectionReferenceSchemaFor(
   const propertyName: string = openApiCollectionReferenceNameFor(property, propertyModifier, propertiesChain);
 
   if (apiMapping.isReferenceCollection) {
-    return [];
+    return [
+      {
+        schema: openApiArrayItemForReferenceCollection(property, propertyModifier),
+        propertyName,
+      },
+    ];
   }
   if (apiMapping.isDescriptorCollection) {
     const schemaDetails: OpenApiRequestBodyCollectionSchema = {
