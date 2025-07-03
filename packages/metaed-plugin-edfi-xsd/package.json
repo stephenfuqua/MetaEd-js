@@ -16,17 +16,17 @@
     "@edfi/metaed-core": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-unified": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-unified-advanced": "4.5.2-dev.68",
-    "@xmldom/xmldom": "^0.8.10",
+    "@xmldom/xmldom": "^0.9.8",
     "deep-freeze": "^0.0.1",
-    "handlebars": "^4.7.7",
-    "js-beautify": "^1.14.7",
-    "ramda": "^0.29.0",
-    "semver": "^7.5.4",
+    "handlebars": "^4.7.8",
+    "js-beautify": "^1.15.4",
+    "ramda": "^0.31.3",
+    "semver": "^7.7.2",
     "sugar": "^2.0.6",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "xpath": "^0.0.32"
+    "xpath": "^0.0.34"
   },
   "scripts": {
     "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",

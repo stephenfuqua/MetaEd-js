@@ -18,9 +18,9 @@
     "@edfi/metaed-plugin-edfi-unified": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-unified-advanced": "4.5.2-dev.68",
     "deep-freeze": "^0.0.1",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.8",
     "hash.js": "^1.1.7",
-    "ramda": "^0.29.0",
+    "ramda": "^0.31.3",
     "sugar": "^2.0.6"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@edfi/ed-fi-model-5.2": "3.0.0",
     "cli-highlight": "^2.1.11",
     "mssql": "^11.0.1",
-    "tedious": "^18.2.1"
+    "tedious": "^18.6.1"
   },
   "scripts": {
     "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",

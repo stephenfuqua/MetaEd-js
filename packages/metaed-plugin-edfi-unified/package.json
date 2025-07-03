@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "@edfi/metaed-core": "4.5.2-dev.68",
-    "ramda": "^0.29.0"
+    "ramda": "^0.31.3"
   },
   "scripts": {
     "build": "npm run build:clean && npm run build:copy-non-ts && npm run build:dist",
