@@ -13,7 +13,7 @@ updates:
       interval: weekly
       day: thursday
       # The time is in UTC. This is 3:05 PM CDT.
-      time: "20:05"
+      time: "20:10"
     groups:
       minor-patches:
         applies-to: version-updates
