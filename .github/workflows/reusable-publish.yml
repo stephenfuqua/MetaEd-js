@@ -32,6 +32,10 @@ on:
       AZURE_ARTIFACTS_PERSONAL_ACCESS_TOKEN :
         required: true
 
+# Define explicit permissions for the workflow
+permissions:
+  contents: write # Needed for version bumping and pushing changes
+
 env:
   NPM_REGISTRY: //pkgs.dev.azure.com/ed-fi-alliance/Ed-Fi-Alliance-OSS/_packaging/EdFi/npm/registry/
 

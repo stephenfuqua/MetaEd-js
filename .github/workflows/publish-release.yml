@@ -26,6 +26,10 @@ on:
           - "false"
           - "true"
 
+# Define explicit permissions for the workflow
+permissions:
+  contents: read
+
 jobs:
   publish-major:
     name: Publish Release
@@ -34,6 +38,11 @@ jobs:
     with:
       bump: ${{ github.event.inputs.bump }}
       debug_enabled: ${{ github.event.inputs.debug_enabled }}
+
+    # Define explicit permissions for the job
+    permissions:
+      contents: write # Needed for version bumping and pushing changes
+
     secrets:
       EDFI_BUILD_AGENT_PAT: ${{ secrets.EDFI_BUILD_AGENT_PAT }}
       EDFIBUILDAGENT_PRIVATE_KEY: ${{ secrets.EDFIBUILDAGENT_PRIVATE_KEY }}

@@ -21,6 +21,10 @@ on:
     branches:
       - main
 
+# Define explicit permissions for the workflow
+permissions:
+  contents: read
+
 jobs:
   publish-dev:
     name: Publish Dev
@@ -33,6 +37,10 @@ jobs:
       bump: dev
       # '|| false' below handles pull_request event case, where github.event.inputs.debug_enabled is undefined
       debug_enabled: ${{ github.event.inputs.debug_enabled || 'false' }}
+
+    # Define explicit permissions for the job
+    permissions:
+      contents: write # Needed for version bumping and pushing changes
 
     secrets:
       EDFI_BUILD_AGENT_PAT: ${{ secrets.EDFI_BUILD_AGENT_PAT }}
