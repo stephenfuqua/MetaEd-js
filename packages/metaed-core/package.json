@@ -15,18 +15,18 @@
   "dependencies": {
     "@edfi/antlr4": "4.6.1",
     "@hapi/topo": "^6.0.2",
-    "ajv": "^8.12.0",
+    "ajv": "^8.17.1",
     "chalk": "^4.1.2",
     "cosmiconfig": "^8.3.5",
     "deep-freeze": "^0.0.1",
     "deepmerge": "^4.3.1",
-    "fs-extra": "^11.1.1",
-    "joi": "^17.10.1",
+    "fs-extra": "^11.3.0",
+    "joi": "^17.13.3",
     "klaw-sync": "^6.0.0",
-    "ramda": "^0.29.0",
-    "semver": "^7.3.8",
+    "ramda": "^0.31.3",
+    "semver": "^7.7.2",
     "sugar": "^2.0.6",
-    "winston": "^3.10.0"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/klaw-sync": "^6.0.1",

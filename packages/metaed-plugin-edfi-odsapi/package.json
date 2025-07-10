@@ -13,7 +13,7 @@
     "/package.json"
   ],
   "dependencies": {
-    "@dagrejs/graphlib": "^2.1.4",
+    "@dagrejs/graphlib": "^2.2.4",
     "@edfi/metaed-core": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-ods-postgresql": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-ods-relational": "4.5.2-dev.68",
@@ -22,9 +22,9 @@
     "@edfi/metaed-plugin-edfi-unified-advanced": "4.5.2-dev.68",
     "@edfi/metaed-plugin-edfi-xsd": "4.5.2-dev.68",
     "deep-freeze": "^0.0.1",
-    "handlebars": "^4.7.7",
-    "ramda": "^0.29.0",
-    "semver": "^7.5.4",
+    "handlebars": "^4.7.8",
+    "ramda": "^0.31.3",
+    "semver": "^7.7.2",
     "sugar": "^2.0.6"
   },
   "devDependencies": {
