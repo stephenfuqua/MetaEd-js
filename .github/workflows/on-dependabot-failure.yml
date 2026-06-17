@@ -1,0 +1,135 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+name: Fix Dependabot CI Failures
+on:
+  workflow_run:
+    workflows: ["Lint and Test"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to fix (for manual trigger)'
+        required: false
+        type: number
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix-dependabot-failures:
+    name: Auto-fix Dependabot PR
+    runs-on: ubuntu-latest
+    
+    # Only run if triggered manually or if:
+    # 1. The workflow failed
+    # 2. The PR was created by dependabot
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'failure' &&
+       github.event.workflow_run.pull_requests != null &&
+       github.event.workflow_run.pull_requests[0] != null &&
+       github.event.workflow_run.pull_requests[0].user.login == 'dependabot[bot]')
+
+    steps:
+      - name: Get PR information
+        id: pr_info
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            let prNumber, headRef, headSha;
+            
+            if (context.eventName === 'workflow_run') {
+              // From workflow_run event
+              prNumber = context.payload.workflow_run.pull_requests[0].number;
+              headRef = context.payload.workflow_run.head_branch;
+              headSha = context.payload.workflow_run.head_sha;
+            } else {
+              // From manual workflow_dispatch
+              prNumber = context.payload.inputs.pr_number;
+              const pr = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+              });
+              headRef = pr.data.head.ref;
+              headSha = pr.data.head.sha;
+            }
+            
+            core.setOutput('pr_number', prNumber);
+            core.setOutput('head_ref', headRef);
+            core.setOutput('head_sha', headSha);
+
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          # Check out the PR branch, not the merge commit
+          ref: ${{ steps.pr_info.outputs.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Configure git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Run Copilot dependency update agent
+        run: |
+          # The Copilot CLI will be invoked to run the update-dependencies agent.
+          # The agent will analyze the build failure and attempt to fix dependency issues.
+          gh copilot -- task \
+            "Analyze the CI failure from dependabot PR #${{ steps.pr_info.outputs.pr_number }} and fix dependency compatibility issues using the update-dependencies agent in security-only mode" \
+            --agent-file .github/agents/update-dependencies.agent.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push fixes
+        run: |
+          if ! git diff --quiet; then
+            git add -A
+            git commit -m "deps: auto-fix dependency issues from dependabot
+
+This commit was created automatically by the GitHub Copilot update-dependencies agent.
+The original dependabot PR CI failed, and this fixes the compatibility issues.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+            git push
+          else
+            echo "No changes detected. CI may have passed on retry or issues were already fixed."
+          fi
+
+      - name: Add comment to PR if fixes were applied
+        if: success()
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+            const prNumber = ${{ steps.pr_info.outputs.pr_number }};
+            const workflowRunId = context.payload.workflow_run?.id || 'manual';
+            const workflowRunUrl = context.payload.workflow_run?.html_url || '';
+            
+            let body = `🤖 **Copilot Auto-Fix Complete**\n\nThe GitHub Copilot update-dependencies agent detected CI failures and applied fixes in security-only mode (patches only, no major version bumps).`;
+            
+            if (workflowRunUrl) {
+              body += `\n\n[Original workflow run #${workflowRunId}](${workflowRunUrl})`;
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
